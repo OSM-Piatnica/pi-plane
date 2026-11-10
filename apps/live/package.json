@@ -1,6 +1,6 @@
 {
   "name": "live",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "private": true,
   "description": "A realtime collaborative server that powers Pi-Plane's rich text editor",
   "license": "AGPL-3.0",
@@ -26,8 +26,13 @@
     "clean": "rm -rf .turbo && rm -rf .next && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "@effect/platform": "^0.94.0",
-    "@effect/platform-node": "^0.104.0",
+    "@effect/cluster": "^0.60.5",
+    "@effect/experimental": "^0.61.2",
+    "@effect/platform": "^0.97.3",
+    "@effect/platform-node": "^0.108.4",
+    "@effect/rpc": "^0.76.4",
+    "@effect/sql": "^0.52.2",
+    "@effect/workflow": "^0.19.1",
     "@fontsource/inter": "5.2.8",
     "@hocuspocus/extension-database": "3.4.4",
     "@hocuspocus/extension-logger": "3.4.4",
@@ -48,7 +53,7 @@
     "compression": "1.8.2",
     "cors": "^2.8.5",
     "dotenv": "catalog:",
-    "effect": "3.20.0",
+    "effect": "3.22.4",
     "express": "catalog:",
     "express-ws": "^5.0.2",
     "helmet": "^7.1.0",

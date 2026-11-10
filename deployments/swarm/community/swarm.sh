@@ -272,56 +272,78 @@ function deployStack() {
     echo "Waiting for services to be deployed..."
     sleep 10
 
-    # Check migrator service
+    # Wait for the data migration. A Swarm service is never "done" in `docker service ls`; the state of its latest
+    # task (`docker service ps`) is what says whether the migrator is still running, finished or failed.
     local migrator_service=$(docker service ls --filter name=${stack_name}_migrator -q)
     if [ -n "$migrator_service" ]; then
-        echo ">> Waiting for Data Migration to finish"
-        while docker service ls --filter name=${stack_name}_migrator | grep -q "running"; do
-            echo -n "."
-            sleep 1
-        done
-        echo ""
-        
-        # Get the most recent container for the migrator service
-        local migrator_container=$(docker ps -a --filter name=${stack_name}_migrator --latest -q)
-        
-        if [ -n "$migrator_container" ]; then
-            # Get the exit code of the container
-            local exit_code=$(docker inspect --format='{{.State.ExitCode}}' $migrator_container)
-            
-            if [ "$exit_code" != "0" ]; then
+        local migration_wait_limit=1800  # 30 minutes, a first install on a slow disk can take minutes
+        local migration_start=$(date +%s)
+        local idx=0
+        local migrator_state
+        local migrator_failures
+        while true; do
+            # newest task first
+            migrator_state=$(docker service ps ${stack_name}_migrator --format '{{.CurrentState}}' 2>/dev/null | head -n 1)
+            migrator_failures=$(docker service ps ${stack_name}_migrator --format '{{.CurrentState}}' 2>/dev/null | grep -c '^\(Failed\|Rejected\)')
+
+            case "$migrator_state" in
+                Complete*) break ;;
+            esac
+
+            # the service restarts a failed migrator; give up after a few failed attempts
+            if [ "$migrator_failures" -ge 3 ]; then
+                printf "\r\033[K"
                 echo "Server failed to start ❌"
-                echo "Migration failed with exit code: $exit_code"
-                echo "Please check the logs for the 'migrator' service and resolve the issue(s)."
+                echo "The migrator failed $migrator_failures times."
+                echo "Please check the logs for the 'migrator' service (docker service logs ${stack_name}_migrator) and resolve the issue(s)."
                 echo "Stop the services by running the command: ./swarm.sh stop"
                 exit 1
-            else
-                echo "   Data Migration completed successfully ✅"
             fi
-        else
-            echo "Warning: Could not find migrator container to check exit status"
-        fi
+
+            if [ $(( $(date +%s) - migration_start )) -gt $migration_wait_limit ]; then
+                printf "\r\033[K"
+                echo "Server failed to start ❌"
+                echo "The data migration did not finish within $((migration_wait_limit / 60)) minutes."
+                echo "Please check the logs for the 'migrator' service (docker service logs ${stack_name}_migrator)."
+                echo "Stop the services by running the command: ./swarm.sh stop"
+                exit 1
+            fi
+
+            echo -ne "\r>> Waiting for Data Migration to finish$(printf '%*s' $idx | tr ' ' '.')"
+            ((idx++))
+            sleep 2
+        done
+        printf "\r\033[K"
+        echo "   Data Migration completed successfully ✅"
     fi
 
-    # Check API service
+    # Wait until the API answers through the proxy (the ingress routes the published port from every node)
     local api_service=$(docker service ls --filter name=${stack_name}_api -q)
-    while docker service ls --filter name=${stack_name}_api | grep -q "running"; do
-        local running_container=$(docker ps --filter "name=${stack_name}_api" --filter "status=running" -q)
-        if [ -n "$running_container" ]; then
-            if docker container logs $running_container 2>/dev/null | grep -q "Application Startup Complete"; then
-                break
-            fi
-        fi
-        sleep 2
-    done
-
     if [ -z "$api_service" ]; then
         echo "Plane Server failed to start ❌"
         echo "Please check the logs for the 'api' service and resolve the issue(s)."
         echo "Stop the services by running the command: ./swarm.sh stop"
         exit 1
     fi
-    echo "   Plane Server started successfully ✅"
+    local api_wait_limit=300  # 5 minutes
+    local api_start=$(date +%s)
+    local api_ready=false
+    local idx2=0
+    while [ $(( $(date +%s) - api_start )) -le $api_wait_limit ]; do
+        if [ "$(curl -s -o /dev/null -w '%{http_code}' -m 5 "http://localhost:${LISTEN_HTTP_PORT:-80}/api/instances/" 2>/dev/null)" == "200" ]; then
+            api_ready=true
+            break
+        fi
+        echo -ne "\r>> Waiting for API Service to Start ($(( $(date +%s) - api_start ))s)$(printf '%*s' $idx2 | tr ' ' '.')"
+        ((idx2++))
+        sleep 2
+    done
+    printf "\r\033[K"
+    if [ "$api_ready" == true ]; then
+        echo "   Plane Server started successfully ✅"
+    else
+        echo "   ⚠️  The API did not answer within 5 minutes: check the logs of the 'api' service (docker service logs ${stack_name}_api)."
+    fi
     echo ""
     echo "   You can access the application at $WEB_URL"
     echo ""

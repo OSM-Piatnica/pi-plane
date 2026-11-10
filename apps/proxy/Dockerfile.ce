@@ -18,13 +18,18 @@ RUN XCADDY_SKIP_CLEANUP=1 xcaddy build \
 
 # Caddy's own go.mod pins x/crypto, x/net and x/text at versions with open CVEs;
 # xcaddy preserved its build dir above, so upgrade them there and rebuild.
-# x/net v0.60.0 requires x/crypto v0.57.0 and x/text v0.42.0, hence those floors.
+# x/net v0.62.0 requires x/crypto v0.58.0 and x/text v0.43.0, hence those floors.
+ARG GO_PINS="golang.org/x/crypto@v0.58.0 golang.org/x/net@v0.62.0 golang.org/x/text@v0.43.0"
 RUN cd "$(find /tmp -maxdepth 1 -name 'buildenv_*' -type d | head -1)" && \
-    go get golang.org/x/crypto@v0.57.0 && \
-    go get golang.org/x/net@v0.60.0 && \
-    go get golang.org/x/text@v0.42.0 && \
+    for m in $GO_PINS; do go get "$m" || exit 1; done && \
     go mod tidy && \
     go build -o /usr/bin/caddy -ldflags "-w -s" -trimpath -tags nobadger,nomysql,nopgx .
+
+# `go get` can also walk the x/ floors backwards, so assert each one too.
+RUN for m in $GO_PINS; do \
+      go version -m /usr/bin/caddy | awk -v p="${m%@*}" -v v="${m#*@}" '$1=="dep" && $2==p && $3==v {f=1} END {exit !f}' \
+        || { echo "caddy was not built against $m -- check the go get floors" >&2; exit 1; }; \
+    done
 
 # xcaddy resolves every --with pin in a single `go get`, which walks a module
 # backwards to an older release rather than failing when the pins conflict.
