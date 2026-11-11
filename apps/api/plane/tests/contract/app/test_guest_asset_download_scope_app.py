@@ -29,7 +29,7 @@ from plane.tests.contract.app.test_guest_issue_subresource_scope_app import (  #
     project,
 )
 
-S3_STORAGE_PATH = "plane.app.views.asset.v2.S3Storage"
+S3_STORAGE_PATH = "plane.app.views.asset.v2.get_storage"
 
 READ_URLS = [
     "/api/assets/v2/workspaces/{slug}/download/{asset_id}/",

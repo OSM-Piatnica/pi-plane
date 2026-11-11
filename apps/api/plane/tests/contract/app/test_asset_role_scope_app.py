@@ -271,7 +271,7 @@ class TestProjectCoverBinding:
             "entity_type": FileAsset.EntityTypeContext.PROJECT_COVER,
             "entity_identifier": str(project_id),
         }
-        with patch("plane.app.views.asset.v2.S3Storage") as storage:
+        with patch("plane.app.views.asset.v2.get_storage") as storage:
             storage.return_value.generate_presigned_post.return_value = {}
             return client.post(f"/api/assets/v2/workspaces/{workspace.slug}/", payload, format="json")
 
