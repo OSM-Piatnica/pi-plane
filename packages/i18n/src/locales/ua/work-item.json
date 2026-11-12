@@ -158,7 +158,8 @@
       "access": {
         "internal": "Внутрішній",
         "external": "Видимий в інтернеті"
-      }
+      },
+      "commented_ago": "прокоментовано <time/>"
     },
     "empty_state": {
       "issue_detail": {

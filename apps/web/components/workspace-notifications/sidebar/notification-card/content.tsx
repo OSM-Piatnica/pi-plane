@@ -202,7 +202,7 @@ export function NotificationContent({
     // Check if value is explicitly defined in map
     if (contentDetails && "value" in contentDetails) return contentDetails.value;
     // Fallback to default value handler for fields not in map or without value defined
-    return renderAdditionalValue(notificationField, newValue, oldValue);
+    return renderAdditionalValue(notificationField, newValue, oldValue, t);
   };
 
   const actionNode = renderAction();

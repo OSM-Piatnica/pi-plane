@@ -39,9 +39,11 @@ import {
 } from "@makeplane/propel/icons";
 // components
 
+import { getPriorityLabel } from "@/helpers/activity-values";
 import { renderTaggedText } from "@/helpers/tagged-text";
 import { store } from "@/lib/store-context";
 import type { TProjectActivity } from "@plane/types";
+import { getStateName } from "@plane/utils";
 
 type ActivityIconMap = {
   [key: string]: FC<{ className?: string }>;
@@ -125,7 +127,10 @@ export const messages = (
   switch (activityType) {
     case "priority":
       return {
-        message: withValue(t("activity_feed.project.priority.set"), newValue || t("activity_feed.project.value_none")),
+        message: withValue(
+          t("activity_feed.project.priority.set"),
+          newValue ? getPriorityLabel(newValue, t) : t("activity_feed.project.value_none")
+        ),
       };
     case "archived_at":
       return {
@@ -157,7 +162,10 @@ export const messages = (
       };
     case "state":
       return {
-        message: withValue(t("activity_feed.project.state.set"), newValue || t("activity_feed.project.value_none")),
+        message: withValue(
+          t("activity_feed.project.state.set"),
+          newValue ? getStateName(newValue, t) : t("activity_feed.project.value_none")
+        ),
       };
     case "estimate":
       if (newValue) return { message: withValue(t("activity_feed.project.estimate.set"), newValue) };

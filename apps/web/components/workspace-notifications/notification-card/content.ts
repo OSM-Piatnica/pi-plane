@@ -5,6 +5,8 @@
  * See the LICENSE file for details.
  */
 
+import { getStateName } from "@plane/utils";
+import { getPriorityLabel } from "@/helpers/activity-values";
 import type { TNotificationContentMap } from "@/components/workspace-notifications/sidebar/notification-card/content";
 
 // Additional notification content map for CE (empty - EE extends this)
@@ -58,11 +60,17 @@ export const renderAdditionalAction = (
   return t(key ?? "notification.content.generic_updated");
 };
 
-// Fallback value renderer for fields not in the map
+// Fallback value renderer for fields not in the map. The state and the priority are stored as English data (the
+// name of a default state, the key of a priority), so they are translated where they are shown.
 export const renderAdditionalValue = (
-  _notificationField: string | undefined,
+  notificationField: string | undefined,
   newValue: string | undefined,
-  _oldValue: string | undefined
-) => newValue;
+  _oldValue: string | undefined,
+  t: (key: string) => string
+) => {
+  if (notificationField === "state") return getStateName(newValue ?? "", t);
+  if (notificationField === "priority") return getPriorityLabel(newValue, t);
+  return newValue;
+};
 
 export const shouldRender = (notificationField: string | undefined, verb: string | undefined) => verb !== "deleted";

@@ -158,7 +158,8 @@
       "access": {
         "internal": "内部",
         "external": "在网络上可见"
-      }
+      },
+      "commented_ago": "<time/>发表了评论"
     },
     "empty_state": {
       "issue_detail": {

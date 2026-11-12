@@ -158,7 +158,8 @@
       "access": {
         "internal": "Dahili",
         "external": "Web'de görünür"
-      }
+      },
+      "commented_ago": "<time/> yorum yaptı"
     },
     "empty_state": {
       "issue_detail": {
