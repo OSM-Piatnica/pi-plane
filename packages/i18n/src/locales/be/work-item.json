@@ -158,7 +158,8 @@
       "access": {
         "internal": "Унутраны",
         "external": "Бачны ў вэб-версіі"
-      }
+      },
+      "commented_ago": "— пракаментавана <time/>"
     },
     "empty_state": {
       "issue_detail": {

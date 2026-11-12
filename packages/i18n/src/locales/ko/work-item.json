@@ -158,7 +158,8 @@
       "access": {
         "internal": "내부용",
         "external": "웹에 표시됨"
-      }
+      },
+      "commented_ago": "<time/>에 댓글을 남겼습니다"
     },
     "empty_state": {
       "issue_detail": {

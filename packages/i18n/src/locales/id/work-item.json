@@ -158,7 +158,8 @@
       "access": {
         "internal": "Internal",
         "external": "Terlihat di web"
-      }
+      },
+      "commented_ago": "berkomentar <time/>"
     },
     "empty_state": {
       "issue_detail": {

@@ -158,7 +158,8 @@
       "access": {
         "internal": "Intern",
         "external": "Zichtbaar op het web"
-      }
+      },
+      "commented_ago": "plaatste een opmerking <time/>"
     },
     "empty_state": {
       "issue_detail": {

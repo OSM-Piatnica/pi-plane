@@ -158,7 +158,8 @@
       "access": {
         "internal": "內部",
         "external": "在網路上可見"
-      }
+      },
+      "commented_ago": "<time/>發表了留言"
     },
     "empty_state": {
       "issue_detail": {
