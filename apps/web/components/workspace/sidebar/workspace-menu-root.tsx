@@ -177,7 +177,8 @@ export const WorkspaceMenuRoot = observer(function WorkspaceMenuRoot(props: Work
               </div>
             )}
           </div>
-          <div className="shrink-0">
+          {/* pinned to the bottom of the scrolling menu so the actions stay reachable with many workspaces */}
+          <div className="sticky bottom-0 z-1 shrink-0 bg-layer-2">
             <MenuSeparator />
             {!isWorkspaceCreationDisabled && (
               <MenuItem
