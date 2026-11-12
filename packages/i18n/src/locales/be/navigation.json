@@ -1,0 +1,34 @@
+{
+  "command_k": {
+    "empty_state": {
+      "search": {
+        "title": "Нічога не знойдзена"
+      }
+    }
+  },
+  "sidebar": {
+    "stickies": "Stickies",
+    "your_work": "Ваша праца",
+    "projects": "Праекты",
+    "pages": "Старонкі",
+    "new_work_item": "Новы працоўны элемент",
+    "home": "Галоўная",
+    "inbox": "Уваходныя",
+    "workspace": "Працоўная прастора",
+    "views": "Прагляды",
+    "analytics": "Аналітыка",
+    "work_items": "Працоўныя элементы",
+    "cycles": "Цыклы",
+    "modules": "Модулі",
+    "intake": "Intake",
+    "drafts": "Чарнавікі",
+    "favorites": "Абранае",
+    "pro": "Pro",
+    "upgrade": "Палепшыць",
+    "pi_chat": "Plane AI",
+    "epics": "Эпікі",
+    "upgrade_plan": "Палепшыць план",
+    "plane_pro": "Plane Pro",
+    "business": "Business"
+  }
+}

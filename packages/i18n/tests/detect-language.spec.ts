@@ -23,6 +23,7 @@ describe("detectLanguage", () => {
 
   it("maps tags whose app code differs from the BCP 47 tag", () => {
     expect(detectLanguage(["uk-UA"])).toBe("ua");
+    expect(detectLanguage(["be-BY"])).toBe("be");
     expect(detectLanguage(["ka"])).toBe("ka-ge");
     expect(detectLanguage(["vi"])).toBe("vi-VN");
     expect(detectLanguage(["pt"])).toBe("pt-BR");

@@ -34,6 +34,7 @@ export const SUPPORTED_LANGUAGES: ILanguageOption[] = [
   { label: "ქართული", value: "ka-ge" },
   { label: "Nederlands", value: "nl" },
   { label: "Български", value: "bg" },
+  { label: "Беларуская", value: "be" },
 ];
 
 export const LANGUAGE_STORAGE_KEY = "userLanguage";

@@ -43,6 +43,7 @@ class TestPluralCategory:
             ("pl", {1: "one", 2: "few", 4: "few", 5: "many", 12: "many", 22: "few", 25: "many", 112: "many"}),
             ("ru", {1: "one", 21: "one", 2: "few", 24: "few", 5: "many", 11: "many", 12: "many", 111: "many"}),
             ("ua", {1: "one", 3: "few", 11: "many", 101: "one"}),
+            ("be", {1: "one", 21: "one", 2: "few", 24: "few", 5: "many", 11: "many", 12: "many", 111: "many"}),
             ("cs", {1: "one", 2: "few", 4: "few", 5: "other", 0: "other"}),
             ("sk", {1: "one", 3: "few", 6: "other"}),
             ("ro", {1: "one", 0: "few", 2: "few", 19: "few", 20: "other", 101: "few"}),
@@ -83,7 +84,23 @@ class TestTranslate:
 @pytest.mark.unit
 class TestLocaleFiles:
     def test_every_web_locale_has_a_file_or_an_alias(self):
-        web_locales = {"bg", "cs", "de", "en", "es", "fr", "id", "it", "ja", "ka-ge", "ko", "nl", "pl", "pl-x-podlaski"}
+        web_locales = {
+            "be",
+            "bg",
+            "cs",
+            "de",
+            "en",
+            "es",
+            "fr",
+            "id",
+            "it",
+            "ja",
+            "ka-ge",
+            "ko",
+            "nl",
+            "pl",
+            "pl-x-podlaski",
+        }
         web_locales |= {"pt-BR", "pt-PT", "ro", "ru", "sk", "tr-TR", "ua", "vi-VN", "zh-CN", "zh-TW"}
         covered = set(LOCALE_FILES) | set(email_i18n.LANGUAGE_ALIASES)
         assert web_locales <= covered
