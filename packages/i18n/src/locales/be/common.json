@@ -260,7 +260,7 @@
     "error_rate_limited": "Вы нядаўна адправілі некалькі паведамленняў. Паспрабуйце пазней.",
     "error_generic": "Не ўдалося адправіць паведамленне. Паспрабуйце яшчэ раз або напішыце адміністратарам на электронную пошту.",
     "or_email": "Або напішыце са свайго паштовага кліента",
-    "notification_text": "напісаў(-ла) адміністратарам гэтай працоўнай прасторы",
+    "notification_text": "— паведамленне адміністратарам гэтай працоўнай прасторы",
     "message_from": "Паведамленне ад {name}",
     "reply_by_email": "Адказаць па электроннай пошце"
   },
@@ -383,10 +383,10 @@
     "no_group": "Без групы",
     "unknown_group": "Невядомая група"
   },
-  "good": "Добрага",
-  "morning": "ранку",
-  "afternoon": "дня",
-  "evening": "вечара",
+  "good": "Добры",
+  "morning": "дзень",
+  "afternoon": "дзень",
+  "evening": "вечар",
   "show_all": "Паказаць усе",
   "show_less": "Паказаць меней",
   "hide": "Схаваць",
@@ -892,8 +892,8 @@
   },
   "description_versions": {
     "last_edited_by": "Апошні рэдактар",
-    "previously_edited_by": "Раней рэдагаваў(-ла)",
-    "edited_by": "Рэдагаваў(-ла)"
+    "previously_edited_by": "Раней рэдагавана",
+    "edited_by": "Рэдактар"
   },
   "self_hosted_maintenance_message": {
     "plane_didnt_start_up_this_could_be_because_one_or_more_plane_services_failed_to_start": "Pi-Plane не запусціўся. Магчыма, не ўдалося запусціць адзін або некалькі сэрвісаў Pi-Plane.",
@@ -964,7 +964,7 @@
       "new_password_placeholder": "Новы пароль...",
       "role_question": "Над чым вы працуеце? Выберыце адзін варыянт.",
       "domain_question": "Якая ваша вобласць экспертызы? Выберыце адзін або некалькі варыянтаў.",
-      "marketing_consent": "Я згодны(-на) атрымліваць маркетынгавыя паведамленні Pi-Plane",
+      "marketing_consent": "Даю згоду на атрыманне маркетынгавых паведамленняў Pi-Plane",
       "passwords_do_not_match": "Паролі не супадаюць",
       "passwords_match": "Паролі супадаюць",
       "seniority_levels": {
@@ -1097,7 +1097,7 @@
     "archived_at": "Заархівавана {date}",
     "date_time": "{date} {time}",
     "date_comma_time": "{date}, {time}",
-    "uploaded_on": "{name} загрузіў(-ла) {date}",
+    "uploaded_on": "{name}, дата загрузкі: {date}",
     "date_range": "{start} - {end}",
     "expiry": "Тэрмін дзеяння"
   },
@@ -1367,7 +1367,7 @@
       "welcome_title": "Вітаем у Pi-Plane, {firstName} {lastName}",
       "welcome_description": "Мы рады, што вы вырашылі паспрабаваць Pi-Plane. Цяпер вы можаце лёгка кіраваць сваімі праектамі. Пачніце са стварэння праекта.",
       "take_tour": "Азнаёміцца з прадуктам",
-      "skip": "Не, дзякуй, разбяруся сам(а)",
+      "skip": "Не, дзякуй, разбяруся самастойна",
       "create_first_project": "Стварыць першы праект",
       "sidebar_heading": "Пачнем!<br/>Атрымайце ад Pi-Plane больш."
     },

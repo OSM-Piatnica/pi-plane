@@ -11,7 +11,7 @@
   },
   "issue_updates": {
     "title": "Абнаўленні {identifier}",
-    "summary": "<strong>{actor}</strong> унёс(-ла) змены ў працоўны элемент.",
+    "summary": "У працоўны элемент унесены змены: <strong>{actor}</strong>.",
     "summary_others": "<strong>{actor}</strong> і іншыя ўнеслі змены ў працоўны элемент.",
     "title_changed": "Назву працоўнага элемента зменена на {title}",
     "updates": "Абнаўленні",
@@ -100,9 +100,9 @@
   },
   "project_addition": {
     "subject": "Вас запрасілі ў праект Pi-Plane",
-    "preheader": "{inviter} запрасіў(-ла) вас у праект {project} у працоўнай прасторы {workspace} у Pi-Plane.",
+    "preheader": "{inviter} запрашае вас у праект {project} у працоўнай прасторы {workspace} у Pi-Plane.",
     "heading": "Вас запрасілі ў праект {project} у Pi-Plane",
-    "intro": "{inviter} запрасіў(-ла) вас працаваць разам у праекце <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane.",
+    "intro": "{inviter} запрашае вас працаваць разам у праекце <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane.",
     "button": "Перайсці да праекта",
     "fallback": "Калі кнопка не працуе, скапіруйце гэту спасылку і ўстаўце яе ў браўзер:",
     "note": "Заўвага: гэты ліст адпраўлены на адрас <span>{email}</span>. Калі вы не чакалі гэтага запрашэння, можаце спакойна ігнараваць гэты ліст."
@@ -122,8 +122,8 @@
     "subject_rejected": "Ваш запыт на далучэнне да {project} не ўхвалены",
     "heading_approved": "Цяпер у вас ёсць доступ да {project}",
     "heading_rejected": "Ваш запыт на далучэнне да {project}",
-    "intro_approved": "<strong>{decider}</strong> ухваліў(-ла) ваш запыт на далучэнне да прыватнага праекта <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane. Цяпер вы можаце яго адкрыць.",
-    "intro_rejected": "<strong>{decider}</strong> не ўхваліў(-ла) ваш запыт на далучэнне да прыватнага праекта <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane. Калі вы лічыце, што гэта памылка, звярніцеся да адміністратара праекта.",
+    "intro_approved": "Ваш запыт на далучэнне да прыватнага праекта <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane ухвалены: <strong>{decider}</strong>. Цяпер вы можаце яго адкрыць.",
+    "intro_rejected": "Ваш запыт на далучэнне да прыватнага праекта <strong>{project}</strong> у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane не ўхвалены: <strong>{decider}</strong>. Калі вы лічыце, што гэта памылка, звярніцеся да адміністратара праекта.",
     "button": "Адкрыць праект",
     "note": "Заўвага: гэты ліст адпраўлены на адрас <span>{email}</span>, бо вы запыталі далучэнне да гэтага праекта."
   },
@@ -143,10 +143,10 @@
     "note": "Заўвага: гэты ліст адпраўлены на адрас <span>{email}</span>. Калі вы не чакалі скіду пароля, можаце спакойна ігнараваць гэты ліст."
   },
   "workspace_invitation": {
-    "subject": "{inviter} запрасіў(-ла) вас далучыцца да {workspace} у Pi-Plane",
-    "preheader": "{inviter} запрасіў(-ла) вас далучыцца да {workspace} у Pi-Plane.",
+    "subject": "{inviter} запрашае вас далучыцца да {workspace} у Pi-Plane",
+    "preheader": "{inviter} запрашае вас далучыцца да {workspace} у Pi-Plane.",
     "heading": "Далучайцеся да {workspace} у Pi-Plane",
-    "intro": "{inviter} запрасіў(-ла) вас супрацоўнічаць у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane.",
+    "intro": "{inviter} запрашае вас супрацоўнічаць у працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane.",
     "button": "Прыняць запрашэнне",
     "note": "Заўвага: гэта запрашэнне прызначана для <span>{email}</span>. Калі вы не чакалі гэтага запрашэння, можаце ігнараваць гэты ліст."
   },
@@ -187,10 +187,10 @@
     "fallback": "Калі кнопка не працуе, скапіруйце гэту спасылку і ўстаўце яе ў браўзер:"
   },
   "workspace_admin_message": {
-    "subject": "{sender} напісаў(-ла) адміністратарам {workspace}",
-    "preheader": "{sender} адправіў(-ла) паведамленне адміністратарам {workspace} у Pi-Plane.",
+    "subject": "Паведамленне адміністратарам {workspace} ад {sender}",
+    "preheader": "Паведамленне адміністратарам {workspace} у Pi-Plane ад {sender}.",
     "heading": "Паведамленне для адміністратараў {workspace}",
-    "intro": "<strong>{sender}</strong> ({sender_email}) напісаў(-ла) адміністратарам працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane.",
+    "intro": "Паведамленне адміністратарам працоўнай прасторы <strong>{workspace}</strong> у Pi-Plane ад <strong>{sender}</strong> ({sender_email}).",
     "message": "Паведамленне:",
     "reply": "Адкажыце на гэты ліст, каб адказаць {sender} непасрэдна.",
     "note": "Заўвага: гэты ліст адпраўлены на адрас <span>{email}</span>, бо вы адміністратар гэтай працоўнай прасторы."

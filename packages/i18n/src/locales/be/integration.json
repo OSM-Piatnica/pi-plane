@@ -23,7 +23,7 @@
     "connect_org": "Падключыць арганізацыю",
     "connect_org_description": "Падключыце вашу арганізацыю GitHub да Pi-Plane",
     "processing": "Апрацоўка",
-    "org_added_desc": "Арганізацыю GitHub дадаў(-ла) і час",
+    "org_added_desc": "Арганізацыя GitHub дададзена: аўтар і час",
     "connection_fetch_error": "Памылка атрымання звестак пра падключэнне з сервера",
     "personal_account_connected": "Асабісты ўліковы запіс падключаны",
     "personal_account_connected_description": "Ваш уліковы запіс GitHub цяпер падключаны да Pi-Plane",

@@ -599,484 +599,484 @@
   },
   "activity_feed": {
     "issue": {
-      "archived": "архіваваў(-ла) працоўны элемент.",
+      "archived": "— архіваваны працоўны элемент.",
       "assignee": {
-        "added": "дадаў(-ла) новага прызначанага <user/>.",
-        "added_with_issue": "дадаў(-ла) новага прызначанага <user/> да <issue/>.",
-        "removed": "прыбраў(-ла) прызначанага <user/>.",
-        "removed_with_issue": "прыбраў(-ла) прызначанага <user/> з <issue/>."
+        "added": "— дададзены новы прызначаны <user/>.",
+        "added_with_issue": "— дададзены новы прызначаны <user/> у <issue/>.",
+        "removed": "— прыбраны прызначаны <user/>.",
+        "removed_with_issue": "— прыбраны прызначаны <user/> з <issue/>."
       },
       "attachment": {
-        "added": "загрузіў(-ла) новае далучэнне.",
-        "added_with_issue": "загрузіў(-ла) новае далучэнне да <issue/>.",
-        "removed": "прыбраў(-ла) далучэнне.",
-        "removed_with_issue": "прыбраў(-ла) далучэнне з <issue/>."
+        "added": "— загружана новае далучэнне.",
+        "added_with_issue": "— загружана новае далучэнне ў <issue/>.",
+        "removed": "— прыбрана далучэнне.",
+        "removed_with_issue": "— прыбрана далучэнне з <issue/>."
       },
-      "created": "стварыў(-ла) працоўны элемент.",
-      "created_via": "стварыў(-ла) працоўны элемент праз <source/>.",
+      "created": "— створаны працоўны элемент.",
+      "created_via": "— створаны працоўны элемент праз <source/>.",
       "cycle": {
-        "added": "дадаў(-ла) гэты працоўны элемент у цыкл <cycle/>",
-        "removed": "прыбраў(-ла) працоўны элемент з цыкла <cycle/>",
-        "set": "задаў(-ла) цыкл <cycle/>"
+        "added": "— гэты працоўны элемент дададзены ў цыкл <cycle/>",
+        "removed": "— працоўны элемент прыбраны з цыкла <cycle/>",
+        "set": "— цыкл: <cycle/>"
       },
-      "deleted": "выдаліў(-ла) працоўны элемент.",
+      "deleted": "— выдалены працоўны элемент.",
       "description": {
-        "updated": "абнавіў(-ла) апісанне.",
-        "updated_with_issue": "абнавіў(-ла) апісанне <issue/>."
+        "updated": "— абноўлена апісанне.",
+        "updated_with_issue": "— абноўлена апісанне <issue/>."
       },
       "duration": {
         "days": "{count, plural, one {# дзень} few {# дні} many {# дзён} other {# дня}}",
-        "removed": "прыбраў(-ла) працягласць.",
-        "removed_with_issue": "прыбраў(-ла) працягласць з <issue/>.",
-        "set": "задаў(-ла) працягласць <value/>.",
-        "set_with_issue": "задаў(-ла) працягласць <value/> для <issue/>."
+        "removed": "— прыбрана працягласць.",
+        "removed_with_issue": "— прыбрана працягласць з <issue/>.",
+        "set": "— працягласць: <value/>.",
+        "set_with_issue": "— працягласць для <issue/>: <value/>."
       },
       "estimate": {
-        "removed": "прыбраў(-ла) ацэнку <value/>.",
-        "removed_with_issue": "прыбраў(-ла) ацэнку <value/> з <issue/>.",
-        "set": "задаў(-ла) ацэнку <value/>.",
-        "set_with_issue": "задаў(-ла) ацэнку <value/> для <issue/>."
+        "removed": "— прыбрана ацэнка <value/>.",
+        "removed_with_issue": "— прыбрана ацэнка <value/> з <issue/>.",
+        "set": "— ацэнка: <value/>.",
+        "set_with_issue": "— ацэнка для <issue/>: <value/>."
       },
       "intake": {
-        "accepted": "прыняў(-ла) гэты працоўны элемент з Intake.",
-        "declined": "адхіліў(-ла) гэты працоўны элемент з Intake.",
-        "duplicate": "адхіліў(-ла) гэты працоўны элемент з Intake, пазначыўшы яго як дублікат.",
-        "snoozed": "адклаў(-ла) гэты працоўны элемент.",
-        "updated": "абнавіў(-ла) статус працоўнага элемента ў Intake."
+        "accepted": "— гэты працоўны элемент прыняты з Intake.",
+        "declined": "— гэты працоўны элемент адхілены з Intake.",
+        "duplicate": "— гэты працоўны элемент адхілены з Intake з пазнакай дублікату.",
+        "snoozed": "— гэты працоўны элемент адкладзены.",
+        "updated": "— абноўлены статус працоўнага элемента ў Intake."
       },
       "label": {
-        "added": "дадаў(-ла) новую метку <label/>",
-        "added_with_issue": "дадаў(-ла) новую метку <label/> да <issue/>",
-        "removed": "прыбраў(-ла) метку <label/>",
-        "removed_with_issue": "прыбраў(-ла) метку <label/> з <issue/>"
+        "added": "— дададзена новая метка <label/>",
+        "added_with_issue": "— дададзена новая метка <label/> у <issue/>",
+        "removed": "— прыбрана метка <label/>",
+        "removed_with_issue": "— прыбрана метка <label/> з <issue/>"
       },
       "link": {
-        "added": "дадаў(-ла) <link>спасылку</link>.",
-        "added_with_issue": "дадаў(-ла) <link>спасылку</link> да <issue/>.",
-        "removed": "прыбраў(-ла) гэтую <link>спасылку</link>.",
-        "removed_with_issue": "прыбраў(-ла) гэтую <link>спасылку</link> з <issue/>.",
-        "updated": "абнавіў(-ла) <link>спасылку</link>.",
-        "updated_with_issue": "абнавіў(-ла) <link>спасылку</link> у <issue/>."
+        "added": "— дададзена <link>спасылка</link>.",
+        "added_with_issue": "— дададзена <link>спасылка</link> у <issue/>.",
+        "removed": "— прыбрана гэта <link>спасылка</link>.",
+        "removed_with_issue": "— прыбрана гэта <link>спасылка</link> з <issue/>.",
+        "updated": "— абноўлена <link>спасылка</link>.",
+        "updated_with_issue": "— абноўлена <link>спасылка</link> у <issue/>."
       },
       "module": {
-        "added": "дадаў(-ла) гэты працоўны элемент у модуль <module/>",
-        "removed": "прыбраў(-ла) працоўны элемент з модуля <module/>",
-        "set": "задаў(-ла) модуль <module/>"
+        "added": "— гэты працоўны элемент дададзены ў модуль <module/>",
+        "removed": "— працоўны элемент прыбраны з модуля <module/>",
+        "set": "— модуль: <module/>"
       },
       "name": {
-        "set": "задаў(-ла) назву {name}."
+        "set": "— назва: {name}."
       },
       "parent": {
-        "removed": "прыбраў(-ла) бацькоўскі элемент <value/>.",
-        "removed_with_issue": "прыбраў(-ла) бацькоўскі элемент <value/> з <issue/>.",
-        "set": "задаў(-ла) бацькоўскі элемент <value/>.",
-        "set_with_issue": "задаў(-ла) бацькоўскі элемент <value/> для <issue/>."
+        "removed": "— прыбраны бацькоўскі элемент <value/>.",
+        "removed_with_issue": "— прыбраны бацькоўскі элемент <value/> з <issue/>.",
+        "set": "— бацькоўскі элемент: <value/>.",
+        "set_with_issue": "— бацькоўскі элемент для <issue/>: <value/>."
       },
       "priority": {
-        "set": "задаў(-ла) прыярытэт <value/>.",
-        "set_with_issue": "задаў(-ла) прыярытэт <value/> для <issue/>."
+        "set": "— прыярытэт: <value/>.",
+        "set_with_issue": "— прыярытэт для <issue/>: <value/>."
       },
       "relation": {
         "blocked_by": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент блакуецца элементам <value/>.",
-          "removed": "прыбраў(-ла) блакаванне гэтага працоўнага элемента элементам <value/>."
+          "added": "— пазначана, што гэты працоўны элемент блакуецца элементам <value/>.",
+          "removed": "— прыбрана блакаванне гэтага працоўнага элемента элементам <value/>."
         },
         "blocking": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент блакуе элемент <value/>.",
-          "removed": "прыбраў(-ла) блакаванне элемента <value/>."
+          "added": "— пазначана, што гэты працоўны элемент блакуе элемент <value/>.",
+          "removed": "— прыбрана блакаванне элемента <value/>."
         },
         "caused_by": {
-          "added": "дадаў(-ла) сувязь «Выклікана»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Выклікана»: <value/>."
+          "added": "— дададзена сувязь «Выклікана»: <value/>.",
+          "removed": "— прыбрана сувязь «Выклікана»: <value/>."
         },
         "causes": {
-          "added": "дадаў(-ла) сувязь «Выклікае»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Выклікае»: <value/>."
+          "added": "— дададзена сувязь «Выклікае»: <value/>.",
+          "removed": "— прыбрана сувязь «Выклікае»: <value/>."
         },
         "cloned_by": {
-          "added": "дадаў(-ла) сувязь «Кланіраваны»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Кланіраваны»: <value/>."
+          "added": "— дададзена сувязь «Кланіраваны»: <value/>.",
+          "removed": "— прыбрана сувязь «Кланіраваны»: <value/>."
         },
         "clones": {
-          "added": "дадаў(-ла) сувязь «Кланіруе»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Кланіруе»: <value/>."
+          "added": "— дададзена сувязь «Кланіруе»: <value/>.",
+          "removed": "— прыбрана сувязь «Кланіруе»: <value/>."
         },
         "duplicate": {
-          "added": "пазначыў(-ла) гэты працоўны элемент як дублікат элемента <value/>.",
-          "removed": "прыбраў(-ла) пазнаку дубліката элемента <value/> з гэтага працоўнага элемента."
+          "added": "— гэты працоўны элемент пазначаны як дублікат элемента <value/>.",
+          "removed": "— прыбрана пазнака дублікату элемента <value/> з гэтага працоўнага элемента."
         },
         "finish_after": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент завяршаецца пасля <value/>.",
-          "removed": "прыбраў(-ла) сувязь «завяршаецца пасля» з <value/>."
+          "added": "— пазначана, што гэты працоўны элемент завяршаецца пасля <value/>.",
+          "removed": "— прыбрана сувязь «завяршаецца пасля» з <value/>."
         },
         "finish_after_start": {
-          "added": "дадаў(-ла) сувязь «Завяршаецца пасля пачатку»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Завяршаецца пасля пачатку»: <value/>."
+          "added": "— дададзена сувязь «Завяршаецца пасля пачатку»: <value/>.",
+          "removed": "— прыбрана сувязь «Завяршаецца пасля пачатку»: <value/>."
         },
         "finish_before": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент завяршаецца перад <value/>.",
-          "removed": "прыбраў(-ла) сувязь «завяршаецца перад» з <value/>."
+          "added": "— пазначана, што гэты працоўны элемент завяршаецца перад <value/>.",
+          "removed": "— прыбрана сувязь «завяршаецца перад» з <value/>."
         },
         "implemented_by": {
-          "added": "дадаў(-ла) сувязь «Рэалізуецца»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Рэалізуецца»: <value/>."
+          "added": "— дададзена сувязь «Рэалізуецца»: <value/>.",
+          "removed": "— прыбрана сувязь «Рэалізуецца»: <value/>."
         },
         "implements": {
-          "added": "дадаў(-ла) сувязь «Рэалізуе»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Рэалізуе»: <value/>."
+          "added": "— дададзена сувязь «Рэалізуе»: <value/>.",
+          "removed": "— прыбрана сувязь «Рэалізуе»: <value/>."
         },
         "relates_to": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент звязаны з <value/>.",
-          "removed": "прыбраў(-ла) сувязь з <value/>."
+          "added": "— пазначана, што гэты працоўны элемент звязаны з <value/>.",
+          "removed": "— прыбрана сувязь з <value/>."
         },
         "start_after": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент пачынаецца пасля <value/>.",
-          "removed": "прыбраў(-ла) сувязь «пачынаецца пасля» з <value/>."
+          "added": "— пазначана, што гэты працоўны элемент пачынаецца пасля <value/>.",
+          "removed": "— прыбрана сувязь «пачынаецца пасля» з <value/>."
         },
         "start_before": {
-          "added": "пазначыў(-ла), што гэты працоўны элемент пачынаецца перад <value/>.",
-          "removed": "прыбраў(-ла) сувязь «пачынаецца перад» з <value/>."
+          "added": "— пазначана, што гэты працоўны элемент пачынаецца перад <value/>.",
+          "removed": "— прыбрана сувязь «пачынаецца перад» з <value/>."
         },
         "start_before_finish": {
-          "added": "дадаў(-ла) сувязь «Пачынаецца перад завяршэннем»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Пачынаецца перад завяршэннем»: <value/>."
+          "added": "— дададзена сувязь «Пачынаецца перад завяршэннем»: <value/>.",
+          "removed": "— прыбрана сувязь «Пачынаецца перад завяршэннем»: <value/>."
         },
         "tested_by": {
-          "added": "дадаў(-ла) сувязь «Тэстуецца»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Тэстуецца»: <value/>."
+          "added": "— дададзена сувязь «Тэстуецца»: <value/>.",
+          "removed": "— прыбрана сувязь «Тэстуецца»: <value/>."
         },
         "tests": {
-          "added": "дадаў(-ла) сувязь «Тэстуе»: <value/>.",
-          "removed": "прыбраў(-ла) сувязь «Тэстуе»: <value/>."
+          "added": "— дададзена сувязь «Тэстуе»: <value/>.",
+          "removed": "— прыбрана сувязь «Тэстуе»: <value/>."
         }
       },
-      "restored": "аднавіў(-ла) працоўны элемент.",
+      "restored": "— адноўлены працоўны элемент.",
       "start_date": {
-        "removed": "прыбраў(-ла) дату пачатку.",
-        "removed_with_issue": "прыбраў(-ла) дату пачатку з <issue/>.",
-        "set": "задаў(-ла) дату пачатку <value/>.",
-        "set_with_issue": "задаў(-ла) дату пачатку <value/> для <issue/>."
+        "removed": "— прыбрана дата пачатку.",
+        "removed_with_issue": "— прыбрана дата пачатку з <issue/>.",
+        "set": "— дата пачатку: <value/>.",
+        "set_with_issue": "— дата пачатку для <issue/>: <value/>."
       },
       "state": {
-        "set": "задаў(-ла) стан <value/>.",
-        "set_with_issue": "задаў(-ла) стан <value/> для <issue/>."
+        "set": "— стан: <value/>.",
+        "set_with_issue": "— стан для <issue/>: <value/>."
       },
       "finish_date": {
-        "removed": "прыбраў(-ла) дату завяршэння.",
-        "removed_with_issue": "прыбраў(-ла) дату завяршэння з <issue/>.",
-        "set": "задаў(-ла) дату завяршэння <value/>.",
-        "set_with_issue": "задаў(-ла) дату завяршэння <value/> для <issue/>."
+        "removed": "— прыбрана дата завяршэння.",
+        "removed_with_issue": "— прыбрана дата завяршэння з <issue/>.",
+        "set": "— дата завяршэння: <value/>.",
+        "set_with_issue": "— дата завяршэння для <issue/>: <value/>."
       },
       "target_date": {
-        "removed": "прыбраў(-ла) тэрмін выканання.",
-        "removed_with_issue": "прыбраў(-ла) тэрмін выканання з <issue/>.",
-        "set": "задаў(-ла) тэрмін выканання <value/>.",
-        "set_with_issue": "задаў(-ла) тэрмін выканання <value/> для <issue/>."
+        "removed": "— прыбраны тэрмін выканання.",
+        "removed_with_issue": "— прыбраны тэрмін выканання з <issue/>.",
+        "set": "— тэрмін выканання: <value/>.",
+        "set_with_issue": "— тэрмін выканання для <issue/>: <value/>."
       }
     },
     "profile": {
       "archived_at": {
-        "archived": "архіваваў(-ла) <issue/>",
-        "restored": "аднавіў(-ла) <issue/>"
+        "archived": "— архівацыя: <issue/>",
+        "restored": "— аднаўленне: <issue/>"
       },
       "assignee": {
-        "added_with_issue": "дадаў(-ла) новага прызначанага <assignee/> да <issue/>",
-        "added_without_issue": "дадаў(-ла) новага прызначанага <assignee/>",
-        "removed_with_issue": "прыбраў(-ла) прызначанага <assignee/> з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) прызначанага <assignee/>"
+        "added_with_issue": "— дададзены новы прызначаны <assignee/> у <issue/>",
+        "added_without_issue": "— дададзены новы прызначаны <assignee/>",
+        "removed_with_issue": "— прыбраны прызначаны <assignee/> з <issue/>",
+        "removed_without_issue": "— прыбраны прызначаны <assignee/>"
       },
       "attachment": {
-        "added_with_issue": "загрузіў(-ла) новае далучэнне да <issue/>",
-        "added_without_issue": "загрузіў(-ла) новае далучэнне",
-        "removed_with_issue": "прыбраў(-ла) далучэнне з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) далучэнне"
+        "added_with_issue": "— загружана новае далучэнне ў <issue/>",
+        "added_without_issue": "— загружана новае далучэнне",
+        "removed_with_issue": "— прыбрана далучэнне з <issue/>",
+        "removed_without_issue": "— прыбрана далучэнне"
       },
       "blocked_by": {
-        "added_with_issue": "пазначыў(-ла), што <issue/> блакуецца элементам <value/>.",
-        "added_without_issue": "пазначыў(-ла), што гэты працоўны элемент блакуецца элементам <value/>.",
-        "removed_with_issue": "прыбраў(-ла) блакаванне <issue/> працоўным элементам <value/>.",
-        "removed_without_issue": "прыбраў(-ла) блакаванне гэтага працоўнага элемента элементам <value/>."
+        "added_with_issue": "— пазначана, што <issue/> блакуецца элементам <value/>.",
+        "added_without_issue": "— пазначана, што гэты працоўны элемент блакуецца элементам <value/>.",
+        "removed_with_issue": "— прыбрана блакаванне <issue/> працоўным элементам <value/>.",
+        "removed_without_issue": "— прыбрана блакаванне гэтага працоўнага элемента элементам <value/>."
       },
       "blocking": {
-        "added_with_issue": "пазначыў(-ла), што <issue/> блакуе працоўны элемент <value/>.",
-        "added_without_issue": "пазначыў(-ла), што гэты працоўны элемент блакуе працоўны элемент <value/>.",
-        "removed": "прыбраў(-ла) блакаванне працоўнага элемента <value/>."
+        "added_with_issue": "— пазначана, што <issue/> блакуе працоўны элемент <value/>.",
+        "added_without_issue": "— пазначана, што гэты працоўны элемент блакуе працоўны элемент <value/>.",
+        "removed": "— прыбрана блакаванне працоўнага элемента <value/>."
       },
       "cycle": {
-        "added_with_issue": "дадаў(-ла) <issue/> <nowrap>у цыкл</nowrap> <value/>",
-        "added_without_issue": "дадаў(-ла) гэты працоўны элемент <nowrap>у цыкл</nowrap> <value/>",
-        "removed": "прыбраў(-ла) <issue/> з цыкла <value/>",
-        "set": "<nowrap>задаў(-ла) цыкл</nowrap> <value/>"
+        "added_with_issue": "— <issue/> дададзена <nowrap>ў цыкл</nowrap> <value/>",
+        "added_without_issue": "— гэты працоўны элемент дададзены <nowrap>ў цыкл</nowrap> <value/>",
+        "removed": "— <issue/> прыбрана з цыкла <value/>",
+        "set": "— <nowrap>цыкл:</nowrap> <value/>"
       },
       "description": {
-        "updated_with_issue": "абнавіў(-ла) апісанне <issue/>",
-        "updated_without_issue": "абнавіў(-ла) апісанне"
+        "updated_with_issue": "— абноўлена апісанне <issue/>",
+        "updated_without_issue": "— абноўлена апісанне"
       },
       "duplicate": {
-        "added_with_issue": "пазначыў(-ла) <issue/> як дублікат <value/>.",
-        "added_without_issue": "пазначыў(-ла) гэты працоўны элемент як дублікат <value/>.",
-        "removed_with_issue": "прыбраў(-ла) пазнаку дубліката <value/> з <issue/>.",
-        "removed_without_issue": "прыбраў(-ла) пазнаку дубліката <value/> з гэтага працоўнага элемента."
+        "added_with_issue": "— <issue/> пазначана як дублікат <value/>.",
+        "added_without_issue": "— гэты працоўны элемент пазначаны як дублікат <value/>.",
+        "removed_with_issue": "— прыбрана пазнака дублікату <value/> з <issue/>.",
+        "removed_without_issue": "— прыбрана пазнака дублікату <value/> з гэтага працоўнага элемента."
       },
       "duration": {
         "days": "{count, plural, one {# дзень} few {# дні} many {# дзён} other {# дня}}",
-        "removed_with_issue": "прыбраў(-ла) працягласць з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) працягласць",
-        "set_with_issue": "задаў(-ла) працягласць <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) працягласць <value/>"
+        "removed_with_issue": "— прыбрана працягласць з <issue/>",
+        "removed_without_issue": "— прыбрана працягласць",
+        "set_with_issue": "— працягласць для <issue/>: <value/>",
+        "set_without_issue": "— працягласць: <value/>"
       },
       "epic": {
-        "converted_to_work_item": "пераўтварыў(-ла) <issue/> у працоўны элемент",
-        "created": "стварыў(-ла) <issue/>",
-        "deleted": "выдаліў(-ла) <issue/>"
+        "converted_to_work_item": "— пераўтварэнне ў працоўны элемент: <issue/>",
+        "created": "— створана: <issue/>",
+        "deleted": "— выдалена: <issue/>"
       },
       "estimate_point": {
-        "removed_with_issue": "прыбраў(-ла) ацэнку з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) ацэнку",
-        "set_with_issue": "задаў(-ла) ацэнку <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) ацэнку <value/>"
+        "removed_with_issue": "— прыбрана ацэнка з <issue/>",
+        "removed_without_issue": "— прыбрана ацэнка",
+        "set_with_issue": "— ацэнка для <issue/>: <value/>",
+        "set_without_issue": "— ацэнка: <value/>"
       },
       "inbox": {
-        "accepted_with_issue": "прыняў(-ла) працоўны элемент <issue/>",
-        "accepted_without_issue": "прыняў(-ла) гэты працоўны элемент з Intake.",
-        "declined_with_issue": "адхіліў(-ла) працоўны элемент <issue/>",
-        "declined_without_issue": "адхіліў(-ла) гэты працоўны элемент з Intake.",
-        "duplicate_with_issue": "адхіліў(-ла) працоўны элемент <issue/> з Intake, пазначыўшы яго як дублікат.",
-        "duplicate_without_issue": "адхіліў(-ла) гэты працоўны элемент з Intake, пазначыўшы яго як дублікат.",
-        "snoozed_with_issue": "адклаў(-ла) працоўны элемент <issue/>",
-        "snoozed_without_issue": "адклаў(-ла) гэты працоўны элемент.",
-        "updated_with_issue": "абнавіў(-ла) статус працоўнага элемента ў Intake. <issue/>",
-        "updated_without_issue": "абнавіў(-ла) статус працоўнага элемента ў Intake."
+        "accepted_with_issue": "— прыняты працоўны элемент <issue/>",
+        "accepted_without_issue": "— гэты працоўны элемент прыняты з Intake.",
+        "declined_with_issue": "— адхілены працоўны элемент <issue/>",
+        "declined_without_issue": "— гэты працоўны элемент адхілены з Intake.",
+        "duplicate_with_issue": "— працоўны элемент <issue/> адхілены з Intake як дублікат.",
+        "duplicate_without_issue": "— гэты працоўны элемент адхілены з Intake як дублікат.",
+        "snoozed_with_issue": "— адкладзены працоўны элемент <issue/>",
+        "snoozed_without_issue": "— гэты працоўны элемент адкладзены.",
+        "updated_with_issue": "— абноўлены статус працоўнага элемента ў Intake. <issue/>",
+        "updated_without_issue": "— абноўлены статус працоўнага элемента ў Intake."
       },
       "issue": {
-        "converted_to_epic": "пераўтварыў(-ла) <issue/> у эпік",
-        "created": "стварыў(-ла) <issue/>",
-        "deleted": "выдаліў(-ла) <issue/>",
+        "converted_to_epic": "— пераўтварэнне <issue/> у эпік",
+        "created": "— створана: <issue/>",
+        "deleted": "— выдалена: <issue/>",
         "deleted_tooltip": "Гэты працоўны элемент выдалены",
         "fallback_name": "працоўны элемент"
       },
       "label": {
-        "added_with_issue": "дадаў(-ла) новую метку <label/> да <issue/>",
-        "added_without_issue": "дадаў(-ла) новую метку <label/>",
-        "removed_with_issue": "прыбраў(-ла) метку <label/> з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) метку <label/>"
+        "added_with_issue": "— дададзена новая метка <label/> да <issue/>",
+        "added_without_issue": "— дададзена новая метка <label/>",
+        "removed_with_issue": "— прыбрана метка <label/> з <issue/>",
+        "removed_without_issue": "— прыбрана метка <label/>"
       },
       "link": {
-        "added_with_issue": "дадаў(-ла) гэтую <link>спасылку</link> да <issue/>",
-        "added_without_issue": "дадаў(-ла) гэтую <link>спасылку</link>",
-        "removed_with_issue": "прыбраў(-ла) гэтую <link>спасылку</link> з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) гэтую <link>спасылку</link>",
-        "updated_with_issue": "абнавіў(-ла) <link>спасылку</link> у <issue/>",
-        "updated_without_issue": "абнавіў(-ла) <link>спасылку</link>"
+        "added_with_issue": "— дададзена гэтая <link>спасылка</link> да <issue/>",
+        "added_without_issue": "— дададзена гэтая <link>спасылка</link>",
+        "removed_with_issue": "— прыбрана гэтая <link>спасылка</link> з <issue/>",
+        "removed_without_issue": "— прыбрана гэтая <link>спасылка</link>",
+        "updated_with_issue": "— абноўлена <link>спасылка</link> у <issue/>",
+        "updated_without_issue": "— абноўлена <link>спасылка</link>"
       },
       "module": {
-        "added_with_issue": "дадаў(-ла) <issue/> у модуль <value/>",
-        "added_without_issue": "дадаў(-ла) гэты працоўны элемент у модуль <value/>",
-        "removed": "прыбраў(-ла) <issue/> з модуля <value/>",
-        "set": "задаў(-ла) модуль <value/>"
+        "added_with_issue": "— дададзена ў модуль <value/>: <issue/>",
+        "added_without_issue": "— гэты працоўны элемент дададзены ў модуль <value/>",
+        "removed": "— прыбрана з модуля <value/>: <issue/>",
+        "set": "— модуль: <value/>"
       },
       "name": {
-        "set_with_issue": "задаў(-ла) назву <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) назву <value/>"
+        "set_with_issue": "— назва для <issue/>: <value/>",
+        "set_without_issue": "— назва: <value/>"
       },
       "parent": {
-        "removed_with_issue": "прыбраў(-ла) бацькоўскі элемент <value/> з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) бацькоўскі элемент <value/>",
-        "set_with_issue": "задаў(-ла) бацькоўскі элемент <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) бацькоўскі элемент <value/>"
+        "removed_with_issue": "— прыбраны бацькоўскі элемент <value/> з <issue/>",
+        "removed_without_issue": "— прыбраны бацькоўскі элемент <value/>",
+        "set_with_issue": "— бацькоўскі элемент для <issue/>: <value/>",
+        "set_without_issue": "— бацькоўскі элемент: <value/>"
       },
       "priority": {
         "high": "Высокі",
         "low": "Нізкі",
         "medium": "Сярэдні",
         "none": "Няма",
-        "set_with_issue": "задаў(-ла) прыярытэт <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) прыярытэт <value/>",
+        "set_with_issue": "— прыярытэт для <issue/>: <value/>",
+        "set_without_issue": "— прыярытэт: <value/>",
         "urgent": "Тэрмінова"
       },
       "relates_to": {
-        "added_with_issue": "пазначыў(-ла), што <issue/> звязаны з <value/>.",
-        "added_without_issue": "пазначыў(-ла), што гэты працоўны элемент звязаны з <value/>.",
-        "removed": "прыбраў(-ла) сувязь з <value/>."
+        "added_with_issue": "— пазначана, што <issue/> звязаны з <value/>.",
+        "added_without_issue": "— пазначана, што гэты працоўны элемент звязаны з <value/>.",
+        "removed": "— прыбрана сувязь з <value/>."
       },
       "start_date": {
-        "removed_with_issue": "прыбраў(-ла) дату пачатку з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) дату пачатку",
-        "set_with_issue": "задаў(-ла) дату пачатку <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) дату пачатку <value/>"
+        "removed_with_issue": "— прыбраная дата пачатку з <issue/>",
+        "removed_without_issue": "— прыбраная дата пачатку",
+        "set_with_issue": "— дата пачатку для <issue/>: <value/>",
+        "set_without_issue": "— дата пачатку: <value/>"
       },
       "state": {
-        "set_with_issue": "задаў(-ла) стан <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) стан <value/>"
+        "set_with_issue": "— стан для <issue/>: <value/>",
+        "set_without_issue": "— стан: <value/>"
       },
       "finish_date": {
-        "removed_with_issue": "прыбраў(-ла) дату завяршэння з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) дату завяршэння",
-        "set_with_issue": "задаў(-ла) дату завяршэння <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) дату завяршэння <value/>"
+        "removed_with_issue": "— прыбраная дата завяршэння з <issue/>",
+        "removed_without_issue": "— прыбраная дата завяршэння",
+        "set_with_issue": "— дата завяршэння для <issue/>: <value/>",
+        "set_without_issue": "— дата завяршэння: <value/>"
       },
       "target_date": {
-        "removed_with_issue": "прыбраў(-ла) тэрмін выканання з <issue/>",
-        "removed_without_issue": "прыбраў(-ла) тэрмін выканання",
-        "set_with_issue": "задаў(-ла) тэрмін выканання <value/> для <issue/>",
-        "set_without_issue": "задаў(-ла) тэрмін выканання <value/>"
+        "removed_with_issue": "— прыбраны тэрмін выканання з <issue/>",
+        "removed_without_issue": "— прыбраны тэрмін выканання",
+        "set_with_issue": "— тэрмін выканання для <issue/>: <value/>",
+        "set_without_issue": "— тэрмін выканання: <value/>"
       },
       "actor_separator": " ",
       "commented_ago": "Пракаментавана {timeAgo}"
     },
     "project": {
       "archived_at": {
-        "archived": "архіваваў(-ла) праект",
-        "restored": "аднавіў(-ла) праект"
+        "archived": "— праект архіваваны",
+        "restored": "— праект адноўлены"
       },
       "cycle_view": {
-        "disabled": "адключыў(-ла) прагляд цыклаў",
-        "enabled": "уключыў(-ла) прагляд цыклаў",
-        "fallback": "абнавіў(-ла) прагляд цыклаў"
+        "disabled": "— адключаны прагляд цыклаў",
+        "enabled": "— уключаны прагляд цыклаў",
+        "fallback": "— абноўлены прагляд цыклаў"
       },
       "cycles": {
-        "added": "дадаў(-ла) гэты праект у цыкл <value/>",
-        "removed": "прыбраў(-ла) гэты праект з цыкла <value/>",
+        "added": "— гэты праект дададзены ў цыкл <value/>",
+        "removed": "— гэты праект прыбраны з цыкла <value/>",
         "unknown": "Невядомы цыкл"
       },
-      "default": "абнавіў(-ла) налады праекта",
+      "default": "— абноўленыя налады праекта",
       "description": {
-        "removed": "прыбраў(-ла) апісанне праекта",
-        "updated": "абнавіў(-ла) апісанне праекта"
+        "removed": "— прыбранае апісанне праекта",
+        "updated": "— абноўленае апісанне праекта"
       },
       "estimate": {
-        "removed": "прыбраў(-ла) ацэнку",
-        "removed_with_value": "прыбраў(-ла) ацэнку <value/>",
-        "set": "задаў(-ла) ацэнку <value/>"
+        "removed": "— прыбраная ацэнка",
+        "removed_with_value": "— прыбраная ацэнка <value/>",
+        "set": "— ацэнка: <value/>"
       },
       "identifier": {
-        "updated": "абнавіў(-ла) ідэнтыфікатар праекта на <value/>"
+        "updated": "— абноўлены ідэнтыфікатар праекта: <value/>"
       },
       "inbox": {
-        "disabled": "адключыў(-ла) уваходныя",
-        "enabled": "уключыў(-ла) уваходныя"
+        "disabled": "— адключаныя ўваходныя",
+        "enabled": "— уключаныя ўваходныя"
       },
       "intake_view": {
-        "disabled": "адключыў(-ла) прагляд Intake",
-        "enabled": "уключыў(-ла) прагляд Intake",
-        "fallback": "абнавіў(-ла) прагляд Intake"
+        "disabled": "— адключаны прагляд Intake",
+        "enabled": "— уключаны прагляд Intake",
+        "fallback": "— абноўлены прагляд Intake"
       },
       "is_assignee_edit_rule_enabled": {
-        "disabled": "адключыў(-ла) правіла рэдагавання прызначаным",
-        "enabled": "уключыў(-ла) правіла рэдагавання прызначаным",
-        "fallback": "абнавіў(-ла) правіла рэдагавання прызначаным"
+        "disabled": "— адключанае правіла рэдагавання прызначаным",
+        "enabled": "— уключанае правіла рэдагавання прызначаным",
+        "fallback": "— абноўленае правіла рэдагавання прызначаным"
       },
       "is_blocked_status_rule_enabled": {
-        "disabled": "адключыў(-ла) правіла статусу блакавання",
-        "enabled": "уключыў(-ла) правіла статусу блакавання",
-        "fallback": "абнавіў(-ла) правіла статусу блакавання"
+        "disabled": "— адключанае правіла статусу блакавання",
+        "enabled": "— уключанае правіла статусу блакавання",
+        "fallback": "— абноўленае правіла статусу блакавання"
       },
       "is_epic_enabled": {
-        "disabled": "адключыў(-ла) эпікі",
-        "enabled": "уключыў(-ла) эпікі",
-        "fallback": "абнавіў(-ла) эпікі"
+        "disabled": "— адключаныя эпікі",
+        "enabled": "— уключаныя эпікі",
+        "fallback": "— абноўленыя эпікі"
       },
       "is_issue_type_enabled": {
-        "disabled": "адключыў(-ла) тыпы працоўных элементаў",
-        "enabled": "уключыў(-ла) тыпы працоўных элементаў",
-        "fallback": "абнавіў(-ла) тыпы працоўных элементаў"
+        "disabled": "— адключаныя тыпы працоўных элементаў",
+        "enabled": "— уключаныя тыпы працоўных элементаў",
+        "fallback": "— абноўленыя тыпы працоўных элементаў"
       },
       "is_parent_completion_rule_enabled": {
-        "disabled": "адключыў(-ла) правіла завяршэння бацькоўскага элемента",
-        "enabled": "уключыў(-ла) правіла завяршэння бацькоўскага элемента",
-        "fallback": "абнавіў(-ла) правіла завяршэння бацькоўскага элемента"
+        "disabled": "— адключанае правіла завяршэння бацькоўскага элемента",
+        "enabled": "— уключанае правіла завяршэння бацькоўскага элемента",
+        "fallback": "— абноўленае правіла завяршэння бацькоўскага элемента"
       },
       "is_project_updates_enabled": {
-        "disabled": "адключыў(-ла) абнаўленні праекта",
-        "enabled": "уключыў(-ла) абнаўленні праекта",
-        "fallback": "абнавіў(-ла) абнаўленні праекта"
+        "disabled": "— адключаныя абнаўленні праекта",
+        "enabled": "— уключаныя абнаўленні праекта",
+        "fallback": "— змененыя абнаўленні праекта"
       },
       "is_relation_duplicate_enabled": {
-        "disabled": "адключыў(-ла) сувязь «Дублікат»",
-        "enabled": "уключыў(-ла) сувязь «Дублікат»",
-        "fallback": "абнавіў(-ла) сувязь «Дублікат»"
+        "disabled": "— адключаная сувязь «Дублікат»",
+        "enabled": "— уключаная сувязь «Дублікат»",
+        "fallback": "— абноўленая сувязь «Дублікат»"
       },
       "is_relation_relates_to_enabled": {
-        "disabled": "адключыў(-ла) сувязь «Звязаны з»",
-        "enabled": "уключыў(-ла) сувязь «Звязаны з»",
-        "fallback": "абнавіў(-ла) сувязь «Звязаны з»"
+        "disabled": "— адключаная сувязь «Звязаны з»",
+        "enabled": "— уключаная сувязь «Звязаны з»",
+        "fallback": "— абноўленая сувязь «Звязаны з»"
       },
       "is_relation_schedule_enabled": {
-        "disabled": "адключыў(-ла) залежнасці раскладу",
-        "enabled": "уключыў(-ла) залежнасці раскладу",
-        "fallback": "абнавіў(-ла) залежнасці раскладу"
+        "disabled": "— адключаныя залежнасці раскладу",
+        "enabled": "— уключаныя залежнасці раскладу",
+        "fallback": "— абноўленыя залежнасці раскладу"
       },
       "is_relation_traceability_enabled": {
-        "disabled": "адключыў(-ла) сувязі адсочвання",
-        "enabled": "уключыў(-ла) сувязі адсочвання",
-        "fallback": "абнавіў(-ла) сувязі адсочвання"
+        "disabled": "— адключаныя сувязі адсочвання",
+        "enabled": "— уключаныя сувязі адсочвання",
+        "fallback": "— абноўленыя сувязі адсочвання"
       },
       "is_time_tracking_enabled": {
-        "disabled": "адключыў(-ла) ўлік часу",
-        "enabled": "уключыў(-ла) ўлік часу",
-        "fallback": "абнавіў(-ла) ўлік часу"
+        "disabled": "— адключаны ўлік часу",
+        "enabled": "— уключаны ўлік часу",
+        "fallback": "— абноўлены ўлік часу"
       },
       "is_workflow_enabled": {
-        "disabled": "адключыў(-ла) індывідуальны працоўны працэс",
-        "enabled": "уключыў(-ла) індывідуальны працоўны працэс",
-        "fallback": "абнавіў(-ла) індывідуальны працоўны працэс"
+        "disabled": "— адключаны індывідуальны працоўны працэс",
+        "enabled": "— уключаны індывідуальны працоўны працэс",
+        "fallback": "— абноўлены індывідуальны працоўны працэс"
       },
       "issue_views_view": {
-        "disabled": "адключыў(-ла) прагляды працоўных элементаў",
-        "enabled": "уключыў(-ла) прагляды працоўных элементаў",
-        "fallback": "абнавіў(-ла) прагляды працоўных элементаў"
+        "disabled": "— адключаныя прагляды працоўных элементаў",
+        "enabled": "— уключаныя прагляды працоўных элементаў",
+        "fallback": "— абноўленыя прагляды працоўных элементаў"
       },
       "labels": {
-        "added": "дадаў(-ла) метку <value/>",
-        "created": "стварыў(-ла) метку <value/>",
-        "deleted": "выдаліў(-ла) метку <value/>",
-        "removed": "прыбраў(-ла) метку <value/>",
+        "added": "— дададзеная метка <value/>",
+        "created": "— створаная метка <value/>",
+        "deleted": "— выдаленая метка <value/>",
+        "removed": "— прыбраная метка <value/>",
         "untitled": "Метка без назвы",
-        "updated": "абнавіў(-ла) метку <value/>"
+        "updated": "— абноўленая метка <value/>"
       },
       "module_view": {
-        "disabled": "адключыў(-ла) прагляд модуляў",
-        "enabled": "уключыў(-ла) прагляд модуляў",
-        "fallback": "абнавіў(-ла) прагляд модуляў"
+        "disabled": "— адключаны прагляд модуляў",
+        "enabled": "— уключаны прагляд модуляў",
+        "fallback": "— абноўлены прагляд модуляў"
       },
       "modules": {
-        "added": "дадаў(-ла) гэты праект у модуль <value/>",
-        "removed": "прыбраў(-ла) гэты праект з модуля <value/>",
+        "added": "— гэты праект дададзены ў модуль <value/>",
+        "removed": "— гэты праект прыбраны з модуля <value/>",
         "unknown": "Невядомы модуль"
       },
       "name": {
-        "renamed": "перайменаваў(-ла) праект у <value/>"
+        "renamed": "— новая назва праекта: <value/>"
       },
       "network": {
-        "disabled": "адключыў(-ла) сеткавы доступ",
-        "enabled": "уключыў(-ла) сеткавы доступ"
+        "disabled": "— адключаны сеткавы доступ",
+        "enabled": "— уключаны сеткавы доступ"
       },
       "page": {
-        "created": "стварыў(-ла) старонку праекта <value/>",
-        "removed": "прыбраў(-ла) старонку праекта <value/>",
+        "created": "— створаная старонка праекта <value/>",
+        "removed": "— прыбраная старонка праекта <value/>",
         "untitled": "Старонка без назвы"
       },
       "page_view": {
-        "disabled": "адключыў(-ла) прагляд старонак",
-        "enabled": "уключыў(-ла) прагляд старонак",
-        "fallback": "абнавіў(-ла) прагляд старонак"
+        "disabled": "— адключаны прагляд старонак",
+        "enabled": "— уключаны прагляд старонак",
+        "fallback": "— абноўлены прагляд старонак"
       },
       "priority": {
-        "set": "задаў(-ла) прыярытэт <value/>"
+        "set": "— прыярытэт: <value/>"
       },
       "start_date": {
-        "removed": "прыбраў(-ла) дату пачатку",
-        "set": "задаў(-ла) дату пачатку <value/>"
+        "removed": "— прыбраная дата пачатку",
+        "set": "— дата пачатку: <value/>"
       },
       "state": {
-        "set": "задаў(-ла) стан <value/>"
+        "set": "— стан: <value/>"
       },
       "target_date": {
-        "removed": "прыбраў(-ла) тэрмін выканання",
-        "set": "задаў(-ла) тэрмін выканання <value/>"
+        "removed": "— прыбраны тэрмін выканання",
+        "set": "— тэрмін выканання: <value/>"
       },
       "timezone": {
-        "changed": "змяніў(-ла) часавы пояс праекта на <value/>",
+        "changed": "— часавы пояс праекта: <value/>",
         "default": "па змаўчанні"
       },
       "value_none": "няма"
@@ -1110,8 +1110,8 @@
     "delete_description": "Вы ўпэўнены, што хочаце выдаліць гэты запіс часу? Гэта дзеянне нельга адрабіць.",
     "edit_entry": "Рэдагаваць запіс часу",
     "delete_entry": "Выдаліць запіс часу",
-    "logged": "зафіксаваў(-ла) <value>{duration}</value>",
-    "updated": "змяніў(-ла) зафіксаваны час з <old>{from}</old> на <new>{to}</new>",
-    "removed": "прыбраў(-ла) зафіксаваны час <value>{duration}</value>"
+    "logged": "— зафіксаваны час: <value>{duration}</value>",
+    "updated": "— зафіксаваны час зменены з <old>{from}</old> на <new>{to}</new>",
+    "removed": "— прыбраны зафіксаваны час <value>{duration}</value>"
   }
 }
