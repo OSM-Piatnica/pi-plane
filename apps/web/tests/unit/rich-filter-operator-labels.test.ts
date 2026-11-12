@@ -40,7 +40,7 @@ describe("operator labels", () => {
   });
 
   it("exist in every locale", () => {
-    for (const locale of ["bg", "de", "fr", "pl", "ru", "ua", "ja", "zh-CN", "pl-x-podlaski"]) {
+    for (const locale of ["be", "bg", "de", "fr", "pl", "ru", "ua", "ja", "zh-CN", "pl-x-podlaski"]) {
       const translated = JSON.parse(readFileSync(resolve(locales, locale, "project.json"), "utf8")).project_components
         .rich_filters.operators as Record<string, string>;
       expect(Object.keys(translated).toSorted(), locale).toEqual(Object.keys(operators).toSorted());

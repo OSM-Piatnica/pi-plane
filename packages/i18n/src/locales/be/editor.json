@@ -1,0 +1,65 @@
+{
+  "attachmentComponent": {
+    "uploader": {
+      "drag_and_drop": "Перацягніце файлы сюды або націсніце, каб загрузіць"
+    },
+    "errors": {
+      "file_too_large": {
+        "title": "Файл занадта вялікі.",
+        "description": "Максімальны памер аднаго файла — {maxFileSize} МБ"
+      },
+      "unsupported_file_type": {
+        "title": "Тып файла не падтрымліваецца.",
+        "description": "Глядзіце падтрымліваныя фарматы"
+      },
+      "default": {
+        "title": "Не ўдалося загрузіць.",
+        "description": "Нешта пайшло не так. Паспрабуйце яшчэ раз."
+      }
+    },
+    "upgrade": {
+      "description": "Палепшыце свой план, каб праглядзець гэта далучэнне."
+    },
+    "aria": {
+      "click_to_upload": "Націсніце, каб загрузіць далучэнне"
+    }
+  },
+  "externalEmbedComponent": {
+    "block_menu": {
+      "convert_to_embed": "Пераўтварыць у убудаваны змест",
+      "convert_to_link": "Пераўтварыць у спасылку",
+      "convert_to_richcard": "Пераўтварыць у пашыраную картку"
+    },
+    "placeholder": {
+      "insert_embed": "Устаўце сюды спасылку на змест для ўбудавання, напрыклад відэа з YouTube, дызайн з Figma і г. д.",
+      "link": "Увядзіце або ўстаўце спасылку"
+    },
+    "input_modal": {
+      "embed": "Убудаваць",
+      "works_with_links": "Працуе са спасылкамі YouTube, Figma, Google Docs і іншымі"
+    },
+    "error": {
+      "not_valid_link": "Увядзіце сапраўдны URL."
+    }
+  },
+  "ai_block": {
+    "content": {
+      "placeholder": "Апішыце змест гэтага блока",
+      "generated_here": "Ваш AI-змест будзе створаны тут"
+    },
+    "block_types": {
+      "placeholder": "Выберыце тып блока",
+      "summarize_page": "Падсумаваць старонку",
+      "custom_prompt": "Уласны запыт"
+    },
+    "actions": {
+      "discard": "Адхіліць",
+      "generate": "Стварыць",
+      "generating": "Ствараецца",
+      "rewriting": "Перапісваецца",
+      "rewrite": "Перапісаць",
+      "use_this": "Выкарыстаць",
+      "refine": "Удакладніць"
+    }
+  }
+}

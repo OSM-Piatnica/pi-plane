@@ -1,0 +1,50 @@
+{
+  "aria_labels": {
+    "projects_sidebar": {
+      "workspace_logo": "Лагатып працоўнай прасторы",
+      "open_workspace_switcher": "Адкрыць пераключальнік працоўных прастор",
+      "open_user_menu": "Адкрыць меню карыстальніка",
+      "open_command_palette": "Адкрыць палітру каманд",
+      "open_extended_sidebar": "Адкрыць пашыраную бакавую панэль",
+      "close_extended_sidebar": "Закрыць пашыраную бакавую панэль",
+      "open_workspace_menu": "Адкрыць меню працоўнай прасторы",
+      "close_workspace_menu": "Закрыць меню працоўнай прасторы",
+      "create_favorites_folder": "Стварыць папку абранага",
+      "open_folder": "Адкрыць папку",
+      "close_folder": "Закрыць папку",
+      "open_favorites_menu": "Адкрыць меню абранага",
+      "close_favorites_menu": "Закрыць меню абранага",
+      "enter_folder_name": "Увядзіце назву папкі",
+      "create_new_project": "Стварыць новы праект",
+      "open_projects_menu": "Адкрыць меню праектаў",
+      "close_projects_menu": "Закрыць меню праектаў",
+      "toggle_quick_actions_menu": "Пераключыць меню хуткіх дзеянняў",
+      "open_project_menu": "Адкрыць меню праекта",
+      "close_project_menu": "Закрыць меню праекта",
+      "collapse_sidebar": "Згарнуць бакавую панэль",
+      "expand_sidebar": "Разгарнуць бакавую панэль",
+      "edition_badge": "Адкрыць акно платных планаў"
+    },
+    "auth_forms": {
+      "clear_email": "Ачысціць адрас электроннай пошты",
+      "show_password": "Паказаць пароль",
+      "hide_password": "Схаваць пароль",
+      "close_alert": "Закрыць апавяшчэнне",
+      "close_popover": "Закрыць усплывальнае акно"
+    },
+    "breadcrumb": {
+      "trail": "Навігацыйны шлях",
+      "show_more": "Паказаць больш элементаў шляху"
+    },
+    "common": {
+      "more_actions": "Іншыя дзеянні",
+      "resize_column": "Змяніць шырыню слупка",
+      "remove": "Прыбраць"
+    },
+    "color_picker": {
+      "open": "Адкрыць выбар колеру",
+      "swatches": "Гатовыя колеры",
+      "hex_input": "Колер у фармаце hex"
+    }
+  }
+}

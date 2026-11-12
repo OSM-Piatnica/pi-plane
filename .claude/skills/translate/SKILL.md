@@ -49,18 +49,18 @@ For each term: the source, the required rendering per script group, and **forbid
 
 > **Pi-Plane fork:** the product brand shown to users is **Pi-Plane**, not Plane. Wherever the table below says "Plane", write "Pi-Plane" (Latin script in every locale, never transliterated). Feature names such as Plane AI, Plane Pro and Plane Runner keep their upstream names.
 
-| Source term                        | Latin locales (fr, es, it, de, pt-BR, pl, cs, sk, ro, tr-TR, vi-VN, id) | ja (katakana-default) | ko (Hangul-default) | zh-CN / zh-TW                                 | ru                | ua                | **Forbidden** (never produce)                                                     |
-| ---------------------------------- | ----------------------------------------------------------------------- | --------------------- | ------------------- | --------------------------------------------- | ----------------- | ----------------- | --------------------------------------------------------------------------------- |
-| **Plane**                          | Plane                                                                   | Plane                 | Plane               | Plane                                         | Plane             | Plane             | 飛行機, 飞机, 비행기, Самолёт, Літак, Avion, Avião, Aereo, Flugzeug               |
-| **Plane AI** (formerly PI Chat)    | Plane AI                                                                | Plane AI              | Plane AI            | Plane AI                                      | Plane AI          | Plane AI          | Чат ИИ, AI 聊天, AIチャット, AI 채팅, Chat IA, AI Çet, PI Chat (legacy)           |
-| **Power K**                        | Power K                                                                 | Power K               | Power K             | Power K                                       | Power K           | Power K           | Command K, Command Palette, コマンドパレット, 命令面板, Палитра команд            |
-| **PQL**                            | PQL                                                                     | PQL                   | PQL                 | PQL                                           | PQL               | PQL               | any expansion of the acronym into the target language                             |
-| **Intake** (feature name)          | Intake                                                                  | Intake                | Intake              | Intake                                        | Intake            | Intake            | Inbox, 受信箱, 收件箱, Входящие, Triage, Boîte de réception                       |
-| **Active Cycles** (workspace view) | Active Cycles                                                           | Active Cycles         | Active Cycles       | Active Cycles                                 | Active Cycles     | Active Cycles     | Translate as a unit; never split into generic "active" + localized "cycles"       |
-| **Sticky** / **Stickies**          | Sticky / Stickies                                                       | Sticky / Stickies     | Sticky / Stickies   | Sticky / Stickies (Latin inside Chinese text) | Sticky / Stickies | Sticky / Stickies | 便签, 便利貼, メモ, 付箋, スティッキー, 메모, 스티키, заметка, Стикер, Note, Nota |
-| **Pro** (plan tier)                | Pro                                                                     | Pro                   | Pro                 | Pro                                           | Pro               | Pro               | Профессиональный, プロフェッショナル, 专业版, 專業版, Profesional                 |
-| **Business** (plan tier)           | Business                                                                | Business              | Business            | Business                                      | Business          | Business          | Бизнес, ビジネス, 商业版, 商務版, Negocios, Negócios                              |
-| **Enterprise** (plan tier)         | Enterprise                                                              | Enterprise            | Enterprise          | Enterprise                                    | Enterprise        | Enterprise        | Корпоративный, エンタープライズ, 企业版, 企業版, Empresarial                      |
+| Source term                        | Latin locales (fr, es, it, de, pt-BR, pl, cs, sk, ro, tr-TR, vi-VN, id) | ja (katakana-default) | ko (Hangul-default) | zh-CN / zh-TW                                 | ru                | ua                | be                | **Forbidden** (never produce)                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------- | --------------------- | ------------------- | --------------------------------------------- | ----------------- | ----------------- | ----------------- | --------------------------------------------------------------------------------- |
+| **Plane**                          | Plane                                                                   | Plane                 | Plane               | Plane                                         | Plane             | Plane             | Plane             | 飛行機, 飞机, 비행기, Самолёт, Літак, Avion, Avião, Aereo, Flugzeug               |
+| **Plane AI** (formerly PI Chat)    | Plane AI                                                                | Plane AI              | Plane AI            | Plane AI                                      | Plane AI          | Plane AI          | Plane AI          | Чат ИИ, AI 聊天, AIチャット, AI 채팅, Chat IA, AI Çet, PI Chat (legacy)           |
+| **Power K**                        | Power K                                                                 | Power K               | Power K             | Power K                                       | Power K           | Power K           | Power K           | Command K, Command Palette, コマンドパレット, 命令面板, Палитра команд            |
+| **PQL**                            | PQL                                                                     | PQL                   | PQL                 | PQL                                           | PQL               | PQL               | PQL               | any expansion of the acronym into the target language                             |
+| **Intake** (feature name)          | Intake                                                                  | Intake                | Intake              | Intake                                        | Intake            | Intake            | Intake            | Inbox, 受信箱, 收件箱, Входящие, Triage, Boîte de réception                       |
+| **Active Cycles** (workspace view) | Active Cycles                                                           | Active Cycles         | Active Cycles       | Active Cycles                                 | Active Cycles     | Active Cycles     | Active Cycles     | Translate as a unit; never split into generic "active" + localized "cycles"       |
+| **Sticky** / **Stickies**          | Sticky / Stickies                                                       | Sticky / Stickies     | Sticky / Stickies   | Sticky / Stickies (Latin inside Chinese text) | Sticky / Stickies | Sticky / Stickies | Sticky / Stickies | 便签, 便利貼, メモ, 付箋, スティッキー, 메모, 스티키, заметка, Стикер, Note, Nota |
+| **Pro** (plan tier)                | Pro                                                                     | Pro                   | Pro                 | Pro                                           | Pro               | Pro               | Pro               | Профессиональный, プロフェッショナル, 专业版, 專業版, Profesional                 |
+| **Business** (plan tier)           | Business                                                                | Business              | Business            | Business                                      | Business          | Business          | Business          | Бизнес, ビジネス, 商业版, 商務版, Negocios, Negócios                              |
+| **Enterprise** (plan tier)         | Enterprise                                                              | Enterprise            | Enterprise          | Enterprise                                    | Enterprise        | Enterprise        | Enterprise        | Корпоративный, エンタープライズ, 企业版, 企業版, Empresarial                      |
 
 **German exception (Sticky / Stickies):** in `de` these are translated as **Haftnotiz** (singular) and **Haftnotizen** (plural), everywhere the sticky feature is named: sidebar, sticky page, toasts, empty states, access scopes. The Latin "Sticky" is not used in German. Do not use plain "Notiz" for stickies; "Notiz" stays a generic word for a note. All other locales keep Sticky / Stickies Latin.
 
@@ -70,16 +70,16 @@ These are common nouns. **Translate them into the target language** using the ca
 
 Use the table verbatim — never coin new variants; never leave the Latin form in the locale value.
 
-| Source      | zh-CN | zh-TW | ja         | ko     | ru       | ua       | de     | fr      | es      | it     | pt-BR   | pl     | cs      | sk      | ro      | tr-TR    | vi-VN  | id      |
-| ----------- | ----- | ----- | ---------- | ------ | -------- | -------- | ------ | ------- | ------- | ------ | ------- | ------ | ------- | ------- | ------- | -------- | ------ | ------- |
-| **Cycle**   | 周期  | 週期  | サイクル   | 사이클 | Цикл     | Цикл     | Zyklus | Cycle   | Ciclo   | Ciclo  | Ciclo   | Cykl   | Cyklus  | Cyklus  | Ciclu   | Döngü    | Chu kỳ | Siklus  |
-| **Cycles**  | 周期  | 週期  | サイクル   | 사이클 | Циклы    | Цикли    | Zyklen | Cycles  | Ciclos  | Cicli  | Ciclos  | Cykle  | Cykly   | Cykly   | Cicluri | Döngüler | Chu kỳ | Siklus  |
-| **Module**  | 模块  | 模組  | モジュール | 모듈   | Модуль   | Модуль   | Modul  | Module  | Módulo  | Modulo | Módulo  | Moduł  | Modul   | Modul   | Modul   | Modül    | Mô-đun | Modul   |
-| **Modules** | 模块  | 模組  | モジュール | 모듈   | Модули   | Модулі   | Module | Modules | Módulos | Moduli | Módulos | Moduły | Moduly  | Moduly  | Module  | Modüller | Mô-đun | Modul   |
-| **Epic**    | 史诗  | 史詩  | エピック   | 에픽   | Эпик     | Епік     | Epic   | Epic    | Epic    | Epic   | Epic    | Epik   | Epik    | Epik    | Epic    | Epik     | Epic   | Epik    |
-| **Epics**   | 史诗  | 史詩  | エピック   | 에픽   | Эпики    | Епіки    | Epics  | Epics   | Epics   | Epics  | Epics   | Epiki  | Epiky   | Epiky   | Epice   | Epikler  | Epic   | Epik    |
-| **Page**    | 页面  | 頁面  | ページ     | 페이지 | Страница | Сторінка | Seite  | Page    | Página  | Pagina | Página  | Strona | Stránka | Stránka | Pagină  | Sayfa    | Trang  | Halaman |
-| **Pages**   | 页面  | 頁面  | ページ     | 페이지 | Страницы | Сторінки | Seiten | Pages   | Páginas | Pagine | Páginas | Strony | Stránky | Stránky | Pagini  | Sayfalar | Trang  | Halaman |
+| Source      | zh-CN | zh-TW | ja         | ko     | ru       | ua       | be       | de     | fr      | es      | it     | pt-BR   | pl     | cs      | sk      | ro      | tr-TR    | vi-VN  | id      |
+| ----------- | ----- | ----- | ---------- | ------ | -------- | -------- | -------- | ------ | ------- | ------- | ------ | ------- | ------ | ------- | ------- | ------- | -------- | ------ | ------- |
+| **Cycle**   | 周期  | 週期  | サイクル   | 사이클 | Цикл     | Цикл     | Цыкл     | Zyklus | Cycle   | Ciclo   | Ciclo  | Ciclo   | Cykl   | Cyklus  | Cyklus  | Ciclu   | Döngü    | Chu kỳ | Siklus  |
+| **Cycles**  | 周期  | 週期  | サイクル   | 사이클 | Циклы    | Цикли    | Цыклы    | Zyklen | Cycles  | Ciclos  | Cicli  | Ciclos  | Cykle  | Cykly   | Cykly   | Cicluri | Döngüler | Chu kỳ | Siklus  |
+| **Module**  | 模块  | 模組  | モジュール | 모듈   | Модуль   | Модуль   | Модуль   | Modul  | Module  | Módulo  | Modulo | Módulo  | Moduł  | Modul   | Modul   | Modul   | Modül    | Mô-đun | Modul   |
+| **Modules** | 模块  | 模組  | モジュール | 모듈   | Модули   | Модулі   | Модулі   | Module | Modules | Módulos | Moduli | Módulos | Moduły | Moduly  | Moduly  | Module  | Modüller | Mô-đun | Modul   |
+| **Epic**    | 史诗  | 史詩  | エピック   | 에픽   | Эпик     | Епік     | Эпік     | Epic   | Epic    | Epic    | Epic   | Epic    | Epik   | Epik    | Epik    | Epic    | Epik     | Epic   | Epik    |
+| **Epics**   | 史诗  | 史詩  | エピック   | 에픽   | Эпики    | Епіки    | Эпікі    | Epics  | Epics   | Epics   | Epics  | Epics   | Epiki  | Epiky   | Epiky   | Epice   | Epikler  | Epic   | Epik    |
+| **Page**    | 页面  | 頁面  | ページ     | 페이지 | Страница | Сторінка | Старонка | Seite  | Page    | Página  | Pagina | Página  | Strona | Stránka | Stránka | Pagină  | Sayfa    | Trang  | Halaman |
+| **Pages**   | 页面  | 頁面  | ページ     | 페이지 | Страницы | Сторінки | Старонкі | Seiten | Pages   | Páginas | Pagine | Páginas | Strony | Stránky | Stránky | Pagini  | Sayfalar | Trang  | Halaman |
 
 Notes:
 
@@ -104,6 +104,10 @@ When a Slavic plural block counts a Plane feature noun, use these forms:
 | **ua** | Модуль   | Модуль        | Модуля   | Модулів  | Модуля   |
 | **ua** | Епік     | Епік          | Епіка    | Епіків   | Епіка    |
 | **ua** | Сторінка | Сторінка      | Сторінки | Сторінок | Сторінки |
+| **be** | Цыкл     | Цыкл          | Цыклы    | Цыклаў   | Цыкла    |
+| **be** | Модуль   | Модуль        | Модулі   | Модуляў  | Модуля   |
+| **be** | Эпік     | Эпік          | Эпікі    | Эпікаў   | Эпіка    |
+| **be** | Старонка | Старонка      | Старонкі | Старонак | Старонкі |
 | **pl** | Cykl     | Cykl          | Cykle    | Cykli    | Cyklu    |
 | **pl** | Moduł    | Moduł         | Moduły   | Modułów  | Modułu   |
 | **pl** | Epik     | Epik          | Epiki    | Epików   | Epika    |
@@ -117,7 +121,7 @@ When a Slavic plural block counts a Plane feature noun, use these forms:
 | **sk** | Epik     | Epik          | Epiky    | Epiku    | Epikov   |
 | **sk** | Stránka  | Stránka       | Stránky  | Stránky  | Stránok  |
 
-Per CLDR for ru/ua: `one` fires for 1, 21, 31… (nom.sg.); `few` for 2–4, 22–24… (gen.sg.); `many` for 0, 5–20, 25–30… (gen.pl.); `other` for non-integer counts (gen.sg.). For pl: `one` (1), `few` (2–4 not 12–14, nom.pl.), `many` (0, 5–20, gen.pl.), `other` (decimals, gen.sg.). cs/sk: `one` (1), `few` (2–4, nom.pl.), `many` (decimals, gen.sg.), `other` (0, 5+, gen.pl.).
+**Belarusian (be) uses the same four CLDR categories as ru/ua, but its `few` form is the NOMINATIVE PLURAL (2 праекты, 3 старонкі), not the genitive singular; `many` is the genitive plural (5 праектаў) and `other` the genitive singular.** Per CLDR for ru/ua: `one` fires for 1, 21, 31… (nom.sg.); `few` for 2–4, 22–24… (gen.sg.); `many` for 0, 5–20, 25–30… (gen.pl.); `other` for non-integer counts (gen.sg.). For pl: `one` (1), `few` (2–4 not 12–14, nom.pl.), `many` (0, 5–20, gen.pl.), `other` (decimals, gen.sg.). cs/sk: `one` (1), `few` (2–4, nom.pl.), `many` (decimals, gen.sg.), `other` (0, 5+, gen.pl.).
 
 ### Third-party products & standards (always Latin, every locale)
 
@@ -229,9 +233,9 @@ Register: 您 (formal polite) in Plane UI — the product is B2B/SaaS. Reserve �
 
 ### Cyrillic locales
 
-Currently includes ru, ua — and any future Cyrillic locale (bg-BG, sr-Cyrl, mk, be, kk-Cyrl, etc.).
+Currently includes ru, ua, be (and bg) — and any future Cyrillic locale (sr-Cyrl, mk, kk-Cyrl, etc.).
 
-**Plane feature nouns** (Cycle, Module, Epic, Page) use the natural Cyrillic form per the glossary above (Цикл/Циклы, Модуль/Модули, Эпик/Эпики, Страница/Страницы in ru — Цикл/Цикли, Модуль/Модулі, Епік/Епіки, Сторінка/Сторінки in ua). **Brand marks** stay in Latin: Plane, Plane AI, Power K, PQL, Active Cycles, Sticky, Stickies, Intake, GitHub, Slack, Pro/Business/Enterprise.
+**Plane feature nouns** (Cycle, Module, Epic, Page) use the natural Cyrillic form per the glossary above (Цикл/Циклы, Модуль/Модули, Эпик/Эпики, Страница/Страницы in ru — Цикл/Цикли, Модуль/Модулі, Епік/Епіки, Сторінка/Сторінки in ua — Цыкл/Цыклы, Модуль/Модулі, Эпік/Эпікі, Старонка/Старонкі in be). **Brand marks** stay in Latin: Plane, Plane AI, Power K, PQL, Active Cycles, Sticky, Stickies, Intake, GitHub, Slack, Pro/Business/Enterprise.
 
 For new terms not on the glossary: prefer the native Cyrillic word where one exists; use phonetic transliteration only when no native word applies (`Бакет` is wrong for "Bucket" — use `Корзина`/`Кошик`).
 
@@ -240,11 +244,12 @@ For new terms not on the glossary: prefer the native Cyrillic word where one exi
 Register:
 
 - **ru**: formal **Вы** (capitalized) when addressing a **single user directly** in respectful/formal contexts (onboarding, settings, confirmation dialogs); lowercase **вы** for plural/general references ("все вы"). Default to capitalized Вы in tooltips/dialogs and lowercase вы in descriptive copy.
+- **be**: formal plural **вы** (lowercase) in product UI, like modern Ukrainian software; never "ты". Use the official Cyrillic orthography (наркамаўка), not Taraškievica or Łacinka. Letters: Belarusian has ў and і but no и, щ, ъ, ї, є, ґ — those mark Russian/Ukrainian leakage. Write the apostrophe as the typographic ’ (U+2019), never a straight ' (ICU message syntax treats ' specially). Belarusian is not Russian: after 2–4 use the nominative plural (2 праекты), spell as pronounced (akanne: працаваць, прыярытэт, дзеянне), and keep words like "працоўны" (not "рабочы") for work-.
 - **ua**: modern Ukrainian software convention is lowercase **ви** by default; capitalized **Ви** is reserved for very formal direct address. This is the opposite convention from Russian — do not copy-paste Russian capitalization rules into Ukrainian files.
 
 Punctuation: primary quotes `«…»`, nested `„…"`.
 
-**Plural forms — critical**: both ru and ua require `one / few / many / other`. See CLDR section below.
+**Plural forms — critical**: ru, ua and be all require `one / few / many / other`. See CLDR section below.
 
 ## CLDR Plural Rules
 
@@ -266,6 +271,7 @@ Below are the required keywords for locales currently in the repo. When adding a
 | sk                                                 | `one, few, many, other`                                                               | same pattern as cs                                                            |
 | ru                                                 | `one, few, many, other`                                                               | 1, 21, 31… → one; 2–4, 22–24… → few; 0, 5–20, 25–30… → many; decimals → other |
 | ua                                                 | `one, few, many, other`                                                               | same pattern as ru                                                            |
+| be                                                 | `one, few, many, other`                                                               | same categories as ru; `few` = nominative plural (not gen. sg.)               |
 | ar (when added)                                    | `zero, one, two, few, many, other`                                                    | Six categories — the maximum any language uses                                |
 
 > **Note on the consolidated row.** CLDR itself only requires `other` for `tr-TR`, `vi-VN`, `id`, `ja`, `ko`, `zh-CN`, `zh-TW` (single-form locales). Emitting both `one` and `other` with identical content is a **project convention** — it keeps tooling and linters consistent across the codebase. It is not a CLDR requirement, and `Intl.PluralRules` will return only `"other"` for these locales at runtime.
@@ -340,7 +346,7 @@ Table below covers locales currently in the repo; add a row when you add a local
 | **cs / sk**            | Primary quotes `„…"`.                                                                                                                                                                            |
 | **ro**                 | Primary quotes `„…"`.                                                                                                                                                                            |
 | **tr-TR / vi-VN / id** | Straight quotes `"…"`. Vietnamese diacritics are mandatory — never strip (no `bạn` → `ban`).                                                                                                     |
-| **ru / ua**            | Primary `«…»`, nested `„…"`.                                                                                                                                                                     |
+| **ru / ua / be**       | Primary `«…»`, nested `„…"`.                                                                                                                                                                     |
 | **ja**                 | Full-width `。、（）！？・`. Primary quotes 「」, nested 『』. Ellipsis `…` (U+2026), typically doubled as `……`.                                                                                 |
 | **ko**                 | Western `. , ? !`; straight quotes `"…"`.                                                                                                                                                        |
 | **zh-CN**              | Full-width `。，？！；：`. Primary `"…"`, nested `'…'`. Work titles `《…》`. Half-width space around embedded Latin tokens.                                                                      |
@@ -369,6 +375,7 @@ Formality defaults for locales currently in the repo. Add a row for each new loc
 | zh-TW   | **您**                                                                       | B2B convention; never 你                         |
 | ru      | **Вы** (cap.) for singular direct address, **вы** (lower) for plural/general | Context-dependent                                |
 | ua      | **ви** (lowercase, modern convention)                                        | Capitalized Ви only for very formal              |
+| be      | **вы** (lowercase)                                                           | Never "ты"; capitalized Вы only for very formal  |
 
 General writing rules (apply across all locales):
 
@@ -394,7 +401,7 @@ Design strings knowing translations will grow. Typical expansion vs. English for
 | pl           | +20–30%                                           |                                                 |
 | cs, sk       | +10–20%                                           |                                                 |
 | ro           | +15–25%                                           |                                                 |
-| ru, ua       | +15% typical, spikes to +30%                      |                                                 |
+| ru, ua, be   | +15% typical, spikes to +30%                      |                                                 |
 | tr-TR        | +10–30% (agglutination)                           |                                                 |
 | vi-VN        | +30–40%                                           | Diacritic-heavy, many small words               |
 | id           | +10–20%                                           |                                                 |
@@ -418,7 +425,7 @@ Never write `"{date}MM/DD/YYYY"` in the source — that guarantees a locale bug.
 
 Decimal/thousands separators (runtime-handled):
 
-- en: `1,234.56` — de/it/es/pt-BR/ru/ua/pl/cs/sk/tr-TR: `1.234,56` or `1 234,56` — fr: `1 234,56` (thin space) — ja/ko/zh: `1,234.56`.
+- en: `1,234.56` — de/it/es/pt-BR/ru/ua/be/pl/cs/sk/tr-TR: `1.234,56` or `1 234,56` — fr: `1 234,56` (thin space) — ja/ko/zh: `1,234.56`.
 
 Date formats (runtime-handled):
 
@@ -530,7 +537,7 @@ pnpm --filter @plane/i18n run check:sync
 - **Leaving feature nouns in Latin in non-Latin locales** — `创建 Cycle` (zh-CN), `Создать Cycle` (ru), `エピックを作成` is fine but `Epicを作成` is not. Use the per-locale form from the glossary.
 - **Coining new feature-noun translations** — `Cycle → Cercle` (fr — invented; the natural cognate is the same `Cycle`), `Cycle → 循环` (zh-CN — non-glossary; use `周期`), `Epic → Saga` (es — non-glossary; use `Epic`). The glossary is the source of truth.
 - **Missing `few` / `many` in Slavic languages** — Russian/Polish/Czech/Slovak/Ukrainian strings with only `one / other` are grammatically wrong for counts 2–4 and 5+. Fix in the same PR.
-- **Wrong Slavic case form inside ICU plurals** — for ru/ua, `few` is genitive singular (`# Цикла`), not nominative plural (`# Циклы`). See the case-form table.
+- **Wrong Slavic case form inside ICU plurals** — for ru/ua, `few` is genitive singular (`# Цикла`), not nominative plural (`# Циклы`); for be it is the other way round: nominative plural (`# цыклы`), not genitive singular (`# цыкла`). See the case-form table.
 - **Inventing `few` in German, `many` in Spanish, etc.** — languages not in CLDR for that form. Remove the spurious keyword.
 - **Translating `{count}` or renaming `{name}`** — ICU variables are lookup keys; rename breaks runtime substitution.
 - **Dropping `<0>`/`<1>` numbering in `Trans`** — react-i18next matches by number; renumbering breaks the component.
@@ -552,13 +559,13 @@ pnpm --filter @plane/i18n run check:sync
 You see yourself about to do any of the following → stop, delete, restart this string:
 
 - Replacing `Plane`, `Plane AI`, `Power K`, `PQL`, `Active Cycles`, `Sticky`, `Stickies`, `Intake`, `Pro`, `Business`, `Enterprise`, or any third-party brand (`GitHub`, `Slack`, etc.) with a translated form.
-- Leaving `Cycle` / `Module` / `Epic` / `Page` in Latin in a non-Latin locale (zh-CN, zh-TW, ja, ko, ru, ua) — these are common nouns and must be translated per the glossary.
+- Leaving `Cycle` / `Module` / `Epic` / `Page` in Latin in a non-Latin locale (zh-CN, zh-TW, ja, ko, ru, ua, be) — these are common nouns and must be translated per the glossary.
 - Coining a feature-noun translation that's not in the glossary (`Cycle → 循环`, `Cycle → Cercle`, `Epic → Saga`).
 - Using a vowel-form Korean particle (을/은/이/과 vs. 를/는/가/와) that doesn't agree with the noun's final character.
 - Pasting the English value into a non-English file.
 - Renaming or removing a `{variable}`, `<tag>`, numbered `<0>`, or Markdown marker.
 - Dropping `few` or `many` from a Slavic-language plural, or adding `few` to German.
-- Using nominative plural for `few` in ru/ua plural blocks (it should be genitive singular per CLDR).
+- Using nominative plural for `few` in ru/ua plural blocks (it should be genitive singular per CLDR), or genitive singular for `few` in be (it should be nominative plural).
 - Editing one locale file and deciding to "do the others later" without updating the PR description.
 - Using `du`, `tu`, `ты`, `tú`, plain-form Japanese, or 반말 Korean in any product string.
 - Stripping diacritics from Vietnamese, lowercasing `Anda` in Indonesian.

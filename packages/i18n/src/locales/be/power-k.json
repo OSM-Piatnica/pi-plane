@@ -1,0 +1,217 @@
+{
+  "power_k": {
+    "actions_commands": {
+      "bulk_delete_work_items": "Масавае выдаленне працоўных элементаў"
+    },
+    "contextual_actions": {
+      "work_item": {
+        "title": "Дзеянні з працоўным элементам",
+        "indicator": "Працоўны элемент",
+        "change_state": "Змяніць стан",
+        "change_priority": "Змяніць прыярытэт",
+        "change_assignees": "Прызначыць",
+        "assign_to_me": "Прызначыць мне",
+        "unassign_from_me": "Зняць прызначэнне з мяне",
+        "change_estimate": "Змяніць ацэнку",
+        "add_to_cycle": "Дадаць у цыкл",
+        "add_to_modules": "Дадаць у модулі",
+        "add_labels": "Дадаць меткі",
+        "subscribe": "Падпісацца на апавяшчэнні",
+        "unsubscribe": "Адпісацца ад апавяшчэнняў",
+        "delete": "Выдаліць",
+        "copy_id": "Скапіяваць ID",
+        "copy_id_toast_success": "ID працоўнага элемента скапіяваны ў буфер абмену.",
+        "copy_id_toast_error": "Пры капіяванні ID працоўнага элемента ў буфер абмену адбылася памылка.",
+        "copy_title": "Скапіяваць назву",
+        "copy_title_toast_success": "Назва працоўнага элемента скапіявана ў буфер абмену.",
+        "copy_title_toast_error": "Пры капіяванні назвы працоўнага элемента ў буфер абмену адбылася памылка.",
+        "copy_url": "Скапіяваць URL",
+        "copy_url_toast_success": "URL працоўнага элемента скапіяваны ў буфер абмену.",
+        "copy_url_toast_error": "Пры капіяванні URL працоўнага элемента ў буфер абмену адбылася памылка."
+      },
+      "cycle": {
+        "title": "Дзеянні з цыклам",
+        "indicator": "Цыкл",
+        "add_to_favorites": "Дадаць у абранае",
+        "remove_from_favorites": "Прыбраць з абранага",
+        "copy_url": "Скапіяваць URL",
+        "copy_url_toast_success": "URL цыкла скапіяваны ў буфер абмену.",
+        "copy_url_toast_error": "Пры капіяванні URL цыкла ў буфер абмену адбылася памылка."
+      },
+      "module": {
+        "title": "Дзеянні з модулем",
+        "indicator": "Модуль",
+        "add_remove_members": "Дадаць або прыбраць удзельнікаў",
+        "change_status": "Змяніць статус",
+        "add_to_favorites": "Дадаць у абранае",
+        "remove_from_favorites": "Прыбраць з абранага",
+        "copy_url": "Скапіяваць URL",
+        "copy_url_toast_success": "URL модуля скапіяваны ў буфер абмену.",
+        "copy_url_toast_error": "Пры капіяванні URL модуля ў буфер абмену адбылася памылка."
+      },
+      "page": {
+        "title": "Дзеянні са старонкай",
+        "indicator": "Старонка",
+        "lock": "Заблакіраваць",
+        "unlock": "Разблакіраваць",
+        "make_private": "Зрабіць бачнай толькі мне",
+        "make_public": "Падзяліцца з праектам",
+        "archive": "Архіваваць",
+        "restore": "Аднавіць",
+        "add_to_favorites": "Дадаць у абранае",
+        "remove_from_favorites": "Прыбраць з абранага",
+        "copy_url": "Скапіяваць URL",
+        "copy_url_toast_success": "URL старонкі скапіяваны ў буфер абмену.",
+        "copy_url_toast_error": "Пры капіяванні URL старонкі ў буфер абмену адбылася памылка."
+      }
+    },
+    "creation_actions": {
+      "create_work_item": "Новы працоўны элемент",
+      "create_page": "Новая старонка",
+      "create_view": "Новы прагляд",
+      "create_cycle": "Новы цыкл",
+      "create_module": "Новы модуль",
+      "create_project": "Новы праект",
+      "create_workspace": "Новая працоўная прастора",
+      "create_project_automation": "Новая аўтаматызацыя"
+    },
+    "navigation_actions": {
+      "open_workspace": "Адкрыць працоўную прастору",
+      "nav_home": "Перайсці на галоўную",
+      "nav_inbox": "Перайсці ва ўваходныя",
+      "nav_your_work": "Перайсці да вашай працы",
+      "nav_account_settings": "Перайсці ў налады ўліковага запісу",
+      "open_project": "Адкрыць праект",
+      "nav_projects_list": "Перайсці да спісу праектаў",
+      "nav_all_workspace_work_items": "Перайсці да ўсіх працоўных элементаў",
+      "nav_assigned_workspace_work_items": "Перайсці да прызначаных працоўных элементаў",
+      "nav_created_workspace_work_items": "Перайсці да створаных працоўных элементаў",
+      "nav_subscribed_workspace_work_items": "Перайсці да працоўных элементаў, на якія вы падпісаны",
+      "nav_workspace_analytics": "Перайсці да аналітыкі працоўнай прасторы",
+      "nav_workspace_drafts": "Перайсці да чарнавікоў працоўнай прасторы",
+      "nav_workspace_archives": "Перайсці ў архіў працоўнай прасторы",
+      "open_workspace_setting": "Адкрыць наладу працоўнай прасторы",
+      "nav_workspace_settings": "Перайсці ў налады працоўнай прасторы",
+      "nav_project_work_items": "Перайсці да працоўных элементаў",
+      "open_project_cycle": "Адкрыць цыкл",
+      "nav_project_cycles": "Перайсці да цыклаў",
+      "open_project_module": "Адкрыць модуль",
+      "nav_project_modules": "Перайсці да модуляў",
+      "open_project_view": "Адкрыць прагляд праекта",
+      "nav_project_views": "Перайсці да праглядаў праекта",
+      "nav_project_pages": "Перайсці да старонак",
+      "nav_project_intake": "Перайсці да Intake",
+      "nav_project_archives": "Перайсці ў архіў праекта",
+      "open_project_setting": "Адкрыць наладу праекта",
+      "nav_project_settings": "Перайсці ў налады праекта",
+      "nav_workspace_active_cycle": "Перайсці да ўсіх Active Cycles",
+      "nav_project_overview": "Перайсці да агляду праекта"
+    },
+    "account_actions": {
+      "sign_out": "Выйсці",
+      "workspace_invites": "Запрашэнні ў працоўную прастору"
+    },
+    "miscellaneous_actions": {
+      "toggle_app_sidebar": "Паказаць або схаваць бакавую панэль праграмы",
+      "copy_current_page_url": "Скапіяваць URL бягучай старонкі",
+      "copy_current_page_url_toast_success": "URL бягучай старонкі скапіяваны ў буфер абмену.",
+      "copy_current_page_url_toast_error": "Пры капіяванні URL бягучай старонкі ў буфер абмену адбылася памылка.",
+      "focus_top_nav_search": "Перайсці ў поле пошуку"
+    },
+    "preferences_actions": {
+      "update_theme": "Змяніць тэму інтэрфейсу",
+      "update_timezone": "Змяніць часавы пояс",
+      "update_start_of_week": "Змяніць першы дзень тыдня",
+      "update_language": "Змяніць мову інтэрфейсу",
+      "toast": {
+        "theme": {
+          "success": "Тэма паспяхова абноўлена.",
+          "error": "Не ўдалося абнавіць тэму. Паспрабуйце яшчэ раз."
+        },
+        "timezone": {
+          "success": "Часавы пояс паспяхова абноўлены.",
+          "error": "Не ўдалося абнавіць часавы пояс. Паспрабуйце яшчэ раз."
+        },
+        "generic": {
+          "success": "Параметры паспяхова абноўлены.",
+          "error": "Не ўдалося абнавіць параметры. Паспрабуйце яшчэ раз."
+        }
+      }
+    },
+    "help_actions": {
+      "open_keyboard_shortcuts": "Адкрыць спалучэнні клавіш",
+      "open_plane_documentation": "Адкрыць дакументацыю Pi-Plane",
+      "join_forum": "Далучыцца да нашага форуму",
+      "report_bug": "Паведаміць пра памылку",
+      "chat_with_us": "Напісаць нам у чаце"
+    },
+    "page_placeholders": {
+      "default": "Увядзіце каманду або пошукавы запыт",
+      "open_workspace": "Адкрыць працоўную прастору",
+      "open_project": "Адкрыць праект",
+      "open_workspace_setting": "Адкрыць наладу працоўнай прасторы",
+      "open_project_cycle": "Адкрыць цыкл",
+      "open_project_module": "Адкрыць модуль",
+      "open_project_view": "Адкрыць прагляд праекта",
+      "open_project_setting": "Адкрыць наладу праекта",
+      "update_work_item_state": "Змяніць стан",
+      "update_work_item_priority": "Змяніць прыярытэт",
+      "update_work_item_assignee": "Прызначыць",
+      "update_work_item_estimate": "Змяніць ацэнку",
+      "update_work_item_cycle": "Дадаць у цыкл",
+      "update_work_item_module": "Дадаць у модулі",
+      "update_work_item_labels": "Дадаць меткі",
+      "update_module_member": "Змяніць удзельнікаў",
+      "update_module_status": "Змяніць статус",
+      "update_theme": "Змяніць тэму",
+      "update_timezone": "Змяніць часавы пояс",
+      "update_start_of_week": "Змяніць першы дзень тыдня",
+      "update_language": "Змяніць мову"
+    },
+    "search_menu": {
+      "no_results": "Нічога не знойдзена",
+      "clear_search": "Ачысціць пошук",
+      "go_to_advanced_search": "Перайсці да пашыранага пошуку",
+      "results_in_workspace": "Вынікі пошуку для <term/> у працоўнай прасторы:",
+      "results_in_project": "Вынікі пошуку для <term/> у праекце:"
+    },
+    "footer": {
+      "workspace_level": "Узровень працоўнай прасторы"
+    },
+    "shortcuts_modal": {
+      "search_placeholder": "Пошук спалучэнняў клавіш",
+      "no_results": "Спалучэнняў клавіш для «{query}» не знойдзена",
+      "sequence_separator": "потым"
+    },
+    "group_titles": {
+      "actions": "Дзеянні",
+      "contextual": "Кантэкстныя",
+      "navigation": "Навігацыя",
+      "create": "Стварыць",
+      "general": "Агульныя",
+      "settings": "Налады",
+      "account": "Уліковы запіс",
+      "miscellaneous": "Рознае",
+      "preferences": "Параметры",
+      "help": "Даведка"
+    }
+  },
+  "power_k_ui": {
+    "clear_context": "Ачысціць кантэкст (Backspace)",
+    "empty_menu": {
+      "cycles": "Цыклаў не знойдзена",
+      "labels": "Метак не знойдзена",
+      "modules": "Модуляў не знойдзена",
+      "projects": "Праектаў не знойдзена",
+      "settings": "Налад не знойдзена",
+      "views": "Праглядаў не знойдзена",
+      "workspaces": "Працоўных прастор не знойдзена"
+    },
+    "epic_update_error": "Не ўдалося абнавіць эпік. Паспрабуйце яшчэ раз.",
+    "module_update_error": "Не ўдалося абнавіць модуль. Паспрабуйце яшчэ раз.",
+    "no_estimate_found": "Ацэнка не знойдзена",
+    "reloading_to_apply": "Перазагрузка для ўжывання змен...",
+    "some_error_occurred": "Адбылася памылка",
+    "work_item_update_error": "Не ўдалося абнавіць працоўны элемент. Паспрабуйце яшчэ раз."
+  }
+}
