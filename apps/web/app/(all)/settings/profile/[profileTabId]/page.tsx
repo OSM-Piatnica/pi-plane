@@ -14,6 +14,7 @@ import type { TProfileSettingsTabs } from "@plane/types";
 import { LogoSpinner } from "@/components/common/logo-spinner";
 import { PageHead } from "@/components/core/page-title";
 import { ProfileSettingsContent } from "@/components/settings/profile/content";
+import { ProfileSettingsMobileNav } from "@/components/settings/profile/mobile-nav";
 import { ProfileSettingsSidebarRoot } from "@/components/settings/profile/sidebar";
 // hooks
 import { useUser } from "@/hooks/store/user";
@@ -42,17 +43,18 @@ function ProfileSettingsPage(props: Route.ComponentProps) {
   return (
     <>
       <PageHead title={`${t("profile.label")} - ${t("general_settings")}`} />
-      <div className="relative size-full">
-        <div className="flex size-full">
+      <div className="relative flex size-full flex-col">
+        <ProfileSettingsMobileNav activeTab={profileTabId as TProfileSettingsTabs} />
+        <div className="flex min-h-0 w-full grow">
           <ProfileSettingsSidebarRoot
             activeTab={profileTabId as TProfileSettingsTabs}
-            className="w-[250px]"
+            className="hidden w-[250px] md:flex"
             showBackToWorkspace
             updateActiveTab={(tab) => router.push(`/settings/profile/${tab}`)}
           />
           <ProfileSettingsContent
             activeTab={profileTabId as TProfileSettingsTabs}
-            className="mx-auto w-fit max-w-225 grow px-page-x py-20"
+            className="w-full max-w-225 grow px-2 py-4 md:mx-auto md:w-fit md:px-page-x md:py-20"
           />
         </div>
       </div>
