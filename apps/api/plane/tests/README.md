@@ -101,7 +101,7 @@ When writing tests, follow these guidelines:
 Common fixtures are defined in:
 
 - `conftest.py`: General fixtures for authentication, database access, etc.
-- `conftest_external.py`: Fixtures for external services (Redis, Elasticsearch, Celery)
+- `conftest_external.py`: Fixtures for external services (Redis, Celery)
 - `factories.py`: Test factories for easy model instance creation
 
 ## Best Practices
@@ -125,7 +125,7 @@ When writing tests, follow these guidelines:
 
 Tests for components that interact with external services should:
 
-1. Use the `mock_redis`, `mock_elasticsearch`, and `mock_celery` fixtures for unit and most contract tests.
+1. Use the `mock_redis` and `mock_celery` fixtures for unit and most contract tests.
 2. For more comprehensive contract tests, use Docker-based test containers (optional).
 
 ## Coverage Reports
