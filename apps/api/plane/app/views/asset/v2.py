@@ -312,7 +312,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
 
         # Project Cover
         elif entity_type == FileAsset.EntityTypeContext.PROJECT_COVER:
-            project = Project.objects.filter(id=asset.project_id).first()
+            project = Project.objects.filter(id=asset.project_id, workspace_id=asset.workspace_id).first()
             if project is None:
                 return
             # Delete the previous cover image
@@ -345,7 +345,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
             return
         # Project Cover
         elif entity_type == FileAsset.EntityTypeContext.PROJECT_COVER:
-            project = Project.objects.filter(id=asset.project_id).first()
+            project = Project.objects.filter(id=asset.project_id, workspace_id=asset.workspace_id).first()
             if project is None:
                 return
             project.cover_image_asset_id = None
@@ -407,7 +407,7 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
         asset_key = f"{workspace.id}/{uuid.uuid4().hex}-{name}"
 
         # Create a File Asset
-        asset = FileAsset.objects.create(
+        asset = FileAsset(
             attributes={"name": name, "type": type, "size": size_limit},
             asset=asset_key,
             size=size_limit,
@@ -416,6 +416,14 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
             entity_type=entity_type,
             **self.get_entity_id_field(entity_type=entity_type, entity_id=entity_identifier),
         )
+
+        # A cover bound to a project at upload time needs a project of this workspace that the caller administers
+        if asset.project_id and not can_modify_asset(request.user, asset):
+            return Response(
+                {"error": "You don't have the required permissions."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        asset.save()
 
         # Get the presigned URL
         storage = get_storage(request=request)
@@ -714,6 +722,12 @@ class ProjectAssetEndpoint(BaseAPIView):
     def get(self, request, slug, project_id, pk):
         # get the asset id
         asset = FileAsset.objects.get(workspace__slug=slug, project_id=project_id, pk=pk)
+        # A restricted guest only reaches the assets of issues they created.
+        if not asset.is_project_accessible_to(request.user):
+            return Response(
+                {"error": "You don't have access to this asset."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         # Check if the asset is uploaded
         if not asset.is_uploaded:
@@ -993,6 +1007,13 @@ class ProjectAssetDownloadEndpoint(BaseAPIView):
             return Response(
                 {"error": "The requested asset could not be found."},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # A restricted guest only reaches the assets of issues they created.
+        if not asset.is_project_accessible_to(request.user):
+            return Response(
+                {"error": "You don't have access to this asset."},
+                status=status.HTTP_403_FORBIDDEN,
             )
 
         storage = get_storage(request=request)
