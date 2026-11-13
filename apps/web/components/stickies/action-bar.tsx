@@ -58,7 +58,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
 
   const recentStickyButton = (
     <button
-      className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
+      className="btn btn--icon shadow-sm flex h-9 w-9 items-center justify-center rounded-full bg-surface-1"
       onClick={() => setShowRecentSticky(true)}
       style={{ color: recentStickyBackgroundColor }}
     >
@@ -76,7 +76,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
       >
         <Tooltip label={t("stickies.all")} side="right">
           <button
-            className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
+            className="btn btn--icon shadow-sm flex h-9 w-9 items-center justify-center rounded-full bg-surface-1"
             onClick={() => toggleAllStickiesModal(true)}
           >
             <MultipleStickyOutline className="size-5 rotate-90 text-tertiary" />
@@ -107,7 +107,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
           ))}
         <Tooltip label={t("stickies.add")} side="right">
           <button
-            className="btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1"
+            className="btn btn--icon shadow-sm flex h-9 w-9 items-center justify-center rounded-full bg-surface-1"
             onClick={() => {
               updateActiveStickyId("");
               toggleShowNewSticky(true);
@@ -120,7 +120,7 @@ export const StickyActionBar = observer(function StickyActionBar() {
       </div>
 
       <button
-        className={`btn btn--icon shadow-sm flex h-10 w-10 items-center justify-center rounded-full bg-surface-1 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
+        className={`btn btn--icon shadow-sm flex h-9 w-9 items-center justify-center rounded-full bg-surface-1 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? (
