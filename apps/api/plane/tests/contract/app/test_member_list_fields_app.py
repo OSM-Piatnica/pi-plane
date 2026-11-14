@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Guests must only see ``id``/``member``/``role`` from the member endpoints (WEB-10019 / SEC-122).
@@ -16,7 +17,8 @@ from plane.tests.factories import UserFactory
 
 ALLOWED = {"id", "member", "role"}
 NON_GUEST_WORKSPACE_FIELDS = ALLOWED | {"is_active", "created_at"}
-PROJECT_LIST_FIELDS = ALLOWED | {"original_role", "created_at"}
+# the fork also returns the group fields the project members page shows as badges
+PROJECT_LIST_FIELDS = ALLOWED | {"original_role", "created_at", "via_group", "group_role", "direct_role"}
 
 
 @pytest.fixture
