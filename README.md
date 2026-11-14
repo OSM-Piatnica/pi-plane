@@ -75,6 +75,12 @@ Beyond Plane Community Edition, Pi-Plane adds, among other things:
 - **Tracking:** time tracking with worklogs and time estimates; negated filters; choosing the columns of an export, in the order of your list view.
 - **Setup:** [single sign-on with OpenID Connect](docs/sso.md); [duplicating a project's configuration](docs/duplicating-projects.md); [compact work item links](docs/workspace-short-links.md); [Markdown in descriptions and comments](docs/markdown-in-descriptions.md); a custom colour theme, down to individual colours, that can be exported and imported; German (in the formal register) and Belarusian interfaces; [file uploads and their size limit](docs/file-uploads.md); [Azure Blob Storage](docs/azure-blob-storage.md) (and [Google Cloud Storage](deployments/cli/community/README.md#using-your-own-object-storage-aws-s3-google-cloud-storage-azure-blob-storage)); email in the recipient's language, with digests; a Helm chart.
 
+## 🌍 Languages
+
+Pi-Plane is available in more than twenty languages, and the list keeps growing. We add languages regularly and review existing translations as the product evolves.
+
+If your team needs a language that is not available yet, please [submit a feature request](https://github.com/OSM-Piatnica/pi-plane/issues/new?labels=enhancement&template=feature-request.yaml&title=%5Bfeature%5D%3A+) naming the language. Corrections to existing translations from native speakers are just as welcome; please open an issue for those as well.
+
 ## 🛠️ Local development
 
 See [CONTRIBUTING](./CONTRIBUTING.md).
