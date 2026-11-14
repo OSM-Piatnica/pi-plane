@@ -1,0 +1,273 @@
+{
+  "automations": {
+    "settings": {
+      "title": "Уласныя аўтаматызацыі",
+      "create_automation": "Стварыць аўтаматызацыю"
+    },
+    "scope": {
+      "label": "Ахоп",
+      "run_on": "Выконваць у"
+    },
+    "trigger": {
+      "label": "Трыгер",
+      "add_trigger": "Дадаць трыгер",
+      "sidebar_header": "Налада трыгера",
+      "input_label": "Які трыгер у гэтай аўтаматызацыі?",
+      "input_placeholder": "Выберыце варыянт",
+      "section_plane_events": "Падзеі Pi-Plane",
+      "section_time_based": "Па часе",
+      "fixed_schedule": "Фіксаваны расклад",
+      "schedule": {
+        "frequency": "Частата",
+        "select_day": "Выберыце дзень",
+        "day_of_month": "Дзень месяца",
+        "monthly_every": "Кожны",
+        "monthly_day_aria": "Дзень {day}",
+        "time": "Час",
+        "hour": "Гадзіна",
+        "minute": "Хвіліна",
+        "hour_suffix": "гадз",
+        "minute_suffix": "хв",
+        "am": "AM",
+        "pm": "PM",
+        "timezone": "Часавы пояс",
+        "timezone_placeholder": "Выберыце часавы пояс",
+        "frequency_daily": "Штодзень",
+        "frequency_weekly": "Штотыдзень",
+        "frequency_monthly": "Штомесяц",
+        "on": "У",
+        "validation_weekly_day_required": "Выберыце хаця б адзін дзень тыдня.",
+        "validation_monthly_date_required": "Выберыце дзень месяца.",
+        "main_content_schedule_summary_daily": "Кожны дзень у {time} ({timezone}).",
+        "main_content_schedule_summary_weekly": "Кожны тыдзень: {days} у {time} ({timezone}).",
+        "main_content_schedule_summary_monthly": "Штомесяц, дзень {day}, у {time} ({timezone}).",
+        "schedule_mode": "Рэжым расклада",
+        "schedule_mode_fixed": "Фіксаваны",
+        "schedule_mode_cron": "Cron",
+        "cron_expression_label": "Увядзіце выраз Cron",
+        "cron_expression_placeholder": "0 9 * * 1-5",
+        "cron_invalid": "Няправільны выраз Cron.",
+        "cron_preview": "Гэты выраз Cron выконвае «{description}».",
+        "main_content_cron_summary": "{description} ({timezone})."
+      },
+      "button": {
+        "previous": "Назад",
+        "next": "Дадаць дзеянне"
+      },
+      "warning": {
+        "disabled_trigger_switching": "Пасля стварэння змяніць тып трыгера нельга"
+      }
+    },
+    "condition": {
+      "label": "Пры ўмове",
+      "add_condition": "Дадаць умову",
+      "adding_condition": "Даданне ўмовы"
+    },
+    "action": {
+      "label": "Дзеянне",
+      "add_action": "Дадаць дзеянне",
+      "sidebar_header": "Дзеянні",
+      "input_label": "Што робіць аўтаматызацыя?",
+      "input_placeholder": "Выберыце варыянт",
+      "handler_name": {
+        "add_comment": "Дадаць каментарый",
+        "change_property": "Змяніць уласцівасць",
+        "run_script": "Запусціць скрыпт"
+      },
+      "configuration": {
+        "label": "Канфігурацыя",
+        "change_property": {
+          "placeholders": {
+            "property_name": "Выберыце ўласцівасць",
+            "change_type": "Выберыце",
+            "property_value_select": "{count, plural, one {Выберыце значэнне} few {Выберыце значэнні} many {Выберыце значэнні} other {Выберыце значэнні}}",
+            "property_value_select_date": "Выберыце дату"
+          },
+          "validation": {
+            "property_name_required": "Назва ўласцівасці абавязковая",
+            "change_type_required": "Тып змены абавязковы",
+            "property_value_required": "Значэнне ўласцівасці абавязковае"
+          }
+        }
+      },
+      "comment_block": {
+        "title": "Дадаць каментарый"
+      },
+      "run_script_block": {
+        "title": "Запусціць скрыпт"
+      },
+      "change_property_block": {
+        "title": "Змяніць уласцівасць"
+      },
+      "validation": {
+        "delete_only_action": "Адключыце аўтаматызацыю, перш чым выдаляць яе адзінае дзеянне."
+      }
+    },
+    "conjunctions": {
+      "and": "І",
+      "or": "Або",
+      "if": "Калі",
+      "then": "Тады"
+    },
+    "enable": {
+      "alert": "Націсніце «Уключыць», калі аўтаматызацыя будзе гатова. Пасля ўключэння аўтаматызацыя будзе гатова да запуску.",
+      "validation": {
+        "required": "Для ўключэння аўтаматызацыя павінна мець трыгер і хаця б адно дзеянне."
+      }
+    },
+    "delete": {
+      "validation": {
+        "enabled": "Перад выдаленнем аўтаматызацыю трэба адключыць."
+      }
+    },
+    "table": {
+      "title": "Назва аўтаматызацыі",
+      "scope": "Ахоп",
+      "projects": "Праекты",
+      "last_run_on": "Апошні запуск",
+      "created_on": "Дата стварэння",
+      "last_updated_on": "Дата апошняга абнаўлення",
+      "last_run_status": "Статус апошняга запуску",
+      "average_duration": "Сярэдняя працягласць",
+      "owner": "Уладальнік",
+      "executions": "Выкананні"
+    },
+    "create_modal": {
+      "heading": {
+        "create": "Стварыць аўтаматызацыю",
+        "update": "Абнавіць аўтаматызацыю"
+      },
+      "title": {
+        "placeholder": "Назавіце вашу аўтаматызацыю.",
+        "required_error": "Назва абавязковая"
+      },
+      "description": {
+        "placeholder": "Апішыце вашу аўтаматызацыю."
+      },
+      "submit_button": {
+        "create": "Стварыць аўтаматызацыю",
+        "update": "Абнавіць аўтаматызацыю"
+      }
+    },
+    "delete_modal": {
+      "heading": "Выдаліць аўтаматызацыю"
+    },
+    "activity": {
+      "filters": {
+        "show_fails": "Паказваць збоі",
+        "all": "Усе",
+        "only_activity": "Толькі актыўнасць",
+        "only_run_history": "Толькі гісторыя запускаў"
+      },
+      "run_history": {
+        "initiator": "Ініцыятар"
+      }
+    },
+    "toasts": {
+      "create": {
+        "success": {
+          "title": "Паспяхова!",
+          "message": "Аўтаматызацыя паспяхова створана."
+        },
+        "error": {
+          "title": "Памылка!",
+          "message": "Не ўдалося стварыць аўтаматызацыю."
+        }
+      },
+      "update": {
+        "success": {
+          "title": "Паспяхова!",
+          "message": "Аўтаматызацыя паспяхова абноўлена."
+        },
+        "error": {
+          "title": "Памылка!",
+          "message": "Не ўдалося абнавіць аўтаматызацыю."
+        }
+      },
+      "enable": {
+        "success": {
+          "title": "Паспяхова!",
+          "message": "Аўтаматызацыя паспяхова ўключана."
+        },
+        "error": {
+          "title": "Памылка!",
+          "message": "Не ўдалося ўключыць аўтаматызацыю."
+        }
+      },
+      "disable": {
+        "success": {
+          "title": "Паспяхова!",
+          "message": "Аўтаматызацыя паспяхова адключана."
+        },
+        "error": {
+          "title": "Памылка!",
+          "message": "Не ўдалося адключыць аўтаматызацыю."
+        }
+      },
+      "delete": {
+        "success": {
+          "title": "Аўтаматызацыя выдалена",
+          "message": "Аўтаматызацыя {name} выдалена з вашага праекта."
+        },
+        "error": {
+          "title": "Не ўдалося выдаліць аўтаматызацыю.",
+          "message": "Паспрабуйце выдаліць яе яшчэ раз або вярніцеся да яе пазней. Калі выдаліць не атрымаецца, звяжыцеся з намі."
+        }
+      },
+      "action": {
+        "create": {
+          "error": {
+            "title": "Памылка!",
+            "message": "Не ўдалося стварыць дзеянне. Паспрабуйце яшчэ раз!"
+          }
+        },
+        "update": {
+          "error": {
+            "title": "Памылка!",
+            "message": "Не ўдалося абнавіць дзеянне. Паспрабуйце яшчэ раз!"
+          }
+        }
+      }
+    },
+    "empty_state": {
+      "no_automations": {
+        "title": "Аўтаматызацый пакуль няма.",
+        "description": "Аўтаматызацыі дапамагаюць пазбавіцца ад паўтаральных задач, задаючы трыгеры, умовы і дзеянні. Стварыце адну, каб зэканоміць час і без намаганняў падтрымліваць рух працы."
+      },
+      "upgrade": {
+        "title": "Аўтаматызацыі",
+        "description": "Аўтаматызацыі — гэта спосаб аўтаматызаваць задачы ў вашым праекце.",
+        "sub_description": "Верніце сабе 80% часу адміністравання, выкарыстоўваючы аўтаматызацыі."
+      }
+    },
+    "global_automations": {
+      "project_select": {
+        "label": "Выберыце праекты, у якіх запускаць гэтую аўтаматызацыю",
+        "all_projects": {
+          "label": "Усе праекты",
+          "description": "Аўтаматызацыя будзе выконвацца для ўсіх праектаў у працоўнай прасторы."
+        },
+        "select_projects": {
+          "label": "Выбраць праекты",
+          "description": "Аўтаматызацыя будзе выконвацца для абраных праектаў у працоўнай прасторы.",
+          "placeholder": "Выберыце праекты"
+        }
+      },
+      "settings": {
+        "sidebar_label": "Аўтаматызацыі",
+        "title": "Аўтаматызацыі",
+        "description": "Стандартызуйце працэсы ў вашай працоўнай прасторы з дапамогай глабальных аўтаматызацый."
+      },
+      "table": {
+        "scope": {
+          "global": "Глабальная",
+          "project": {
+            "label": "Праект",
+            "multiple": "Некалькі",
+            "all": "Усе"
+          }
+        }
+      }
+    }
+  }
+}

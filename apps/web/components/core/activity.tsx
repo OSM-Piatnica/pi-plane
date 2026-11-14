@@ -33,8 +33,9 @@ import {
 import { BlockedIcon, BlockerIcon } from "@plane/blocks/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { IIssueActivity } from "@plane/types";
-import { generateWorkItemLink, capitalizeFirstLetter } from "@plane/utils";
+import { generateWorkItemLink, getStateName } from "@plane/utils";
 // helpers
+import { getPriorityLabel } from "@/helpers/activity-values";
 import { useLabel } from "@/hooks/store/use-label";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
@@ -189,27 +190,6 @@ const getInboxUserActivityMessage = (activity: IIssueActivity, showIssue: boolea
       return showIssue
         ? t("activity_feed.profile.inbox.updated_with_issue")
         : t("activity_feed.profile.inbox.updated_without_issue");
-  }
-};
-
-const getPriorityLabel = (priority: string | null | undefined, t: TTranslate): string => {
-  switch (priority) {
-    case undefined:
-    case null:
-    case "":
-      return t("activity_feed.profile.priority.none");
-    case "urgent":
-      return t("activity_feed.profile.priority.urgent");
-    case "high":
-      return t("activity_feed.profile.priority.high");
-    case "medium":
-      return t("activity_feed.profile.priority.medium");
-    case "low":
-      return t("activity_feed.profile.priority.low");
-    case "none":
-      return t("activity_feed.profile.priority.none");
-    default:
-      return capitalizeFirstLetter(priority);
   }
 };
 
@@ -535,7 +515,10 @@ const activityDetails: {
         showIssue
           ? t("activity_feed.profile.state.set_with_issue")
           : t("activity_feed.profile.state.set_without_issue"),
-        { ...issueTag(activity), ...emphasisTag(activity.new_value, "font-medium break-all text-primary") }
+        {
+          ...issueTag(activity),
+          ...emphasisTag(getStateName(activity.new_value ?? "", t), "font-medium break-all text-primary"),
+        }
       ),
     icon: <GridOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },

@@ -29,7 +29,8 @@ export type TLanguage =
   | "tr-TR"
   | "ka-ge"
   | "nl"
-  | "bg";
+  | "bg"
+  | "be";
 
 export interface ILanguageOption {
   label: string;

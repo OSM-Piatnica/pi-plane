@@ -114,7 +114,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 completed_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="completed",
                         issue_module__issue__archived_at__isnull=True,
@@ -126,7 +126,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 cancelled_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="cancelled",
                         issue_module__issue__archived_at__isnull=True,
@@ -138,7 +138,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 started_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="started",
                         issue_module__issue__archived_at__isnull=True,
@@ -150,7 +150,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 unstarted_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="unstarted",
                         issue_module__issue__archived_at__isnull=True,
@@ -162,7 +162,7 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 backlog_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="backlog",
                         issue_module__issue__archived_at__isnull=True,
@@ -365,7 +365,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 completed_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="completed",
                         issue_module__issue__archived_at__isnull=True,
@@ -377,7 +377,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 cancelled_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="cancelled",
                         issue_module__issue__archived_at__isnull=True,
@@ -389,7 +389,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 started_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="started",
                         issue_module__issue__archived_at__isnull=True,
@@ -401,7 +401,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 unstarted_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="unstarted",
                         issue_module__issue__archived_at__isnull=True,
@@ -413,7 +413,7 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 backlog_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="backlog",
                         issue_module__issue__archived_at__isnull=True,
@@ -985,7 +985,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 completed_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="completed",
                         issue_module__issue__archived_at__isnull=True,
@@ -997,7 +997,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 cancelled_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="cancelled",
                         issue_module__issue__archived_at__isnull=True,
@@ -1009,7 +1009,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 started_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="started",
                         issue_module__issue__archived_at__isnull=True,
@@ -1021,7 +1021,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 unstarted_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="unstarted",
                         issue_module__issue__archived_at__isnull=True,
@@ -1033,7 +1033,7 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
             )
             .annotate(
                 backlog_issues=Count(
-                    "issue_module__issue__state__group",
+                    "issue_module",
                     filter=Q(
                         issue_module__issue__state__group="backlog",
                         issue_module__issue__archived_at__isnull=True,
