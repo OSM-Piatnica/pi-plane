@@ -194,7 +194,9 @@ class ProjectMemberViewSet(BaseViewSet):
         ).select_related("project", "member", "workspace")
 
         serializer = ProjectMemberRoleSerializer(
-            project_members, fields=("id", "member", "role", "via_group", "group_role", "direct_role"), many=True
+            project_members,
+            fields=("id", "member", "role", "original_role", "created_at", "via_group", "group_role", "direct_role"),
+            many=True,
         )
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -229,7 +231,17 @@ class ProjectMemberViewSet(BaseViewSet):
             serializer = ProjectMemberAdminSerializer(project_member)
         else:
             serializer = ProjectMemberRoleSerializer(
-                project_member, fields=("id", "member", "role", "via_group", "group_role", "direct_role")
+                project_member,
+                fields=(
+                    "id",
+                    "member",
+                    "role",
+                    "original_role",
+                    "created_at",
+                    "via_group",
+                    "group_role",
+                    "direct_role",
+                ),
             )
 
         return Response(
