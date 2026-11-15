@@ -1024,6 +1024,76 @@ class TestWorkItemImportOptions:
 
         assert Issue.objects.get(project=project, name="Child").parent is None
 
+    def test_parent_cycle_in_the_file_is_not_linked(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Cycle", "CYC")
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "A", "name": "A", "state": "Todo", "parent_external_key": "C"},
+                {"external_key": "B", "name": "B", "state": "Todo", "parent_external_key": "A"},
+                {"external_key": "C", "name": "C", "state": "Todo", "parent_external_key": "B"},
+            ],
+        )
+
+        a, b, c = (Issue.objects.get(project=project, name=n) for n in "ABC")
+        # The first two links are fine, the one that would close the loop is skipped
+        assert a.parent_id == c.id
+        assert b.parent_id == a.id
+        assert c.parent_id is None
+        assert any("would create a cycle" in w for w in result["warnings"])
+
+    def test_epic_does_not_get_a_parent(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Epics", "EPX")
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True, created_by=create_user)
+        ProjectIssueType.objects.create(
+            project=project, workspace=workspace, issue_type=epic_type, created_by=create_user
+        )
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "P1", "name": "Parent", "state": "Todo"},
+                {
+                    "external_key": "E1",
+                    "name": "Epic",
+                    "state": "Todo",
+                    "issue_type": "Epic",
+                    "parent_external_key": "P1",
+                },
+                {"external_key": "C1", "name": "Child", "state": "Todo", "parent_external_key": "E1"},
+            ],
+        )
+
+        assert Issue.objects.get(project=project, name="Epic").parent_id is None
+        assert Issue.objects.get(project=project, name="Child").parent.name == "Epic"
+        assert any("Epic cannot have a parent" in w for w in result["warnings"])
+
+    def test_parent_from_another_project_is_not_linked(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Here", "HER")
+        other = _project_with_state(workspace, create_user, "There", "THE")
+        foreign = Issue.objects.create(
+            name="Foreign", project=other, workspace=workspace, created_by=create_user, state=other.default_state
+        )
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {
+                    "external_key": "C1",
+                    "name": "Child",
+                    "state": "Todo",
+                    "parent_external_key": f"THE-{foreign.sequence_id}",
+                }
+            ],
+        )
+
+        assert Issue.objects.get(project=project, name="Child").parent_id is None
+        assert any("is not in this project" in w for w in result["warnings"])
+
     def test_dates_can_be_left_out(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "No dates", "NDA")
 
