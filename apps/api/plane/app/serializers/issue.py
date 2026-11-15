@@ -58,6 +58,7 @@ from plane.utils.content_validator import (
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_dates import apply_date_rules
+from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
 
 class IssueFlatSerializer(BaseSerializer):
@@ -311,6 +312,22 @@ class IssueCreateSerializer(BaseSerializer):
                 issue_type__deleted_at__isnull=True,
             ).exists():
                 raise serializers.ValidationError("Issue type is not enabled for this project")
+
+        # Parent rules (same project, no cycle, an Epic has no parent) hold for the type and parent the work
+        # item ends up with, so a type change alone is checked against the parent it already has.
+        if project_id and ("parent" in attrs or "type" in attrs):
+            effective_parent = attrs["parent"] if "parent" in attrs else getattr(self.instance, "parent", None)
+            effective_type = attrs["type"] if "type" in attrs else getattr(self.instance, "type", None)
+            try:
+                validate_work_item_parent(
+                    project_id=project_id,
+                    workspace_id=Project.objects.filter(pk=project_id).values_list("workspace_id", flat=True).first(),
+                    issue_type=effective_type,
+                    parent=effective_parent,
+                    issue_id=getattr(self.instance, "pk", None),
+                )
+            except WorkItemInvariantError as error:
+                raise serializers.ValidationError({error.field: error.message})
 
         self._reschedule_plan = None
         # Checked last on purpose: the dates are the ones `apply_date_rules` derived
