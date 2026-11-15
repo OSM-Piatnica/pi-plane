@@ -146,26 +146,24 @@ class TestSubIssuesCrossProjectScope:
         assert orphan_b.parent_id is None, "Orphan issue was re-parented across projects"
 
     @pytest.mark.django_db
-    def test_write_cross_project_sub_issue_ids_ignored(
+    def test_write_cross_project_sub_issue_ids_rejected(
         self, session_client, workspace, project_a, parent_a, orphan_b, mocker
     ):
-        """Even with an in-project parent, sub_issue_ids from another project are ignored.
+        """sub_issue_ids from another project reject the whole request and change nothing.
 
         Parent A is valid for the URL project, but ``orphan_b`` lives in project B,
-        so the project-scoped ``sub_issue_ids`` filter must exclude it and leave its
-        parent untouched — and no activity event may be enqueued for it (the activity
-        task does an unscoped lookup + updated_at bump on whatever id it receives).
+        so the project-scoped lookup does not find it. The request is refused with a 400
+        (it used to skip the id silently), the foreign issue keeps its parent, and no
+        activity event is enqueued for it (the activity task does an unscoped lookup +
+        updated_at bump on whatever id it receives).
         """
         mock_activity = mocker.patch("plane.app.views.issue.sub_issue.issue_activity.delay")
         url = SUB_ISSUES_URL.format(slug=workspace.slug, project_id=project_a.id, issue_id=parent_a.id)
         response = session_client.post(url, {"sub_issue_ids": [str(orphan_b.id)]}, format="json")
 
-        assert response.status_code == status.HTTP_200_OK, (
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, (
             f"Got {response.status_code}: {getattr(response, 'data', None)!r}"
         )
-        # The foreign issue must not appear in the response body either.
-        assert response.data["sub_issues"] == [], f"Leaked cross-project issue: {response.data!r}"
-        assert response.data["state_distribution"] == {}, f"Leaked state_distribution: {response.data!r}"
         orphan_b.refresh_from_db()
         assert orphan_b.parent_id is None, "Cross-project issue was re-parented"
         # No activity may be dispatched for the excluded cross-project issue.

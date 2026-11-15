@@ -41,6 +41,7 @@ from plane.utils.content_validator import (
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.work_item_dates import apply_date_rules
+from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
 from .base import BaseSerializer
 from .cycle import CycleLiteSerializer, CycleSerializer
@@ -234,6 +235,19 @@ class IssueSerializer(BaseSerializer):
             ).exists()
         ):
             raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
+
+        # Same parent rules as the app API; a type change alone is checked against the parent already set
+        if self.context.get("project_id") and ("parent" in data or "type" in data):
+            try:
+                validate_work_item_parent(
+                    project_id=self.context.get("project_id"),
+                    workspace_id=self.context.get("workspace_id"),
+                    issue_type=data["type"] if "type" in data else getattr(self.instance, "type", None),
+                    parent=data["parent"] if "parent" in data else getattr(self.instance, "parent", None),
+                    issue_id=getattr(self.instance, "pk", None),
+                )
+            except WorkItemInvariantError as error:
+                raise serializers.ValidationError({error.field: error.message})
 
         if (
             data.get("estimate_point")
