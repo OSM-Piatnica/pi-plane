@@ -5,6 +5,7 @@
 
 # Python imports
 import json
+import uuid
 
 # Django imports
 from django.core import serializers
@@ -15,9 +16,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 # Third party imports
 from rest_framework import status
 from rest_framework.response import Response
-from drf_spectacular.utils import OpenApiResponse, OpenApiRequest
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, OpenApiRequest
 
 # Module imports
+from plane.utils.work_item_descendants import wants_sub_issues, with_sub_issues
 from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.api.serializers import (
     IssueSerializer,
@@ -599,6 +602,18 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+INCLUDE_SUB_ISSUES_PARAMETER = OpenApiParameter(
+    name="include_sub_issues",
+    description=(
+        "Also remove the sub-work items (all levels below) of the work item from the module. "
+        "A one-time change: nothing keeps parents and children in step afterwards."
+    ),
+    required=False,
+    type=OpenApiTypes.BOOL,
+    location=OpenApiParameter.QUERY,
+)
+
+
 class ModuleIssueListCreateAPIEndpoint(BaseAPIView):
     """Module Work Item List and Create Endpoint"""
 
@@ -746,6 +761,12 @@ class ModuleIssueListCreateAPIEndpoint(BaseAPIView):
         issues = Issue.objects.filter(workspace__slug=slug, project_id=project_id, pk__in=issues).values_list(
             "id", flat=True
         )
+        if wants_sub_issues(request.data.get("include_sub_issues")):
+            # The sub-work items of the given work items come along (all levels, same project)
+            expanded, error_response = with_sub_issues(request.user, slug, project_id, list(issues), only_active=True)
+            if error_response is not None:
+                return error_response
+            issues = [uuid.UUID(issue_id) for issue_id in expanded]
 
         module_issues = list(ModuleIssue.objects.filter(issue_id__in=issues))
 
@@ -932,6 +953,7 @@ class ModuleIssueDetailAPIEndpoint(BaseAPIView):
         parameters=[
             MODULE_ID_PARAMETER,
             ISSUE_ID_PARAMETER,
+            INCLUDE_SUB_ISSUES_PARAMETER,
         ],
         responses={
             204: DELETED_RESPONSE,
@@ -952,17 +974,33 @@ class ModuleIssueDetailAPIEndpoint(BaseAPIView):
             issue_id=issue_id,
         )
 
-        module_name = module_issue.module.name if module_issue.module is not None else ""
-        module_issue.delete()
-        issue_activity.delay(
-            type="module.activity.deleted",
-            requested_data=json.dumps({"module_id": str(module_id), "issues": [str(module_issue.issue_id)]}),
-            actor_id=str(request.user.id),
-            issue_id=str(issue_id),
-            project_id=str(project_id),
-            current_instance=json.dumps({"module_name": module_name}),
-            epoch=int(timezone.now().timestamp()),
-        )
+        # The sub-work items of the work item leave the module with it, when asked for
+        sub_issue_links = []
+        if wants_sub_issues(request.query_params.get("include_sub_issues")):
+            expanded, error_response = with_sub_issues(request.user, slug, project_id, [issue_id], only_active=False)
+            if error_response is not None:
+                return error_response
+            sub_issue_links = list(
+                ModuleIssue.objects.filter(
+                    workspace__slug=slug,
+                    project_id=project_id,
+                    module_id=module_id,
+                    issue_id__in=[sub_id for sub_id in expanded if sub_id != str(issue_id)],
+                )
+            )
+
+        for link in [module_issue, *sub_issue_links]:
+            module_name = link.module.name if link.module is not None else ""
+            link.delete()
+            issue_activity.delay(
+                type="module.activity.deleted",
+                requested_data=json.dumps({"module_id": str(module_id), "issues": [str(link.issue_id)]}),
+                actor_id=str(request.user.id),
+                issue_id=str(link.issue_id),
+                project_id=str(project_id),
+                current_instance=json.dumps({"module_name": module_name}),
+                epoch=int(timezone.now().timestamp()),
+            )
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
