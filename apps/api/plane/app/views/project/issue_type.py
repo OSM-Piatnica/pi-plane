@@ -12,6 +12,11 @@ from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import IssueTypeSerializer, ProjectIssueTypeSerializer
 from plane.app.views.base import BaseAPIView, BaseViewSet
 from plane.db.models import IssueType, Project, ProjectIssueType
+from plane.utils.project_issue_types import (
+    EpicsNotAvailableError,
+    ensure_project_epic_type,
+    remove_project_epic_types,
+)
 
 
 class ProjectIssueTypeViewSet(BaseViewSet):
@@ -202,3 +207,30 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
             issue_type__deleted_at__isnull=True,
             issue_type__is_active=True,
         ).select_related("issue_type")
+
+
+class ProjectEpicsEndpoint(BaseAPIView):
+    """The per-project Epics switch: on links the workspace's Epic type, off unlinks the Epic types."""
+
+    def _project(self, slug, project_id):
+        return Project.objects.filter(id=project_id, workspace__slug=slug, deleted_at__isnull=True).first()
+
+    @allow_permission([ROLE.ADMIN], level="PROJECT")
+    def post(self, request, slug, project_id):
+        project = self._project(slug, project_id)
+        if not project:
+            return Response({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            with transaction.atomic():
+                epic_type = ensure_project_epic_type(project, created_by_id=request.user.id)
+        except EpicsNotAvailableError as error:
+            return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(IssueTypeSerializer(epic_type, context={"slug": slug}).data, status=status.HTTP_200_OK)
+
+    @allow_permission([ROLE.ADMIN], level="PROJECT")
+    def delete(self, request, slug, project_id):
+        project = self._project(slug, project_id)
+        if not project:
+            return Response({"error": "Project not found"}, status=status.HTTP_404_NOT_FOUND)
+        remove_project_epic_types(project)
+        return Response(status=status.HTTP_204_NO_CONTENT)

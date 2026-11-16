@@ -400,6 +400,10 @@
         "toggle_title": "Zeiterfassung aktivieren",
         "toggle_description": "Projektmitglieder können die geleistete Arbeitszeit erfassen."
       },
+      "epics": {
+        "toggle_title": "Epics aktivieren",
+        "toggle_description": "Mitglieder können Epics erstellen, also Arbeitselemente, die andere Arbeitselemente zusammenfassen. Beim Deaktivieren bleiben vorhandene Epics erhalten."
+      },
       "milestones": {
         "title": "Meilensteine",
         "short_title": "Meilensteine",

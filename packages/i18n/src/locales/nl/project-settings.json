@@ -400,6 +400,10 @@
         "toggle_title": "Tijdregistratie inschakelen",
         "toggle_description": "Projectleden kunnen gewerkte tijd registreren."
       },
+      "epics": {
+        "toggle_title": "Epics inschakelen",
+        "toggle_description": "Leden kunnen Epics maken, werkitems die andere werkitems groeperen. Als u dit uitschakelt, blijven bestaande Epics behouden."
+      },
       "milestones": {
         "title": "Mijlpalen",
         "short_title": "Mijlpalen",

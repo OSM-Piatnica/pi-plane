@@ -400,6 +400,10 @@
         "toggle_title": "Activer le suivi du temps",
         "toggle_description": "Les membres du projet pourront enregistrer le temps travaillé."
       },
+      "epics": {
+        "toggle_title": "Activer les Epics",
+        "toggle_description": "Les membres pourront créer des Epics, des éléments de travail qui regroupent d’autres éléments de travail. Si vous désactivez cette option, les Epics existants sont conservés."
+      },
       "milestones": {
         "title": "Jalons",
         "short_title": "Jalons",

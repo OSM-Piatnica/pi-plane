@@ -400,6 +400,10 @@
         "toggle_title": "Zaman takibini etkinleştir",
         "toggle_description": "Proje üyeleri çalışılan zamanı kaydedebilecektir."
       },
+      "epics": {
+        "toggle_title": "Epikleri etkinleştir",
+        "toggle_description": "Üyeler, diğer iş öğelerini gruplayan iş öğeleri olan Epikler oluşturabilir. Kapatırsanız mevcut Epikler korunur."
+      },
       "milestones": {
         "title": "Kilometre taşları",
         "short_title": "Kilometre taşları",

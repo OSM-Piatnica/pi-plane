@@ -16,6 +16,7 @@ import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view
 import { PageHead } from "@/components/core/page-title";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
+import { ProjectSettingsEpicsControlItem } from "@/components/settings/project/content/epics-control-item";
 import { ProjectSettingsFeatureControlItem } from "@/components/settings/project/content/feature-control-item";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
@@ -75,6 +76,10 @@ function FeaturesSettingsPage({ params }: Route.ComponentProps) {
               workspaceSlug={workspaceSlug}
             />
           ))}
+          {/* Epics are a work item type, so they only exist in projects that use work item types */}
+          {currentProjectDetails?.is_issue_type_enabled && (
+            <ProjectSettingsEpicsControlItem projectId={projectId} workspaceSlug={workspaceSlug} />
+          )}
         </div>
       </section>
     </SettingsContentWrapper>

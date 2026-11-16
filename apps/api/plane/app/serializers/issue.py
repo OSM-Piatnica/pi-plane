@@ -49,7 +49,6 @@ from plane.db.models import (
     ProjectMember,
     EstimatePoint,
     IssueType,
-    ProjectIssueType,
 )
 from plane.utils.content_validator import (
     validate_html_content,
@@ -57,6 +56,7 @@ from plane.utils.content_validator import (
 )
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
+from plane.utils.project_issue_types import issue_type_assignment_error
 from plane.utils.work_item_dates import apply_date_rules
 from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
@@ -304,14 +304,9 @@ class IssueCreateSerializer(BaseSerializer):
         issue_type = attrs.get("type")
         project_id = self.context.get("project_id")
         if issue_type is not None and project_id:
-            if not ProjectIssueType.objects.filter(
-                project_id=project_id,
-                issue_type_id=issue_type.id,
-                deleted_at__isnull=True,
-                issue_type__is_active=True,
-                issue_type__deleted_at__isnull=True,
-            ).exists():
-                raise serializers.ValidationError("Issue type is not enabled for this project")
+            type_error = issue_type_assignment_error(project_id, issue_type, getattr(self.instance, "type", None))
+            if type_error:
+                raise serializers.ValidationError(type_error)
 
         # Parent rules (same project, no cycle, an Epic has no parent) hold for the type and parent the work
         # item ends up with, so a type change alone is checked against the parent it already has.

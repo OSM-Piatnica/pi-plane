@@ -35,7 +35,7 @@ from .project.member_import import ProjectMemberImportEndpoint
 from .project.member_export import ProjectMemberExportEndpoint
 from .project.project_group import ProjectGroupDetailEndpoint, ProjectGroupEndpoint
 from .project.duplicate import ProjectCopyRetryEndpoint, ProjectCopyStatusEndpoint, ProjectDuplicateEndpoint
-from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint
+from .project.issue_type import ProjectIssueTypeViewSet, ProjectIssueTypeBulkAssignEndpoint, ProjectEpicsEndpoint
 
 from .user.instance_theme import UserInstanceThemeEndpoint
 from .user.base import (

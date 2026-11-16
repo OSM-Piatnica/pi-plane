@@ -400,6 +400,10 @@
         "toggle_title": "時間追跡を有効にする",
         "toggle_description": "プロジェクトメンバーは作業時間を記録できるようになります。"
       },
+      "epics": {
+        "toggle_title": "エピックを有効にする",
+        "toggle_description": "メンバーはエピック（ほかの作業項目をまとめる作業項目）を作成できます。無効にしても、既存のエピックはそのまま残ります。"
+      },
       "milestones": {
         "title": "マイルストーン",
         "short_title": "マイルストーン",
