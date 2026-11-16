@@ -291,6 +291,7 @@ class UserWorkspaceDashboardEndpoint(BaseAPIView):
 
         overdue_issues = Issue.issue_objects.filter(
             ~Q(state__group__in=["completed", "cancelled"]),
+            _visible_issues_q(request.user),
             workspace__slug=slug,
             assignees__in=[request.user],
             target_date__lt=timezone.now(),
@@ -299,6 +300,7 @@ class UserWorkspaceDashboardEndpoint(BaseAPIView):
 
         upcoming_issues = Issue.issue_objects.filter(
             ~Q(state__group__in=["completed", "cancelled"]),
+            _visible_issues_q(request.user),
             start_date__gte=timezone.now(),
             workspace__slug=slug,
             assignees__in=[request.user],
