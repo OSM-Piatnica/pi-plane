@@ -82,6 +82,8 @@ from .workspace.invite import (
 from .workspace.label import WorkspaceLabelsEndpoint
 from .workspace.admin_message import WorkspaceAdminMessageEndpoint
 from .workspace.user_group import (
+    DepartmentListEndpoint,
+    WorkspaceMemberDepartmentEndpoint,
     UserGroupDetailEndpoint,
     UserGroupFilterableEndpoint,
     UserGroupListEndpoint,

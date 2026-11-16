@@ -16,6 +16,7 @@ from django.db import transaction
 from django.utils import timezone
 
 from plane.db.models import Account, GroupRole, GroupSource, UserGroup, UserGroupMember, WorkspaceMember
+from plane.utils.departments import adopt_department, clear_department
 from plane.utils.project_groups import reconcile_user
 from plane.utils.user_groups import MAX_GROUP_DEPTH
 
@@ -130,14 +131,19 @@ def _sync_workspace(workspace_id, user, source, groups):
                 role=GroupRole.MEMBER,
                 managed_externally=True,
             )
+        # A mirrored group a workspace admin marked as a department becomes the department of whoever has none
+        adopt_department(workspace_id, user.id, group)
 
     # Left at the provider: only what this sync put in is taken out. Groups stay, even when nobody is left in them.
-    UserGroupMember.objects.filter(
+    left = UserGroupMember.objects.filter(
         workspace_id=workspace_id,
         user=user,
         managed_externally=True,
         group__source=source,
-    ).exclude(group_id__in=current).delete()
+    ).exclude(group_id__in=current)
+    # A department the person left at the provider is no longer theirs
+    clear_department(workspace_id, list(left.values_list("group_id", flat=True)), user_id=user.id)
+    left.delete()
 
 
 def _as_data(group):

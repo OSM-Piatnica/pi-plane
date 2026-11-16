@@ -12,13 +12,32 @@ from rest_framework.response import Response
 
 # Module imports
 from plane.bgtasks.group_membership_notification_task import ADDED, ROLE_CHANGED, notify_group_membership
-from plane.app.permissions import WorkSpaceAdminPermission, WorkspaceViewerPermission
+from plane.app.permissions import ROLE, WorkSpaceAdminPermission, WorkspaceViewerPermission, allow_permission
 from plane.app.serializers.user_group import (
+    DepartmentLiteSerializer,
+    WorkspaceMemberDepartmentSerializer,
     UserGroupMemberSerializer,
     UserGroupMemberWriteSerializer,
     UserGroupSerializer,
 )
-from plane.db.models import IssueGroupAssignee, ProjectGroup, UserGroup, UserGroupMember, Workspace, WorkspaceMember
+from plane.db.models import (
+    GroupKind,
+    IssueGroupAssignee,
+    ProjectGroup,
+    UserGroup,
+    UserGroupMember,
+    Workspace,
+    WorkspaceMember,
+)
+from plane.utils.departments import (
+    DepartmentError,
+    active_departments,
+    adopt_department,
+    clear_department,
+    code_taken,
+    next_sort_order,
+    set_department,
+)
 from plane.utils.project_groups import reconcile_user, reconcile_workspace
 from plane.utils.user_groups import (
     MAX_GROUP_DEPTH,
@@ -38,6 +57,10 @@ from plane.utils.group_filters import allowed_group_ids
 from ..base import BaseAPIView
 
 EXTERNAL_MESSAGE = "This group is managed by the identity provider and cannot be changed here."
+# What makes a group a department and how it is listed: the dictionary of departments is the workspace admins'
+DEPARTMENT_FIELDS = ("kind", "code", "color", "sort_order", "is_active")
+DEPARTMENT_ADMIN_MESSAGE = "Only a workspace admin can change departments."
+CODE_TAKEN_MESSAGE = "Another department already has this code."
 
 
 def _error(message, code=status.HTTP_400_BAD_REQUEST):
@@ -92,6 +115,13 @@ class UserGroupListEndpoint(_GroupView):
     def get(self, request, slug):
         workspace = self._workspace(slug)
         queryset = UserGroup.objects.filter(workspace=workspace).order_by("name")
+        kind = request.query_params.get("kind")
+        if kind:
+            if kind not in GroupKind.values:
+                return _error("Unknown kind of group.")
+            queryset = queryset.filter(kind=kind)
+            if kind == GroupKind.DEPARTMENT:
+                queryset = queryset.order_by("sort_order", "name")
         return Response(self._present(request, workspace, queryset), status=status.HTTP_200_OK)
 
     def post(self, request, slug):
@@ -116,8 +146,18 @@ class UserGroupListEndpoint(_GroupView):
         name = serializer.validated_data["name"]
         if self._name_taken(workspace, parent_id, name):
             return _error("A group with this name already exists here.", status.HTTP_409_CONFLICT)
+        data = serializer.validated_data
+        extra = {}
+        if any(field in data for field in DEPARTMENT_FIELDS):
+            if not is_workspace_admin(request.user, workspace.id):
+                return _error(DEPARTMENT_ADMIN_MESSAGE, status.HTTP_403_FORBIDDEN)
+            if data.get("kind") == GroupKind.DEPARTMENT:
+                if code_taken(workspace.id, data.get("code", "")):
+                    return _error(CODE_TAKEN_MESSAGE, status.HTTP_409_CONFLICT)
+                if "sort_order" not in data:
+                    extra["sort_order"] = next_sort_order(workspace.id)
 
-        group = serializer.save(workspace=workspace)
+        group = serializer.save(workspace=workspace, **extra)
         return Response(
             self._present(request, workspace, UserGroup.objects.filter(pk=group.pk))[0],
             status=status.HTTP_201_CREATED,
@@ -174,6 +214,15 @@ class UserGroupDetailEndpoint(_GroupView):
         data = serializer.validated_data
         if group.is_external and ("name" in data or "description" in data):
             return _error(EXTERNAL_MESSAGE)
+        # A mirrored group can be made a department: that says what it is here, and changes nothing of the provider's
+        new_kind = data.get("kind", group.kind)
+        if any(field in data and data[field] != getattr(group, field) for field in DEPARTMENT_FIELDS):
+            if not admin:
+                return _error(DEPARTMENT_ADMIN_MESSAGE, status.HTTP_403_FORBIDDEN)
+            if new_kind == GroupKind.DEPARTMENT and code_taken(workspace.id, data.get("code", group.code), group.id):
+                return _error(CODE_TAKEN_MESSAGE, status.HTTP_409_CONFLICT)
+        becomes_department = new_kind == GroupKind.DEPARTMENT and not group.is_department
+        stops_being_department = group.is_department and new_kind != GroupKind.DEPARTMENT
 
         parent_id = group.parent_id
         if "parent" in data:
@@ -199,7 +248,13 @@ class UserGroupDetailEndpoint(_GroupView):
             return _error("A group with this name already exists here.", status.HTTP_409_CONFLICT)
 
         moved = parent_id != group.parent_id
-        serializer.save()
+        extra = {}
+        if becomes_department and "sort_order" not in data:
+            extra["sort_order"] = next_sort_order(workspace.id)
+        with transaction.atomic():
+            serializer.save(**extra)
+            if stops_being_department:
+                clear_department(workspace.id, [group.id])
         if moved:
             # Who belongs to the groups above changed with it, and so do the projects those give
             reconcile_workspace(workspace.id)
@@ -221,6 +276,8 @@ class UserGroupDetailEndpoint(_GroupView):
             IssueGroupAssignee.objects.filter(group=group).delete()
             # ... nor does a project have it as a member
             ProjectGroup.objects.filter(group=group).delete()
+            # ... nor is it anybody's department
+            clear_department(workspace.id, [group.id])
             group.delete()
         reconcile_workspace(workspace.id)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -262,6 +319,7 @@ class UserGroupMembersEndpoint(_GroupView):
         membership = UserGroupMember.objects.create(
             workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
         )
+        adopt_department(workspace.id, user_id, group)
         reconcile_user(workspace.id, user_id)
         notify_group_membership.delay(str(group.id), str(user_id), str(request.user.id), ADDED, membership.role)
         return Response(UserGroupMemberSerializer(membership).data, status=status.HTTP_201_CREATED)
@@ -308,6 +366,47 @@ class UserGroupMemberDetailEndpoint(_GroupView):
         _, membership, error = self._check(request, slug, pk, user_id)
         if error:
             return error
-        membership.delete()
+        with transaction.atomic():
+            membership.delete()
+            clear_department(membership.workspace_id, [membership.group_id], user_id=membership.user_id)
         reconcile_user(membership.workspace_id, membership.user_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DepartmentListEndpoint(BaseAPIView):
+    """The departments a person can choose from: open to every member of the workspace, guests included."""
+
+    permission_classes = [WorkspaceViewerPermission]
+
+    def get(self, request, slug):
+        workspace = Workspace.objects.get(slug=slug)
+        return Response(DepartmentLiteSerializer(active_departments(workspace.id), many=True).data)
+
+
+class WorkspaceMemberDepartmentEndpoint(BaseAPIView):
+    """The department of a workspace member: a workspace admin sets anyone's, everybody else their own."""
+
+    @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
+    def patch(self, request, slug, pk):
+        workspace = Workspace.objects.get(slug=slug)
+        member = WorkspaceMember.objects.filter(
+            workspace=workspace, pk=pk, is_active=True, member__is_bot=False
+        ).first()
+        if member is None:
+            return _error("Workspace member not found.", status.HTTP_404_NOT_FOUND)
+        if member.member_id != request.user.id and not is_workspace_admin(request.user, workspace.id):
+            return _error("Only a workspace admin can set the department of another person.", status.HTTP_403_FORBIDDEN)
+
+        serializer = WorkspaceMemberDepartmentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        department_id = serializer.validated_data["department"]
+        department = None
+        if department_id is not None:
+            department = UserGroup.objects.filter(workspace=workspace, pk=department_id).first()
+            if department is None:
+                return _error("The department does not exist in this workspace.")
+        try:
+            set_department(member, department)
+        except DepartmentError as exc:
+            return _error(str(exc))
+        return Response({"id": member.id, "department": member.department_id}, status=status.HTTP_200_OK)
