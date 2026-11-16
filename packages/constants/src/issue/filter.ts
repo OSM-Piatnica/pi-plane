@@ -36,6 +36,7 @@ export enum EServerGroupByToFilterOptions {
   "finish_date_bucket" = "finish_date_bucket",
   "project_id" = "project",
   "created_by" = "created_by",
+  "parent_id" = "parent",
 }
 
 export enum EIssueFilterType {
@@ -319,6 +320,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "labels",
             "assignees",
             "created_by",
+            "parent",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
@@ -354,6 +356,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "labels",
             "assignees",
             "created_by",
+            "parent",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
@@ -366,6 +369,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "labels",
             "assignees",
             "created_by",
+            "parent",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",

@@ -12,6 +12,7 @@ import {
   EIssueGroupByToServerOptions,
   EServerGroupByToFilterOptions,
   ENABLE_ISSUE_DEPENDENCIES,
+  isHierarchyGrouping,
 } from "@plane/constants";
 import type {
   EIssuesStoreType,
@@ -102,7 +103,8 @@ export class IssueFilterHelperStore implements IIssueFilterHelperStore {
         ? EIssueGroupByToServerOptions[displayFilters.sub_group_by]
         : undefined,
       order_by: displayFilters?.order_by || undefined,
-      sub_issue: displayFilters?.sub_issue ?? false,
+      // grouped by the hierarchy, every work item is listed under its parent, so sub-work items always come
+      sub_issue: isHierarchyGrouping(displayFilters) ? true : (displayFilters?.sub_issue ?? false),
     };
 
     const issueFiltersParams: Partial<Record<TIssueParams, boolean | string>> = {};

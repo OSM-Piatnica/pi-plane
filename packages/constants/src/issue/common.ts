@@ -7,6 +7,7 @@
  */
 
 import type {
+  IIssueDisplayFilterOptions,
   TIssueGroupByOptions,
   TIssueOrderByDirection,
   TIssueOrderByField,
@@ -50,6 +51,7 @@ export enum EIssueGroupByToServerOptions {
   "created_by" = "created_by",
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   "team_project" = "project_id",
+  "parent" = "parent_id",
 }
 
 export enum EIssueGroupBYServerToProperty {
@@ -64,6 +66,7 @@ export enum EIssueGroupBYServerToProperty {
   "finish_date" = "finish_date",
   "project_id" = "project_id",
   "created_by" = "created_by",
+  "parent_id" = "parent_id",
 }
 
 export enum EIssueCommentAccessSpecifier {
@@ -148,11 +151,30 @@ export const ISSUE_GROUP_BY_OPTIONS: {
   { key: "labels", titleTranslationKey: "common.labels" },
   { key: "assignees", titleTranslationKey: "common.assignees" },
   { key: "created_by", titleTranslationKey: "common.created_by" },
+  { key: "parent", titleTranslationKey: "common.parent" },
   { key: "start_date_bucket", titleTranslationKey: "common.order_by.start_date" },
   { key: "target_date_bucket", titleTranslationKey: "common.order_by.due_date" },
   { key: "finish_date_bucket", titleTranslationKey: "common.order_by.finish_date" },
   { key: null, titleTranslationKey: "common.none" },
 ];
+
+// Groupings by the work item hierarchy list every work item of a group, so they always request sub-work items.
+export const HIERARCHY_GROUP_BY_OPTIONS: TIssueGroupByOptions[] = ["parent"];
+
+/**
+ * Whether the layout in use groups by the hierarchy. Group by is stored per view and kept when the layout changes,
+ * so only the groupings the current layout applies count.
+ */
+export const isHierarchyGrouping = (
+  displayFilters: Pick<IIssueDisplayFilterOptions, "layout" | "group_by" | "sub_group_by"> | undefined
+) => {
+  const layout = displayFilters?.layout;
+  const groupBy = layout === "list" || layout === "kanban" ? displayFilters?.group_by : undefined;
+  const subGroupBy = layout === "kanban" ? displayFilters?.sub_group_by : undefined;
+  return (
+    HIERARCHY_GROUP_BY_OPTIONS.includes(groupBy ?? null) || HIERARCHY_GROUP_BY_OPTIONS.includes(subGroupBy ?? null)
+  );
+};
 
 // what a work item list can be sorted on; the direction is chosen separately (see ISSUE_ORDER_BY_DIRECTION_OPTIONS)
 /**
@@ -266,6 +288,7 @@ export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = 
   "modules",
   "cycle",
   "issue_type",
+  "parent",
 ];
 
 export const SUB_ISSUES_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [
@@ -327,9 +350,11 @@ export const ISSUE_DISPLAY_PROPERTIES: {
   },
   { key: "modules", titleTranslationKey: "common.module" },
   { key: "cycle", titleTranslationKey: "common.cycle" },
+  { key: "parent", titleTranslationKey: "common.parent" },
 ];
 
 export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
+  "parent",
   "state",
   "priority",
   "assignee",
@@ -348,16 +373,29 @@ export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
   "sub_issue_count",
 ];
 
+export type TSpreadsheetPropertyDetails = { i18n_title: string; icon: string } & (
+  | {
+      ascendingOrderKey: TIssueOrderByOptions;
+      ascendingOrderTitle: string;
+      descendingOrderKey: TIssueOrderByOptions;
+      descendingOrderTitle: string;
+    }
+  // a column that only shows a value and cannot be sorted
+  | {
+      ascendingOrderKey?: undefined;
+      ascendingOrderTitle?: undefined;
+      descendingOrderKey?: undefined;
+      descendingOrderTitle?: undefined;
+    }
+);
+
 export const SPREADSHEET_PROPERTY_DETAILS: {
-  [key in keyof IIssueDisplayProperties]: {
-    i18n_title: string;
-    ascendingOrderKey: TIssueOrderByOptions;
-    ascendingOrderTitle: string;
-    descendingOrderKey: TIssueOrderByOptions;
-    descendingOrderTitle: string;
-    icon: string;
-  };
+  [key in keyof IIssueDisplayProperties]: TSpreadsheetPropertyDetails;
 } = {
+  parent: {
+    i18n_title: "common.parent",
+    icon: "ParentPropertyIcon",
+  },
   assignee: {
     i18n_title: "common.assignees",
     ascendingOrderKey: "assignees__first_name",

@@ -20,3 +20,10 @@ Both answer "which bigger thing does this belong to", but they are different thi
 - Adding (or removing) a work item that has sub-work items to a module asks whether its sub-work items should follow. Yes copies the membership once, for all levels below. Nothing keeps them in step afterwards, because an Epic often spans modules.
 - A new sub-work item starts in the modules of its parent. The form lets you change that.
 - Epics are left out of the progress numbers of modules and cycles (totals, states, estimate points, assignee and label distributions, burndown), so an Epic is not counted next to its own children. They still show in the lists. Work items that have sub-work items but are not Epics count as before.
+
+## Seeing the hierarchy
+
+Useful in every project, with or without Epics:
+
+- **Parent display property.** List and board rows show the parent of a work item as a chip with its identifier and name; clicking it opens the parent in the peek view. The spreadsheet has a display-only **Parent** column. It is a display property, so it can be turned off per view. Parents that are not part of the loaded page are fetched once per project, in batches, through the permission-scoped work item list, so a guest never receives a work item they cannot open (an unresolved parent shows a placeholder name).
+- **Group by Parent.** Offered for the list and board layouts and as a board sub-group. One group per parent that the filtered work items reference, plus a "None" group for work items without a parent; a group's title is its parent's identifier and name. Sub-work items are always included under this grouping (the "Show sub-work items" option is not offered) and rows cannot be expanded, because children are already listed in their parent's group. Adding a work item in a parent group makes it a sub-work item of that parent. Moving work items between parent groups by dragging is not supported yet.
