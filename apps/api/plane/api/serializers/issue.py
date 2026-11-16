@@ -40,7 +40,7 @@ from plane.utils.content_validator import (
 )
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
-from plane.utils.project_issue_types import issue_type_assignment_error
+from plane.utils.project_issue_types import issue_type_assignment_error, raise_issue_type_assignment_error
 from plane.utils.work_item_dates import apply_date_rules
 from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
@@ -239,10 +239,13 @@ class IssueSerializer(BaseSerializer):
 
         if data.get("type") is not None and self.context.get("project_id"):
             type_error = issue_type_assignment_error(
-                self.context.get("project_id"), data["type"], getattr(self.instance, "type", None)
+                self.context.get("project_id"),
+                data["type"],
+                getattr(self.instance, "type", None),
+                existing=self.instance is not None,
             )
             if type_error:
-                raise serializers.ValidationError({"type_id": type_error})
+                raise_issue_type_assignment_error(type_error, field="type_id")
 
         # Same parent rules as the app API; a type change alone is checked against the parent already set
         if self.context.get("project_id") and ("parent" in data or "type" in data):

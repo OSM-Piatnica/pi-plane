@@ -7,7 +7,7 @@ import uuid
 from rest_framework import serializers
 
 from plane.app.serializers.base import BaseSerializer
-from plane.db.models import IssueType, IssueTypeProperty, Project, ProjectIssueType, Workspace
+from plane.db.models import IssueType, IssueTypeKind, IssueTypeProperty, Project, ProjectIssueType, Workspace
 from plane.utils.issue_type_property import clean_property_list
 from plane.utils.project_issue_types import issue_type_in_use
 
@@ -55,6 +55,7 @@ class IssueTypeSerializer(BaseSerializer):
             "description",
             "logo_props",
             "is_epic",
+            "kind",
             "is_default",
             "is_active",
             "level",
@@ -63,7 +64,8 @@ class IssueTypeSerializer(BaseSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "created_at", "updated_at", "properties"]
+        # The kind is set by code: only `is_epic` moves a type between the standard and the Epic kind
+        read_only_fields = ["id", "kind", "created_at", "updated_at", "properties"]
 
     def validate_logo_props(self, value):
         """Accept only the emoji or icon shape that the web logo renderer understands.
@@ -223,6 +225,10 @@ class IssueTypeSerializer(BaseSerializer):
         # Work items that have a parent would silently become Epics (or Epics would stop being one), so the
         # flag is fixed as soon as a work item uses the type
         if self.instance is not None and "is_epic" in attrs and attrs["is_epic"] != self.instance.is_epic:
+            if self.instance.kind not in (IssueTypeKind.STANDARD, IssueTypeKind.EPIC):
+                raise serializers.ValidationError(
+                    {"is_epic": f"A work item type of the {self.instance.kind} kind cannot become an Epic type"}
+                )
             if issue_type_in_use(self.instance):
                 raise serializers.ValidationError(
                     {"is_epic": "Cannot be changed while work items use this work item type"}

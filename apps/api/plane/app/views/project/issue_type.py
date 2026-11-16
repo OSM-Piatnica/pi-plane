@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import IssueTypeSerializer, ProjectIssueTypeSerializer
 from plane.app.views.base import BaseAPIView, BaseViewSet
-from plane.db.models import IssueType, Project, ProjectIssueType
+from plane.db.models import IssueType, IssueTypeKind, Project, ProjectIssueType
 from plane.utils.project_issue_types import (
     EpicsNotAvailableError,
     ensure_project_epic_type,
@@ -186,7 +186,7 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
             for key, row in existing.items():
                 # Epics are switched on and off through the Epics endpoint only, so a list that leaves an Epic
                 # type out (the settings list does not show them) never turns Epics off
-                if key not in keep and not row.issue_type.is_epic:
+                if key not in keep and row.issue_type.kind != IssueTypeKind.EPIC:
                     row.delete()
 
             if default_uuid:
