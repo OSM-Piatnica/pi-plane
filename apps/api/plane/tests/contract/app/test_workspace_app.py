@@ -14,6 +14,11 @@ from plane.db.models import Workspace, WorkspaceMember
 class TestWorkspaceAPI:
     """Test workspace CRUD operations"""
 
+    @pytest.fixture(autouse=True)
+    def _allow_workspace_creation(self, monkeypatch):
+        # Creation is off by default; these tests are about the create endpoint itself.
+        monkeypatch.setenv("DISABLE_WORKSPACE_CREATION", "0")
+
     @pytest.mark.django_db
     def test_create_workspace_empty_data(self, session_client):
         """Test creating a workspace with empty data"""
