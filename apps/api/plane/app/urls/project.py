@@ -25,6 +25,7 @@ from plane.app.views import (
     WorkspaceProjectIssueTypeSeedEndpoint,
     WorkspaceProjectTemplateGroupsEndpoint,
     ProjectIssueTypeViewSet,
+    ProjectEpicsEndpoint,
     ProjectIssueTypeBulkAssignEndpoint,
     ProjectIssueTypePropertiesEndpoint,
     ProjectDuplicateEndpoint,
@@ -209,6 +210,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/",
         ProjectIssueTypeViewSet.as_view({"get": "list", "post": "create"}),
         name="project-issue-types",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/epics/",
+        ProjectEpicsEndpoint.as_view(),
+        name="project-epics",
     ),
     path(
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-types/bulk/",

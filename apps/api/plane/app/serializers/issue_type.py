@@ -9,6 +9,7 @@ from rest_framework import serializers
 from plane.app.serializers.base import BaseSerializer
 from plane.db.models import IssueType, IssueTypeProperty, Project, ProjectIssueType, Workspace
 from plane.utils.issue_type_property import clean_property_list
+from plane.utils.project_issue_types import issue_type_in_use
 
 
 class IssueTypePropertySerializer(BaseSerializer):
@@ -177,6 +178,17 @@ class IssueTypeSerializer(BaseSerializer):
         if project_ids is not None:
             self._sync_project_links(issue_type, project_ids)
         return issue_type
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        # Work items that have a parent would silently become Epics (or Epics would stop being one), so the
+        # flag is fixed as soon as a work item uses the type
+        if self.instance is not None and "is_epic" in attrs and attrs["is_epic"] != self.instance.is_epic:
+            if issue_type_in_use(self.instance):
+                raise serializers.ValidationError(
+                    {"is_epic": "Cannot be changed while work items use this work item type"}
+                )
+        return attrs
 
     def update(self, instance, validated_data):
         properties = self._raw_properties_from_request()

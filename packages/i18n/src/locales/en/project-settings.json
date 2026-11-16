@@ -400,6 +400,10 @@
         "toggle_title": "Enable time tracking",
         "toggle_description": "Project members will be able to log time worked."
       },
+      "epics": {
+        "toggle_title": "Enable Epics",
+        "toggle_description": "Members can create Epics, work items that group other work items. Turning this off keeps existing Epics."
+      },
       "milestones": {
         "title": "Milestones",
         "short_title": "Milestones",

@@ -400,6 +400,10 @@
         "toggle_title": "Activați urmărirea timpului",
         "toggle_description": "Membrii proiectului vor putea înregistra timpul lucrat."
       },
+      "epics": {
+        "toggle_title": "Activați funcția Epice",
+        "toggle_description": "Membrii vor putea crea Epice, activități care grupează alte activități. La dezactivare, Epicele existente sunt păstrate."
+      },
       "milestones": {
         "title": "Etape importante",
         "short_title": "Etape importante",

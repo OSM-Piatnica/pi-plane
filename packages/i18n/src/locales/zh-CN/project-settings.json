@@ -400,6 +400,10 @@
         "toggle_title": "启用时间跟踪",
         "toggle_description": "项目成员将能够记录工作时间。"
       },
+      "epics": {
+        "toggle_title": "启用史诗",
+        "toggle_description": "成员可以创建史诗，即用于归组其他工作项的工作项。关闭后，现有史诗将保留。"
+      },
       "milestones": {
         "title": "里程碑",
         "short_title": "里程碑",
