@@ -86,7 +86,7 @@ class WorkSpaceViewSet(BaseViewSet):
                 [
                     {
                         "key": "DISABLE_WORKSPACE_CREATION",
-                        "default": os.environ.get("DISABLE_WORKSPACE_CREATION", "0"),
+                        "default": os.environ.get("DISABLE_WORKSPACE_CREATION", "1"),
                     }
                 ]
             )
