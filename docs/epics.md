@@ -2,6 +2,8 @@
 
 An Epic is a work item that groups other work items. It is a work item type (a type marked as an Epic), so it has its own state, assignees and comments like any other work item. Epics are optional, per project.
 
+Epic is one of the kinds a work item type can have; [Work item types and kinds](work-item-types.md) lists them all and the rules each brings.
+
 ## Turning Epics on
 
 Open **Settings → Features** in the project. Work item types must be on first (the same page has that switch and the list of types the project can use). The **Epics** switch then links the workspace's Epic type to the project: the oldest active Epic type, created when the workspace has none. Other Epic types that admins made stay usable through the type list in workspace settings.
@@ -12,6 +14,7 @@ Turning Epics off keeps the Epics and their sub-work items as they are. It only 
 
 - An Epic has no parent. A work item cannot be its own parent, parent and child are in one project, and a change of parent cannot close a cycle. The server checks this for the app, the public API, the sub-work item endpoint and the work item import.
 - Work items without a type count as "not an Epic".
+- A type is an Epic type when its kind is `epic`. The older `is_epic` flag says the same and is kept in step with the kind.
 
 ## Epics and modules
 

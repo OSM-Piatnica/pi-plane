@@ -1071,6 +1071,38 @@ class TestWorkItemImportOptions:
         assert Issue.objects.get(project=project, name="Child").parent.name == "Epic"
         assert any("Epic cannot have a parent" in w for w in result["warnings"])
 
+    def test_system_managed_types_are_not_imported(self, workspace, create_user):
+        project = _project_with_state(workspace, create_user, "Kinds", "KND")
+        for name, kind in (("Approval", "approval"), ("Review", "review"), ("Milestone", "milestone")):
+            issue_type = IssueType.objects.create(workspace=workspace, name=name, kind=kind, created_by=create_user)
+            ProjectIssueType.objects.create(
+                project=project, workspace=workspace, issue_type=issue_type, created_by=create_user
+            )
+
+        result = import_work_items_into_project(
+            project=project,
+            user=create_user,
+            rows=[
+                {"external_key": "A1", "name": "Sign-off", "state": "Todo", "issue_type": "Approval"},
+                {
+                    "external_key": "R1",
+                    "name": "Step",
+                    "state": "Todo",
+                    "issue_type": "Review",
+                    "parent_external_key": "A1",
+                },
+                {"external_key": "M1", "name": "Go-live", "state": "Todo", "issue_type": "Milestone"},
+            ],
+        )
+
+        # Approval and review work items are made by the system: the rows come in without a type
+        assert Issue.objects.get(project=project, name="Sign-off").type is None
+        step = Issue.objects.get(project=project, name="Step")
+        assert step.type is None
+        assert step.parent.name == "Sign-off"
+        assert Issue.objects.get(project=project, name="Go-live").type.kind == "milestone"
+        assert sum("is managed by the system" in w for w in result["warnings"]) == 2
+
     def test_parent_from_another_project_is_not_linked(self, workspace, create_user):
         project = _project_with_state(workspace, create_user, "Here", "HER")
         other = _project_with_state(workspace, create_user, "There", "THE")
