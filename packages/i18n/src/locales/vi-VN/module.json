@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {mô-đun} other {mô-đun}}",
     "no_module": "Không có mô-đun",
-    "select": "Thêm mô-đun"
+    "select": "Thêm mô-đun",
+    "sub_issues": {
+      "add": {
+        "title": "Thêm cả các mục công việc con?",
+        "content": "Các mục công việc này có mục công việc con: {names}. Thêm tất cả mục công việc con của chúng vào mô-đun luôn?",
+        "confirm": "Có, thêm",
+        "decline": "Không, bỏ qua"
+      },
+      "remove": {
+        "title": "Gỡ cả các mục công việc con?",
+        "content": "Các mục công việc này có mục công việc con: {names}. Gỡ tất cả mục công việc con của chúng khỏi mô-đun luôn?",
+        "confirm": "Có, gỡ",
+        "decline": "Không, giữ lại"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Yêu thích",

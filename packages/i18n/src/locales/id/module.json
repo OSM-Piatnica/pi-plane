@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modul} other {Modul}}",
     "no_module": "Tidak ada modul",
-    "select": "Tambah modul"
+    "select": "Tambah modul",
+    "sub_issues": {
+      "add": {
+        "title": "Tambahkan juga sub-item kerja?",
+        "content": "Item kerja ini memiliki sub-item kerja: {names}. Tambahkan juga semua sub-item kerjanya ke modul?",
+        "confirm": "Ya, tambahkan",
+        "decline": "Tidak, lewati"
+      },
+      "remove": {
+        "title": "Hapus juga sub-item kerja?",
+        "content": "Item kerja ini memiliki sub-item kerja: {names}. Hapus juga semua sub-item kerjanya dari modul?",
+        "confirm": "Ya, hapus",
+        "decline": "Tidak, pertahankan"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favorit",

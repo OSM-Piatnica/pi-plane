@@ -21,6 +21,13 @@ import type { RootStore } from "@/store/root.store";
 
 export type TParentReopenRequest = { id: string; name: string; sequence_id: number | string };
 
+/** What the dialog that asks whether sub-work items move along with their parents in a module shows. */
+export type TSubIssuesChoice = {
+  mode: "add" | "remove";
+  /** Names of the work items that have sub-work items */
+  names: string[];
+};
+
 /** What the dialog that offers to cancel a work item just marked as a duplicate shows. */
 export type TDuplicateCancelOffer = {
   /** The work item marked as a duplicate: "PRJ-5 Name" */
@@ -32,6 +39,9 @@ export type TDuplicateCancelOffer = {
 };
 
 export interface IWorkflowStore {
+  pendingSubIssuesChoice: TSubIssuesChoice | null;
+  confirmSubIssues: (choice: TSubIssuesChoice) => Promise<boolean>;
+  resolveSubIssues: (include: boolean) => void;
   pendingDuplicateCancel: TDuplicateCancelOffer | null;
   confirmDuplicateCancel: (offer: TDuplicateCancelOffer) => Promise<boolean>;
   resolveDuplicateCancel: (confirmed: boolean) => void;
@@ -105,6 +115,8 @@ export class WorkflowStore implements IWorkflowStore {
   private duplicateCancelResolver: ((confirmed: boolean) => void) | null = null;
   pendingReschedule: TRelationRescheduleShift[] | null = null;
   private rescheduleResolver: ((confirmed: boolean) => void) | null = null;
+  pendingSubIssuesChoice: TSubIssuesChoice | null = null;
+  private subIssuesResolver: ((include: boolean) => void) | null = null;
   pendingParentReopen: TParentReopenRequest[] | null = null;
   private parentReopenResolver: ((confirmed: boolean) => void) | null = null;
   rootStore: RootStore;
@@ -123,6 +135,9 @@ export class WorkflowStore implements IWorkflowStore {
       pendingReschedule: observable.ref,
       confirmReschedule: action,
       resolveReschedule: action,
+      pendingSubIssuesChoice: observable.ref,
+      confirmSubIssues: action,
+      resolveSubIssues: action,
       pendingParentReopen: observable.ref,
       confirmParentReopen: action,
       resolveParentReopen: action,
@@ -160,6 +175,28 @@ export class WorkflowStore implements IWorkflowStore {
     this.pendingDuplicateCancel = null;
     this.duplicateCancelResolver = null;
     resolver?.(confirmed);
+  };
+
+  /**
+   * Asks whether the sub-work items of a work item should move into (or out of) a module together with it. Resolves
+   * with true for "include them"; a dismissed dialog and a second request while one is open mean "only the work
+   * item", which is what happened before the question existed.
+   */
+  confirmSubIssues = (choice: TSubIssuesChoice) => {
+    if (this.pendingSubIssuesChoice) return Promise.resolve(false);
+    return new Promise<boolean>((resolve) => {
+      runInAction(() => {
+        this.pendingSubIssuesChoice = choice;
+        this.subIssuesResolver = resolve;
+      });
+    });
+  };
+
+  resolveSubIssues = (include: boolean) => {
+    const resolver = this.subIssuesResolver;
+    this.pendingSubIssuesChoice = null;
+    this.subIssuesResolver = null;
+    resolver?.(include);
   };
 
   /**
