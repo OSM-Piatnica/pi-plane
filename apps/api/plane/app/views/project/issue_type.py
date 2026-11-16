@@ -227,8 +227,11 @@ class ProjectEpicsEndpoint(BaseAPIView):
         try:
             with transaction.atomic():
                 epic_type = ensure_project_epic_type(project, created_by_id=request.user.id)
-        except EpicsNotAvailableError as error:
-            return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        except EpicsNotAvailableError:
+            # A fixed message: nothing of the exception itself goes into the response
+            return Response(
+                {"error": "Work item types are not enabled for this project"}, status=status.HTTP_400_BAD_REQUEST
+            )
         return Response(IssueTypeSerializer(epic_type, context={"slug": slug}).data, status=status.HTTP_200_OK)
 
     @allow_permission([ROLE.ADMIN], level="PROJECT")
