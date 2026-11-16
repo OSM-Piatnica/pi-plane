@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Zapnout",
+        "add": "Přidat oddělení",
+        "code": "Kód",
+        "code_hint": "Krátké označení, například RM.",
+        "color": "Barva",
+        "created": "Oddělení bylo přidáno.",
+        "deactivate": "Vypnout",
+        "delete_content": "Lidé z tohoto oddělení zůstanou v pracovním prostoru a nebudou mít žádné oddělení. Pracovním položkám přiřazeným oddělení se toto přiřazení zruší. Tuto akci nelze vrátit zpět.",
+        "deleted": "Oddělení bylo smazáno.",
+        "department": "Oddělení",
+        "description": "Oddělení vaší organizace. Každý člověk má v pracovním prostoru jedno oddělení. Oddělení je zároveň skupinou, takže má členy a lze mu přiřazovat pracovní položky.",
+        "edit": "Upravit oddělení",
+        "empty": "Zatím nejsou žádná oddělení.",
+        "import": "Importovat seznam",
+        "import_done": "Přidaná oddělení: {count}.",
+        "import_hint": "Vložte na každý řádek jedno oddělení ve tvaru KÓD;Název. Oddělení, která už existují, se vynechají.",
+        "import_invalid_lines": "Řádky, které nelze použít: {lines}",
+        "import_summary": "K přidání: {create}. Už existují: {existing}.",
+        "import_title": "Importovat oddělení",
+        "inactive": "Vypnuto",
+        "later": "Později",
+        "move_down": "Přesunout dolů",
+        "move_up": "Přesunout nahoru",
+        "no_color": "Bez barvy",
+        "no_department": "Bez oddělení",
+        "prompt_description": "Vyberte své oddělení v tomto pracovním prostoru. Později je můžete změnit v nastavení pracovního prostoru v části Členové.",
+        "prompt_title": "Ve kterém oddělení pracujete?",
+        "select": "Vyberte oddělení",
+        "title": "Oddělení",
+        "updated": "Oddělení bylo uloženo."
+      },
       "exports": {
         "all_projects": "Všechny projekty",
         "history": {

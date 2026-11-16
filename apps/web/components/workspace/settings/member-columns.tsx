@@ -17,11 +17,15 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 import { setToast } from "@plane/blocks/toast";
-import type { IUser, IWorkspaceMember } from "@plane/types";
+import type { IUser, IWorkspaceMember, TUserGroup } from "@plane/types";
 // plane ui
 import { Select } from "@plane/blocks/select";
 // helpers
 import { getFileURL } from "@plane/utils";
+// components
+import { DepartmentColorDot, DepartmentSelect } from "@/components/workspace/departments/department-select";
+// helpers
+import { getDepartmentLabel } from "@/helpers/department";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
@@ -30,6 +34,8 @@ export interface RowData {
   member: IWorkspaceMember;
   role: EUserPermissions;
   is_active: boolean;
+  /** The id of the person's department. */
+  department?: string | null;
 }
 
 type NameProps = {
@@ -188,5 +194,75 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
         />
       )}
     </>
+  );
+});
+
+type DepartmentProps = {
+  rowData: RowData;
+  workspaceSlug: string;
+  /** Every department of the workspace, the ones that are switched off included. */
+  departments: TUserGroup[];
+};
+
+// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
+export const DepartmentColumn = observer(function DepartmentColumn(props: DepartmentProps) {
+  const { rowData, workspaceSlug, departments } = props;
+  // translation
+  const { t } = useTranslation();
+  // store hooks
+  const { allowPermissions, setWorkspaceUserDepartment } = useUserPermissions();
+  const {
+    workspace: { updateMemberDepartment },
+  } = useMember();
+  const { data: currentUser } = useUser();
+
+  // derived values
+  const isCurrentUser = currentUser?.id === rowData.member.id;
+  const isAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
+  // A workspace admin sets anyone's department, everybody else their own
+  const canEdit = (isAdmin || isCurrentUser) && rowData.is_active !== false;
+  const current = departments.find((department) => department.id === rowData.department) ?? null;
+  // What can be chosen: the departments that are switched on. One the identity provider manages is only
+  // for the people the provider put in it, so it is offered to nobody but the person who has it.
+  const offered = departments.filter((department) => department.is_active && !department.is_external);
+
+  if (!canEdit) {
+    if (!current) return null;
+    return (
+      <div className={`flex w-full items-center gap-2 ${rowData.is_active === false ? "text-placeholder" : ""}`}>
+        <DepartmentColorDot color={current.color} />
+        <span className="truncate">{getDepartmentLabel(current)}</span>
+      </div>
+    );
+  }
+
+  const handleChange = (departmentId: string | null) => {
+    if (!workspaceSlug) return;
+    updateMemberDepartment(workspaceSlug.toString(), rowData.member.id, departmentId)
+      .then(() => {
+        if (isCurrentUser) setWorkspaceUserDepartment(workspaceSlug.toString(), departmentId);
+        return undefined;
+      })
+      .catch((err: unknown) => {
+        const error = err as { error?: string };
+        setToast({
+          type: "error",
+          title: t("toast.error"),
+          message: error?.error ?? t("something_went_wrong_please_try_again"),
+        });
+      });
+  };
+
+  return (
+    <div className="w-full">
+      <DepartmentSelect
+        departments={offered}
+        value={rowData.department ?? null}
+        current={current}
+        onChange={handleChange}
+        allowNone
+        variant="select-ghost-md"
+      />
+    </div>
   );
 });

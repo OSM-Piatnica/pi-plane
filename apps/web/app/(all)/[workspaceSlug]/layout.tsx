@@ -11,6 +11,7 @@ import { AuthenticationWrapper } from "@/lib/wrappers/authentication-wrapper";
 import { WorkspaceContentWrapper } from "@/components/workspace/content-wrapper";
 import { AppRailVisibilityProvider } from "@/hooks/app-rail";
 import { GlobalModals } from "@/components/common/modal/global";
+import { DepartmentPrompt } from "@/components/workspace/departments/department-prompt";
 import { WorkspaceAuthWrapper } from "@/layouts/auth-layout/workspace-wrapper";
 
 export default function WorkspaceLayout() {
@@ -23,6 +24,7 @@ export default function WorkspaceLayout() {
         <AppRailVisibilityProvider>
           <WorkspaceContentWrapper>
             <GlobalModals workspaceSlug={workspaceSlug} />
+            <DepartmentPrompt workspaceSlug={workspaceSlug} />
             <Outlet />
           </WorkspaceContentWrapper>
         </AppRailVisibilityProvider>

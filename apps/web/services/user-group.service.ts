@@ -7,9 +7,11 @@
 import { API_BASE_URL } from "@plane/constants";
 import type {
   EUserGroupRole,
+  TDepartment,
   TFilterableUserGroup,
   TUserGroup,
   TUserGroupFormData,
+  TUserGroupKind,
   TUserGroupMember,
 } from "@plane/types";
 import { APIService } from "@/services/api.service";
@@ -19,8 +21,33 @@ export class UserGroupService extends APIService {
     super(API_BASE_URL);
   }
 
-  async list(workspaceSlug: string): Promise<TUserGroup[]> {
-    return this.get(`/api/workspaces/${workspaceSlug}/user-groups/`)
+  /** Every group of the workspace, or only the groups of one kind (departments come in their own order). */
+  async list(workspaceSlug: string, kind?: TUserGroupKind): Promise<TUserGroup[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/user-groups/`, { params: kind ? { kind } : undefined })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The departments a person can choose from; open to every member of the workspace, guests included. */
+  async listDepartments(workspaceSlug: string): Promise<TDepartment[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/departments/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Sets the department of a workspace member (by the id of the membership); null takes it away. */
+  async setMemberDepartment(
+    workspaceSlug: string,
+    workspaceMemberId: string,
+    departmentId: string | null
+  ): Promise<{ id: string; department: string | null }> {
+    return this.patch(`/api/workspaces/${workspaceSlug}/members/${workspaceMemberId}/department/`, {
+      department: departmentId,
+    })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

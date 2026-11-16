@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activer",
+        "add": "Ajouter un département",
+        "code": "Code",
+        "code_hint": "Un libellé court, par exemple RM.",
+        "color": "Couleur",
+        "created": "Département ajouté.",
+        "deactivate": "Désactiver",
+        "delete_content": "Les personnes de ce département restent dans l’espace de travail et n’ont plus de département. Les éléments de travail attribués au département perdent cette attribution. Cette action est irréversible.",
+        "deleted": "Département supprimé.",
+        "department": "Département",
+        "description": "Les départements de votre organisation. Chaque personne a un département dans l’espace de travail. Un département est aussi un groupe : il a donc des membres et des éléments de travail peuvent lui être attribués.",
+        "edit": "Modifier le département",
+        "empty": "Il n’y a pas encore de départements.",
+        "import": "Importer la liste",
+        "import_done": "Départements ajoutés : {count}.",
+        "import_hint": "Collez un département par ligne au format CODE;Nom. Les départements qui existent déjà sont ignorés.",
+        "import_invalid_lines": "Lignes inutilisables : {lines}",
+        "import_summary": "À ajouter : {create}. Déjà présents : {existing}.",
+        "import_title": "Importer des départements",
+        "inactive": "Désactivé",
+        "later": "Plus tard",
+        "move_down": "Déplacer vers le bas",
+        "move_up": "Déplacer vers le haut",
+        "no_color": "Aucune couleur",
+        "no_department": "Aucun département",
+        "prompt_description": "Sélectionnez votre département dans cet espace de travail. Vous pourrez le modifier plus tard dans les paramètres de l’espace de travail, sous Membres.",
+        "prompt_title": "Dans quel département travaillez-vous ?",
+        "select": "Sélectionner un département",
+        "title": "Départements",
+        "updated": "Département enregistré."
+      },
       "exports": {
         "all_projects": "Tous les projets",
         "history": {

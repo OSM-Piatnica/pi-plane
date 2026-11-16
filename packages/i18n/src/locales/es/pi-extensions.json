@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activar",
+        "add": "Añadir departamento",
+        "code": "Código",
+        "code_hint": "Una etiqueta corta, por ejemplo RM.",
+        "color": "Color",
+        "created": "Departamento añadido.",
+        "deactivate": "Desactivar",
+        "delete_content": "Las personas de este departamento permanecen en el espacio de trabajo y quedan sin departamento. Los elementos de trabajo asignados al departamento pierden esa asignación. Esta acción no se puede deshacer.",
+        "deleted": "Departamento eliminado.",
+        "department": "Departamento",
+        "description": "Los departamentos de su organización. Cada persona tiene un departamento en el espacio de trabajo. Un departamento es también un grupo, por lo que tiene miembros y se le pueden asignar elementos de trabajo.",
+        "edit": "Editar departamento",
+        "empty": "Aún no hay departamentos.",
+        "import": "Importar lista",
+        "import_done": "Departamentos añadidos: {count}.",
+        "import_hint": "Pegue un departamento por línea con el formato CÓDIGO;Nombre. Los departamentos que ya existen se omiten.",
+        "import_invalid_lines": "Líneas que no se pueden usar: {lines}",
+        "import_summary": "Por añadir: {create}. Ya existen: {existing}.",
+        "import_title": "Importar departamentos",
+        "inactive": "Desactivado",
+        "later": "Más tarde",
+        "move_down": "Mover abajo",
+        "move_up": "Mover arriba",
+        "no_color": "Sin color",
+        "no_department": "Sin departamento",
+        "prompt_description": "Seleccione su departamento en este espacio de trabajo. Puede cambiarlo más adelante en la configuración del espacio de trabajo, en Miembros.",
+        "prompt_title": "¿En qué departamento trabaja?",
+        "select": "Seleccione un departamento",
+        "title": "Departamentos",
+        "updated": "Departamento guardado."
+      },
       "exports": {
         "all_projects": "Todos los proyectos",
         "history": {

@@ -15,6 +15,7 @@ export type TWorkspaceSettingsTabs =
   | "general"
   | "members"
   | "groups"
+  | "departments"
   | "export"
   | "import"
   | "work-item-templates"

@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activează",
+        "add": "Adaugă departament",
+        "code": "Cod",
+        "code_hint": "O etichetă scurtă, de exemplu RM.",
+        "color": "Culoare",
+        "created": "Departament adăugat.",
+        "deactivate": "Dezactivează",
+        "delete_content": "Persoanele din acest departament rămân în spațiul de lucru și nu mai au departament. Activitățile atribuite departamentului pierd această atribuire. Această acțiune nu poate fi anulată.",
+        "deleted": "Departament șters.",
+        "department": "Departament",
+        "description": "Departamentele organizației dumneavoastră. Fiecare persoană are un departament în spațiul de lucru. Un departament este și un grup, așadar are membri și i se pot atribui activități.",
+        "edit": "Editează departamentul",
+        "empty": "Nu există încă niciun departament.",
+        "import": "Importă lista",
+        "import_done": "Departamente adăugate: {count}.",
+        "import_hint": "Lipiți câte un departament pe linie, în forma COD;Nume. Departamentele care există deja sunt omise.",
+        "import_invalid_lines": "Linii care nu pot fi folosite: {lines}",
+        "import_summary": "De adăugat: {create}. Există deja: {existing}.",
+        "import_title": "Importă departamente",
+        "inactive": "Dezactivat",
+        "later": "Mai târziu",
+        "move_down": "Mută în jos",
+        "move_up": "Mută în sus",
+        "no_color": "Fără culoare",
+        "no_department": "Fără departament",
+        "prompt_description": "Selectați departamentul dumneavoastră din acest spațiu de lucru. Îl puteți schimba ulterior în setările spațiului de lucru, la Membri.",
+        "prompt_title": "În ce departament lucrați?",
+        "select": "Selectați un departament",
+        "title": "Departamente",
+        "updated": "Departament salvat."
+      },
       "exports": {
         "all_projects": "Toate proiectele",
         "history": {

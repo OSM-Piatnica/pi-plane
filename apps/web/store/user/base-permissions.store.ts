@@ -52,6 +52,7 @@ export interface IBaseUserPermissionStore {
   ) => boolean;
   // actions
   fetchUserWorkspaceInfo: (workspaceSlug: string) => Promise<IWorkspaceMemberMe>;
+  setWorkspaceUserDepartment: (workspaceSlug: string, departmentId: string | null) => void;
   leaveWorkspace: (workspaceSlug: string) => Promise<void>;
   fetchUserProjectInfo: (workspaceSlug: string, projectId: string) => Promise<TProjectMembership>;
   fetchUserProjectPermissions: (workspaceSlug: string) => Promise<IUserProjectsRole>;
@@ -82,6 +83,7 @@ export abstract class BaseUserPermissionStore implements IBaseUserPermissionStor
       // computed
       // actions
       fetchUserWorkspaceInfo: action,
+      setWorkspaceUserDepartment: action,
       leaveWorkspace: action,
       fetchUserProjectInfo: action,
       fetchUserProjectPermissions: action,
@@ -250,6 +252,16 @@ export abstract class BaseUserPermissionStore implements IBaseUserPermissionStor
       this.loader = false;
       throw error;
     }
+  };
+
+  /**
+   * @description Records the department the user has in a workspace, after it was saved
+   * @param { string } workspaceSlug
+   * @param { string | null } departmentId
+   */
+  setWorkspaceUserDepartment = (workspaceSlug: string, departmentId: string | null): void => {
+    if (!this.workspaceUserInfo[workspaceSlug]) return;
+    set(this.workspaceUserInfo, [workspaceSlug, "department"], departmentId);
   };
 
   /**

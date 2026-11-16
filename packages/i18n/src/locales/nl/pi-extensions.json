@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Inschakelen",
+        "add": "Afdeling toevoegen",
+        "code": "Code",
+        "code_hint": "Een korte aanduiding, bijvoorbeeld RM.",
+        "color": "Kleur",
+        "created": "Afdeling toegevoegd.",
+        "deactivate": "Uitschakelen",
+        "delete_content": "De mensen in deze afdeling blijven in de werkruimte en hebben geen afdeling meer. Werkitems die aan de afdeling zijn toegewezen, verliezen die toewijzing. Deze actie kan niet ongedaan worden gemaakt.",
+        "deleted": "Afdeling verwijderd.",
+        "department": "Afdeling",
+        "description": "De afdelingen van uw organisatie. Elke persoon heeft één afdeling in de werkruimte. Een afdeling is ook een groep: ze heeft dus leden en er kunnen werkitems aan worden toegewezen.",
+        "edit": "Afdeling bewerken",
+        "empty": "Er zijn nog geen afdelingen.",
+        "import": "Lijst importeren",
+        "import_done": "Toegevoegde afdelingen: {count}.",
+        "import_hint": "Plak één afdeling per regel in de vorm CODE;Naam. Afdelingen die al bestaan, worden overgeslagen.",
+        "import_invalid_lines": "Regels die niet bruikbaar zijn: {lines}",
+        "import_summary": "Toe te voegen: {create}. Bestaan al: {existing}.",
+        "import_title": "Afdelingen importeren",
+        "inactive": "Uitgeschakeld",
+        "later": "Niet nu",
+        "move_down": "Omlaag verplaatsen",
+        "move_up": "Omhoog verplaatsen",
+        "no_color": "Geen kleur",
+        "no_department": "Geen afdeling",
+        "prompt_description": "Selecteer uw afdeling in deze werkruimte. U kunt dit later wijzigen in de werkruimte-instellingen, onder Leden.",
+        "prompt_title": "Op welke afdeling werkt u?",
+        "select": "Selecteer een afdeling",
+        "title": "Afdelingen",
+        "updated": "Afdeling opgeslagen."
+      },
       "exports": {
         "all_projects": "Alle projecten",
         "history": {

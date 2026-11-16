@@ -231,6 +231,38 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Bật",
+        "add": "Thêm phòng ban",
+        "code": "Mã",
+        "code_hint": "Một nhãn ngắn, ví dụ RM.",
+        "color": "Màu",
+        "created": "Đã thêm phòng ban.",
+        "deactivate": "Tắt",
+        "delete_content": "Những người trong phòng ban này vẫn ở lại không gian làm việc và không có phòng ban. Các mục công việc được giao cho phòng ban sẽ mất lượt giao đó. Không thể hoàn tác hành động này.",
+        "deleted": "Đã xóa phòng ban.",
+        "department": "Phòng ban",
+        "description": "Các phòng ban của tổ chức bạn. Mỗi người có một phòng ban trong không gian làm việc. Phòng ban cũng là một nhóm, vì vậy có thành viên và có thể được giao các mục công việc.",
+        "edit": "Chỉnh sửa phòng ban",
+        "empty": "Chưa có phòng ban nào.",
+        "import": "Nhập danh sách",
+        "import_done": "Số phòng ban đã thêm: {count}.",
+        "import_hint": "Dán mỗi dòng một phòng ban theo dạng MÃ;Tên. Các phòng ban đã tồn tại sẽ được bỏ qua.",
+        "import_invalid_lines": "Các dòng không dùng được: {lines}",
+        "import_summary": "Sẽ thêm: {create}. Đã có: {existing}.",
+        "import_title": "Nhập phòng ban",
+        "inactive": "Đã tắt",
+        "later": "Để sau",
+        "move_down": "Chuyển xuống",
+        "move_up": "Chuyển lên",
+        "no_color": "Không có màu",
+        "no_department": "Không có phòng ban",
+        "prompt_description": "Chọn phòng ban của bạn trong không gian làm việc này. Bạn có thể thay đổi sau trong cài đặt không gian làm việc, ở mục Thành viên.",
+        "prompt_title": "Bạn làm việc ở phòng ban nào?",
+        "select": "Chọn phòng ban",
+        "title": "Phòng ban",
+        "updated": "Đã lưu phòng ban."
+      },
       "exports": {
         "all_projects": "Tất cả dự án",
         "history": {
