@@ -29,6 +29,7 @@ from plane.app.views import (
     IssueAttachmentV2Endpoint,
     IssueBulkUpdateDateEndpoint,
     IssueDateRollupEndpoint,
+    ProjectScheduleAnalysisEndpoint,
     IssueWorkLogDetailEndpoint,
     IssueWorkLogsEndpoint,
     IssueVersionEndpoint,
@@ -302,6 +303,11 @@ urlpatterns = [
         "workspaces/<str:slug>/projects/<uuid:project_id>/issue-date-rollups/",
         IssueDateRollupEndpoint.as_view(),
         name="issue-date-rollups",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/schedule-analysis/",
+        ProjectScheduleAnalysisEndpoint.as_view(),
+        name="project-schedule-analysis",
     ),
     path(
         "workspaces/<str:slug>/work-items/<str:project_identifier>-<str:issue_identifier>/",
