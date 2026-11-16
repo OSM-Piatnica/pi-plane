@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {模組} other {模組}}",
     "no_module": "無模組",
-    "select": "新增模組"
+    "select": "新增模組",
+    "sub_issues": {
+      "add": {
+        "title": "是否同時新增子工作事項？",
+        "content": "以下工作事項包含子工作事項：{names}。是否將它們的所有子工作事項一併新增至模組？",
+        "confirm": "是，新增",
+        "decline": "否，不新增"
+      },
+      "remove": {
+        "title": "是否同時移除子工作事項？",
+        "content": "以下工作事項包含子工作事項：{names}。是否將它們的所有子工作事項一併從模組中移除？",
+        "confirm": "是，移除",
+        "decline": "否，保留"
+      }
+    }
   },
   "module_ui": {
     "favorite": "我的最愛",

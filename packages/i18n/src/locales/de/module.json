@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modul} other {Module}}",
     "no_module": "Kein Modul",
-    "select": "Module hinzufügen"
+    "select": "Module hinzufügen",
+    "sub_issues": {
+      "add": {
+        "title": "Auch die untergeordneten Arbeitselemente hinzufügen?",
+        "content": "Diese Arbeitselemente haben untergeordnete Arbeitselemente: {names}. Alle ihre untergeordneten Arbeitselemente ebenfalls zum Modul hinzufügen?",
+        "confirm": "Ja, hinzufügen",
+        "decline": "Nein, weglassen"
+      },
+      "remove": {
+        "title": "Auch die untergeordneten Arbeitselemente entfernen?",
+        "content": "Diese Arbeitselemente haben untergeordnete Arbeitselemente: {names}. Alle ihre untergeordneten Arbeitselemente ebenfalls aus dem Modul entfernen?",
+        "confirm": "Ja, entfernen",
+        "decline": "Nein, behalten"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favorit",

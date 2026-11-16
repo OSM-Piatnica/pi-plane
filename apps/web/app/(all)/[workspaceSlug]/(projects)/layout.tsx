@@ -7,6 +7,7 @@
 
 import { observer } from "mobx-react";
 import { Outlet } from "react-router";
+import { ModuleSubIssuesConfirmModal } from "@/components/issues/module-sub-issues-confirm-modal";
 import { ProjectsAppPowerKProvider } from "@/components/power-k/projects-app-provider";
 import { StickyActionBar } from "@/components/stickies/action-bar";
 import { DuplicateCancelConfirmModal } from "@/components/workflow/duplicate-cancel-confirm-modal";
@@ -20,6 +21,7 @@ function WorkspaceLayout() {
     <>
       <ProjectsAppPowerKProvider />
       <ParentReopenConfirmModal />
+      <ModuleSubIssuesConfirmModal />
       <DuplicateCancelConfirmModal />
       <RescheduleConfirmModal />
       <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg border border-subtle">
