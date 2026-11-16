@@ -90,6 +90,15 @@ from .workspace.user_group import (
     UserGroupMemberDetailEndpoint,
     UserGroupMembersEndpoint,
 )
+from .workspace.initiative import (
+    InitiativeDetailEndpoint,
+    InitiativeEpicDetailEndpoint,
+    InitiativeEpicsEndpoint,
+    InitiativeListEndpoint,
+    InitiativeProjectDetailEndpoint,
+    InitiativeProjectsEndpoint,
+    InitiativeUpdatesEndpoint,
+)
 from .workspace.state import WorkspaceStatesEndpoint
 from .workspace.user import (
     UserLastProjectWithWorkspaceEndpoint,
