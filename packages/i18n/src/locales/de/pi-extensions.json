@@ -207,6 +207,20 @@
     }
   },
   "reject": "Ablehnen",
+  "schedule_analysis": {
+    "critical_bar": "Auf dem kritischen Pfad: Eine Verzögerung verschiebt das Projektende",
+    "critical_path": "Kritischer Pfad",
+    "critical_path_tooltip": "Hebt die Arbeitselemente hervor, deren Verzögerung das Projektende verschiebt.",
+    "cycles": "Einige Arbeitselemente hängen im Kreis voneinander ab; diese Beziehungen wurden ausgelassen.",
+    "float": "Puffer",
+    "float_critical": "Keiner (kritischer Pfad)",
+    "float_days": "{count, plural, one {# Arbeitstag} other {# Arbeitstage}}",
+    "float_help": "Arbeitstage, um die sich dieses Arbeitselement verzögern kann, ohne das Projektende zu verschieben",
+    "load_error": "Der kritische Pfad konnte nicht geladen werden.",
+    "needed_by": "Benötigt bis",
+    "needed_by_help": "Spätester Abschluss, bei dem die von diesem abhängigen Arbeitselemente ihre Fälligkeitsdaten einhalten",
+    "truncated": "Nur die ersten Arbeitselemente mit Terminen wurden analysiert (Limit: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Sie haben derzeit keine Importe. Sobald Sie eine Datei in ein Projekt importieren, werden alle Importe hier angezeigt.",

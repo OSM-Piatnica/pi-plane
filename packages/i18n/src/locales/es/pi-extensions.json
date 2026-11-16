@@ -207,6 +207,20 @@
     }
   },
   "reject": "Rechazar",
+  "schedule_analysis": {
+    "critical_bar": "En la ruta crítica: un retraso desplaza el final del proyecto",
+    "critical_path": "Ruta crítica",
+    "critical_path_tooltip": "Resalta los elementos de trabajo cuyo retraso desplaza el final del proyecto.",
+    "cycles": "Algunos elementos de trabajo dependen entre sí en círculo; esas relaciones se omitieron.",
+    "float": "Holgura",
+    "float_critical": "Ninguna (ruta crítica)",
+    "float_days": "{count, plural, one {# día laborable} other {# días laborables}}",
+    "float_help": "Días laborables que este elemento de trabajo puede retrasarse sin desplazar el final del proyecto",
+    "load_error": "No se pudo cargar la ruta crítica.",
+    "needed_by": "Necesario para el",
+    "needed_by_help": "Finalización más tardía que permite a los elementos de trabajo que dependen de este cumplir sus fechas de vencimiento",
+    "truncated": "Solo se analizaron los primeros elementos de trabajo con fechas (límite: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Aún no tienes registros de importación. Una vez que importes un archivo a un proyecto, todos los registros aparecerán aquí.",

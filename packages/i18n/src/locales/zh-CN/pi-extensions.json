@@ -207,6 +207,20 @@
     }
   },
   "reject": "拒绝",
+  "schedule_analysis": {
+    "critical_bar": "位于关键路径上：延误会推迟项目结束时间",
+    "critical_path": "关键路径",
+    "critical_path_tooltip": "突出显示一旦延误就会推迟项目结束时间的工作项。",
+    "cycles": "部分工作项相互循环依赖；这些关系已被排除。",
+    "float": "浮动时间",
+    "float_critical": "无（关键路径）",
+    "float_days": "{count, plural, one {# 个工作日} other {# 个工作日}}",
+    "float_help": "在不推迟项目结束时间的前提下，此工作项可以延后的工作日数",
+    "load_error": "无法加载关键路径。",
+    "needed_by": "最迟需要完成于",
+    "needed_by_help": "能让依赖此工作项的工作项赶上截止日期的最晚结束时间",
+    "truncated": "仅分析了最前面的带日期工作项（上限：{count}）。"
+  },
   "settings_empty_state": {
     "imports": {
       "description": "您目前还没有任何导入记录。将文件导入项目后，所有记录都会显示在这里。",
