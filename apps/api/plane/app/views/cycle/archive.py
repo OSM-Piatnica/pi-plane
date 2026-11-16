@@ -34,6 +34,7 @@ from plane.app.permissions import allow_permission, ROLE
 from plane.db.models import Cycle, UserFavorite, Issue, Label, User, Project
 from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
+from plane.utils.epic_progress import not_epic_q
 
 # Module imports
 from .. import BaseAPIView
@@ -49,7 +50,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             workspace__slug=self.kwargs.get("slug"),
         )
         backlog_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="backlog",
                 issue_cycle__cycle_id=OuterRef("pk"),
@@ -60,7 +61,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             .values("backlog_estimate_point")[:1]
         )
         unstarted_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="unstarted",
                 issue_cycle__cycle_id=OuterRef("pk"),
@@ -71,7 +72,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             .values("unstarted_estimate_point")[:1]
         )
         started_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="started",
                 issue_cycle__cycle_id=OuterRef("pk"),
@@ -82,7 +83,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             .values("started_estimate_point")[:1]
         )
         cancelled_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="cancelled",
                 issue_cycle__cycle_id=OuterRef("pk"),
@@ -93,7 +94,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             .values("cancelled_estimate_point")[:1]
         )
         completed_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="completed",
                 issue_cycle__cycle_id=OuterRef("pk"),
@@ -104,7 +105,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             .values("completed_estimate_points")[:1]
         )
         total_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 issue_cycle__cycle_id=OuterRef("pk"),
                 issue_cycle__deleted_at__isnull=True,
@@ -144,7 +145,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -156,7 +158,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -168,7 +171,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -180,7 +184,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -192,7 +197,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -204,7 +210,8 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -310,7 +317,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                 self.get_queryset()
                 .filter(pk=pk)
                 .annotate(
-                    sub_issues=Issue.issue_objects.filter(
+                    sub_issues=Issue.progress_objects.filter(
                         project_id=self.kwargs.get("project_id"),
                         parent__isnull=False,
                         issue_cycle__cycle_id=pk,
@@ -367,7 +374,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
             data["estimate_distribution"] = {}
             if estimate_type:
                 assignee_distribution = (
-                    Issue.issue_objects.filter(
+                    Issue.progress_objects.filter(
                         issue_cycle__cycle_id=pk,
                         issue_cycle__deleted_at__isnull=True,
                         workspace__slug=slug,
@@ -421,7 +428,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
                 )
 
                 label_distribution = (
-                    Issue.issue_objects.filter(
+                    Issue.progress_objects.filter(
                         issue_cycle__cycle_id=pk,
                         issue_cycle__deleted_at__isnull=True,
                         workspace__slug=slug,
@@ -471,7 +478,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
 
             # Assignee Distribution
             assignee_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=pk,
                     issue_cycle__deleted_at__isnull=True,
                     workspace__slug=slug,
@@ -534,7 +541,7 @@ class CycleArchiveUnarchiveEndpoint(BaseAPIView):
 
             # Label Distribution
             label_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=pk,
                     issue_cycle__deleted_at__isnull=True,
                     workspace__slug=slug,

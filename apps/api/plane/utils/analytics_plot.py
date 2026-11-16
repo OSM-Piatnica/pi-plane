@@ -133,7 +133,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
         estimate__type="points",
     ).exists()
     if estimate_type and plot_type == "points" and cycle_id:
-        issue_estimates = Issue.issue_objects.filter(
+        issue_estimates = Issue.progress_objects.filter(
             workspace__slug=slug,
             project_id=project_id,
             issue_cycle__cycle_id=cycle_id,
@@ -145,7 +145,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
         total_estimate_points = sum(issue_estimates)
 
     if estimate_type and plot_type == "points" and module_id:
-        issue_estimates = Issue.issue_objects.filter(
+        issue_estimates = Issue.progress_objects.filter(
             workspace__slug=slug,
             project_id=project_id,
             issue_module__module_id=module_id,
@@ -170,7 +170,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
 
         if plot_type == "points":
             completed_issues_estimate_point_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     workspace__slug=slug,
                     project_id=project_id,
                     issue_cycle__cycle_id=cycle_id,
@@ -184,7 +184,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
             )
         else:
             completed_issues_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     workspace__slug=slug,
                     project_id=project_id,
                     issue_cycle__cycle_id=cycle_id,
@@ -208,7 +208,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
 
         if plot_type == "points":
             completed_issues_estimate_point_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     workspace__slug=slug,
                     project_id=project_id,
                     issue_module__module_id=module_id,
@@ -222,7 +222,7 @@ def burndown_plot(queryset, slug, project_id, plot_type, cycle_id=None, module_i
             )
         else:
             completed_issues_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     workspace__slug=slug,
                     project_id=project_id,
                     issue_module__module_id=module_id,
