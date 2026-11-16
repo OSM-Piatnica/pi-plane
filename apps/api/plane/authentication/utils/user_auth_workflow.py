@@ -4,6 +4,7 @@
 # See the LICENSE file for details.
 
 from plane.utils.auto_join_workspace import join_auto_join_workspace
+from plane.utils.exception_logger import log_exception
 
 from .workspace_project_join import process_workspace_project_invitations
 
@@ -11,4 +12,8 @@ from .workspace_project_join import process_workspace_project_invitations
 def post_user_auth_workflow(user, is_signup, request):
     process_workspace_project_invitations(user=user)
     # After the invites: whoever accepted one to the company workspace is a member already and keeps that role
-    join_auto_join_workspace(user)
+    # Joining is a convenience: whatever goes wrong in it must never stop the person from signing in
+    try:
+        join_auto_join_workspace(user)
+    except Exception as e:
+        log_exception(e)

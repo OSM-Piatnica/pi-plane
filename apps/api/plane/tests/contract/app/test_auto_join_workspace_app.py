@@ -83,6 +83,16 @@ def membership(workspace, user):
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestJoining:
+    def test_a_failure_while_joining_does_not_stop_the_sign_in(self, company):
+        from plane.authentication.utils.user_auth_workflow import post_user_auth_workflow
+
+        user = new_user("anna@example.com")
+
+        with patch("plane.authentication.utils.user_auth_workflow.join_auto_join_workspace", side_effect=RuntimeError):
+            post_user_auth_workflow(user, is_signup=True, request=None)
+
+        assert membership(company, user) is None
+
     def test_a_person_of_the_domain_joins_as_member(self, company):
         user = new_user("anna@example.com")
 
