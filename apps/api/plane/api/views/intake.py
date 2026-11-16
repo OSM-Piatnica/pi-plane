@@ -157,6 +157,13 @@ class IntakeIssueListCreateAPIEndpoint(BaseAPIView):
         if not request.data.get("issue", {}).get("name", False):
             return Response({"error": "Name is required"}, status=status.HTTP_400_BAD_REQUEST)
 
+        name_max_length = Issue._meta.get_field("name").max_length
+        if len(str(request.data["issue"]["name"])) > name_max_length:
+            return Response(
+                {"error": f"Name must be at most {name_max_length} characters"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         intake = Intake.objects.filter(workspace__slug=slug, project_id=project_id).first()
 
         project = Project.objects.get(workspace__slug=slug, pk=project_id)
