@@ -4,6 +4,11 @@
       "heading": "개인 액세스 토큰"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "프로젝트로 전환"
+    }
+  },
   "approve": "승인",
   "duration": "기간",
   "duration_days": "{count, plural, other {#일}}",

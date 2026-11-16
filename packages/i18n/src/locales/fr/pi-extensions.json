@@ -4,6 +4,11 @@
       "heading": "Jetons d'accès personnel"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Basculer vers Projets"
+    }
+  },
   "approve": "Approuver",
   "duration": "Durée",
   "duration_days": "{count, plural, one {# jour} other {# jours}}",

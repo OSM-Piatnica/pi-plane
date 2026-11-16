@@ -4,6 +4,11 @@
       "heading": "个人访问令牌"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "切换到项目"
+    }
+  },
   "approve": "批准",
   "duration": "持续时间",
   "duration_days": "{count, plural, other {# 天}}",

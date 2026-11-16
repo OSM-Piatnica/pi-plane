@@ -4,6 +4,11 @@
       "heading": "Tokeny API"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Przełącz na Projekty"
+    }
+  },
   "appearance": "Wygląd",
   "approve": "Zatwierdź",
   "duration": "Czas trwania",

@@ -4,6 +4,11 @@
       "heading": "Kişisel Erişim Tokenları"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Projeler'e geç"
+    }
+  },
   "approve": "Onayla",
   "duration": "Süre",
   "duration_days": "{count, plural, other {# gün}}",

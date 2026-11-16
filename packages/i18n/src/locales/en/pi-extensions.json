@@ -4,6 +4,11 @@
       "heading": "Personal Access Tokens"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Switch to Projects"
+    }
+  },
   "approve": "Approve",
   "duration": "Duration",
   "duration_days": "{count, plural, one {# day} other {# days}}",

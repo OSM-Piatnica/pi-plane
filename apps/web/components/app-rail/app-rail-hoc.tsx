@@ -10,9 +10,9 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { useTranslation } from "@plane/i18n";
-import { Projects } from "@makeplane/propel/icons";
 import type { AppSidebarItemData } from "@/components/sidebar/sidebar-item";
-import { useWorkspacePaths } from "@/hooks/use-workspace-paths";
+import { APP_RAIL_APP_ICONS } from "./registry-icons";
+import { useAppRailApps } from "./use-app-rail-apps";
 
 type WithDockItemsProps = {
   dockItems: (AppSidebarItemData & { shouldRender: boolean })[];
@@ -22,17 +22,19 @@ export function withDockItems<P extends WithDockItemsProps>(WrappedComponent: Re
   const ComponentWithDockItems = observer(function ComponentWithDockItems(props: Omit<P, keyof WithDockItemsProps>) {
     const { workspaceSlug } = useParams();
     const { t } = useTranslation();
-    const { isProjectsPath, isNotificationsPath } = useWorkspacePaths();
+    const { enabledApps, activeAppKey } = useAppRailApps();
 
-    const dockItems: (AppSidebarItemData & { shouldRender: boolean })[] = [
-      {
-        label: t("projects"),
-        icon: <Projects className="size-5" />,
-        href: `/${workspaceSlug}/`,
-        isActive: isProjectsPath && !isNotificationsPath,
+    // one item per enabled app of the registry, in registry order (see docs/app-rail.md)
+    const dockItems: (AppSidebarItemData & { shouldRender: boolean })[] = enabledApps.map((app) => {
+      const Icon = APP_RAIL_APP_ICONS[app.key];
+      return {
+        label: t(app.i18n_label),
+        icon: <Icon className="size-5" />,
+        href: app.getHref(`${workspaceSlug}`),
+        isActive: activeAppKey === app.key,
         shouldRender: true,
-      },
-    ];
+      };
+    });
 
     return <WrappedComponent {...(props as P)} dockItems={dockItems} />;
   });

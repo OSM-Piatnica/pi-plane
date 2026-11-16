@@ -4,6 +4,11 @@
       "heading": "Лични токени за достъп"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Превключи към Проекти"
+    }
+  },
   "approve": "Одобри",
   "duration": "Продължителност",
   "duration_days": "{count, plural, one {# ден} other {# дни}}",

@@ -1,0 +1,44 @@
+/**
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+ * SPDX-License-Identifier: AGPL-3.0-only
+ * See the LICENSE file for details.
+ */
+
+import type { ComponentType } from "react";
+import type { TAppRailApp, TAppRailAppKey } from "@plane/types";
+import { getAppRailSwitchKeySequence, hasMultipleAppRailApps } from "@plane/utils";
+import type { TPowerKCommandConfig } from "@/components/power-k/core/types";
+
+export const APP_RAIL_SWITCH_COMMAND_ID_PREFIX = "switch_app_";
+
+type TAppRailIcons = Partial<Record<TAppRailAppKey, ComponentType<{ className?: string }>>>;
+
+/**
+ * Command palette entries that switch between rail apps, one per enabled app, with the key
+ * sequence of the app's position in the rail (`g1`, `g2`, ...).
+ *
+ * Returns nothing with fewer than two enabled apps. The commands must be absent then, not just
+ * invisible: the keyboard shortcuts dialog lists every registered command that has a shortcut.
+ */
+export const buildAppRailSwitchCommands = (
+  enabledApps: readonly TAppRailApp[],
+  icons: TAppRailIcons = {}
+): TPowerKCommandConfig[] => {
+  if (!hasMultipleAppRailApps(enabledApps)) return [];
+
+  return enabledApps.map((app, index) => ({
+    id: `${APP_RAIL_SWITCH_COMMAND_ID_PREFIX}${app.key}`,
+    type: "action",
+    group: "navigation",
+    i18n_title: app.i18n_switch_label,
+    icon: icons[app.key],
+    keySequence: getAppRailSwitchKeySequence(index),
+    action: (ctx) => {
+      const workspaceSlug = ctx.params.workspaceSlug?.toString();
+      if (workspaceSlug) ctx.router.push(app.getHref(workspaceSlug));
+    },
+    isEnabled: (ctx) => Boolean(ctx.params.workspaceSlug?.toString()),
+    isVisible: (ctx) => Boolean(ctx.params.workspaceSlug?.toString()),
+    closeOnSelect: true,
+  }));
+};
