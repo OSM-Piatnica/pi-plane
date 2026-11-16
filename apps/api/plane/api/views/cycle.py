@@ -79,6 +79,7 @@ from plane.utils.openapi import (
     UNARCHIVED_RESPONSE,
     REQUIRED_FIELDS_RESPONSE,
 )
+from plane.utils.epic_progress import not_epic_q
 
 
 class CycleListCreateAPIEndpoint(BaseAPIView):
@@ -108,7 +109,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -119,7 +121,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -130,7 +133,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -141,7 +145,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -152,7 +157,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -163,7 +169,8 @@ class CycleListCreateAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .order_by(self.kwargs.get("order_by", "-created_at"))
@@ -446,7 +453,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -457,7 +465,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -468,7 +477,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -479,7 +489,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -490,7 +501,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -501,7 +513,8 @@ class CycleDetailAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .order_by(self.kwargs.get("order_by", "-created_at"))
@@ -688,7 +701,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -699,7 +713,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -710,7 +725,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -721,7 +737,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -732,7 +749,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -743,10 +761,15 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
-            .annotate(total_estimates=Sum("issue_cycle__issue__estimate_point__key"))
+            .annotate(
+                total_estimates=Sum(
+                    "issue_cycle__issue__estimate_point__key", filter=not_epic_q("issue_cycle__issue__")
+                )
+            )
             .annotate(
                 completed_estimates=Sum(
                     "issue_cycle__issue__estimate_point__key",
@@ -755,7 +778,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -766,7 +790,8 @@ class CycleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_cycle__issue__archived_at__isnull=True,
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .order_by(self.kwargs.get("order_by", "-created_at"))

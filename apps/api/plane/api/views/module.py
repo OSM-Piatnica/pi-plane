@@ -76,6 +76,7 @@ from plane.utils.openapi import (
     MODULE_ISSUE_NOT_FOUND_RESPONSE,
     CANNOT_ARCHIVE_RESPONSE,
 )
+from plane.utils.epic_progress import not_epic_q
 
 
 class ModuleListCreateAPIEndpoint(BaseAPIView):
@@ -108,7 +109,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -120,7 +122,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -132,7 +135,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -144,7 +148,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -156,7 +161,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -168,7 +174,8 @@ class ModuleListCreateAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -359,7 +366,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -371,7 +379,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -383,7 +392,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -395,7 +405,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -407,7 +418,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -419,7 +431,8 @@ class ModuleDetailAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -979,7 +992,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -991,7 +1005,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -1003,7 +1018,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -1015,7 +1031,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -1027,7 +1044,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -1039,7 +1057,8 @@ class ModuleArchiveUnarchiveAPIEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
