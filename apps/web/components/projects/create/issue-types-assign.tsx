@@ -19,16 +19,18 @@ type TProps = {
   value: string[];
   onChange: (ids: string[]) => void;
   disabled?: boolean;
+  /** Leave Epic types out, where Epics have a switch of their own */
+  hideEpics?: boolean;
 };
 
 export function ProjectCreateIssueTypesAssign(props: TProps) {
-  const { workspaceSlug, value, onChange, disabled = false } = props;
+  const { workspaceSlug, value, onChange, disabled = false, hideEpics = false } = props;
   const { t } = useTranslation();
   const { data: types, isLoading } = useSWR(workspaceSlug ? `PROJECT_CREATE_ISSUE_TYPES_${workspaceSlug}` : null, () =>
     issueTypeService.listWorkspaceTypes(workspaceSlug, true)
   );
 
-  const rows = (types ?? []) as TIssueType[];
+  const rows = ((types ?? []) as TIssueType[]).filter((row) => !(hideEpics && row.is_epic));
 
   const toggleType = (typeId: string) => {
     if (disabled) return;

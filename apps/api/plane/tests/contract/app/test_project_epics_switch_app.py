@@ -13,6 +13,7 @@ from rest_framework import status
 
 from plane.db.models import Issue, IssueType, Project, ProjectIssueType, ProjectMember, User, WorkspaceMember
 
+BULK_URL = "/api/workspaces/{slug}/projects/{project_id}/issue-types/bulk/"
 EPICS_URL = "/api/workspaces/{slug}/projects/{project_id}/issue-types/epics/"
 ISSUE_URL = "/api/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/"
 ISSUE_TYPE_URL = "/api/workspaces/{slug}/issue-types/{pk}/"
@@ -217,3 +218,37 @@ class TestTypeAssignment:
         )
         assert not serializer.is_valid()
         assert "type_id" in serializer.errors
+
+
+@pytest.mark.contract
+class TestBulkAssignAndEpics:
+    @pytest.mark.django_db
+    def test_a_list_without_the_epic_type_keeps_epics_on(self, session_client, workspace, project, task_type):
+        epics_url = EPICS_URL.format(slug=workspace.slug, project_id=project.id)
+        epic_type = IssueType.objects.get(pk=session_client.post(epics_url).data["id"])
+        bug = IssueType.objects.create(workspace=workspace, name="Bug")
+        old = IssueType.objects.create(workspace=workspace, name="Old")
+        ProjectIssueType.objects.create(project=project, issue_type=old, workspace=workspace)
+
+        response = session_client.post(
+            BULK_URL.format(slug=workspace.slug, project_id=project.id),
+            {"issue_type_ids": [str(task_type.id), str(bug.id)], "default_type_id": str(task_type.id)},
+            format="json",
+        )
+
+        assert response.status_code == status.HTTP_200_OK, response.data
+        assert _linked(project, issue_type=epic_type).exists()
+        assert _linked(project, issue_type=bug).exists()
+        # other types that are not in the list are still unlinked
+        assert not _linked(project, issue_type=old).exists()
+
+    @pytest.mark.django_db
+    def test_a_list_with_an_epic_type_links_it(self, session_client, workspace, project, task_type):
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        response = session_client.post(
+            BULK_URL.format(slug=workspace.slug, project_id=project.id),
+            {"issue_type_ids": [str(task_type.id), str(epic_type.id)]},
+            format="json",
+        )
+        assert response.status_code == status.HTTP_200_OK, response.data
+        assert _linked(project, issue_type=epic_type).exists()

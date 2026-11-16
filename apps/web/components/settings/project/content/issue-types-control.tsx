@@ -23,7 +23,10 @@ type Props = {
   workspaceSlug: string;
 };
 
-/** Which workspace work item types the project can use. A change is saved right away. */
+/**
+ * Which workspace work item types the project can use. A change is saved right away.
+ * Epic types are not listed: the Epics switch owns them, and the bulk endpoint never unlinks them.
+ */
 export const ProjectSettingsIssueTypesControl = observer(function ProjectSettingsIssueTypesControl(props: Props) {
   const { projectId, workspaceSlug } = props;
   // states
@@ -66,6 +69,7 @@ export const ProjectSettingsIssueTypesControl = observer(function ProjectSetting
         value={selectedIds}
         onChange={handleChange}
         disabled={isSaving}
+        hideEpics
       />
     </div>
   );

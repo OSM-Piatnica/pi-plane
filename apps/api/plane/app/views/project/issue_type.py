@@ -165,7 +165,9 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
         with transaction.atomic():
             existing = {
                 str(row.issue_type_id): row
-                for row in ProjectIssueType.objects.filter(project_id=project_id, deleted_at__isnull=True)
+                for row in ProjectIssueType.objects.filter(
+                    project_id=project_id, deleted_at__isnull=True
+                ).select_related("issue_type")
             }
             keep = set()
             for issue_type in valid_types:
@@ -182,7 +184,9 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
                     existing[str(issue_type.id)].is_default = True
                     existing[str(issue_type.id)].save()
             for key, row in existing.items():
-                if key not in keep:
+                # Epics are switched on and off through the Epics endpoint only, so a list that leaves an Epic
+                # type out (the settings list does not show them) never turns Epics off
+                if key not in keep and not row.issue_type.is_epic:
                     row.delete()
 
             if default_uuid:
