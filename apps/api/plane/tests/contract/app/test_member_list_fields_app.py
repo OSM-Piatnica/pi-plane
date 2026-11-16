@@ -16,7 +16,8 @@ from plane.db.models import Project, ProjectMember, WorkspaceMember
 from plane.tests.factories import UserFactory
 
 ALLOWED = {"id", "member", "role"}
-NON_GUEST_WORKSPACE_FIELDS = ALLOWED | {"is_active", "created_at"}
+# the fork also returns the department (the id of a user group of kind "department")
+NON_GUEST_WORKSPACE_FIELDS = ALLOWED | {"is_active", "created_at", "department"}
 # the fork also returns the group fields the project members page shows as badges
 PROJECT_LIST_FIELDS = ALLOWED | {"original_role", "created_at", "via_group", "group_role", "direct_role"}
 
