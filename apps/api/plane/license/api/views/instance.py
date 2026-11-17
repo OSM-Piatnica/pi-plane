@@ -35,6 +35,7 @@ from plane.utils.admin_message_limit import (
     get_deployment_admin_message_limit,
 )
 from plane.utils.cache import cache_response, invalidate_cache
+from plane.utils.sharepoint.config import is_sharepoint_enabled
 from plane.utils.space import is_space_deployed, is_space_enabled
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
@@ -155,6 +156,8 @@ class InstanceEndpoint(BaseAPIView):
         # Web sharing: whether Space is part of this installation, and whether it is switched on
         data["is_space_deployed"] = is_space_deployed()
         data["is_space_enabled"] = is_space_enabled()
+        # Documents can be kept in SharePoint: switched on by the administrator and the credentials are saved
+        data["is_sharepoint_enabled"] = is_sharepoint_enabled()
 
         # Github app name
         data["github_app_name"] = str(GITHUB_APP_NAME)

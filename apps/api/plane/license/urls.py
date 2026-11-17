@@ -21,6 +21,7 @@ from plane.license.api.views import (
     InstanceWorkSpaceEndpoint,
     InstanceThemeEndpoint,
     InstanceThemeDetailEndpoint,
+    SharePointConnectionTestEndpoint,
 )
 
 urlpatterns = [
@@ -76,4 +77,9 @@ urlpatterns = [
     path("workspaces/", InstanceWorkSpaceEndpoint.as_view(), name="instance-workspace"),
     path("themes/", InstanceThemeEndpoint.as_view(), name="instance-themes"),
     path("themes/<uuid:pk>/", InstanceThemeDetailEndpoint.as_view(), name="instance-theme-detail"),
+    path(
+        "sharepoint/test-connection/",
+        SharePointConnectionTestEndpoint.as_view(),
+        name="instance-sharepoint-test-connection",
+    ),
 ]
