@@ -78,6 +78,27 @@ workspace_management_config_variables = [
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
+    {
+        # Workspace UUID that people of AUTO_JOIN_EMAIL_DOMAINS join when they sign in (plane.utils.auto_join_workspace)
+        "key": "AUTO_JOIN_WORKSPACE_ID",
+        "value": os.environ.get("AUTO_JOIN_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # The role they get there: 15 (Member) or 5 (Guest)
+        "key": "AUTO_JOIN_WORKSPACE_ROLE",
+        "value": os.environ.get("AUTO_JOIN_WORKSPACE_ROLE", "15"),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Email domains separated by commas, e.g. "example.com"; empty turns joining off
+        "key": "AUTO_JOIN_EMAIL_DOMAINS",
+        "value": os.environ.get("AUTO_JOIN_EMAIL_DOMAINS", ""),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
 ]
 
 github_config_variables = [
