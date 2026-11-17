@@ -229,6 +229,12 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
       } else if (groupByKey === "parent") {
         // a work item added to a parent group becomes a sub-work item of it; in "None" it has no parent
         preloadedData = { ...preloadedData, parent_id: groupValue === "None" ? null : groupValue };
+      } else if (groupByKey === "epic") {
+        preloadedData = {
+          ...preloadedData,
+          parent_id: groupValue === "None" ? null : groupValue,
+          epic_id: groupValue === "None" ? null : groupValue,
+        };
       } else if (groupByKey === "created_by") {
         preloadedData = { ...preloadedData };
       } else {
@@ -251,6 +257,12 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
         preloadedData = { ...preloadedData, assignee_ids: [subGroupValue] };
       } else if (subGroupByKey === "parent") {
         preloadedData = { ...preloadedData, parent_id: subGroupValue === "None" ? null : subGroupValue };
+      } else if (subGroupByKey === "epic") {
+        preloadedData = {
+          ...preloadedData,
+          parent_id: subGroupValue === "None" ? null : subGroupValue,
+          epic_id: subGroupValue === "None" ? null : subGroupValue,
+        };
       } else if (subGroupByKey === "created_by") {
         preloadedData = { ...preloadedData };
       } else {

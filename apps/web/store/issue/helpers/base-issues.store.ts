@@ -148,6 +148,7 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   module: "module_ids",
   team_project: "project_id",
   parent: "parent_id",
+  epic: "epic_id",
 };
 
 export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof TIssue> = {
@@ -168,6 +169,7 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   finish_date_bucket: "finish_date",
   team_project: "project_id",
   parent: "parent_id",
+  epic: "epic_id",
 };
 
 // This constant maps the order by keys to the respective issue property that the key relies on
@@ -321,6 +323,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
   abstract fetchParentStats: (workspaceSlug: string, projectId?: string, id?: string) => void;
 
   abstract updateParentStats: (prevIssueState?: TIssue, nextIssueState?: TIssue, id?: string) => void;
+
+  // Reload the groups that the server derives from the hierarchy (Epic groups); stores that can do it override this
+  refreshHierarchyGroups(_workspaceSlug: string, _projectId: string): void {}
 
   // current Module Id from url
   get moduleId() {
@@ -586,12 +591,15 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     id?: string,
     shouldUpdateList = true
   ) {
-    // perform an API call
-    const response = await this.issueService.createIssue(workspaceSlug, projectId, data);
+    // perform an API call; epic_id is derived by the server, so it is not sent
+    const { epic_id: epicId, ...payload } = data;
+    const response = await this.issueService.createIssue(workspaceSlug, projectId, payload);
 
     const enrichedResponse = {
       ...response,
       type_id: response?.type_id ?? data.type_id ?? null,
+      // a work item created in an Epic group stays in it
+      ...(epicId !== undefined ? { epic_id: epicId } : {}),
     };
 
     // add Issue to Store
@@ -643,12 +651,13 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         ...data,
       } as TIssue);
 
-      // call API to update the issue
+      // call API to update the issue; epic_id is derived by the server, so it is not sent
+      const { epic_id: _epicId, ...patchData } = data;
       const response = await this.issueService.patchIssue(
         workspaceSlug,
         projectId,
         issueId,
-        (initializePairedDate ? { ...data, initialize_paired_date: true } : data) as Partial<TIssue>,
+        (initializePairedDate ? { ...patchData, initialize_paired_date: true } : patchData) as Partial<TIssue>,
         options
       );
 
@@ -682,6 +691,10 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
+
+      // A parent change moves the whole subtree to another Epic, which only the server can resolve
+      if ("parent_id" in data && (this.groupBy === "epic" || this.subGroupBy === "epic"))
+        this.refreshHierarchyGroups(workspaceSlug, projectId);
     } catch (error) {
       // If errored out update store again to revert the change
       this.rootIssueStore.issues.updateIssue(issueId, issueBeforeUpdate ?? {});

@@ -19,6 +19,7 @@ import {
   LabelsOutline,
   LinkOutline,
   MembersOutline,
+  EpicOutline,
   ModuleOutline,
   ParentOutline,
   PriorityOutline,
@@ -185,6 +186,7 @@ export const getGroupByColumns = ({
     finish_date_bucket: () => getDateBucketColumns("finish_date"),
     team_project: getTeamProjectColumns,
     parent: getParentColumns,
+    epic: getEpicColumns,
   };
 
   // Get and return the columns for the specified group by option
@@ -192,34 +194,51 @@ export const getGroupByColumns = ({
 };
 
 /**
- * The groups of a parent grouping: the parents that the loaded work items reference, in identifier order, and the
- * work items without a parent. A group that is not loaded (yet) shows a placeholder name; one the person cannot open
- * keeps it.
+ * The groups of a grouping by a work item (a parent, an Epic): the work items that the loaded work items reference, in
+ * identifier order, and the work items without one. A group that is not loaded (yet) shows a placeholder name; one the
+ * person cannot open keeps it.
  */
-const getParentColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] => {
+const getWorkItemGroupColumns = (
+  groupIds: string[] | undefined,
+  payloadFor: (workItemId: string | null) => Partial<TIssue>,
+  noneIcon: React.ReactElement,
+  unresolvedName: string
+): IGroupByColumn[] => {
   const { getIssueById } = store.issue.issues;
   const { getProjectIdentifierById } = store.projectRoot.project;
-  const parents = orderWorkItemGroups(groupIds, getIssueById);
+  const workItems = orderWorkItemGroups(groupIds, getIssueById);
 
-  const columns: IGroupByColumn[] = parents.map(({ workItemId, workItem }) => {
+  const columns: IGroupByColumn[] = workItems.map(({ workItemId, workItem }) => {
     const projectIdentifier = workItem?.project_id ? getProjectIdentifierById(workItem.project_id) : undefined;
     return {
       id: workItemId,
       name: workItem
         ? `${projectIdentifier ? `${projectIdentifier}-${workItem.sequence_id} ` : ""}${workItem.name}`
-        : "Parent",
+        : unresolvedName,
       icon: <WorkItemGroupIcon workItemId={workItemId} />,
-      payload: { parent_id: workItemId },
+      payload: payloadFor(workItemId),
     };
   });
-  columns.push({
-    id: "None",
-    name: "None",
-    icon: <ParentOutline className="h-3.5 w-3.5" />,
-    payload: { parent_id: null },
-  });
+  columns.push({ id: "None", name: "None", icon: noneIcon, payload: payloadFor(null) });
   return columns;
 };
+
+const getParentColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (parentId) => ({ parent_id: parentId }),
+    <ParentOutline className="h-3.5 w-3.5" />,
+    "Parent"
+  );
+
+// A work item moved to an Epic group goes directly under that Epic, hence both fields
+const getEpicColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (epicId) => ({ parent_id: epicId, epic_id: epicId }),
+    <EpicOutline className="h-3.5 w-3.5" />,
+    "Epic"
+  );
 
 /**
  * The groups of a date: its time buckets. The names are built where no translation is available, so they are

@@ -34,6 +34,7 @@ class TestIssueGroupByAllowlist:
             "finish_date",
             "start_date",
             "parent_id",
+            "epic_id",
             "schedule_date",
             "start_date_bucket",
             "target_date_bucket",

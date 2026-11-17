@@ -30,6 +30,7 @@ export type TIssueGroupByOptions =
   | "finish_date_bucket"
   | "team_project"
   | "parent"
+  | "epic"
   | null;
 
 export type TIssueOrderByOptions =
@@ -118,6 +119,7 @@ export type TIssueParams =
   | "layout"
   | "expand"
   | "parent"
+  | "epic"
   | "filters";
 
 export type TCalendarLayouts = "month" | "week";
