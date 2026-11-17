@@ -304,7 +304,8 @@ class IssueCreateSerializer(BaseSerializer):
 
         issue_type = attrs.get("type")
         project_id = self.context.get("project_id")
-        if issue_type is not None and project_id:
+        # Checked whenever a type was sent, null included: clearing the type is a change of type as well
+        if "type" in attrs and project_id:
             type_error = issue_type_assignment_error(
                 project_id, issue_type, getattr(self.instance, "type", None), existing=self.instance is not None
             )

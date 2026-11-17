@@ -66,38 +66,45 @@ class IssueType(BaseModel):
         return self.name
 
     def _remember_kind(self):
-        # Remembered so that `save` can tell which of the two fields the caller changed
-        if not {"kind", "is_epic"} & self.get_deferred_fields():
-            self._loaded_kind = self.kind
-            self._loaded_is_epic = self.is_epic
+        # The kind the database holds, remembered so that `save` can tell a kind the caller changed from one that
+        # was only loaded. Called only right after the field was read from or written to the database: a value
+        # the caller set in memory must never be taken for the stored one
+        if "kind" in self.__dict__:
+            self._loaded_kind = self.__dict__["kind"]
 
     @classmethod
     def from_db(cls, db, field_names, values):
         instance = super().from_db(db, field_names, values)
-        instance._remember_kind()
+        if "kind" in field_names:
+            instance._remember_kind()
         return instance
 
-    def refresh_from_db(self, *args, **kwargs):
-        super().refresh_from_db(*args, **kwargs)
-        self._remember_kind()
+    def refresh_from_db(self, using=None, fields=None, from_queryset=None):
+        super().refresh_from_db(using=using, fields=fields, from_queryset=from_queryset)
+        # Django also comes here to load one deferred field (`fields=[name]`), so only a reloaded kind counts
+        if fields is None or "kind" in fields:
+            self._remember_kind()
 
     def sync_kind_and_is_epic(self):
         """Make `is_epic` and `kind` agree before a save.
 
         A changed `kind` decides. Otherwise `is_epic`, which upstream code and the type form write, moves the type
         between the standard and the Epic kind; it never changes a milestone, approval or review type.
+
+        Only the stored kind is remembered. The stored flag always matches it (the check constraint), so a flag
+        that disagrees with an unchanged kind is a flag the caller changed.
         """
 
         epic, standard = IssueTypeKind.EPIC, IssueTypeKind.STANDARD
+        # Reading the kind loads it when it was deferred, which also remembers the stored value
+        kind, is_epic = self.kind, self.is_epic
         if hasattr(self, "_loaded_kind"):
-            kind_changed = self.kind != self._loaded_kind
-            is_epic_changed = self.is_epic != self._loaded_is_epic
+            kind_changed = kind != self._loaded_kind
         else:
-            # A new row, or one loaded without these fields: an explicit kind is anything but the default
-            kind_changed = self.kind != standard
-            is_epic_changed = not kind_changed
-        if not kind_changed and is_epic_changed and self.kind in (epic, standard):
-            self.kind = epic if self.is_epic else standard
+            # A new row: an explicit kind is anything but the default
+            kind_changed = kind != standard
+        if not kind_changed and is_epic != (kind == epic) and kind in (epic, standard):
+            self.kind = epic if is_epic else standard
         self.is_epic = self.kind == epic
 
     def save(self, *args, **kwargs):
@@ -106,7 +113,9 @@ class IssueType(BaseModel):
         if update_fields is not None and {"kind", "is_epic"} & set(update_fields):
             kwargs["update_fields"] = list({*update_fields, "kind", "is_epic"})
         super().save(*args, **kwargs)
-        self._remember_kind()
+        # A save limited to other fields did not write these two, so what is remembered still holds
+        if kwargs.get("update_fields") is None or "kind" in kwargs["update_fields"]:
+            self._remember_kind()
 
 
 class ProjectIssueType(ProjectBaseModel):

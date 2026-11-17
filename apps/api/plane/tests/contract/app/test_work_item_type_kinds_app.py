@@ -28,6 +28,7 @@ from plane.utils.work_item_hierarchy import parent_kind_error
 
 ISSUES_URL = "/api/workspaces/{slug}/projects/{project_id}/issues/"
 ISSUE_URL = "/api/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/"
+PUBLIC_ISSUE_URL = "/api/v1/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/"
 SUB_ISSUES_URL = "/api/workspaces/{slug}/projects/{project_id}/issues/{issue_id}/sub-issues/"
 ISSUE_TYPES_URL = "/api/workspaces/{slug}/issue-types/"
 ISSUE_TYPE_URL = "/api/workspaces/{slug}/issue-types/{pk}/"
@@ -271,6 +272,102 @@ class TestTypeSwitch:
         )
         assert response.status_code == status.HTTP_201_CREATED, response.data
         assert Issue.objects.get(project=project, name="Sign-off").type_id == types["approval"].id
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", ["approval", "review"])
+    def test_clearing_the_type_of_a_system_managed_item_is_rejected(
+        self, session_client, workspace, project, types, create_user, kind
+    ):
+        # Taking the type off would open the way round the rule: null first, then any standard type
+        approval = _make_issue("Approval", project, workspace, create_user, issue_type=types["approval"])
+        item = (
+            approval
+            if kind == "approval"
+            else _make_issue("Review", project, workspace, create_user, parent=approval, issue_type=types["review"])
+        )
+        url = ISSUE_URL.format(slug=workspace.slug, project_id=project.id, issue_id=item.id)
+
+        cleared = session_client.patch(url, {"type_id": None}, format="json")
+
+        assert cleared.status_code == status.HTTP_400_BAD_REQUEST
+        assert cleared.data["error_code"] == SYSTEM_MANAGED_TYPE_CODE
+        item.refresh_from_db()
+        assert item.type_id == types[kind].id
+        # The second step of the way round is refused as well, since the type is still there
+        switched = session_client.patch(url, {"type_id": str(types["standard"].id)}, format="json")
+        assert switched.status_code == status.HTTP_400_BAD_REQUEST
+        item.refresh_from_db()
+        assert item.type_id == types[kind].id
+
+    @pytest.mark.django_db
+    def test_clearing_the_type_of_other_items_still_works(self, session_client, workspace, project, types, create_user):
+        for name, kind in (("Task", "standard"), ("Milestone", "milestone"), ("Untyped", "none")):
+            item = _make_issue(name, project, workspace, create_user, issue_type=types[kind])
+            response = session_client.patch(
+                ISSUE_URL.format(slug=workspace.slug, project_id=project.id, issue_id=item.id),
+                {"type_id": None},
+                format="json",
+            )
+            assert response.status_code == status.HTTP_204_NO_CONTENT, response.data
+            item.refresh_from_db()
+            assert item.type_id is None
+
+    @pytest.mark.django_db
+    def test_a_patch_without_a_type_leaves_a_system_managed_item_alone(
+        self, session_client, workspace, project, types, create_user
+    ):
+        item = _make_issue("Approval", project, workspace, create_user, issue_type=types["approval"])
+        response = session_client.patch(
+            ISSUE_URL.format(slug=workspace.slug, project_id=project.id, issue_id=item.id),
+            {"priority": "high"},
+            format="json",
+        )
+        assert response.status_code == status.HTTP_204_NO_CONTENT, response.data
+        item.refresh_from_db()
+        assert item.type_id == types["approval"].id
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", ["approval", "review"])
+    def test_the_public_api_rejects_clearing_the_type(
+        self, api_key_client, workspace, project, types, create_user, kind
+    ):
+        from plane.api.serializers import IssueSerializer
+
+        approval = _make_issue("Approval", project, workspace, create_user, issue_type=types["approval"])
+        item = (
+            approval
+            if kind == "approval"
+            else _make_issue("Review", project, workspace, create_user, parent=approval, issue_type=types["review"])
+        )
+        context = {"project_id": project.id, "workspace_id": workspace.id, "default_assignee_id": None}
+
+        serializer = IssueSerializer(item, data={"type_id": None}, partial=True, context=context)
+        with pytest.raises(IssueTypeChangeRejected) as rejected:
+            serializer.is_valid()
+        assert rejected.value.detail["error_code"] == SYSTEM_MANAGED_TYPE_CODE
+
+        response = api_key_client.patch(
+            PUBLIC_ISSUE_URL.format(slug=workspace.slug, project_id=project.id, issue_id=item.id),
+            {"type_id": None},
+            format="json",
+        )
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, response.data
+        assert response.data["error_code"] == SYSTEM_MANAGED_TYPE_CODE
+        item.refresh_from_db()
+        assert item.type_id == types[kind].id
+
+    @pytest.mark.django_db
+    def test_the_public_api_still_clears_the_type_of_a_task(self, workspace, project, types, create_user):
+        from plane.api.serializers import IssueSerializer
+
+        context = {"project_id": project.id, "workspace_id": workspace.id, "default_assignee_id": None}
+        task = _make_issue("Task", project, workspace, create_user, issue_type=types["standard"])
+        serializer = IssueSerializer(task, data={"type_id": None}, partial=True, context=context)
+        assert serializer.is_valid(), serializer.errors
+        # A patch that does not send the type is not a change of type
+        approval = _make_issue("Approval", project, workspace, create_user, issue_type=types["approval"])
+        untouched = IssueSerializer(approval, data={"name": "Sign-off"}, partial=True, context=context)
+        assert untouched.is_valid(), untouched.errors
 
     @pytest.mark.django_db
     def test_the_public_api_rejects_the_switch_too(self, workspace, project, types, create_user):

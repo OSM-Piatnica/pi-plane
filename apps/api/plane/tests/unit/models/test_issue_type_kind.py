@@ -13,6 +13,7 @@ from importlib import import_module
 import pytest
 from django.apps import apps as django_apps
 from django.db import IntegrityError, connection, transaction
+from django.test.utils import CaptureQueriesContext
 from django.utils import timezone
 
 from plane.db.models import (
@@ -136,6 +137,68 @@ class TestKindAndIsEpicStayInSync:
         assert _stored(issue_type) == ("approval", False)
 
     @pytest.mark.django_db
+    def test_loading_a_deferred_field_does_not_lose_a_changed_flag(self, workspace):
+        # Django loads a deferred field through `refresh_from_db(fields=[name])`; the flag set before that
+        # read is a change by the caller, not the stored value
+        issue_type = IssueType.objects.defer("description").get(pk=_type(workspace, "Task").pk)
+        issue_type.is_epic = True
+        assert issue_type.description == ""
+        issue_type.save()
+        assert _stored(issue_type) == ("epic", True)
+
+        issue_type = IssueType.objects.defer("description").get(pk=issue_type.pk)
+        issue_type.is_epic = False
+        assert issue_type.description == ""
+        issue_type.save()
+        assert _stored(issue_type) == ("standard", False)
+
+    @pytest.mark.django_db
+    def test_a_partial_refresh_does_not_lose_a_changed_flag_or_kind(self, workspace):
+        issue_type = IssueType.objects.get(pk=_type(workspace, "Task").pk)
+        issue_type.is_epic = True
+        issue_type.refresh_from_db(fields=["name"])
+        issue_type.save()
+        assert _stored(issue_type) == ("epic", True)
+
+        issue_type = IssueType.objects.get(pk=issue_type.pk)
+        issue_type.kind = IssueTypeKind.MILESTONE
+        issue_type.refresh_from_db(fields=["name"])
+        issue_type.save()
+        assert _stored(issue_type) == ("milestone", False)
+
+    @pytest.mark.django_db
+    def test_a_refresh_of_the_flag_takes_the_stored_value(self, workspace):
+        issue_type = IssueType.objects.get(pk=_type(workspace, "Task").pk)
+        IssueType.objects.filter(pk=issue_type.pk).update(is_epic=True, kind=IssueTypeKind.EPIC)
+        issue_type.refresh_from_db(fields=["is_epic", "kind"])
+        issue_type.is_epic = False
+        issue_type.save()
+        assert _stored(issue_type) == ("standard", False)
+
+    @pytest.mark.django_db
+    def test_a_type_loaded_without_the_two_fields_keeps_them(self, workspace):
+        epic = _type(workspace, "Epic", is_epic=True)
+        issue_type = IssueType.objects.only("id", "name").get(pk=epic.pk)
+        issue_type.name = "Theme"
+        issue_type.save()
+        assert _stored(issue_type) == ("epic", True)
+
+        issue_type = IssueType.objects.only("id", "name").get(pk=epic.pk)
+        issue_type.is_epic = False
+        issue_type.save()
+        assert _stored(issue_type) == ("standard", False)
+
+    @pytest.mark.django_db
+    def test_a_save_of_other_fields_does_not_forget_a_changed_flag(self, workspace):
+        issue_type = IssueType.objects.get(pk=_type(workspace, "Task").pk)
+        issue_type.is_epic = True
+        issue_type.name = "Theme"
+        issue_type.save(update_fields=["name"])
+        assert _stored(issue_type) == ("standard", False)
+        issue_type.save()
+        assert _stored(issue_type) == ("epic", True)
+
+    @pytest.mark.django_db
     def test_update_fields_with_one_of_the_two_writes_both(self, workspace):
         issue_type = IssueType.objects.get(pk=_type(workspace, "Task").pk)
         issue_type.is_epic = True
@@ -233,6 +296,40 @@ class TestKindTypeOnDemand:
         assert review_type.kind == IssueTypeKind.REVIEW
 
     @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", SYSTEM_KINDS)
+    def test_creation_takes_turns_per_workspace(self, workspace, project, kind):
+        def workspace_locks(queries):
+            return [q["sql"] for q in queries if "FOR UPDATE" in q["sql"] and '"workspaces"' in q["sql"]]
+
+        # The first call makes the type, under a lock on the workspace row, and looks again once it holds the lock
+        with CaptureQueriesContext(connection) as first:
+            created = workspace_kind_type(workspace.id, kind)
+        assert len(workspace_locks(first.captured_queries)) == 1
+        # Later calls find the type and do not lock
+        with CaptureQueriesContext(connection) as second:
+            assert workspace_kind_type(workspace.id, kind).id == created.id
+        assert workspace_locks(second.captured_queries) == []
+
+    @pytest.mark.django_db
+    def test_a_type_made_by_another_request_while_waiting_for_the_lock_is_used(self, workspace, project, monkeypatch):
+        # What a second request sees: no type on the first look, then the type the first request committed
+        from plane.utils import project_issue_types
+
+        other = _type(workspace, "Sign-off", kind=IssueTypeKind.APPROVAL)
+        real = project_issue_types._workspace_kind_types
+        looks = []
+
+        def first_look_is_empty(workspace_id, kind):
+            looks.append(kind)
+            return real(workspace_id, kind).none() if len(looks) == 1 else real(workspace_id, kind)
+
+        monkeypatch.setattr(project_issue_types, "_workspace_kind_types", first_look_is_empty)
+
+        assert workspace_kind_type(workspace.id, IssueTypeKind.APPROVAL).id == other.id
+        assert len(looks) == 2
+        assert IssueType.objects.filter(workspace=workspace, kind=IssueTypeKind.APPROVAL).count() == 1
+
+    @pytest.mark.django_db
     def test_the_standard_kind_has_no_system_type(self, workspace, project):
         with pytest.raises(ValueError):
             ensure_project_kind_type(project, IssueTypeKind.STANDARD)
@@ -316,6 +413,21 @@ class TestTypeAssignment:
     @pytest.mark.parametrize("kind", ["approval", "review"])
     def test_keeping_the_same_system_managed_type_is_allowed(self, project, types, kind):
         assert issue_type_assignment_error(project.id, types[kind], types[kind], existing=True) is None
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", ["approval", "review"])
+    def test_the_type_of_a_system_managed_work_item_cannot_be_cleared(self, project, types, kind):
+        for existing in (None, True):
+            error = issue_type_assignment_error(project.id, None, types[kind], existing=existing)
+            assert error is not None
+            assert error.error_code == SYSTEM_MANAGED_TYPE_CODE
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", ["standard", "epic", "milestone"])
+    def test_other_types_can_be_cleared(self, project, types, kind):
+        assert issue_type_assignment_error(project.id, None, types[kind]) is None
+        assert issue_type_assignment_error(project.id, None, None, existing=True) is None
+        assert issue_type_assignment_error(project.id, None, None) is None
 
     @pytest.mark.django_db
     def test_other_reasons_have_no_code(self, workspace, project, types):

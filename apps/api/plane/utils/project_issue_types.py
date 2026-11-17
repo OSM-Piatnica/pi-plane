@@ -21,6 +21,7 @@ from plane.db.models import (
     IssueTypeKind,
     Project,
     ProjectIssueType,
+    Workspace,
 )
 
 # The name a kind's type gets when the workspace has none yet; admins can rename it afterwards
@@ -179,24 +180,33 @@ def workspace_kind_type(workspace_id, kind, *, created_by_id=None):
     existing = _workspace_kind_types(workspace_id, kind).first()
     if existing:
         return existing
-    # A type of another kind may already own the name, so the new one gets a free name
-    name = KIND_TYPE_NAMES[kind]
-    if IssueType.objects.filter(workspace_id=workspace_id, name=name, deleted_at__isnull=True).exists():
-        name = f"{name} work item"
-    created = get_or_create_issue_type(
-        workspace_id=workspace_id, name=name, kind=kind, is_default=False, created_by_id=created_by_id
-    )
-    if created is not None and created.kind != kind and kind != IssueTypeKind.EPIC:
-        # The second name is taken by a type of another kind as well. The Epics switch keeps handing that type
-        # back, as it always has; the newer kinds drive behaviour, so they never get a type of the wrong kind
-        return IssueType.objects.create(
-            workspace_id=workspace_id,
-            name=f"{name} ({kind})"[:255],
-            kind=kind,
-            is_default=False,
-            created_by_id=created_by_id,
+    with transaction.atomic():
+        # Creation takes turns per workspace: two requests that both found no type would each make one. The lock
+        # is on the workspace row and held to the end of the caller's transaction; the second request then finds
+        # the type the first one made. (No unique constraint: a workspace may hold several types of a kind.)
+        Workspace.objects.select_for_update().filter(pk=workspace_id).values_list("id", flat=True).first()
+        existing = _workspace_kind_types(workspace_id, kind).first()
+        if existing:
+            return existing
+        # A type of another kind may already own the name, so the new one gets a free name
+        name = KIND_TYPE_NAMES[kind]
+        if IssueType.objects.filter(workspace_id=workspace_id, name=name, deleted_at__isnull=True).exists():
+            name = f"{name} work item"
+        created = get_or_create_issue_type(
+            workspace_id=workspace_id, name=name, kind=kind, is_default=False, created_by_id=created_by_id
         )
-    return created
+        if created is not None and created.kind != kind and kind != IssueTypeKind.EPIC:
+            # The second name is taken by a type of another kind as well. The Epics switch keeps handing that
+            # type back, as it always has; the newer kinds drive behaviour, so they never get a type of the
+            # wrong kind
+            return IssueType.objects.create(
+                workspace_id=workspace_id,
+                name=f"{name} ({kind})"[:255],
+                kind=kind,
+                is_default=False,
+                created_by_id=created_by_id,
+            )
+        return created
 
 
 def workspace_epic_type(workspace_id, *, created_by_id=None):
@@ -262,9 +272,12 @@ def issue_type_assignment_error(project_id, issue_type, current_type=None, *, ex
     `existing` says that the work item is already saved (by default: when it has a type). An existing work item
     cannot be switched into or out of a system-managed kind (approval, review); that reason carries the
     `error_code` `SYSTEM_MANAGED_TYPE_CODE`. A new work item can be created with such a type.
+
+    `issue_type` is None when the type is cleared. Call this whenever a type was sent, None included: taking the
+    type off an approval or review work item is a switch out of the kind too.
     """
 
-    if issue_type is None or (current_type is not None and current_type.id == issue_type.id):
+    if (issue_type.id if issue_type else None) == (current_type.id if current_type else None):
         return None
     if existing is None:
         existing = current_type is not None
@@ -273,6 +286,8 @@ def issue_type_assignment_error(project_id, issue_type, current_type=None, *, ex
             "The type of a work item cannot be changed to or from a system-managed type (approval, review)",
             SYSTEM_MANAGED_TYPE_CODE,
         )
+    if issue_type is None:
+        return None
     if not ProjectIssueType.objects.filter(
         project_id=project_id,
         issue_type_id=issue_type.id,
