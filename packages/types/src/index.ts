@@ -9,6 +9,7 @@ export * from "./activity";
 export * from "./ai";
 export * from "./analytics";
 export * from "./api_token";
+export * from "./app-rail";
 export * from "./auth";
 export * from "./calendar";
 export * from "./charts";

@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+export * from "./app-rail";
 export * from "./array";
 export * from "./attachment";
 export * from "./auth";

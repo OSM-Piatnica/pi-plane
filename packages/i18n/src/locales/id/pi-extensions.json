@@ -4,6 +4,11 @@
       "heading": "Token Akses Pribadi"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Beralih ke Proyek"
+    }
+  },
   "approve": "Setujui",
   "duration": "Durasi",
   "duration_days": "{count, plural, other {# hari}}",

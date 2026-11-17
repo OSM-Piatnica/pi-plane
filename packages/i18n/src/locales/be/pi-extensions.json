@@ -4,6 +4,11 @@
       "heading": "Асабістыя токены доступу"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Пераключыцца на Праекты"
+    }
+  },
   "approve": "Зацвердзіць",
   "duration": "Працягласць",
   "duration_days": "{count, plural, one {# дзень} few {# дні} many {# дзён} other {# дня}}",

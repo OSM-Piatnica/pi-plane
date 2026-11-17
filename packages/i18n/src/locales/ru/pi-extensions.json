@@ -4,6 +4,11 @@
       "heading": "Персональные токены доступа"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Переключиться на Проекты"
+    }
+  },
   "approve": "Одобрить",
   "duration": "Длительность",
   "duration_days": "{count, plural, one {# день} few {# дня} many {# дней} other {# дней}}",
