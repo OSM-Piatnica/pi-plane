@@ -11,6 +11,7 @@ import pytest
 from django.core.exceptions import ValidationError
 from django.db import connection
 from django.test.utils import CaptureQueriesContext
+from django.utils import timezone
 
 from plane.db.models import (
     Initiative,
@@ -27,7 +28,8 @@ from plane.db.models import (
     Workspace,
     WorkspaceMember,
 )
-from plane.utils.initiatives import describe, empty_progress, roll_up
+from plane.bgtasks.deletion_task import soft_delete_related_objects
+from plane.utils.initiatives import describe, empty_progress, project_access, roll_up
 
 GOAL, INITIATIVE = InitiativeKind.GOAL, InitiativeKind.INITIATIVE
 
@@ -172,6 +174,46 @@ class TestInitiativeModels:
         with pytest.raises(ValidationError):
             InitiativeUpdate.objects.create(initiative=initiative, author=create_user, health="fine")
 
+    def test_a_link_can_be_removed_after_the_epic_was_given_another_type(self, workspace):
+        initiative = _initiative(workspace)
+        project = _project(workspace, "EPI")
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        task_type = IssueType.objects.create(workspace=workspace, name="Task")
+        retyped = _issues(project, "started", 1, epic_type)[0]
+        untyped = _issues(project, "started", 1, epic_type)[0]
+        links = [InitiativeEpic.objects.create(initiative=initiative, issue=issue) for issue in (retyped, untyped)]
+        Issue.objects.filter(pk=retyped.pk).update(type=task_type)
+        Issue.objects.filter(pk=untyped.pk).update(type=None)
+
+        for link in links:
+            InitiativeEpic.objects.get(pk=link.pk).delete()
+
+        assert not InitiativeEpic.objects.filter(initiative=initiative).exists()
+
+    def test_deleting_an_initiative_removes_the_link_of_a_retyped_epic(self, workspace):
+        initiative = _initiative(workspace)
+        project = _project(workspace, "EPI")
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        epic = _issues(project, "started", 1, epic_type)[0]
+        InitiativeEpic.objects.create(initiative=initiative, issue=epic)
+        InitiativeProject.objects.create(initiative=initiative, project=project)
+        Issue.objects.filter(pk=epic.pk).update(type=None)
+
+        soft_delete_related_objects("db", "initiative", str(initiative.pk))
+
+        assert not Initiative.objects.filter(pk=initiative.pk).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=initiative.pk).exists()
+        assert not InitiativeProject.objects.filter(initiative_id=initiative.pk).exists()
+
+    def test_an_initiative_that_broke_a_rule_since_can_still_be_deleted(self, workspace):
+        goal = _initiative(workspace, "Goal", GOAL)
+        initiative = _initiative(workspace, parent=goal)
+        Initiative.objects.filter(pk=goal.pk).update(kind=INITIATIVE)
+
+        Initiative.objects.get(pk=initiative.pk).delete()
+
+        assert not Initiative.objects.filter(pk=initiative.pk).exists()
+
 
 @pytest.mark.unit
 @pytest.mark.django_db
@@ -282,3 +324,107 @@ class TestDescribe:
             describe(many, create_user, workspace.id)
 
         assert len(large) == len(small)
+
+    def _guest_of(self, workspace, project, workspace_role=15):
+        user = self._outsider(workspace)
+        WorkspaceMember.objects.filter(workspace=workspace, member=user).update(role=workspace_role)
+        ProjectMember.objects.create(workspace=workspace, project=project, member=user, role=5)
+        return user
+
+    def test_a_project_guest_who_sees_only_their_own_work_items_gets_no_numbers(self, workspace, create_user):
+        project = _project(workspace, "GUE", [create_user])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        _issues(project, "started", 3)
+        epic = _issues(project, "started", 1, epic_type)[0]
+        guest = self._guest_of(workspace, project)
+        initiative = _initiative(workspace)
+        InitiativeProject.objects.create(initiative=initiative, project=project)
+        InitiativeEpic.objects.create(initiative=initiative, issue=epic)
+
+        described = describe([initiative], guest, workspace.id)[initiative.id]
+
+        assert project_access(guest, workspace.id) == (set(), set())
+        assert described["progress"]["total_issues"] == 0
+        assert described["progress_is_partial"] is True and described["hidden_project_count"] == 1
+        assert described["project_ids"] == [] and described["epic_ids"] == []
+        assert described["hidden_epic_count"] == 1
+
+    def test_a_guest_of_a_project_that_shows_everything_to_guests_sees_but_does_not_manage(
+        self, workspace, create_user
+    ):
+        project = _project(workspace, "OPE", [create_user])
+        Project.objects.filter(pk=project.pk).update(guest_view_all_features=True)
+        _issues(project, "started", 3)
+        guest = self._guest_of(workspace, project)
+        initiative = _initiative(workspace)
+        InitiativeProject.objects.create(initiative=initiative, project=project)
+
+        described = describe([initiative], guest, workspace.id)[initiative.id]
+
+        assert project_access(guest, workspace.id) == ({project.id}, set())
+        assert described["progress"]["total_issues"] == 3
+        assert described["progress_is_partial"] is False
+
+    def test_a_workspace_admin_needs_a_membership_of_the_project_and_any_role_is_enough(self, workspace, create_user):
+        joined = _project(workspace, "JOI")
+        other = _project(workspace, "OTH")
+        admin = self._guest_of(workspace, joined, workspace_role=20)
+
+        assert project_access(admin, workspace.id, [joined.id, other.id]) == ({joined.id}, {joined.id})
+
+    def test_retyped_and_archived_epics_are_not_reported(self, workspace, create_user):
+        project = _project(workspace, "ONE", [create_user])
+        archived_project = _project(workspace, "ARC", [create_user])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        kept, retyped, archived = _issues(project, "started", 3, epic_type)
+        in_archived_project = _issues(archived_project, "started", 1, epic_type)[0]
+        initiative = _initiative(workspace)
+        for issue in (kept, retyped, archived, in_archived_project):
+            InitiativeEpic.objects.create(initiative=initiative, issue=issue)
+        Issue.objects.filter(pk=retyped.pk).update(type=None)
+        Issue.objects.filter(pk=archived.pk).update(archived_at=timezone.now().date())
+        Project.objects.filter(pk=archived_project.pk).update(archived_at=timezone.now())
+
+        described = describe([initiative], create_user, workspace.id)[initiative.id]
+
+        assert described["epic_ids"] == [kept.id]
+        assert described["hidden_epic_count"] == 0
+
+    def test_an_archived_project_stays_listed_and_its_work_items_do_not_count(self, workspace, create_user):
+        live = _project(workspace, "LIV", [create_user])
+        archived = _project(workspace, "ARC", [create_user])
+        _issues(live, "started", 2)
+        _issues(archived, "completed", 5)
+        initiative = _initiative(workspace)
+        InitiativeProject.objects.create(initiative=initiative, project=live)
+        InitiativeProject.objects.create(initiative=initiative, project=archived)
+        Project.objects.filter(pk=archived.pk).update(archived_at=timezone.now())
+
+        described = describe([initiative], create_user, workspace.id)[initiative.id]
+
+        assert set(described["project_ids"]) == {live.id, archived.id}
+        assert described["progress"]["total_issues"] == 2
+        assert described["progress_is_partial"] is False
+
+    def test_a_goal_has_the_epics_of_its_initiatives_each_once(self, workspace, create_user):
+        outsider = self._outsider(workspace)
+        visible = _project(workspace, "VIS", [create_user, outsider])
+        secret = _project(workspace, "SEC", [create_user])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        shared, single = _issues(visible, "started", 2, epic_type)
+        secret_epic = _issues(secret, "started", 1, epic_type)[0]
+        goal = _initiative(workspace, "Goal", GOAL)
+        first = _initiative(workspace, "First", parent=goal)
+        second = _initiative(workspace, "Second", parent=goal)
+        for initiative, issue in ((first, shared), (first, secret_epic), (second, shared), (second, single)):
+            InitiativeEpic.objects.create(initiative=initiative, issue=issue)
+        InitiativeEpic.objects.create(initiative=second, issue=secret_epic)
+
+        for_member = describe([goal], create_user, workspace.id)[goal.id]
+        for_outsider = describe([goal], outsider, workspace.id)[goal.id]
+
+        assert sorted(for_member["epic_ids"], key=str) == sorted([shared.id, single.id, secret_epic.id], key=str)
+        assert len(for_member["epic_ids"]) == 3
+        assert for_member["hidden_epic_count"] == 0
+        assert sorted(for_outsider["epic_ids"], key=str) == sorted([shared.id, single.id], key=str)
+        assert for_outsider["hidden_epic_count"] == 1

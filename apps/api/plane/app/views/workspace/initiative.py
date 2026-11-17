@@ -6,6 +6,7 @@
 import uuid
 
 # Django imports
+from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction
 
 # Third party imports
@@ -23,13 +24,18 @@ from plane.db.models import (
     InitiativeStatus,
     InitiativeUpdate,
     Issue,
+    Project,
     Workspace,
 )
-from plane.utils.initiatives import accessible_project_ids, describe
+from plane.utils.user_groups import is_workspace_admin
+from plane.utils.initiatives import accessible_project_ids, describe, manageable_project_ids, project_access
 
 from ..base import BaseAPIView
 
 LINKS_ONLY_ON_INITIATIVES = "Projects and Epics are linked to initiatives, not to goals."
+# The most projects or Epics one request may link
+MAX_LINKS_PER_REQUEST = 100
+NOT_ALLOWED_TO_UNLINK = "Only a member of the project can unlink it."
 
 
 def _error(message, code=status.HTTP_400_BAD_REQUEST):
@@ -44,9 +50,12 @@ def _uuid(value):
 
 
 def _uuid_list(data, key):
-    """The ids sent under ``key`` as a list of UUIDs without repeats, or None when it is not a list of ids."""
+    """The ids sent under ``key`` as a list of UUIDs without repeats.
+
+    None when it is not a list of ids, is empty or has more than ``MAX_LINKS_PER_REQUEST`` entries.
+    """
     values = data.get(key) if hasattr(data, "get") else None
-    if not isinstance(values, list) or not values:
+    if not isinstance(values, list) or not values or len(values) > MAX_LINKS_PER_REQUEST:
         return None
     ids = [_uuid(value) for value in values]
     return None if any(value is None for value in ids) else list(dict.fromkeys(ids))
@@ -59,6 +68,14 @@ class _InitiativeView(BaseAPIView):
     """
 
     permission_classes = [WorkSpaceAdminPermission]
+
+    def handle_exception(self, exc):
+        # What a model refuses is said in its own words; the base view would answer with a general message
+        if isinstance(exc, DjangoValidationError):
+            if hasattr(exc, "message_dict"):
+                return Response(exc.message_dict, status=status.HTTP_400_BAD_REQUEST)
+            return _error(" ".join(exc.messages))
+        return super().handle_exception(exc)
 
     def _workspace(self, slug):
         return Workspace.objects.get(slug=slug)
@@ -151,6 +168,11 @@ class InitiativeDetailEndpoint(_InitiativeView):
         initiative = self._initiative(workspace, pk)
         if initiative is None:
             return _error("Initiative not found.", status.HTTP_404_NOT_FOUND)
+        # Editing is open to every member; deleting is for a workspace admin, the lead and the person who made it
+        if request.user.id not in (initiative.lead_id, initiative.created_by_id) and not is_workspace_admin(
+            request.user, workspace.id
+        ):
+            return _error("Only a workspace admin, the lead or the creator can delete this.", status.HTTP_403_FORBIDDEN)
         with transaction.atomic():
             # The initiatives of a deleted goal stay, without a goal
             Initiative.objects.filter(workspace=workspace, parent=initiative).update(parent=None)
@@ -159,7 +181,10 @@ class InitiativeDetailEndpoint(_InitiativeView):
 
 
 class InitiativeProjectsEndpoint(_InitiativeView):
-    """Link projects to an initiative. Only the projects the requester is a member of can be linked or unlinked."""
+    """Link projects to an initiative.
+
+    Linking and unlinking takes at least the Member role in the project (see ``project_access``).
+    """
 
     def post(self, request, slug, pk):
         workspace = self._workspace(slug)
@@ -170,20 +195,35 @@ class InitiativeProjectsEndpoint(_InitiativeView):
             return _error(LINKS_ONLY_ON_INITIATIVES)
         project_ids = _uuid_list(request.data, "project_ids")
         if project_ids is None:
-            return _error("project_ids must be a list of project ids.")
+            return _error(f"project_ids must be a list of 1 to {MAX_LINKS_PER_REQUEST} project ids.")
         # One answer for a project of another workspace and for one the requester is not in: neither is confirmed
-        if set(project_ids) - accessible_project_ids(request.user, workspace.id, project_ids):
-            return _error("Every project must be a project of this workspace that you are a member of.")
-
-        with transaction.atomic():
-            present = set(
-                InitiativeProject.objects.filter(initiative=initiative, project_id__in=project_ids).values_list(
-                    "project_id", flat=True
-                )
+        manageable = manageable_project_ids(request.user, workspace.id, project_ids)
+        if set(project_ids) - manageable:
+            return _error(
+                "Every project must be a project of this workspace in which you are at least a member (not a guest)."
             )
-            for project_id in project_ids:
-                if project_id not in present:
-                    InitiativeProject.objects.create(initiative=initiative, project_id=project_id)
+        if Project.objects.filter(pk__in=project_ids, archived_at__isnull=False).exists():
+            return _error("An archived project cannot be linked.")
+
+        present = set(
+            InitiativeProject.objects.filter(initiative=initiative, project_id__in=project_ids).values_list(
+                "project_id", flat=True
+            )
+        )
+        # Checked above, so the rows are written in one statement without the per-row checks of save()
+        InitiativeProject.objects.bulk_create(
+            [
+                InitiativeProject(
+                    workspace_id=workspace.id,
+                    initiative=initiative,
+                    project_id=project_id,
+                    created_by=request.user,
+                )
+                for project_id in project_ids
+                if project_id not in present
+            ],
+            ignore_conflicts=True,
+        )
         return Response(self._present_one(request, workspace, initiative), status=status.HTTP_200_OK)
 
 
@@ -194,14 +234,20 @@ class InitiativeProjectDetailEndpoint(_InitiativeView):
         if initiative is None:
             return _error("Initiative not found.", status.HTTP_404_NOT_FOUND)
         link = InitiativeProject.objects.filter(initiative=initiative, project_id=project_id).first()
-        if link is None or not accessible_project_ids(request.user, workspace.id, [project_id]):
+        viewable, manageable = project_access(request.user, workspace.id, [project_id])
+        if link is None or project_id not in viewable:
             return _error("This project is not linked to the initiative.", status.HTTP_404_NOT_FOUND)
+        if project_id not in manageable:
+            return _error(NOT_ALLOWED_TO_UNLINK, status.HTTP_403_FORBIDDEN)
         link.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class InitiativeEpicsEndpoint(_InitiativeView):
-    """Link Epics to an initiative. Only Epics of projects the requester is a member of can be linked or unlinked."""
+    """Link Epics to an initiative.
+
+    Linking and unlinking takes at least the Member role in the project of the Epic (see ``project_access``).
+    """
 
     def post(self, request, slug, pk):
         workspace = self._workspace(slug)
@@ -212,28 +258,38 @@ class InitiativeEpicsEndpoint(_InitiativeView):
             return _error(LINKS_ONLY_ON_INITIATIVES)
         epic_ids = _uuid_list(request.data, "epic_ids")
         if epic_ids is None:
-            return _error("epic_ids must be a list of work item ids.")
+            return _error(f"epic_ids must be a list of 1 to {MAX_LINKS_PER_REQUEST} work item ids.")
 
         epics = list(
             Issue.issue_objects.filter(
                 workspace=workspace,
                 pk__in=epic_ids,
                 type__is_epic=True,
-                project_id__in=accessible_project_ids(request.user, workspace.id),
-            ).select_related("type")
+                project_id__in=manageable_project_ids(request.user, workspace.id),
+            ).values_list("id", flat=True)
         )
         if len(epics) != len(epic_ids):
-            return _error("Every work item must be an Epic in a project of this workspace that you are a member of.")
-
-        with transaction.atomic():
-            present = set(
-                InitiativeEpic.objects.filter(initiative=initiative, issue_id__in=epic_ids).values_list(
-                    "issue_id", flat=True
-                )
+            return _error(
+                "Every work item must be an Epic that is not archived, in a project of this workspace in which you "
+                "are at least a member (not a guest)."
             )
-            for epic in epics:
-                if epic.id not in present:
-                    InitiativeEpic.objects.create(initiative=initiative, issue=epic)
+
+        present = set(
+            InitiativeEpic.objects.filter(initiative=initiative, issue_id__in=epic_ids).values_list(
+                "issue_id", flat=True
+            )
+        )
+        # Checked above, so the rows are written in one statement without the per-row checks of save()
+        InitiativeEpic.objects.bulk_create(
+            [
+                InitiativeEpic(
+                    workspace_id=workspace.id, initiative=initiative, issue_id=epic_id, created_by=request.user
+                )
+                for epic_id in epics
+                if epic_id not in present
+            ],
+            ignore_conflicts=True,
+        )
         return Response(self._present_one(request, workspace, initiative), status=status.HTTP_200_OK)
 
 
@@ -244,8 +300,14 @@ class InitiativeEpicDetailEndpoint(_InitiativeView):
         if initiative is None:
             return _error("Initiative not found.", status.HTTP_404_NOT_FOUND)
         link = InitiativeEpic.objects.filter(initiative=initiative, issue_id=epic_id).select_related("issue").first()
-        if link is None or not accessible_project_ids(request.user, workspace.id, [link.issue.project_id]):
+        if link is None:
             return _error("This Epic is not linked to the initiative.", status.HTTP_404_NOT_FOUND)
+        project_id = link.issue.project_id
+        viewable, manageable = project_access(request.user, workspace.id, [project_id])
+        if project_id not in viewable:
+            return _error("This Epic is not linked to the initiative.", status.HTTP_404_NOT_FOUND)
+        if project_id not in manageable:
+            return _error(NOT_ALLOWED_TO_UNLINK, status.HTTP_403_FORBIDDEN)
         link.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
