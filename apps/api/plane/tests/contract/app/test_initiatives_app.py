@@ -8,11 +8,17 @@ Admins and members of the workspace manage them, guests have no access. Work ite
 projects the requester is a member of; the others are counted as hidden and never named.
 """
 
+from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from rest_framework.test import APIClient
 
+from plane.app.serializers.initiative import InitiativeSerializer
+from plane.app.views.workspace.initiative import MAX_LINKS_PER_REQUEST
+from plane.bgtasks.deletion_task import soft_delete_related_objects
 from plane.db.models import (
     Initiative,
     InitiativeEpic,
@@ -330,6 +336,166 @@ class TestInitiativeLinks:
         assert InitiativeProject.objects.filter(initiative_id=initiative["id"]).count() == 1
         assert InitiativeEpic.objects.filter(initiative_id=initiative["id"]).count() == 1
 
+    def test_an_archived_project_is_not_linked_and_an_archived_epic_neither(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        archived = _project(workspace, "ARC", [create_user])
+        archived_epic = _issues(project, "started", 1, epic_type)[0]
+        Issue.objects.filter(pk=archived_epic.pk).update(archived_at=timezone.now().date())
+        Project.objects.filter(pk=archived.pk).update(archived_at=timezone.now())
+        initiative = _create(session_client).data
+
+        projects = session_client.post(
+            _url(initiative["id"], "projects/"), {"project_ids": [str(project.id), str(archived.id)]}, format="json"
+        )
+        epics = session_client.post(
+            _url(initiative["id"], "epics/"), {"epic_ids": [str(archived_epic.id)]}, format="json"
+        )
+
+        assert projects.status_code == 400 and "archived" in projects.data["error"]
+        assert epics.status_code == 400
+        assert not InitiativeProject.objects.filter(initiative_id=initiative["id"]).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=initiative["id"]).exists()
+
+    def test_one_request_links_a_limited_number(self, session_client, workspace):
+        initiative = _create(session_client).data
+        too_many = [str(uuid4()) for _ in range(MAX_LINKS_PER_REQUEST + 1)]
+
+        projects = session_client.post(_url(initiative["id"], "projects/"), {"project_ids": too_many}, format="json")
+        epics = session_client.post(_url(initiative["id"], "epics/"), {"epic_ids": too_many}, format="json")
+
+        assert projects.status_code == 400 and str(MAX_LINKS_PER_REQUEST) in projects.data["error"]
+        assert epics.status_code == 400 and str(MAX_LINKS_PER_REQUEST) in epics.data["error"]
+
+    def test_an_epic_that_was_given_another_type_can_be_unlinked(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        epic = _issues(project, "started", 1, epic_type)[0]
+        initiative = _create(session_client).data
+        epics_url = _url(initiative["id"], "epics/")
+        session_client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
+        Issue.objects.filter(pk=epic.pk).update(type=IssueType.objects.create(workspace=workspace, name="Task"))
+
+        shown = session_client.get(_url(initiative["id"])).data
+        removed = session_client.delete(f"{epics_url}{epic.id}/")
+
+        assert shown["epic_ids"] == [] and shown["hidden_epic_count"] == 0
+        assert removed.status_code == 204
+        assert not InitiativeEpic.objects.filter(initiative_id=initiative["id"]).exists()
+
+    def test_deleting_an_initiative_with_a_retyped_epic_leaves_no_link(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        epic = _issues(project, "started", 1, epic_type)[0]
+        initiative = _create(session_client).data
+        session_client.post(_url(initiative["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        session_client.post(_url(initiative["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        Issue.objects.filter(pk=epic.pk).update(type=None)
+
+        with patch("plane.db.mixins.soft_delete_related_objects.delay") as queued:
+            response = session_client.delete(_url(initiative["id"]))
+        # What the worker does with the queued task
+        soft_delete_related_objects(*queued.call_args.args, **queued.call_args.kwargs)
+
+        assert response.status_code == 204
+        assert not InitiativeEpic.objects.filter(initiative_id=initiative["id"]).exists()
+        assert not InitiativeProject.objects.filter(initiative_id=initiative["id"]).exists()
+
+    def test_what_a_model_refuses_is_answered_with_its_message(self, session_client, workspace):
+        refusal = ValidationError({"parent": "The parent of an initiative must be a goal."})
+
+        with patch.object(InitiativeSerializer, "save", side_effect=refusal):
+            response = _create(session_client)
+
+        assert response.status_code == 400
+        assert response.data == {"parent": ["The parent of an initiative must be a goal."]}
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeProjectGuests:
+    """A workspace member can be a guest of a single project: there they see less and link nothing."""
+
+    def _setup(self, session_client, workspace, create_user, epic_type, guests_see_all):
+        project = _project(workspace, "GUE", [create_user])
+        Project.objects.filter(pk=project.pk).update(guest_view_all_features=guests_see_all)
+        _issues(project, "started", 3)
+        epic = _issues(project, "started", 1, epic_type)[0]
+        guest = _person(workspace, "projectguest")
+        ProjectMember.objects.create(workspace=workspace, project=project, member=guest, role=GUEST)
+        linked = _create(session_client, name="Linked").data
+        empty = _create(session_client, name="Empty").data
+        session_client.post(_url(linked["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        session_client.post(_url(linked["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        return project, epic, _as(guest), linked, empty
+
+    def test_a_guest_who_sees_only_their_own_work_items_gets_a_count_of_hidden_projects_only(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project, epic, client, linked, empty = self._setup(session_client, workspace, create_user, epic_type, False)
+
+        detail = client.get(_url(linked["id"]))
+
+        assert detail.data["progress"]["total_issues"] == 0
+        assert detail.data["progress_is_partial"] is True and detail.data["hidden_project_count"] == 1
+        assert detail.data["project_ids"] == [] and detail.data["epic_ids"] == []
+        assert detail.data["hidden_epic_count"] == 1
+        assert str(project.id) not in detail.content.decode() and str(epic.id) not in detail.content.decode()
+        assert client.get(f"{INITIATIVES}?project={project.id}").data == []
+
+    def test_a_guest_who_sees_only_their_own_work_items_links_and_unlinks_nothing(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project, epic, client, linked, empty = self._setup(session_client, workspace, create_user, epic_type, False)
+
+        add_project = client.post(_url(empty["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        add_epic = client.post(_url(empty["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        drop_project = client.delete(_url(linked["id"], f"projects/{project.id}/"))
+        drop_epic = client.delete(_url(linked["id"], f"epics/{epic.id}/"))
+
+        assert add_project.status_code == 400 and add_epic.status_code == 400
+        assert drop_project.status_code == 404 and drop_epic.status_code == 404
+        assert not InitiativeProject.objects.filter(initiative_id=empty["id"]).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=empty["id"]).exists()
+        assert InitiativeProject.objects.filter(initiative_id=linked["id"]).count() == 1
+        assert InitiativeEpic.objects.filter(initiative_id=linked["id"]).count() == 1
+
+    def test_a_guest_of_a_project_that_shows_everything_sees_the_progress_but_links_and_unlinks_nothing(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project, epic, client, linked, empty = self._setup(session_client, workspace, create_user, epic_type, True)
+
+        detail = client.get(_url(linked["id"])).data
+        add_project = client.post(_url(empty["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        add_epic = client.post(_url(empty["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        drop_project = client.delete(_url(linked["id"], f"projects/{project.id}/"))
+        drop_epic = client.delete(_url(linked["id"], f"epics/{epic.id}/"))
+
+        assert detail["progress"]["total_issues"] == 3
+        assert detail["progress_is_partial"] is False
+        assert [str(value) for value in detail["project_ids"]] == [str(project.id)]
+        assert [str(value) for value in detail["epic_ids"]] == [str(epic.id)]
+        assert add_project.status_code == 400 and add_epic.status_code == 400
+        assert drop_project.status_code == 403 and drop_epic.status_code == 403
+        assert not InitiativeProject.objects.filter(initiative_id=empty["id"]).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=empty["id"]).exists()
+        assert InitiativeProject.objects.filter(initiative_id=linked["id"]).count() == 1
+        assert InitiativeEpic.objects.filter(initiative_id=linked["id"]).count() == 1
+
+    def test_a_workspace_admin_who_is_not_in_the_project_links_nothing(self, session_client, workspace, create_user):
+        admin = _person(workspace, "secondadmin", ADMIN)
+        project = _project(workspace, "ONE", [create_user])
+        initiative = _create(session_client).data
+
+        response = _as(admin).post(
+            _url(initiative["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json"
+        )
+
+        assert response.status_code == 400
+
 
 @pytest.mark.contract
 @pytest.mark.django_db
@@ -409,6 +575,33 @@ class TestInitiativeProgress:
         assert secret.name not in body
         assert str(secret_epic.id) not in body
 
+    def test_a_goal_lists_the_epics_of_its_initiatives_once_and_only_counts_the_hidden_ones(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        outsider = _person(workspace, "outsider")
+        visible = _project(workspace, "VIS", [create_user, outsider])
+        secret = _project(workspace, "SEC", [create_user])
+        shared = _issues(visible, "started", 1, epic_type)[0]
+        secret_epic = _issues(secret, "started", 1, epic_type)[0]
+        goal = _create(session_client, name="Goal", kind="goal").data
+        first = _create(session_client, name="First", parent=goal["id"]).data
+        second = _create(session_client, name="Second", parent=goal["id"]).data
+        both = {"epic_ids": [str(shared.id), str(secret_epic.id)]}
+        session_client.post(_url(first["id"], "epics/"), both, format="json")
+        session_client.post(_url(second["id"], "epics/"), both, format="json")
+
+        whole = session_client.get(_url(goal["id"])).data
+        client = _as(outsider)
+        detail = client.get(_url(goal["id"]))
+        listed = {row["name"]: row for row in client.get(INITIATIVES).data}["Goal"]
+
+        assert {str(value) for value in whole["epic_ids"]} == {str(shared.id), str(secret_epic.id)}
+        assert len(whole["epic_ids"]) == 2 and whole["hidden_epic_count"] == 0
+        for row in (detail.data, listed):
+            assert [str(value) for value in row["epic_ids"]] == [str(shared.id)]
+            assert row["hidden_epic_count"] == 1
+        assert str(secret_epic.id) not in detail.content.decode()
+
 
 @pytest.mark.contract
 @pytest.mark.django_db
@@ -483,3 +676,49 @@ class TestInitiativeAccess:
         assert _as(stranger).get(INITIATIVES).status_code == 403
         assert _as(stranger).get(_url(initiative["id"])).status_code == 403
         assert APIClient().get(INITIATIVES).status_code in (401, 403)
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeDelete:
+    """Every member edits; deleting is for a workspace admin, the lead and the person who made it."""
+
+    def _made_by(self, user, **data):
+        created = _create(_as(user), **data)
+        assert created.status_code == 201, created.data
+        return created.data
+
+    def test_a_workspace_admin_deletes_what_somebody_else_made(self, session_client, workspace):
+        initiative = self._made_by(_person(workspace, "maker"))
+
+        assert session_client.delete(_url(initiative["id"])).status_code == 204
+
+    def test_the_lead_deletes_it(self, workspace):
+        lead = _person(workspace, "lead")
+        initiative = self._made_by(_person(workspace, "maker"), lead=str(lead.id))
+
+        assert _as(lead).delete(_url(initiative["id"])).status_code == 204
+
+    def test_the_creator_deletes_it_also_when_somebody_else_leads_it(self, workspace):
+        maker = _person(workspace, "maker")
+        initiative = self._made_by(maker, kind="goal", lead=str(_person(workspace, "lead").id))
+
+        assert _as(maker).delete(_url(initiative["id"])).status_code == 204
+
+    def test_another_member_edits_but_does_not_delete(self, workspace):
+        initiative = self._made_by(_person(workspace, "maker"))
+        client = _as(_person(workspace, "other"))
+
+        edited = client.patch(_url(initiative["id"]), {"name": "Renamed"}, format="json")
+        deleted = client.delete(_url(initiative["id"]))
+
+        assert edited.status_code == 200
+        assert deleted.status_code == 403
+        assert Initiative.objects.filter(pk=initiative["id"]).exists()
+
+    def test_a_guest_does_not_delete_even_as_the_lead(self, workspace):
+        guest = _person(workspace, "guest", GUEST)
+        initiative = self._made_by(_person(workspace, "maker"), lead=str(guest.id))
+
+        assert _as(guest).delete(_url(initiative["id"])).status_code == 403
+        assert Initiative.objects.filter(pk=initiative["id"]).exists()

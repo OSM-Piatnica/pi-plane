@@ -96,7 +96,9 @@ class Initiative(BaseModel):
             raise ValidationError({"target_date": "The target date cannot be before the start date."})
 
     def save(self, *args, **kwargs):
-        self.clean()
+        # A soft delete is a save too: what is being deleted is not checked
+        if self.deleted_at is None:
+            self.clean()
         if self._state.adding and self.sort_order == 65535:
             # A new one goes to the end of the list
             largest = Initiative.objects.filter(workspace_id=self.workspace_id).aggregate(
@@ -142,8 +144,11 @@ class InitiativeProject(BaseModel):
             raise ValidationError({"project": "The project must belong to the workspace of the initiative."})
 
     def save(self, *args, **kwargs):
-        self.workspace_id = self.initiative.workspace_id
-        self.clean()
+        # Only a new link is checked. An old one must stay removable (a soft delete is a save too) after the
+        # thing it points to has changed, for example when an Epic was given another type
+        if self._state.adding:
+            self.workspace_id = self.initiative.workspace_id
+            self.clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -180,8 +185,11 @@ class InitiativeEpic(BaseModel):
             raise ValidationError({"issue": "Only an Epic can be linked to an initiative."})
 
     def save(self, *args, **kwargs):
-        self.workspace_id = self.initiative.workspace_id
-        self.clean()
+        # Only a new link is checked. An old one must stay removable (a soft delete is a save too) after the
+        # thing it points to has changed, for example when an Epic was given another type
+        if self._state.adding:
+            self.workspace_id = self.initiative.workspace_id
+            self.clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -211,8 +219,11 @@ class InitiativeUpdate(BaseModel):
             raise ValidationError({"health": "Unknown health."})
 
     def save(self, *args, **kwargs):
-        self.workspace_id = self.initiative.workspace_id
-        self.clean()
+        # Only a new link is checked. An old one must stay removable (a soft delete is a save too) after the
+        # thing it points to has changed, for example when an Epic was given another type
+        if self._state.adding:
+            self.workspace_id = self.initiative.workspace_id
+            self.clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
