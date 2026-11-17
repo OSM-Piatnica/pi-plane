@@ -14,6 +14,12 @@ Every timeline rule has the form "the successor's date is at least a function of
 so shifting a successor later can only break rules where it is itself the predecessor: the shift is followed down the
 chain. Work items that are completed or cancelled, that the person may not edit, or that the request itself changes
 are never moved; then nothing is offered and the change stays refused.
+
+A project can switch the offer off (``Project.is_reschedule_offer_enabled``): a change to one of its work items that
+breaks a relation is then refused as it was before the offer existed, also when the request carries
+``shift_dependents``. The project of the work item that is changed decides, not those of its dependents.
+
+Each dependent that moves gets an activity entry naming the work item whose change moved it (``SHIFT_CAUSE_KEY``).
 """
 
 import json
@@ -26,8 +32,8 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.exceptions import APIException
 
-from plane.bgtasks.issue_activities_task import issue_activity
-from plane.db.models import ProjectMember
+from plane.bgtasks.issue_activities_task import SHIFT_CAUSE_KEY, issue_activity
+from plane.db.models import Project, ProjectMember
 from plane.utils.issue_relation_constraints import _as_date
 from plane.utils.work_item_duration import (
     add_working_days,
@@ -102,6 +108,7 @@ def _move_to(dates, field_name, earliest, weekend_days):
 @dataclass
 class ReschedulePlan:
     # work item id -> its work item and proposed dates, for the dependents that move
+    # each entry also names the work item of the request whose change moved it ("cause_id")
     shifted: dict = field(default_factory=dict)
 
     def updates(self):
@@ -155,6 +162,8 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
     moved_by_request = set(current)
     objects = {str(issue_id): issues_by_id[str(issue_id)] for issue_id in current if str(issue_id) in issues_by_id}
     moved = {}
+    # work item id -> the work item of the request its move goes back to; the request's own items are their own cause
+    causes = {issue_id: issue_id for issue_id in current}
 
     queue = deque(current)
     steps = 0
@@ -195,6 +204,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
             if successor_id in moved_by_request or getattr(successor.state, "group", None) in NOT_MOVED_GROUPS:
                 return None
             moved[successor_id] = True
+            causes[successor_id] = causes[predecessor_id]
             successor_dates["start_date"], successor_dates["finish_date"] = _move_to(
                 successor_dates, field_name, earliest, weekend_days
             )
@@ -227,6 +237,7 @@ def plan_reschedule(proposed: dict, issues_by_id: dict, actor) -> Optional[Resch
                 "issue": objects[issue_id],
                 "start_date": current[issue_id]["start_date"],
                 "finish_date": current[issue_id]["finish_date"],
+                "cause_id": causes[issue_id],
             }
             for issue_id in moved
         }
@@ -257,6 +268,7 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
                 changes[field_name] = (before, after)
         if not changes:
             continue
+        cause_id = entry.get("cause_id")
         type(issue).objects.filter(pk=issue.pk).update(
             start_date=entry["start_date"], finish_date=entry["finish_date"], updated_at=now, updated_by_id=actor_id
         )
@@ -264,7 +276,9 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
             activities.append(
                 {
                     "type": "issue.activity.updated",
-                    "requested_data": json.dumps({field_name: after}),
+                    "requested_data": json.dumps(
+                        {field_name: after, SHIFT_CAUSE_KEY: cause_id} if cause_id else {field_name: after}
+                    ),
                     "current_instance": json.dumps({field_name: before}),
                     "issue_id": issue_id,
                     "actor_id": str(actor_id),
@@ -290,6 +304,14 @@ def _dates_after(issue, update):
     }
 
 
+def is_offer_enabled(project_ids) -> bool:
+    """Whether every one of these projects lets a refused date change be offered with its dependents shifted."""
+    project_ids = {project_id for project_id in project_ids if project_id}
+    if not project_ids:
+        return True
+    return not Project.objects.filter(pk__in=project_ids, is_reschedule_offer_enabled=False).exists()
+
+
 def plan_for_issue_update(issue, attrs, actor, timeline_error) -> Optional[ReschedulePlan]:
     """The plan for a single work item's update that ``timeline_error`` refused, if shifting dependents fixes it."""
     from plane.utils.issue_relation_constraints import RELATION_DATE_CONFLICT
@@ -297,6 +319,8 @@ def plan_for_issue_update(issue, attrs, actor, timeline_error) -> Optional[Resch
     if not timeline_error or timeline_error.get("error_code") != RELATION_DATE_CONFLICT:
         return None
     if "start_date" not in attrs and "finish_date" not in attrs:
+        return None
+    if not is_offer_enabled([issue.project_id]):
         return None
     return plan_reschedule({str(issue.id): _dates_after(issue, attrs)}, {str(issue.id): issue}, actor)
 
@@ -312,4 +336,6 @@ def plan_for_batch(updates, issues_by_id, actor, timeline_error) -> Optional[Res
         issue = issues_by_id.get(str(update.get("id")))
         if issue is not None:
             proposed[str(issue.id)] = _dates_after(issue, update)
-    return plan_reschedule(proposed, issues_by_id, actor) if proposed else None
+    if not proposed or not is_offer_enabled(issues_by_id[issue_id].project_id for issue_id in proposed):
+        return None
+    return plan_reschedule(proposed, issues_by_id, actor)
