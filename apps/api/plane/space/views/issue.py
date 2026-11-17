@@ -68,6 +68,7 @@ from plane.db.models import (
     CycleIssue,
 )
 from plane.bgtasks.issue_activities_task import issue_activity
+from plane.space.utils.params import public_filter_params
 from plane.utils.issue_filters import issue_filters
 
 
@@ -108,7 +109,7 @@ class ProjectIssuesPublicEndpoint(BaseAPIView):
     permission_classes = [AllowAny]
 
     def get(self, request, anchor):
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(public_filter_params(request.query_params), "GET")
         order_by_param = request.GET.get("order_by", "-created_at")
 
         deploy_board = DeployBoard.objects.filter(anchor=anchor, entity_name="project").first()

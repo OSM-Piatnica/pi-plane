@@ -135,6 +135,36 @@ def filter_priority(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_epic(params, issue_filter, method, prefix=""):
+    """The filter behind "load more" in an Epic group: the Epic and every work item below it (None: under no Epic).
+
+    The parent groups use `filter_parent`.
+    """
+
+    from django.db.models import Q
+
+    from plane.db.models import Issue
+    from plane.utils.epic_ancestor import EpicAncestor
+
+    if method != "GET":
+        return issue_filter
+    values = [item for item in str(params.get("epic", "")).split(",") if item not in ("", "null")]
+    include_none, epics = "None" in values, filter_valid_uuids(values)
+    if not include_none and not epics:
+        return issue_filter
+    condition = Q()
+    if include_none:
+        condition |= Q(epic_id__isnull=True)
+    if epics:
+        condition |= Q(epic_id__in=epics)
+    scope = Issue.all_objects.all()
+    if epics and not include_none:
+        # Only the projects of these Epics need the walk up the parent chain; "None" has to look at every work item
+        scope = scope.filter(project_id__in=Issue.all_objects.filter(pk__in=epics).values("project_id"))
+    issue_filter[f"{prefix}pk__in"] = scope.annotate(epic_id=EpicAncestor()).filter(condition).values("id")
+    return issue_filter
+
+
 def filter_parent(params, issue_filter, method, prefix=""):
     if method == "GET":
         parents = [item for item in params.get("parent").split(",") if item != "null"]
@@ -573,6 +603,7 @@ def issue_filters(query_params, method, prefix="", request=None):
         "estimate_point": filter_estimate_point,
         "priority": filter_priority,
         "parent": filter_parent,
+        "epic": filter_epic,
         "labels": filter_labels,
         "assignees": filter_assignees,
         "group_assignees": filter_group_assignees,

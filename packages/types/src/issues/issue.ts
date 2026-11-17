@@ -67,6 +67,8 @@ export type TBaseIssue = {
 
   project_id: string | null;
   parent_id: string | null;
+  // the nearest Epic above the work item (itself included); only present when the list is grouped by Epic
+  epic_id?: string | null;
   cycle_id: string | null;
   module_ids: string[] | null;
   type_id: string | null;
