@@ -260,11 +260,12 @@ class TestOfferSwitchedOff:
         assert project.is_reschedule_offer_enabled is True
 
     def test_a_project_admin_switches_it_off(self, session_client, workspace, project):
-        response = session_client.patch(
-            f"/api/workspaces/{workspace.slug}/projects/{project.id}/",
-            {"is_reschedule_offer_enabled": False},
-            format="json",
-        )
+        with mock.patch("plane.app.views.project.base.model_activity"):
+            response = session_client.patch(
+                f"/api/workspaces/{workspace.slug}/projects/{project.id}/",
+                {"is_reschedule_offer_enabled": False},
+                format="json",
+            )
 
         assert response.status_code == status.HTTP_200_OK, response.data
         project.refresh_from_db()
