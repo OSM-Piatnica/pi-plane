@@ -80,6 +80,8 @@ from .workspace import (
     WorkspaceUserPreference,
 )
 
+from .workspace_feature import WorkspaceFeature
+
 from .favorite import UserFavorite
 
 from .issue_type import IssueType, ProjectIssueType

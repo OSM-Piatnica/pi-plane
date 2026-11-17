@@ -27,7 +27,9 @@ from plane.db.models import (
     Sticky,
     WorkspaceUserPreference,
 )
+from plane.utils.app_rail import is_app_rail_app_key
 from plane.utils.constants import RESTRICTED_WORKSPACE_SLUGS
+from plane.utils.workspace_features import enabled_workspace_feature_keys
 from plane.utils.url import contains_url
 from plane.utils.content_validator import (
     validate_html_content,
@@ -45,6 +47,11 @@ class WorkSpaceSerializer(DynamicBaseSerializer):
     total_members = serializers.IntegerField(read_only=True)
     logo_url = serializers.CharField(read_only=True)
     role = serializers.IntegerField(read_only=True)
+    # keys of the feature switches that are on for the workspace (plane.utils.workspace_features)
+    enabled_features = serializers.SerializerMethodField()
+
+    def get_enabled_features(self, obj):
+        return enabled_workspace_feature_keys(obj)
 
     def validate_name(self, value):
         # Check if the name contains a URL
@@ -182,6 +189,12 @@ class WorkspaceUserPropertiesSerializer(BaseSerializer):
         model = WorkspaceUserProperties
         fields = "__all__"
         read_only_fields = ["workspace", "user"]
+
+    def validate_default_app(self, value):
+        # null clears the preference; anything else has to be a rail app the web app knows
+        if value is not None and not is_app_rail_app_key(value):
+            raise serializers.ValidationError("Unknown app")
+        return value
 
 
 class WorkspaceUserLinkSerializer(BaseSerializer):
