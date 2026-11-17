@@ -237,7 +237,8 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
 
-        if data.get("type") is not None and self.context.get("project_id"):
+        # Checked whenever a type was sent, null included: clearing the type is a change of type as well
+        if "type" in data and self.context.get("project_id"):
             type_error = issue_type_assignment_error(
                 self.context.get("project_id"),
                 data["type"],

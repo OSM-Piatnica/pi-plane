@@ -33,7 +33,7 @@ A work item without a type behaves like the `standard` kind.
 | approval | yes | no | yes | yes | yes |
 | review | no | no | no | no | no |
 
-**System-managed kinds** (`approval`, `review`). The type of an existing work item cannot be changed into or out of these kinds. The API answers `400` with `{"error": "...", "error_code": "WORK_ITEM_TYPE_SYSTEM_MANAGED"}`. A new work item can be created with such a type. The work item import does not assign these types: the row comes in without a type, with a warning.
+**System-managed kinds** (`approval`, `review`). The type of an existing work item cannot be changed into or out of these kinds; taking the type off (`type_id: null`) counts as a change out of the kind. The API answers `400` with `{"error": "...", "error_code": "WORK_ITEM_TYPE_SYSTEM_MANAGED"}`. A new work item can be created with such a type. The work item import does not assign these types: the row comes in without a type, with a warning.
 
 **Progress.** `epic` and `review` work items are left out of the progress numbers of modules and cycles: an Epic is counted through its children, and an acceptance counts once, through its `approval` work item. They still show in the lists.
 
@@ -48,7 +48,7 @@ The type endpoints return `kind` as a read-only field. The type form can still s
 
 ## System types
 
-`epic`, `milestone`, `approval` and `review` each have one type per workspace that the system uses: the oldest active type of the kind, created on demand under the name of the kind (it can be renamed afterwards) and linked to the project that needs it. For Epics this is the **Epics** switch in the project's feature settings; the other kinds are linked by the features that use them.
+`epic`, `milestone`, `approval` and `review` each have one type per workspace that the system uses: the oldest active type of the kind, created on demand under the name of the kind (it can be renamed afterwards) and linked to the project that needs it. Creation takes turns per workspace (a lock on the workspace row), so two requests at the same moment end up with one type. There is no unique constraint: admins can still make more types of the Epic kind. For Epics this is the **Epics** switch in the project's feature settings; the other kinds are linked by the features that use them.
 
 ## For developers
 
