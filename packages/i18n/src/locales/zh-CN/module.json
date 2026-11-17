@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {模块} other {模块}}",
     "no_module": "无模块",
-    "select": "添加模块"
+    "select": "添加模块",
+    "sub_issues": {
+      "add": {
+        "title": "是否同时添加子工作项？",
+        "content": "以下工作项包含子工作项：{names}。是否将它们的所有子工作项一并添加到模块？",
+        "confirm": "是，添加",
+        "decline": "否，不添加"
+      },
+      "remove": {
+        "title": "是否同时移除子工作项？",
+        "content": "以下工作项包含子工作项：{names}。是否将它们的所有子工作项一并从模块中移除？",
+        "confirm": "是，移除",
+        "decline": "否，保留"
+      }
+    }
   },
   "module_ui": {
     "favorite": "收藏",

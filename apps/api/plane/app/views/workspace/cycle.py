@@ -14,6 +14,7 @@ from plane.app.views.base import BaseAPIView
 from plane.db.models import Cycle
 from plane.app.permissions import WorkspaceViewerPermission
 from plane.app.serializers.cycle import CycleSerializer
+from plane.utils.epic_progress import not_epic_q
 
 
 class WorkspaceCyclesEndpoint(BaseAPIView):
@@ -39,7 +40,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -51,7 +53,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -63,7 +66,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -75,7 +79,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -87,7 +92,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -99,7 +105,8 @@ class WorkspaceCyclesEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .order_by(self.kwargs.get("order_by", "-created_at"))

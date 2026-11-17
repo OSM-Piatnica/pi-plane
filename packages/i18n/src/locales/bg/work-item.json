@@ -158,7 +158,8 @@
       "access": {
         "internal": "Вътрешен",
         "external": "Видим в интернет"
-      }
+      },
+      "commented_ago": "коментира <time/>"
     },
     "empty_state": {
       "issue_detail": {

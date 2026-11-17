@@ -4,6 +4,11 @@
       "heading": "個人アクセストークン"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "プロジェクトに切り替え"
+    }
+  },
   "approve": "承認",
   "duration": "期間",
   "duration_days": "{count, plural, other {#日}}",

@@ -130,6 +130,8 @@ ISSUE_GROUP_BY_ALLOWLIST = frozenset(
         "target_date",
         "finish_date",
         "start_date",
+        # the work item hierarchy: one group per parent
+        "parent_id",
         # annotations of issue_queryset_grouper: calendar day, time buckets of a date
         "schedule_date",
         "start_date_bucket",

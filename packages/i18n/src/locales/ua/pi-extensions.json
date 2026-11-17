@@ -4,6 +4,11 @@
       "heading": "Персональні токени доступу"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Перемкнутися на Проєкти"
+    }
+  },
   "approve": "Затвердити",
   "duration": "Тривалість",
   "duration_days": "{count, plural, one {# день} few {# дні} many {# днів} other {# дня}}",

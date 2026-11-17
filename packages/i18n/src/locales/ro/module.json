@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modul} other {Module}}",
     "no_module": "Niciun modul",
-    "select": "Adaugă module"
+    "select": "Adaugă module",
+    "sub_issues": {
+      "add": {
+        "title": "Adăugați și sub-activitățile?",
+        "content": "Aceste activități au sub-activități: {names}. Adăugați în modul și toate sub-activitățile lor?",
+        "confirm": "Da, adăugați",
+        "decline": "Nu, omiteți"
+      },
+      "remove": {
+        "title": "Eliminați și sub-activitățile?",
+        "content": "Aceste activități au sub-activități: {names}. Eliminați din modul și toate sub-activitățile lor?",
+        "confirm": "Da, eliminați",
+        "decline": "Nu, păstrați"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favorit",

@@ -400,6 +400,10 @@
         "toggle_title": "Bật theo dõi thời gian",
         "toggle_description": "Thành viên dự án sẽ có thể ghi lại thời gian làm việc."
       },
+      "epics": {
+        "toggle_title": "Bật Epic",
+        "toggle_description": "Thành viên có thể tạo Epic, là các mục công việc nhóm các mục công việc khác. Khi tắt, các Epic hiện có vẫn được giữ nguyên."
+      },
       "milestones": {
         "title": "Cột mốc",
         "short_title": "Cột mốc",

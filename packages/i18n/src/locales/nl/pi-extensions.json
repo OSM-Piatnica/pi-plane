@@ -4,6 +4,11 @@
       "heading": "Persoonlijke toegangstokens"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Overschakelen naar Projecten"
+    }
+  },
   "approve": "Goedkeuren",
   "duration": "Duur",
   "duration_days": "{count, plural, one {# dag} other {# dagen}}",

@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modul} few {Moduly} other {Modulov}}",
     "no_module": "Žiadny modul",
-    "select": "Pridať moduly"
+    "select": "Pridať moduly",
+    "sub_issues": {
+      "add": {
+        "title": "Pridať aj podriadené pracovné položky?",
+        "content": "Tieto pracovné položky majú podriadené pracovné položky: {names}. Pridať do modulu aj všetky ich podriadené pracovné položky?",
+        "confirm": "Áno, pridať",
+        "decline": "Nie, vynechať"
+      },
+      "remove": {
+        "title": "Odstrániť aj podriadené pracovné položky?",
+        "content": "Tieto pracovné položky majú podriadené pracovné položky: {names}. Odstrániť z modulu aj všetky ich podriadené pracovné položky?",
+        "confirm": "Áno, odstrániť",
+        "decline": "Nie, ponechať"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Obľúbené",

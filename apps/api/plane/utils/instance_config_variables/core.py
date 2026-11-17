@@ -30,7 +30,7 @@ authentication_config_variables = [
 workspace_management_config_variables = [
     {
         "key": "DISABLE_WORKSPACE_CREATION",
-        "value": os.environ.get("DISABLE_WORKSPACE_CREATION", "0"),
+        "value": os.environ.get("DISABLE_WORKSPACE_CREATION", "1"),
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },

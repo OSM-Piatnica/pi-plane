@@ -158,7 +158,8 @@
       "access": {
         "internal": "Interne",
         "external": "Visible sur le web"
-      }
+      },
+      "commented_ago": "a commenté <time/>"
     },
     "empty_state": {
       "issue_detail": {

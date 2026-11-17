@@ -109,6 +109,17 @@ class IssueManager(SoftDeletionManager):
         )
 
 
+class IssueProgressManager(IssueManager):
+    """The work items that count in progress numbers of modules and cycles: ``issue_objects`` without Epics.
+
+    An Epic is a work item with children, so counting it next to them counts the same work twice. It still shows
+    in lists. A work item without a type counts.
+    """
+
+    def get_queryset(self):
+        return super().get_queryset().exclude(type__is_epic=True)
+
+
 class Issue(ChangeTrackerMixin, ProjectBaseModel):
     TRACKED_FIELDS = ["state_id"]
 
@@ -189,6 +200,8 @@ class Issue(ChangeTrackerMixin, ProjectBaseModel):
     )
 
     issue_objects = IssueManager()
+    # issue_objects without Epics, for the progress numbers of modules and cycles
+    progress_objects = IssueProgressManager()
 
     class Meta:
         verbose_name = "Issue"

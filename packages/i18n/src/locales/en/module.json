@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Module} other {Modules}}",
     "no_module": "No module",
-    "select": "Add modules"
+    "select": "Add modules",
+    "sub_issues": {
+      "add": {
+        "title": "Add the sub-work items too?",
+        "content": "These work items have sub-work items: {names}. Add all their sub-work items to the module as well?",
+        "confirm": "Yes, add them",
+        "decline": "No, leave them out"
+      },
+      "remove": {
+        "title": "Remove the sub-work items too?",
+        "content": "These work items have sub-work items: {names}. Remove all their sub-work items from the module as well?",
+        "confirm": "Yes, remove them",
+        "decline": "No, keep them"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favorite",

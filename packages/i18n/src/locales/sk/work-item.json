@@ -158,7 +158,8 @@
       "access": {
         "internal": "Interný",
         "external": "Viditeľný na webe"
-      }
+      },
+      "commented_ago": "komentované <time/>"
     },
     "empty_state": {
       "issue_detail": {

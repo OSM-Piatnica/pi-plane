@@ -86,7 +86,10 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   const { issues } = useIssues(storeType);
   const { issues: projectIssues } = useIssues(EIssuesStoreType.PROJECT);
   const { issues: draftIssues } = useIssues(EIssuesStoreType.WORKSPACE_DRAFT);
-  const { fetchIssue } = useIssueDetail();
+  const {
+    fetchIssue,
+    issue: { getIssueById },
+  } = useIssueDetail();
   const { allowedProjectIds, handleCreateUpdatePropertyValues, handleCreateSubWorkItem, issuePropertyValues } =
     useIssueModal();
   const { getProjectByIdentifier } = useProject();
@@ -437,13 +440,22 @@ export const CreateUpdateIssueModalBase = observer(function CreateUpdateIssueMod
   // don't open the modal if there are no projects
   if (!allowedProjectIds || allowedProjectIds.length === 0 || !activeProjectId) return null;
 
+  // A new sub-work item starts in the modules of its parent; the user can change that in the form
+  const parentModuleIds =
+    !data?.id && data?.parent_id ? (getIssueById(data.parent_id)?.module_ids?.filter(Boolean) ?? null) : null;
+  const defaultRouterModuleIds = routerModuleId ? [routerModuleId.toString()] : null;
+
   const commonIssueModalProps: IssueFormProps = {
     issueTitleRef: issueTitleRef,
     data: {
       ...data,
       description_html: description,
       cycle_id: data?.cycle_id ? data?.cycle_id : routerCycleId ? routerCycleId.toString() : null,
-      module_ids: data?.module_ids ? data?.module_ids : routerModuleId ? [routerModuleId.toString()] : null,
+      module_ids: data?.module_ids
+        ? data?.module_ids
+        : parentModuleIds?.length
+          ? parentModuleIds
+          : defaultRouterModuleIds,
     },
     onAssetUpload: handleUpdateUploadedAssetIds,
     onClose: handleClose,

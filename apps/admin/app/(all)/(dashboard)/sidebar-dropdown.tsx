@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { observer } from "mobx-react";
 import { useTheme as useNextTheme } from "next-themes";
 import { Icon } from "@makeplane/propel/components/icon";
@@ -21,13 +22,10 @@ import { WorkspaceAvatar } from "@makeplane/propel/components/workspace-avatar";
 import { AccessAndRolesOutline, LogOutOutline, PaletteOutline } from "@makeplane/propel/icons";
 // plane internal packages
 import { API_BASE_URL } from "@plane/constants";
-import { AuthService } from "@plane/services";
 import { getFileURL, cn } from "@plane/utils";
 // hooks
 import { useTheme, useUser } from "@/hooks/store";
-
-// service initialization
-const authService = new AuthService();
+import { useCsrfToken } from "@/hooks/use-csrf-token";
 
 export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
   // store hooks
@@ -35,8 +33,8 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
   const { currentUser, signOut } = useUser();
   // hooks
   const { resolvedTheme, setTheme } = useNextTheme();
-  // state
-  const [csrfToken, setCsrfToken] = useState<string | undefined>(undefined);
+  // the sign-out form posts natively to the API, which needs the token; "" until it has arrived
+  const csrfToken = useCsrfToken();
   // refs
   // A Base UI menu closes (and unmounts its rows) on item press, so a submit button inside the
   // panel would be detached before the browser ran the default action. The sign-out form lives
@@ -65,15 +63,10 @@ export const AdminSidebarDropdown = observer(function AdminSidebarDropdown() {
       <MenuItem
         icon={<Icon icon={LogOutOutline} />}
         label="Sign out"
-        onClick={() => signOutFormRef.current?.requestSubmit()}
+        onClick={() => csrfToken && signOutFormRef.current?.requestSubmit()}
       />
     </MenuContent>
   );
-
-  useEffect(() => {
-    if (csrfToken === undefined)
-      void authService.requestCSRFToken().then((data) => data?.csrf_token && setCsrfToken(data.csrf_token));
-  }, [csrfToken]);
 
   return (
     <div className="flex max-h-header items-center gap-x-5 gap-y-2 border-b border-subtle px-4 py-2.5">

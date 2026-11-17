@@ -158,7 +158,8 @@
       "access": {
         "internal": "შიდა",
         "external": "ხილულია ვებში"
-      }
+      },
+      "commented_ago": "დააკომენტარა <time/>"
     },
     "empty_state": {
       "issue_detail": {

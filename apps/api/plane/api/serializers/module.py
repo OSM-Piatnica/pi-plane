@@ -283,3 +283,11 @@ class ModuleIssueRequestSerializer(serializers.Serializer):
         child=serializers.UUIDField(),
         help_text="List of issue IDs to add to the module",
     )
+    include_sub_issues = serializers.BooleanField(
+        required=False,
+        default=False,
+        help_text=(
+            "Also add the sub-work items (all levels below) of these work items to the module. "
+            "A one-time copy: nothing keeps parents and children in step afterwards."
+        ),
+    )

@@ -7,6 +7,7 @@
 
 export * from "./ai";
 export * from "./analytics";
+export * from "./app-rail";
 export * from "./calendar";
 export * from "./auth";
 export * from "./chart";

@@ -80,11 +80,11 @@ class InstanceEndpoint(BaseAPIView):
             [
                 {
                     "key": "ENABLE_SIGNUP",
-                    "default": os.environ.get("ENABLE_SIGNUP", "0"),
+                    "default": os.environ.get("ENABLE_SIGNUP", "1"),
                 },
                 {
                     "key": "DISABLE_WORKSPACE_CREATION",
-                    "default": os.environ.get("DISABLE_WORKSPACE_CREATION", "0"),
+                    "default": os.environ.get("DISABLE_WORKSPACE_CREATION", "1"),
                 },
                 {
                     "key": "IS_GITHUB_ENABLED",

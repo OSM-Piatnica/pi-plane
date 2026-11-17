@@ -400,6 +400,10 @@
         "toggle_title": "시간 추적 활성화",
         "toggle_description": "프로젝트 멤버가 작업 시간을 기록할 수 있습니다."
       },
+      "epics": {
+        "toggle_title": "에픽 활성화",
+        "toggle_description": "멤버가 다른 작업 항목을 묶는 작업 항목인 에픽을 만들 수 있습니다. 비활성화해도 기존 에픽은 유지됩니다."
+      },
       "milestones": {
         "title": "마일스톤",
         "short_title": "마일스톤",

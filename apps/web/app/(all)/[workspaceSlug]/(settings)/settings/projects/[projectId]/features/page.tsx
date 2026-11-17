@@ -16,7 +16,9 @@ import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view
 import { PageHead } from "@/components/core/page-title";
 import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
+import { ProjectSettingsEpicsControlItem } from "@/components/settings/project/content/epics-control-item";
 import { ProjectSettingsFeatureControlItem } from "@/components/settings/project/content/feature-control-item";
+import { ProjectSettingsIssueTypesControl } from "@/components/settings/project/content/issue-types-control";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -75,6 +77,21 @@ function FeaturesSettingsPage({ params }: Route.ComponentProps) {
               workspaceSlug={workspaceSlug}
             />
           ))}
+          <ProjectSettingsFeatureControlItem
+            title={t("project_create.features.work_item_types.label")}
+            description={t("project_create.features.work_item_types.description")}
+            featureProperty="is_issue_type_enabled"
+            projectId={projectId}
+            value={!!currentProjectDetails?.is_issue_type_enabled}
+            workspaceSlug={workspaceSlug}
+          />
+          {/* Types and Epics (a work item type) only exist in projects that use work item types */}
+          {currentProjectDetails?.is_issue_type_enabled && (
+            <>
+              <ProjectSettingsIssueTypesControl projectId={projectId} workspaceSlug={workspaceSlug} />
+              <ProjectSettingsEpicsControlItem projectId={projectId} workspaceSlug={workspaceSlug} />
+            </>
+          )}
         </div>
       </section>
     </SettingsContentWrapper>

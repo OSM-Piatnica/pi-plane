@@ -400,6 +400,10 @@
         "toggle_title": "Włącz śledzenie czasu",
         "toggle_description": "Członkowie projektu będą mogli rejestrować przepracowany czas."
       },
+      "epics": {
+        "toggle_title": "Włącz epiki",
+        "toggle_description": "Członkowie będą mogli tworzyć epiki, czyli elementy pracy grupujące inne elementy pracy. Wyłączenie tej opcji nie usuwa istniejących epików."
+      },
       "milestones": {
         "title": "Kamienie milowe",
         "short_title": "Kamienie milowe",

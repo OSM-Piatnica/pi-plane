@@ -4,6 +4,11 @@
       "heading": "Token-uri de acces personal"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Comută la Proiecte"
+    }
+  },
   "approve": "Aprobă",
   "duration": "Durată",
   "duration_days": "{count, plural, one {# zi} few {# zile} other {# de zile}}",

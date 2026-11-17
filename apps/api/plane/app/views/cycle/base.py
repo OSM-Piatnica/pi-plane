@@ -62,6 +62,7 @@ from plane.utils.cycle_transfer_issues import transfer_cycle_issues
 from .. import BaseAPIView, BaseViewSet
 from plane.bgtasks.webhook_task import model_activity
 from plane.utils.timezone_converter import convert_to_utc, user_timezone_converter
+from plane.utils.epic_progress import not_epic_q
 
 
 class CycleViewSet(BaseViewSet):
@@ -123,7 +124,8 @@ class CycleViewSet(BaseViewSet):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -136,7 +138,8 @@ class CycleViewSet(BaseViewSet):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -149,7 +152,8 @@ class CycleViewSet(BaseViewSet):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__deleted_at__isnull=True,
                         issue_cycle__issue__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .annotate(
@@ -418,7 +422,7 @@ class CycleViewSet(BaseViewSet):
             .filter(pk=pk)
             .filter(archived_at__isnull=True)
             .annotate(
-                sub_issues=Issue.issue_objects.filter(
+                sub_issues=Issue.progress_objects.filter(
                     project_id=self.kwargs.get("project_id"),
                     parent__isnull=False,
                     issue_cycle__cycle_id=pk,
@@ -669,7 +673,7 @@ class CycleProgressEndpoint(BaseAPIView):
         if not cycle:
             return Response({"error": "Cycle not found"}, status=status.HTTP_404_NOT_FOUND)
         aggregate_estimates = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
@@ -724,7 +728,7 @@ class CycleProgressEndpoint(BaseAPIView):
             completed_issues = cycle.progress_snapshot.get("completed_issues", 0)
             total_issues = cycle.progress_snapshot.get("total_issues", 0)
         else:
-            backlog_issues = Issue.issue_objects.filter(
+            backlog_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -732,7 +736,7 @@ class CycleProgressEndpoint(BaseAPIView):
                 state__group="backlog",
             ).count()
 
-            unstarted_issues = Issue.issue_objects.filter(
+            unstarted_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -740,7 +744,7 @@ class CycleProgressEndpoint(BaseAPIView):
                 state__group="unstarted",
             ).count()
 
-            started_issues = Issue.issue_objects.filter(
+            started_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -748,7 +752,7 @@ class CycleProgressEndpoint(BaseAPIView):
                 state__group="started",
             ).count()
 
-            cancelled_issues = Issue.issue_objects.filter(
+            cancelled_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -756,7 +760,7 @@ class CycleProgressEndpoint(BaseAPIView):
                 state__group="cancelled",
             ).count()
 
-            completed_issues = Issue.issue_objects.filter(
+            completed_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -764,7 +768,7 @@ class CycleProgressEndpoint(BaseAPIView):
                 state__group="completed",
             ).count()
 
-            total_issues = Issue.issue_objects.filter(
+            total_issues = Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -805,7 +809,8 @@ class CycleAnalyticsEndpoint(BaseAPIView):
                         issue_cycle__issue__is_draft=False,
                         issue_cycle__issue__deleted_at__isnull=True,
                         issue_cycle__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_cycle__issue__"),
                 )
             )
             .first()
@@ -849,7 +854,7 @@ class CycleAnalyticsEndpoint(BaseAPIView):
 
         if analytic_type == "points" and estimate_type:
             assignee_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=cycle_id,
                     issue_cycle__deleted_at__isnull=True,
                     workspace__slug=slug,
@@ -903,7 +908,7 @@ class CycleAnalyticsEndpoint(BaseAPIView):
             )
 
             label_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=cycle_id,
                     issue_cycle__deleted_at__isnull=True,
                     workspace__slug=slug,
@@ -946,7 +951,7 @@ class CycleAnalyticsEndpoint(BaseAPIView):
 
         if analytic_type == "issues":
             assignee_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=cycle_id,
                     issue_cycle__deleted_at__isnull=True,
                     project_id=project_id,
@@ -1005,7 +1010,7 @@ class CycleAnalyticsEndpoint(BaseAPIView):
             )
 
             label_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_cycle__cycle_id=cycle_id,
                     issue_cycle__deleted_at__isnull=True,
                     project_id=project_id,
