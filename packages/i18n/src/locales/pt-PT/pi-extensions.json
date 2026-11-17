@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Quando um item de trabalho tem um responsável, só os responsáveis, o líder do projeto e os administradores do projeto o podem alterar: campos, estado, datas, sub-itens, relações, ligações, anexos, ciclos e módulos, eliminar e arquivar. Todos podem continuar a comentar. Os itens sem responsável continuam abertos a todos os membros.",
           "title": "Só os responsáveis, o líder do projeto e os administradores podem alterar um item de trabalho"
+        },
+        "reschedule_offer": {
+          "description": "Quando uma alteração de datas quebraria uma dependência, é proposto mover para mais tarde os itens de trabalho dependentes em vez de recusar a alteração. Quando desativada, essa alteração é recusada.",
+          "title": "Propor mover os itens de trabalho dependentes"
         }
       },
       "save_error": "Não foi possível guardar a configuração do fluxo de trabalho.",

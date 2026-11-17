@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Jakmile má pracovní položka přiřazenou osobu, mohou ji měnit jen přiřazení, vedoucí projektu a správci projektu: pole, stav, data, podřízené položky, vztahy, odkazy, přílohy, cykly a moduly, mazání a archivaci. Komentovat může dál každý. Pracovní položky bez přiřazené osoby zůstávají otevřené všem členům.",
           "title": "Pracovní položku mohou měnit jen přiřazení, vedoucí projektu a správci"
+        },
+        "reschedule_offer": {
+          "description": "Když by změna data porušila závislost, nabídne se posunutí závislých pracovních položek na později místo odmítnutí změny. Je-li volba vypnutá, taková změna se odmítne.",
+          "title": "Nabízet posunutí závislých pracovních položek"
         }
       },
       "save_error": "Nastavení workflow se nepodařilo uložit.",

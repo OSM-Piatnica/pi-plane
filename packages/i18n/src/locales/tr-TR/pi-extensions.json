@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Bir iş öğesine biri atandığında, onu yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir: alanlar, durum, tarihler, alt öğeler, ilişkiler, bağlantılar, ekler, döngüler ve modüller, silme ve arşivleme. Yorum yapmayı herkes sürdürebilir. Kimsenin atanmadığı iş öğeleri tüm üyelere açık kalır.",
           "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
+        },
+        "reschedule_offer": {
+          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir.",
+          "title": "Bağımlı iş öğelerini taşımayı öner"
         }
       },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",

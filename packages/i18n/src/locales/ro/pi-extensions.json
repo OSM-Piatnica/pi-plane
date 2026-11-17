@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Când o activitate are o persoană atribuită, doar cei atribuiți, liderul proiectului și administratorii proiectului o pot modifica: câmpuri, stare, date, sub-activități, relații, linkuri, atașamente, cicluri și module, ștergere și arhivare. Oricine poate comenta în continuare. Activitățile fără persoană atribuită rămân deschise tuturor membrilor.",
           "title": "O activitate pot să o modifice doar cei atribuiți, liderul proiectului și administratorii"
+        },
+        "reschedule_offer": {
+          "description": "Când o modificare de dată ar încălca o dependență, se propune mutarea mai târziu a activităților dependente în loc să se refuze modificarea. Când opțiunea este dezactivată, o astfel de modificare este refuzată.",
+          "title": "Propune mutarea activităților dependente"
         }
       },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",

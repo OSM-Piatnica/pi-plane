@@ -756,7 +756,8 @@
         "removed": "ha rimosso la data di inizio.",
         "removed_with_issue": "ha rimosso la data di inizio da <issue/>.",
         "set": "ha impostato la data di inizio su <value/>.",
-        "set_with_issue": "ha impostato la data di inizio di <issue/> su <value/>."
+        "set_with_issue": "ha impostato la data di inizio di <issue/> su <value/>.",
+        "shifted": "ha spostato automaticamente la data di inizio al <value/> dopo la modifica di <cause/>."
       },
       "state": {
         "set": "ha impostato lo stato su <value/>.",
@@ -766,7 +767,8 @@
         "removed": "ha rimosso la data di fine.",
         "removed_with_issue": "ha rimosso la data di fine da <issue/>.",
         "set": "ha impostato la data di fine su <value/>.",
-        "set_with_issue": "ha impostato la data di fine di <issue/> su <value/>."
+        "set_with_issue": "ha impostato la data di fine di <issue/> su <value/>.",
+        "shifted": "ha spostato automaticamente la data di fine al <value/> dopo la modifica di <cause/>."
       },
       "target_date": {
         "removed": "ha rimosso la scadenza.",
@@ -1011,6 +1013,11 @@
         "disabled": "ha disattivato le relazioni di tracciabilità",
         "enabled": "ha attivato le relazioni di tracciabilità",
         "fallback": "ha aggiornato le relazioni di tracciabilità"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "ha disattivato la proposta di spostamento degli elementi di lavoro dipendenti",
+        "enabled": "ha attivato la proposta di spostamento degli elementi di lavoro dipendenti",
+        "fallback": "ha aggiornato la proposta di spostamento degli elementi di lavoro dipendenti"
       },
       "is_time_tracking_enabled": {
         "disabled": "ha disabilitato il tracciamento del tempo",

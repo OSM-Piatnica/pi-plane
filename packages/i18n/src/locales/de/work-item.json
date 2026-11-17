@@ -756,7 +756,8 @@
         "removed": "hat das Startdatum entfernt.",
         "removed_with_issue": "hat das Startdatum von <issue/> entfernt.",
         "set": "hat das Startdatum auf <value/> gesetzt.",
-        "set_with_issue": "hat das Startdatum von <issue/> auf <value/> gesetzt."
+        "set_with_issue": "hat das Startdatum von <issue/> auf <value/> gesetzt.",
+        "shifted": "hat das Startdatum automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde."
       },
       "state": {
         "set": "hat den Status auf <value/> gesetzt.",
@@ -766,7 +767,8 @@
         "removed": "hat das Fertigstellungsdatum entfernt.",
         "removed_with_issue": "hat das Fertigstellungsdatum von <issue/> entfernt.",
         "set": "hat das Fertigstellungsdatum auf <value/> gesetzt.",
-        "set_with_issue": "hat das Fertigstellungsdatum von <issue/> auf <value/> gesetzt."
+        "set_with_issue": "hat das Fertigstellungsdatum von <issue/> auf <value/> gesetzt.",
+        "shifted": "hat das Fertigstellungsdatum automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde."
       },
       "target_date": {
         "removed": "hat das Fälligkeitsdatum entfernt.",
@@ -1011,6 +1013,11 @@
         "disabled": "hat die Nachverfolgbarkeits-Beziehungen deaktiviert",
         "enabled": "hat die Nachverfolgbarkeits-Beziehungen aktiviert",
         "fallback": "hat die Nachverfolgbarkeits-Beziehungen aktualisiert"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "hat das Angebot zum Verschieben abhängiger Arbeitselemente deaktiviert",
+        "enabled": "hat das Angebot zum Verschieben abhängiger Arbeitselemente aktiviert",
+        "fallback": "hat das Angebot zum Verschieben abhängiger Arbeitselemente aktualisiert"
       },
       "is_time_tracking_enabled": {
         "disabled": "hat die Zeiterfassung deaktiviert",

@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,14 @@ import type {
   TIssueActivityIssueDetail,
   TIssueActivityUserDetail,
 } from "./base";
+
+/** The work item whose date change moved another one along (a shift of dependents). */
+export type TIssueActivityShiftCause = {
+  id: string;
+  project_id: string;
+  sequence_id: number;
+  project_identifier: string;
+};
 
 export type TIssueActivity = {
   id: string;
@@ -38,6 +47,8 @@ export type TIssueActivity = {
   new_identifier: string | undefined;
   epoch: number;
   issue_comment: string | null;
+  /** Set on a start or finish date entry written when the work item was moved along with another one. */
+  shift_cause?: TIssueActivityShiftCause | null;
   source_data: {
     source: EInboxIssueSource;
     source_email?: string;

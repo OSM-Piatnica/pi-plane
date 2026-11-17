@@ -756,7 +756,8 @@
         "removed": "menghapus tanggal mulai.",
         "removed_with_issue": "menghapus tanggal mulai dari <issue/>.",
         "set": "menetapkan tanggal mulai menjadi <value/>.",
-        "set_with_issue": "menetapkan tanggal mulai untuk <issue/> menjadi <value/>."
+        "set_with_issue": "menetapkan tanggal mulai untuk <issue/> menjadi <value/>.",
+        "shifted": "memindahkan tanggal mulai secara otomatis ke <value/> setelah <cause/> berubah."
       },
       "state": {
         "set": "menetapkan status menjadi <value/>.",
@@ -766,7 +767,8 @@
         "removed": "menghapus tanggal selesai.",
         "removed_with_issue": "menghapus tanggal selesai dari <issue/>.",
         "set": "menetapkan tanggal selesai menjadi <value/>.",
-        "set_with_issue": "menetapkan tanggal selesai untuk <issue/> menjadi <value/>."
+        "set_with_issue": "menetapkan tanggal selesai untuk <issue/> menjadi <value/>.",
+        "shifted": "memindahkan tanggal selesai secara otomatis ke <value/> setelah <cause/> berubah."
       },
       "target_date": {
         "removed": "menghapus tanggal jatuh tempo.",
@@ -1011,6 +1013,11 @@
         "disabled": "menonaktifkan relasi keterlacakan",
         "enabled": "mengaktifkan relasi keterlacakan",
         "fallback": "memperbarui relasi keterlacakan"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "menonaktifkan tawaran pemindahan item kerja yang bergantung",
+        "enabled": "mengaktifkan tawaran pemindahan item kerja yang bergantung",
+        "fallback": "memperbarui tawaran pemindahan item kerja yang bergantung"
       },
       "is_time_tracking_enabled": {
         "disabled": "menonaktifkan pelacakan waktu",

@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Zodra een werkitem een toegewezen persoon heeft, mogen alleen de toegewezenen, de projectleider en de projectbeheerders het wijzigen: velden, status, data, subitems, relaties, links, bijlagen, cycli en modules, verwijderen en archiveren. Iedereen kan nog reageren. Werkitems zonder toegewezen persoon blijven open voor alle leden.",
           "title": "Alleen toegewezenen, de projectleider en beheerders mogen een werkitem wijzigen"
+        },
+        "reschedule_offer": {
+          "description": "Als een datumwijziging een afhankelijkheid zou verbreken, wordt aangeboden de afhankelijke werkitems later te plannen in plaats van de wijziging te weigeren. Staat dit uit, dan wordt een dergelijke wijziging geweigerd.",
+          "title": "Aanbieden om afhankelijke werkitems te verplaatsen"
         }
       },
       "save_error": "Kon workflowconfiguratie niet opslaan.",

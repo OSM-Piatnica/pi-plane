@@ -41,6 +41,8 @@ export interface IPartialProject {
   is_relation_traceability_enabled?: boolean;
   is_relation_relates_to_enabled?: boolean;
   is_relation_duplicate_enabled?: boolean;
+  /** Offer to move dependent work items when a date change breaks a relation; on unless set to false. */
+  is_reschedule_offer_enabled?: boolean;
   is_time_tracking_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;

@@ -163,6 +163,10 @@
         "assignee_edit": {
           "description": "Dès qu’un élément de travail a un assigné, seuls ses assignés, le responsable du projet et les admins du projet peuvent le modifier : champs, état, dates, sous-éléments, relations, liens, pièces jointes, cycles et modules, suppression et archivage. Tout le monde peut toujours commenter. Les éléments sans assigné restent ouverts à tous les membres.",
           "title": "Seuls les assignés, le responsable du projet et les admins peuvent modifier un élément de travail"
+        },
+        "reschedule_offer": {
+          "description": "Si un changement de date devait enfreindre une dépendance, proposer de décaler plus tard les éléments de travail dépendants au lieu de refuser le changement. Lorsque ce réglage est désactivé, un tel changement est refusé.",
+          "title": "Proposer de décaler les éléments de travail dépendants"
         }
       },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",
