@@ -96,7 +96,7 @@ Rules that follow from kind:
 - Workspace type settings show kind as a read-only badge; system types can be renamed and re-iconed but not deleted while in use.
 - Replace `workItem.is_epic` checks in fork-owned components with a `kind` helper.
 - Remove or wire up the unused `store/issue/epic/*` stub only if it is in the way; otherwise leave it.
-- Bulk assign must keep system-managed kinds linked, like Epic types. `ProjectIssueTypeBulkAssignEndpoint` sets the whole list of a project's types, so today it unlinks an approval or review type that the list leaves out (only Epic types are kept, #460 and A1). The project type list in the web app (`issues-types-control`) must not offer these kinds for unticking, and the endpoint must keep their links, as it does for Epic types; the acceptance engine (C1) links them through `ensure_project_kind_type`.
+- Bulk assign must keep system-managed kinds linked, like Epic types. `ProjectIssueTypeBulkAssignEndpoint` sets the whole list of a project's types, so today it unlinks an approval or review type that the list leaves out (only Epic types are kept, #460 and A1). The project type list in the web app (`components/settings/project/content/issue-types-control.tsx`) must not offer these kinds for unticking, and the endpoint must keep their links, as it does for Epic types; the acceptance engine (C1) links them through `ensure_project_kind_type`.
 
 **A3. Type catalogue and per-type templates. Size M.**
 - Seed command and "Add from catalogue" button in workspace type settings: Task (default), Bug, Story, Change request, Milestone. Each catalogue entry brings an icon, a description template and suggested properties (Bug: severity, environment, steps to reproduce; Change request: reason, impact).
