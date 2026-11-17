@@ -37,6 +37,7 @@ import {
   useWorkspaceNavigationPreferences,
 } from "@/hooks/use-navigation-preferences";
 // helpers
+import { AppRailPreferencesSection } from "@/components/app-rail/app-preferences-section";
 import { getSidebarNavigationItemIcon } from "@/components/workspace/sidebar/helper";
 // types
 import type { TPersonalNavigationItemKey } from "@plane/types";
@@ -227,6 +228,9 @@ export const CustomizeNavigationDialog = observer(function CustomizeNavigationDi
           {/* Content */}
           <DialogBody tabIndex={0}>
             <div className="space-y-4">
+              {/* Apps of the rail and the default app: only with more than one app (docs/app-rail.md) */}
+              <AppRailPreferencesSection />
+
               {/* Personal Section */}
               <div className="flex flex-col gap-2">
                 <h3 className="text-13 font-semibold text-placeholder">{t("personal")}</h3>

@@ -279,6 +279,10 @@ export const coreRoutes: RouteConfigEntry[] = [
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/work-item-templates/page.tsx"
           ),
           route(
+            ":workspaceSlug/settings/features",
+            "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/features/page.tsx"
+          ),
+          route(
             ":workspaceSlug/settings/work-item-types",
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/work-item-types/page.tsx"
           ),

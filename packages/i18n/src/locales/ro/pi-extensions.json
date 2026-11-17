@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Aplicație implicită",
+      "default_app_description": "Aplicația care se deschide la intrarea în acest spațiu de lucru.",
+      "heading": "Aplicații",
+      "last_used_app": "Ultima aplicație folosită"
+    },
     "switch_to": {
       "projects": "Comută la Proiecte"
     }
@@ -228,6 +234,9 @@
     "loading": "Se încarcă tipurile…",
     "property_values_save_failed": "Activitatea a fost creată, dar proprietățile suplimentare nu au putut fi salvate. Completează-le din detaliile activității.",
     "select_placeholder": "Tip"
+  },
+  "workspace_features": {
+    "description": "Activați sau dezactivați părți din Pi-Plane pentru toți cei din acest spațiu de lucru."
   },
   "workspace_settings": {
     "settings": {

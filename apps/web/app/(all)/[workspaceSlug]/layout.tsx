@@ -8,6 +8,7 @@
 import { useParams } from "next/navigation";
 import { Outlet } from "react-router";
 import { AuthenticationWrapper } from "@/lib/wrappers/authentication-wrapper";
+import { AppRailLanding } from "@/components/app-rail/app-landing";
 import { WorkspaceContentWrapper } from "@/components/workspace/content-wrapper";
 import { AppRailVisibilityProvider } from "@/hooks/app-rail";
 import { GlobalModals } from "@/components/common/modal/global";
@@ -23,7 +24,9 @@ export default function WorkspaceLayout() {
         <AppRailVisibilityProvider>
           <WorkspaceContentWrapper>
             <GlobalModals workspaceSlug={workspaceSlug} />
-            <Outlet />
+            <AppRailLanding>
+              <Outlet />
+            </AppRailLanding>
           </WorkspaceContentWrapper>
         </AppRailVisibilityProvider>
       </WorkspaceAuthWrapper>

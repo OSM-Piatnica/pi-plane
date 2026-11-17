@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Aplikasi default",
+      "default_app_description": "Aplikasi yang terbuka saat Anda masuk ke ruang kerja ini.",
+      "heading": "Aplikasi",
+      "last_used_app": "Aplikasi yang terakhir digunakan"
+    },
     "switch_to": {
       "projects": "Beralih ke Proyek"
     }
@@ -228,6 +234,9 @@
     "loading": "Memuat tipe…",
     "property_values_save_failed": "Item kerja berhasil dibuat, tetapi properti tambahan tidak dapat disimpan. Isi properti tersebut dari detail item kerja.",
     "select_placeholder": "Tipe"
+  },
+  "workspace_features": {
+    "description": "Aktifkan atau nonaktifkan bagian Pi-Plane untuk semua orang di ruang kerja ini."
   },
   "workspace_settings": {
     "settings": {

@@ -38,6 +38,8 @@ export interface IWorkspace {
   start_of_the_week?: EStartOfTheWeek;
   /** Days that count as non-working time, 0 = Sunday ... 6 = Saturday. */
   weekend_days?: number[];
+  /** Keys of the feature switches that are on for the workspace (see `TWorkspaceFeatureKey`). */
+  readonly enabled_features?: string[];
 }
 
 export interface IWorkspaceLite {

@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Aplicativo padrão",
+      "default_app_description": "O aplicativo que abre quando você entra neste espaço de trabalho.",
+      "heading": "Aplicativos",
+      "last_used_app": "Último aplicativo usado"
+    },
     "switch_to": {
       "projects": "Alternar para Projetos"
     }
@@ -228,6 +234,9 @@
     "loading": "Carregando tipos…",
     "property_values_save_failed": "O item de trabalho foi criado, mas não foi possível salvar as propriedades adicionais. Preencha-as a partir dos detalhes do item de trabalho.",
     "select_placeholder": "Tipo"
+  },
+  "workspace_features": {
+    "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho."
   },
   "workspace_settings": {
     "settings": {
