@@ -21,7 +21,7 @@ LANGUAGE_ALIASES = {"pl-x-podlaski": "pl"}
 
 # Plural rule family per language (CLDR); languages without an entry have the plain one/other rule
 _SINGLE_FORM = {"ja", "ko", "zh-CN", "zh-TW", "vi-VN", "id"}
-_EAST_SLAVIC = {"ru", "ua"}
+_EAST_SLAVIC = {"ru", "ua", "be"}
 _WEST_SLAVIC_FEW_MANY = {"pl", "pl-x-podlaski"}
 _CZECH_SLOVAK = {"cs", "sk"}
 _ONE_FEW_OTHER = {"ro"}

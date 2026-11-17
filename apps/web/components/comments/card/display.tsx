@@ -25,6 +25,7 @@ import { LiteTextEditor } from "@/components/editor/lite-text";
 import { CommentReactions } from "../comment-reaction";
 import { CommentCardEditForm } from "./edit-form";
 import { EmojiReactionButton, EmojiReactionPicker } from "@plane/blocks/emoji-reaction";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { useMember } from "@/hooks/store/use-member";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 
@@ -127,21 +128,24 @@ export const CommentCardDisplay = observer(function CommentCardDisplay(props: TC
         <div className="flex flex-1 flex-wrap items-center gap-1">
           <div className="text-caption-sm-medium">{displayName}</div>
           <div className="text-caption-sm-regular text-tertiary">
-            commented{" "}
-            <Tooltip
-              label={t("date_phrases.date_at_time", {
-                date: formatDate(comment.created_at),
-                time: formatTime(comment.created_at),
-              })}
-              side="bottom"
-              layout="single"
-              delay={200}
-            >
-              <span className="text-tertiary">
-                {timeAgo(comment.created_at)}
-                {comment.edited_at && " (edited)"}
-              </span>
-            </Tooltip>
+            {renderTaggedText(t("issue.comments.commented_ago"), {
+              time: () => (
+                <Tooltip
+                  label={t("date_phrases.date_at_time", {
+                    date: formatDate(comment.created_at),
+                    time: formatTime(comment.created_at),
+                  })}
+                  side="bottom"
+                  layout="single"
+                  delay={200}
+                >
+                  <span className="text-tertiary">
+                    {timeAgo(comment.created_at)}
+                    {comment.edited_at && ` (${t("edited")})`}
+                  </span>
+                </Tooltip>
+              ),
+            })}
           </div>
         </div>
         {!disabled && (

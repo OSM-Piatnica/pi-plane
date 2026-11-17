@@ -87,7 +87,7 @@ class ModuleViewSet(BaseViewSet):
             workspace__slug=self.kwargs.get("slug"),
         )
         cancelled_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 state__group="cancelled",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -97,7 +97,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         completed_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 state__group="completed",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -107,7 +107,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         started_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 state__group="started",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -117,7 +117,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         unstarted_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 state__group="unstarted",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -127,7 +127,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         backlog_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 state__group="backlog",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -137,7 +137,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         total_issues = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
             )
@@ -146,7 +146,7 @@ class ModuleViewSet(BaseViewSet):
             .values("cnt")
         )
         completed_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="completed",
                 issue_module__module_id=OuterRef("pk"),
@@ -158,7 +158,7 @@ class ModuleViewSet(BaseViewSet):
         )
 
         total_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 issue_module__module_id=OuterRef("pk"),
                 issue_module__deleted_at__isnull=True,
@@ -168,7 +168,7 @@ class ModuleViewSet(BaseViewSet):
             .values("total_estimate_points")[:1]
         )
         backlog_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="backlog",
                 issue_module__module_id=OuterRef("pk"),
@@ -179,7 +179,7 @@ class ModuleViewSet(BaseViewSet):
             .values("backlog_estimate_point")[:1]
         )
         unstarted_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="unstarted",
                 issue_module__module_id=OuterRef("pk"),
@@ -190,7 +190,7 @@ class ModuleViewSet(BaseViewSet):
             .values("unstarted_estimate_point")[:1]
         )
         started_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="started",
                 issue_module__module_id=OuterRef("pk"),
@@ -201,7 +201,7 @@ class ModuleViewSet(BaseViewSet):
             .values("started_estimate_point")[:1]
         )
         cancelled_estimate_point = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 estimate_point__estimate__type="points",
                 state__group="cancelled",
                 issue_module__module_id=OuterRef("pk"),
@@ -402,7 +402,7 @@ class ModuleViewSet(BaseViewSet):
             .filter(archived_at__isnull=True)
             .filter(pk=pk)
             .annotate(
-                sub_issues=Issue.issue_objects.filter(
+                sub_issues=Issue.progress_objects.filter(
                     project_id=self.kwargs.get("project_id"),
                     parent__isnull=False,
                     issue_module__module_id=pk,
@@ -431,7 +431,7 @@ class ModuleViewSet(BaseViewSet):
 
         if estimate_type:
             assignee_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_module__module_id=pk,
                     issue_module__deleted_at__isnull=True,
                     workspace__slug=slug,
@@ -493,7 +493,7 @@ class ModuleViewSet(BaseViewSet):
             )
 
             label_distribution = (
-                Issue.issue_objects.filter(
+                Issue.progress_objects.filter(
                     issue_module__module_id=pk,
                     issue_module__deleted_at__isnull=True,
                     workspace__slug=slug,
@@ -539,7 +539,7 @@ class ModuleViewSet(BaseViewSet):
                 )
 
         assignee_distribution = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 issue_module__module_id=pk,
                 issue_module__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -592,7 +592,7 @@ class ModuleViewSet(BaseViewSet):
         )
 
         label_distribution = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 issue_module__module_id=pk,
                 issue_module__deleted_at__isnull=True,
                 workspace__slug=slug,

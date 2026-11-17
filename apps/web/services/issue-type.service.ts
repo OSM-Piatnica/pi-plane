@@ -83,6 +83,24 @@ export class IssueTypeService extends APIService {
       });
   }
 
+  /** Turn Epics on for a project (links the workspace's Epic type) and return that type. */
+  async enableProjectEpics(workspaceSlug: string, projectId: string): Promise<TIssueType> {
+    return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-types/epics/`)
+      .then((res) => res?.data as TIssueType)
+      .catch((e) => {
+        throw e?.response;
+      });
+  }
+
+  /** Turn Epics off for a project. Existing Epics and their children stay as they are. */
+  async disableProjectEpics(workspaceSlug: string, projectId: string): Promise<void> {
+    return this.delete(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-types/epics/`)
+      .then(() => undefined)
+      .catch((e) => {
+        throw e?.response;
+      });
+  }
+
   async listTypeProperties(
     workspaceSlug: string,
     projectId: string,

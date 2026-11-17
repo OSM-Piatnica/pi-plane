@@ -158,7 +158,8 @@
       "access": {
         "internal": "Nội bộ",
         "external": "Hiển thị trên web"
-      }
+      },
+      "commented_ago": "đã bình luận <time/>"
     },
     "empty_state": {
       "issue_detail": {

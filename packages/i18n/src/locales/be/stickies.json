@@ -1,0 +1,59 @@
+{
+  "stickies": {
+    "title": "Stickies",
+    "placeholder": "націсніце, каб пісаць тут",
+    "all": "Усе нататкі Stickies",
+    "no-data": "Занатуйце ідэю, зафіксуйце азарэнне або запішыце ўспышку натхнення. Дадайце нататку Sticky, каб пачаць.",
+    "add": "Дадаць Sticky",
+    "search_placeholder": "Шукаць па назве",
+    "delete": "Выдаліць Sticky",
+    "delete_confirmation": "Вы ўпэўнены, што хочаце выдаліць гэту нататку Sticky?",
+    "empty_state": {
+      "simple": "Занатуйце ідэю, зафіксуйце азарэнне або запішыце ўспышку натхнення. Дадайце нататку Sticky, каб пачаць.",
+      "general": {
+        "title": "Stickies — гэта хуткія нататкі і спісы спраў, якія вы запісваеце на хаду.",
+        "description": "Без намаганняў фіксуйце свае думкі і ідэі, ствараючы нататкі Sticky, да якіх можна атрымаць доступ у любы час і з любога месца.",
+        "primary_button": {
+          "text": "Дадаць Sticky"
+        }
+      },
+      "search": {
+        "title": "Гэта не адпавядае ніводнай з вашых нататак Sticky.",
+        "description": "Паспрабуйце іншы тэрмін або паведаміце нам,\nкалі вы ўпэўнены, што пошук правільны. ",
+        "primary_button": {
+          "text": "Дадаць Sticky"
+        }
+      }
+    },
+    "toasts": {
+      "errors": {
+        "wrong_name": "Назва нататкі Sticky не можа быць даўжэйшай за 100 сімвалаў.",
+        "already_exists": "Ужо існуе нататка Sticky без апісання"
+      },
+      "created": {
+        "title": "Sticky створана",
+        "message": "Нататку Sticky паспяхова створана"
+      },
+      "not_created": {
+        "title": "Sticky не створана",
+        "message": "Не ўдалося стварыць нататку Sticky"
+      },
+      "updated": {
+        "title": "Sticky абноўлена",
+        "message": "Нататку Sticky паспяхова абноўлена"
+      },
+      "not_updated": {
+        "title": "Sticky не абноўлена",
+        "message": "Не ўдалося абнавіць нататку Sticky"
+      },
+      "removed": {
+        "title": "Sticky прыбрана",
+        "message": "Нататку Sticky паспяхова прыбрана"
+      },
+      "not_removed": {
+        "title": "Sticky не прыбрана",
+        "message": "Не ўдалося прыбраць нататку Sticky"
+      }
+    }
+  }
+}

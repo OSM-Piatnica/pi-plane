@@ -400,6 +400,10 @@
         "toggle_title": "Aktifkan pelacakan waktu",
         "toggle_description": "Anggota proyek akan dapat mencatat waktu yang dikerjakan."
       },
+      "epics": {
+        "toggle_title": "Aktifkan Epik",
+        "toggle_description": "Anggota dapat membuat Epik, yaitu item kerja yang mengelompokkan item kerja lainnya. Jika dinonaktifkan, Epik yang sudah ada tetap dipertahankan."
+      },
       "milestones": {
         "title": "Tonggak",
         "short_title": "Tonggak",

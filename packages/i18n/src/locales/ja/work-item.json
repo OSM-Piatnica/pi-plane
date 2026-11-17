@@ -158,7 +158,8 @@
       "access": {
         "internal": "社内向け",
         "external": "ウェブで表示"
-      }
+      },
+      "commented_ago": "<time/>にコメントしました"
     },
     "empty_state": {
       "issue_detail": {

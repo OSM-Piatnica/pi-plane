@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Module} other {Modules}}",
     "no_module": "Geen module",
-    "select": "Modules toevoegen"
+    "select": "Modules toevoegen",
+    "sub_issues": {
+      "add": {
+        "title": "Ook de subwerkitems toevoegen?",
+        "content": "Deze werkitems hebben subwerkitems: {names}. Alle bijbehorende subwerkitems ook aan de module toevoegen?",
+        "confirm": "Ja, toevoegen",
+        "decline": "Nee, weglaten"
+      },
+      "remove": {
+        "title": "Ook de subwerkitems verwijderen?",
+        "content": "Deze werkitems hebben subwerkitems: {names}. Alle bijbehorende subwerkitems ook uit de module verwijderen?",
+        "confirm": "Ja, verwijderen",
+        "decline": "Nee, behouden"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favoriet",

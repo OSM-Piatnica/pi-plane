@@ -1,9 +1,11 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
+import { resolveSequenceKey } from "./physical-digit";
 import type { IPowerKCommandRegistry } from "./registry";
 import type { TPowerKCommandConfig, TPowerKContext } from "./types";
 
@@ -257,11 +259,13 @@ export class ShortcutHandler {
       return;
     }
 
-    const key = resolveShortcutKey(e, this.layoutMap);
     const ctx = this.getContext();
     // Visible commands are computed on every call outside a reactive context, so fetch the
     // map once and answer both the exact and the prefix lookup from it
     const sequenceMap = this.registry.getKeySequenceMap(ctx);
+    // a sequence ending in a digit also completes from the digit key of layouts that need Shift
+    // for digits (see `resolveSequenceKey`)
+    const key = resolveSequenceKey(sequenceMap, this.sequence, resolveShortcutKey(e, this.layoutMap), e.code);
 
     this.sequence += key;
 

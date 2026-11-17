@@ -262,4 +262,14 @@ def issue_group_values(
         else:
             return list(queryset)
 
+    # Parent groups are the parents that the filtered work items actually reference, so no group names a work item
+    # the viewer cannot list
+    if field == "parent_id":
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return [
+            *queryset.filter(parent_id__isnull=False).order_by().values_list("parent_id", flat=True).distinct(),
+            "None",
+        ]
+
     return []

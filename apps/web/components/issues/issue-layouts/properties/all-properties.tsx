@@ -46,6 +46,7 @@ import { WorkItemLayoutAdditionalProperties } from "@/components/issues/issue-la
 // local components
 import { IssuePropertyLabels } from "./labels";
 import { getIssueDateStatuses } from "../utils";
+import { WorkItemParentProperty } from "./parent-property";
 import { WithDisplayPropertiesHOC } from "./with-display-properties-HOC";
 import { setToast } from "@plane/blocks/toast";
 
@@ -275,6 +276,9 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
 
   return (
     <div className={className}>
+      {/* parent work item */}
+      <WorkItemParentProperty issue={issue} displayProperties={displayProperties} />
+
       {/* basic properties */}
       {/* state */}
       <WithDisplayPropertiesHOC displayProperties={displayProperties} displayPropertyKey="state">

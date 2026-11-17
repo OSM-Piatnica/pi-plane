@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {モジュール} other {モジュール}}",
     "no_module": "モジュールなし",
-    "select": "モジュールを追加"
+    "select": "モジュールを追加",
+    "sub_issues": {
+      "add": {
+        "title": "サブ作業項目も追加しますか？",
+        "content": "次の作業項目にはサブ作業項目があります：{names}。それらのサブ作業項目もすべてモジュールに追加しますか？",
+        "confirm": "はい、追加する",
+        "decline": "いいえ、追加しない"
+      },
+      "remove": {
+        "title": "サブ作業項目も削除しますか？",
+        "content": "次の作業項目にはサブ作業項目があります：{names}。それらのサブ作業項目もすべてモジュールから削除しますか？",
+        "confirm": "はい、削除する",
+        "decline": "いいえ、残す"
+      }
+    }
   },
   "module_ui": {
     "favorite": "お気に入り",

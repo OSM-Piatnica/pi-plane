@@ -17,6 +17,7 @@ from plane.app.views.base import BaseAPIView
 from plane.db.models import Module, ModuleLink
 from plane.app.permissions import WorkspaceViewerPermission
 from plane.app.serializers.module import ModuleSerializer
+from plane.utils.epic_progress import not_epic_q
 
 
 class WorkspaceModulesEndpoint(BaseAPIView):
@@ -48,7 +49,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -60,7 +62,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -72,7 +75,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -84,7 +88,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -96,7 +101,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )
@@ -108,7 +114,8 @@ class WorkspaceModulesEndpoint(BaseAPIView):
                         issue_module__issue__archived_at__isnull=True,
                         issue_module__issue__is_draft=False,
                         issue_module__deleted_at__isnull=True,
-                    ),
+                    )
+                    & not_epic_q("issue_module__issue__"),
                     distinct=True,
                 )
             )

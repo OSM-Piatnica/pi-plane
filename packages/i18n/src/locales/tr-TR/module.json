@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modül} other {Modüller}}",
     "no_module": "Modül yok",
-    "select": "Modül ekle"
+    "select": "Modül ekle",
+    "sub_issues": {
+      "add": {
+        "title": "Alt iş öğeleri de eklensin mi?",
+        "content": "Bu iş öğelerinin alt iş öğeleri var: {names}. Tüm alt iş öğeleri de modüle eklensin mi?",
+        "confirm": "Evet, ekle",
+        "decline": "Hayır, ekleme"
+      },
+      "remove": {
+        "title": "Alt iş öğeleri de kaldırılsın mı?",
+        "content": "Bu iş öğelerinin alt iş öğeleri var: {names}. Tüm alt iş öğeleri de modülden kaldırılsın mı?",
+        "confirm": "Evet, kaldır",
+        "decline": "Hayır, kalsın"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favori",

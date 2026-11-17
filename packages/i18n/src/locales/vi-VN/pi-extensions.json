@@ -4,6 +4,11 @@
       "heading": "Token truy cập cá nhân"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Chuyển sang Dự án"
+    }
+  },
   "approve": "Phê duyệt",
   "duration": "Thời lượng",
   "duration_days": "{count, plural, other {# ngày}}",

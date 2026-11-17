@@ -4,6 +4,11 @@
       "heading": "Tokens de Acesso Pessoal"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Alternar para Projetos"
+    }
+  },
   "approve": "Aprovar",
   "duration": "Duração",
   "duration_days": "{count, plural, one {# dia} other {# dias}}",

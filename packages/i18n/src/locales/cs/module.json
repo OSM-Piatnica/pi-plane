@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Modul} few {Moduly} other {Modulů}}",
     "no_module": "Žádný modul",
-    "select": "Přidat moduly"
+    "select": "Přidat moduly",
+    "sub_issues": {
+      "add": {
+        "title": "Přidat i podřízené pracovní položky?",
+        "content": "Tyto pracovní položky mají podřízené pracovní položky: {names}. Přidat do modulu i všechny jejich podřízené pracovní položky?",
+        "confirm": "Ano, přidat",
+        "decline": "Ne, nepřidávat"
+      },
+      "remove": {
+        "title": "Odebrat i podřízené pracovní položky?",
+        "content": "Tyto pracovní položky mají podřízené pracovní položky: {names}. Odebrat z modulu i všechny jejich podřízené pracovní položky?",
+        "confirm": "Ano, odebrat",
+        "decline": "Ne, ponechat"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Oblíbené",

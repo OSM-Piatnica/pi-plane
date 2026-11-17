@@ -18,6 +18,7 @@ from django.views.decorators.gzip import gzip_page
 from rest_framework import status
 from rest_framework.response import Response
 
+from plane.utils.work_item_descendants import wants_sub_issues, with_sub_issues
 from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.app.permissions import allow_permission, ROLE
 from plane.app.serializers import ModuleIssueSerializer
@@ -211,6 +212,13 @@ class ModuleIssueViewSet(BaseViewSet):
                 on_results=lambda issues: issue_on_results(group_by=group_by, issues=issues, sub_group_by=sub_group_by),
             )
 
+    @staticmethod
+    def _wants_sub_issues(value):
+        return wants_sub_issues(value)
+
+    def _with_sub_issues(self, request, slug, project_id, issue_ids, *, only_active):
+        return with_sub_issues(request.user, slug, project_id, issue_ids, only_active=only_active)
+
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     # create multiple issues inside a module
     @restrict_work_item_changes(body=body_list("issues"))
@@ -229,6 +237,10 @@ class ModuleIssueViewSet(BaseViewSet):
                 pk__in=issues,
             ).values_list("id", flat=True)
         )
+        if self._wants_sub_issues(request.data.get("include_sub_issues")):
+            issues, error_response = self._with_sub_issues(request, slug, project_id, issues, only_active=True)
+            if error_response is not None:
+                return error_response
         _ = ModuleIssue.objects.bulk_create(
             [
                 ModuleIssue(
@@ -259,7 +271,9 @@ class ModuleIssueViewSet(BaseViewSet):
             )
             for issue in issues
         ]
-        return Response({"message": "success"}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"message": "success", "issue_ids": [str(issue) for issue in issues]}, status=status.HTTP_201_CREATED
+        )
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     # add multiple module inside an issue and remove multiple modules from an issue
@@ -278,11 +292,23 @@ class ModuleIssueViewSet(BaseViewSet):
             ).values_list("id", flat=True)
         ]
 
+        include_sub_issues = self._wants_sub_issues(request.data.get("include_sub_issues"))
+        add_ids = [str(issue_id)]
+        remove_ids = [str(issue_id)]
+        if include_sub_issues and modules:
+            add_ids, error_response = self._with_sub_issues(request, slug, project_id, [issue_id], only_active=True)
+            if error_response is not None:
+                return error_response
+        if include_sub_issues and removed_modules:
+            remove_ids, error_response = self._with_sub_issues(request, slug, project_id, [issue_id], only_active=False)
+            if error_response is not None:
+                return error_response
+
         if modules:
             _ = ModuleIssue.objects.bulk_create(
                 [
                     ModuleIssue(
-                        issue_id=issue_id,
+                        issue_id=added_id,
                         module_id=module,
                         project_id=project_id,
                         workspace_id=project.workspace_id,
@@ -290,6 +316,7 @@ class ModuleIssueViewSet(BaseViewSet):
                         updated_by=request.user,
                     )
                     for module in modules
+                    for added_id in add_ids
                 ],
                 batch_size=10,
                 ignore_conflicts=True,
@@ -300,7 +327,7 @@ class ModuleIssueViewSet(BaseViewSet):
                     type="module.activity.created",
                     requested_data=json.dumps({"module_id": module}),
                     actor_id=str(request.user.id),
-                    issue_id=issue_id,
+                    issue_id=added_id,
                     project_id=project_id,
                     current_instance=None,
                     epoch=int(timezone.now().timestamp()),
@@ -308,41 +335,39 @@ class ModuleIssueViewSet(BaseViewSet):
                     origin=base_host(request=request, is_app=True),
                 )
                 for module in modules
+                for added_id in add_ids
             ]
 
         for module_id in removed_modules:
-            module_issue = ModuleIssue.objects.filter(
-                workspace__slug=slug,
-                project_id=project_id,
-                module_id=module_id,
-                issue_id=issue_id,
-            )
-            issue_activity.delay(
-                type="module.activity.deleted",
-                requested_data=json.dumps({"module_id": str(module_id)}),
-                actor_id=str(request.user.id),
-                issue_id=str(issue_id),
-                project_id=str(project_id),
-                current_instance=json.dumps(
-                    {
-                        "module_name": (
-                            module_issue.first().module.name
-                            if (module_issue.first() and module_issue.first().module)
-                            else None
-                        )
-                    }
-                ),
-                epoch=int(timezone.now().timestamp()),
-                notification=True,
-                origin=base_host(request=request, is_app=True),
-            )
-            module_issue.delete()
+            for removed_id in remove_ids:
+                self._remove_from_module(request, slug, project_id, module_id, removed_id)
 
-        return Response({"message": "success"}, status=status.HTTP_201_CREATED)
+        # Which work items moved, so a client can bring its own copy up to date (sub-work items come along on request)
+        return Response(
+            {
+                "message": "success",
+                "added_issue_ids": add_ids if modules else [],
+                "removed_issue_ids": remove_ids if removed_modules else [],
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
     @restrict_work_item_changes(param="issue_id")
     def destroy(self, request, slug, project_id, module_id, issue_id):
+        issue_ids = [str(issue_id)]
+        if self._wants_sub_issues(request.query_params.get("include_sub_issues")):
+            issue_ids, error_response = self._with_sub_issues(request, slug, project_id, [issue_id], only_active=False)
+            if error_response is not None:
+                return error_response
+        for removed_id in issue_ids:
+            self._remove_from_module(request, slug, project_id, module_id, removed_id)
+        if len(issue_ids) > 1:
+            return Response({"issue_ids": issue_ids}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def _remove_from_module(self, request, slug, project_id, module_id, issue_id):
+        """Take one work item out of a module and record it. Already removed: nothing to do."""
         module_issue = ModuleIssue.objects.filter(
             workspace__slug=slug,
             project_id=project_id,
@@ -350,9 +375,8 @@ class ModuleIssueViewSet(BaseViewSet):
             issue_id=issue_id,
         )
         existing = module_issue.select_related("module").first()
-        # Already removed (e.g. a repeated delete): nothing to do
         if existing is None:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return
         issue_activity.delay(
             type="module.activity.deleted",
             requested_data=json.dumps({"module_id": str(module_id)}),
@@ -365,4 +389,3 @@ class ModuleIssueViewSet(BaseViewSet):
             origin=base_host(request=request, is_app=True),
         )
         module_issue.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)

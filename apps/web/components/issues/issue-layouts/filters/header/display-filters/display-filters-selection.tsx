@@ -8,6 +8,7 @@
 import React from "react";
 import { isEmpty } from "lodash-es";
 import { observer } from "mobx-react";
+import { isHierarchyGrouping } from "@plane/constants";
 import type {
   IIssueDisplayFilterOptions,
   IIssueDisplayProperties,
@@ -59,6 +60,12 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
   if (moduleViewDisabled) {
     ignoreGroupedFilters.push("module");
   }
+
+  // grouped by the hierarchy, sub-work items are always included, so the option is not offered
+  const extraOptions = layoutDisplayFiltersOptions?.extra_options.values ?? [];
+  const enabledExtraOptions = isHierarchyGrouping(displayFilters)
+    ? extraOptions.filter((option) => option !== "sub_issue")
+    : extraOptions;
 
   return (
     <div className="vertical-scrollbar relative scrollbar-sm h-full w-full divide-y divide-subtle-1 overflow-hidden overflow-y-auto px-2.5">
@@ -137,14 +144,14 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
           <FilterExtraOptions
             selectedExtraOptions={{
               show_empty_groups: displayFilters?.show_empty_groups ?? true,
-              sub_issue: displayFilters?.sub_issue ?? false,
+              sub_issue: isHierarchyGrouping(displayFilters) ? true : (displayFilters?.sub_issue ?? false),
             }}
             handleUpdate={(key, val) =>
               handleDisplayFiltersUpdate({
                 [key]: val,
               })
             }
-            enabledExtraOptions={layoutDisplayFiltersOptions?.extra_options.values}
+            enabledExtraOptions={enabledExtraOptions}
           />
         </div>
       )}

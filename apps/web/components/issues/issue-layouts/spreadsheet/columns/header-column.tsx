@@ -55,6 +55,15 @@ export function HeaderColumn(props: Props) {
 
   if (!propertyDetails) return null;
 
+  // a column that only shows a value (the parent) has nothing to sort on
+  if (propertyDetails.ascendingOrderKey === undefined)
+    return (
+      <Row className="flex w-full items-center gap-1.5 py-2 text-13 text-secondary">
+        <SpreadSheetPropertyIcon iconKey={propertyDetails.icon} className="h-4 w-4 text-placeholder" />
+        {t(propertyDetails.i18n_title)}
+      </Row>
+    );
+
   const ascendingMenuItemKey = `${propertyDetails.ascendingOrderKey}_${property}`;
   const descendingMenuItemKey = `${propertyDetails.descendingOrderKey}_${property}`;
 

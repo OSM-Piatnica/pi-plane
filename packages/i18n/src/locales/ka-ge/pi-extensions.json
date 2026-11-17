@@ -4,6 +4,11 @@
       "heading": "პერსონალური წვდომის ტოკენები"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "პროექტებზე გადართვა"
+    }
+  },
   "approve": "დამტკიცება",
   "duration": "ხანგრძლივობა",
   "duration_days": "{count, plural, one {# დღე} other {# დღე}}",

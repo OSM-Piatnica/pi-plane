@@ -28,6 +28,8 @@ import { MultipleSelectGroup } from "@/components/core/multiple-select";
 // hooks
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
+// helpers
+import { getResponseGroupIds } from "@/helpers/work-item-hierarchy-groups";
 // utils
 import type { GroupDropLocation } from "../utils";
 import { getGroupByColumns, isWorkspaceLevel, isSubGrouped } from "../utils";
@@ -89,6 +91,7 @@ export const List = observer(function List(props: IList) {
     includeNone: true,
     isWorkspaceLevel: isWorkspaceLevel(storeType),
     isEpic: isEpic,
+    groupIds: getResponseGroupIds(groupedIssueIds),
   });
 
   // Enable Auto Scroll for Main Kanban
