@@ -39,15 +39,17 @@ In the workspace:
 - **Deleting** one is for a workspace admin, its lead and the person who created it. Other members get 403.
 - Workspace **guests** have no access (403). A guest sees a narrowed part of single projects, and an initiative shows numbers across projects.
 
-Per project, following the rules of the rest of the app:
+Per project:
 
-| The person in the project                                                    | Sees its numbers and Epics | Links and unlinks it |
-| ---------------------------------------------------------------------------- | -------------------------- | -------------------- |
-| Member or admin of the project                                               | yes                        | yes                  |
-| Workspace admin with any membership of the project (guest included)          | yes                        | yes                  |
-| Guest of a project that shows everything to guests                           | yes                        | no                   |
-| Guest of a project where guests see only the work items they created         | no (counted as hidden)     | no                   |
-| Not a member of the project, a workspace admin included, or no longer active | no (counted as hidden)     | no                   |
+| The person                                                            | Sees its numbers and Epics | Links and unlinks it |
+| --------------------------------------------------------------------- | -------------------------- | -------------------- |
+| Workspace admin, member of the project or not                         | yes                        | yes                  |
+| Member or admin of the project                                        | yes                        | yes                  |
+| Guest of a project that shows everything to guests                    | yes                        | no (403)             |
+| Guest of a project where guests see only the work items they created  | no (counted as hidden)     | no                   |
+| Workspace member who is not in the project, or no longer active in it | no (counted as hidden)     | no                   |
+
+A workspace admin sees and links every project of the workspace, so nothing is hidden from them. For everybody else the rules of the rest of the app apply: the numbers of a project are for the people who can see all its work items, and linking takes the Member role in the project.
 
 ## Progress
 
@@ -100,5 +102,5 @@ Notes:
 
 - One request links at most 100 projects or Epics.
 - The `project` filter returns nothing for a project whose numbers the person may not see, so it cannot be used to find out where a project is linked.
-- Linking answers 400 with one message for a project of another workspace, an unknown id, and a project the person may not link. Nothing is linked when one id in the list is refused.
+- Linking answers 400 with one message for a project of another workspace, an unknown id, and a project the person cannot see. It answers 403 for a project they see but may not link. Nothing is linked when one id in the list is refused.
 - Unlinking a project or an Epic the person cannot see answers 404, like a link that does not exist. Unlinking one they see but may not link answers 403.

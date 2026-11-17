@@ -28,14 +28,15 @@ from plane.db.models import (
     Workspace,
 )
 from plane.utils.user_groups import is_workspace_admin
-from plane.utils.initiatives import accessible_project_ids, describe, manageable_project_ids, project_access
+from plane.utils.initiatives import accessible_project_ids, describe, project_access
 
 from ..base import BaseAPIView
 
 LINKS_ONLY_ON_INITIATIVES = "Projects and Epics are linked to initiatives, not to goals."
 # The most projects or Epics one request may link
 MAX_LINKS_PER_REQUEST = 100
-NOT_ALLOWED_TO_UNLINK = "Only a member of the project can unlink it."
+NOT_ALLOWED_TO_UNLINK = "Only a member of the project (not a guest) or a workspace admin can unlink it."
+NOT_ALLOWED_TO_LINK = "Only a member of the project (not a guest) or a workspace admin can link it or its Epics."
 
 
 def _error(message, code=status.HTTP_400_BAD_REQUEST):
@@ -64,7 +65,8 @@ def _uuid_list(data, key):
 class _InitiativeView(BaseAPIView):
     """Initiatives belong to the workspace: its admins and members read and manage them, guests have no access.
 
-    Work item numbers come only from the projects the requester is a member of (see ``plane.utils.initiatives``).
+    Work item numbers come only from the projects the requester may see: all of them for a workspace admin, their
+    own for a member (see ``plane.utils.initiatives``).
     """
 
     permission_classes = [WorkSpaceAdminPermission]
@@ -183,7 +185,7 @@ class InitiativeDetailEndpoint(_InitiativeView):
 class InitiativeProjectsEndpoint(_InitiativeView):
     """Link projects to an initiative.
 
-    Linking and unlinking takes at least the Member role in the project (see ``project_access``).
+    Linking and unlinking takes at least the Member role in the project, or a workspace admin (``project_access``).
     """
 
     def post(self, request, slug, pk):
@@ -196,12 +198,12 @@ class InitiativeProjectsEndpoint(_InitiativeView):
         project_ids = _uuid_list(request.data, "project_ids")
         if project_ids is None:
             return _error(f"project_ids must be a list of 1 to {MAX_LINKS_PER_REQUEST} project ids.")
-        # One answer for a project of another workspace and for one the requester is not in: neither is confirmed
-        manageable = manageable_project_ids(request.user, workspace.id, project_ids)
+        # One answer for a project of another workspace and for one the requester cannot see: neither is confirmed
+        viewable, manageable = project_access(request.user, workspace.id, project_ids)
+        if set(project_ids) - viewable:
+            return _error("Every project must be a project of this workspace that you can see.")
         if set(project_ids) - manageable:
-            return _error(
-                "Every project must be a project of this workspace in which you are at least a member (not a guest)."
-            )
+            return _error(NOT_ALLOWED_TO_LINK, status.HTTP_403_FORBIDDEN)
         if Project.objects.filter(pk__in=project_ids, archived_at__isnull=False).exists():
             return _error("An archived project cannot be linked.")
 
@@ -246,7 +248,7 @@ class InitiativeProjectDetailEndpoint(_InitiativeView):
 class InitiativeEpicsEndpoint(_InitiativeView):
     """Link Epics to an initiative.
 
-    Linking and unlinking takes at least the Member role in the project of the Epic (see ``project_access``).
+    Linking and unlinking takes at least the Member role in the project of the Epic, or a workspace admin.
     """
 
     def post(self, request, slug, pk):
@@ -260,19 +262,19 @@ class InitiativeEpicsEndpoint(_InitiativeView):
         if epic_ids is None:
             return _error(f"epic_ids must be a list of 1 to {MAX_LINKS_PER_REQUEST} work item ids.")
 
-        epics = list(
+        viewable, manageable = project_access(request.user, workspace.id)
+        found = list(
             Issue.issue_objects.filter(
-                workspace=workspace,
-                pk__in=epic_ids,
-                type__is_epic=True,
-                project_id__in=manageable_project_ids(request.user, workspace.id),
-            ).values_list("id", flat=True)
+                workspace=workspace, pk__in=epic_ids, type__is_epic=True, project_id__in=viewable
+            ).values_list("id", "project_id")
         )
-        if len(epics) != len(epic_ids):
+        if len(found) != len(epic_ids):
             return _error(
-                "Every work item must be an Epic that is not archived, in a project of this workspace in which you "
-                "are at least a member (not a guest)."
+                "Every work item must be an Epic that is not archived, in a project of this workspace that you can see."
             )
+        if any(project_id not in manageable for _, project_id in found):
+            return _error(NOT_ALLOWED_TO_LINK, status.HTTP_403_FORBIDDEN)
+        epics = [epic_id for epic_id, _ in found]
 
         present = set(
             InitiativeEpic.objects.filter(initiative=initiative, issue_id__in=epic_ids).values_list(

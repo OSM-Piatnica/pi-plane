@@ -270,6 +270,10 @@ class TestInitiativeLinks:
         foreign = _project(other, "FOR", [create_user])
         not_mine = _project(workspace, "NOT")
         initiative = _create(session_client).data
+        member = _person(workspace, "member")
+        WorkspaceMember.objects.create(workspace=other, member=member, role=ADMIN)
+        ProjectMember.objects.create(workspace=other, project=foreign, member=member, role=ADMIN)
+        client = _as(member)
         projects_url = _url(initiative["id"], "projects/")
 
         for body in (
@@ -281,7 +285,7 @@ class TestInitiativeLinks:
             {"project_ids": str(not_mine.id)},
             {},
         ):
-            assert session_client.post(projects_url, body, format="json").status_code == 400, body
+            assert client.post(projects_url, body, format="json").status_code == 400, body
         assert not InitiativeProject.objects.filter(initiative_id=initiative["id"]).exists()
 
     def test_a_goal_takes_no_projects_or_epics(self, session_client, workspace, create_user, epic_type):
@@ -295,29 +299,29 @@ class TestInitiativeLinks:
         assert projects.status_code == 400 and epics.status_code == 400
 
     def test_only_epics_of_the_persons_projects_are_linked(self, session_client, workspace, create_user, epic_type):
-        project = _project(workspace, "ONE", [create_user])
+        member = _person(workspace, "member")
+        project = _project(workspace, "ONE", [create_user, member])
         not_mine = _project(workspace, "NOT")
         epic = _issues(project, "started", 1, epic_type)[0]
         task = _issues(project, "started", 1)[0]
         hidden_epic = _issues(not_mine, "started", 1, epic_type)[0]
         initiative = _create(session_client).data
+        client = _as(member)
         epics_url = _url(initiative["id"], "epics/")
 
-        assert session_client.post(epics_url, {"epic_ids": [str(task.id)]}, format="json").status_code == 400
-        assert session_client.post(epics_url, {"epic_ids": [str(hidden_epic.id)]}, format="json").status_code == 400
-        assert (
-            session_client.post(epics_url, {"epic_ids": [str(epic.id), str(task.id)]}, format="json").status_code == 400
-        )
+        assert client.post(epics_url, {"epic_ids": [str(task.id)]}, format="json").status_code == 400
+        assert client.post(epics_url, {"epic_ids": [str(hidden_epic.id)]}, format="json").status_code == 400
+        assert client.post(epics_url, {"epic_ids": [str(epic.id), str(task.id)]}, format="json").status_code == 400
         assert not InitiativeEpic.objects.filter(initiative_id=initiative["id"]).exists()
 
-        added = session_client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
-        again = session_client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
+        added = client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
+        again = client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
 
         assert added.status_code == 200 and again.status_code == 200
         assert [str(value) for value in again.data["epic_ids"]] == [str(epic.id)]
         assert InitiativeEpic.objects.filter(initiative_id=initiative["id"]).count() == 1
-        assert session_client.delete(f"{epics_url}{epic.id}/").status_code == 204
-        assert session_client.delete(f"{epics_url}{epic.id}/").status_code == 404
+        assert client.delete(f"{epics_url}{epic.id}/").status_code == 204
+        assert client.delete(f"{epics_url}{epic.id}/").status_code == 404
 
     def test_links_to_projects_the_person_is_not_in_cannot_be_removed_by_them(
         self, session_client, workspace, create_user, epic_type
@@ -478,23 +482,82 @@ class TestInitiativeProjectGuests:
         assert detail["progress_is_partial"] is False
         assert [str(value) for value in detail["project_ids"]] == [str(project.id)]
         assert [str(value) for value in detail["epic_ids"]] == [str(epic.id)]
-        assert add_project.status_code == 400 and add_epic.status_code == 400
+        assert add_project.status_code == 403 and add_epic.status_code == 403
         assert drop_project.status_code == 403 and drop_epic.status_code == 403
         assert not InitiativeProject.objects.filter(initiative_id=empty["id"]).exists()
         assert not InitiativeEpic.objects.filter(initiative_id=empty["id"]).exists()
         assert InitiativeProject.objects.filter(initiative_id=linked["id"]).count() == 1
         assert InitiativeEpic.objects.filter(initiative_id=linked["id"]).count() == 1
 
-    def test_a_workspace_admin_who_is_not_in_the_project_links_nothing(self, session_client, workspace, create_user):
-        admin = _person(workspace, "secondadmin", ADMIN)
-        project = _project(workspace, "ONE", [create_user])
+    def test_a_workspace_admin_who_is_not_in_the_project_sees_links_and_unlinks_everything(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        owner = _person(workspace, "owner")
+        project = _project(workspace, "ONE", [owner])
+        _issues(project, "started", 4)
+        epic = _issues(project, "backlog", 1, epic_type)[0]
+        goal = _create(session_client, name="Goal", kind="goal").data
+        initiative = _create(session_client, name="Work", parent=goal["id"]).data
+        projects_url, epics_url = _url(initiative["id"], "projects/"), _url(initiative["id"], "epics/")
+
+        add_project = session_client.post(projects_url, {"project_ids": [str(project.id)]}, format="json")
+        add_epic = session_client.post(epics_url, {"epic_ids": [str(epic.id)]}, format="json")
+        rows = {row["name"]: row for row in session_client.get(INITIATIVES).data}
+
+        assert not ProjectMember.objects.filter(project=project, member=create_user).exists()
+        assert add_project.status_code == 200 and add_epic.status_code == 200
+        for row in (rows["Goal"], rows["Work"], session_client.get(_url(goal["id"])).data):
+            assert row["progress"]["total_issues"] == 4
+            assert row["progress_is_partial"] is False and row["hidden_project_count"] == 0
+            assert [str(value) for value in row["project_ids"]] == [str(project.id)]
+            assert [str(value) for value in row["epic_ids"]] == [str(epic.id)]
+            assert row["hidden_epic_count"] == 0
+        assert session_client.delete(f"{projects_url}{project.id}/").status_code == 204
+        assert session_client.delete(f"{epics_url}{epic.id}/").status_code == 204
+        assert not InitiativeProject.objects.filter(initiative_id=initiative["id"]).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=initiative["id"]).exists()
+
+    def test_a_workspace_admin_does_not_link_an_archived_project_they_are_not_in(self, session_client, workspace):
+        archived = _project(workspace, "ARC")
+        Project.objects.filter(pk=archived.pk).update(archived_at=timezone.now())
         initiative = _create(session_client).data
 
-        response = _as(admin).post(
-            _url(initiative["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json"
+        response = session_client.post(
+            _url(initiative["id"], "projects/"), {"project_ids": [str(archived.id)]}, format="json"
         )
 
-        assert response.status_code == 400
+        assert response.status_code == 400 and "archived" in response.data["error"]
+
+    def test_a_plain_member_who_is_not_in_the_project_sees_a_hidden_count_and_links_nothing(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        owner = _person(workspace, "owner")
+        project = _project(workspace, "ONE", [owner])
+        _issues(project, "started", 4)
+        epic = _issues(project, "backlog", 1, epic_type)[0]
+        goal = _create(session_client, name="Goal", kind="goal").data
+        linked = _create(session_client, name="Linked", parent=goal["id"]).data
+        empty = _create(session_client, name="Empty").data
+        session_client.post(_url(linked["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        session_client.post(_url(linked["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        client = _as(_person(workspace, "plain"))
+
+        add_project = client.post(_url(empty["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        add_epic = client.post(_url(empty["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+        drop_project = client.delete(_url(linked["id"], f"projects/{project.id}/"))
+        drop_epic = client.delete(_url(linked["id"], f"epics/{epic.id}/"))
+
+        for row in (client.get(_url(linked["id"])).data, client.get(_url(goal["id"])).data):
+            assert row["progress"]["total_issues"] == 0
+            assert row["progress_is_partial"] is True and row["hidden_project_count"] == 1
+            assert row["project_ids"] == [] and row["epic_ids"] == []
+            assert row["hidden_epic_count"] == 1
+        assert add_project.status_code == 400 and add_epic.status_code == 400
+        assert drop_project.status_code == 404 and drop_epic.status_code == 404
+        assert InitiativeProject.objects.filter(initiative_id=linked["id"]).count() == 1
+        assert InitiativeEpic.objects.filter(initiative_id=linked["id"]).count() == 1
+        assert not InitiativeProject.objects.filter(initiative_id=empty["id"]).exists()
+        assert not InitiativeEpic.objects.filter(initiative_id=empty["id"]).exists()
 
 
 @pytest.mark.contract
