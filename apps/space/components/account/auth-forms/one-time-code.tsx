@@ -41,7 +41,7 @@ const defaultValues: TOneTimeCodeFormValues = {
 
 export function AuthOneTimeCodeForm(props: TAuthOneTimeCodeForm) {
   const { mode, email, nextPath, handleEmailClear, generateEmailOneTimeCode } = props;
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
   // derived values
   const defaultResetTimerValue = 5;
   // states
@@ -87,6 +87,8 @@ export function AuthOneTimeCodeForm(props: TAuthOneTimeCodeForm) {
     >
       <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken ?? ""} />
       <input type="hidden" value={oneTimeCodeFormData.email} name="email" />
+      {/* the new account's profile, and so its emails, start in the language picked on this page */}
+      {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
       <input type="hidden" value={nextPath} name="next_path" />
       <div className="space-y-1">
         <label className="text-13 font-medium text-tertiary" htmlFor="email">

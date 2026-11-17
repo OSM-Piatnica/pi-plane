@@ -57,10 +57,23 @@ def plural_category(language, count):
     return "one" if count == 1 else "other"
 
 
+@lru_cache(maxsize=None)
+def _available_languages():
+    # Compared by exact name: a case-insensitive disk (Windows, macOS) would find tr-tr.json for tr-TR.json
+    return frozenset(path.stem for path in LOCALES_DIR.glob("*.json"))
+
+
+def supported_language(language):
+    """The email language for a UI language code (``pl``, ``pl-x-podlaski``, ``zh-TW``); None if it has no emails."""
+    if not isinstance(language, str):
+        return None
+    language = LANGUAGE_ALIASES.get(language, language)
+    return language if language in _available_languages() else None
+
+
 def normalize_language(language):
     """The language the emails are written in for a profile language code; English when there are none."""
-    language = LANGUAGE_ALIASES.get(language or "", language or "")
-    return language if (LOCALES_DIR / f"{language}.json").is_file() else DEFAULT_LANGUAGE
+    return supported_language(language) or DEFAULT_LANGUAGE
 
 
 def _flatten(node, prefix=""):
@@ -130,9 +143,7 @@ def language_from_accept_header(header):
         # the most specific match first: zh-hant-tw, zh-hant, zh
         for length in range(len(parts), 0, -1):
             prefix = "-".join(parts[:length])
-            language = _BROWSER_LANGUAGES.get(prefix, prefix)
-            if (LOCALES_DIR / f"{language}.json").is_file():
+            language = supported_language(_BROWSER_LANGUAGES.get(prefix, prefix))
+            if language:
                 return language
-            if language in LANGUAGE_ALIASES:
-                return normalize_language(language)
     return DEFAULT_LANGUAGE

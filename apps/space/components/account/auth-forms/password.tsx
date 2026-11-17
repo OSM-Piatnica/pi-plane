@@ -53,7 +53,7 @@ const authService = new AuthService();
 
 export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props) {
   const { email, nextPath, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, setErrorInfo } = props;
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
   // ref
   const formRef = useRef<HTMLFormElement>(null);
   // states
@@ -90,7 +90,11 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     setIsRequestingCode(true);
     setErrorInfo(undefined);
     try {
-      const response = await authService.requestSignUpVerificationCode({ email: passwordFormData.email });
+      // the code email is written in the language picked on this page
+      const response = await authService.requestSignUpVerificationCode({
+        email: passwordFormData.email,
+        language: currentLocale,
+      });
       if (response?.required) setResendCodeTimer(RESEND_CODE_AFTER_SECONDS);
       return !!response?.required;
     } catch (error) {
@@ -178,6 +182,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     >
       <input type="hidden" name="csrfmiddlewaretoken" />
       <input type="hidden" value={passwordFormData.email} name="email" />
+      {/* the new account's profile, and so its emails, start in the language picked on this page */}
+      {mode === EAuthModes.SIGN_UP && <input type="hidden" value={currentLocale} name="language" />}
       <input type="hidden" value={nextPath} name="next_path" />
       <div className="space-y-1">
         <label className="text-13 font-medium text-tertiary" htmlFor="email">
@@ -308,16 +314,14 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               size="xl"
               value={verificationCode}
               onChange={(e) => setVerificationCode(e.target.value)}
-              placeholder={t("auth.common.one_time_code.placeholder")}
+              placeholder={t("auth.common.one_time_code.enter_code")}
               inputMode="numeric"
               autoComplete="one-time-code"
               // oxlint-disable-next-line jsx-a11y/no-autofocus -- the code is the only thing left to fill in at this step
               autoFocus
             />
           </div>
-          <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
-            {/* A neutral hint: the code is only checked once the form is sent */}
-            <p className="font-medium text-tertiary">{t("auth.common.one_time_code.paste_code")}</p>
+          <div className="flex w-full items-center justify-end px-1 pt-1 text-11">
             <button
               type="button"
               onClick={() => void requestVerificationCode()}

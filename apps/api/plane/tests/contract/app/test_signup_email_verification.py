@@ -91,6 +91,14 @@ class TestVerificationCodeEndpoint:
         assert _no_mail.call_args[0][0] == EMAIL
         assert _no_mail.call_args[0][2] == _issued_code()
 
+    def test_passes_the_language_picked_on_the_page_to_the_email(self, api_client, setup_instance, _no_mail):
+        response = api_client.post(
+            reverse("sign-up-verification-code"), {"email": EMAIL, "language": "pl"}, format="json"
+        )
+
+        assert response.status_code == status.HTTP_200_OK
+        assert _no_mail.call_args.kwargs["language"] == "pl"
+
     def test_rejects_an_invalid_email(self, api_client, setup_instance):
         response = _request_code(api_client, "not-an-email")
 
@@ -176,6 +184,18 @@ class TestSignUpWithCode:
         assert "_auth_user_id" in django_client.session
         # The code is used up
         assert not redis_instance().exists(f"{KEY_PREFIX}{EMAIL}")
+
+    def test_the_language_picked_on_the_page_goes_to_the_profile(
+        self, url_name, api_client, django_client, setup_instance
+    ):
+        _request_code(api_client)
+
+        django_client.post(
+            reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": _issued_code(), "language": "pl"}
+        )
+
+        # later emails (invitations, notifications) follow the profile language
+        assert User.objects.get(email=EMAIL).profile.language == "pl"
 
     def test_the_code_stays_valid_after_a_weak_password(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)

@@ -97,7 +97,11 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     setIsRequestingCode(true);
     setErrorInfo(undefined);
     try {
-      const response = await authService.requestSignUpVerificationCode({ email: passwordFormData.email });
+      // the code email is written in the language picked on this page
+      const response = await authService.requestSignUpVerificationCode({
+        email: passwordFormData.email,
+        language: currentLocale,
+      });
       if (response?.required) setResendCodeTimer(RESEND_CODE_AFTER_SECONDS);
       return !!response?.required;
     } catch (error) {
@@ -339,16 +343,14 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
                 name="code"
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value)}
-                placeholder={t("auth.common.one_time_code.placeholder")}
+                placeholder={t("auth.common.one_time_code.enter_code")}
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 // oxlint-disable-next-line jsx-a11y/no-autofocus -- the code is the only thing left to fill in at this step
                 autoFocus
               />
             </InputGroup>
-            <div className="flex w-full items-center justify-between px-1 pt-1 text-11">
-              {/* A neutral hint: the code is only checked once the form is sent */}
-              <p className="font-medium text-tertiary">{t("auth.common.one_time_code.paste_code")}</p>
+            <div className="flex w-full items-center justify-end px-1 pt-1 text-11">
               <button
                 type="button"
                 onClick={() => void requestVerificationCode()}

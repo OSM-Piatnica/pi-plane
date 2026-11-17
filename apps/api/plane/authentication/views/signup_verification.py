@@ -65,7 +65,12 @@ class SignUpVerificationCodeEndpoint(APIView):
             verification = SignUpEmailVerification(email)
             code = verification.issue()
             send_one_time_code.delay(
-                email, verification.key, code, accept_language=request.headers.get("Accept-Language")
+                email,
+                verification.key,
+                code,
+                accept_language=request.headers.get("Accept-Language"),
+                # the language picked on the sign-up form; the account and its profile do not exist yet
+                language=request.data.get("language"),
             )
             return Response({"required": True}, status=status.HTTP_200_OK)
         except AuthenticationException as e:

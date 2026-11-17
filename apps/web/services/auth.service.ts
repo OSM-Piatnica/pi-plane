@@ -52,7 +52,7 @@ export class AuthService extends APIService {
       });
   }
 
-  async generateOneTimeCode(data: { email: string }): Promise<any> {
+  async generateOneTimeCode(data: { email: string; language?: string }): Promise<any> {
     return this.post("/auth/magic-generate/", data, { headers: {} })
       .then((response) => response?.data)
       .catch((error) => {
@@ -61,7 +61,7 @@ export class AuthService extends APIService {
   }
 
   /** Sends the code an email-and-password sign-up asks for; `required` is false when no code is asked for. */
-  async requestSignUpVerificationCode(data: { email: string }): Promise<{ required: boolean }> {
+  async requestSignUpVerificationCode(data: { email: string; language?: string }): Promise<{ required: boolean }> {
     return this.post("/auth/sign-up/verification-code/", data, { headers: {} })
       .then((response) => response?.data)
       .catch((error) => {

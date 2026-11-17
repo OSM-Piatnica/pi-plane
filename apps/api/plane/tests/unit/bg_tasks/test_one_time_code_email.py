@@ -43,9 +43,9 @@ class TestLanguageFromAcceptHeader:
         assert language_from_accept_header(header) == expected
 
 
-def _send(email, token="123456", accept_language=None):
+def _send(email, token="123456", accept_language=None, language=None):
     with patch("plane.bgtasks.one_time_code_task.get_email_configuration", return_value=CONFIG):
-        send_one_time_code(email, f"one_time_code_{email}", token, accept_language=accept_language)
+        send_one_time_code(email, f"one_time_code_{email}", token, accept_language=accept_language, language=language)
 
 
 @pytest.mark.unit
@@ -92,3 +92,31 @@ class TestOneTimeCodeEmail:
         _send("new@example.com", accept_language="xx-YY")
 
         assert mailoutbox[0].subject == "Your one-time Pi-Plane login code is 123456"
+
+    def test_someone_signing_up_gets_the_language_picked_on_the_page(self, mailoutbox):
+        # the browser says German, the language picked on the sign-up page wins
+        _send("new@example.com", accept_language="de-DE,de;q=0.9", language="pl")
+
+        assert mailoutbox[0].subject == "Twój jednorazowy kod logowania do Pi-Plane: 123456"
+        assert 'lang="pl"' in mailoutbox[0].alternatives[0][0]
+
+    def test_a_language_variant_gets_the_emails_of_its_language(self, mailoutbox):
+        _send("new@example.com", language="pl-x-podlaski")
+
+        assert mailoutbox[0].subject == "Twój jednorazowy kod logowania do Pi-Plane: 123456"
+
+    @pytest.mark.parametrize("language", ["xx", "", "../en", "PL", 42])
+    def test_a_picked_language_without_emails_falls_back_to_the_browser(self, mailoutbox, language):
+        _send("new@example.com", accept_language="de", language=language)
+
+        assert mailoutbox[0].subject == "Ihr Einmalcode für die Pi-Plane-Anmeldung lautet 123456"
+
+    def test_a_known_user_keeps_the_language_of_their_profile(self, mailoutbox):
+        user = UserFactory(email="known@example.com")
+        profile, _ = Profile.objects.get_or_create(user=user)
+        profile.language = "de"
+        profile.save()
+
+        _send("known@example.com", language="pl")
+
+        assert mailoutbox[0].subject == "Ihr Einmalcode für die Pi-Plane-Anmeldung lautet 123456"

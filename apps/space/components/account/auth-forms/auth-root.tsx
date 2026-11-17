@@ -45,7 +45,7 @@ export const AuthRoot = observer(function AuthRoot() {
   const [isPasswordAutoset, setIsPasswordAutoset] = useState(true);
   // hooks
   const { config } = useInstance();
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
 
   useEffect(() => {
     if (error_code) {
@@ -146,7 +146,8 @@ export const AuthRoot = observer(function AuthRoot() {
 
   // generating the one-time code
   const generateEmailOneTimeCode = async (emailToVerify: string): Promise<{ code: string } | undefined> => {
-    const payload = { email: emailToVerify };
+    // the code email is written in the language picked on this page when the address has no account yet
+    const payload = { email: emailToVerify, language: currentLocale };
     return await authService
       .generateOneTimeCode(payload)
       .then(() => ({ code: "" }))
