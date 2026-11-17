@@ -9,18 +9,22 @@ between, so the rail is not shown and the shell looks exactly as it did before t
 
 ## What the registry drives
 
-| Part                 | With one enabled app | With two or more                                        |
-| -------------------- | -------------------- | ------------------------------------------------------- |
-| Rail (`AppRailRoot`) | not rendered         | one item per enabled app, in registry order             |
-| Active item          | (none shown)         | the app that owns the current route                     |
-| Command palette      | no extra entries     | "Switch to ..." entry per app, in the Navigation group  |
-| Keyboard shortcuts   | none                 | `G` then `1`, `G` then `2`, ... by position in the rail |
-| Shortcuts dialog     | no extra rows        | lists the shortcuts above                               |
-| Docking              | nothing to dock      | "Dock app rail" / "Undock app rail" in the palette      |
+| Part                 | With one enabled app | With two or more                                                 |
+| -------------------- | -------------------- | ---------------------------------------------------------------- |
+| Rail (`AppRailRoot`) | not rendered         | one item per enabled app the user did not hide, in their order   |
+| Active item          | (none shown)         | the app that owns the current route                              |
+| Command palette      | no extra entries     | "Switch to ..." entry per app, in the Navigation group           |
+| Keyboard shortcuts   | none                 | `G` then `1`, `G` then `2`, ... by position in the rail          |
+| Shortcuts dialog     | no extra rows        | lists the shortcuts above                                        |
+| Docking              | nothing to dock      | "Dock app rail" / "Undock app rail" in the palette               |
+| Customise dialog     | no "Apps" section    | order of the apps, hidden apps and the default app               |
+| Workspace root       | opens as always      | sends the user to their default or last used app (see "Landing") |
+| Last used app        | not recorded         | remembered per workspace in `localStorage`                       |
 
 When the rail is shown it keeps the parts it already had: the right-click menu with "icon only" /
 "icon with name" and "undock app rail", the per-workspace docking state in `localStorage`
-(`APP_RAIL_<workspaceSlug>`), and the Settings item below the apps.
+(`APP_RAIL_<workspaceSlug>`), and the Settings item below the apps. The right-click menu also
+opens the customise navigation dialog, so an app without the Projects sidebar has a way to it.
 
 ### Docking
 
@@ -41,20 +45,24 @@ their own permission checks.
 
 ## Where things live
 
-| File                                                 | Content                                                                                                                    |
-| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `packages/types/src/app-rail.ts`                     | `TAppRailAppKey` (the union of app keys), `TAppRailApp`, `TAppRailContext`                                                 |
-| `packages/constants/src/app-rail.ts`                 | reserved route segments, shortcut prefix and limit                                                                         |
-| `packages/utils/src/app-rail.ts`                     | pure helpers: enabled apps, active app from a path, rail items, route access, shortcut for a position, registry validation |
-| `apps/web/components/app-rail/registry.ts`           | the app definitions and `APP_RAIL_APPS`, in rail order (no React code)                                                     |
-| `apps/web/components/app-rail/registry-icons.ts`     | `APP_RAIL_APP_ICONS`: icon per app                                                                                         |
-| `apps/web/components/app-rail/app-sidebar.tsx`       | `APP_RAIL_APP_SIDEBARS` and `<AppRailAppSidebar appKey>` for app layouts                                                   |
-| `apps/web/components/app-rail/app-guard.tsx`         | `<AppRailAppGuard appKey>`: keeps a disabled app's routes from rendering                                                   |
-| `apps/web/components/app-rail/use-app-rail-apps.ts`  | `useAppRailApps()`: enabled apps, active app, `hasMultipleApps`                                                            |
-| `apps/web/components/app-rail/switch-commands.ts`    | command palette entries and shortcuts, generated from the enabled apps                                                     |
-| `apps/web/components/power-k/core/physical-digit.ts` | lets a sequence ending in a digit complete on layouts with shifted digits                                                  |
-| `apps/web/components/app-rail/app-rail-hoc.tsx`      | turns the enabled apps into rail items                                                                                     |
-| `apps/web/hooks/app-rail/provider.tsx`               | enables the rail when more than one app is enabled                                                                         |
+| File                                                       | Content                                                                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `packages/types/src/app-rail.ts`                           | `TAppRailAppKey` (the union of app keys), `TAppRailApp`, `TAppRailContext`                                                 |
+| `packages/constants/src/app-rail.ts`                       | reserved route segments, shortcut prefix and limit                                                                         |
+| `packages/utils/src/app-rail.ts`                           | pure helpers: enabled apps, active app from a path, rail items, route access, shortcut for a position, registry validation |
+| `apps/web/components/app-rail/registry.ts`                 | the app definitions and `APP_RAIL_APPS`, in rail order (no React code)                                                     |
+| `apps/web/components/app-rail/registry-icons.ts`           | `APP_RAIL_APP_ICONS`: icon per app                                                                                         |
+| `apps/web/components/app-rail/app-sidebar.tsx`             | `APP_RAIL_APP_SIDEBARS` and `<AppRailAppSidebar appKey>` for app layouts                                                   |
+| `apps/web/components/app-rail/app-guard.tsx`               | `<AppRailAppGuard appKey>`: keeps a disabled app's routes from rendering                                                   |
+| `apps/web/components/app-rail/use-app-rail-apps.ts`        | `useAppRailApps()`: enabled apps, rail apps in the user's order, active app, `hasMultipleApps`                             |
+| `apps/web/components/app-rail/app-landing.tsx`             | `<AppRailLanding>`: the landing redirect at the workspace root, and the recording of the last used app                     |
+| `apps/web/components/app-rail/last-used-app.ts`            | reads and writes the last used app in `localStorage`                                                                       |
+| `apps/web/components/app-rail/app-preferences-section.tsx` | the "Apps" section of the customise navigation dialog                                                                      |
+| `apps/api/plane/utils/app_rail.py`                         | the app keys the API accepts for `default_app` and for the `app_rail:<key>` preferences                                    |
+| `apps/web/components/app-rail/switch-commands.ts`          | command palette entries and shortcuts, generated from the enabled apps                                                     |
+| `apps/web/components/power-k/core/physical-digit.ts`       | lets a sequence ending in a digit complete on layouts with shifted digits                                                  |
+| `apps/web/components/app-rail/app-rail-hoc.tsx`            | turns the enabled apps into rail items                                                                                     |
+| `apps/web/hooks/app-rail/provider.tsx`                     | enables the rail when more than one app is enabled                                                                         |
 
 Types and constants are in the shared packages, as for other features; the pure helpers are in
 `@plane/utils` because that package owns pure logic and has its own tests. Everything that needs
@@ -74,9 +82,28 @@ type TAppRailApp = {
 };
 ```
 
-`isEnabled` receives `{ workspaceSlug, workspace, user, workspaceRole }`. Any field can be
-`undefined` while data loads, so a predicate should return `false` until it knows. Workspace
-feature switches (roadmap G3) will be added to this context.
+`isEnabled` receives `{ workspaceSlug, workspace, user, workspaceRole, features }`. The first four
+can be `undefined` while data loads, so a predicate should return `false` until it knows.
+`features` is never missing: it holds every workspace feature switch as a boolean, all `false`
+until the workspace has loaded.
+
+### An app behind a feature switch
+
+An app that a workspace admin can switch off reads its switch from the context:
+
+```ts
+isEnabled: ({ features }) => features.approvals,
+// or, combined with a role
+isEnabled: ({ features, workspaceRole }) =>
+  features.approvals && workspaceRole !== undefined && workspaceRole >= EUserWorkspaceRoles.MEMBER,
+```
+
+Nothing else is needed in the shell: while the switch is off the app is not enabled, so it has no
+rail item, no command, no shortcut, and `AppRailAppGuard` keeps its routes closed. The switch
+itself (the key, making it available, the settings page) is described in
+[`workspace-features.md`](./workspace-features.md). The API endpoints of the app must check the
+switch on their own (`is_enabled` of the workspace's `WorkspaceFeature` row); the guard hides the
+UI only.
 
 The switch label is a full sentence per app, not "Switch to {app}", because the app name has to
 be inflected in several languages.
@@ -107,6 +134,10 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
    From here the type check fails until the app has a definition (step 3) and an icon (step 4):
    both are records over this union. The sidebar map is partial on purpose (an app may have no
    sidebar), and nothing checks the route group, the routes or the guard: steps 5 to 8 are on you.
+
+   Add the same key to `APP_RAIL_APP_KEYS` in `apps/api/plane/utils/app_rail.py`. The API accepts
+   only these keys as a user's default app and in the `app_rail:<key>` preferences, and
+   `apps/web/tests/unit/app-preferences-and-features.test.ts` fails while the two lists differ.
 
 2. **Strings.** Add the rail label and the switch label to
    `packages/i18n/src/locales/en/pi-extensions.json`, then to every locale (follow the
@@ -188,7 +219,86 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
    English locale). Update its "offers Projects alone" case, which pins the single-app state.
 
 Nothing in the shell needs to change: once a second app is enabled for a user, the rail, the
-active state, the command palette entries and the shortcuts appear for that user.
+active state, the command palette entries, the shortcuts, the "Apps" section of the customise
+dialog and the landing appear for that user.
+
+## A user's preferences
+
+All of this exists only for a user with more than one enabled app. It was built before a second
+app existed, so so far it has run only in unit and contract tests.
+
+### Order and hidden apps
+
+The customise navigation dialog (the button in the Projects sidebar, or the rail's right-click
+menu) gets an "Apps" section: drag to reorder, untick to hide. The last app left in the rail
+cannot be unticked.
+
+The state is stored with the other sidebar preferences, in `WorkspaceUserPreference`
+(`/api/workspaces/:slug/sidebar-preferences/`), one row per app:
+
+| Field        | Meaning for an app                                |
+| ------------ | ------------------------------------------------- |
+| `key`        | `app_rail:<app key>`, for example `app_rail:wiki` |
+| `sort_order` | position in the rail, ascending                   |
+| `is_pinned`  | `false` hides the app from the rail               |
+
+- A row is created the first time the user changes something (the endpoint creates rows only for
+  keys of known apps). Without a row an app is shown, after the apps that have one, in registry
+  order. So an app registered later appears at the end of a customised rail.
+- Hidden is not disabled. A hidden app keeps its routes and its command palette entry; the
+  shortcuts `G` `1`, `G` `2`, ... follow the rail, and hidden apps are numbered after the rail apps.
+- If every app is hidden (stale data), nothing is hidden.
+
+The pure logic is `arrangeAppRailApps` in `packages/utils/src/app-rail.ts`.
+
+### Default app and landing
+
+`default_app` is the key of the app a user wants to land in. It lives on the user's
+`WorkspaceUserProperties` row of the workspace (`/api/workspaces/:slug/user-properties/`, which
+the web app already loads), is `null` by default, and the API rejects a key that is not in
+`APP_RAIL_APP_KEYS`. The user sets it in the same "Apps" section: "Last used app" (no default) or
+one of their enabled apps.
+
+When a user enters a workspace, `<AppRailLanding>` (in the workspace layout) decides where they
+go. The order is:
+
+1. **An explicit deep link.** Any path other than the workspace root is opened as it is.
+2. **The default app**, when one is set and it is enabled for the user.
+3. **The last used app** in this workspace, when it is still enabled. It is kept in
+   `localStorage` (`APP_RAIL_LAST_APP_<workspaceSlug>`), so it is per device, and a blocked or
+   full storage just means nothing is remembered.
+4. **The workspace root as before**: the home of the Projects app.
+
+Details:
+
+- "Entering" happens once per page load and workspace: opening the app, coming back from sign-in
+  (the sign-in flow ends at `/:workspaceSlug/` unless it carries a `next_path`, which is a deep
+  link), and switching workspaces. Going to the root later, for example with the Projects rail
+  item, is not a new entry and is not redirected.
+- The root stays blank for a moment while the user's properties load, so the Projects home does
+  not flash before the redirect. If they do not load within three seconds the root opens as
+  before. With a single app, and on any deep link, nothing waits.
+- A default app that was switched off for the user later is skipped (step 3 applies) and shown
+  as "Last used app" in the dialog; the stored key is left alone.
+- If the app that owns the root is not enabled for a user, they land in their first enabled app
+  instead of on a page they cannot use.
+
+The pure logic is `getAppRailLandingApp`, `getAppRailLandingRedirect` and `resolveAppRailLanding`.
+
+Note the two meanings of "default": `isDefault` in an app definition marks the app that owns
+every path no other app claims (Projects); `default_app` is a user's choice of where to land.
+
+### Not built yet
+
+- **Default app per role** (for example guests land in Lite; roadmap E4). It fits between steps 2
+  and 3: pass the workspace's default for the user's role to `getAppRailLandingApp` as a further
+  candidate. The workspace side can be a `WorkspaceFeature`-like row or a field; nothing here
+  assumes where it is stored.
+- **A workspace admin setting another member's default app** (E4). `default_app` is on the row
+  keyed by workspace and user, so an admin endpoint can write it for any member without touching
+  `WorkspaceMember` or the member list payload.
+- **Restricting a role to some apps** (`allowed_apps`, later). That is an `isEnabled` concern: the
+  landing already handles a user whose root app is not enabled.
 
 ## Keyboard shortcuts
 
@@ -215,8 +325,3 @@ only Chromium exposes. This is `resolveSequenceKey` in `components/power-k/core/
 It applies only when a sequence is pending, the typed character neither completes nor continues
 any sequence, and the digit completes one, so single-key shortcuts and existing sequences behave
 as before. The numeric keypad works as well, because it types digits directly.
-
-## Not part of the registry yet
-
-- Default app, last used app, order and hidden apps per user: roadmap G2.
-- Workspace feature switches read by `isEnabled`: roadmap G3.
