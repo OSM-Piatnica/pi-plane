@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for who may confirm an upload on the external-API ``GenericAssetEndpoint``.
@@ -66,7 +67,7 @@ class TestGenericAssetPatchScope:
     def test_uploader_can_confirm_own_upload(self, api_key_client, workspace, guest_project):
         """The upload-then-confirm flow keeps working for a caller who is only a guest."""
         payload = {"name": "upload.png", "type": "image/png", "size": 16, "project_id": str(guest_project.id)}
-        with mock.patch("plane.api.views.asset.S3Storage", autospec=True) as mock_storage:
+        with mock.patch("plane.api.views.asset.get_storage") as mock_storage:
             mock_storage.return_value.generate_presigned_post.return_value = {"url": "https://x"}
             created = api_key_client.post(f"/api/v1/workspaces/{workspace.slug}/assets/", payload, format="json")
         assert created.status_code == status.HTTP_200_OK, getattr(created, "data", None)
