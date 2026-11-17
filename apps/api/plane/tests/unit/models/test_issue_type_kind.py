@@ -296,6 +296,14 @@ class TestKindTypeOnDemand:
         assert review_type.kind == IssueTypeKind.REVIEW
 
     @pytest.mark.django_db
+    def test_both_epic_names_taken_by_other_kinds_still_gives_an_epic_type(self, workspace, project):
+        _type(workspace, "Epic")
+        _type(workspace, "Epic work item")
+        epic_type = ensure_project_kind_type(project, IssueTypeKind.EPIC)
+        assert epic_type.kind == IssueTypeKind.EPIC
+        assert epic_type.is_epic is True
+
+    @pytest.mark.django_db
     @pytest.mark.parametrize("kind", SYSTEM_KINDS)
     def test_creation_takes_turns_per_workspace(self, workspace, project, kind):
         def workspace_locks(queries):

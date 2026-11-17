@@ -195,10 +195,9 @@ def workspace_kind_type(workspace_id, kind, *, created_by_id=None):
         created = get_or_create_issue_type(
             workspace_id=workspace_id, name=name, kind=kind, is_default=False, created_by_id=created_by_id
         )
-        if created is not None and created.kind != kind and kind != IssueTypeKind.EPIC:
-            # The second name is taken by a type of another kind as well. The Epics switch keeps handing that
-            # type back, as it always has; the newer kinds drive behaviour, so they never get a type of the
-            # wrong kind
+        if created is not None and created.kind != kind:
+            # The second name is taken by a type of another kind as well. A kind drives behaviour, so no kind
+            # (the Epic kind included) is ever handed a type of the wrong kind
             return IssueType.objects.create(
                 workspace_id=workspace_id,
                 name=f"{name} ({kind})"[:255],
