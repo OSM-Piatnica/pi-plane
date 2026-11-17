@@ -291,12 +291,13 @@ class TestDescribe:
 
     def test_a_former_member_of_a_project_no_longer_gets_its_numbers(self, workspace, create_user):
         project = _project(workspace, "OLD")
-        ProjectMember.objects.create(workspace=workspace, project=project, member=create_user, role=15, is_active=False)
+        former = self._outsider(workspace)
+        ProjectMember.objects.create(workspace=workspace, project=project, member=former, role=15, is_active=False)
         _issues(project, "started", 2)
         initiative = _initiative(workspace)
         InitiativeProject.objects.create(initiative=initiative, project=project)
 
-        described = describe([initiative], create_user, workspace.id)[initiative.id]
+        described = describe([initiative], former, workspace.id)[initiative.id]
 
         assert described["progress"]["total_issues"] == 0
         assert described["hidden_project_count"] == 1
@@ -365,12 +366,22 @@ class TestDescribe:
         assert described["progress"]["total_issues"] == 3
         assert described["progress_is_partial"] is False
 
-    def test_a_workspace_admin_needs_a_membership_of_the_project_and_any_role_is_enough(self, workspace, create_user):
+    def test_a_workspace_admin_sees_and_links_every_project_of_the_workspace_whatever_their_role_in_it(
+        self, workspace, create_user
+    ):
         joined = _project(workspace, "JOI")
         other = _project(workspace, "OTH")
         admin = self._guest_of(workspace, joined, workspace_role=20)
 
-        assert project_access(admin, workspace.id, [joined.id, other.id]) == ({joined.id}, {joined.id})
+        archived = _project(workspace, "ARC")
+        Project.objects.filter(pk=archived.pk).update(archived_at=timezone.now())
+
+        deleted = _project(workspace, "DEL")
+        Project.objects.filter(pk=deleted.pk).update(deleted_at=timezone.now())
+        both, every = {joined.id, other.id}, {joined.id, other.id, archived.id}
+
+        assert project_access(admin, workspace.id, [joined.id, other.id, deleted.id]) == (both, both)
+        assert project_access(admin, workspace.id) == (every, every)
 
     def test_retyped_and_archived_epics_are_not_reported(self, workspace, create_user):
         project = _project(workspace, "ONE", [create_user])
@@ -428,3 +439,32 @@ class TestDescribe:
         assert for_member["hidden_epic_count"] == 0
         assert sorted(for_outsider["epic_ids"], key=str) == sorted([shared.id, single.id], key=str)
         assert for_outsider["hidden_epic_count"] == 1
+
+    def test_a_workspace_admin_sees_the_numbers_and_epics_of_projects_they_are_not_in(self, workspace, create_user):
+        member = self._outsider(workspace)
+        project = _project(workspace, "NOT", [member])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        _issues(project, "started", 4)
+        epic = _issues(project, "backlog", 1, epic_type)[0]
+        plain = self._outsider(workspace)
+        goal = _initiative(workspace, "Goal", GOAL)
+        initiative = _initiative(workspace, parent=goal)
+        InitiativeProject.objects.create(initiative=initiative, project=project)
+        InitiativeEpic.objects.create(initiative=initiative, issue=epic)
+
+        for_admin = describe([goal, initiative], create_user, workspace.id)
+        for_plain = describe([goal, initiative], plain, workspace.id)
+
+        assert not ProjectMember.objects.filter(project=project, member=create_user).exists()
+        for item in (goal, initiative):
+            assert for_admin[item.id]["progress"]["total_issues"] == 4
+            assert for_admin[item.id]["progress_is_partial"] is False
+            assert for_admin[item.id]["hidden_project_count"] == 0
+            assert for_admin[item.id]["project_ids"] == [project.id]
+            assert for_admin[item.id]["epic_ids"] == [epic.id]
+            assert for_admin[item.id]["hidden_epic_count"] == 0
+            assert for_plain[item.id]["progress"]["total_issues"] == 0
+            assert for_plain[item.id]["progress_is_partial"] is True
+            assert for_plain[item.id]["hidden_project_count"] == 1
+            assert for_plain[item.id]["project_ids"] == [] and for_plain[item.id]["epic_ids"] == []
+            assert for_plain[item.id]["hidden_epic_count"] == 1

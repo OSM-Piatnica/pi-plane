@@ -7,7 +7,8 @@
 An initiative counts the work items of its projects by state group; a goal counts the projects of all its
 initiatives, each project once. Epics are left out (``Issue.progress_objects``), or their work would count twice.
 
-A person only gets numbers from the projects whose work items they may see (``project_access``). The other projects
+A person only gets numbers from the projects whose work items they may see (``project_access``; a workspace admin
+sees them all). The other projects
 are left out of the numbers and of the lists, and only their count is given, so neither their names nor their sizes
 leak. An archived project stays linked and listed, but its work items do not count.
 """
@@ -22,6 +23,7 @@ from plane.db.models import (
     InitiativeKind,
     InitiativeProject,
     Issue,
+    Project,
     ProjectMember,
     WorkspaceMember,
 )
@@ -37,15 +39,24 @@ def empty_progress():
 def project_access(user, workspace_id, project_ids=None):
     """(viewable, manageable): the projects whose work items the person may see, and the ones they may link.
 
-    Narrowed to ``project_ids`` when given. The rules of the rest of the app:
+    Narrowed to ``project_ids`` when given.
 
-    * work items are seen by an active project member above Guest, and by a project guest only when the project
-      shows everything to guests (``guest_view_all_features``); other guests see only their own work items, so the
-      totals of the project are not theirs to see;
-    * linking and unlinking takes at least the Member role in the project;
-    * a workspace admin with any active membership of the project counts as its admin; one who is not in the
-      project has no access to it.
+    * A workspace admin sees and links every project of the workspace, member of it or not.
+    * Anybody else sees the work items of a project as an active member above Guest, and as a project guest only
+      when the project shows everything to guests (``guest_view_all_features``); other guests see only their own
+      work items, so the totals of the project are not theirs to see.
+    * Anybody else links and unlinks a project (and its Epics) with at least the Member role in it. Seeing a
+      project is not enough.
     """
+    if WorkspaceMember.objects.filter(
+        workspace_id=workspace_id, member=user, is_active=True, role=ROLE.ADMIN.value
+    ).exists():
+        projects = Project.objects.filter(workspace_id=workspace_id)
+        if project_ids is not None:
+            projects = projects.filter(pk__in=project_ids)
+        every = set(projects.values_list("id", flat=True))
+        return every, set(every)
+
     memberships = ProjectMember.objects.filter(
         workspace_id=workspace_id,
         member=user,
@@ -54,15 +65,11 @@ def project_access(user, workspace_id, project_ids=None):
     )
     if project_ids is not None:
         memberships = memberships.filter(project_id__in=project_ids)
-    rows = list(memberships.values_list("project_id", "role", "project__guest_view_all_features"))
-    workspace_admin = bool(rows) and (
-        WorkspaceMember.objects.filter(
-            workspace_id=workspace_id, member=user, is_active=True, role=ROLE.ADMIN.value
-        ).exists()
-    )
     viewable, manageable = set(), set()
-    for project_id, role, guests_see_all in rows:
-        if workspace_admin or role > ROLE.GUEST.value:
+    for project_id, role, guests_see_all in memberships.values_list(
+        "project_id", "role", "project__guest_view_all_features"
+    ):
+        if role > ROLE.GUEST.value:
             viewable.add(project_id)
             manageable.add(project_id)
         elif guests_see_all:
