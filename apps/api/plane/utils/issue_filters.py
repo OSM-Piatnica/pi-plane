@@ -138,13 +138,15 @@ def filter_priority(params, issue_filter, method, prefix=""):
 def filter_epic(params, issue_filter, method, prefix=""):
     """The filter behind "load more" in an Epic group: the Epic and every work item below it (None: under no Epic).
 
-    The parent groups use `filter_parent`.
+    It is built from the Epics down (`epic_tree_ids`), so what it costs is the size of the Epic subtrees and not
+    the number of work items of the instance, and it agrees with the grouping (`EpicAncestor`). The parent groups
+    use `filter_parent`.
     """
 
     from django.db.models import Q
 
     from plane.db.models import Issue
-    from plane.utils.epic_ancestor import EpicAncestor
+    from plane.utils.epic_ancestor import epic_tree_ids
 
     if method != "GET":
         return issue_filter
@@ -152,16 +154,14 @@ def filter_epic(params, issue_filter, method, prefix=""):
     include_none, epics = "None" in values, filter_valid_uuids(values)
     if not include_none and not epics:
         return issue_filter
-    condition = Q()
-    if include_none:
-        condition |= Q(epic_id__isnull=True)
-    if epics:
-        condition |= Q(epic_id__in=epics)
-    scope = Issue.all_objects.all()
     if epics and not include_none:
-        # Only the projects of these Epics need the walk up the parent chain; "None" has to look at every work item
-        scope = scope.filter(project_id__in=Issue.all_objects.filter(pk__in=epics).values("project_id"))
-    issue_filter[f"{prefix}pk__in"] = scope.annotate(epic_id=EpicAncestor()).filter(condition).values("id")
+        issue_filter[f"{prefix}pk__in"] = epic_tree_ids(epics)
+        return issue_filter
+    # "None" is every work item that is in no Epic tree; Epic ids add their trees
+    condition = ~Q(pk__in=epic_tree_ids())
+    if epics:
+        condition |= Q(pk__in=epic_tree_ids(epics))
+    issue_filter[f"{prefix}pk__in"] = Issue.all_objects.filter(condition).values("id")
     return issue_filter
 
 
