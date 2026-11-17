@@ -5,26 +5,18 @@
  */
 
 import { useParams, usePathname } from "next/navigation";
-import type { EUserWorkspaceRoles, TAppRailApp, TAppRailAppKey, TAppRailContext } from "@plane/types";
-import { getActiveAppRailAppKey, getEnabledAppRailApps, hasMultipleAppRailApps } from "@plane/utils";
+import type { EUserWorkspaceRoles, TAppRailAppKey, TAppRailContext } from "@plane/types";
+import { getAppRailState } from "@plane/utils";
+import type { TAppRailState } from "@plane/utils";
 import { useWorkspace } from "@/hooks/store/use-workspace";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import { APP_RAIL_APPS } from "./registry";
-
-type TUseAppRailApps = {
-  /** Apps offered to the current user in the current workspace, in rail order */
-  enabledApps: TAppRailApp[];
-  /** The enabled app the current route belongs to */
-  activeAppKey: TAppRailAppKey | undefined;
-  /** False with a single enabled app: no rail, no switch commands, no shortcuts */
-  hasMultipleApps: boolean;
-};
 
 /**
  * Reads the rail registry for the current workspace, user and route.
  * Call it from an `observer` component: the context comes from MobX stores.
  */
-export const useAppRailApps = (): TUseAppRailApps => {
+export const useAppRailApps = (): TAppRailState<TAppRailAppKey> => {
   const { workspaceSlug: routeWorkspaceSlug } = useParams();
   const pathname = usePathname();
   const { currentWorkspace } = useWorkspace();
@@ -40,11 +32,6 @@ export const useAppRailApps = (): TUseAppRailApps => {
       ? (getWorkspaceRoleByWorkspaceSlug(workspaceSlug) as EUserWorkspaceRoles | undefined)
       : undefined,
   };
-  const enabledApps = getEnabledAppRailApps(APP_RAIL_APPS, context);
 
-  return {
-    enabledApps,
-    activeAppKey: getActiveAppRailAppKey(enabledApps, pathname, workspaceSlug),
-    hasMultipleApps: hasMultipleAppRailApps(enabledApps),
-  };
+  return getAppRailState(APP_RAIL_APPS, context, pathname);
 };

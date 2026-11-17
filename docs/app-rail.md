@@ -16,25 +16,45 @@ between, so the rail is not shown and the shell looks exactly as it did before t
 | Command palette      | no extra entries     | "Switch to ..." entry per app, in the Navigation group  |
 | Keyboard shortcuts   | none                 | `G` then `1`, `G` then `2`, ... by position in the rail |
 | Shortcuts dialog     | no extra rows        | lists the shortcuts above                               |
+| Docking              | nothing to dock      | "Dock app rail" / "Undock app rail" in the palette      |
 
-When the rail is shown, its existing behaviour applies unchanged: the right-click menu with
-"icon only" / "icon with name" and "undock app rail", the per-workspace docking state in
-`localStorage` (`APP_RAIL_<workspaceSlug>`), and the Settings item below the apps.
+When the rail is shown it keeps the parts it already had: the right-click menu with "icon only" /
+"icon with name" and "undock app rail", the per-workspace docking state in `localStorage`
+(`APP_RAIL_<workspaceSlug>`), and the Settings item below the apps.
+
+### Docking
+
+An undocked rail is not rendered at all, so its right-click menu, the only place that offered
+"dock app rail", disappears with it. To give the way back, the command palette gets a
+"Dock app rail" entry (group Miscellaneous) while the rail is undocked, and "Undock app rail"
+while it is docked. Like the switch commands, the entry exists only when more than one app is
+enabled. It has no keyboard shortcut.
+
+### Routes of a disabled app
+
+An app that is not enabled for a user must not open when its URL is typed or bookmarked. Each
+app's layout is wrapped in `<AppRailAppGuard appKey>`: for a disabled app it renders nothing and
+replaces the route with the default app's (or, if the default app is itself disabled, the first
+enabled app's). The decision is the pure `getAppRailRouteAccess`. Projects, the default app that
+is always enabled, is not wrapped. The guard hides the UI only: API endpoints of an app need
+their own permission checks.
 
 ## Where things live
 
-| File                                                | Content                                                                                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `packages/types/src/app-rail.ts`                    | `TAppRailAppKey` (the union of app keys), `TAppRailApp`, `TAppRailContext`                            |
-| `packages/constants/src/app-rail.ts`                | reserved route segments, shortcut prefix and limit                                                    |
-| `packages/utils/src/app-rail.ts`                    | pure helpers: enabled filtering, active app from a path, shortcut for a position, registry validation |
-| `apps/web/components/app-rail/registry.ts`          | `APP_RAIL_APPS`: the apps, in rail order (no React code)                                              |
-| `apps/web/components/app-rail/registry-icons.ts`    | `APP_RAIL_APP_ICONS`: icon per app                                                                    |
-| `apps/web/components/app-rail/app-sidebar.tsx`      | `APP_RAIL_APP_SIDEBARS` and `<AppRailAppSidebar appKey>` for app layouts                              |
-| `apps/web/components/app-rail/use-app-rail-apps.ts` | `useAppRailApps()`: enabled apps, active app, `hasMultipleApps`                                       |
-| `apps/web/components/app-rail/switch-commands.ts`   | command palette entries and shortcuts, generated from the enabled apps                                |
-| `apps/web/components/app-rail/app-rail-hoc.tsx`     | turns the enabled apps into rail items                                                                |
-| `apps/web/hooks/app-rail/provider.tsx`              | enables the rail when more than one app is enabled                                                    |
+| File                                                 | Content                                                                                                                    |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `packages/types/src/app-rail.ts`                     | `TAppRailAppKey` (the union of app keys), `TAppRailApp`, `TAppRailContext`                                                 |
+| `packages/constants/src/app-rail.ts`                 | reserved route segments, shortcut prefix and limit                                                                         |
+| `packages/utils/src/app-rail.ts`                     | pure helpers: enabled apps, active app from a path, rail items, route access, shortcut for a position, registry validation |
+| `apps/web/components/app-rail/registry.ts`           | the app definitions and `APP_RAIL_APPS`, in rail order (no React code)                                                     |
+| `apps/web/components/app-rail/registry-icons.ts`     | `APP_RAIL_APP_ICONS`: icon per app                                                                                         |
+| `apps/web/components/app-rail/app-sidebar.tsx`       | `APP_RAIL_APP_SIDEBARS` and `<AppRailAppSidebar appKey>` for app layouts                                                   |
+| `apps/web/components/app-rail/app-guard.tsx`         | `<AppRailAppGuard appKey>`: keeps a disabled app's routes from rendering                                                   |
+| `apps/web/components/app-rail/use-app-rail-apps.ts`  | `useAppRailApps()`: enabled apps, active app, `hasMultipleApps`                                                            |
+| `apps/web/components/app-rail/switch-commands.ts`    | command palette entries and shortcuts, generated from the enabled apps                                                     |
+| `apps/web/components/power-k/core/physical-digit.ts` | lets a sequence ending in a digit complete on layouts with shifted digits                                                  |
+| `apps/web/components/app-rail/app-rail-hoc.tsx`      | turns the enabled apps into rail items                                                                                     |
+| `apps/web/hooks/app-rail/provider.tsx`               | enables the rail when more than one app is enabled                                                                         |
 
 Types and constants are in the shared packages, as for other features; the pure helpers are in
 `@plane/utils` because that package owns pure logic and has its own tests. Everything that needs
@@ -84,7 +104,9 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
    export type TAppRailAppKey = "projects" | "approvals";
    ```
 
-   From here the compiler reports the missing icon.
+   From here the type check fails until the app has a definition (step 3) and an icon (step 4):
+   both are records over this union. The sidebar map is partial on purpose (an app may have no
+   sidebar), and nothing checks the route group, the routes or the guard: steps 5 to 8 are on you.
 
 2. **Strings.** Add the rail label and the switch label to
    `packages/i18n/src/locales/en/pi-extensions.json`, then to every locale (follow the
@@ -97,12 +119,12 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
    }
    ```
 
-3. **Registration.** Add the app to `APP_RAIL_APPS` in
-   `apps/web/components/app-rail/registry.ts`. The position in the array is the position in the
+3. **Registration.** Add the app to `APP_RAIL_APP_DEFINITIONS` in
+   `apps/web/components/app-rail/registry.ts`. The position of the entry is the position in the
    rail and decides the shortcut (`G` `2` for the second app):
 
    ```ts
-   {
+   approvals: {
      key: "approvals",
      i18n_label: "app_rail.apps.approvals",
      i18n_switch_label: "app_rail.switch_to.approvals",
@@ -119,19 +141,22 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
 
    ```
    apps/web/app/(all)/[workspaceSlug]/(approvals)/
-     layout.tsx        the app's frame: power-k provider, sidebar, <Outlet />
+     layout.tsx        the app's frame: guard, power-k provider, sidebar, <Outlet />
      _sidebar.tsx      the contextual sidebar (optional)
      approvals/page.tsx
    ```
 
    The layout mirrors `(projects)/layout.tsx`. Mount `ProjectsAppPowerKProvider` in it so the
    command palette and the app switching shortcuts work inside the app, and render the sidebar
-   through the registry:
+   through the registry.
+
+6. **Guard.** Wrap the whole layout in `<AppRailAppGuard appKey>`, so the routes do not render
+   for a user whose `isEnabled` says no (see "Routes of a disabled app"):
 
    ```tsx
    export default function ApprovalsLayout() {
      return (
-       <>
+       <AppRailAppGuard appKey="approvals">
          <ProjectsAppPowerKProvider />
          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-lg border border-subtle">
            <div className="relative flex size-full overflow-hidden">
@@ -141,15 +166,15 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
              </main>
            </div>
          </div>
-       </>
+       </AppRailAppGuard>
      );
    }
    ```
 
-6. **Sidebar.** If the app has one, add it to `APP_RAIL_APP_SIDEBARS` in `app-sidebar.tsx`.
+7. **Sidebar.** If the app has one, add it to `APP_RAIL_APP_SIDEBARS` in `app-sidebar.tsx`.
    Only app layouts may import that module (see the comment in the file).
 
-7. **Routes.** Register the route group in `apps/web/app/routes/extended.ts`, inside the
+8. **Routes.** Register the route group in `apps/web/app/routes/extended.ts`, inside the
    workspace layout and next to the `(projects)` entry:
 
    ```ts
@@ -158,7 +183,7 @@ The example adds an **Approvals** app at `/:workspaceSlug/approvals`.
    ]),
    ```
 
-8. **Tests.** `apps/web/tests/unit/app-rail-registry.test.ts` validates the registry (one default
+9. **Tests.** `apps/web/tests/unit/app-rail-registry.test.ts` validates the registry (one default
    app, no duplicate keys, no route segment claimed twice or reserved, labels present in the
    English locale). Update its "offers Projects alone" case, which pins the single-app state.
 
@@ -180,8 +205,16 @@ Browser-level combinations (`Ctrl`/`Cmd` + digit, `Alt` + digit) were avoided be
 use them to switch tabs. The unit test scans the command palette sources and fails if a later
 binding collides with `g1` to `g9`.
 
-Limitation: on layouts where digits need `Shift` (for example French AZERTY) the sequence does
-not fire, as for any shortcut bound to a digit; the command palette entry still works.
+### Layouts with shifted digits
+
+On French AZERTY, Czech and Slovak layouts the digit row types other characters (`&é"'`, `+ěšč`)
+and digits need `Shift`, which cancels a pending sequence. So after a sequence prefix the handler
+also accepts the digit key by its physical position (`KeyboardEvent.code` `Digit1` to `Digit9`):
+`G` then the key that carries `1` works on every layout, with or without the layout map that
+only Chromium exposes. This is `resolveSequenceKey` in `components/power-k/core/physical-digit.ts`.
+It applies only when a sequence is pending, the typed character neither completes nor continues
+any sequence, and the digit completes one, so single-key shortcuts and existing sequences behave
+as before. The numeric keypad works as well, because it types digits directly.
 
 ## Not part of the registry yet
 

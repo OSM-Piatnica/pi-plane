@@ -17,7 +17,12 @@ import {
   validateAppRailApps,
 } from "@plane/utils";
 import { APP_RAIL_APPS, getAppRailApp } from "@/components/app-rail/registry";
-import { APP_RAIL_SWITCH_COMMAND_ID_PREFIX, buildAppRailSwitchCommands } from "@/components/app-rail/switch-commands";
+import {
+  APP_RAIL_SWITCH_COMMAND_ID_PREFIX,
+  APP_RAIL_TOGGLE_COMMAND_ID,
+  buildAppRailSwitchCommands,
+} from "@/components/app-rail/switch-commands";
+import { resolveSequenceKey } from "@/components/power-k/core/physical-digit";
 import type { TPowerKContext } from "@/components/power-k/core/types";
 
 const CONTEXT: TAppRailContext = {
@@ -201,5 +206,74 @@ describe("app switching shortcuts", () => {
     for (const sequence of existing.sequences) {
       expect(generated.some((own) => own?.startsWith(sequence) || sequence.startsWith(own as string))).toBe(false);
     }
+  });
+});
+
+describe("app rail docking command", () => {
+  const twoApps = [APP_RAIL_APPS[0], fakeApp("approvals")];
+  const findToggle = (commands: ReturnType<typeof buildAppRailSwitchCommands>) =>
+    commands.find((command) => command.id === APP_RAIL_TOGGLE_COMMAND_ID);
+
+  it("offers to dock a collapsed rail, which no longer renders its own menu", () => {
+    const toggle = vi.fn();
+    const command = findToggle(buildAppRailSwitchCommands(twoApps, {}, { isCollapsed: true, toggle }));
+    expect(command?.i18n_title).toBe("app_text.navigation.dock_app_rail");
+    expect(command?.keySequence ?? command?.shortcut ?? command?.modifierShortcut).toBeUndefined();
+    const { ctx } = powerKContext("acme");
+    expect(command?.isVisible(ctx)).toBe(true);
+    expect(command?.isEnabled(ctx)).toBe(true);
+    if (command?.type !== "action") throw new Error("expected an action command");
+    void command.action(ctx);
+    expect(toggle).toHaveBeenCalledTimes(1);
+  });
+
+  it("offers to undock a docked rail", () => {
+    const command = findToggle(buildAppRailSwitchCommands(twoApps, {}, { isCollapsed: false, toggle: vi.fn() }));
+    expect(command?.i18n_title).toBe("app_text.navigation.undock_app_rail");
+  });
+
+  it("uses titles that exist in the English locale", () => {
+    expect(hasEnglishString("app_text.navigation.dock_app_rail")).toBe(true);
+    expect(hasEnglishString("app_text.navigation.undock_app_rail")).toBe(true);
+  });
+
+  it("is absent with a single app, and outside a workspace shell", () => {
+    const docking = { isCollapsed: true, toggle: vi.fn() };
+    expect(buildAppRailSwitchCommands([APP_RAIL_APPS[0]], {}, docking)).toEqual([]);
+    expect(findToggle(buildAppRailSwitchCommands(twoApps, {}))).toBeUndefined();
+  });
+});
+
+describe("resolveSequenceKey", () => {
+  const sequences = new Map([
+    ["g1", "switch_app_projects"],
+    ["g2", "switch_app_approvals"],
+    ["gh", "nav_home"],
+  ]);
+  const withAmpersand = new Map([...sequences, ["g&", "hypothetical"]]);
+
+  it("keeps a digit typed directly", () => {
+    expect(resolveSequenceKey(sequences, "g", "1", "Digit1")).toBe("1");
+    expect(resolveSequenceKey(sequences, "g", "1", "Numpad1")).toBe("1");
+  });
+
+  it("reads the digit key of AZERTY, Czech and Slovak layouts as its digit after a prefix", () => {
+    expect(resolveSequenceKey(sequences, "g", "&", "Digit1")).toBe("1"); // fr
+    expect(resolveSequenceKey(sequences, "g", "+", "Digit1")).toBe("1"); // cs, sk
+    expect(resolveSequenceKey(sequences, "g", "é", "Digit2")).toBe("2");
+  });
+
+  it("prefers a sequence the typed character completes or continues", () => {
+    expect(resolveSequenceKey(withAmpersand, "g", "&", "Digit1")).toBe("&");
+  });
+
+  it("does nothing without a pending sequence, so single keys keep their meaning", () => {
+    expect(resolveSequenceKey(sequences, "", "&", "Digit1")).toBe("&");
+  });
+
+  it("does nothing when the digit completes no sequence, or the key is not a digit key", () => {
+    expect(resolveSequenceKey(sequences, "g", "(", "Digit5")).toBe("(");
+    expect(resolveSequenceKey(sequences, "g", "h", "KeyH")).toBe("h");
+    expect(resolveSequenceKey(sequences, "o", "&", "Digit1")).toBe("&");
   });
 });

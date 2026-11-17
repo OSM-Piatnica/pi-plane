@@ -88,3 +88,66 @@ export const validateAppRailApps = (apps: readonly TAppRailApp<string>[]): strin
 
   return problems;
 };
+
+export type TAppRailState<TKey extends string> = {
+  /** Apps offered in this context, in registry order */
+  enabledApps: TAppRailApp<TKey>[];
+  /** The enabled app the current route belongs to */
+  activeAppKey: TKey | undefined;
+  /** False with a single enabled app: no rail, no switch commands, no shortcuts */
+  hasMultipleApps: boolean;
+};
+
+/** Everything the shell derives from the registry for one workspace, user and route */
+export const getAppRailState = <TKey extends string>(
+  apps: readonly TAppRailApp<TKey>[],
+  context: TAppRailContext,
+  pathname: string
+): TAppRailState<TKey> => {
+  const enabledApps = getEnabledAppRailApps(apps, context);
+  return {
+    enabledApps,
+    activeAppKey: getActiveAppRailAppKey(enabledApps, pathname, context.workspaceSlug),
+    hasMultipleApps: hasMultipleAppRailApps(enabledApps),
+  };
+};
+
+export type TAppRailDockItem<TKey extends string> = {
+  key: TKey;
+  i18n_label: string;
+  href: string;
+  isActive: boolean;
+};
+
+/** The rail items of the enabled apps, in rail order, without their React parts */
+export const getAppRailDockItems = <TKey extends string>(
+  state: Pick<TAppRailState<TKey>, "enabledApps" | "activeAppKey">,
+  workspaceSlug: string
+): TAppRailDockItem<TKey>[] =>
+  state.enabledApps.map((app) => ({
+    key: app.key,
+    i18n_label: app.i18n_label,
+    href: app.getHref(workspaceSlug),
+    isActive: state.activeAppKey === app.key,
+  }));
+
+export type TAppRailRouteAccess = { isAllowed: true } | { isAllowed: false; redirectTo: string | undefined };
+
+/**
+ * Whether a route of the given app may render. An app that is not enabled for the user must not
+ * be reachable by typing its URL: the answer then carries where to send the user instead, the
+ * default app when it is enabled, otherwise the first enabled app. `redirectTo` is undefined
+ * when there is nowhere to go (no workspace, or no enabled app).
+ */
+export const getAppRailRouteAccess = <TKey extends string>(
+  enabledApps: readonly TAppRailApp<TKey>[],
+  appKey: TKey,
+  workspaceSlug: string | undefined
+): TAppRailRouteAccess => {
+  if (enabledApps.some((app) => app.key === appKey)) return { isAllowed: true };
+  const fallbackApp = enabledApps.find((app) => app.isDefault) ?? enabledApps[0];
+  return {
+    isAllowed: false,
+    redirectTo: workspaceSlug && fallbackApp ? fallbackApp.getHref(workspaceSlug) : undefined,
+  };
+};

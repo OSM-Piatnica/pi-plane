@@ -13,7 +13,7 @@ import { AppSidebarItem } from "@/components/sidebar/sidebar-item";
 import { withDockItems } from "@/components/app-rail/app-rail-hoc";
 
 type Props = {
-  dockItems: (AppSidebarItemData & { shouldRender: boolean })[];
+  dockItems: (AppSidebarItemData & { shouldRender: boolean; key?: string })[];
   showLabel?: boolean;
 };
 
@@ -23,7 +23,7 @@ function Component({ dockItems, showLabel = true }: Props) {
       {dockItems
         .filter((item) => item.shouldRender)
         .map((item) => (
-          <AppSidebarItem key={item.label} item={{ ...item, showLabel }} variant="link" />
+          <AppSidebarItem key={item.key ?? item.label} item={{ ...item, showLabel }} variant="link" />
         ))}
     </>
   );

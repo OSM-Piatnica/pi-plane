@@ -8,6 +8,9 @@ import { describe, expect, it } from "vitest";
 import type { TAppRailApp, TAppRailContext } from "@plane/types";
 import {
   getActiveAppRailAppKey,
+  getAppRailDockItems,
+  getAppRailRouteAccess,
+  getAppRailState,
   getAppRailSwitchKeySequence,
   getEnabledAppRailApps,
   hasMultipleAppRailApps,
@@ -171,5 +174,79 @@ describe("validateAppRailApps", () => {
     expect(validateAppRailApps([projects, app("wiki", { routeSegments: [] })])).toEqual([
       'app "wiki" owns no route segment and is not the default app',
     ]);
+  });
+});
+
+describe("getAppRailState", () => {
+  it("derives enabled apps, the active app and the multi-app flag in one go", () => {
+    const apps = [projects, app("approvals", { isEnabled: (ctx) => ctx.workspaceSlug === "acme" }), wiki];
+    const state = getAppRailState(apps, context(), "/acme/approvals/waiting");
+    expect(state.enabledApps.map((a) => a.key)).toEqual(["projects", "approvals", "wiki"]);
+    expect(state.activeAppKey).toBe("approvals");
+    expect(state.hasMultipleApps).toBe(true);
+  });
+
+  it("resolves the active app among the enabled apps only", () => {
+    const apps = [projects, app("approvals", { isEnabled: () => false })];
+    const state = getAppRailState(apps, context(), "/acme/approvals/");
+    expect(state.enabledApps.map((a) => a.key)).toEqual(["projects"]);
+    expect(state.activeAppKey).toBe("projects");
+    expect(state.hasMultipleApps).toBe(false);
+  });
+
+  it("has no active app while the workspace is unknown", () => {
+    const state = getAppRailState(APPS, context({ workspaceSlug: undefined }), "/acme/");
+    expect(state.activeAppKey).toBeUndefined();
+  });
+});
+
+describe("getAppRailDockItems", () => {
+  it("lists one item per enabled app in rail order and marks the active one", () => {
+    const state = getAppRailState(APPS, context(), "/acme/wiki/");
+    expect(getAppRailDockItems(state, "acme")).toEqual([
+      { key: "projects", i18n_label: "projects", href: "/acme/", isActive: false },
+      { key: "approvals", i18n_label: "approvals", href: "/acme/approvals/", isActive: false },
+      { key: "wiki", i18n_label: "wiki", href: "/acme/wiki/", isActive: true },
+    ]);
+  });
+
+  it("marks no item on settings and notifications", () => {
+    const state = getAppRailState(APPS, context(), "/acme/settings/members");
+    expect(getAppRailDockItems(state, "acme").some((item) => item.isActive)).toBe(false);
+  });
+
+  it("gives every item a distinct key even when labels repeat", () => {
+    const apps = [projects, app("approvals", { i18n_label: "projects" })];
+    const items = getAppRailDockItems(getAppRailState(apps, context(), "/acme/"), "acme");
+    expect(new Set(items.map((item) => item.key)).size).toBe(items.length);
+  });
+});
+
+describe("getAppRailRouteAccess", () => {
+  it("allows the routes of an enabled app", () => {
+    expect(getAppRailRouteAccess(APPS, "approvals", "acme")).toEqual({ isAllowed: true });
+    expect(getAppRailRouteAccess([projects], "projects", "acme")).toEqual({ isAllowed: true });
+  });
+
+  it("sends the user of a disabled app to the default app", () => {
+    expect(getAppRailRouteAccess([wiki, projects], "approvals", "acme")).toEqual({
+      isAllowed: false,
+      redirectTo: "/acme/",
+    });
+  });
+
+  it("falls back to the first enabled app when the default app is not enabled", () => {
+    expect(getAppRailRouteAccess([wiki, approvals], "projects", "acme")).toEqual({
+      isAllowed: false,
+      redirectTo: "/acme/wiki/",
+    });
+  });
+
+  it("blocks without a target when there is no workspace or no enabled app", () => {
+    expect(getAppRailRouteAccess([projects], "approvals", undefined)).toEqual({
+      isAllowed: false,
+      redirectTo: undefined,
+    });
+    expect(getAppRailRouteAccess([], "approvals", "acme")).toEqual({ isAllowed: false, redirectTo: undefined });
   });
 });
