@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Once a work item has an assignee, only its assignees, the project lead and project admins can change it: fields, state, dates, sub-items, relations, links, attachments, cycles and modules, deleting and archiving. Everyone can still comment. Work items without an assignee stay open to all members.",
           "title": "Only assignees, the project lead and admins can change a work item"
+        },
+        "reschedule_offer": {
+          "description": "When a date change would break a dependency, offer to move the dependent work items later instead of refusing the change. When off, such a change is refused.",
+          "title": "Offer to shift dependent work items"
         }
       },
       "save_error": "Could not save workflow configuration.",

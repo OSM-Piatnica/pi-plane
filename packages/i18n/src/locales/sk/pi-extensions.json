@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Hneď ako má pracovná položka priradenú osobu, môžu ju meniť len priradení, vedúci projektu a správcovia projektu: polia, stav, dátumy, podriadené položky, vzťahy, odkazy, prílohy, cykly a moduly, mazanie a archiváciu. Komentovať môže naďalej každý. Pracovné položky bez priradenej osoby zostávajú otvorené všetkým členom.",
           "title": "Pracovnú položku môžu meniť len priradení, vedúci projektu a správcovia"
+        },
+        "reschedule_offer": {
+          "description": "Keď by zmena dátumu porušila závislosť, ponúkne sa posunutie závislých pracovných položiek na neskôr namiesto odmietnutia zmeny. Ak je voľba vypnutá, takáto zmena sa odmietne.",
+          "title": "Ponúkať posunutie závislých pracovných položiek"
         }
       },
       "save_error": "Uloženie konfigurácie pracovného postupu zlyhalo.",

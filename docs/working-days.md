@@ -33,7 +33,32 @@ The order differs from weekend days: **the person's own choice wins everywhere**
 - **Duration** of a work item with a start and a due date counts the working days between them, at least 1.
 - **Calendars and the timeline:** weekend days are shaded. The calendar hides weekend columns by default (the "Show weekends" option shows them); the timeline shades them in its week and month views.
 - **Relations** use the calendar of the dependent work item's project. The **lag** of a relation (the "Lag (days)" field, ±3650 days, available on every timeline relation type, not only start-to-finish) counts working days; a start or finish on a weekend day counts as the nearest working day. With a lag of zero a work item that must start after another finishes starts on the next working day.
-- **Moving dependents:** when a work item's dates change and others depend on it, Pi-Plane offers to move them, keeping each one's length in working days. It never moves work items in a completed or cancelled state, ones you may not edit, or more than 100 items; if any of these applies no move is offered and the change stays refused.
+- **Moving dependents:** when a work item's dates change and others depend on it, Pi-Plane offers to move them, keeping each one's length in working days. See the next section.
+
+## Moving dependent work items
+
+A date change that would make a dependent work item start or finish too early is not saved straight away. Pi-Plane lists the dependent work items with their new dates and asks whether to move them; on "Move them" the change and the shifts are saved together. The shift follows the chain: a work item that moves takes its own dependents along.
+
+- Work items only move later, never earlier. Each keeps its length in working days of its own project.
+- Nothing is offered, and the change stays refused, when a dependent is in a completed or cancelled state, when you may not edit one of them, when more than 100 work items would move, or when the changed work item itself would come too early for something it depends on.
+- Clients of the API get a `400` with `error_code: relation_reschedule_available` and the list in `shifts`, and confirm by sending the same request again with `shift_dependents: true`. This holds for the app API, the public API (`/api/v1/`) and the timeline's bulk date update.
+
+### History
+
+Each work item that was moved gets an activity entry per changed date that names and links the work item whose change caused it, for example "moved the start date to 15 Jan 2026 automatically after WDR-12 changed". Further down a chain the entry still names the work item the person changed, not the neighbour in between. The entry is recorded under the person who confirmed the move. The history endpoint returns the cause as `shift_cause` (`id`, `project_id`, `project_identifier`, `sequence_id`); it is empty once that work item is deleted. Shifts do not send notifications or emails and do not subscribe the person to the moved work items.
+
+### Switching the offer off
+
+Project settings, Workflows, Rules: **Offer to shift dependent work items** (on by default; also under the advanced options when creating a project; `is_reschedule_offer_enabled` in the API). With the setting off, a date change that breaks a dependency is refused with the dependency error (`relation_date_conflict`), as it was before the offer existed, and `shift_dependents` is ignored. The project of the work item being changed decides, also when its dependents are in other projects.
+
+### Parents and sub-work items
+
+The dates a parent shows on the timeline from its sub-work items (the bracket, or the hatched bar of a parent without dates) are only drawn there. A parent keeps its own start and finish dates, and dependencies are checked against those. Sub-work items do not take over the dependencies of their parent. So:
+
+- Moving a parent moves the work items that depend on the parent. Its sub-work items stay where they are.
+- A parent that is moved as a dependent takes its own dependents along, again without its sub-work items.
+- A sub-work item that is moved, by hand or as a dependent, does not change its parent's dates, and nothing that depends on the parent moves, even when the sub-work item now ends after the parent.
+- A parent without dates of its own holds nothing back: a dependency on it has no date to check.
 
 ## Upgrading
 
