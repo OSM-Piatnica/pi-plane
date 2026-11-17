@@ -7,6 +7,7 @@
 """The nearest Epic above a work item, as a query expression."""
 
 from django.db.models import F, Func, UUIDField
+from django.db.models.expressions import RawSQL
 
 from plane.utils.work_item_hierarchy import MAX_HIERARCHY_DEPTH
 
@@ -42,3 +43,38 @@ class EpicAncestor(Func):
 
     def __init__(self, expression=None, **extra):
         super().__init__(expression if expression is not None else F("id"), **extra)
+
+
+def epic_tree_ids(epic_ids=None) -> RawSQL:
+    """The ids of the work items that sit under the given Epics (the Epics themselves included), as a subquery.
+
+    This is the same membership as `EpicAncestor`, found the other way round: from the Epics down instead of from
+    every work item up. The cost is the size of the Epic subtrees, not of the instance, so it is what a filter uses
+    where the grouping would have to walk the parent chain of every work item.
+
+    - `epic_ids=None` takes every Epic of the instance (a small set); its complement is "under no Epic".
+    - A child that is itself an Epic is not entered: it is the nearest Epic of its own subtree, as in
+      `EpicAncestor`, and starts a tree of its own.
+    - Soft-deleted work items end a branch, and the depth is capped, as in `EpicAncestor`.
+    - An id that is not an Epic gives nothing.
+    """
+
+    if epic_ids is None:
+        roots, params = "TRUE", []
+    else:
+        roots, params = "root.id = ANY(%s::uuid[])", [[str(epic_id) for epic_id in epic_ids]]
+    sql = (
+        "WITH RECURSIVE epic_tree(id, depth) AS ("
+        " SELECT root.id, 1"
+        " FROM issues AS root"
+        " INNER JOIN issue_types AS root_type ON root_type.id = root.type_id AND root_type.is_epic"
+        " WHERE root.deleted_at IS NULL AND " + roots + " UNION ALL"
+        " SELECT child.id, epic_tree.depth + 1"
+        " FROM issues AS child"
+        " INNER JOIN epic_tree ON child.parent_id = epic_tree.id"
+        " LEFT JOIN issue_types AS child_type ON child_type.id = child.type_id"
+        " WHERE child.deleted_at IS NULL"
+        " AND epic_tree.depth < " + str(int(MAX_HIERARCHY_DEPTH)) + " AND NOT COALESCE(child_type.is_epic, FALSE)"
+        ") SELECT id FROM epic_tree"
+    )
+    return RawSQL(sql, params)

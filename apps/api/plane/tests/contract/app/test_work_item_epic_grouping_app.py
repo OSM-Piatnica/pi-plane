@@ -189,6 +189,49 @@ class TestEpicFilter:
         assert names == {"Task A1", "Task A2"}
 
     @pytest.mark.django_db
+    def test_the_filter_agrees_with_the_grouping_on_awkward_data(
+        self, session_client, workspace, project, hierarchy, types
+    ):
+        make, task = hierarchy["make"], hierarchy["task_type"]
+        # an Epic inside an Epic (made before the parent rules existed), with a work item below it: that work item
+        # belongs to the inner Epic, and the inner Epic starts a group of its own
+        inner = make("Inner epic", types["epic"])
+        Issue.objects.filter(pk=inner.pk).update(parent=hierarchy["epic_a"])
+        make("Inner task", task, inner)
+        # a deleted work item in the middle of a chain ends it: what is below is under no Epic
+        middle = make("Middle", task, hierarchy["epic_b"])
+        make("Below middle", task, middle)
+        middle.delete()
+
+        groups = group_names(get_grouped(session_client, workspace, project, group_by="epic_id")["results"])
+
+        assert groups[str(inner.id)] == {"Inner epic", "Inner task"}
+        assert "Inner epic" not in groups[str(hierarchy["epic_a"].id)]
+        assert "Below middle" in groups["None"]
+        for group_id, expected in groups.items():
+            assert self.names(session_client, workspace, project, epic=group_id) == expected, group_id
+
+    @pytest.mark.django_db
+    def test_an_id_that_is_not_an_epic_gives_nothing(self, session_client, workspace, project, hierarchy):
+        assert self.names(session_client, workspace, project, epic=str(hierarchy["task_a1"].id)) == set()
+
+    @pytest.mark.django_db
+    def test_the_filter_does_not_walk_the_parent_chain_of_every_work_item(
+        self, session_client, workspace, project, hierarchy
+    ):
+        from django.db import connection
+        from django.test.utils import CaptureQueriesContext
+
+        epic_a = str(hierarchy["epic_a"].id)
+        for value in ("None", epic_a, f"None,{epic_a}"):
+            with CaptureQueriesContext(connection) as queries:
+                self.names(session_client, workspace, project, epic=value)
+            sql = " ".join(query["sql"] for query in queries.captured_queries)
+            # built from the Epics down, never with the per-row ancestor walk that the grouping uses
+            assert "epic_tree" in sql, value
+            assert "epic_ancestry" not in sql, value
+
+    @pytest.mark.django_db
     def test_invalid_identifiers_are_ignored(self, session_client, workspace, project, hierarchy):
         everything = self.names(session_client, workspace, project)
 
