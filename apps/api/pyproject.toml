@@ -63,6 +63,9 @@ dependencies = [
   # requests — used directly for webhook delivery & link unfurling; pinned to
   # >=2.32 for the get_connection_with_tls_context adapter hook (SSRF IP pinning)
   "requests==2.34.2",
+  # httpx — the Microsoft Graph client for SharePoint (plane/utils/sharepoint); the tests fake it with
+  # httpx.MockTransport
+  "httpx==0.28.1",
   # password validator
   "zxcvbn==4.5.0",
   # timezone
@@ -112,7 +115,6 @@ test = [
   "factory-boy==3.3.3",
   "freezegun==1.5.5",
   "coverage==7.16.2",
-  "httpx==0.28.1",
 ]
 
 [tool.uv]
