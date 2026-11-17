@@ -16,6 +16,7 @@ import type {
   TInstanceTheme,
   TInstanceThemeCreate,
   TPage,
+  TSharePointConnectionTest,
 } from "@plane/types";
 // api service
 import { APIService } from "../api.service";
@@ -139,6 +140,21 @@ export class InstanceService extends APIService {
    */
   async disableEmail(): Promise<void> {
     return this.delete("/api/instances/configurations/disable-email-feature/")
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Tries the saved SharePoint credentials against Microsoft and, when a site URL is given, looks the site up and
+   * lists its document libraries (instance admins only)
+   * @param {string} [siteUrl] The address of a SharePoint site to look up
+   * @returns {Promise<TSharePointConnectionTest>} The site and its libraries; `site` is null without a site URL
+   * @throws {TSharePointConnectionTestError} What went wrong, with an `error_code` that names the case
+   */
+  async testSharePointConnection(siteUrl?: string): Promise<TSharePointConnectionTest> {
+    return this.post("/api/instances/sharepoint/test-connection/", siteUrl ? { site_url: siteUrl } : {})
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;
