@@ -75,7 +75,7 @@ import {
   DATE_BUCKET_NO_DAY_LEFT_ERROR,
 } from "@/helpers/group-column";
 import { getBucketContext } from "@/helpers/date-bucket-today";
-import { getGroupDropValue } from "@/helpers/group-drop";
+import { getGroupDropValue, withEpicDropParent } from "@/helpers/group-drop";
 import { orderWorkItemGroups } from "@/helpers/work-item-hierarchy-groups";
 import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
@@ -753,6 +753,9 @@ export const handleGroupDragDrop = async (
     issueUpdates[subGroupKey] = { ADD: getGroupId(destination.subGroupId), REMOVE: getGroupId(source.subGroupId) };
     updatedIssue = { ...updatedIssue, [subGroupKey]: subGroupValue };
   }
+
+  // moving a work item to an Epic group places it directly under that Epic
+  updatedIssue = withEpicDropParent(updatedIssue);
 
   if (updatedIssue && sourceIssue?.project_id) {
     return await updateIssueOnDrop(sourceIssue?.project_id, sourceIssue.id, updatedIssue, issueUpdates);

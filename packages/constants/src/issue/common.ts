@@ -122,6 +122,10 @@ export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
   "labels",
   "module",
   "cycle",
+  // a drop sets the parent of the work item (an Epic group: directly under that Epic); the server refuses a move
+  // that breaks the hierarchy rules
+  "parent",
+  "epic",
   // a drop sets the date that stands for the bucket (not into Earlier or Later, see the columns)
   "start_date_bucket",
   "target_date_bucket",
