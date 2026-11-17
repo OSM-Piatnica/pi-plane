@@ -387,6 +387,10 @@ Leftovers to reuse: the reserved slug `initiatives`, `EFileAssetType.INITIATIVE_
 
 **F1. Models and API. Size M.**
 **F2. Initiatives app: list, detail, add projects and Epics, status updates. Size L. Needs G1.**
+- Includes one API addition deferred from F1: a second progress figure for the Epics linked to an initiative, separate from the main one.
+  - The main figure stays "work items in the linked projects". Linked Epics are not added to it, so an Epic inside a linked project is not counted twice.
+  - The Epic figure is computed from each linked Epic's child work items with the existing Epic progress code (`utils/epic_progress.py`), under the same visibility rule as projects (inaccessible Epics are counted, not listed).
+  - It serves an initiative that owns one Epic of a larger shared project without owning the whole project. Settle the response shape together with the screen that shows it.
 **F3. Project list: filter and group by initiative; initiative chip in the project header. Size S.**
 **F4. Roadmap timeline: initiatives and their projects on a time axis (reuse `store/timeline/` and the gantt chart blocks). Size M.**
 **F5. Goals: goal level, progress across initiatives, optional target metric (name, start, target, current value). Size M.**
