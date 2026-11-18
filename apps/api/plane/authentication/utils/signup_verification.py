@@ -26,7 +26,9 @@ CODE_TTL_SECONDS = 600
 MAX_VERIFY_ATTEMPTS = OneTimeCodeProvider.MAX_VERIFY_ATTEMPTS
 MAX_CODES_PER_WINDOW = OneTimeCodeProvider.MAX_CODES_PER_WINDOW
 ISSUE_WINDOW_SECONDS = OneTimeCodeProvider.ISSUE_WINDOW_SECONDS
-_INCREMENT_COUNTER_SCRIPT = OneTimeCodeProvider._INCREMENT_COUNTER_SCRIPT
+_INCREMENT_COUNTER_SCRIPT = OneTimeCodeProvider.INCREMENT_COUNTER_SCRIPT
+# Gives back one try, unless the counter is gone (a DECR on a missing key would leave a counter without an expiry)
+_GIVE_BACK_TRY_SCRIPT = 'if redis.call("EXISTS", KEYS[1]) == 1 then return redis.call("DECR", KEYS[1]) end return 0'
 
 
 def is_signup_email_verification_required():
@@ -69,16 +71,19 @@ class SignUpEmailVerification:
             raise _error("SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED", self.email)
 
         code = str(secrets.randbelow(900000) + 100000)
-        ri.set(self.key, json.dumps({"email": self.email, "code": code}), ex=CODE_TTL_SECONDS)
-        # A new code starts with a fresh budget of wrong tries.
-        ri.delete(self.attempts_key)
+        # One transaction: a try counted between the two steps would otherwise be wiped against the new code, or the
+        # new code compared with the old budget. A new code starts with a fresh budget of wrong tries.
+        with ri.pipeline(transaction=True) as pipe:
+            pipe.set(self.key, json.dumps({"email": self.email, "code": code}), ex=CODE_TTL_SECONDS)
+            pipe.delete(self.attempts_key)
+            pipe.execute()
         return code
 
     def verify(self, code):
-        """Check the code; raises when it is missing, wrong, expired or tried too often. Keeps the code on success.
+        """Check the code; raises when it is missing, wrong, expired or tried too often.
 
-        The code is kept until consume(), so an account that still fails to be created (a weak password, say) can be
-        retried with the same code.
+        The code is kept on success, and that try is not counted, until consume(): an account that still fails to be
+        created (a weak password, say) can be retried with the same code.
         """
         code = str(code or "").strip()
         if not code:
@@ -99,6 +104,9 @@ class SignUpEmailVerification:
         if raw is None:
             raise _error("EXPIRED_SIGN_UP_VERIFICATION_CODE", self.email)
         if attempts <= MAX_VERIFY_ATTEMPTS and secrets.compare_digest(str(json.loads(raw)["code"]), code):
+            # Only wrong codes use up the budget: the code is kept for retries (a weak password, say), and five of
+            # those must not lock out somebody who typed it right every time.
+            ri.eval(_GIVE_BACK_TRY_SCRIPT, 1, self.attempts_key)
             return
 
         if attempts >= MAX_VERIFY_ATTEMPTS:
@@ -108,5 +116,8 @@ class SignUpEmailVerification:
         raise _error("INVALID_SIGN_UP_VERIFICATION_CODE", self.email)
 
     def consume(self):
-        """Remove the code and its counters once the account exists."""
-        redis_instance().delete(self.key, self.attempts_key, self.issued_key)
+        """Remove the code and its try counter once the account exists.
+
+        The issued-code counter stays until its window ends, so the cap on codes per address cannot be reset.
+        """
+        redis_instance().delete(self.key, self.attempts_key)

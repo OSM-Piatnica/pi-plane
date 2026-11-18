@@ -208,6 +208,54 @@ class TestSignUpWithCode:
         assert "error_code" not in response.url
         assert User.objects.filter(email=EMAIL).exists()
 
+    def test_retrying_with_the_right_code_does_not_use_up_the_tries(
+        self, url_name, api_client, django_client, setup_instance
+    ):
+        _request_code(api_client)
+        code = _issued_code()
+
+        # More failed sign-ups with the right code than there are tries for wrong ones
+        for _ in range(MAX_VERIFY_ATTEMPTS + 2):
+            response = django_client.post(reverse(url_name), {"email": EMAIL, "password": "password", "code": code})
+            assert "PASSWORD_TOO_WEAK" in response.url
+
+        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": code})
+        assert "error_code" not in response.url
+        assert User.objects.filter(email=EMAIL).exists()
+
+    def test_wrong_tries_still_count_between_right_ones(self, url_name, api_client, django_client, setup_instance):
+        _request_code(api_client)
+        code = _issued_code()
+        wrong = "100000" if code != "100000" else "100001"
+
+        for _ in range(MAX_VERIFY_ATTEMPTS - 1):
+            django_client.post(reverse(url_name), {"email": EMAIL, "password": "password", "code": code})
+            response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})
+            assert "INVALID_SIGN_UP_VERIFICATION_CODE" in response.url
+
+        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})
+        assert "SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED" in response.url
+
+    def test_a_new_code_starts_with_a_fresh_budget_of_tries(self, url_name, api_client, django_client, setup_instance):
+        _request_code(api_client)
+        wrong = "100000" if _issued_code() != "100000" else "100001"
+        for _ in range(MAX_VERIFY_ATTEMPTS - 1):
+            django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})
+
+        _request_code(api_client)
+        new_code = _issued_code()
+        assert redis_instance().get(f"{KEY_PREFIX}{EMAIL}:verify_attempts") is None
+
+        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": new_code})
+        assert "error_code" not in response.url
+
+    def test_signing_up_keeps_the_cap_on_codes_per_address(self, url_name, api_client, django_client, setup_instance):
+        _request_code(api_client)
+        django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": _issued_code()})
+
+        assert redis_instance().get(f"{KEY_PREFIX}{EMAIL}") is None
+        assert redis_instance().get(f"{KEY_PREFIX}{EMAIL}:issued") is not None
+
     def test_too_many_wrong_codes_drop_the_code(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)
         code = _issued_code()
