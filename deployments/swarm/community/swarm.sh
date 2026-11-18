@@ -187,7 +187,7 @@ function download() {
     echo $FALLBACK_DOWNLOAD_URL
     echo $APP_RELEASE
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml?$(date +%s)")
+    RESPONSE=$(curl -sL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/compose.yaml?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -195,7 +195,7 @@ function download() {
         echo "$BODY" > $PLANE_INSTALL_DIR/docker-compose.yml
     else
         # Fallback to download from the raw github url
-        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/compose.yaml?$(date +%s)")
+        RESPONSE=$(curl -sL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/compose.yaml?$(date +%s)")
         BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
         STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -209,7 +209,7 @@ function download() {
         fi
     fi
 
-    RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env?$(date +%s)")
+    RESPONSE=$(curl -sL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$RELEASE_DOWNLOAD_URL/v$APP_RELEASE/variables.env?$(date +%s)")
     BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
     STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
@@ -217,7 +217,7 @@ function download() {
         echo "$BODY" > $PLANE_INSTALL_DIR/variables-upgrade.env
     else
         # Fallback to download from the raw github url
-        RESPONSE=$(curl -H 'Cache-Control: no-cache, no-store' -s -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/variables.env?$(date +%s)")
+        RESPONSE=$(curl -sL -H 'Cache-Control: no-cache, no-store' -w "HTTPSTATUS:%{http_code}" "$FALLBACK_DOWNLOAD_URL/variables.env?$(date +%s)")
         BODY=$(echo "$RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
         STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 
