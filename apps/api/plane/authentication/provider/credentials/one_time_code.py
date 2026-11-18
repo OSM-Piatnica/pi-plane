@@ -6,7 +6,6 @@
 # Python imports
 import json
 import os
-import secrets
 
 
 # Module imports
@@ -18,6 +17,7 @@ from plane.authentication.adapter.error import (
     AuthenticationException,
 )
 from plane.db.models import User
+from plane.utils.numeric_code import generate_numeric_code
 
 
 class OneTimeCodeProvider(CredentialAdapter):
@@ -88,7 +88,7 @@ class OneTimeCodeProvider(CredentialAdapter):
 
     def initiate(self):
         ## Generate a random token
-        token = str(secrets.randbelow(90000000) + 10000000)
+        token = generate_numeric_code()
 
         ri = redis_instance()
 
