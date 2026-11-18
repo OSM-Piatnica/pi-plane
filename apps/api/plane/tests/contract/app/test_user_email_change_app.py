@@ -55,12 +55,13 @@ def _wrong_code(code):
 
 @pytest.mark.contract
 class TestUserEmailChangeVerification:
-    def test_the_code_has_the_shared_number_of_digits(self, session_client, send_code):
-        code = _generate_code(session_client, send_code)
+    """The email-change code allows MAX_VERIFY_ATTEMPTS tries and both endpoints are throttled per IP."""
+
+    @pytest.mark.django_db
+    def test_the_code_has_the_shared_number_of_digits(self, session_client, mock_email_tasks):
+        code = _generate_code(session_client, mock_email_tasks)
 
         assert code.isdecimal() and len(code) == CODE_DIGITS
-
-    """The email-change code allows MAX_VERIFY_ATTEMPTS tries and both endpoints are throttled per IP."""
 
     @pytest.mark.django_db
     def test_code_invalidated_after_max_wrong_attempts(self, session_client, create_user, mock_email_tasks):
