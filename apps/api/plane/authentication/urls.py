@@ -44,12 +44,19 @@ from .views import (
     OidcCallbackEndpoint,
     OidcInitiateEndpoint,
     OidcSpaceInitiateEndpoint,
+    SignUpVerificationCodeEndpoint,
 )
 
 urlpatterns = [
     # credentials
     path("sign-in/", SignInAuthEndpoint.as_view(), name="sign-in"),
     path("sign-up/", SignUpAuthEndpoint.as_view(), name="sign-up"),
+    # Email verification code of the email-and-password sign-up (web app and Space)
+    path(
+        "sign-up/verification-code/",
+        SignUpVerificationCodeEndpoint.as_view(),
+        name="sign-up-verification-code",
+    ),
     path("spaces/sign-in/", SignInAuthSpaceEndpoint.as_view(), name="space-sign-in"),
     path("spaces/sign-up/", SignUpAuthSpaceEndpoint.as_view(), name="space-sign-up"),
     # signout

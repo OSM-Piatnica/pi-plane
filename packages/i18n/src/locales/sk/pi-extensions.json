@@ -4,6 +4,11 @@
       "heading": "Osobné prístupové tokeny"
     }
   },
+  "app_rail": {
+    "switch_to": {
+      "projects": "Prepnúť na Projekty"
+    }
+  },
   "approve": "Schváliť",
   "duration": "Trvanie",
   "duration_days": "{count, plural, one {# deň} few {# dni} other {# dní}}",

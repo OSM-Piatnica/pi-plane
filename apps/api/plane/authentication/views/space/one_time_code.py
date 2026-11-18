@@ -54,7 +54,13 @@ class OneTimeCodeGenerateSpaceEndpoint(APIView):
             adapter = OneTimeCodeProvider(request=request, key=email)
             key, token = adapter.initiate()
             # If the smtp is configured send through here
-            send_one_time_code.delay(email, key, token, accept_language=request.headers.get("Accept-Language"))
+            send_one_time_code.delay(
+                email,
+                key,
+                token,
+                accept_language=request.headers.get("Accept-Language"),
+                language=request.data.get("language"),
+            )
             return Response({"key": str(key)}, status=status.HTTP_200_OK)
         except AuthenticationException as e:
             return Response(e.get_error_dict(), status=status.HTTP_400_BAD_REQUEST)

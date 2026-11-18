@@ -2,7 +2,21 @@
   "module": {
     "label": "{count, plural, one {Módulo} other {Módulos}}",
     "no_module": "Nenhum módulo",
-    "select": "Adicionar módulos"
+    "select": "Adicionar módulos",
+    "sub_issues": {
+      "add": {
+        "title": "Adicionar também os sub-itens de trabalho?",
+        "content": "Estes itens de trabalho têm sub-itens de trabalho: {names}. Adicionar também todos os seus sub-itens de trabalho ao módulo?",
+        "confirm": "Sim, adicionar",
+        "decline": "Não, deixar de fora"
+      },
+      "remove": {
+        "title": "Remover também os sub-itens de trabalho?",
+        "content": "Estes itens de trabalho têm sub-itens de trabalho: {names}. Remover também todos os seus sub-itens de trabalho do módulo?",
+        "confirm": "Sim, remover",
+        "decline": "Não, manter"
+      }
+    }
   },
   "module_ui": {
     "favorite": "Favorito",

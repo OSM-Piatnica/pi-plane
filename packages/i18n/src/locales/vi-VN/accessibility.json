@@ -45,6 +45,20 @@
       "open": "Mở bộ chọn màu",
       "swatches": "Màu có sẵn",
       "hex_input": "Màu hệ hex"
+    },
+    "calendar": {
+      "choose_month": "Chọn tháng",
+      "choose_year": "Chọn năm",
+      "previous_month": "Tháng trước",
+      "next_month": "Tháng sau",
+      "previous_year": "Năm trước",
+      "next_year": "Năm sau",
+      "previous_year_page": "12 năm trước",
+      "next_year_page": "12 năm sau",
+      "month_view": "Chọn tháng của năm {year}",
+      "year_view": "Chọn năm từ {first_year} đến {last_year}",
+      "today_date": "Hôm nay, {date}",
+      "selected_date": "{date}, đã chọn"
     }
   }
 }

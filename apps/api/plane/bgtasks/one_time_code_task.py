@@ -18,12 +18,21 @@ from django.template.loader import render_to_string
 from plane.db.models import User
 from plane.license.utils.instance_value import get_email_configuration
 from plane.utils.email import generate_plain_text_from_html
-from plane.utils.email_i18n import language_from_accept_header, translate, user_language
+from plane.utils.email_i18n import language_from_accept_header, supported_language, translate, user_language
 from plane.utils.exception_logger import log_exception
 
 
+def one_time_code_language(user, language=None, accept_language=None):
+    """The language of a code email: the profile's, else the one picked on the sign-in form, else the browser's."""
+    if user and hasattr(user, "profile"):
+        return user_language(user)
+    return supported_language(language) or language_from_accept_header(accept_language)
+
+
 @shared_task
-def send_one_time_code(email, key, token, accept_language=None):
+def send_one_time_code(email, key, token, accept_language=None, language=None, purpose="sign_in"):
+    """Email a code. ``purpose`` is ``"sign_in"`` (the one-time sign-in code) or ``"sign_up"`` (the code that confirms
+    the address of an email-and-password sign-up); the wording of the email follows it."""
     try:
         (
             EMAIL_HOST,
@@ -36,13 +45,11 @@ def send_one_time_code(email, key, token, accept_language=None):
         ) = get_email_configuration()
 
         # Send the mail
-        # The language of the profile; someone without one (signing up) gets the language of their browser
         user = User.objects.filter(email=email).select_related("profile").first()
-        language = (
-            user_language(user) if user and hasattr(user, "profile") else language_from_accept_header(accept_language)
-        )
-        subject = translate(language, "one_time_code.subject", code=token)
-        context = {"code": token, "email": email, "email_language": language}
+        language = one_time_code_language(user, language, accept_language)
+        is_sign_up = purpose == "sign_up"
+        subject = translate(language, "sign_up_code.subject" if is_sign_up else "one_time_code.subject", code=token)
+        context = {"code": token, "email": email, "email_language": language, "sign_up": is_sign_up}
 
         html_content = render_to_string("emails/auth/one_time_code_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)

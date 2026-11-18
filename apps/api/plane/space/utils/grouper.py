@@ -12,6 +12,9 @@ from django.db.models import QuerySet
 
 from typing import List, Optional, Dict, Any, Union
 
+# Third party imports
+from rest_framework.exceptions import ParseError
+
 # Module imports
 from plane.db.models import (
     Cycle,
@@ -25,9 +28,19 @@ from plane.db.models import (
 )
 
 
+# Groupings that only the app offers. A public board would have to decide what the title of a parent may reveal, so
+# they are refused here, although the shared paginator accepts them.
+APP_ONLY_GROUP_FIELDS = frozenset({"parent_id", "epic_id"})
+
+
 def issue_queryset_grouper(
     queryset: QuerySet[Issue], group_by: Optional[str], sub_group_by: Optional[str]
 ) -> QuerySet[Issue]:
+    if group_by in APP_ONLY_GROUP_FIELDS:
+        raise ParseError(detail=f"Invalid group_by field: {group_by}")
+    if sub_group_by in APP_ONLY_GROUP_FIELDS:
+        raise ParseError(detail=f"Invalid sub_group_by field: {sub_group_by}")
+
     FIELD_MAPPER = {
         "label_ids": "labels__id",
         "assignee_ids": "assignees__id",

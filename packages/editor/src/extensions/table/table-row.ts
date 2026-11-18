@@ -8,6 +8,8 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";
+// helpers
+import { isValidCssColor } from "@/helpers/common";
 
 type TableRowOptions = {
   HTMLAttributes: Record<string, unknown>;
@@ -42,9 +44,12 @@ export const TableRow = Node.create<TableRowOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const style = HTMLAttributes.background
-      ? `background-color: ${HTMLAttributes.background}; color: ${HTMLAttributes.textColor}`
-      : "";
+    const { background, textColor } = HTMLAttributes;
+    let style = "";
+    if (isValidCssColor(background)) {
+      style = `background-color: ${background}`;
+      if (isValidCssColor(textColor)) style += `; color: ${textColor}`;
+    }
 
     const attributes = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { style });
 

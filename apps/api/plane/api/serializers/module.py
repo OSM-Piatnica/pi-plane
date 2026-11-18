@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Third party imports
@@ -282,4 +283,12 @@ class ModuleIssueRequestSerializer(serializers.Serializer):
     issues = serializers.ListField(
         child=serializers.UUIDField(),
         help_text="List of issue IDs to add to the module",
+    )
+    include_sub_issues = serializers.BooleanField(
+        required=False,
+        default=False,
+        help_text=(
+            "Also add the sub-work items (all levels below) of these work items to the module. "
+            "A one-time copy: nothing keeps parents and children in step afterwards."
+        ),
     )

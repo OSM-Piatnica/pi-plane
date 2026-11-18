@@ -19,6 +19,9 @@ import { clickHandler } from "./helpers/clickHandler";
 import { isDangerousHref } from "./helpers/isDangerousHref";
 import { pasteHandler } from "./helpers/pasteHandler";
 
+// the fork keeps the check in a helper; it stays part of this module's public surface, as upstream's tests use it
+export { isDangerousHref };
+
 type LinkProtocolOptions = {
   scheme: string;
   optionalSlashes?: boolean;

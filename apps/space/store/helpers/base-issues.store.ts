@@ -28,7 +28,10 @@ import type { RootStore } from "../root.store";
 // constants
 // helpers
 
-export type TIssueDisplayFilterOptions = Exclude<TIssueGroupByOptions, null | "team_project"> | "target_date";
+// public boards do not offer the hierarchy groupings
+export type TIssueDisplayFilterOptions =
+  | Exclude<TIssueGroupByOptions, null | "team_project" | "parent" | "epic">
+  | "target_date";
 
 export enum EIssueGroupedAction {
   ADD = "ADD",

@@ -4,8 +4,13 @@
 
 from django.db import IntegrityError
 
-from plane.db.models import IssueType, IssueTypeProperty, Project, ProjectIssueType
+from plane.db.models import IssueType, IssueTypeProperty, Project
 from plane.utils.issue_type_property import clean_property_list
+from plane.utils.project_issue_types import (
+    ensure_project_epic_type,
+    get_or_create_issue_type,
+    link_issue_type_to_project,
+)
 
 
 def seed_project_issue_types_from_template_payload(
@@ -22,23 +27,14 @@ def seed_project_issue_types_from_template_payload(
     ws_id = project.workspace_id
 
     def _get_or_create_issue_type(*, name: str, description: str = "", is_epic: bool, is_default: bool):
-        cleaned_name = (name or "").strip()[:255]
-        if not cleaned_name:
-            return None
-        existing = IssueType.objects.filter(workspace_id=ws_id, name=cleaned_name, deleted_at__isnull=True).first()
-        if existing:
-            return existing
-        try:
-            return IssueType.objects.create(
-                workspace_id=ws_id,
-                name=cleaned_name,
-                description=str(description or "")[:4096],
-                is_epic=is_epic,
-                is_default=is_default,
-                created_by_id=created_by_id,
-            )
-        except IntegrityError:
-            return IssueType.objects.filter(workspace_id=ws_id, name=cleaned_name, deleted_at__isnull=True).first()
+        return get_or_create_issue_type(
+            workspace_id=ws_id,
+            name=name,
+            description=description,
+            is_epic=is_epic,
+            is_default=is_default,
+            created_by_id=created_by_id,
+        )
 
     def _seed_properties(issue_type: IssueType | None, raw_properties):
         if issue_type is None or not raw_properties:
@@ -74,29 +70,16 @@ def seed_project_issue_types_from_template_payload(
                 pass
 
     def _link(project_: Project, issue_type: IssueType | None, *, level: int, is_default: bool):
-        if issue_type is None:
-            return
-        if ProjectIssueType.objects.filter(project=project_, issue_type=issue_type, deleted_at__isnull=True).exists():
-            return
-        try:
-            ProjectIssueType.objects.create(
-                project=project_,
-                issue_type=issue_type,
-                workspace_id=project_.workspace_id,
-                level=level,
-                is_default=is_default,
-                created_by_id=created_by_id,
-            )
-        except IntegrityError:
-            pass
+        link_issue_type_to_project(
+            project_, issue_type, level=level, is_default=is_default, created_by_id=created_by_id
+        )
 
     task_type = _get_or_create_issue_type(name="Task", is_epic=False, is_default=True)
     _link(project, task_type, level=0, is_default=True)
     _seed_properties(task_type, payload.get("task_custom_properties"))
 
     if payload.get("epic_enabled"):
-        epic_type = _get_or_create_issue_type(name="Epic", is_epic=True, is_default=False)
-        _link(project, epic_type, level=1, is_default=False)
+        epic_type = ensure_project_epic_type(project, created_by_id=created_by_id)
         _seed_properties(epic_type, payload.get("epic_custom_properties"))
 
     extra = payload.get("additional_work_item_types") or []

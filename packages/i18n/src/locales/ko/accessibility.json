@@ -45,6 +45,20 @@
       "open": "색상 선택기 열기",
       "swatches": "기본 색상",
       "hex_input": "16진수 색상"
+    },
+    "calendar": {
+      "choose_month": "월 선택",
+      "choose_year": "연도 선택",
+      "previous_month": "이전 달",
+      "next_month": "다음 달",
+      "previous_year": "이전 연도",
+      "next_year": "다음 연도",
+      "previous_year_page": "이전 12년",
+      "next_year_page": "다음 12년",
+      "month_view": "{year}년의 월 선택",
+      "year_view": "{first_year}년부터 {last_year}년까지 연도 선택",
+      "today_date": "오늘, {date}",
+      "selected_date": "{date}, 선택됨"
     }
   }
 }

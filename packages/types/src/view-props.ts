@@ -29,6 +29,8 @@ export type TIssueGroupByOptions =
   | "target_date_bucket"
   | "finish_date_bucket"
   | "team_project"
+  | "parent"
+  | "epic"
   | null;
 
 export type TIssueOrderByOptions =
@@ -116,6 +118,8 @@ export type TIssueParams =
   | "issue_type"
   | "layout"
   | "expand"
+  | "parent"
+  | "epic"
   | "filters";
 
 export type TCalendarLayouts = "month" | "week";
@@ -226,6 +230,7 @@ export interface IIssueDisplayProperties {
   modules?: boolean;
   cycle?: boolean;
   issue_type?: boolean;
+  parent?: boolean;
 }
 
 export type TIssueKanbanFilters = {

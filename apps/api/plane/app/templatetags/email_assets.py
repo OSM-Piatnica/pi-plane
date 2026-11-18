@@ -21,10 +21,11 @@ def _logo_url(variant):
 
 
 @register.simple_tag
-def email_logo(variant="dark", width=120):
+def email_logo(variant="dark", width=120, align=None):
     """
     The Pi-Plane mark. An image when ``EMAIL_LOGO_URL`` (light backgrounds) or ``EMAIL_LOGO_URL_ON_DARK`` (the dark
     header) names one; otherwise the name set in type, which needs no hosting and cannot show up as a broken image.
+    ``align`` places the typed name ("left" or "center"); by default the white one sits left, the dark one centered.
     """
     url = _logo_url(variant)
     if url:
@@ -35,7 +36,8 @@ def email_logo(variant="dark", width=120):
             width,
         )
     color = _WORDMARK_COLORS.get(variant, _WORDMARK_COLORS["dark"])
-    align = "left" if variant == "white" else "center"
+    if align not in ("left", "center"):
+        align = "left" if variant == "white" else "center"
     return format_html(
         '<span style="display: block; font-family: Arial, Helvetica, sans-serif; font-size: 26px; line-height: 32px; '
         'font-weight: 700; letter-spacing: 0.5px; color: {}; text-align: {}">Pi-Plane</span>',

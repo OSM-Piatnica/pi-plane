@@ -75,6 +75,96 @@ describe("DateSelect", () => {
     expect(day("June 15th, 2025")).toBeDefined();
   });
 
+  describe("focus on open", () => {
+    it("lands on the selected day when the calendar opens", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={new Date(2025, 5, 15)} onChange={vi.fn()} variant="select-md" placeholder="Set date" />
+      );
+
+      await user.click(screen.getByRole("button", { name: /jun 15, 2025/i }));
+
+      expect(document.activeElement).toBe(day("June 15th, 2025"));
+    });
+
+    it("lands on a day, not on the popover body, when nothing is picked", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect
+          value={null}
+          onChange={vi.fn()}
+          variant="select-md"
+          placeholder="Set date"
+          defaultMonth={JUNE_2025}
+        />
+      );
+
+      await user.click(screen.getByRole("button", { name: /set date/i }));
+
+      const active = document.activeElement as HTMLElement;
+      expect(active.tagName).toBe("BUTTON");
+      expect(active.closest('[role="grid"]')).not.toBeNull();
+      expect(active.getAttribute("aria-label")).toMatch(/June 1st, 2025/);
+    });
+
+    it("puts no tab stop of its own around the calendar", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect
+          value={null}
+          onChange={vi.fn()}
+          variant="select-md"
+          placeholder="Set date"
+          defaultMonth={JUNE_2025}
+        />
+      );
+
+      await user.click(screen.getByRole("button", { name: /set date/i }));
+
+      // The popover body used to be a tab stop (`tabIndex={0}`) that a screen reader could only call "group".
+      const grid = document.body.querySelector('[role="grid"]') as HTMLElement;
+      const wrappingStops = Array.from(document.body.querySelectorAll<HTMLElement>('[tabindex="0"]')).filter(
+        (element) => element.contains(grid)
+      );
+      expect(wrappingStops).toEqual([]);
+    });
+  });
+
+  describe("keys in the month and year views", () => {
+    const open = async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={new Date(2025, 5, 15)} onChange={vi.fn()} variant="select-md" placeholder="Set date" />
+      );
+      await user.click(screen.getByRole("button", { name: /jun 15, 2025/i }));
+      return user;
+    };
+
+    it("steps back with Escape first and closes the picker with the next one", async () => {
+      const user = await open();
+      await user.click(popup().getByRole("button", { name: "Choose the month, June" }));
+      expect(popup().getByRole("group", { name: "Choose month for 2025" })).toBeDefined();
+
+      await user.keyboard("{Escape}");
+      // Still open, on the day view
+      expect(popup().getByRole("grid")).toBeDefined();
+      expect(screen.getByRole("button", { name: /jun 15, 2025/i }).getAttribute("aria-expanded")).toBe("true");
+
+      await user.keyboard("{Escape}");
+      // The popover is leaving; its exit animation never ends in jsdom, so ask the trigger instead of the grid
+      expect(screen.getByRole("button", { name: /jun 15, 2025/i }).getAttribute("aria-expanded")).toBe("false");
+    });
+
+    it("pages the years with PageDown without closing or selecting anything", async () => {
+      const user = await open();
+      await user.click(popup().getByRole("button", { name: "Choose the year, 2025" }));
+
+      await user.keyboard("{PageDown}");
+
+      expect(popup().getByRole("group", { name: "Choose year from 2032 to 2043" })).toBeDefined();
+    });
+  });
+
   it("prefers the caller's tooltip content over the formatted selection", async () => {
     const user = userEvent.setup();
     render(
@@ -190,6 +280,23 @@ describe("DateRangeSelect", () => {
     const range = onChange.mock.calls[0]?.[0] as DateRangeValue;
     expect(range.from?.getDate()).toBe(12);
     expect(range.to?.getDate()).toBe(15);
+  });
+
+  it("lands on a day when the calendar opens", async () => {
+    const user = userEvent.setup();
+    render(
+      <DateRangeSelect
+        value={{ from: null, to: null }}
+        onChange={vi.fn()}
+        variant="select-md"
+        placeholder="Set dates"
+        defaultMonth={JUNE_2025}
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /set dates/i }));
+
+    expect((document.activeElement as HTMLElement).closest('[role="grid"]')).not.toBeNull();
   });
 
   it("merges a same-month range into one label", () => {

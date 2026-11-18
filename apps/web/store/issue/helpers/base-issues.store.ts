@@ -103,20 +103,23 @@ export interface IBaseIssuesStore {
     projectId: string,
     moduleId: string,
     issueIds: string[],
-    fetchAddedIssues?: boolean
+    fetchAddedIssues?: boolean,
+    includeSubIssues?: boolean
   ) => Promise<void>;
   removeIssuesFromModule: (
     workspaceSlug: string,
     projectId: string,
     moduleId: string,
-    issueIds: string[]
+    issueIds: string[],
+    includeSubIssues?: boolean
   ) => Promise<void>;
   changeModulesInIssue(
     workspaceSlug: string,
     projectId: string,
     issueId: string,
     addModuleIds: string[],
-    removeModuleIds: string[]
+    removeModuleIds: string[],
+    includeSubIssues?: boolean
   ): Promise<void>;
   /** Resolves with false when the person declined to move the work items that depend on the dragged ones */
   updateIssueDates(
@@ -144,6 +147,8 @@ export const ISSUE_GROUP_BY_KEY: Record<TIssueDisplayFilterOptions, keyof TIssue
   cycle: "cycle_id",
   module: "module_ids",
   team_project: "project_id",
+  parent: "parent_id",
+  epic: "epic_id",
 };
 
 export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof TIssue> = {
@@ -163,6 +168,8 @@ export const ISSUE_FILTER_DEFAULT_DATA: Record<TIssueDisplayFilterOptions, keyof
   target_date_bucket: "target_date",
   finish_date_bucket: "finish_date",
   team_project: "project_id",
+  parent: "parent_id",
+  epic: "epic_id",
 };
 
 // This constant maps the order by keys to the respective issue property that the key relies on
@@ -297,6 +304,7 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       addIssuesToModule: action.bound,
       removeIssuesFromModule: action.bound,
       changeModulesInIssue: action.bound,
+      askIncludeSubIssues: action.bound,
     });
     this.rootIssueStore = _rootStore;
     this.issueFilterStore = issueFilterStore;
@@ -315,6 +323,9 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
   abstract fetchParentStats: (workspaceSlug: string, projectId?: string, id?: string) => void;
 
   abstract updateParentStats: (prevIssueState?: TIssue, nextIssueState?: TIssue, id?: string) => void;
+
+  // Reload the groups that the server derives from the hierarchy (Epic groups); stores that can do it override this
+  refreshHierarchyGroups(_workspaceSlug: string, _projectId: string): void {}
 
   // current Module Id from url
   get moduleId() {
@@ -580,12 +591,15 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     id?: string,
     shouldUpdateList = true
   ) {
-    // perform an API call
-    const response = await this.issueService.createIssue(workspaceSlug, projectId, data);
+    // perform an API call; epic_id is derived by the server, so it is not sent
+    const { epic_id: epicId, ...payload } = data;
+    const response = await this.issueService.createIssue(workspaceSlug, projectId, payload);
 
     const enrichedResponse = {
       ...response,
       type_id: response?.type_id ?? data.type_id ?? null,
+      // a work item created in an Epic group stays in it
+      ...(epicId !== undefined ? { epic_id: epicId } : {}),
     };
 
     // add Issue to Store
@@ -637,12 +651,13 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         ...data,
       } as TIssue);
 
-      // call API to update the issue
+      // call API to update the issue; epic_id is derived by the server, so it is not sent
+      const { epic_id: _epicId, ...patchData } = data;
       const response = await this.issueService.patchIssue(
         workspaceSlug,
         projectId,
         issueId,
-        (initializePairedDate ? { ...data, initialize_paired_date: true } : data) as Partial<TIssue>,
+        (initializePairedDate ? { ...patchData, initialize_paired_date: true } : patchData) as Partial<TIssue>,
         options
       );
 
@@ -676,6 +691,10 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
       // call fetch Parent Stats
       this.fetchParentStats(workspaceSlug, projectId);
+
+      // A parent change moves the whole subtree to another Epic, which only the server can resolve
+      if ("parent_id" in data && (this.groupBy === "epic" || this.subGroupBy === "epic"))
+        this.refreshHierarchyGroups(workspaceSlug, projectId);
     } catch (error) {
       // If errored out update store again to revert the change
       this.rootIssueStore.issues.updateIssue(issueId, issueBeforeUpdate ?? {});
@@ -1201,15 +1220,21 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId: string,
     moduleId: string,
     issueIds: string[],
-    fetchAddedIssues = true
+    fetchAddedIssues = true,
+    includeSubIssues?: boolean
   ) {
+    // Work items with sub-work items: ask whether those move along, unless the caller already decided
+    const include = includeSubIssues ?? (await this.askIncludeSubIssues("add", issueIds));
     // Perform an APi call to add issue to module
-    await this.moduleService.addIssuesToModule(workspaceSlug, projectId, moduleId, {
+    const response = await this.moduleService.addIssuesToModule(workspaceSlug, projectId, moduleId, {
       issues: issueIds,
+      ...(include ? { include_sub_issues: true } : {}),
     });
+    // The API names every work item it added, sub-work items included
+    const addedIds = include && response?.issue_ids?.length ? uniq([...issueIds, ...response.issue_ids]) : issueIds;
 
     // if true, fetch the issue data for all the issueIds
-    if (fetchAddedIssues) await this.rootIssueStore.issues.getIssues(workspaceSlug, projectId, issueIds);
+    if (fetchAddedIssues) await this.rootIssueStore.issues.getIssues(workspaceSlug, projectId, addedIds);
 
     // if module Id is the current Module Id then call fetch parent stats
     if (this.moduleId === moduleId) this.fetchParentStats(workspaceSlug, projectId);
@@ -1217,15 +1242,56 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     runInAction(() => {
       // if module Id is the current Module Id, then, add issue to list of issueIds
       if (this.moduleId === moduleId) {
-        issueIds.forEach((issueId) => this.addIssueToList(issueId));
+        addedIds.forEach((issueId) => this.addIssueToList(issueId));
       }
     });
 
     // For Each issue update module Ids by calling current store's update Issue, without making an API call
-    issueIds.forEach((issueId) => {
+    addedIds.forEach((issueId) => {
       const issueModuleIds = get(this.rootIssueStore.issues.issuesMap, [issueId, "module_ids"]) ?? [];
       const updatedIssueModuleIds = uniq(concat(issueModuleIds, [moduleId]));
       this.issueUpdate(workspaceSlug, projectId, issueId, { module_ids: updatedIssueModuleIds }, false);
+    });
+  }
+
+  /**
+   * Asks whether the sub-work items of the given work items should move into (or out of) a module with them.
+   * Only work items that have sub-work items cause the question; no answer (no dialog, none to ask about) means no.
+   */
+  async askIncludeSubIssues(mode: "add" | "remove", issueIds: string[]): Promise<boolean> {
+    const parentNames = issueIds
+      .map((issueId) => this.rootIssueStore.issues.getIssueById(issueId))
+      .filter((issue) => (issue?.sub_issues_count ?? 0) > 0)
+      .map((issue) => issue?.name ?? "");
+    const workflowStore = this.rootIssueStore.rootStore?.workflow;
+    if (parentNames.length === 0 || !workflowStore) return false;
+    return workflowStore.confirmSubIssues({ mode, names: parentNames });
+  }
+
+  /**
+   * Brings the local copies of work items up to date after the API moved them between modules, without another API
+   * call. Used for the sub-work items that came along with a parent.
+   */
+  private applyModuleMembership(
+    workspaceSlug: string,
+    projectId: string,
+    issueIds: string[],
+    changes: { added?: string[]; removed?: string[] }
+  ) {
+    runInAction(() => {
+      issueIds.forEach((issueId) => {
+        if (!this.rootIssueStore.issues.getIssueById(issueId)) return;
+        let moduleIds = [...(get(this.rootIssueStore.issues.issuesMap, [issueId, "module_ids"]) ?? [])];
+        (changes.removed ?? []).forEach((moduleId) => {
+          moduleIds = pull(moduleIds, moduleId);
+          if (this.moduleId === moduleId) this.removeIssueFromList(issueId);
+        });
+        if ((changes.added ?? []).length > 0) {
+          moduleIds = uniq(concat(moduleIds, changes.added ?? []));
+          if (this.moduleId && (changes.added ?? []).includes(this.moduleId)) this.addIssueToList(issueId);
+        }
+        this.issueUpdate(workspaceSlug, projectId, issueId, { module_ids: moduleIds }, false);
+      });
     });
   }
 
@@ -1237,9 +1303,28 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
    * @param issueIds
    * @returns
    */
-  async removeIssuesFromModule(workspaceSlug: string, projectId: string, moduleId: string, issueIds: string[]) {
+  async removeIssuesFromModule(
+    workspaceSlug: string,
+    projectId: string,
+    moduleId: string,
+    issueIds: string[],
+    includeSubIssues?: boolean
+  ) {
+    // Work items with sub-work items: ask whether those leave the module too, unless the caller already decided
+    const include = includeSubIssues ?? (await this.askIncludeSubIssues("remove", issueIds));
     // Perform an APi call to remove issue to module
-    const response = await this.moduleService.removeIssuesFromModuleBulk(workspaceSlug, projectId, moduleId, issueIds);
+    let removedIds = issueIds;
+    let response: void | undefined;
+    if (include) {
+      const results = await Promise.all(
+        issueIds.map((issueId) =>
+          this.moduleService.removeIssueFromModuleWithSubIssues(workspaceSlug, projectId, moduleId, issueId)
+        )
+      );
+      removedIds = uniq([...issueIds, ...results.flat()]);
+    } else {
+      response = await this.moduleService.removeIssuesFromModuleBulk(workspaceSlug, projectId, moduleId, issueIds);
+    }
 
     // if module Id is the current Module Id then call fetch parent stats
     if (this.moduleId === moduleId) this.fetchParentStats(workspaceSlug, projectId);
@@ -1247,13 +1332,13 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     runInAction(() => {
       // if module Id is the current Module Id, then remove issue from list of issueIds
       if (this.moduleId === moduleId) {
-        issueIds.forEach((issueId) => this.removeIssueFromList(issueId));
+        removedIds.forEach((issueId) => this.removeIssueFromList(issueId));
       }
     });
 
     // For Each issue update module Ids by calling current store's update Issue, without making an API call
     runInAction(() => {
-      issueIds.forEach((issueId) => {
+      removedIds.forEach((issueId) => {
         const issueModuleIds = get(this.rootIssueStore.issues.issuesMap, [issueId, "module_ids"]) ?? [];
         const updatedIssueModuleIds = pull(issueModuleIds, moduleId);
         this.issueUpdate(workspaceSlug, projectId, issueId, { module_ids: updatedIssueModuleIds }, false);
@@ -1309,8 +1394,15 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     projectId: string,
     issueId: string,
     addModuleIds: string[],
-    removeModuleIds: string[]
+    removeModuleIds: string[],
+    includeSubIssues?: boolean
   ) {
+    // A work item with sub-work items: ask whether those follow it, unless the caller already decided
+    const include =
+      includeSubIssues ??
+      (addModuleIds.length > 0 || removeModuleIds.length > 0
+        ? await this.askIncludeSubIssues(addModuleIds.length > 0 ? "add" : "remove", [issueId])
+        : false);
     // keep a copy of the original module ids
     const issueBeforeChanges = clone(this.rootIssueStore.issues.getIssueById(issueId));
     const originalModuleIds = get(this.rootIssueStore.issues.issuesMap, [issueId, "module_ids"]) ?? [];
@@ -1343,10 +1435,22 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       }
 
       //Perform API call
-      await this.moduleService.addModulesToIssue(workspaceSlug, projectId, issueId, {
+      const response = await this.moduleService.addModulesToIssue(workspaceSlug, projectId, issueId, {
         modules: addModuleIds,
         removed_modules: removeModuleIds,
+        ...(include ? { include_sub_issues: true } : {}),
       });
+
+      // the sub-work items that came along: load the ones this client does not have yet, then update them
+      if (include) {
+        const added = (response?.added_issue_ids ?? []).filter((id) => id !== issueId);
+        const removed = (response?.removed_issue_ids ?? []).filter((id) => id !== issueId);
+        if (added.length > 0 && addModuleIds.includes(this.moduleId ?? "")) {
+          await this.rootIssueStore.issues.getIssues(workspaceSlug, projectId, added);
+        }
+        this.applyModuleMembership(workspaceSlug, projectId, added, { added: addModuleIds });
+        this.applyModuleMembership(workspaceSlug, projectId, removed, { removed: removeModuleIds });
+      }
 
       if (addModuleIds.includes(this.moduleId || "") || removeModuleIds.includes(this.moduleId || "")) {
         this.fetchParentStats(workspaceSlug, projectId);

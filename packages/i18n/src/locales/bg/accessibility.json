@@ -45,6 +45,20 @@
       "open": "Отвори инструмента за избор на цвят",
       "swatches": "Предварително зададени цветове",
       "hex_input": "Шестнадесетичен цвят"
+    },
+    "calendar": {
+      "choose_month": "Избери месец",
+      "choose_year": "Избери година",
+      "previous_month": "Предишен месец",
+      "next_month": "Следващ месец",
+      "previous_year": "Предишна година",
+      "next_year": "Следваща година",
+      "previous_year_page": "Предишните 12 години",
+      "next_year_page": "Следващите 12 години",
+      "month_view": "Избор на месец за {year} г.",
+      "year_view": "Избор на година от {first_year} до {last_year}",
+      "today_date": "Днес, {date}",
+      "selected_date": "{date}, избрано"
     }
   }
 }

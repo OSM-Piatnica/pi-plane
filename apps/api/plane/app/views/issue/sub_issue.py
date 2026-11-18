@@ -7,6 +7,7 @@
 import json
 
 # Django imports
+from django.db import transaction
 from django.utils import timezone
 from django.db.models import OuterRef, F, Value, UUIDField, Subquery, Count, IntegerField
 from django.utils.decorators import method_decorator
@@ -23,14 +24,29 @@ from rest_framework import status
 from .. import BaseAPIView
 from plane.utils.work_item_edit_rule import body_list, restrict_work_item_changes
 from plane.app.serializers import IssueSerializer
-from plane.app.permissions import ProjectEntityPermission
-from plane.db.models import Issue, IssueLink, FileAsset, CycleIssue, IssueLabel, IssueAssignee, ModuleIssue
+from plane.app.permissions import ProjectEntityPermission, issue_hidden_from_guest, ROLE
+from plane.db.models import (
+    Issue,
+    IssueLink,
+    Project,
+    FileAsset,
+    CycleIssue,
+    IssueLabel,
+    IssueAssignee,
+    ModuleIssue,
+    ProjectMember,
+)
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.utils.timezone_converter import user_timezone_converter
 from collections import defaultdict
 from plane.utils.group_filters import add_group_info
 from plane.utils.host import base_host
 from plane.utils.order_queryset import order_issue_queryset
+from plane.utils.work_item_hierarchy import (
+    MAX_SUB_WORK_ITEMS_PER_REQUEST,
+    WorkItemInvariantError,
+    validate_work_item_parent,
+)
 
 
 class SubIssuesEndpoint(BaseAPIView):
@@ -38,6 +54,13 @@ class SubIssuesEndpoint(BaseAPIView):
 
     @method_decorator(gzip_page)
     def get(self, request, slug, project_id, issue_id):
+        # A restricted guest may only see the sub-issues of issues they created,
+        # mirroring the issue-detail visibility rule.
+        if issue_hidden_from_guest(request, slug, project_id, issue_id):
+            return Response(
+                {"error": "You are not allowed to view this issue"},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         # SECURITY: scope the parent lookup to the URL project. ProjectEntityPermission
         # only checks that the caller belongs to `project_id`, not that `issue_id` lives
         # in it, so an unscoped filter leaks sub-issue metadata across projects in the
@@ -137,6 +160,18 @@ class SubIssuesEndpoint(BaseAPIView):
             .annotate(state_group=F("state__group"))
         )
 
+        # Restrict guests without full feature access to sub-issues they created,
+        # mirroring IssueViewSet.list.
+        if ProjectMember.objects.filter(
+            workspace__slug=slug,
+            project_id=project_id,
+            member=request.user,
+            role=ROLE.GUEST.value,
+            is_active=True,
+            project__guest_view_all_features=False,
+        ).exists():
+            sub_issues = sub_issues.filter(created_by=request.user)
+
         # Ordering
         order_by_param = request.GET.get("order_by", "-created_at")
         group_by = request.GET.get("group_by", False)
@@ -234,13 +269,44 @@ class SubIssuesEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        if not isinstance(sub_issue_ids, list) or len(sub_issue_ids) > MAX_SUB_WORK_ITEMS_PER_REQUEST:
+            return Response(
+                {"error": f"At most {MAX_SUB_WORK_ITEMS_PER_REQUEST} sub-work items can be attached at once"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         # Scope to workspace + project to prevent cross-project/cross-tenant IDOR
-        sub_issues = Issue.issue_objects.filter(id__in=sub_issue_ids, workspace__slug=slug, project_id=project_id)
+        with transaction.atomic():
+            # Hierarchy changes of one project take turns, so two requests cannot each close half of a cycle
+            Project.objects.select_for_update().filter(pk=project_id).first()
+            sub_issues = list(
+                Issue.issue_objects.select_for_update(of=("self",))
+                .select_related("type")
+                .filter(id__in=sub_issue_ids, workspace__slug=slug, project_id=project_id)
+            )
+            # One identifier that is not a work item of this project rejects the whole request
+            if len(sub_issues) != len(set(map(str, sub_issue_ids))):
+                return Response(
+                    {"error": "Some sub-work items were not found in this project"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
-        for sub_issue in sub_issues:
-            sub_issue.parent = parent_issue
+            try:
+                for sub_issue in sub_issues:
+                    validate_work_item_parent(
+                        project_id=project_id,
+                        workspace_id=parent_issue.workspace_id,
+                        issue_type=sub_issue.type,
+                        parent=parent_issue,
+                        issue_id=sub_issue.id,
+                    )
+            except WorkItemInvariantError as error:
+                return Response({"error": error.message}, status=status.HTTP_400_BAD_REQUEST)
 
-        _ = Issue.objects.bulk_update(sub_issues, ["parent"], batch_size=10)
+            for sub_issue in sub_issues:
+                sub_issue.parent = parent_issue
+
+            _ = Issue.objects.bulk_update(sub_issues, ["parent"], batch_size=10)
 
         # Only the issues that were actually re-parented — i.e. the project-scoped
         # `sub_issues`, not the raw caller-supplied ids. Otherwise a cross-project id

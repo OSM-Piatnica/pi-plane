@@ -9,6 +9,7 @@ from rest_framework import serializers
 from plane.app.serializers.base import BaseSerializer
 from plane.db.models import IssueType, IssueTypeProperty, Project, ProjectIssueType, Workspace
 from plane.utils.issue_type_property import clean_property_list
+from plane.utils.project_issue_types import issue_type_in_use
 
 
 class IssueTypePropertySerializer(BaseSerializer):
@@ -29,6 +30,17 @@ class IssueTypePropertySerializer(BaseSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "sort_order", "created_at", "updated_at"]
+
+
+LOGO_TEXT_MAX_LENGTH = 64
+
+
+def _logo_text(value, field):
+    if value is None:
+        return None
+    if not isinstance(value, str) or len(value) > LOGO_TEXT_MAX_LENGTH:
+        raise serializers.ValidationError(f"{field} must be text of at most {LOGO_TEXT_MAX_LENGTH} characters")
+    return value
 
 
 class IssueTypeSerializer(BaseSerializer):
@@ -52,6 +64,34 @@ class IssueTypeSerializer(BaseSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_at", "updated_at", "properties"]
+
+    def validate_logo_props(self, value):
+        """Accept only the emoji or icon shape that the web logo renderer understands.
+
+        The logo is shown next to the identifier of every work item of the type, so what is stored must be a short
+        emoji or icon name and colours, nothing else. An empty value clears the logo.
+        """
+
+        if value in (None, {}):
+            return {}
+        if not isinstance(value, dict) or value.get("in_use") not in {"emoji", "icon"}:
+            raise serializers.ValidationError("in_use must be 'emoji' or 'icon'")
+        if set(value) - {"in_use", "emoji", "icon"}:
+            raise serializers.ValidationError("Unsupported logo field")
+
+        in_use = value["in_use"]
+        detail = value.get(in_use)
+        if not isinstance(detail, dict):
+            raise serializers.ValidationError(f"{in_use} details are required")
+
+        allowed = {"value", "url"} if in_use == "emoji" else {"name", "color", "background_color"}
+        if set(detail) - allowed:
+            raise serializers.ValidationError(f"Unsupported {in_use} field")
+        clean = {key: _logo_text(detail.get(key), f"{in_use}.{key}") for key in allowed if key in detail}
+        primary = "value" if in_use == "emoji" else "name"
+        if not clean.get(primary):
+            raise serializers.ValidationError(f"{in_use}.{primary} is required")
+        return {"in_use": in_use, in_use: clean}
 
     def get_properties(self, instance):
         props = IssueTypeProperty.objects.filter(issue_type=instance, deleted_at__isnull=True).order_by(
@@ -177,6 +217,17 @@ class IssueTypeSerializer(BaseSerializer):
         if project_ids is not None:
             self._sync_project_links(issue_type, project_ids)
         return issue_type
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        # Work items that have a parent would silently become Epics (or Epics would stop being one), so the
+        # flag is fixed as soon as a work item uses the type
+        if self.instance is not None and "is_epic" in attrs and attrs["is_epic"] != self.instance.is_epic:
+            if issue_type_in_use(self.instance):
+                raise serializers.ValidationError(
+                    {"is_epic": "Cannot be changed while work items use this work item type"}
+                )
+        return attrs
 
     def update(self, instance, validated_data):
         properties = self._raw_properties_from_request()

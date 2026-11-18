@@ -45,6 +45,20 @@
       "open": "Otwórz próbnik kolorów",
       "swatches": "Kolory predefiniowane",
       "hex_input": "Kolor szesnastkowy"
+    },
+    "calendar": {
+      "choose_month": "Wybierz miesiąc",
+      "choose_year": "Wybierz rok",
+      "previous_month": "Poprzedni miesiąc",
+      "next_month": "Następny miesiąc",
+      "previous_year": "Poprzedni rok",
+      "next_year": "Następny rok",
+      "previous_year_page": "Poprzednie 12 lat",
+      "next_year_page": "Następne 12 lat",
+      "month_view": "Wybierz miesiąc w roku {year}",
+      "year_view": "Wybierz rok od {first_year} do {last_year}",
+      "today_date": "Dzisiaj, {date}",
+      "selected_date": "{date}, wybrano"
     }
   }
 }

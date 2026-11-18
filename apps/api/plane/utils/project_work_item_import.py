@@ -970,6 +970,7 @@ def import_work_items_into_project(
 
         # Pass 2: parent links
         parent_updates = []
+        new_parent_of: dict = {}
         for item, issue in zip(prepared, created_issues):
             parent_key = item["parent_external_key"]
             if not parent_key:
@@ -978,9 +979,34 @@ def import_work_items_into_project(
             if parent is None:
                 warnings.append(f'Work item "{item["external_key"]}": parent "{parent_key}" was not found, skipped')
                 continue
+            # Same rules as the app and API serializers: one project, no cycle, an Epic has no parent
             if parent.id == issue.id:
                 continue
+            if parent.project_id != project.id:
+                warnings.append(
+                    f'Work item "{item["external_key"]}": parent "{parent_key}" is not in this project, skipped'
+                )
+                continue
+            if issue.type is not None and issue.type.is_epic:
+                warnings.append(f'Work item "{item["external_key"]}": an Epic cannot have a parent, skipped')
+                continue
+            # Only work items of this file get a new parent, so a cycle can only run through them
+            ancestor = parent
+            closes_cycle = False
+            for _ in range(len(created_issues) + 1):
+                if ancestor is None:
+                    break
+                if ancestor.id == issue.id:
+                    closes_cycle = True
+                    break
+                ancestor = new_parent_of.get(ancestor.id)
+            if closes_cycle:
+                warnings.append(
+                    f'Work item "{item["external_key"]}": parent "{parent_key}" would create a cycle, skipped'
+                )
+                continue
             issue.parent = parent
+            new_parent_of[issue.id] = parent
             parent_updates.append(issue)
         if parent_updates:
             Issue.objects.bulk_update(parent_updates, ["parent"], batch_size=200)

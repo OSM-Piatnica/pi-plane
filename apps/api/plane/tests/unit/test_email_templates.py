@@ -56,9 +56,21 @@ class TestEmailTemplates:
             closed = len(re.findall(rf"</{tag}\s*>", source))
             assert opened == closed, f"{name}: <{tag}> opened {opened} times, closed {closed}"
 
+    @pytest.mark.parametrize("name", NAMES)
+    def test_the_mark_on_a_black_header_is_the_white_one(self, name):
+        source = (TEMPLATES.parent / name).read_text(encoding="utf-8")
 
-def _logo(variant="dark", width=120):
-    return Template('{% load email_assets %}{% email_logo "' + variant + '" ' + str(width) + " %}").render(Context())
+        # the mark for light backgrounds (#111111) does not show on a black header
+        for match in re.finditer(r'\{% email_logo "dark"', source):
+            header = source[max(0, match.start() - 400) : match.start()]
+            assert "#000000" not in header, f"{name}: the dark mark sits on a black header"
+
+
+def _logo(variant="dark", width=120, align=None):
+    align = f' "{align}"' if align else ""
+    return Template('{% load email_assets %}{% email_logo "' + variant + '" ' + str(width) + align + " %}").render(
+        Context()
+    )
 
 
 @pytest.mark.unit
@@ -69,6 +81,19 @@ class TestEmailLogo:
 
         assert "<img" not in dark and "Pi-Plane" in dark and "#111111" in dark
         assert "<img" not in white and "Pi-Plane" in white and "#ffffff" in white
+
+    def test_the_typed_name_can_be_centered(self):
+        with override_settings(EMAIL_LOGO_URL="", EMAIL_LOGO_URL_ON_DARK=""):
+            white_default, white_centered = _logo("white"), _logo("white", 120, "center")
+
+        assert "text-align: left" in white_default
+        assert "text-align: center" in white_centered and "#ffffff" in white_centered
+
+    def test_an_unknown_alignment_keeps_the_default(self):
+        with override_settings(EMAIL_LOGO_URL="", EMAIL_LOGO_URL_ON_DARK=""):
+            html = _logo("dark", 120, "right; color: red")
+
+        assert "text-align: center" in html and "color: red" not in html
 
     def test_a_configured_image_is_used_for_its_background(self):
         with override_settings(

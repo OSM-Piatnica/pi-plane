@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Python imports
@@ -30,6 +31,7 @@ from plane.db.models import (
 from plane.utils.analytics_plot import burndown_plot
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.utils.host import base_host
+from plane.utils.epic_progress import not_epic_q
 
 
 def transfer_cycle_issues(
@@ -75,7 +77,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__deleted_at__isnull=True,
                     issue_cycle__issue__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
         .annotate(
@@ -87,7 +90,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__issue__deleted_at__isnull=True,
                     issue_cycle__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
         .annotate(
@@ -99,7 +103,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__issue__deleted_at__isnull=True,
                     issue_cycle__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
         .annotate(
@@ -111,7 +116,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__issue__deleted_at__isnull=True,
                     issue_cycle__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
         .annotate(
@@ -123,7 +129,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__issue__deleted_at__isnull=True,
                     issue_cycle__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
         .annotate(
@@ -135,7 +142,8 @@ def transfer_cycle_issues(
                     issue_cycle__issue__is_draft=False,
                     issue_cycle__issue__deleted_at__isnull=True,
                     issue_cycle__deleted_at__isnull=True,
-                ),
+                )
+                & not_epic_q("issue_cycle__issue__"),
             )
         )
     )
@@ -162,7 +170,7 @@ def transfer_cycle_issues(
 
     if estimate_type:
         assignee_estimate_data = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -228,7 +236,7 @@ def transfer_cycle_issues(
         ]
 
         label_distribution_data = (
-            Issue.issue_objects.filter(
+            Issue.progress_objects.filter(
                 issue_cycle__cycle_id=cycle_id,
                 issue_cycle__deleted_at__isnull=True,
                 workspace__slug=slug,
@@ -284,7 +292,7 @@ def transfer_cycle_issues(
 
     # Get the assignee distribution
     assignee_distribution = (
-        Issue.issue_objects.filter(
+        Issue.progress_objects.filter(
             issue_cycle__cycle_id=cycle_id,
             issue_cycle__deleted_at__isnull=True,
             workspace__slug=slug,
@@ -348,7 +356,7 @@ def transfer_cycle_issues(
 
     # Get the label distribution
     label_distribution = (
-        Issue.issue_objects.filter(
+        Issue.progress_objects.filter(
             issue_cycle__cycle_id=cycle_id,
             issue_cycle__deleted_at__isnull=True,
             workspace__slug=slug,

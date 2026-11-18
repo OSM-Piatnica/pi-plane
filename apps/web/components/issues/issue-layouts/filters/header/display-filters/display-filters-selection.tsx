@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -8,12 +9,16 @@
 import React from "react";
 import { isEmpty } from "lodash-es";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+import { isHierarchyGrouping } from "@plane/constants";
 import type {
   IIssueDisplayFilterOptions,
   IIssueDisplayProperties,
   ILayoutDisplayFiltersOptions,
   TIssueGroupByOptions,
 } from "@plane/types";
+// hooks
+import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
 // components
 import {
   FilterColorBy,
@@ -49,6 +54,11 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
     isEpic = false,
   } = props;
 
+  // router and project work item types: Epics are on when an Epic type is linked to the project
+  const { workspaceSlug, projectId } = useParams();
+  const { types: projectTypes } = useProjectIssueTypes(workspaceSlug?.toString(), projectId?.toString());
+  const epicsEnabled = projectTypes.some((row) => row.issue_type_detail?.is_epic);
+
   const isDisplayFilterEnabled = (displayFilter: keyof IIssueDisplayFilterOptions) =>
     Object.keys(layoutDisplayFiltersOptions?.display_filters ?? {}).includes(displayFilter);
 
@@ -59,6 +69,16 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
   if (moduleViewDisabled) {
     ignoreGroupedFilters.push("module");
   }
+  // Grouping by Epic is offered where the project has an Epic type (and kept where it is already in use)
+  if (!epicsEnabled && displayFilters?.group_by !== "epic" && displayFilters?.sub_group_by !== "epic") {
+    computedIgnoreGroupedFilters.push("epic");
+  }
+
+  // grouped by the hierarchy, sub-work items are always included, so the option is not offered
+  const extraOptions = layoutDisplayFiltersOptions?.extra_options.values ?? [];
+  const enabledExtraOptions = isHierarchyGrouping(displayFilters)
+    ? extraOptions.filter((option) => option !== "sub_issue")
+    : extraOptions;
 
   return (
     <div className="vertical-scrollbar relative scrollbar-sm h-full w-full divide-y divide-subtle-1 overflow-hidden overflow-y-auto px-2.5">
@@ -137,14 +157,14 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
           <FilterExtraOptions
             selectedExtraOptions={{
               show_empty_groups: displayFilters?.show_empty_groups ?? true,
-              sub_issue: displayFilters?.sub_issue ?? false,
+              sub_issue: isHierarchyGrouping(displayFilters) ? true : (displayFilters?.sub_issue ?? false),
             }}
             handleUpdate={(key, val) =>
               handleDisplayFiltersUpdate({
                 [key]: val,
               })
             }
-            enabledExtraOptions={layoutDisplayFiltersOptions?.extra_options.values}
+            enabledExtraOptions={enabledExtraOptions}
           />
         </div>
       )}

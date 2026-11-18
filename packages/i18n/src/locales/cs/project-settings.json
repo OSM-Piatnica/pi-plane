@@ -400,6 +400,10 @@
         "toggle_title": "Povolit sledování času",
         "toggle_description": "Členové projektu budou moci zaznamenávat odpracovaný čas."
       },
+      "epics": {
+        "toggle_title": "Povolit epiky",
+        "toggle_description": "Členové budou moci vytvářet epiky, pracovní položky, které seskupují další pracovní položky. Po vypnutí zůstanou stávající epiky zachovány."
+      },
       "milestones": {
         "title": "Milníky",
         "short_title": "Milníky",

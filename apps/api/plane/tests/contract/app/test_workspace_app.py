@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 import pytest
@@ -13,6 +14,11 @@ from plane.db.models import Workspace, WorkspaceMember
 @pytest.mark.contract
 class TestWorkspaceAPI:
     """Test workspace CRUD operations"""
+
+    @pytest.fixture(autouse=True)
+    def _allow_workspace_creation(self, monkeypatch):
+        # Creation is off by default; these tests are about the create endpoint itself.
+        monkeypatch.setenv("DISABLE_WORKSPACE_CREATION", "0")
 
     @pytest.mark.django_db
     def test_create_workspace_empty_data(self, session_client):

@@ -75,7 +75,12 @@ export const WorkItemAdditionalSidebarProperties = observer(function WorkItemAdd
   return (
     <>
       {schema.map((property) => (
-        <SidebarPropertyListItem key={property.property_id} icon={ListTodo} label={property.title ?? ""}>
+        <SidebarPropertyListItem
+          key={property.property_id}
+          propertyKey={`custom_${property.property_id}`}
+          icon={ListTodo}
+          label={property.title ?? ""}
+        >
           <IssueTypePropertyField
             property={property}
             value={localValues[property.property_id]}

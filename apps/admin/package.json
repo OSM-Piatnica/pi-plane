@@ -1,6 +1,6 @@
 {
   "name": "admin",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "private": true,
   "description": "Admin UI for Plane",
   "license": "AGPL-3.0",
@@ -22,7 +22,7 @@
     "@fontsource-variable/inter": "5.2.8",
     "@fontsource/ibm-plex-mono": "5.2.7",
     "@fontsource/material-symbols-rounded": "5.2.30",
-    "@makeplane/propel": "0.7.3",
+    "@makeplane/propel": "0.9.7",
     "@plane/blocks": "workspace:*",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",

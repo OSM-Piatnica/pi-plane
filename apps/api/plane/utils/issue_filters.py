@@ -135,6 +135,36 @@ def filter_priority(params, issue_filter, method, prefix=""):
     return issue_filter
 
 
+def filter_epic(params, issue_filter, method, prefix=""):
+    """The filter behind "load more" in an Epic group: the Epic and every work item below it (None: under no Epic).
+
+    It is built from the Epics down (`epic_tree_ids`), so what it costs is the size of the Epic subtrees and not
+    the number of work items of the instance, and it agrees with the grouping (`EpicAncestor`). The parent groups
+    use `filter_parent`.
+    """
+
+    from django.db.models import Q
+
+    from plane.db.models import Issue
+    from plane.utils.epic_ancestor import epic_tree_ids
+
+    if method != "GET":
+        return issue_filter
+    values = [item for item in str(params.get("epic", "")).split(",") if item not in ("", "null")]
+    include_none, epics = "None" in values, filter_valid_uuids(values)
+    if not include_none and not epics:
+        return issue_filter
+    if epics and not include_none:
+        issue_filter[f"{prefix}pk__in"] = epic_tree_ids(epics)
+        return issue_filter
+    # "None" is every work item that is in no Epic tree; Epic ids add their trees
+    condition = ~Q(pk__in=epic_tree_ids())
+    if epics:
+        condition |= Q(pk__in=epic_tree_ids(epics))
+    issue_filter[f"{prefix}pk__in"] = Issue.all_objects.filter(condition).values("id")
+    return issue_filter
+
+
 def filter_parent(params, issue_filter, method, prefix=""):
     if method == "GET":
         parents = [item for item in params.get("parent").split(",") if item != "null"]
@@ -573,6 +603,7 @@ def issue_filters(query_params, method, prefix="", request=None):
         "estimate_point": filter_estimate_point,
         "priority": filter_priority,
         "parent": filter_parent,
+        "epic": filter_epic,
         "labels": filter_labels,
         "assignees": filter_assignees,
         "group_assignees": filter_group_assignees,

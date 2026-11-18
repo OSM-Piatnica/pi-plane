@@ -110,6 +110,13 @@
     "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng nhập để hoàn tất đăng nhập.",
     "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không mong đợi mã đăng nhập, bạn có thể bỏ qua thư này."
   },
+  "sign_up_code": {
+    "subject": "Mã đăng ký Pi-Plane của bạn là {code}",
+    "preheader": "Mã đăng ký Pi-Plane {code} của bạn có hiệu lực trong 10 phút.",
+    "heading": "Xác nhận địa chỉ email của bạn cho Pi-Plane",
+    "info": "Mã này có hiệu lực trong 10 phút tới. Hãy nhập mã vào trang đăng ký để tạo tài khoản.",
+    "note": "Lưu ý: Email này được gửi đến <span>{email}</span>. Nếu bạn không cố đăng ký, bạn có thể bỏ qua thư này."
+  },
   "forgot_password": {
     "subject": "Đã có yêu cầu mật khẩu mới cho tài khoản Pi-Plane của bạn",
     "preheader": "Đặt lại mật khẩu Pi-Plane của bạn bằng liên kết an toàn này.",

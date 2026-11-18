@@ -19,7 +19,9 @@ import {
   LabelsOutline,
   LinkOutline,
   MembersOutline,
+  EpicOutline,
   ModuleOutline,
+  ParentOutline,
   PriorityOutline,
   StartDateOutline,
   StateOutline,
@@ -73,12 +75,14 @@ import {
   DATE_BUCKET_NO_DAY_LEFT_ERROR,
 } from "@/helpers/group-column";
 import { getBucketContext } from "@/helpers/date-bucket-today";
-import { getGroupDropValue } from "@/helpers/group-drop";
+import { getGroupDropValue, withEpicDropParent } from "@/helpers/group-drop";
+import { orderWorkItemGroups } from "@/helpers/work-item-hierarchy-groups";
 import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
 // store
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
 import { DEFAULT_DISPLAY_PROPERTIES } from "@/store/issue/issue-details/sub_issues_filter.store";
+import { WorkItemGroupIcon } from "@/components/issues/issue-layouts/work-item-group-icon";
 import {
   SpreadsheetAssigneeColumn,
   SpreadsheetAttachmentColumn,
@@ -90,6 +94,7 @@ import {
   SpreadsheetLabelColumn,
   SpreadsheetModuleColumn,
   SpreadsheetCycleColumn,
+  SpreadsheetParentColumn,
   SpreadsheetLinkColumn,
   SpreadsheetPriorityColumn,
   SpreadsheetStartDateColumn,
@@ -132,6 +137,8 @@ type TGetGroupByColumns = {
   isWorkspaceLevel: boolean;
   isEpic?: boolean;
   projectId?: string;
+  // ids of the groups in the grouped response, for groups that cannot be listed up front (parents)
+  groupIds?: string[];
 };
 
 // NOTE: Type of groupBy is different compared to what's being passed from the components.
@@ -143,6 +150,7 @@ export const getGroupByColumns = ({
   isWorkspaceLevel: isWorkspaceLevelGroup,
   isEpic = false,
   projectId,
+  groupIds,
 }: TGetGroupByColumns): IGroupByColumn[] | undefined => {
   // If no groupBy is specified and includeNone is true, return "All Issues" group
   if (!groupBy && includeNone) {
@@ -162,7 +170,7 @@ export const getGroupByColumns = ({
   // Map of group by options to their corresponding column getter functions
   const groupByColumnMap: Record<
     GroupByColumnTypes,
-    ({ isWorkspaceLevel, projectId }: TGetColumns) => IGroupByColumn[] | undefined
+    ({ isWorkspaceLevel, projectId, groupIds }: TGetColumns) => IGroupByColumn[] | undefined
   > = {
     project: getProjectColumns,
     cycle: getCycleColumns,
@@ -177,11 +185,60 @@ export const getGroupByColumns = ({
     target_date_bucket: () => getDateBucketColumns("target_date"),
     finish_date_bucket: () => getDateBucketColumns("finish_date"),
     team_project: getTeamProjectColumns,
+    parent: getParentColumns,
+    epic: getEpicColumns,
   };
 
   // Get and return the columns for the specified group by option
-  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId });
+  return groupByColumnMap[groupBy]?.({ isWorkspaceLevel: isWorkspaceLevelGroup, projectId, groupIds });
 };
+
+/**
+ * The groups of a grouping by a work item (a parent, an Epic): the work items that the loaded work items reference, in
+ * identifier order, and the work items without one. A group that is not loaded (yet) shows a placeholder name; one the
+ * person cannot open keeps it.
+ */
+const getWorkItemGroupColumns = (
+  groupIds: string[] | undefined,
+  payloadFor: (workItemId: string | null) => Partial<TIssue>,
+  noneIcon: React.ReactElement,
+  unresolvedName: string
+): IGroupByColumn[] => {
+  const { getIssueById } = store.issue.issues;
+  const { getProjectIdentifierById } = store.projectRoot.project;
+  const workItems = orderWorkItemGroups(groupIds, getIssueById);
+
+  const columns: IGroupByColumn[] = workItems.map(({ workItemId, workItem }) => {
+    const projectIdentifier = workItem?.project_id ? getProjectIdentifierById(workItem.project_id) : undefined;
+    return {
+      id: workItemId,
+      name: workItem
+        ? `${projectIdentifier ? `${projectIdentifier}-${workItem.sequence_id} ` : ""}${workItem.name}`
+        : unresolvedName,
+      icon: <WorkItemGroupIcon workItemId={workItemId} />,
+      payload: payloadFor(workItemId),
+    };
+  });
+  columns.push({ id: "None", name: "None", icon: noneIcon, payload: payloadFor(null) });
+  return columns;
+};
+
+const getParentColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (parentId) => ({ parent_id: parentId }),
+    <ParentOutline className="h-3.5 w-3.5" />,
+    "Parent"
+  );
+
+// A work item moved to an Epic group goes directly under that Epic, hence both fields
+const getEpicColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (epicId) => ({ parent_id: epicId, epic_id: epicId }),
+    <EpicOutline className="h-3.5 w-3.5" />,
+    "Epic"
+  );
 
 /**
  * The groups of a date: its time buckets. The names are built where no translation is available, so they are
@@ -697,6 +754,9 @@ export const handleGroupDragDrop = async (
     updatedIssue = { ...updatedIssue, [subGroupKey]: subGroupValue };
   }
 
+  // moving a work item to an Epic group places it directly under that Epic
+  updatedIssue = withEpicDropParent(updatedIssue);
+
   if (updatedIssue && sourceIssue?.project_id) {
     return await updateIssueOnDrop(sourceIssue?.project_id, sourceIssue.id, updatedIssue, issueUpdates);
   }
@@ -964,6 +1024,7 @@ export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
   StartDateOutline: StartDateOutline,
   StateOutline: StateOutline,
   Link2: LinkOutline,
+  ParentPropertyIcon: ParentOutline,
   AttachOutline: AttachOutline,
   WorkItemsOutline: WorkItemsOutline,
   Timer: Timer,
@@ -986,6 +1047,7 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   sub_issue_count: SpreadsheetSubIssueColumn,
   updated_on: SpreadsheetUpdatedOnColumn,
   attachment_count: SpreadsheetAttachmentColumn,
+  parent: SpreadsheetParentColumn,
 };
 
 export const useGroupByOptions = (

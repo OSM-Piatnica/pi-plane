@@ -142,6 +142,23 @@ const errorCodeMessages: {
     title: `Invalid email`,
     message: () => `Invalid email. Please try again.`,
   },
+  // Email verification code of the email-and-password sign-up
+  [EAuthErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED]: {
+    title: `Email and code required`,
+    message: () => `Email and code required. Please try again.`,
+  },
+  [EAuthErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE]: {
+    title: `Authentication failed`,
+    message: () => `Invalid one-time code. Please try again.`,
+  },
+  [EAuthErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE]: {
+    title: `Expired one-time code`,
+    message: () => `Expired one-time code. Please try again.`,
+  },
+  [EAuthErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED]: {
+    title: `Too many one-time code attempts`,
+    message: () => `Too many attempts. Request a new code and try again.`,
+  },
   // sign in
   [EAuthErrorCodes.BOT_USER_LOGIN_FORBIDDEN]: {
     title: `Sign in not allowed`,
@@ -339,6 +356,10 @@ export const authErrorHandler = (errorCode: EAuthErrorCodes, email?: string): TA
     EAuthErrorCodes.INVALID_EMAIL_SIGN_UP,
     EAuthErrorCodes.INVALID_EMAIL_MAGIC_SIGN_UP,
     EAuthErrorCodes.MAGIC_SIGN_UP_EMAIL_CODE_REQUIRED,
+    EAuthErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED,
+    EAuthErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE,
+    EAuthErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE,
+    EAuthErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED,
     EAuthErrorCodes.USER_DOES_NOT_EXIST,
     EAuthErrorCodes.AUTHENTICATION_FAILED_SIGN_IN,
     EAuthErrorCodes.REQUIRED_EMAIL_PASSWORD_SIGN_IN,

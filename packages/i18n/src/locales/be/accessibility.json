@@ -45,6 +45,20 @@
       "open": "Адкрыць выбар колеру",
       "swatches": "Гатовыя колеры",
       "hex_input": "Колер у фармаце hex"
+    },
+    "calendar": {
+      "choose_month": "Выбраць месяц",
+      "choose_year": "Выбраць год",
+      "previous_month": "Папярэдні месяц",
+      "next_month": "Наступны месяц",
+      "previous_year": "Папярэдні год",
+      "next_year": "Наступны год",
+      "previous_year_page": "Папярэднія 12 гадоў",
+      "next_year_page": "Наступныя 12 гадоў",
+      "month_view": "Выбар месяца для {year} года",
+      "year_view": "Выбар года: ад {first_year} да {last_year}",
+      "today_date": "Сёння, {date}",
+      "selected_date": "{date}, выбрана"
     }
   }
 }

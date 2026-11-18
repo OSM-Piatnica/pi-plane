@@ -29,6 +29,7 @@ import { useWorkFlowFDragNDrop } from "@/components/workflow";
 import type { TRenderQuickActions } from "../list/list-view-types";
 import type { GroupDropLocation } from "../utils";
 import { getGroupColumnName } from "@/helpers/group-column";
+import { getResponseGroupIds } from "@/helpers/work-item-hierarchy-groups";
 import { getGroupByColumns, isWorkspaceLevel } from "../utils";
 import { KanBan } from "./default";
 import { HeaderGroupByCard } from "./headers/group-by-card";
@@ -299,12 +300,14 @@ export const KanBanSwimLanes = observer(function KanBanSwimLanes(props: IKanBanS
     includeNone: true,
     isWorkspaceLevel: isWorkspaceLevel(storeType),
     isEpic: isEpic,
+    groupIds: getResponseGroupIds(groupedIssueIds),
   });
   const subGroupByList = getGroupByColumns({
     groupBy: sub_group_by as GroupByColumnTypes,
     includeNone: true,
     isWorkspaceLevel: isWorkspaceLevel(storeType),
     isEpic: isEpic,
+    groupIds: getResponseGroupIds(groupedIssueIds, "sub_group"),
   });
 
   if (!groupByList || !subGroupByList) return null;

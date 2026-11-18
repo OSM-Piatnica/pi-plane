@@ -30,7 +30,7 @@ authentication_config_variables = [
 workspace_management_config_variables = [
     {
         "key": "DISABLE_WORKSPACE_CREATION",
-        "value": os.environ.get("DISABLE_WORKSPACE_CREATION", "0"),
+        "value": os.environ.get("DISABLE_WORKSPACE_CREATION", "1"),
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },
@@ -75,6 +75,27 @@ workspace_management_config_variables = [
         # Workspace UUID that gets compact `/i/PROJ-123` work item links; empty turns them off.
         "key": "INSTANCE_DEFAULT_WORKSPACE_ID",
         "value": os.environ.get("INSTANCE_DEFAULT_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Workspace UUID that people of AUTO_JOIN_EMAIL_DOMAINS join when they sign in (plane.utils.auto_join_workspace)
+        "key": "AUTO_JOIN_WORKSPACE_ID",
+        "value": os.environ.get("AUTO_JOIN_WORKSPACE_ID", ""),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # The role they get there: 15 (Member) or 5 (Guest)
+        "key": "AUTO_JOIN_WORKSPACE_ROLE",
+        "value": os.environ.get("AUTO_JOIN_WORKSPACE_ROLE", "15"),
+        "category": "WORKSPACE_MANAGEMENT",
+        "is_encrypted": False,
+    },
+    {
+        # Email domains separated by commas, e.g. "example.com"; empty turns joining off
+        "key": "AUTO_JOIN_EMAIL_DOMAINS",
+        "value": os.environ.get("AUTO_JOIN_EMAIL_DOMAINS", ""),
         "category": "WORKSPACE_MANAGEMENT",
         "is_encrypted": False,
     },

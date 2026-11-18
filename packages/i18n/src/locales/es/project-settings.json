@@ -400,6 +400,10 @@
         "toggle_title": "Habilitar seguimiento de tiempo",
         "toggle_description": "Los miembros del proyecto podrán registrar el tiempo trabajado."
       },
+      "epics": {
+        "toggle_title": "Habilitar Epics",
+        "toggle_description": "Los miembros podrán crear Epics, elementos de trabajo que agrupan otros elementos de trabajo. Al desactivarlo, se conservan los Epics existentes."
+      },
       "milestones": {
         "title": "Hitos",
         "short_title": "Hitos",

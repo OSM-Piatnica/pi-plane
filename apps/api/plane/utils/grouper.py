@@ -25,7 +25,12 @@ from plane.db.models import (
     ModuleIssue,
     IssueLabel,
 )
+from plane.utils.epic_ancestor import EpicAncestor
 from typing import Optional, Dict, Tuple, Any, Union, List
+
+# Grouping by the nearest Epic above a work item. The field is an annotation: it is added only where a grouping
+# asks for it, because the walk up the parent chain runs once per row.
+EPIC_GROUP_FIELD = "epic_id"
 
 
 def issue_queryset_grouper(
@@ -105,6 +110,9 @@ def issue_queryset_grouper(
         # the day a work item is placed on in a calendar of the planned work: its finish, else its start
         default_annotations["schedule_date"] = Coalesce("finish_date", "start_date")
 
+    if EPIC_GROUP_FIELD in {group_by, sub_group_by}:
+        default_annotations[EPIC_GROUP_FIELD] = EpicAncestor()
+
     return queryset.annotate(**default_annotations)
 
 
@@ -164,6 +172,9 @@ def issue_on_results(
     for group_key in (group_by, sub_group_by):
         if group_key == "schedule_date" or group_key in BUCKET_FIELDS:
             required_fields.append(group_key)
+
+    if EPIC_GROUP_FIELD in {group_by, sub_group_by}:
+        required_fields.append(EPIC_GROUP_FIELD)
 
     required_fields.extend(original_list)
     return list(issues.values(*required_fields))
@@ -261,5 +272,29 @@ def issue_group_values(
             return list(queryset.filter(project_id=project_id))
         else:
             return list(queryset)
+
+    # Parent groups are the parents that the filtered work items actually reference, so no group names a work item
+    # the viewer cannot list
+    if field == "parent_id":
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return [
+            *queryset.filter(parent_id__isnull=False).order_by().values_list("parent_id", flat=True).distinct(),
+            "None",
+        ]
+
+    # Epic groups are the Epics above the filtered work items (an Epic is in its own group), so no group names an
+    # Epic the viewer cannot list
+    if field == EPIC_GROUP_FIELD:
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        epic_ids = (
+            queryset.annotate(epic_id=EpicAncestor())
+            .filter(epic_id__isnull=False)
+            .order_by()
+            .values_list("epic_id", flat=True)
+            .distinct()
+        )
+        return [*epic_ids, "None"]
 
     return []

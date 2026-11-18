@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -100,10 +101,10 @@ export class ModuleService extends APIService {
     workspaceSlug: string,
     projectId: string,
     moduleId: string,
-    data: { issues: string[] }
-  ): Promise<void> {
+    data: { issues: string[]; include_sub_issues?: boolean }
+  ): Promise<{ issue_ids?: string[] }> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/modules/${moduleId}/issues/`, data)
-      .then((response) => response?.data)
+      .then((response) => response?.data ?? {})
       .catch((error) => {
         throw error?.response?.data;
       });
@@ -113,10 +114,28 @@ export class ModuleService extends APIService {
     workspaceSlug: string,
     projectId: string,
     issueId: string,
-    data: { modules: string[]; removed_modules?: string[] }
-  ): Promise<void> {
+    data: { modules: string[]; removed_modules?: string[]; include_sub_issues?: boolean }
+  ): Promise<{ added_issue_ids?: string[]; removed_issue_ids?: string[] }> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/modules/`, data)
-      .then((response) => response?.data)
+      .then((response) => response?.data ?? {})
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Takes a work item out of a module together with its sub-work items; resolves with every id that was removed. */
+  async removeIssueFromModuleWithSubIssues(
+    workspaceSlug: string,
+    projectId: string,
+    moduleId: string,
+    issueId: string
+  ): Promise<string[]> {
+    return this.delete(
+      `/api/workspaces/${workspaceSlug}/projects/${projectId}/modules/${moduleId}/issues/${issueId}/`,
+      undefined,
+      { params: { include_sub_issues: true } }
+    )
+      .then((response) => (response?.data?.issue_ids as string[] | undefined) ?? [issueId])
       .catch((error) => {
         throw error?.response?.data;
       });

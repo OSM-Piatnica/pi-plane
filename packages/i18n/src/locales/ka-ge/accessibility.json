@@ -45,6 +45,20 @@
       "open": "ფერის ამომრჩევის გახსნა",
       "swatches": "წინასწარ განსაზღვრული ფერები",
       "hex_input": "HEX ფერი"
+    },
+    "calendar": {
+      "choose_month": "თვის არჩევა",
+      "choose_year": "წლის არჩევა",
+      "previous_month": "წინა თვე",
+      "next_month": "შემდეგი თვე",
+      "previous_year": "წინა წელი",
+      "next_year": "შემდეგი წელი",
+      "previous_year_page": "წინა 12 წელი",
+      "next_year_page": "შემდეგი 12 წელი",
+      "month_view": "{year} წლის თვის არჩევა",
+      "year_view": "წლის არჩევა: {first_year}–{last_year}",
+      "today_date": "დღეს, {date}",
+      "selected_date": "{date}, არჩეულია"
     }
   }
 }

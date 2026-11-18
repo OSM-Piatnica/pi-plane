@@ -131,11 +131,15 @@ export type GroupByColumnTypes =
   | "start_date_bucket"
   | "target_date_bucket"
   | "finish_date_bucket"
-  | "team_project";
+  | "team_project"
+  | "parent"
+  | "epic";
 
 export type TGetColumns = {
   isWorkspaceLevel?: boolean;
   projectId?: string;
+  // ids of the groups in the grouped response, for groups that cannot be listed up front (parents, Epics)
+  groupIds?: string[];
 };
 
 export interface IGroupByColumn {

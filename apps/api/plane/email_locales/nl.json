@@ -118,6 +118,13 @@
     "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de inlogpagina om het inloggen te voltooien.",
     "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u geen inlogcode verwachtte, kunt u dit bericht negeren."
   },
+  "sign_up_code": {
+    "subject": "Uw Pi-Plane-registratiecode is {code}",
+    "preheader": "Uw Pi-Plane-registratiecode {code} is 10 minuten geldig.",
+    "heading": "Bevestig uw e-mailadres voor Pi-Plane",
+    "info": "Deze code is de komende 10 minuten geldig. Voer hem in op de registratiepagina om uw account aan te maken.",
+    "note": "Opmerking: deze e-mail is verzonden naar <span>{email}</span>. Als u zich niet wilde registreren, kunt u dit bericht negeren."
+  },
   "forgot_password": {
     "subject": "Er is een nieuw wachtwoord aangevraagd voor uw Pi-Plane-account",
     "preheader": "Stel uw Pi-Plane-wachtwoord opnieuw in met deze beveiligde link.",
