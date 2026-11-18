@@ -10,7 +10,7 @@ import { addDays } from "date-fns";
 // ui
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
-import { Calendar } from "@makeplane/propel/components/calendar";
+import { Calendar } from "@plane/blocks/calendar";
 import { Dialog, DialogActions, DialogBody, DialogContent, DialogMain } from "@makeplane/propel/components/dialog";
 import { useCalendarLocale } from "@/hooks/use-calendar-locale";
 

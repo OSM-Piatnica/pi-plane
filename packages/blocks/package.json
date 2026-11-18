@@ -11,6 +11,7 @@
   "exports": {
     "./auth": "./dist/auth/index.js",
     "./breadcrumb": "./dist/breadcrumb/index.js",
+    "./calendar": "./dist/calendar/index.js",
     "./card": "./dist/card/index.js",
     "./charts/area-chart": "./dist/charts/area-chart/index.js",
     "./charts/bar-chart": "./dist/charts/bar-chart/index.js",
