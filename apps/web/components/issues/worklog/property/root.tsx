@@ -48,7 +48,7 @@ export const IssueWorklogProperty = observer(function IssueWorklogProperty(props
 
   return (
     <>
-      <SidebarPropertyListItem icon={TimeTrackingOutline} label={t("time_tracking")}>
+      <SidebarPropertyListItem propertyKey="time_tracking" icon={TimeTrackingOutline} label={t("time_tracking")}>
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
