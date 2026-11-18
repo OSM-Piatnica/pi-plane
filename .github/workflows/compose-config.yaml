@@ -1,0 +1,74 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+name: Compose file
+
+# One file, deployments/cli/community/compose.yaml, is deployed by two tools: `docker compose` (the Docker guide) and
+# `docker stack deploy` (the Swarm guide downloads the same file). They do not read every default alike: Swarm ends a
+# default at the first "}", so a default that holds another ${...} reaches the container as literal text. 2.3.0 shipped
+# with exactly that in DATABASE_URL (#491, fixed in #504) and no check saw it, because only a Swarm install does.
+# `docker stack config` resolves the file the way Swarm does, without a swarm, so it can be run here.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "preview"
+    types:
+      - "opened"
+      - "synchronize"
+      - "reopened"
+      - "ready_for_review"
+      - "edited"
+    paths:
+      - "deployments/cli/community/compose.yaml"
+      - "deployments/cli/community/variables.env"
+      - "deployments/swarm/**"
+      - ".github/workflows/compose-config.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
+  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
+
+permissions:
+  contents: read
+
+jobs:
+  compose:
+    if: (github.event.action != 'edited' || github.event.changes.base != null)
+    name: docker compose + docker stack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Resolve compose.yaml with both tools
+        working-directory: deployments/cli/community
+        run: |
+          set -euo pipefail
+          # the values a fresh install starts from, as setup.sh and swarm.sh load plane.env
+          set -a
+          . ./variables.env
+          set +a
+
+          docker compose -f compose.yaml config -q
+
+          docker stack config -c compose.yaml > "$RUNNER_TEMP/stack-config.yaml"
+          # every ${...} must be resolved; a leftover is a default that Swarm could not read
+          if grep -n '\${' "$RUNNER_TEMP/stack-config.yaml"; then
+            echo "::error file=deployments/cli/community/compose.yaml::docker stack config left a \${...} unresolved (lines above). Swarm cannot read a default that contains another \${...}; use a plain default and let plane.env override it."
+            exit 1
+          fi
+
+          # and the two tools must agree on the values the services get
+          docker compose -f compose.yaml config > "$RUNNER_TEMP/compose-config.yaml"
+          for key in DATABASE_URL AMQP_URL REDIS_URL; do
+            from_compose=$(grep -m1 "  $key:" "$RUNNER_TEMP/compose-config.yaml" | sed 's/^ *//' || true)
+            from_stack=$(grep -m1 "  $key:" "$RUNNER_TEMP/stack-config.yaml" | sed 's/^ *//' || true)
+            if [ "$from_compose" != "$from_stack" ]; then
+              echo "::error file=deployments/cli/community/compose.yaml::$key differs: compose says '$from_compose', stack says '$from_stack'"
+              exit 1
+            fi
+          done
+          echo "compose.yaml resolves the same with docker compose and docker stack"
