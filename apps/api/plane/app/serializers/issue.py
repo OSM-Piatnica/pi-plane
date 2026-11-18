@@ -15,6 +15,7 @@ from rest_framework import serializers
 
 # Module imports
 from .base import BaseSerializer, DynamicBaseSerializer
+from .asset import validate_uploaded_file
 from .user import UserLiteSerializer
 from .state import StateLiteSerializer
 from .project import ProjectLiteSerializer
@@ -835,6 +836,9 @@ class IssueAttachmentSerializer(BaseSerializer):
             "project",
             "issue",
         ]
+
+    def validate_asset(self, value):
+        return validate_uploaded_file(value)
 
 
 class IssueAttachmentLiteSerializer(DynamicBaseSerializer):
