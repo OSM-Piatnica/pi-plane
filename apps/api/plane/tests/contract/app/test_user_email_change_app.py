@@ -13,6 +13,7 @@ from rest_framework.test import APIClient
 
 from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 from plane.authentication.rate_limit import AuthenticationThrottle
+from plane.utils.numeric_code import CODE_DIGITS
 from plane.db.models import User
 
 NEW_EMAIL = "changed@plane.so"
@@ -49,12 +50,18 @@ def _generate_code(client, send_code):
 
 
 def _wrong_code(code):
-    return "100000" if code != "100000" else "100001"
+    return "10000000" if code != "10000000" else "10000001"
 
 
 @pytest.mark.contract
 class TestUserEmailChangeVerification:
     """The email-change code allows MAX_VERIFY_ATTEMPTS tries and both endpoints are throttled per IP."""
+
+    @pytest.mark.django_db
+    def test_the_code_has_the_shared_number_of_digits(self, session_client, mock_email_tasks):
+        code = _generate_code(session_client, mock_email_tasks)
+
+        assert code.isdecimal() and len(code) == CODE_DIGITS
 
     @pytest.mark.django_db
     def test_code_invalidated_after_max_wrong_attempts(self, session_client, create_user, mock_email_tasks):
@@ -129,10 +136,10 @@ class TestUserEmailChangeVerification:
         """Code verification from one IP is limited by AuthenticationThrottle."""
         url = reverse("user-email-update")
         with patch.object(AuthenticationThrottle, "rate", "1/minute"):
-            response = session_client.patch(url, {"email": NEW_EMAIL, "code": "100000"}, format="json")
+            response = session_client.patch(url, {"email": NEW_EMAIL, "code": "10000000"}, format="json")
             assert response.status_code != status.HTTP_429_TOO_MANY_REQUESTS
 
-            response = session_client.patch(url, {"email": NEW_EMAIL, "code": "100000"}, format="json")
+            response = session_client.patch(url, {"email": NEW_EMAIL, "code": "10000000"}, format="json")
             assert response.status_code == status.HTTP_429_TOO_MANY_REQUESTS
 
     @pytest.mark.django_db

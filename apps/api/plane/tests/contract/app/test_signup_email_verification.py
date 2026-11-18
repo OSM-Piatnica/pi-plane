@@ -25,6 +25,7 @@ from plane.authentication.utils.signup_verification import (
 from plane.db.models import User
 from plane.license.models import Instance
 from plane.settings.redis import redis_instance
+from plane.utils.numeric_code import CODE_DIGITS
 
 EMAIL = "verify-me@plane.so"
 PASSWORD = "Xk9#mQ2$vL7@pR4!"
@@ -97,6 +98,13 @@ class TestVerificationCodeEndpoint:
         assert _no_mail.call_args[0][2] == _issued_code()
         # the email says "sign-up code", not "login code"
         assert _no_mail.call_args.kwargs["purpose"] == "sign_up"
+
+    def test_the_code_has_the_shared_number_of_digits(self, api_client, setup_instance, _no_mail):
+        _request_code(api_client)
+
+        code = _issued_code()
+        assert code.isdecimal() and len(code) == CODE_DIGITS
+        assert _no_mail.call_args[0][2] == code
 
     def test_passes_the_language_picked_on_the_page_to_the_email(self, api_client, setup_instance, _no_mail):
         response = api_client.post(
@@ -219,14 +227,14 @@ class TestSignUpWithCode:
         assert not User.objects.filter(email=EMAIL).exists()
 
     def test_without_a_requested_code_the_code_is_expired(self, url_name, django_client, setup_instance):
-        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": "123456"})
+        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": "12345678"})
 
         assert "EXPIRED_SIGN_UP_VERIFICATION_CODE" in response.url
         assert not User.objects.filter(email=EMAIL).exists()
 
     def test_a_wrong_code_creates_no_account(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)
-        wrong = "100000" if _issued_code() != "100000" else "100001"
+        wrong = "10000000" if _issued_code() != "10000000" else "10000001"
 
         response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})
 
@@ -286,7 +294,7 @@ class TestSignUpWithCode:
     def test_wrong_tries_still_count_between_right_ones(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)
         code = _issued_code()
-        wrong = "100000" if code != "100000" else "100001"
+        wrong = "10000000" if code != "10000000" else "10000001"
 
         for _ in range(MAX_VERIFY_ATTEMPTS - 1):
             django_client.post(reverse(url_name), {"email": EMAIL, "password": "password", "code": code})
@@ -298,7 +306,7 @@ class TestSignUpWithCode:
 
     def test_a_new_code_starts_with_a_fresh_budget_of_tries(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)
-        wrong = "100000" if _issued_code() != "100000" else "100001"
+        wrong = "10000000" if _issued_code() != "10000000" else "10000001"
         for _ in range(MAX_VERIFY_ATTEMPTS - 1):
             django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})
 
@@ -319,7 +327,7 @@ class TestSignUpWithCode:
     def test_too_many_wrong_codes_drop_the_code(self, url_name, api_client, django_client, setup_instance):
         _request_code(api_client)
         code = _issued_code()
-        wrong = "100000" if code != "100000" else "100001"
+        wrong = "10000000" if code != "10000000" else "10000001"
 
         for _ in range(MAX_VERIFY_ATTEMPTS - 1):
             response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": wrong})

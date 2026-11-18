@@ -5,7 +5,7 @@
 """Email verification code for the email-and-password sign-up.
 
 Before an account is created with an email and a password, the person proves they own the address by typing a
-6-digit code sent to it. The code lives in Redis under its own key, apart from the one-time sign-in codes, so a
+8-digit code sent to it. The code lives in Redis under its own key, apart from the one-time sign-in codes, so a
 sign-in code cannot create an account with a password and the check works whether or not one-time sign-in is on.
 The caps are the ones of the one-time sign-in codes: 5 wrong tries per code and 4 codes per address in 10 minutes.
 """
@@ -21,6 +21,7 @@ from plane.authentication.provider.credentials.one_time_code import OneTimeCodeP
 from plane.license.utils.instance_value import get_configuration_value
 from plane.settings.redis import redis_instance
 from plane.utils.exception_logger import log_exception
+from plane.utils.numeric_code import generate_numeric_code
 
 KEY_PREFIX = "signup_verification_code_"
 CODE_TTL_SECONDS = 600
@@ -71,7 +72,7 @@ class SignUpEmailVerification:
         if issued > MAX_CODES_PER_WINDOW:
             raise _error("SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED", self.email)
 
-        code = str(secrets.randbelow(900000) + 100000)
+        code = generate_numeric_code()
         # One transaction: a try counted between the two steps would otherwise be wiped against the new code, or the
         # new code compared with the old budget. A new code starts with a fresh budget of wrong tries.
         with ri.pipeline(transaction=True) as pipe:
