@@ -126,6 +126,13 @@
     "info": "Tento kód platí nasledujúcich 10 minút. Zadajte ho na prihlasovacej stránke a dokončite prihlásenie.",
     "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste prihlasovací kód nečakali, môžete túto správu ignorovať."
   },
+  "sign_up_code": {
+    "subject": "Váš registračný kód do Pi-Plane je {code}",
+    "preheader": "Váš registračný kód do Pi-Plane {code} platí 10 minút.",
+    "heading": "Potvrďte svoju e-mailovú adresu pre Pi-Plane",
+    "info": "Tento kód platí nasledujúcich 10 minút. Zadajte ho na registračnej stránke a vytvorte si účet.",
+    "note": "Poznámka: Tento e-mail bol odoslaný na adresu <span>{email}</span>. Ak ste sa nepokúšali registrovať, môžete túto správu ignorovať."
+  },
   "forgot_password": {
     "subject": "Bolo vyžiadané nové heslo k vášmu účtu Pi-Plane",
     "preheader": "Obnovte si heslo k Pi-Plane pomocou tohto zabezpečeného odkazu.",

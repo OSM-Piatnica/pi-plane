@@ -11,7 +11,7 @@ import pytest
 from plane.bgtasks.one_time_code_task import send_one_time_code
 from plane.db.models import Profile
 from plane.tests.factories import UserFactory
-from plane.utils.email_i18n import language_from_accept_header
+from plane.utils.email_i18n import LOCALES_DIR, language_from_accept_header
 
 CONFIG = ("localhost", "", "", "25", "0", "0", "noreply@example.com")
 
@@ -43,9 +43,11 @@ class TestLanguageFromAcceptHeader:
         assert language_from_accept_header(header) == expected
 
 
-def _send(email, token="123456", accept_language=None, language=None):
+def _send(email, token="123456", accept_language=None, language=None, purpose="sign_in"):
     with patch("plane.bgtasks.one_time_code_task.get_email_configuration", return_value=CONFIG):
-        send_one_time_code(email, f"one_time_code_{email}", token, accept_language=accept_language, language=language)
+        send_one_time_code(
+            email, f"one_time_code_{email}", token, accept_language=accept_language, language=language, purpose=purpose
+        )
 
 
 @pytest.mark.unit
@@ -120,3 +122,38 @@ class TestOneTimeCodeEmail:
         _send("known@example.com", language="pl")
 
         assert mailoutbox[0].subject == "Ihr Einmalcode für die Pi-Plane-Anmeldung lautet 123456"
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestSignUpCodeEmail:
+    """The code that confirms the address of a sign-up is not worded as a sign-in code."""
+
+    def test_english_says_sign_up_not_login(self, mailoutbox):
+        _send("new@example.com", purpose="sign_up")
+
+        mail = mailoutbox[0]
+        assert mail.subject == "Your Pi-Plane sign-up code is 123456"
+        html = mail.alternatives[0][0]
+        assert "Confirm your email address for Pi-Plane" in html
+        assert "Enter it on the sign-up page to create your account" in html
+        text = mail.body.lower()
+        assert "sign-in" not in text
+        assert "login" not in text
+
+    def test_the_sign_in_code_keeps_its_wording(self, mailoutbox):
+        _send("new@example.com", purpose="sign_in")
+
+        assert mailoutbox[0].subject == "Your one-time Pi-Plane login code is 123456"
+
+    @pytest.mark.parametrize("language", sorted(path.stem for path in LOCALES_DIR.glob("*.json")))
+    def test_every_language_has_its_own_sign_up_wording(self, mailoutbox, language):
+        _send("new@example.com", language=language, purpose="sign_up")
+        _send("new@example.com", language=language, purpose="sign_in")
+
+        sign_up, sign_in = mailoutbox
+        assert sign_up.subject != sign_in.subject
+        assert "123456" in sign_up.subject
+        sign_up_html = sign_up.alternatives[0][0]
+        assert "654321" not in sign_up_html and "new@example.com" in sign_up_html
+        assert sign_up_html != sign_in.alternatives[0][0]

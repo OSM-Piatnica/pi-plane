@@ -71,6 +71,7 @@ class SignUpVerificationCodeEndpoint(APIView):
                 accept_language=request.headers.get("Accept-Language"),
                 # the language picked on the sign-up form; the account and its profile do not exist yet
                 language=request.data.get("language"),
+                purpose="sign_up",
             )
             return Response({"required": True}, status=status.HTTP_200_OK)
         except AuthenticationException as e:

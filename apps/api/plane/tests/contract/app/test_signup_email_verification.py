@@ -16,7 +16,12 @@ from django.urls import reverse
 from django.utils import timezone
 from rest_framework import status
 
-from plane.authentication.utils.signup_verification import KEY_PREFIX, MAX_CODES_PER_WINDOW, MAX_VERIFY_ATTEMPTS
+from plane.authentication.utils.signup_verification import (
+    KEY_PREFIX,
+    MAX_CODES_PER_WINDOW,
+    MAX_VERIFY_ATTEMPTS,
+    SignUpEmailVerification,
+)
 from plane.db.models import User
 from plane.license.models import Instance
 from plane.settings.redis import redis_instance
@@ -90,6 +95,8 @@ class TestVerificationCodeEndpoint:
         _no_mail.assert_called_once()
         assert _no_mail.call_args[0][0] == EMAIL
         assert _no_mail.call_args[0][2] == _issued_code()
+        # the email says "sign-up code", not "login code"
+        assert _no_mail.call_args.kwargs["purpose"] == "sign_up"
 
     def test_passes_the_language_picked_on_the_page_to_the_email(self, api_client, setup_instance, _no_mail):
         response = api_client.post(
@@ -144,6 +151,59 @@ class TestVerificationNotRequired:
 
         assert "error_code" not in response.url
         assert User.objects.filter(email=EMAIL).exists()
+
+
+@pytest.mark.contract
+@pytest.mark.parametrize("url_name", ["sign-up", "space-sign-up"])
+class TestConfigChangedBetweenTheCodeAndTheSignUp:
+    """The form asks the server whether a code is needed, and the sign-up asks again: the two can disagree."""
+
+    def test_switched_off_after_the_code_was_sent_the_sign_up_goes_through(
+        self, url_name, api_client, django_client, setup_instance
+    ):
+        with patch.dict(os.environ, SMTP_ON):
+            _request_code(api_client)
+
+        with patch.dict(os.environ, {**SMTP_ON, "ENABLE_SIGNUP_EMAIL_VERIFICATION": "0"}):
+            response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD, "code": "000000"})
+
+        assert "error_code" not in response.url
+        assert User.objects.filter(email=EMAIL).exists()
+
+    @patch.dict(os.environ, SMTP_ON)
+    def test_switched_on_after_the_form_was_shown_the_sign_up_sends_the_person_back_for_a_code(
+        self, url_name, django_client, setup_instance
+    ):
+        response = django_client.post(reverse(url_name), {"email": EMAIL, "password": PASSWORD})
+
+        assert "SIGN_UP_VERIFICATION_CODE_REQUIRED" in response.url
+        assert not User.objects.filter(email=EMAIL).exists()
+
+
+@pytest.mark.contract
+class TestConsumingTheCode:
+    def test_a_redis_error_after_the_account_exists_is_logged_not_raised(self):
+        verification = SignUpEmailVerification(EMAIL)
+
+        with (
+            patch("plane.authentication.utils.signup_verification.redis_instance") as redis,
+            patch("plane.authentication.utils.signup_verification.log_exception") as log,
+        ):
+            redis.return_value.delete.side_effect = ConnectionError("redis is gone")
+            verification.consume()
+
+        log.assert_called_once()
+
+    def test_the_cap_on_codes_per_address_outlives_the_code(self):
+        verification = SignUpEmailVerification(EMAIL)
+        verification.issue()
+
+        verification.consume()
+
+        ri = redis_instance()
+        assert ri.get(verification.key) is None
+        assert ri.get(verification.attempts_key) is None
+        assert ri.get(verification.issued_key) is not None
 
 
 @pytest.mark.contract

@@ -110,6 +110,13 @@
     "info": "此驗證碼在接下來的 10 分鐘內有效。請在登入頁面輸入以完成登入。",
     "note": "注意：此郵件寄送至 <span>{email}</span>。如果您沒有要求登入碼，可以忽略此郵件。"
   },
+  "sign_up_code": {
+    "subject": "您的 Pi-Plane 註冊驗證碼是 {code}",
+    "preheader": "您的 Pi-Plane 註冊驗證碼 {code} 在 10 分鐘內有效。",
+    "heading": "確認您用於 Pi-Plane 的電子郵件地址",
+    "info": "此驗證碼在接下來的 10 分鐘內有效。請在註冊頁面輸入以建立帳戶。",
+    "note": "注意：此郵件寄送至 <span>{email}</span>。如果您沒有嘗試註冊，可以忽略此郵件。"
+  },
   "forgot_password": {
     "subject": "已要求為您的 Pi-Plane 帳號設定新密碼",
     "preheader": "請透過此安全連結重設您的 Pi-Plane 密碼。",

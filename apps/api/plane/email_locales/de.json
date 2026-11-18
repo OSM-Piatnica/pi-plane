@@ -118,6 +118,13 @@
     "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Anmeldeseite ein, um die Anmeldung abzuschließen.",
     "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie keinen Anmeldecode erwartet haben, können Sie diese Nachricht ignorieren."
   },
+  "sign_up_code": {
+    "subject": "Ihr Bestätigungscode für die Pi-Plane-Registrierung lautet {code}",
+    "preheader": "Ihr Pi-Plane-Registrierungscode {code} ist 10 Minuten lang gültig.",
+    "heading": "Bestätigen Sie Ihre E-Mail-Adresse für Pi-Plane",
+    "info": "Dieser Code ist die nächsten 10 Minuten gültig. Geben Sie ihn auf der Registrierungsseite ein, um Ihr Konto zu erstellen.",
+    "note": "Hinweis: Diese E-Mail wurde an <span>{email}</span> gesendet. Wenn Sie sich nicht registrieren wollten, können Sie diese Nachricht ignorieren."
+  },
   "forgot_password": {
     "subject": "Für Ihr Pi-Plane-Konto wurde ein neues Passwort angefordert",
     "preheader": "Setzen Sie Ihr Pi-Plane-Passwort mit diesem sicheren Link zurück.",

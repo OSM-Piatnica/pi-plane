@@ -126,6 +126,13 @@
     "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de autentificare pentru a finaliza autentificarea.",
     "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu te așteptai la un cod de autentificare, poți ignora acest mesaj."
   },
+  "sign_up_code": {
+    "subject": "Codul tău de înregistrare în Pi-Plane este {code}",
+    "preheader": "Codul tău de înregistrare în Pi-Plane {code} este valabil 10 minute.",
+    "heading": "Confirmă-ți adresa de e-mail pentru Pi-Plane",
+    "info": "Acest cod este valabil în următoarele 10 minute. Introdu-l pe pagina de înregistrare pentru a-ți crea contul.",
+    "note": "Notă: Acest e-mail a fost trimis la <span>{email}</span>. Dacă nu ai încercat să te înregistrezi, poți ignora acest mesaj."
+  },
   "forgot_password": {
     "subject": "A fost solicitată o parolă nouă pentru contul dumneavoastră Pi-Plane",
     "preheader": "Resetați-vă parola Pi-Plane cu acest link securizat.",

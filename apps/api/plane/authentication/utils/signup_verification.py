@@ -20,6 +20,7 @@ from plane.authentication.adapter.error import AUTHENTICATION_ERROR_CODES, Authe
 from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
 from plane.license.utils.instance_value import get_configuration_value
 from plane.settings.redis import redis_instance
+from plane.utils.exception_logger import log_exception
 
 KEY_PREFIX = "signup_verification_code_"
 CODE_TTL_SECONDS = 600
@@ -118,6 +119,11 @@ class SignUpEmailVerification:
     def consume(self):
         """Remove the code and its try counter once the account exists.
 
-        The issued-code counter stays until its window ends, so the cap on codes per address cannot be reset.
+        The issued-code counter stays until its window ends, so the cap on codes per address cannot be reset. The
+        account exists by now, so a Redis error here is logged and does not stop the person from signing in: the code
+        is of no use to anybody once the address has an account, and expires on its own.
         """
-        redis_instance().delete(self.key, self.attempts_key)
+        try:
+            redis_instance().delete(self.key, self.attempts_key)
+        except Exception as e:
+            log_exception(e)

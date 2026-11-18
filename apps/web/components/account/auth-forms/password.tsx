@@ -14,6 +14,7 @@ import { CloseCircleOutline, HideOutline, ShowOutline } from "@makeplane/propel/
 import { Banner } from "@makeplane/propel/components/banner";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
+import { useSignUpVerificationCode } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { PasswordStrengthIndicator } from "@plane/blocks/auth";
@@ -25,8 +26,6 @@ import { ForgotPasswordPopover } from "@/components/account/auth-forms/forgot-pa
 import type { TAuthErrorInfo } from "@/helpers/authentication.helper";
 import { EAuthModes, EAuthSteps, authErrorHandler } from "@/helpers/authentication.helper";
 import type { EAuthenticationErrorCodes } from "@/helpers/authentication.helper";
-// hooks
-import useTimer from "@/hooks/use-timer";
 // services
 import { AuthService } from "@/services/auth.service";
 
@@ -39,9 +38,6 @@ type Props = {
   nextPath: string | undefined;
   setErrorInfo: (errorInfo: TAuthErrorInfo | undefined) => void;
 };
-
-// Seconds before another sign-up code can be asked for
-const RESEND_CODE_AFTER_SECONDS = 30;
 
 type TPasswordFormValues = {
   email: string;
@@ -74,10 +70,20 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
   const [isRetryPasswordInputFocused, setIsRetryPasswordInputFocused] = useState(false);
   const [isBannerMessage, setBannerMessage] = useState(false);
   // sign-up: the code sent to the address, asked for once the password is set
-  const [isCodeStep, setIsCodeStep] = useState(false);
-  const [verificationCode, setVerificationCode] = useState("");
-  const [isRequestingCode, setIsRequestingCode] = useState(false);
-  const { timer: resendCodeTimer, setTimer: setResendCodeTimer } = useTimer(0);
+  const signUpCode = useSignUpVerificationCode({
+    // the code email is written in the language picked on this page
+    requestCode: () =>
+      authService.requestSignUpVerificationCode({ email: passwordFormData.email, language: currentLocale }),
+    onRequestStart: () => setErrorInfo(undefined),
+    onRequestError: (error) => {
+      const errorhandler = authErrorHandler(
+        (error as { error_code?: number } | undefined)?.error_code?.toString() as EAuthenticationErrorCodes,
+        t,
+        passwordFormData.email
+      );
+      if (errorhandler?.type) setErrorInfo(errorhandler);
+    },
+  });
 
   const handleShowPassword = (key: keyof typeof showPassword) =>
     setShowPassword((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -91,31 +97,6 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
       setCsrfPromise(promise);
     }
   }, [csrfPromise]);
-
-  // Sends the sign-up code; resolves to whether a code is asked for, or undefined when sending failed
-  const requestVerificationCode = async (): Promise<boolean | undefined> => {
-    setIsRequestingCode(true);
-    setErrorInfo(undefined);
-    try {
-      // the code email is written in the language picked on this page
-      const response = await authService.requestSignUpVerificationCode({
-        email: passwordFormData.email,
-        language: currentLocale,
-      });
-      if (response?.required) setResendCodeTimer(RESEND_CODE_AFTER_SECONDS);
-      return !!response?.required;
-    } catch (error) {
-      const errorhandler = authErrorHandler(
-        (error as { error_code?: number } | undefined)?.error_code?.toString() as EAuthenticationErrorCodes,
-        t,
-        passwordFormData.email
-      );
-      if (errorhandler?.type) setErrorInfo(errorhandler);
-      return undefined;
-    } finally {
-      setIsRequestingCode(false);
-    }
-  };
 
   const redirectToOneTimeCodeSignIn = async () => {
     handleAuthStep(EAuthSteps.ONE_TIME_CODE);
@@ -146,18 +127,16 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     () =>
       !(
         !isSubmitting &&
-        !isRequestingCode &&
+        !signUpCode.isRequesting &&
         !!passwordFormData.password &&
         (mode === EAuthModes.SIGN_UP
-          ? passwordFormData.password === passwordFormData.confirm_password &&
-            (!isCodeStep || verificationCode.trim().length > 0)
+          ? passwordFormData.password === passwordFormData.confirm_password && !signUpCode.isCodeMissing
           : true)
       ),
     [
       isSubmitting,
-      isRequestingCode,
-      isCodeStep,
-      verificationCode,
+      signUpCode.isRequesting,
+      signUpCode.isCodeMissing,
       mode,
       passwordFormData.confirm_password,
       passwordFormData.password,
@@ -204,14 +183,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             return;
           }
           // A new account first gets the code sent to the address, unless no code is asked for
-          if (mode === EAuthModes.SIGN_UP && !isCodeStep) {
-            const isCodeRequired = await requestVerificationCode();
-            if (isCodeRequired === undefined) return;
-            if (isCodeRequired) {
-              setIsCodeStep(true);
-              return;
-            }
-          }
+          if (mode === EAuthModes.SIGN_UP && !(await signUpCode.continueToSubmit())) return;
           setIsSubmitting(true);
           if (formRef.current) formRef.current.submit(); // Manually submit the form if the condition is met
         }}
@@ -331,7 +303,7 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           </div>
         )}
 
-        {mode === EAuthModes.SIGN_UP && isCodeStep && (
+        {mode === EAuthModes.SIGN_UP && signUpCode.isCodeStep && (
           <div className="space-y-1">
             <label htmlFor="sign-up-code" className="text-13 font-medium text-tertiary">
               {t("auth.common.one_time_code.label")}
@@ -341,8 +313,8 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
                 size="2xl"
                 id="sign-up-code"
                 name="code"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
+                value={signUpCode.code}
+                onChange={(e) => signUpCode.setCode(e.target.value)}
                 placeholder={t("auth.common.one_time_code.enter_code")}
                 inputMode="numeric"
                 autoComplete="one-time-code"
@@ -353,17 +325,17 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             <div className="flex w-full items-center justify-end px-1 pt-1 text-11">
               <button
                 type="button"
-                onClick={() => void requestVerificationCode()}
+                onClick={() => void signUpCode.requestCode()}
                 className={
-                  isRequestingCode || resendCodeTimer > 0
+                  signUpCode.isRequesting || signUpCode.resendTimer > 0
                     ? "text-placeholder"
                     : "font-medium text-accent-secondary hover:text-accent-secondary"
                 }
-                disabled={isRequestingCode || resendCodeTimer > 0}
+                disabled={signUpCode.isRequesting || signUpCode.resendTimer > 0}
               >
-                {resendCodeTimer > 0
-                  ? t("auth.common.resend_in", { seconds: resendCodeTimer })
-                  : isRequestingCode
+                {signUpCode.resendTimer > 0
+                  ? t("auth.common.resend_in", { seconds: signUpCode.resendTimer })
+                  : signUpCode.isRequesting
                     ? t("auth.common.one_time_code.requesting_new_code")
                     : t("common.resend")}
               </button>
@@ -401,9 +373,9 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               size="lg"
               stretch="full"
               disabled={isButtonDisabled}
-              loading={isSubmitting || isRequestingCode}
+              loading={isSubmitting || signUpCode.isRequesting}
               label={
-                isRequestingCode && !isCodeStep
+                signUpCode.isRequesting && !signUpCode.isCodeStep
                   ? t("auth.common.one_time_code.sending_code")
                   : t("app_text.auth_password.create_account")
               }

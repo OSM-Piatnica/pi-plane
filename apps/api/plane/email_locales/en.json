@@ -118,6 +118,13 @@
     "info": "This code is valid for the next 10 minutes. Enter it on the sign-in page to complete your login.",
     "note": "Note: This email was sent to <span>{email}</span>. If you were not expecting a sign-in code, you can safely ignore this message."
   },
+  "sign_up_code": {
+    "subject": "Your Pi-Plane sign-up code is {code}",
+    "preheader": "Your Pi-Plane sign-up code {code} is valid for 10 minutes.",
+    "heading": "Confirm your email address for Pi-Plane",
+    "info": "This code is valid for the next 10 minutes. Enter it on the sign-up page to create your account.",
+    "note": "Note: This email was sent to <span>{email}</span>. If you did not try to sign up, you can safely ignore this message."
+  },
   "forgot_password": {
     "subject": "A new password to your Pi-Plane account has been requested",
     "preheader": "Reset your Pi-Plane password with this secure link.",

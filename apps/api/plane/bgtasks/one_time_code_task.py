@@ -30,7 +30,9 @@ def one_time_code_language(user, language=None, accept_language=None):
 
 
 @shared_task
-def send_one_time_code(email, key, token, accept_language=None, language=None):
+def send_one_time_code(email, key, token, accept_language=None, language=None, purpose="sign_in"):
+    """Email a code. ``purpose`` is ``"sign_in"`` (the one-time sign-in code) or ``"sign_up"`` (the code that confirms
+    the address of an email-and-password sign-up); the wording of the email follows it."""
     try:
         (
             EMAIL_HOST,
@@ -45,8 +47,9 @@ def send_one_time_code(email, key, token, accept_language=None, language=None):
         # Send the mail
         user = User.objects.filter(email=email).select_related("profile").first()
         language = one_time_code_language(user, language, accept_language)
-        subject = translate(language, "one_time_code.subject", code=token)
-        context = {"code": token, "email": email, "email_language": language}
+        is_sign_up = purpose == "sign_up"
+        subject = translate(language, "sign_up_code.subject" if is_sign_up else "one_time_code.subject", code=token)
+        context = {"code": token, "email": email, "email_language": language, "sign_up": is_sign_up}
 
         html_content = render_to_string("emails/auth/one_time_code_signin.html", context)
         text_content = generate_plain_text_from_html(html_content)

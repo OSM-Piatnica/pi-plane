@@ -118,6 +118,13 @@
     "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Girişi tamamlamak için giriş sayfasına girin.",
     "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Bir giriş kodu beklemiyorsanız bu iletiyi yok sayabilirsiniz."
   },
+  "sign_up_code": {
+    "subject": "Pi-Plane kayıt kodunuz: {code}",
+    "preheader": "Pi-Plane kayıt kodunuz {code} 10 dakika boyunca geçerlidir.",
+    "heading": "Pi-Plane için e-posta adresinizi doğrulayın",
+    "info": "Bu kod önümüzdeki 10 dakika boyunca geçerlidir. Hesabınızı oluşturmak için kodu kayıt sayfasına girin.",
+    "note": "Not: Bu e-posta <span>{email}</span> adresine gönderildi. Kaydolmayı denemediyseniz bu iletiyi yok sayabilirsiniz."
+  },
   "forgot_password": {
     "subject": "Pi-Plane hesabınız için yeni bir parola istendi",
     "preheader": "Pi-Plane parolanızı bu güvenli bağlantıyla sıfırlayın.",
