@@ -71,9 +71,12 @@ x-app-env: &app-env
   CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
   GUNICORN_WORKERS: ${GUNICORN_WORKERS:-1}
   USE_MINIO: ${USE_MINIO:-1}
-  DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-plane}:${POSTGRES_PASSWORD:-plane}@${PGHOST:-plane-db}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-plane}}
+  # The two URLs below keep a plain default on purpose. This file is also deployed by `docker stack deploy` (Swarm), which
+  # ends a default at the first "}" and so cannot read a default that holds another ${...}; the API then got the user
+  # "${POSTGRES_USER" and never connected. To use other credentials, set DATABASE_URL and AMQP_URL in plane.env.
+  DATABASE_URL: ${DATABASE_URL:-postgresql://plane:plane@plane-db/plane}
   SECRET_KEY: ${SECRET_KEY}
-  AMQP_URL: ${AMQP_URL:-amqp://${RABBITMQ_USER:-plane}:${RABBITMQ_PASSWORD:-plane}@${RABBITMQ_HOST:-plane-mq}:${RABBITMQ_PORT:-5672}/${RABBITMQ_VHOST:-plane}}
+  AMQP_URL: ${AMQP_URL:-amqp://plane:plane@plane-mq:5672/plane}
   API_KEY_RATE_LIMIT: ${API_KEY_RATE_LIMIT:-60/minute}
   AUTHENTICATION_RATE_LIMIT: ${AUTHENTICATION_RATE_LIMIT:-1000/minute}
   ANON_RATE_LIMIT: ${ANON_RATE_LIMIT:-180/minute}
