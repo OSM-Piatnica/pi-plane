@@ -60,18 +60,20 @@ export function Calendar({ labels, defaultMonth, onMonthChange, ...props }: Cale
 
     if (event.key === "PageDown" || event.key === "PageUp") {
       const forward = event.key === "PageDown";
-      const names = forward
-        ? [
-            allLabels.labelNextYear?.() ?? PROPEL_ARROW_NAMES.nextYear,
-            allLabels.labelNextYearPage?.() ?? PROPEL_ARROW_NAMES.nextYearPage,
-          ]
-        : [
-            allLabels.labelPreviousYear?.() ?? PROPEL_ARROW_NAMES.previousYear,
-            allLabels.labelPreviousYearPage?.() ?? PROPEL_ARROW_NAMES.previousYearPage,
-          ];
+      const names = new Set(
+        forward
+          ? [
+              allLabels.labelNextYear?.() ?? PROPEL_ARROW_NAMES.nextYear,
+              allLabels.labelNextYearPage?.() ?? PROPEL_ARROW_NAMES.nextYearPage,
+            ]
+          : [
+              allLabels.labelPreviousYear?.() ?? PROPEL_ARROW_NAMES.previousYear,
+              allLabels.labelPreviousYearPage?.() ?? PROPEL_ARROW_NAMES.previousYearPage,
+            ]
+      );
       // Only the arrow of the view that is showing exists, so at most one of the two names is on the page
       const arrow = Array.from(root.querySelectorAll<HTMLButtonElement>("button")).find((button) =>
-        names.includes(button.getAttribute("aria-label") ?? "")
+        names.has(button.getAttribute("aria-label") ?? "")
       );
       if (!arrow) return;
       event.preventDefault();
