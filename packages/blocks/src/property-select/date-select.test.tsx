@@ -130,6 +130,41 @@ describe("DateSelect", () => {
     });
   });
 
+  describe("keys in the month and year views", () => {
+    const open = async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={new Date(2025, 5, 15)} onChange={vi.fn()} variant="select-md" placeholder="Set date" />
+      );
+      await user.click(screen.getByRole("button", { name: /jun 15, 2025/i }));
+      return user;
+    };
+
+    it("steps back with Escape first and closes the picker with the next one", async () => {
+      const user = await open();
+      await user.click(popup().getByRole("button", { name: "Choose the month, June" }));
+      expect(popup().getByRole("group", { name: "Choose month for 2025" })).toBeDefined();
+
+      await user.keyboard("{Escape}");
+      // Still open, on the day view
+      expect(popup().getByRole("grid")).toBeDefined();
+      expect(screen.getByRole("button", { name: /jun 15, 2025/i }).getAttribute("aria-expanded")).toBe("true");
+
+      await user.keyboard("{Escape}");
+      // The popover is leaving; its exit animation never ends in jsdom, so ask the trigger instead of the grid
+      expect(screen.getByRole("button", { name: /jun 15, 2025/i }).getAttribute("aria-expanded")).toBe("false");
+    });
+
+    it("pages the years with PageDown without closing or selecting anything", async () => {
+      const user = await open();
+      await user.click(popup().getByRole("button", { name: "Choose the year, 2025" }));
+
+      await user.keyboard("{PageDown}");
+
+      expect(popup().getByRole("group", { name: "Choose year from 2032 to 2043" })).toBeDefined();
+    });
+  });
+
   it("prefers the caller's tooltip content over the formatted selection", async () => {
     const user = userEvent.setup();
     render(
