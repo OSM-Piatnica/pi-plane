@@ -8,6 +8,8 @@
 import { NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { useEffect, useRef, useState } from "react";
+// plane imports
+import { isValidAssetId } from "@plane/utils";
 // local imports
 import type { CustomImageExtensionType, TCustomImageAttributes } from "../types";
 import { ECustomImageAttributeNames, ECustomImageStatus } from "../types";
@@ -110,6 +112,11 @@ export function CustomImageNodeView(props: CustomImageNodeViewProps) {
       isDuplicatingRef.current = true;
       try {
         hasRetriedOnMount.current = true;
+
+        // the src is stored document content, so only a plain asset id may be duplicated
+        if (!isValidAssetId(imgNodeSrc)) {
+          throw new Error("Image source is not a valid asset ID");
+        }
 
         const newAssetId = await extension.options.duplicateImage(imgNodeSrc);
 
