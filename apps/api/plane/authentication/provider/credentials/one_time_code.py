@@ -24,7 +24,7 @@ class OneTimeCodeProvider(CredentialAdapter):
     provider = "magic-code"
 
     # Max wrong-code verification attempts per issued token before the token
-    # is invalidated. Prevents brute-forcing the 6-digit code space within
+    # is invalidated. Prevents brute-forcing the 8-digit code space within
     # the token TTL window.
     MAX_VERIFY_ATTEMPTS = 5
 
@@ -85,7 +85,7 @@ class OneTimeCodeProvider(CredentialAdapter):
 
     def initiate(self):
         ## Generate a random token
-        token = str(secrets.randbelow(900000) + 100000)
+        token = str(secrets.randbelow(90000000) + 10000000)
 
         ri = redis_instance()
 
