@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+import { useRef } from "react";
 import type { ReactNode } from "react";
 import type { Locale } from "date-fns";
 import { useTranslation } from "@plane/i18n";
@@ -130,6 +131,8 @@ export function DateSelectShell(props: DateSelectShellProps) {
     onClear,
     children,
   } = props;
+  // refs
+  const bodyRef = useRef<HTMLDivElement>(null);
   // translation
   const { t } = useTranslation();
   // derived values
@@ -156,6 +159,12 @@ export function DateSelectShell(props: DateSelectShellProps) {
     />
   );
 
+  // Opening the calendar puts focus on the day the arrow keys move from (the selected day, else today, else the
+  // first one that can be picked) instead of on the popover body, which a screen reader can only call "group".
+  // react-day-picker keeps that day as the grid's only tab stop. `true` falls back to Base UI's own default.
+  const focusStartingDay = () =>
+    bodyRef.current?.querySelector<HTMLElement>('[role="grid"] button[tabindex="0"]') ?? true;
+
   return (
     <Popover open={isOpen} onOpenChange={onOpenChange}>
       {showTooltip ? (
@@ -175,8 +184,8 @@ export function DateSelectShell(props: DateSelectShellProps) {
       ) : (
         trigger
       )}
-      <PopoverContent variant="rich" side={side} align={align}>
-        <PopoverBody tabIndex={0}>{children}</PopoverBody>
+      <PopoverContent variant="rich" side={side} align={align} initialFocus={focusStartingDay}>
+        <PopoverBody ref={bodyRef}>{children}</PopoverBody>
         {canClear ? (
           <div className="flex justify-end border-t border-subtle pt-2">
             <Button
