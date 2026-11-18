@@ -9,16 +9,49 @@
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Layers } from "lucide-react";
-import type { TIssueIdentifierProps, TIssueTypeIdentifier } from "@plane/types";
+import { Logo } from "@plane/blocks/emoji-icon-picker";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
+import { EpicOutline, WorkItemsOutline } from "@makeplane/propel/icons";
+import type { TIssueIdentifierProps, TIssueIdentifierSize, TIssueTypeIdentifier, TLogoProps } from "@plane/types";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
+import { getWorkItemTypeMarkKind } from "@/helpers/work-item-type-mark";
 import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 import { IdentifierText } from "@/components/issues/issue-detail/identifier-text";
 
+const TYPE_MARK_SIZE: Record<TIssueIdentifierSize, number> = { xs: 14, sm: 14, md: 16, lg: 16 };
+
+/** The mark of a work item type: the logo an admin picked, else a built-in one (Epic, general). */
+const WorkItemTypeMark = observer(function WorkItemTypeMark(props: {
+  issueTypeId: string;
+  size?: TIssueIdentifierSize;
+}) {
+  const { issueTypeId, size = "md" } = props;
+  const { workspaceSlug } = useParams();
+  const { typeMap } = useWorkspaceIssueTypes(workspaceSlug?.toString());
+  const issueType = typeMap[issueTypeId];
+  if (!issueType) return null;
+
+  const iconSize = TYPE_MARK_SIZE[size];
+  const kind = getWorkItemTypeMarkKind(issueType);
+  let mark;
+  if (kind === "logo") mark = <Logo logo={issueType.logo_props as TLogoProps} size={iconSize} />;
+  else if (kind === "epic") mark = <EpicOutline width={iconSize} height={iconSize} className="text-accent-primary" />;
+  else mark = <WorkItemsOutline width={iconSize} height={iconSize} className="text-tertiary" />;
+
+  return (
+    <Tooltip label={issueType.name}>
+      <span className="grid flex-shrink-0 place-items-center" aria-label={issueType.name}>
+        {mark}
+      </span>
+    </Tooltip>
+  );
+});
+
 export const IssueIdentifier = observer(function IssueIdentifier(props: TIssueIdentifierProps) {
   const { projectId, variant, size, displayProperties, enableClickToCopyIdentifier = false } = props;
-  const { getProjectIdentifierById } = useProject();
+  const { getProjectIdentifierById, getProjectById } = useProject();
   const {
     issue: { getIssueById },
   } = useIssueDetail();
@@ -26,20 +59,31 @@ export const IssueIdentifier = observer(function IssueIdentifier(props: TIssueId
   const issue = isUsingStoreData ? getIssueById(props.issueId) : null;
   const projectIdentifier = isUsingStoreData ? getProjectIdentifierById(projectId) : props.projectIdentifier;
   const issueSequenceId = isUsingStoreData ? issue?.sequence_id : props.issueSequenceId;
+  const issueTypeId = isUsingStoreData ? issue?.type_id : props.issueTypeId;
   const shouldRenderIssueID = displayProperties ? displayProperties.key : true;
+  // The type mark follows its own display property, so it is only offered where the layout has the property, and
+  // only in projects that use work item types
+  const shouldRenderIssueType =
+    !!issueTypeId &&
+    !!displayProperties &&
+    displayProperties.issue_type !== false &&
+    !!getProjectById(projectId)?.is_issue_type_enabled;
 
-  if (!shouldRenderIssueID) return null;
+  if (!shouldRenderIssueID && !shouldRenderIssueType) return null;
 
   const identifier = `${projectIdentifier}-${issueSequenceId}`;
 
   return (
-    <div className="flex shrink-0 items-center space-x-2">
-      <IdentifierText
-        identifier={identifier}
-        enableClickToCopyIdentifier={enableClickToCopyIdentifier}
-        variant={variant}
-        size={size}
-      />
+    <div className="flex shrink-0 items-center gap-1.5">
+      {shouldRenderIssueType && issueTypeId && <WorkItemTypeMark issueTypeId={issueTypeId} size={size} />}
+      {shouldRenderIssueID && (
+        <IdentifierText
+          identifier={identifier}
+          enableClickToCopyIdentifier={enableClickToCopyIdentifier}
+          variant={variant}
+          size={size}
+        />
+      )}
     </div>
   );
 });

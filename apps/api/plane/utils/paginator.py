@@ -18,6 +18,9 @@ from rest_framework.response import Response
 # Module imports
 from plane.utils.order_queryset import ISSUE_GROUP_BY_ALLOWLIST
 
+# Group fields that are annotations of the grouper, so they exist only where it adds them
+HIERARCHY_ANNOTATION_GROUP_FIELDS = frozenset({"epic_id"})
+
 
 class Cursor:
     # The cursor value
@@ -655,6 +658,14 @@ class BasePaginator:
         return per_page
 
     @staticmethod
+    def _has_group_field(queryset, field_name):
+        # Annotation-backed group fields (epic_id) exist only on surfaces whose grouper adds them; elsewhere the
+        # answer is a 400, not a 500
+        if field_name in HIERARCHY_ANNOTATION_GROUP_FIELDS:
+            return queryset is not None and field_name in queryset.query.annotations
+        return True
+
+    @staticmethod
     def _effective_max_per_page(max_per_page, default_per_page):
         return max(max_per_page, default_per_page)
 
@@ -699,7 +710,9 @@ class BasePaginator:
                 # paginators below — prevents unauthenticated ORM field-name
                 # injection via user-supplied group_by/sub_group_by query params
                 # (GHSA-wwgj-929g-42cm).
-                if group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
+                if group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST or not self._has_group_field(
+                    paginator_kwargs.get("queryset"), group_by_field_name
+                ):
                     raise ParseError(detail=f"Invalid group_by field: {group_by_field_name}")
 
                 paginator_kwargs["group_by_field_name"] = group_by_field_name
@@ -707,7 +720,9 @@ class BasePaginator:
                 paginator_kwargs["count_filter"] = count_filter
 
                 if sub_group_by_field_name:
-                    if sub_group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST:
+                    if sub_group_by_field_name not in ISSUE_GROUP_BY_ALLOWLIST or not self._has_group_field(
+                        paginator_kwargs.get("queryset"), sub_group_by_field_name
+                    ):
                         raise ParseError(detail=f"Invalid sub_group_by field: {sub_group_by_field_name}")
 
                     paginator_kwargs["sub_group_by_field_name"] = sub_group_by_field_name

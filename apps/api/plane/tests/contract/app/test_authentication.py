@@ -134,6 +134,21 @@ class TestOneTimeCodeGenerate:
 
     @pytest.mark.django_db
     @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_generated_code_is_eight_digits(self, mock_send_one_time_code, api_client, setup_user, setup_instance):
+        """The emailed sign-in code is an 8-digit number"""
+        ri = redis_instance()
+        ri.delete("one_time_code_user@plane.so")
+        ri.delete("one_time_code_user@plane.so:issued")
+
+        response = api_client.post(reverse("magic-generate"), {"email": "user@plane.so"}, format="json")
+        assert response.status_code == status.HTTP_200_OK
+
+        code = mock_send_one_time_code.call_args[0][2]
+        assert len(code) == 8
+        assert code.isdigit()
+
+    @pytest.mark.django_db
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
     def test_max_generate_attempt(self, mock_send_one_time_code, api_client, setup_user, setup_instance):
         """Test exceeding maximum one-time code generation attempts"""
         url = reverse("magic-generate")

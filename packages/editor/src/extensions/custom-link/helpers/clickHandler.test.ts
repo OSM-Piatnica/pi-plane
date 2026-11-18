@@ -19,10 +19,13 @@ const getHandleClick = (): HandleClick => {
   return plugin.props.handleClick as unknown as HandleClick;
 };
 
-// minimal stand-in for a click on an <a> inside the editor's root <div>
+// the view the handler is given: the anchor must be inside the editor's DOM
+const view = { dom: { contains: () => true } };
+
+// minimal stand-in for a click on (or inside) an <a>: the handler resolves the anchor with closest("a")
 const makeClickEvent = (href: string, overrides: Record<string, unknown> = {}) => ({
   button: 0,
-  target: { nodeName: "A", href, target: "_blank", parentNode: { nodeName: "DIV" } },
+  target: { closest: () => ({ href, target: "_blank" }) },
   ...overrides,
 });
 
@@ -46,7 +49,7 @@ describe("clickHandler", () => {
     "file:///etc/passwd",
     "about:blank",
   ])("does not open %j", (href) => {
-    const result = getHandleClick()({ state: {} }, 0, makeClickEvent(href));
+    const result = getHandleClick()(view, 0, makeClickEvent(href));
     expect(result).toBe(false);
     expect(open).not.toHaveBeenCalled();
   });
@@ -54,23 +57,52 @@ describe("clickHandler", () => {
   it.each(["https://example.com/", "http://example.com/?q=javascript:alert(1)", "mailto:user@example.com"])(
     "opens %j",
     (href) => {
-      const result = getHandleClick()({ state: {} }, 0, makeClickEvent(href));
+      const result = getHandleClick()(view, 0, makeClickEvent(href));
       expect(result).toBe(true);
-      expect(open).toHaveBeenCalledWith(href, "_blank", "noopener");
+      expect(open).toHaveBeenCalledWith(href, "_blank", "noopener,noreferrer");
     }
   );
 
   it("ignores non-primary mouse buttons", () => {
-    const result = getHandleClick()({ state: {} }, 0, makeClickEvent("https://example.com/", { button: 1 }));
+    const result = getHandleClick()(view, 0, makeClickEvent("https://example.com/", { button: 1 }));
     expect(result).toBe(false);
     expect(open).not.toHaveBeenCalled();
   });
 
   it("ignores clicks that are not on a link", () => {
     const event = makeClickEvent("https://example.com/", {
-      target: { nodeName: "P", parentNode: { nodeName: "DIV" } },
+      target: { closest: () => null },
     });
-    expect(getHandleClick()({ state: {} }, 0, event)).toBe(false);
+    expect(getHandleClick()(view, 0, event)).toBe(false);
+    expect(open).not.toHaveBeenCalled();
+  });
+});
+
+describe("clickHandler target", () => {
+  const open = vi.fn();
+
+  beforeEach(() => {
+    vi.stubGlobal("window", { open });
+  });
+
+  afterEach(() => {
+    open.mockReset();
+    vi.unstubAllGlobals();
+  });
+
+  it("honours _self and opens every other stored target in a new tab", () => {
+    const handleClick = getHandleClick();
+    handleClick(view, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/", target: "_self" }) } });
+    expect(open).toHaveBeenLastCalledWith("https://example.com/", "_self", "noopener,noreferrer");
+    handleClick(view, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/", target: "evil" }) } });
+    expect(open).toHaveBeenLastCalledWith("https://example.com/", "_blank", "noopener,noreferrer");
+  });
+
+  it("ignores an anchor that is outside the editor", () => {
+    const outside = { dom: { contains: () => false } };
+    expect(
+      getHandleClick()(outside, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/" }) } })
+    ).toBe(false);
     expect(open).not.toHaveBeenCalled();
   });
 });

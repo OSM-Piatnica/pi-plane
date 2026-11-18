@@ -168,6 +168,11 @@ export class ProjectIssues extends BaseIssuesStore implements IProjectIssues {
     }
   };
 
+  // an Epic group is derived by the server from the parent chain, so it is reloaded after a parent change
+  override refreshHierarchyGroups(workspaceSlug: string, projectId: string) {
+    void this.fetchIssuesWithExistingPagination(workspaceSlug, projectId, "mutation");
+  }
+
   /**
    * This Method exists to fetch the first page of the issues with the existing stored pagination
    * This is useful for refetching when filters, groupBy, orderBy etc changes
