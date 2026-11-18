@@ -13,7 +13,7 @@
     "./postcss.config.js": "./postcss.config.js"
   },
   "dependencies": {
-    "@makeplane/propel": "0.7.3",
+    "@makeplane/propel": "0.9.7",
     "@tailwindcss/postcss": "4.3.3",
     "postcss": "8.5.30"
   },
