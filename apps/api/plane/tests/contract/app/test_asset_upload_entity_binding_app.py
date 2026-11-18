@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 """Contract tests for the entity an asset is bound to at upload, bulk-bind and duplicate time.
@@ -65,7 +66,7 @@ def _upload(client, url, entity_type, entity_identifier):
         "entity_type": entity_type,
         "entity_identifier": str(entity_identifier),
     }
-    with patch("plane.app.views.asset.v2.S3Storage") as storage:
+    with patch("plane.app.views.asset.v2.get_storage") as storage:
         storage.return_value.generate_presigned_post.return_value = {}
         return client.post(url, payload, format="json")
 
@@ -160,7 +161,7 @@ class TestAssetUploadEntityBinding:
                 "entity_id": str(entity_id),
                 "project_id": str(project.id),
             }
-            with patch("plane.app.views.asset.v2.S3Storage"):
+            with patch("plane.app.views.asset.v2.get_storage"):
                 return session_client.post(url, payload, format="json")
 
         response = duplicate(other_project_issue.id)
