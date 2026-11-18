@@ -45,6 +45,20 @@
       "open": "カラーピッカーを開く",
       "swatches": "プリセットカラー",
       "hex_input": "16 進数カラー"
+    },
+    "calendar": {
+      "choose_month": "月を選択",
+      "choose_year": "年を選択",
+      "previous_month": "前の月",
+      "next_month": "次の月",
+      "previous_year": "前の年",
+      "next_year": "次の年",
+      "previous_year_page": "前の12年間",
+      "next_year_page": "次の12年間",
+      "month_view": "{year}年の月を選択",
+      "year_view": "{first_year}年から{last_year}年までの年を選択",
+      "today_date": "今日、{date}",
+      "selected_date": "{date}、選択済み"
     }
   }
 }

@@ -45,6 +45,20 @@
       "open": "Відкрити вибір кольору",
       "swatches": "Готові кольори",
       "hex_input": "Колір у HEX"
+    },
+    "calendar": {
+      "choose_month": "Вибрати місяць",
+      "choose_year": "Вибрати рік",
+      "previous_month": "Попередній місяць",
+      "next_month": "Наступний місяць",
+      "previous_year": "Попередній рік",
+      "next_year": "Наступний рік",
+      "previous_year_page": "Попередні 12 років",
+      "next_year_page": "Наступні 12 років",
+      "month_view": "Вибрати місяць {year} року",
+      "year_view": "Вибрати рік з {first_year} по {last_year}",
+      "today_date": "Сьогодні, {date}",
+      "selected_date": "{date}, вибрано"
     }
   }
 }

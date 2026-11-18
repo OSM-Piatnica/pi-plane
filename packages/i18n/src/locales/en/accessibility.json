@@ -45,6 +45,20 @@
       "open": "Open color picker",
       "swatches": "Preset colors",
       "hex_input": "Hex color"
+    },
+    "calendar": {
+      "choose_month": "Choose the month",
+      "choose_year": "Choose the year",
+      "previous_month": "Previous month",
+      "next_month": "Next month",
+      "previous_year": "Previous year",
+      "next_year": "Next year",
+      "previous_year_page": "Previous 12 years",
+      "next_year_page": "Next 12 years",
+      "month_view": "Choose month for {year}",
+      "year_view": "Choose year from {first_year} to {last_year}",
+      "today_date": "Today, {date}",
+      "selected_date": "{date}, selected"
     }
   }
 }

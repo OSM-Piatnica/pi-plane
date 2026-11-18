@@ -45,6 +45,20 @@
       "open": "Ouvrir le sélecteur de couleur",
       "swatches": "Couleurs prédéfinies",
       "hex_input": "Couleur hexadécimale"
+    },
+    "calendar": {
+      "choose_month": "Choisir le mois",
+      "choose_year": "Choisir l’année",
+      "previous_month": "Mois précédent",
+      "next_month": "Mois suivant",
+      "previous_year": "Année précédente",
+      "next_year": "Année suivante",
+      "previous_year_page": "12 années précédentes",
+      "next_year_page": "12 années suivantes",
+      "month_view": "Choisir le mois de {year}",
+      "year_view": "Choisir l’année de {first_year} à {last_year}",
+      "today_date": "Aujourd’hui, {date}",
+      "selected_date": "{date}, sélectionné"
     }
   }
 }
