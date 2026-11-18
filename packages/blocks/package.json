@@ -53,8 +53,8 @@
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "catalog:",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "catalog:",
-    "@base-ui/react": "1.6.0",
-    "@makeplane/propel": "0.7.3",
+    "@base-ui/react": "1.8.0",
+    "@makeplane/propel": "0.9.7",
     "@plane/constants": "workspace:*",
     "@plane/hooks": "workspace:*",
     "@plane/i18n": "workspace:*",
