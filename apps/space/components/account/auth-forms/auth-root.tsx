@@ -45,7 +45,7 @@ export const AuthRoot = observer(function AuthRoot() {
   const [isPasswordAutoset, setIsPasswordAutoset] = useState(true);
   // hooks
   const { config } = useInstance();
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
 
   useEffect(() => {
     if (error_code) {
@@ -55,7 +55,16 @@ export const AuthRoot = observer(function AuthRoot() {
           setAuthMode(EAuthModes.SIGN_IN);
           setAuthStep(EAuthSteps.PASSWORD);
         }
-        if (errorhandler.code === EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_UP) {
+        if (
+          [
+            EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_UP,
+            // the code of the email-and-password sign-up: back to the password form to ask for a new one
+            EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED,
+            EAuthenticationErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE,
+            EAuthenticationErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE,
+            EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED,
+          ].includes(errorhandler.code)
+        ) {
           setAuthMode(EAuthModes.SIGN_UP);
           setAuthStep(EAuthSteps.PASSWORD);
         }
@@ -137,7 +146,8 @@ export const AuthRoot = observer(function AuthRoot() {
 
   // generating the one-time code
   const generateEmailOneTimeCode = async (emailToVerify: string): Promise<{ code: string } | undefined> => {
-    const payload = { email: emailToVerify };
+    // the code email is written in the language picked on this page when the address has no account yet
+    const payload = { email: emailToVerify, language: currentLocale };
     return await authService
       .generateOneTimeCode(payload)
       .then(() => ({ code: "" }))
@@ -185,6 +195,7 @@ export const AuthRoot = observer(function AuthRoot() {
               if (step === EAuthSteps.ONE_TIME_CODE) generateEmailOneTimeCode(email);
               setAuthStep(step);
             }}
+            setErrorInfo={setErrorInfo}
           />
         )}
         <TermsAndConditions isSignUp={authMode === EAuthModes.SIGN_UP} />

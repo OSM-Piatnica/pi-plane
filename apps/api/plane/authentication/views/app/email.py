@@ -17,6 +17,10 @@ from plane.license.models import Instance
 from plane.authentication.utils.host import base_host
 from plane.authentication.utils.redirection_path import get_redirection_path
 from plane.authentication.utils.user_auth_workflow import post_user_auth_workflow
+from plane.authentication.utils.signup_verification import (
+    SignUpEmailVerification,
+    is_signup_email_verification_required,
+)
 from plane.db.models import User
 from plane.authentication.adapter.error import (
     AuthenticationException,
@@ -212,7 +216,12 @@ class SignUpAuthEndpoint(View):
             )
             return HttpResponseRedirect(url)
 
+        # The address is proven by the code sent to it before the account is created
+        verification = SignUpEmailVerification(email) if is_signup_email_verification_required() else None
+
         try:
+            if verification:
+                verification.verify(request.POST.get("code"))
             provider = EmailProvider(
                 request=request,
                 key=email,
@@ -221,6 +230,8 @@ class SignUpAuthEndpoint(View):
                 callback=post_user_auth_workflow,
             )
             user = provider.authenticate()
+            if verification:
+                verification.consume()
             # Login the user and record his device info
             user_login(request=request, user=user, is_app=True)
             # Get the redirection path

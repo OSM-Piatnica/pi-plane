@@ -22,7 +22,11 @@ import { getPasswordStrength } from "@plane/utils";
 import { ForgotPasswordPopover } from "@/components/account/auth-forms/forgot-password-popover";
 // constants
 // helpers
-import { EAuthModes, EAuthSteps } from "@/helpers/authentication.helper";
+import type { TAuthErrorInfo } from "@/helpers/authentication.helper";
+import { EAuthModes, EAuthSteps, authErrorHandler } from "@/helpers/authentication.helper";
+import type { EAuthenticationErrorCodes } from "@/helpers/authentication.helper";
+// hooks
+import useTimer from "@/hooks/use-timer";
 // services
 import { AuthService } from "@/services/auth.service";
 
@@ -33,7 +37,11 @@ type Props = {
   handleEmailClear: () => void;
   handleAuthStep: (step: EAuthSteps) => void;
   nextPath: string | undefined;
+  setErrorInfo: (errorInfo: TAuthErrorInfo | undefined) => void;
 };
+
+// Seconds before another sign-up code can be asked for
+const RESEND_CODE_AFTER_SECONDS = 30;
 
 type TPasswordFormValues = {
   email: string;
@@ -49,7 +57,7 @@ const defaultValues: TPasswordFormValues = {
 const authService = new AuthService();
 
 export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props) {
-  const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath } = props;
+  const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath, setErrorInfo } = props;
   // plane imports
   const { t, currentLocale } = useTranslation();
   // ref
@@ -65,6 +73,11 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
   const [isRetryPasswordInputFocused, setIsRetryPasswordInputFocused] = useState(false);
   const [isBannerMessage, setBannerMessage] = useState(false);
+  // sign-up: the code sent to the address, asked for once the password is set
+  const [isCodeStep, setIsCodeStep] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [isRequestingCode, setIsRequestingCode] = useState(false);
+  const { timer: resendCodeTimer, setTimer: setResendCodeTimer } = useTimer(0);
 
   const handleShowPassword = (key: keyof typeof showPassword) =>
     setShowPassword((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -78,6 +91,31 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
       setCsrfPromise(promise);
     }
   }, [csrfPromise]);
+
+  // Sends the sign-up code; resolves to whether a code is asked for, or undefined when sending failed
+  const requestVerificationCode = async (): Promise<boolean | undefined> => {
+    setIsRequestingCode(true);
+    setErrorInfo(undefined);
+    try {
+      // the code email is written in the language picked on this page
+      const response = await authService.requestSignUpVerificationCode({
+        email: passwordFormData.email,
+        language: currentLocale,
+      });
+      if (response?.required) setResendCodeTimer(RESEND_CODE_AFTER_SECONDS);
+      return !!response?.required;
+    } catch (error) {
+      const errorhandler = authErrorHandler(
+        (error as { error_code?: number } | undefined)?.error_code?.toString() as EAuthenticationErrorCodes,
+        t,
+        passwordFormData.email
+      );
+      if (errorhandler?.type) setErrorInfo(errorhandler);
+      return undefined;
+    } finally {
+      setIsRequestingCode(false);
+    }
+  };
 
   const redirectToOneTimeCodeSignIn = async () => {
     handleAuthStep(EAuthSteps.ONE_TIME_CODE);
@@ -108,10 +146,22 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     () =>
       !(
         !isSubmitting &&
+        !isRequestingCode &&
         !!passwordFormData.password &&
-        (mode === EAuthModes.SIGN_UP ? passwordFormData.password === passwordFormData.confirm_password : true)
+        (mode === EAuthModes.SIGN_UP
+          ? passwordFormData.password === passwordFormData.confirm_password &&
+            (!isCodeStep || verificationCode.trim().length > 0)
+          : true)
       ),
-    [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password]
+    [
+      isSubmitting,
+      isRequestingCode,
+      isCodeStep,
+      verificationCode,
+      mode,
+      passwordFormData.confirm_password,
+      passwordFormData.password,
+    ]
   );
 
   const password = passwordFormData?.password ?? "";
@@ -149,12 +199,21 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             mode === EAuthModes.SIGN_UP
               ? getPasswordStrength(passwordFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID
               : true;
-          if (isPasswordValid) {
-            setIsSubmitting(true);
-            if (formRef.current) formRef.current.submit(); // Manually submit the form if the condition is met
-          } else {
+          if (!isPasswordValid) {
             setBannerMessage(true);
+            return;
           }
+          // A new account first gets the code sent to the address, unless no code is asked for
+          if (mode === EAuthModes.SIGN_UP && !isCodeStep) {
+            const isCodeRequired = await requestVerificationCode();
+            if (isCodeRequired === undefined) return;
+            if (isCodeRequired) {
+              setIsCodeStep(true);
+              return;
+            }
+          }
+          setIsSubmitting(true);
+          if (formRef.current) formRef.current.submit(); // Manually submit the form if the condition is met
         }}
         onError={() => {
           setIsSubmitting(false);
@@ -272,6 +331,46 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           </div>
         )}
 
+        {mode === EAuthModes.SIGN_UP && isCodeStep && (
+          <div className="space-y-1">
+            <label htmlFor="sign-up-code" className="text-13 font-medium text-tertiary">
+              {t("auth.common.one_time_code.label")}
+            </label>
+            <InputGroup size="2xl">
+              <Input
+                size="2xl"
+                id="sign-up-code"
+                name="code"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                placeholder={t("auth.common.one_time_code.enter_code")}
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                // oxlint-disable-next-line jsx-a11y/no-autofocus -- the code is the only thing left to fill in at this step
+                autoFocus
+              />
+            </InputGroup>
+            <div className="flex w-full items-center justify-end px-1 pt-1 text-11">
+              <button
+                type="button"
+                onClick={() => void requestVerificationCode()}
+                className={
+                  isRequestingCode || resendCodeTimer > 0
+                    ? "text-placeholder"
+                    : "font-medium text-accent-secondary hover:text-accent-secondary"
+                }
+                disabled={isRequestingCode || resendCodeTimer > 0}
+              >
+                {resendCodeTimer > 0
+                  ? t("auth.common.resend_in", { seconds: resendCodeTimer })
+                  : isRequestingCode
+                    ? t("auth.common.one_time_code.requesting_new_code")
+                    : t("common.resend")}
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-2.5">
           {mode === EAuthModes.SIGN_IN ? (
             <>
@@ -302,8 +401,12 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               size="lg"
               stretch="full"
               disabled={isButtonDisabled}
-              loading={isSubmitting}
-              label={t("app_text.auth_password.create_account")}
+              loading={isSubmitting || isRequestingCode}
+              label={
+                isRequestingCode && !isCodeStep
+                  ? t("auth.common.one_time_code.sending_code")
+                  : t("app_text.auth_password.create_account")
+              }
             />
           )}
         </div>

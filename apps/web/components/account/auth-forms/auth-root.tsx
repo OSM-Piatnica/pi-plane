@@ -69,7 +69,16 @@ export const AuthRoot = observer(function AuthRoot(props: TAuthRoot) {
       const errorhandler = authErrorHandler(error_code?.toString() as EAuthenticationErrorCodes, t);
       if (errorhandler) {
         // password error handler
-        if ([EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_UP].includes(errorhandler.code)) {
+        if (
+          [
+            EAuthenticationErrorCodes.AUTHENTICATION_FAILED_SIGN_UP,
+            // the code of the email-and-password sign-up: back to the password form to ask for a new one
+            EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_REQUIRED,
+            EAuthenticationErrorCodes.INVALID_SIGN_UP_VERIFICATION_CODE,
+            EAuthenticationErrorCodes.EXPIRED_SIGN_UP_VERIFICATION_CODE,
+            EAuthenticationErrorCodes.SIGN_UP_VERIFICATION_CODE_ATTEMPT_EXHAUSTED,
+          ].includes(errorhandler.code)
+        ) {
           setAuthMode(EAuthModes.SIGN_UP);
           setAuthStep(EAuthSteps.PASSWORD);
         }

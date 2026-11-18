@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -15,6 +16,10 @@ from plane.authentication.utils.login import user_login
 from plane.authentication.rate_limit import throttle_auth_redirect
 from plane.license.models import Instance
 from plane.authentication.utils.host import base_host
+from plane.authentication.utils.signup_verification import (
+    SignUpEmailVerification,
+    is_signup_email_verification_required,
+)
 from plane.db.models import User
 from plane.authentication.adapter.error import (
     AUTHENTICATION_ERROR_CODES,
@@ -174,9 +179,16 @@ class SignUpAuthSpaceEndpoint(View):
             )
             return HttpResponseRedirect(url)
 
+        # The address is proven by the code sent to it before the account is created
+        verification = SignUpEmailVerification(email) if is_signup_email_verification_required() else None
+
         try:
+            if verification:
+                verification.verify(request.POST.get("code"))
             provider = EmailProvider(request=request, key=email, code=password, is_signup=True)
             user = provider.authenticate()
+            if verification:
+                verification.consume()
             # Login the user and record his device info
             user_login(request=request, user=user, is_space=True)
             # redirect to referer path

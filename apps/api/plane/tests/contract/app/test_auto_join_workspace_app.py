@@ -5,6 +5,7 @@
 """People of the company's email domains join the chosen workspace when they sign in, also without an invite."""
 
 import json
+import os
 import uuid
 from io import StringIO
 from unittest.mock import patch
@@ -31,6 +32,13 @@ from plane.utils.auto_join_workspace import (
 
 STRONG_PASSWORD = "Xk9#mQ2$vL7@pR4!"
 CONFIGURATIONS = "/api/instances/configurations/"
+
+
+@pytest.fixture(autouse=True)
+def _no_sign_up_email_verification():
+    # These tests are about who joins; the code sent to the address of a sign-up has its own tests
+    with patch.dict(os.environ, {"ENABLE_SIGNUP_EMAIL_VERIFICATION": "0"}):
+        yield
 
 
 @pytest.fixture(autouse=True)

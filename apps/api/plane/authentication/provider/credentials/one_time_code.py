@@ -46,6 +46,9 @@ class OneTimeCodeProvider(CredentialAdapter):
         "return count"
     )
 
+    # The same script under a public name, for the counters of the sign-up verification code
+    INCREMENT_COUNTER_SCRIPT = _INCREMENT_COUNTER_SCRIPT
+
     @staticmethod
     def _verify_attempts_key(token_key):
         return f"{token_key}:verify_attempts"
