@@ -8,7 +8,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import type { Locale } from "date-fns";
-import { Calendar } from "@makeplane/propel/components/calendar";
+import { Calendar } from "../calendar";
 import type { DateSelectCommonProps } from "./date-select-shell";
 import { DateSelectShell } from "./date-select-shell";
 import { buildDisabledMatchers, DEFAULT_DATE_FORMAT_TOKEN } from "./date-select.utils";

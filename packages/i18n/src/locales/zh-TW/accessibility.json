@@ -45,6 +45,20 @@
       "open": "開啟色彩選擇器",
       "swatches": "預設色彩",
       "hex_input": "十六進位色彩"
+    },
+    "calendar": {
+      "choose_month": "選擇月份",
+      "choose_year": "選擇年份",
+      "previous_month": "上個月",
+      "next_month": "下個月",
+      "previous_year": "上一年",
+      "next_year": "下一年",
+      "previous_year_page": "前 12 年",
+      "next_year_page": "後 12 年",
+      "month_view": "選擇 {year} 年的月份",
+      "year_view": "選擇 {first_year} 年至 {last_year} 年中的年份",
+      "today_date": "今天，{date}",
+      "selected_date": "{date}，已選取"
     }
   }
 }

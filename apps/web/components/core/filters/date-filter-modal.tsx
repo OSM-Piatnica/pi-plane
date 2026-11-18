@@ -7,7 +7,7 @@
 
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@makeplane/propel/components/button";
-import { Calendar } from "@makeplane/propel/components/calendar";
+import { Calendar } from "@plane/blocks/calendar";
 import {
   Dialog,
   DialogActions,

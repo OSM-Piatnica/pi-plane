@@ -45,6 +45,20 @@
       "open": "Открыть выбор цвета",
       "swatches": "Готовые цвета",
       "hex_input": "Цвет в HEX"
+    },
+    "calendar": {
+      "choose_month": "Выбрать месяц",
+      "choose_year": "Выбрать год",
+      "previous_month": "Предыдущий месяц",
+      "next_month": "Следующий месяц",
+      "previous_year": "Предыдущий год",
+      "next_year": "Следующий год",
+      "previous_year_page": "Предыдущие 12 лет",
+      "next_year_page": "Следующие 12 лет",
+      "month_view": "Выбрать месяц {year} года",
+      "year_view": "Выбрать год с {first_year} по {last_year}",
+      "today_date": "Сегодня, {date}",
+      "selected_date": "{date}, выбрано"
     }
   }
 }

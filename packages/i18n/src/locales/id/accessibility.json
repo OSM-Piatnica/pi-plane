@@ -45,6 +45,20 @@
       "open": "Buka pemilih warna",
       "swatches": "Warna preset",
       "hex_input": "Warna heksadesimal"
+    },
+    "calendar": {
+      "choose_month": "Pilih bulan",
+      "choose_year": "Pilih tahun",
+      "previous_month": "Bulan sebelumnya",
+      "next_month": "Bulan berikutnya",
+      "previous_year": "Tahun sebelumnya",
+      "next_year": "Tahun berikutnya",
+      "previous_year_page": "12 tahun sebelumnya",
+      "next_year_page": "12 tahun berikutnya",
+      "month_view": "Pilih bulan untuk {year}",
+      "year_view": "Pilih tahun dari {first_year} hingga {last_year}",
+      "today_date": "Hari ini, {date}",
+      "selected_date": "{date}, dipilih"
     }
   }
 }
