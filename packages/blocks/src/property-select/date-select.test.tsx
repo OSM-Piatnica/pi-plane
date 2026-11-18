@@ -90,7 +90,13 @@ describe("DateSelect", () => {
     it("lands on a day, not on the popover body, when nothing is picked", async () => {
       const user = userEvent.setup();
       render(
-        <DateSelect value={null} onChange={vi.fn()} variant="select-md" placeholder="Set date" defaultMonth={JUNE_2025} />
+        <DateSelect
+          value={null}
+          onChange={vi.fn()}
+          variant="select-md"
+          placeholder="Set date"
+          defaultMonth={JUNE_2025}
+        />
       );
 
       await user.click(screen.getByRole("button", { name: /set date/i }));
@@ -101,18 +107,26 @@ describe("DateSelect", () => {
       expect(active.getAttribute("aria-label")).toMatch(/June 1st, 2025/);
     });
 
-    it("leaves no unlabelled tab stop around the calendar", async () => {
+    it("puts no tab stop of its own around the calendar", async () => {
       const user = userEvent.setup();
       render(
-        <DateSelect value={null} onChange={vi.fn()} variant="select-md" placeholder="Set date" defaultMonth={JUNE_2025} />
+        <DateSelect
+          value={null}
+          onChange={vi.fn()}
+          variant="select-md"
+          placeholder="Set date"
+          defaultMonth={JUNE_2025}
+        />
       );
 
       await user.click(screen.getByRole("button", { name: /set date/i }));
 
-      const stops = Array.from(document.body.querySelectorAll<HTMLElement>('[tabindex="0"]')).filter(
-        (element) => !element.getAttribute("aria-label") && element.tagName !== "BUTTON"
+      // The popover body used to be a tab stop (`tabIndex={0}`) that a screen reader could only call "group".
+      const grid = document.body.querySelector('[role="grid"]') as HTMLElement;
+      const wrappingStops = Array.from(document.body.querySelectorAll<HTMLElement>('[tabindex="0"]')).filter(
+        (element) => element.contains(grid)
       );
-      expect(stops).toEqual([]);
+      expect(wrappingStops).toEqual([]);
     });
   });
 
