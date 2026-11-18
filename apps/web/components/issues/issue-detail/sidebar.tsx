@@ -41,6 +41,7 @@ import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-d
 import { IssueParentSelectRoot } from "@/components/issues/issue-details/parent-select-root";
 import { TransferHopInfo } from "@/components/issues/issue-details/sidebar/transfer-hop-info";
 import { IssueWorklogProperty } from "@/components/issues/worklog/property";
+import { CollapsiblePropertyList } from "@/components/common/layout/sidebar/collapsible-property-list";
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
 import { IssueCycleSelect } from "./cycle-select";
 import { IssueLabel } from "./label";
@@ -79,9 +80,15 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
     <>
       <div className="flex h-full w-full flex-col items-center divide-y-2 divide-subtle-1 overflow-hidden">
         <div className="h-full w-full overflow-y-auto px-6">
-          <h5 className="mt-5 text-body-xs-medium">{t("common.properties")}</h5>
-          <div className={`mt-4 mb-2 space-y-2.5 truncate ${!isEditable ? "opacity-60" : ""}`}>
-            <SidebarPropertyListItem icon={StateOutline} label={t("common.state")}>
+          <CollapsiblePropertyList
+            title={t("common.properties")}
+            expandLabel={t("common.expand_properties")}
+            collapseLabel={t("common.collapse_properties")}
+            buttonClassName="mt-5"
+            headingClassName="text-body-xs-medium"
+            listClassName={`mt-4 mb-2 space-y-2.5 truncate ${!isEditable ? "opacity-60" : ""}`}
+          >
+            <SidebarPropertyListItem propertyKey="state" icon={StateOutline} label={t("common.state")}>
               <StateSelect
                 testId="work-item-state-select"
                 value={issue?.state_id}
@@ -95,7 +102,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               />
             </SidebarPropertyListItem>
 
-            <SidebarPropertyListItem icon={MembersOutline} label={t("common.assignees")}>
+            <SidebarPropertyListItem propertyKey="assignees" icon={MembersOutline} label={t("common.assignees")}>
               <MemberSelect
                 testId="work-item-assignee-select"
                 value={issue?.assignee_ids ?? []}
@@ -110,7 +117,11 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               />
             </SidebarPropertyListItem>
 
-            <SidebarPropertyListItem icon={Network} label={t("workspace_settings.settings.groups.group_assignees")}>
+            <SidebarPropertyListItem
+              propertyKey="group_assignees"
+              icon={Network}
+              label={t("workspace_settings.settings.groups.group_assignees")}
+            >
               <GroupAssigneeSelect
                 projectId={projectId}
                 workspaceSlug={workspaceSlug}
@@ -122,7 +133,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               />
             </SidebarPropertyListItem>
 
-            <SidebarPropertyListItem icon={PriorityOutline} label={t("common.priority")}>
+            <SidebarPropertyListItem propertyKey="priority" icon={PriorityOutline} label={t("common.priority")}>
               <PrioritySelect
                 testId="work-item-priority-select"
                 value={issue?.priority}
@@ -134,7 +145,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
             </SidebarPropertyListItem>
 
             {createdByDetails && (
-              <SidebarPropertyListItem icon={UserOutline} label={t("common.created_by")}>
+              <SidebarPropertyListItem propertyKey="created_by" icon={UserOutline} label={t("common.created_by")}>
                 <div className="flex gap-2 px-2">
                   <ButtonAvatars showTooltip userIds={createdByDetails.id} />
                   <span className="grow truncate text-body-xs-regular leading-5">{createdByDetails?.display_name}</span>
@@ -151,7 +162,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
             />
 
             {projectId && areEstimateEnabledByProjectId(projectId) && (
-              <SidebarPropertyListItem icon={EstimateOutline} label={t("common.estimate")}>
+              <SidebarPropertyListItem propertyKey="estimate" icon={EstimateOutline} label={t("common.estimate")}>
                 <EstimateSelect
                   value={issue?.estimate_point ?? undefined}
                   onChange={(val: string | null) =>
@@ -167,7 +178,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
             )}
 
             {projectDetails?.module_view && (
-              <SidebarPropertyListItem icon={ModuleOutline} label={t("common.modules")}>
+              <SidebarPropertyListItem propertyKey="modules" icon={ModuleOutline} label={t("common.modules")}>
                 <IssueModuleSelect
                   className="w-full grow"
                   workspaceSlug={workspaceSlug}
@@ -181,6 +192,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
 
             {projectDetails?.cycle_view && (
               <SidebarPropertyListItem
+                propertyKey="cycle"
                 icon={CyclesOutline}
                 label={t("common.cycle")}
                 appendElement={<TransferHopInfo workItem={issue} />}
@@ -196,7 +208,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               </SidebarPropertyListItem>
             )}
 
-            <SidebarPropertyListItem icon={ParentOutline} label={t("common.parent")}>
+            <SidebarPropertyListItem propertyKey="parent" icon={ParentOutline} label={t("common.parent")}>
               <IssueParentSelectRoot
                 className="h-7.5 w-full grow"
                 workspaceSlug={workspaceSlug}
@@ -207,7 +219,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               />
             </SidebarPropertyListItem>
 
-            <SidebarPropertyListItem icon={LabelsOutline} label={t("common.labels")}>
+            <SidebarPropertyListItem propertyKey="labels" icon={LabelsOutline} label={t("common.labels")}>
               <IssueLabel
                 workspaceSlug={workspaceSlug}
                 projectId={projectId}
@@ -230,7 +242,7 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
               workspaceSlug={workspaceSlug}
               isEditable={isEditable}
             />
-          </div>
+          </CollapsiblePropertyList>
         </div>
       </div>
     </>

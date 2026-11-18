@@ -28,6 +28,7 @@ import { WorkItemPlanningDates } from "@/components/issues/work-item-planning-da
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
 import { StateSelect } from "@/components/dropdowns/state/state-select";
+import { CollapsiblePropertyList } from "@/components/common/layout/sidebar/collapsible-property-list";
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
 // helpers
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
@@ -71,9 +72,14 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
 
   return (
     <div>
-      <h6 className="text-body-xs-medium">{t("common.properties")}</h6>
-      <div className={`mt-3 w-full space-y-3 ${disabled ? "opacity-60" : ""}`}>
-        <SidebarPropertyListItem icon={StateOutline} label={t("common.state")}>
+      <CollapsiblePropertyList
+        title={t("common.properties")}
+        expandLabel={t("common.expand_properties")}
+        collapseLabel={t("common.collapse_properties")}
+        headingClassName="text-body-xs-medium"
+        listClassName={`mt-3 w-full space-y-3 ${disabled ? "opacity-60" : ""}`}
+      >
+        <SidebarPropertyListItem propertyKey="state" icon={StateOutline} label={t("common.state")}>
           <StateSelect
             testId="work-item-state-select"
             value={issue?.state_id}
@@ -87,7 +93,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           />
         </SidebarPropertyListItem>
 
-        <SidebarPropertyListItem icon={MembersOutline} label={t("common.assignees")}>
+        <SidebarPropertyListItem propertyKey="assignees" icon={MembersOutline} label={t("common.assignees")}>
           <MemberSelect
             testId="work-item-assignee-select"
             value={issue?.assignee_ids ?? []}
@@ -102,7 +108,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           />
         </SidebarPropertyListItem>
 
-        <SidebarPropertyListItem icon={PriorityOutline} label={t("common.priority")}>
+        <SidebarPropertyListItem propertyKey="priority" icon={PriorityOutline} label={t("common.priority")}>
           <PrioritySelect
             testId="work-item-priority-select"
             value={issue?.priority}
@@ -114,7 +120,12 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
         </SidebarPropertyListItem>
 
         {createdByDetails && (
-          <SidebarPropertyListItem icon={UserOutline} label={t("common.created_by")} childrenClassName="px-2">
+          <SidebarPropertyListItem
+            propertyKey="created_by"
+            icon={UserOutline}
+            label={t("common.created_by")}
+            childrenClassName="px-2"
+          >
             <ButtonAvatars
               showTooltip
               userIds={createdByDetails?.display_name?.includes("-intake") ? null : createdByDetails?.id}
@@ -134,7 +145,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
         />
 
         {isEstimateEnabled && (
-          <SidebarPropertyListItem icon={EstimateOutline} label={t("common.estimate")}>
+          <SidebarPropertyListItem propertyKey="estimate" icon={EstimateOutline} label={t("common.estimate")}>
             <EstimateSelect
               value={issue.estimate_point ?? undefined}
               onChange={(val) => issueOperations.update(workspaceSlug, projectId, issueId, { estimate_point: val })}
@@ -148,7 +159,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
         )}
 
         {projectDetails?.module_view && (
-          <SidebarPropertyListItem icon={ModuleOutline} label={t("common.modules")}>
+          <SidebarPropertyListItem propertyKey="modules" icon={ModuleOutline} label={t("common.modules")}>
             <IssueModuleSelect
               className="w-full grow"
               workspaceSlug={workspaceSlug}
@@ -162,6 +173,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
 
         {projectDetails?.cycle_view && (
           <SidebarPropertyListItem
+            propertyKey="cycle"
             icon={CyclesOutline}
             label={t("common.cycle")}
             appendElement={<TransferHopInfo workItem={issue} />}
@@ -177,7 +189,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           </SidebarPropertyListItem>
         )}
 
-        <SidebarPropertyListItem icon={ParentOutline} label={t("common.parent")}>
+        <SidebarPropertyListItem propertyKey="parent" icon={ParentOutline} label={t("common.parent")}>
           <IssueParentSelectRoot
             className="h-7.5 w-full grow"
             disabled={disabled}
@@ -188,7 +200,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           />
         </SidebarPropertyListItem>
 
-        <SidebarPropertyListItem icon={LabelsOutline} label={t("common.labels")}>
+        <SidebarPropertyListItem propertyKey="labels" icon={LabelsOutline} label={t("common.labels")}>
           <IssueLabel workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} disabled={disabled} />
         </SidebarPropertyListItem>
 
@@ -207,7 +219,7 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
           isEditable={!disabled}
           isPeekView
         />
-      </div>
+      </CollapsiblePropertyList>
     </div>
   );
 });
