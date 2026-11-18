@@ -110,6 +110,13 @@
     "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman masuk untuk menyelesaikan proses masuk.",
     "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mengharapkan kode masuk, Anda dapat mengabaikan pesan ini."
   },
+  "sign_up_code": {
+    "subject": "Kode pendaftaran Pi-Plane Anda adalah {code}",
+    "preheader": "Kode pendaftaran Pi-Plane Anda {code} berlaku selama 10 menit.",
+    "heading": "Konfirmasikan alamat email Anda untuk Pi-Plane",
+    "info": "Kode ini berlaku selama 10 menit ke depan. Masukkan di halaman pendaftaran untuk membuat akun Anda.",
+    "note": "Catatan: Email ini dikirim ke <span>{email}</span>. Jika Anda tidak mencoba mendaftar, Anda dapat mengabaikan pesan ini."
+  },
   "forgot_password": {
     "subject": "Kata sandi baru untuk akun Pi-Plane Anda telah diminta",
     "preheader": "Setel ulang kata sandi Pi-Plane Anda dengan tautan aman ini.",

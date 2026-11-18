@@ -126,6 +126,13 @@
     "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie logowania, aby dokończyć logowanie.",
     "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie spodziewałeś(aś) się kodu logowania, możesz zignorować tę wiadomość."
   },
+  "sign_up_code": {
+    "subject": "Twój kod rejestracji w Pi-Plane: {code}",
+    "preheader": "Twój kod rejestracji w Pi-Plane {code} jest ważny przez 10 minut.",
+    "heading": "Potwierdź swój adres e-mail w Pi-Plane",
+    "info": "Ten kod jest ważny przez najbliższe 10 minut. Wpisz go na stronie rejestracji, aby utworzyć konto.",
+    "note": "Uwaga: ta wiadomość została wysłana na adres <span>{email}</span>. Jeśli nie próbowałeś(aś) się zarejestrować, możesz zignorować tę wiadomość."
+  },
   "forgot_password": {
     "subject": "Zażądano nowego hasła do konta Pi-Plane",
     "preheader": "Zresetuj hasło do Pi-Plane za pomocą tego bezpiecznego linku.",

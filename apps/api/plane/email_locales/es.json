@@ -118,6 +118,13 @@
     "info": "Este código es válido durante los próximos 10 minutos. Introdúzcalo en la página de inicio de sesión para completar el acceso.",
     "note": "Nota: Este correo se envió a <span>{email}</span>. Si no esperaba un código de inicio de sesión, puede ignorar este mensaje."
   },
+  "sign_up_code": {
+    "subject": "Su código de registro de Pi-Plane es {code}",
+    "preheader": "Su código de registro de Pi-Plane {code} es válido durante 10 minutos.",
+    "heading": "Confirme su dirección de correo electrónico para Pi-Plane",
+    "info": "Este código es válido durante los próximos 10 minutos. Introdúzcalo en la página de registro para crear su cuenta.",
+    "note": "Nota: Este correo se envió a <span>{email}</span>. Si no intentó registrarse, puede ignorar este mensaje."
+  },
   "forgot_password": {
     "subject": "Se ha solicitado una nueva contraseña para su cuenta de Pi-Plane",
     "preheader": "Restablezca su contraseña de Pi-Plane con este enlace seguro.",

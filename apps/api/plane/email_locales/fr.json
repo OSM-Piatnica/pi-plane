@@ -118,6 +118,13 @@
     "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page de connexion pour terminer votre connexion.",
     "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’attendiez pas de code de connexion, vous pouvez ignorer ce message."
   },
+  "sign_up_code": {
+    "subject": "Votre code d’inscription à Pi-Plane est {code}",
+    "preheader": "Votre code d’inscription à Pi-Plane {code} est valable pendant 10 minutes.",
+    "heading": "Confirmez votre adresse e-mail pour Pi-Plane",
+    "info": "Ce code est valable pendant les 10 prochaines minutes. Saisissez-le sur la page d’inscription pour créer votre compte.",
+    "note": "Remarque : cet e-mail a été envoyé à <span>{email}</span>. Si vous n’avez pas essayé de vous inscrire, vous pouvez ignorer ce message."
+  },
   "forgot_password": {
     "subject": "Un nouveau mot de passe a été demandé pour votre compte Pi-Plane",
     "preheader": "Réinitialisez votre mot de passe Pi-Plane avec ce lien sécurisé.",
