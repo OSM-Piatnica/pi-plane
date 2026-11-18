@@ -75,6 +75,47 @@ describe("DateSelect", () => {
     expect(day("June 15th, 2025")).toBeDefined();
   });
 
+  describe("focus on open", () => {
+    it("lands on the selected day when the calendar opens", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={new Date(2025, 5, 15)} onChange={vi.fn()} variant="select-md" placeholder="Set date" />
+      );
+
+      await user.click(screen.getByRole("button", { name: /jun 15, 2025/i }));
+
+      expect(document.activeElement).toBe(day("June 15th, 2025"));
+    });
+
+    it("lands on a day, not on the popover body, when nothing is picked", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={null} onChange={vi.fn()} variant="select-md" placeholder="Set date" defaultMonth={JUNE_2025} />
+      );
+
+      await user.click(screen.getByRole("button", { name: /set date/i }));
+
+      const active = document.activeElement as HTMLElement;
+      expect(active.tagName).toBe("BUTTON");
+      expect(active.closest('[role="grid"]')).not.toBeNull();
+      expect(active.getAttribute("aria-label")).toMatch(/June 1st, 2025/);
+    });
+
+    it("leaves no unlabelled tab stop around the calendar", async () => {
+      const user = userEvent.setup();
+      render(
+        <DateSelect value={null} onChange={vi.fn()} variant="select-md" placeholder="Set date" defaultMonth={JUNE_2025} />
+      );
+
+      await user.click(screen.getByRole("button", { name: /set date/i }));
+
+      const stops = Array.from(document.body.querySelectorAll<HTMLElement>('[tabindex="0"]')).filter(
+        (element) => !element.getAttribute("aria-label") && element.tagName !== "BUTTON"
+      );
+      expect(stops).toEqual([]);
+    });
+  });
+
   it("prefers the caller's tooltip content over the formatted selection", async () => {
     const user = userEvent.setup();
     render(
@@ -190,6 +231,23 @@ describe("DateRangeSelect", () => {
     const range = onChange.mock.calls[0]?.[0] as DateRangeValue;
     expect(range.from?.getDate()).toBe(12);
     expect(range.to?.getDate()).toBe(15);
+  });
+
+  it("lands on a day when the calendar opens", async () => {
+    const user = userEvent.setup();
+    render(
+      <DateRangeSelect
+        value={{ from: null, to: null }}
+        onChange={vi.fn()}
+        variant="select-md"
+        placeholder="Set dates"
+        defaultMonth={JUNE_2025}
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /set dates/i }));
+
+    expect((document.activeElement as HTMLElement).closest('[role="grid"]')).not.toBeNull();
   });
 
   it("merges a same-month range into one label", () => {
