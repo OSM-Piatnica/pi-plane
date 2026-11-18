@@ -14,6 +14,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
 
 from plane.db.models import FileAsset, Issue, Project, ProjectMember
+from plane.license.models import InstanceConfiguration
 
 ROUTES = ["workspace", "user", "issue_attachment"]
 
@@ -73,3 +74,18 @@ class TestLegacyUploadValidation:
         assert resp.status_code == status.HTTP_400_BAD_REQUEST, resp.content
         assert "asset" in resp.data
         assert not FileAsset.objects.exists()
+
+    # The fork's limit is set by the instance administrator; the bare setting is only the default.
+    def test_the_limit_the_administrator_saved_rules_over_the_environment_default(
+        self, session_client, urls, route, settings
+    ):
+        settings.FILE_SIZE_LIMIT = 1
+        settings.SKIP_ENV_VAR = True
+        InstanceConfiguration.objects.create(
+            key="FILE_SIZE_LIMIT", value=str(2 * 1024 * 1024), category="WORKSPACE_MANAGEMENT"
+        )
+
+        resp = _upload(session_client, urls[route], "ok.png", "image/png", b"xx")
+
+        assert resp.status_code == status.HTTP_201_CREATED, resp.content
+        assert FileAsset.objects.filter(id=resp.data["id"]).exists()

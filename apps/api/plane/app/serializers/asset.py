@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 from django.conf import settings
@@ -7,6 +8,7 @@ from rest_framework import serializers
 
 from .base import BaseSerializer
 from plane.db.models import FileAsset
+from plane.utils.file_size_limit import get_file_size_limit
 
 
 def validate_uploaded_file(file):
@@ -17,7 +19,8 @@ def validate_uploaded_file(file):
     """
     if getattr(file, "content_type", None) not in settings.ATTACHMENT_MIME_TYPES:
         raise serializers.ValidationError("Invalid file type.")
-    if file.size > settings.FILE_SIZE_LIMIT:
+    # The limit the instance administrator set, which is what the presigned routes enforce, not the bare setting
+    if file.size > get_file_size_limit():
         raise serializers.ValidationError("File too large.")
     return file
 
