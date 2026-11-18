@@ -52,6 +52,7 @@ export enum EIssueGroupByToServerOptions {
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
   "team_project" = "project_id",
   "parent" = "parent_id",
+  "epic" = "epic_id",
 }
 
 export enum EIssueGroupBYServerToProperty {
@@ -67,6 +68,7 @@ export enum EIssueGroupBYServerToProperty {
   "project_id" = "project_id",
   "created_by" = "created_by",
   "parent_id" = "parent_id",
+  "epic_id" = "epic_id",
 }
 
 export enum EIssueCommentAccessSpecifier {
@@ -120,6 +122,10 @@ export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
   "labels",
   "module",
   "cycle",
+  // a drop sets the parent of the work item (an Epic group: directly under that Epic); the server refuses a move
+  // that breaks the hierarchy rules
+  "parent",
+  "epic",
   // a drop sets the date that stands for the bucket (not into Earlier or Later, see the columns)
   "start_date_bucket",
   "target_date_bucket",
@@ -152,6 +158,7 @@ export const ISSUE_GROUP_BY_OPTIONS: {
   { key: "assignees", titleTranslationKey: "common.assignees" },
   { key: "created_by", titleTranslationKey: "common.created_by" },
   { key: "parent", titleTranslationKey: "common.parent" },
+  { key: "epic", titleTranslationKey: "common.epic" },
   { key: "start_date_bucket", titleTranslationKey: "common.order_by.start_date" },
   { key: "target_date_bucket", titleTranslationKey: "common.order_by.due_date" },
   { key: "finish_date_bucket", titleTranslationKey: "common.order_by.finish_date" },
@@ -159,7 +166,7 @@ export const ISSUE_GROUP_BY_OPTIONS: {
 ];
 
 // Groupings by the work item hierarchy list every work item of a group, so they always request sub-work items.
-export const HIERARCHY_GROUP_BY_OPTIONS: TIssueGroupByOptions[] = ["parent"];
+export const HIERARCHY_GROUP_BY_OPTIONS: TIssueGroupByOptions[] = ["parent", "epic"];
 
 /**
  * Whether the layout in use groups by the hierarchy. Group by is stored per view and kept when the layout changes,

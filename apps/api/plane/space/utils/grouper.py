@@ -30,7 +30,7 @@ from plane.db.models import (
 
 # Groupings that only the app offers. A public board would have to decide what the title of a parent may reveal, so
 # they are refused here, although the shared paginator accepts them.
-APP_ONLY_GROUP_FIELDS = frozenset({"parent_id"})
+APP_ONLY_GROUP_FIELDS = frozenset({"parent_id", "epic_id"})
 
 
 def issue_queryset_grouper(

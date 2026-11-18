@@ -8,6 +8,7 @@
 import React from "react";
 import { isEmpty } from "lodash-es";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { isHierarchyGrouping } from "@plane/constants";
 import type {
   IIssueDisplayFilterOptions,
@@ -15,6 +16,8 @@ import type {
   ILayoutDisplayFiltersOptions,
   TIssueGroupByOptions,
 } from "@plane/types";
+// hooks
+import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
 // components
 import {
   FilterColorBy,
@@ -50,6 +53,11 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
     isEpic = false,
   } = props;
 
+  // router and project work item types: Epics are on when an Epic type is linked to the project
+  const { workspaceSlug, projectId } = useParams();
+  const { types: projectTypes } = useProjectIssueTypes(workspaceSlug?.toString(), projectId?.toString());
+  const epicsEnabled = projectTypes.some((row) => row.issue_type_detail?.is_epic);
+
   const isDisplayFilterEnabled = (displayFilter: keyof IIssueDisplayFilterOptions) =>
     Object.keys(layoutDisplayFiltersOptions?.display_filters ?? {}).includes(displayFilter);
 
@@ -59,6 +67,10 @@ export const DisplayFiltersSelection = observer(function DisplayFiltersSelection
   }
   if (moduleViewDisabled) {
     ignoreGroupedFilters.push("module");
+  }
+  // Grouping by Epic is offered where the project has an Epic type (and kept where it is already in use)
+  if (!epicsEnabled && displayFilters?.group_by !== "epic" && displayFilters?.sub_group_by !== "epic") {
+    computedIgnoreGroupedFilters.push("epic");
   }
 
   // grouped by the hierarchy, sub-work items are always included, so the option is not offered

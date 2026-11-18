@@ -181,6 +181,13 @@ export const ListGroup = observer(function ListGroup(props: Props) {
       } else if (groupByKey === "parent") {
         // a work item added to a parent group becomes a sub-work item of it; in "None" it has no parent
         preloadedData = { ...preloadedData, parent_id: value === "None" ? null : value };
+      } else if (groupByKey === "epic") {
+        // directly under the Epic of the group
+        preloadedData = {
+          ...preloadedData,
+          parent_id: value === "None" ? null : value,
+          epic_id: value === "None" ? null : value,
+        };
       } else if (groupByKey === "created_by") {
         preloadedData = { ...preloadedData };
       } else {

@@ -24,6 +24,7 @@ from plane.app.serializers import (
     IssueStateIntakeSerializer,
 )
 from plane.utils.content_validator import validate_html_content
+from plane.space.utils.params import public_filter_params
 from plane.utils.issue_filters import issue_filters
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models.intake import SourceType
@@ -62,7 +63,7 @@ class IntakeIssuePublicViewSet(BaseViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        filters = issue_filters(request.query_params, "GET")
+        filters = issue_filters(public_filter_params(request.query_params), "GET")
         issues = (
             Issue.objects.filter(
                 issue_intake__intake_id=intake_id,

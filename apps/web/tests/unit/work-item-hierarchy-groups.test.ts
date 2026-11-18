@@ -56,6 +56,13 @@ describe("isHierarchyGrouping", () => {
     expect(isHierarchyGrouping(undefined)).toBe(false);
   });
 
+  it("counts grouping by Epic like grouping by parent", () => {
+    expect(isHierarchyGrouping({ layout: EIssueLayoutTypes.LIST, group_by: "epic" })).toBe(true);
+    expect(isHierarchyGrouping({ layout: EIssueLayoutTypes.KANBAN, group_by: "state", sub_group_by: "epic" })).toBe(
+      true
+    );
+  });
+
   it("ignores groupings the current layout does not apply", () => {
     expect(isHierarchyGrouping({ layout: EIssueLayoutTypes.LIST, group_by: "state", sub_group_by: "parent" })).toBe(
       false
