@@ -42,6 +42,7 @@ from plane.utils.file_size_limit import (
     parse_whole_number,
 )
 from plane.license.utils.instance_value import get_email_configuration
+from plane.utils.sharepoint.config import configuration_error as sharepoint_configuration_error
 
 
 class InstanceConfigurationEndpoint(BaseAPIView):
@@ -147,6 +148,10 @@ class InstanceConfigurationEndpoint(BaseAPIView):
                         },
                         status=status.HTTP_400_BAD_REQUEST,
                     )
+
+        sharepoint_error = sharepoint_configuration_error(request.data)
+        if sharepoint_error:
+            return Response({"error": sharepoint_error}, status=status.HTTP_400_BAD_REQUEST)
 
         configurations = InstanceConfiguration.objects.filter(key__in=request.data.keys())
 

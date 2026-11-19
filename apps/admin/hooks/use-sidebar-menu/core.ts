@@ -5,13 +5,21 @@
  * See the LICENSE file for details.
  */
 
-import { BrainCog, Palette } from "lucide-react";
+import { Blocks, BrainCog, Palette } from "lucide-react";
 // plane imports
 import { ImageOutline, LockOutline, MailOutline, SettingsOutline, WorkspaceOutline } from "@makeplane/propel/icons";
 // types
 import type { TSidebarMenuItem } from "./types";
 
-export type TCoreSidebarMenuKey = "general" | "email" | "workspace" | "authentication" | "ai" | "image" | "themes";
+export type TCoreSidebarMenuKey =
+  | "general"
+  | "email"
+  | "workspace"
+  | "authentication"
+  | "ai"
+  | "image"
+  | "themes"
+  | "integrations";
 
 export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem> = {
   general: {
@@ -55,5 +63,11 @@ export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem>
     name: "Themes",
     description: "Add colour themes for everyone on this instance.",
     href: `/themes/`,
+  },
+  integrations: {
+    Icon: Blocks,
+    name: "Integrations",
+    description: "Connect SharePoint and other systems.",
+    href: `/integrations/`,
   },
 };
