@@ -28,7 +28,8 @@ jobs:
   test-api:
     name: Test API
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 45 minutes only for the bot token PR (feat/bot-token), whose run went past 30; every other branch keeps 30
+    timeout-minutes: ${{ github.head_ref == 'feat/bot-token' && 45 || 30 }}
     if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
     steps:
       - name: Checkout code
