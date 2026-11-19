@@ -28,7 +28,17 @@ CODE_MAX_LENGTH = 16
 
 
 class DepartmentError(ValueError):
-    """A change that would break the rules of departments; the message is shown to whoever asked."""
+    """
+    A change that would break the rules of departments.
+
+    ``detail`` is the message for whoever asked, and ``people`` the names of the people concerned (for example
+    those already in another department); views answer with these, never with the exception's own text.
+    """
+
+    def __init__(self, detail, people=()):
+        super().__init__(detail)
+        self.detail = detail
+        self.people = list(people)
 
 
 def normalize_code(value):
@@ -123,5 +133,6 @@ def check_one_department(group, user_ids):
         names.append(f"{person} ({membership.group.name})")
     if names:
         raise DepartmentError(
-            "A person belongs to at most one department. Already in another department: " + ", ".join(names) + "."
+            "A person belongs to at most one department. Already in another department: " + ", ".join(names) + ".",
+            people=names,
         )

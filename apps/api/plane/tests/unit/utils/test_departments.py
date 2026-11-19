@@ -115,8 +115,13 @@ class TestDepartments:
         closed = _department(ws, "Closed", "CL", is_active=False)
         _join(marketing, pat)
 
-        with pytest.raises(DepartmentError, match="Marketing"):
+        with pytest.raises(DepartmentError, match="Marketing") as raised:
             check_one_department(quality, [pat.member_id])
+        # What the views answer with: the message and the people, set explicitly
+        assert raised.value.detail == "A person belongs to at most one department. Already in another department: " + (
+            f"{raised.value.people[0]}."
+        )
+        assert len(raised.value.people) == 1 and raised.value.people[0].endswith("(Marketing)")
         # The same department again, a switched-off one and a plain group are fine
         check_one_department(marketing, [pat.member_id])
         check_one_department(closed, [pat.member_id])

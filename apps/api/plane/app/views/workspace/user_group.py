@@ -278,7 +278,7 @@ class UserGroupDetailEndpoint(_GroupView):
         except IntegrityError as exc:
             return _conflict(exc)
         except DepartmentError as exc:
-            return _error(str(exc))
+            return _error(exc.detail)
         if moved:
             # Who belongs to the groups above changed with it, and so do the projects those give
             reconcile_workspace(workspace.id)
@@ -350,7 +350,7 @@ class UserGroupMembersEndpoint(_GroupView):
                     workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
                 )
         except DepartmentError as exc:
-            return _error(str(exc), status.HTTP_409_CONFLICT)
+            return _error(exc.detail, status.HTTP_409_CONFLICT)
         reconcile_user(workspace.id, user_id)
         notify_group_membership.delay(str(group.id), str(user_id), str(request.user.id), ADDED, membership.role)
         return Response(UserGroupMemberSerializer(membership).data, status=status.HTTP_201_CREATED)
