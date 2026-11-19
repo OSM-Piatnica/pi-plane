@@ -13,6 +13,8 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction
 from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Module imports
 from plane.db.mixins import AuditModel, ChangeTrackerMixin
@@ -529,3 +531,14 @@ class ProjectUserProperty(ProjectBaseModel):
     def __str__(self):
         """Return properties status of the project"""
         return str(self.user)
+
+
+@receiver(post_save, sender=Project)
+def add_service_account_to_new_project(sender, instance, created, raw=False, **kwargs):
+    """The workspace's service account joins every new project, so God Mode bot tokens see all projects."""
+    if not created or raw:
+        return
+    # Imported here: the helper imports the models
+    from plane.utils.service_account import add_service_accounts_to_project
+
+    add_service_accounts_to_project(instance)
