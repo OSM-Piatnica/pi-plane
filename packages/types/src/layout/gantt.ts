@@ -54,6 +54,40 @@ export type TGanttBlockRollup = TGanttDateRollup & {
   is_target_inferred: boolean;
 };
 
+/** Critical path analysis of one work item, as the server computes it. Dates are ISO "YYYY-MM-DD" strings. */
+export type TScheduleAnalysisItem = {
+  earliest_start: string;
+  earliest_finish: string;
+  latest_start: string;
+  latest_finish: string;
+  /** Working days the work item can slip without moving the end of the project; null for a fixed work item. */
+  total_float: number | null;
+  is_critical: boolean;
+  /** Completed or cancelled: the analysis leaves its dates alone. */
+  is_fixed: boolean;
+  /** The latest finish that still lets the work items depending on this one meet their due dates. */
+  needed_by: string | null;
+};
+
+/** The answer of the schedule analysis endpoint of a project (optionally of one module or cycle). */
+export type TScheduleAnalysis = {
+  project_start: string | null;
+  project_end: string | null;
+  items: Record<string, TScheduleAnalysisItem>;
+  critical_ids: string[];
+  /** Work items that depend on each other in a circle; the relations inside a circle are left out. */
+  cycles: string[][];
+  undated_count: number;
+  undated_linked_ids: string[];
+  weekend_days: number[];
+  analysed_count: number;
+  max_items: number;
+  /** More dated work items than `max_items`: only the first ones were analysed. */
+  truncated: boolean;
+};
+
+export type TScheduleAnalysisScope = { module?: string; cycle?: string };
+
 export interface IBlockUpdateData {
   sort_order?: {
     destinationIndex: number;

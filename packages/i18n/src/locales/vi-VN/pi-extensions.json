@@ -212,6 +212,20 @@
     }
   },
   "reject": "Từ chối",
+  "schedule_analysis": {
+    "critical_bar": "Nằm trên đường găng: chậm trễ sẽ đẩy lùi ngày kết thúc dự án",
+    "critical_path": "Đường găng",
+    "critical_path_tooltip": "Làm nổi bật các mục công việc mà sự chậm trễ sẽ đẩy lùi ngày kết thúc dự án.",
+    "cycles": "Một số mục công việc phụ thuộc vòng tròn vào nhau; các quan hệ đó đã bị bỏ qua.",
+    "float": "Thời gian dự trữ",
+    "float_critical": "Không có (đường găng)",
+    "float_days": "{count, plural, one {# ngày làm việc} other {# ngày làm việc}}",
+    "float_help": "Số ngày làm việc mà mục công việc này có thể trễ mà không đẩy lùi ngày kết thúc dự án",
+    "load_error": "Không thể tải đường găng.",
+    "needed_by": "Cần xong trước",
+    "needed_by_help": "Ngày kết thúc muộn nhất để các mục công việc phụ thuộc vào mục này vẫn kịp ngày hết hạn",
+    "truncated": "Chỉ những mục công việc có ngày đầu tiên được phân tích (giới hạn: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Bạn hiện chưa có bản ghi nhập nào. Sau khi bạn nhập một tệp vào dự án, tất cả các bản ghi sẽ xuất hiện tại đây.",

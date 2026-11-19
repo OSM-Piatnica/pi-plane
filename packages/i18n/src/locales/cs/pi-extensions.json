@@ -212,6 +212,20 @@
     }
   },
   "reject": "Zamítnout",
+  "schedule_analysis": {
+    "critical_bar": "Na kritické cestě: zpoždění posune konec projektu",
+    "critical_path": "Kritická cesta",
+    "critical_path_tooltip": "Zvýrazní pracovní položky, jejichž zpoždění posune konec projektu.",
+    "cycles": "Některé pracovní položky na sobě závisejí v kruhu; tyto vazby byly vynechány.",
+    "float": "Rezerva",
+    "float_critical": "Žádná (kritická cesta)",
+    "float_days": "{count, plural, one {# pracovní den} few {# pracovní dny} many {# pracovního dne} other {# pracovních dnů}}",
+    "float_help": "O kolik pracovních dnů se tato pracovní položka může zpozdit, aniž by se posunul konec projektu",
+    "load_error": "Kritickou cestu se nepodařilo načíst.",
+    "needed_by": "Potřeba do",
+    "needed_by_help": "Nejpozdější dokončení, při kterém pracovní položky závislé na této stihnou své termíny",
+    "truncated": "Analyzovány byly jen první pracovní položky s daty (limit: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Zatím nemáte žádné záznamy o importu. Jakmile do projektu importujete soubor, všechny záznamy se zobrazí zde.",

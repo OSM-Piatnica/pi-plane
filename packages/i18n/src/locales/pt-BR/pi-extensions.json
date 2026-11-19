@@ -212,6 +212,20 @@
     }
   },
   "reject": "Rejeitar",
+  "schedule_analysis": {
+    "critical_bar": "No caminho crítico: um atraso desloca o fim do projeto",
+    "critical_path": "Caminho crítico",
+    "critical_path_tooltip": "Destaca os itens de trabalho cujo atraso desloca o fim do projeto.",
+    "cycles": "Alguns itens de trabalho dependem uns dos outros em círculo; essas relações foram ignoradas.",
+    "float": "Folga",
+    "float_critical": "Nenhuma (caminho crítico)",
+    "float_days": "{count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}",
+    "float_help": "Dias úteis que este item de trabalho pode atrasar sem deslocar o fim do projeto",
+    "load_error": "Não foi possível carregar o caminho crítico.",
+    "needed_by": "Necessário até",
+    "needed_by_help": "Conclusão mais tardia que permite aos itens de trabalho que dependem deste cumprir as datas de vencimento",
+    "truncated": "Apenas os primeiros itens de trabalho com datas foram analisados (limite: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Você ainda não tem nenhum registro de importação. Assim que importar um arquivo para um projeto, todos os registros aparecerão aqui.",

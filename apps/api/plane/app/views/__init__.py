@@ -157,6 +157,7 @@ from .issue.base import (
 
 from .issue.activity import IssueActivityEndpoint
 from .issue.hierarchy import IssueDateRollupEndpoint
+from .issue.schedule import ProjectScheduleAnalysisEndpoint
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint

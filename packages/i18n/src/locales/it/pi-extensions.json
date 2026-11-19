@@ -212,6 +212,20 @@
     }
   },
   "reject": "Rifiuta",
+  "schedule_analysis": {
+    "critical_bar": "Sul percorso critico: un ritardo sposta la fine del progetto",
+    "critical_path": "Percorso critico",
+    "critical_path_tooltip": "Evidenzia gli elementi di lavoro il cui ritardo sposta la fine del progetto.",
+    "cycles": "Alcuni elementi di lavoro dipendono l’uno dall’altro in modo circolare; queste relazioni sono state escluse.",
+    "float": "Margine",
+    "float_critical": "Nessuno (percorso critico)",
+    "float_days": "{count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}",
+    "float_help": "Giorni lavorativi di cui questo elemento di lavoro può slittare senza spostare la fine del progetto",
+    "load_error": "Impossibile caricare il percorso critico.",
+    "needed_by": "Necessario entro",
+    "needed_by_help": "Ultima data di fine che consente agli elementi di lavoro che dipendono da questo di rispettare le scadenze",
+    "truncated": "Sono stati analizzati solo i primi elementi di lavoro con date (limite: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Al momento non hai record di importazione. Una volta importato un file in un progetto, tutti i record appariranno qui.",

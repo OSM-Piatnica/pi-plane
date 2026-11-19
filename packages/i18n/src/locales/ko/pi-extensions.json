@@ -212,6 +212,20 @@
     }
   },
   "reject": "거부",
+  "schedule_analysis": {
+    "critical_bar": "크리티컬 패스에 있습니다: 지연되면 프로젝트 종료일이 밀립니다",
+    "critical_path": "크리티컬 패스",
+    "critical_path_tooltip": "지연되면 프로젝트 종료일이 밀리는 작업 항목을 강조 표시합니다.",
+    "cycles": "일부 작업 항목이 서로 순환하여 의존합니다. 해당 관계는 분석에서 제외되었습니다.",
+    "float": "여유 기간",
+    "float_critical": "없음(크리티컬 패스)",
+    "float_days": "{count, plural, one {근무일 기준 #일} other {근무일 기준 #일}}",
+    "float_help": "프로젝트 종료일을 밀지 않고 이 작업 항목이 지연될 수 있는 근무일 수입니다",
+    "load_error": "크리티컬 패스를 불러올 수 없습니다.",
+    "needed_by": "필요 기한",
+    "needed_by_help": "이 작업 항목에 의존하는 작업 항목이 마감일을 지킬 수 있는 가장 늦은 완료일입니다",
+    "truncated": "날짜가 있는 작업 항목 중 처음 항목만 분석했습니다(한도: {count})."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "지금은 가져오기 기록이 없습니다. 파일을 프로젝트로 가져오면 모든 기록이 여기에 표시됩니다.",

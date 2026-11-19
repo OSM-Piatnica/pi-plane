@@ -16,6 +16,7 @@ import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/prop
 import { DateSelect } from "@/components/dropdowns/date-select";
 import { DurationDropdown } from "@/components/dropdowns/duration";
 import { DateAlert } from "@/components/issues/issue-details/sidebar/date-alert";
+import { WorkItemScheduleInfo } from "@/components/issues/work-item-schedule-info";
 // hooks
 import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
@@ -135,6 +136,8 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
           hideIcon
         />
       </SidebarPropertyListItem>
+
+      <WorkItemScheduleInfo issue={issue} projectId={issue.project_id ?? projectId} />
     </>
   );
 });
