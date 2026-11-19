@@ -15,6 +15,7 @@ export function useSidebarMenu(): TSidebarMenuItem[] {
     coreSidebarMenuLinks.email,
     coreSidebarMenuLinks.authentication,
     coreSidebarMenuLinks.workspace,
+    coreSidebarMenuLinks.botTokens,
     coreSidebarMenuLinks.ai,
     coreSidebarMenuLinks.image,
     coreSidebarMenuLinks.themes,

@@ -11,6 +11,7 @@ export * from "./auth-ee";
 export * from "./base";
 export * from "./email";
 export * from "./image";
+export * from "./service-token";
 export * from "./theme";
 export * from "./uploads";
 export * from "./workspace";
