@@ -112,6 +112,7 @@ from .project_copy_job import ProjectCopyJob
 from .description import Description, DescriptionVersion
 
 from .user_group import (
+    GroupKind,
     GroupRole,
     GroupSource,
     IssueGroupAssignee,

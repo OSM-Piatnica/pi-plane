@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "有効にする",
+        "add": "部署を追加",
+        "code": "コード",
+        "code_hint": "短い略称です（例：RM）。",
+        "color": "色",
+        "created": "部署を追加しました。",
+        "deactivate": "無効にする",
+        "delete_content": "この部署のメンバーはワークスペースに残り、部署なしになります。部署に割り当てられた作業項目は、その割り当てが解除されます。この操作は元に戻せません。",
+        "deleted": "部署を削除しました。",
+        "department": "部署",
+        "description": "組織の部署です。各メンバーはワークスペース内で 1 つの部署に所属します。部署はグループでもあるため、メンバーを持ち、作業項目を割り当てることができます。",
+        "edit": "部署を編集",
+        "empty": "部署はまだありません。",
+        "import": "リストをインポート",
+        "import_done": "追加した部署：{count}。",
+        "import_hint": "1 行に 1 部署ずつ、「コード;名前」の形式で貼り付けてください。既に存在する部署は除外されます。",
+        "import_invalid_lines": "使用できない行：{lines}",
+        "import_summary": "追加：{create}。既存：{existing}。",
+        "import_title": "部署をインポート",
+        "inactive": "無効",
+        "move_down": "下へ移動",
+        "move_up": "上へ移動",
+        "no_color": "色なし",
+        "title": "部署",
+        "updated": "部署を保存しました。"
+      },
       "exports": {
         "all_projects": "すべてのプロジェクト",
         "history": {

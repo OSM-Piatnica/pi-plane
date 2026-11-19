@@ -18,6 +18,8 @@ from plane.app.views import (
     UserLastProjectWithWorkspaceEndpoint,
     WorkspaceThemeViewSet,
     WorkspaceAdminMessageEndpoint,
+    DepartmentListEndpoint,
+    DepartmentMembersEndpoint,
     UserGroupDetailEndpoint,
     UserGroupFilterableEndpoint,
     UserGroupListEndpoint,
@@ -148,6 +150,16 @@ urlpatterns = [
         "workspaces/<str:slug>/user-groups/",
         UserGroupListEndpoint.as_view(),
         name="workspace-user-groups",
+    ),
+    path(
+        "workspaces/<str:slug>/departments/",
+        DepartmentListEndpoint.as_view(),
+        name="workspace-departments",
+    ),
+    path(
+        "workspaces/<str:slug>/departments/members/",
+        DepartmentMembersEndpoint.as_view(),
+        name="workspace-department-members",
     ),
     path(
         "workspaces/<str:slug>/user-groups/filterable/",

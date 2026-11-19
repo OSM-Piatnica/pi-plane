@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Aktivieren",
+        "add": "Abteilung hinzufügen",
+        "code": "Code",
+        "code_hint": "Ein kurzes Kürzel, zum Beispiel RM.",
+        "color": "Farbe",
+        "created": "Abteilung hinzugefügt.",
+        "deactivate": "Deaktivieren",
+        "delete_content": "Die Personen in dieser Abteilung bleiben im Arbeitsbereich und haben keine Abteilung mehr. Arbeitselemente, die der Abteilung zugewiesen sind, verlieren diese Zuweisung. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "deleted": "Abteilung gelöscht.",
+        "department": "Abteilung",
+        "description": "Die Abteilungen Ihrer Organisation. Jede Person hat im Arbeitsbereich eine Abteilung. Eine Abteilung ist zugleich eine Gruppe, sie hat also Mitglieder, und Arbeitselemente können ihr zugewiesen werden.",
+        "edit": "Abteilung bearbeiten",
+        "empty": "Es gibt noch keine Abteilungen.",
+        "import": "Liste importieren",
+        "import_done": "Hinzugefügte Abteilungen: {count}.",
+        "import_hint": "Eine Abteilung pro Zeile im Format CODE;Name einfügen. Bereits vorhandene Abteilungen werden ausgelassen.",
+        "import_invalid_lines": "Nicht verwendbare Zeilen: {lines}",
+        "import_summary": "Hinzuzufügen: {create}. Bereits vorhanden: {existing}.",
+        "import_title": "Abteilungen importieren",
+        "inactive": "Deaktiviert",
+        "move_down": "Nach unten verschieben",
+        "move_up": "Nach oben verschieben",
+        "no_color": "Keine Farbe",
+        "title": "Abteilungen",
+        "updated": "Abteilung gespeichert."
+      },
       "exports": {
         "all_projects": "Alle Projekte",
         "history": {

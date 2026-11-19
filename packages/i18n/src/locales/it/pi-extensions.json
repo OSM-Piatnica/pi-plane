@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Attiva",
+        "add": "Aggiungi reparto",
+        "code": "Codice",
+        "code_hint": "Una sigla breve, ad esempio RM.",
+        "color": "Colore",
+        "created": "Reparto aggiunto.",
+        "deactivate": "Disattiva",
+        "delete_content": "Le persone di questo reparto restano nello spazio di lavoro e non hanno più un reparto. Gli elementi di lavoro assegnati al reparto perdono tale assegnazione. Questa azione non può essere annullata.",
+        "deleted": "Reparto eliminato.",
+        "department": "Reparto",
+        "description": "I reparti della Sua organizzazione. Ogni persona ha un reparto nello spazio di lavoro. Un reparto è anche un gruppo, quindi ha dei membri e gli si possono assegnare elementi di lavoro.",
+        "edit": "Modifica reparto",
+        "empty": "Non ci sono ancora reparti.",
+        "import": "Importa elenco",
+        "import_done": "Reparti aggiunti: {count}.",
+        "import_hint": "Incolli un reparto per riga nel formato CODICE;Nome. I reparti già esistenti vengono ignorati.",
+        "import_invalid_lines": "Righe non utilizzabili: {lines}",
+        "import_summary": "Da aggiungere: {create}. Già presenti: {existing}.",
+        "import_title": "Importa reparti",
+        "inactive": "Disattivato",
+        "move_down": "Sposta giù",
+        "move_up": "Sposta su",
+        "no_color": "Nessun colore",
+        "title": "Reparti",
+        "updated": "Reparto salvato."
+      },
       "exports": {
         "all_projects": "Tutti i progetti",
         "history": {

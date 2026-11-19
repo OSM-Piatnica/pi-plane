@@ -15,6 +15,9 @@ export enum EUserGroupRole {
   MEMBER = 15,
 }
 
+/** What a group stands for. A department is the unit a person works in: at most one active per person. */
+export type TUserGroupKind = "group" | "department";
+
 export type TUserGroup = {
   id: string;
   name: string;
@@ -23,6 +26,14 @@ export type TUserGroup = {
   source: TUserGroupSource;
   external_id: string | null;
   is_external: boolean;
+  kind: TUserGroupKind;
+  /** The short name of a department ("RM"); empty when it has none. */
+  code: string;
+  /** A hex colour, or empty. */
+  color: string;
+  sort_order: number;
+  /** A department that is switched off keeps its members but is nobody's department. */
+  is_active: boolean;
   /** Direct members only. */
   member_count: number;
   /** What the requester may do with this group. */
@@ -35,6 +46,24 @@ export type TUserGroupFormData = {
   name: string;
   description?: string;
   parent?: string | null;
+  kind?: TUserGroupKind;
+  code?: string;
+  color?: string;
+  sort_order?: number;
+  is_active?: boolean;
+};
+
+/** Who works in which department: user id to department (group) id, derived from the department groups. */
+export type TDepartmentMembers = Record<string, string>;
+
+/** A department as the pickers get it (the departments endpoint, open to every member of the workspace). */
+export type TDepartment = {
+  id: string;
+  name: string;
+  code: string;
+  color: string;
+  sort_order: number;
+  is_external: boolean;
 };
 
 export type TUserGroupMember = {
