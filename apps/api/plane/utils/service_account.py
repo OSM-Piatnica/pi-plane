@@ -10,13 +10,16 @@ including the ones created later. Its tokens are read-only (see plane.api.middle
 """
 
 # Python imports
+import logging
 from urllib.parse import urlparse
 from uuid import uuid4
 
 # Django imports
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
-from django.db import transaction
+from django.db import IntegrityError, transaction
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Module imports
 from plane.db.models import BotTypeEnum, Project, ProjectMember, User, WorkspaceMember
@@ -25,6 +28,12 @@ from plane.utils.permissions import ROLE
 # Member, not Admin: enough to see every work item, state, comment and member of a project
 SERVICE_ACCOUNT_ROLE = ROLE.MEMBER.value
 SERVICE_ACCOUNT_NAME = "Pi-Plane API"
+
+logger = logging.getLogger("plane.api")
+
+
+class ServiceAccountDisabled(Exception):
+    """The workspace's service account was deactivated; creating a token must not silently bring it back."""
 
 
 def is_service_account(user) -> bool:
@@ -47,20 +56,27 @@ def get_or_create_service_account(workspace):
     user = get_service_account(workspace.id)
     if user is None:
         host = urlparse(settings.WEB_URL or "https://plane.so").hostname or "plane.so"
-        user = User.objects.create(
-            username=_username(workspace.id),
-            email=f"{_username(workspace.id)}@{host}",
-            display_name=SERVICE_ACCOUNT_NAME,
-            first_name=SERVICE_ACCOUNT_NAME,
-            last_name="",
-            is_bot=True,
-            bot_type=BotTypeEnum.SERVICE_ACCOUNT,
-            password=make_password(uuid4().hex),
-            is_password_autoset=True,
-        )
-    elif not user.is_active:
-        user.is_active = True
-        user.save(update_fields=["is_active"])
+        try:
+            # a savepoint, so that losing the race for the unique username does not break the outer transaction
+            with transaction.atomic():
+                user = User.objects.create(
+                    username=_username(workspace.id),
+                    email=f"{_username(workspace.id)}@{host}",
+                    display_name=SERVICE_ACCOUNT_NAME,
+                    first_name=SERVICE_ACCOUNT_NAME,
+                    last_name="",
+                    is_bot=True,
+                    bot_type=BotTypeEnum.SERVICE_ACCOUNT,
+                    password=make_password(uuid4().hex),
+                    is_password_autoset=True,
+                )
+        except IntegrityError:
+            # another request created it first
+            user = get_service_account(workspace.id)
+            if user is None:
+                raise
+    if not user.is_active:
+        raise ServiceAccountDisabled(workspace.id)
 
     workspace_member = WorkspaceMember.objects.filter(workspace=workspace, member=user).first()
     if workspace_member is None:
@@ -100,6 +116,20 @@ def _join(user, projects) -> int:
 def sync_service_account_projects(user, workspace_id) -> int:
     """Make the service account a member of every project of the workspace (archived ones too)."""
     return _join(user, Project.objects.filter(workspace_id=workspace_id))
+
+
+@receiver(post_save, sender=Project)
+def add_service_account_to_new_project(sender, instance, created, raw=False, **kwargs):
+    """The workspace's service account joins every new project, so God Mode bot tokens see all projects.
+
+    A failure here must not stop the project from being created; the next token creation syncs the memberships."""
+    if not created or raw:
+        return
+    try:
+        with transaction.atomic():
+            add_service_accounts_to_project(instance)
+    except Exception:
+        logger.exception("Could not add the service account to project %s", instance.id)
 
 
 def add_service_accounts_to_project(project) -> None:

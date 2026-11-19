@@ -12,6 +12,8 @@ from unittest import mock
 from uuid import uuid4
 
 import pytest
+from django.db import connection
+from django.test.utils import CaptureQueriesContext
 from rest_framework.test import APIClient
 
 from plane.db.models import (
@@ -229,6 +231,36 @@ class TestProjectGroupsApi:
         by_name = {g["name"]: set(g["member_ids"]) for g in response.json()}
         # a group concerns its own people and the people of the groups below it
         assert by_name == {"Sales": {str(anna.id), str(jan.id)}, "Poland": {str(jan.id)}}
+
+    def test_members_lists_only_active_people_of_the_project(self, api_key_client, workspace, project):
+        sales = _group(workspace, "Sales")
+        _link(api_key_client, workspace, project, sales)
+        inside = _person(workspace)
+        outside = _person(workspace)
+        left = _person(workspace)
+        _join(sales, inside)
+        _join(sales, outside)
+        _join(sales, left)
+        ProjectMember.objects.filter(project=project, member=left).update(is_active=False)
+        ProjectMember.objects.filter(project=project, member=outside).delete()
+
+        response = api_key_client.get(_url(workspace, project) + "?assignable=1&members=1")
+
+        assert response.status_code == 200
+        assert [set(g["member_ids"]) for g in response.json()] == [{str(inside.id)}]
+
+    def test_members_does_not_query_per_group(self, api_key_client, workspace, project):
+        def queries(extra_groups):
+            for _ in range(extra_groups):
+                _link(api_key_client, workspace, project, _group(workspace, f"G{uuid4().hex[:6]}"))
+            with CaptureQueriesContext(connection) as captured:
+                response = api_key_client.get(_url(workspace, project) + "?assignable=1&members=1")
+            assert response.status_code == 200
+            return len(captured)
+
+        few = queries(2)
+        many = queries(6)
+        assert many == few
 
 
 @pytest.mark.contract

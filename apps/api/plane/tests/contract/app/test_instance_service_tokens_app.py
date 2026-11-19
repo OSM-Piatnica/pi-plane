@@ -7,6 +7,8 @@
 from datetime import timedelta
 from uuid import uuid4
 
+from unittest import mock
+
 import pytest
 from django.utils import timezone
 from rest_framework.test import APIClient
@@ -23,6 +25,7 @@ from plane.db.models import (
 )
 from plane.license.models import Instance, InstanceAdmin
 from plane.utils.service_account import get_service_account
+from plane.utils import service_account as service_account_module
 
 TOKENS = "/api/instances/service-tokens/"
 
@@ -220,3 +223,50 @@ class TestServiceTokenAccess:
             f"/api/v1/workspaces/{workspace.slug}/projects/{project.id}/work-items/", {"name": "Fine"}, format="json"
         )
         assert response.status_code == 201, response.data
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestServiceAccountRobustness:
+    def test_a_deactivated_account_is_not_brought_back(self, session_client, instance_admin, workspace):
+        _create(session_client, workspace)
+        account = get_service_account(workspace.id)
+        account.is_active = False
+        account.save(update_fields=["is_active"])
+
+        response = session_client.post(TOKENS, {"workspace": str(workspace.id), "label": "Again"}, format="json")
+
+        assert response.status_code == 409
+        account.refresh_from_db()
+        assert account.is_active is False
+        assert APIToken.objects.filter(user=account).count() == 1
+
+    def test_the_workspace_must_be_a_string(self, session_client, instance_admin):
+        for bad in ({"slug": "x"}, ["x"], 5):
+            response = session_client.post(TOKENS, {"workspace": bad, "label": "X"}, format="json")
+            assert response.status_code == 400
+
+    def test_losing_the_race_for_the_account_reuses_it(self, instance_admin, workspace):
+        existing = service_account_module.get_or_create_service_account(workspace)
+        calls = {"n": 0}
+        real = service_account_module.get_service_account
+
+        def first_call_misses(workspace_id):
+            calls["n"] += 1
+            return None if calls["n"] == 1 else real(workspace_id)
+
+        with mock.patch.object(service_account_module, "get_service_account", first_call_misses):
+            again = service_account_module.get_or_create_service_account(workspace)
+
+        assert again.id == existing.id
+        assert User.objects.filter(is_bot=True, bot_type=BotTypeEnum.SERVICE_ACCOUNT).count() == 1
+
+    def test_a_failing_hook_does_not_stop_project_creation(self, session_client, instance_admin, workspace):
+        _create(session_client, workspace)
+        with mock.patch.object(service_account_module, "_join", side_effect=RuntimeError("boom")):
+            project = _project(workspace, "New", "NEW")
+        assert Project.objects.filter(pk=project.pk).exists()
+        assert not ProjectMember.objects.filter(project=project, member__is_bot=True).exists()
+        # creating another token syncs what the hook missed
+        _create(session_client, workspace, label="Again")
+        assert ProjectMember.objects.filter(project=project, member__is_bot=True, is_active=True).exists()

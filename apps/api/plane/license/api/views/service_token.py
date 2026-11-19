@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from plane.db.models import APIToken, BotTypeEnum, Workspace
 from plane.license.api.permissions import InstanceAdminPermission
 from plane.utils.service_account import (
+    ServiceAccountDisabled,
     get_or_create_service_account,
     service_account_project_count,
     sync_service_account_projects,
@@ -102,7 +103,7 @@ class InstanceServiceTokenEndpoint(BaseAPIView):
         label = str(request.data.get("label") or "").strip()
         description = str(request.data.get("description") or "").strip()
 
-        if not workspace_ref:
+        if not workspace_ref or not isinstance(workspace_ref, str):
             return Response({"error": "Choose a workspace"}, status=status.HTTP_400_BAD_REQUEST)
         workspace = (
             Workspace.objects.filter(id=workspace_ref).first()
@@ -122,16 +123,22 @@ class InstanceServiceTokenEndpoint(BaseAPIView):
         if expiry_error:
             return Response({"error": expiry_error}, status=status.HTTP_400_BAD_REQUEST)
 
-        with transaction.atomic():
-            account = get_or_create_service_account(workspace)
-            sync_service_account_projects(account, workspace.id)
-            token = APIToken.objects.create(
-                user=account,
-                user_type=1,
-                workspace=workspace,
-                label=label,
-                description=description,
-                expired_at=expired_at,
+        try:
+            with transaction.atomic():
+                account = get_or_create_service_account(workspace)
+                sync_service_account_projects(account, workspace.id)
+                token = APIToken.objects.create(
+                    user=account,
+                    user_type=1,
+                    workspace=workspace,
+                    label=label,
+                    description=description,
+                    expired_at=expired_at,
+                )
+        except ServiceAccountDisabled:
+            return Response(
+                {"error": "The service account of this workspace is deactivated; activate it first"},
+                status=status.HTTP_409_CONFLICT,
             )
 
         data = _serialize(token, {account.id: service_account_project_count(account)})
@@ -147,8 +154,7 @@ class InstanceServiceTokenDetailEndpoint(BaseAPIView):
         token = _service_tokens().filter(pk=pk).first()
         if token is None:
             return Response({"error": "The token does not exist"}, status=status.HTTP_404_NOT_FOUND)
-        token.is_active = False
-        token.save(update_fields=["is_active", "updated_at"])
+        # a soft delete: API authentication only looks at tokens that are not deleted
         token.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
