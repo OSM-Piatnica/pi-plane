@@ -55,3 +55,35 @@ def resolve_user_object_id(email: str) -> str | None:
         return None
 
     raise RuntimeError(f"Błąd wyszukiwania użytkownika {email}: {response.status_code} {response.text}")
+
+
+_object_id_to_emails_cache: dict[str, frozenset[str]] = {}
+
+
+def resolve_user_emails(object_id: str) -> frozenset[str]:
+    """
+    Adresy (mail i UPN, malymi literami) konta Entra ID o danym Object ID, pobrane z Graph.
+    Pusty zbior, gdy konta nie ma. Tozsamosc pytajacego ustalamy po niezmiennym 'oid' z tokena,
+    a nie po tresci tokena (preferred_username / upn / email moga sie zmieniac i nie nadaja sie
+    do autoryzacji).
+    """
+    if not object_id:
+        return frozenset()
+    if object_id in _object_id_to_emails_cache:
+        return _object_id_to_emails_cache[object_id]
+
+    headers = {"Authorization": f"Bearer {get_access_token()}"}
+    url = f"{GRAPH_BASE}/users/{object_id}"
+    response = requests.get(url, headers=headers, params={"$select": "mail,userPrincipalName"}, timeout=60)
+
+    if response.status_code == 200:
+        data = response.json()
+        emails = frozenset(
+            value.strip().lower() for value in (data.get("mail"), data.get("userPrincipalName")) if value
+        )
+    elif response.status_code == 404:
+        emails = frozenset()
+    else:
+        raise RuntimeError(f"Błąd odczytu użytkownika {object_id}: {response.status_code}")
+    _object_id_to_emails_cache[object_id] = emails
+    return emails

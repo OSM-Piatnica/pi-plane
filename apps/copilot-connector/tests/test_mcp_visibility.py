@@ -34,11 +34,12 @@ def fake_get_all(path, params=None, cap=None):
 
 def visible(email, mode, project=None):
     srv._cache.clear()
-    token = SimpleNamespace(claims={"email": email})
+    token = SimpleNamespace(claims={"oid": "oid-" + email})
     with mock.patch.object(srv, "_get_all", fake_get_all), \
             mock.patch.object(srv, "_get", lambda path, params=None: fake_get("x" + path, params)), \
             mock.patch.object(srv, "AUTH_MODE", "entra"), mock.patch.object(srv, "VISIBILITY", mode), \
-            mock.patch.object(srv, "get_access_token", lambda: token):
+            mock.patch.object(srv, "get_access_token", lambda: token), \
+            mock.patch.object(srv, "resolve_user_emails", lambda oid: frozenset({oid[len("oid-"):].lower()})):
         return [item["id"] for item in srv._visible_items(project or {"id": "p1"})]
 
 
@@ -65,3 +66,29 @@ def test_the_project_lead_also_sees_the_unassigned_ones():
 def test_project_mode_is_like_plane():
     assert visible("a@x.test", "project") == [item["id"] for item in ITEMS]
     assert visible("guest@x.test", "project") == ["i2"]
+
+
+def test_identity_comes_from_the_oid_not_from_token_text():
+    srv._cache.clear()
+    # a token that only claims Anna's address in its text, without an oid, sees nothing
+    token = SimpleNamespace(claims={"email": "a@x.test", "preferred_username": "a@x.test"})
+    with mock.patch.object(srv, "_get_all", fake_get_all), \
+            mock.patch.object(srv, "AUTH_MODE", "entra"), mock.patch.object(srv, "VISIBILITY", "project"), \
+            mock.patch.object(srv, "_all_projects", lambda: [{"id": "p1"}]), \
+            mock.patch.object(srv, "get_access_token", lambda: token):
+        assert srv._visible_items({"id": "p1"}) == []
+        assert srv._visible_projects() == []
+
+
+def test_a_graph_failure_shows_nothing():
+    srv._cache.clear()
+    token = SimpleNamespace(claims={"oid": "o1"})
+
+    def broken(oid):
+        raise RuntimeError("boom")
+
+    with mock.patch.object(srv, "_get_all", fake_get_all), \
+            mock.patch.object(srv, "AUTH_MODE", "entra"), mock.patch.object(srv, "VISIBILITY", "project"), \
+            mock.patch.object(srv, "get_access_token", lambda: token), \
+            mock.patch.object(srv, "resolve_user_emails", broken):
+        assert srv._visible_items({"id": "p1"}) == []

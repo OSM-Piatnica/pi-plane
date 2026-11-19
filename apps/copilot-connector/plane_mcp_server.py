@@ -66,6 +66,7 @@ from mcp.types import ToolAnnotations
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
+from graph_users import resolve_user_emails
 from html_text import html_to_text
 
 load_dotenv(Path(__file__).with_name(".env"))
@@ -300,8 +301,8 @@ def _visible_items(project):
     items = _items(project["id"])
     if AUTH_MODE != "entra" or VISIBILITY == "everyone":
         return items
-    email = _current_email()
-    me = next((m for m in _members(project["id"]) if email and m["email"] == email), None)
+    emails = _current_emails()
+    me = next((m for m in _members(project["id"]) if m["email"] in emails), None)
     if me is None:
         return []
     my_id = str(me["id"])
@@ -331,12 +332,18 @@ def _is_unassigned(item, project_id):
 # Kto pyta i co mu wolno zobaczyc
 # --------------------------------------------------------------------------- #
 
-def _current_email():
-    """E-mail zalogowanego uzytkownika (tylko w trybie entra); w pozostalych trybach None."""
+def _current_emails():
+    """Adresy zalogowanego uzytkownika (tylko w trybie entra) wg Graph, po 'oid' z tokena; inaczej pusty zbior.
+    Nie ufamy adresom z samego tokena (preferred_username, upn, email moga sie zmieniac)."""
     token = get_access_token()
-    if token and token.claims:
-        return (token.claims.get("email") or "").strip().lower() or None
-    return None
+    oid = token.claims.get("oid") if token and token.claims else None
+    if not oid:
+        return frozenset()
+    try:
+        return resolve_user_emails(oid)
+    except (requests.exceptions.RequestException, RuntimeError):
+        log.warning("Nie udalo sie ustalic adresu uzytkownika w Graph - brak dostepu.")
+        return frozenset()
 
 
 def _visible_projects():
@@ -344,13 +351,13 @@ def _visible_projects():
     if AUTH_MODE != "entra" or VISIBILITY == "everyone":
         return projects
 
-    email = _current_email()
-    if not email:
+    emails = _current_emails()
+    if not emails:
         return []
     visible = []
     for project in projects:
         try:
-            if any(m["email"] == email for m in _members(project["id"])):
+            if any(m["email"] in emails for m in _members(project["id"])):
                 visible.append(project)
         except PlaneError:
             continue  # token API nie widzi czlonkow projektu -> nie pokazujemy go
@@ -691,15 +698,16 @@ class EntraVerifier:
         if claims.get("iss") not in self._issuers or claims.get("tid") != self._tenant:
             log.info("Odrzucono token Entra: obcy wystawca lub tenant")
             return None
-        email = (claims.get("preferred_username") or claims.get("upn") or claims.get("email")
-                 or claims.get("unique_name") or "")
+        if not claims.get("oid"):
+            log.info("Odrzucono token Entra: brak 'oid'")
+            return None
         return AccessToken(
             token=token,
             client_id=claims.get("azp") or claims.get("appid") or "",
             scopes=(claims.get("scp") or "").split(),
             expires_at=claims.get("exp"),
-            subject=claims.get("oid") or claims.get("sub"),
-            claims={"email": email.strip().lower(), "name": claims.get("name"), "iss": claims["iss"]},
+            subject=claims["oid"],
+            claims={"oid": claims["oid"], "name": claims.get("name"), "iss": claims["iss"]},
         )
 
 

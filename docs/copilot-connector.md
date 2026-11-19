@@ -84,4 +84,4 @@ docker exec -it <container> python sync_service.py --allow-mass-delete
 
 ## The MCP server
 
-`apps/copilot-connector/plane_mcp_server.py` answers the same questions live, without copying data, for Copilot agents and other MCP clients. It is not part of the stack yet: it needs a public HTTPS address and Entra ID sign-in. Its settings are described at the top of the file.
+`apps/copilot-connector/plane_mcp_server.py` answers the same questions live, without copying data, for Copilot agents and other MCP clients. It is not part of the stack yet: it needs a public HTTPS address and Entra ID sign-in. In Entra mode it identifies the person by the `oid` of their token and reads their address from Graph (the app needs `User.Read.All`, as for the sync), never from the address text in the token. Its settings are described at the top of the file.

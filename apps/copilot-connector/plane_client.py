@@ -83,9 +83,8 @@ def _all_pages(url, params=None):
 
 
 def list_projects():
-    """Zwraca liste wszystkich projektow w workspace."""
-    data = _get(f"{_base_url()}/projects/")
-    return data.get("results", data) if isinstance(data, dict) else data
+    """Zwraca liste wszystkich projektow w workspace (wszystkie strony)."""
+    return _all_pages(f"{_base_url()}/projects/")
 
 
 def list_project_people(project_id):
