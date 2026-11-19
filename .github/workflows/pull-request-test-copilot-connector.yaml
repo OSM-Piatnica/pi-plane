@@ -39,8 +39,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
-          # Same patch release as the image (python:3.12.12-alpine).
-          python-version: "3.12.12"
+          # The image uses python:3.12.12-alpine; any 3.12 runs the tests (the runner image does not
+          # ship every patch release).
+          python-version: "3.12"
       - name: Install dependencies
         run: pip install -r requirements-test.txt
       # The tests use made-up settings (tests/conftest.py) and never call Plane or Microsoft Graph.
