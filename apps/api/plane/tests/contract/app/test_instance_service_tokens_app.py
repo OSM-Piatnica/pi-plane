@@ -125,6 +125,13 @@ class TestServiceTokenAdmin:
             TOKENS, {"workspace": str(workspace.id), "label": "X", "expired_at": past}, format="json"
         )
         assert response.status_code == 400
+        assert response.data == {"error": "expired_at must be in the future"}
+        for wrong in ("tomorrow", "2027-02-30", "2027-13-01T10:00:00"):
+            response = session_client.post(
+                TOKENS, {"workspace": str(workspace.id), "label": "X", "expired_at": wrong}, format="json"
+            )
+            assert response.status_code == 400, wrong
+            assert response.data == {"error": "expired_at must be an ISO date or date-time"}
         assert not APIToken.objects.exists()
 
     def test_accepts_a_workspace_slug_and_an_expiry_date(self, session_client, instance_admin, workspace):

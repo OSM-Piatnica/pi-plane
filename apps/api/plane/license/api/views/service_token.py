@@ -37,22 +37,31 @@ def _service_tokens():
     )
 
 
+EXPIRY_FORMAT_ERROR = "expired_at must be an ISO date or date-time"
+EXPIRY_PAST_ERROR = "expired_at must be in the future"
+
+
 def _parse_expiry(value):
-    """An ISO date or date-time in the future, or None for a token that does not expire. Raises ValueError."""
+    """(moment, None) for an ISO date or date-time in the future, (None, None) for a token that does not expire,
+    or (None, message) when the value is not valid. The message is one of the fixed texts above."""
     if value in (None, ""):
-        return None
-    moment = parse_datetime(str(value))
-    if moment is None:
-        day = parse_date(str(value))
-        if day is None:
-            raise ValueError("expired_at must be an ISO date or date-time")
-        # a bare date means the token works through the whole of that day
-        moment = datetime.combine(day, time.max)
+        return None, None
+    try:
+        moment = parse_datetime(str(value))
+        if moment is None:
+            day = parse_date(str(value))
+            if day is None:
+                return None, EXPIRY_FORMAT_ERROR
+            # a bare date means the token works through the whole of that day
+            moment = datetime.combine(day, time.max)
+    except ValueError:
+        # well-formed but impossible, such as 2027-02-30
+        return None, EXPIRY_FORMAT_ERROR
     if timezone.is_naive(moment):
         moment = timezone.make_aware(moment)
     if moment <= timezone.now():
-        raise ValueError("expired_at must be in the future")
-    return moment
+        return None, EXPIRY_PAST_ERROR
+    return moment, None
 
 
 def _serialize(token, project_counts):
@@ -109,10 +118,9 @@ class InstanceServiceTokenEndpoint(BaseAPIView):
                 {"error": f"The name can be at most {LABEL_MAX_LENGTH} characters long"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        try:
-            expired_at = _parse_expiry(request.data.get("expired_at"))
-        except ValueError as error:
-            return Response({"error": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        expired_at, expiry_error = _parse_expiry(request.data.get("expired_at"))
+        if expiry_error:
+            return Response({"error": expiry_error}, status=status.HTTP_400_BAD_REQUEST)
 
         with transaction.atomic():
             account = get_or_create_service_account(workspace)
