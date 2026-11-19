@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Standard-App",
+      "default_app_description": "Die App, die beim Öffnen dieses Arbeitsbereichs angezeigt wird.",
+      "heading": "Apps",
+      "last_used_app": "Zuletzt verwendete App"
+    },
     "switch_to": {
       "projects": "Zu Projekte wechseln"
     }
@@ -228,6 +234,9 @@
     "loading": "Typen werden geladen…",
     "property_values_save_failed": "Das Arbeitselement wurde erstellt, aber die zusätzlichen Eigenschaften konnten nicht gespeichert werden. Füllen Sie sie in den Arbeitselementdetails aus.",
     "select_placeholder": "Typ"
+  },
+  "workspace_features": {
+    "description": "Teile von Pi-Plane für alle in diesem Arbeitsbereich ein- oder ausschalten."
   },
   "workspace_settings": {
     "settings": {

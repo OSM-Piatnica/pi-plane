@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "默认应用",
+      "default_app_description": "进入此工作区时打开的应用。",
+      "heading": "应用",
+      "last_used_app": "上次使用的应用"
+    },
     "switch_to": {
       "projects": "切换到项目"
     }
@@ -228,6 +234,9 @@
     "loading": "正在加载类型…",
     "property_values_save_failed": "工作项已创建，但无法保存附加属性。请从工作项详情中填写。",
     "select_placeholder": "类型"
+  },
+  "workspace_features": {
+    "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。"
   },
   "workspace_settings": {
     "settings": {

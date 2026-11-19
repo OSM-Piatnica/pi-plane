@@ -25,7 +25,7 @@ export function withDockItems<P extends WithDockItemsProps>(WrappedComponent: Re
     const { t } = useTranslation();
     const appRailState = useAppRailApps();
 
-    // one item per enabled app of the registry, in registry order (see docs/app-rail.md)
+    // one item per enabled app the user did not hide, in the user's order (see docs/app-rail.md)
     const dockItems: WithDockItemsProps["dockItems"] = getAppRailDockItems(appRailState, `${workspaceSlug}`).map(
       (item) => {
         const Icon = APP_RAIL_APP_ICONS[item.key];

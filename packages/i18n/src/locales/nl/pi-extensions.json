@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Standaardapp",
+      "default_app_description": "De app die wordt geopend wanneer je deze werkruimte opent.",
+      "heading": "Apps",
+      "last_used_app": "Laatst gebruikte app"
+    },
     "switch_to": {
       "projects": "Overschakelen naar Projecten"
     }
@@ -228,6 +234,9 @@
     "loading": "Typen laden…",
     "property_values_save_failed": "Het werkitem is aangemaakt, maar extra eigenschappen konden niet worden opgeslagen. Vul ze in via de details van het werkitem.",
     "select_placeholder": "Type"
+  },
+  "workspace_features": {
+    "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte."
   },
   "workspace_settings": {
     "settings": {

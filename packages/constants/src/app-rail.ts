@@ -18,3 +18,13 @@ export const APP_RAIL_SWITCH_KEY_SEQUENCE_PREFIX = "g";
 
 /** Apps beyond this position in the rail get a command palette entry without a shortcut */
 export const APP_RAIL_MAX_SWITCH_SHORTCUTS = 9;
+
+/**
+ * Prefix of the `WorkspaceUserPreference` key that holds a user's order (`sort_order`) and hidden
+ * state (`is_pinned` false) of a rail app, for example `app_rail:approvals`. The API accepts the
+ * prefix only with a known app key (`apps/api/plane/utils/app_rail.py`).
+ */
+export const APP_RAIL_PREFERENCE_KEY_PREFIX = "app_rail:";
+
+/** `localStorage` key of the app a user last used in a workspace: this prefix plus the workspace slug */
+export const APP_RAIL_LAST_USED_APP_STORAGE_KEY_PREFIX = "APP_RAIL_LAST_APP_";

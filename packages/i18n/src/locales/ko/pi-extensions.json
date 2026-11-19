@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "기본 앱",
+      "default_app_description": "이 워크스페이스에 들어올 때 열리는 앱입니다.",
+      "heading": "앱",
+      "last_used_app": "마지막으로 사용한 앱"
+    },
     "switch_to": {
       "projects": "프로젝트로 전환"
     }
@@ -228,6 +234,9 @@
     "loading": "유형 로딩 중…",
     "property_values_save_failed": "작업 항목이 생성되었지만 추가 속성을 저장할 수 없습니다. 작업 항목 세부 정보에서 입력하세요.",
     "select_placeholder": "유형"
+  },
+  "workspace_features": {
+    "description": "이 워크스페이스의 모든 사용자를 대상으로 Pi-Plane의 일부 기능을 켜거나 끕니다."
   },
   "workspace_settings": {
     "settings": {

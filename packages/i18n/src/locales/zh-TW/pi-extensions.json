@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "預設應用程式",
+      "default_app_description": "進入此工作區時開啟的應用程式。",
+      "heading": "應用程式",
+      "last_used_app": "上次使用的應用程式"
+    },
     "switch_to": {
       "projects": "切換至專案"
     }
@@ -228,6 +234,9 @@
     "loading": "正在載入類型…",
     "property_values_save_failed": "工作項目已建立，但無法儲存額外的屬性。請至工作項目詳細資料中填寫。",
     "select_placeholder": "類型"
+  },
+  "workspace_features": {
+    "description": "為此工作區中的所有人開啟或關閉 Pi-Plane 的各項功能。"
   },
   "workspace_settings": {
     "settings": {

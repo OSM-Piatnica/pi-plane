@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "既定のアプリ",
+      "default_app_description": "このワークスペースを開いたときに表示されるアプリです。",
+      "heading": "アプリ",
+      "last_used_app": "最後に使用したアプリ"
+    },
     "switch_to": {
       "projects": "プロジェクトに切り替え"
     }
@@ -228,6 +234,9 @@
     "loading": "タイプを読み込み中…",
     "property_values_save_failed": "作業項目は作成されましたが、追加のプロパティを保存できませんでした。作業項目の詳細画面から入力してください。",
     "select_placeholder": "タイプ"
+  },
+  "workspace_features": {
+    "description": "このワークスペースの全員を対象に、Pi-Plane の機能のオン・オフを切り替えます。"
   },
   "workspace_settings": {
     "settings": {

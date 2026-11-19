@@ -22,6 +22,8 @@ import type { RootStore } from "@/store/root.store";
 // sub-stores
 import type { IApiTokenStore } from "./api-token.store";
 import { ApiTokenStore } from "./api-token.store";
+import type { IWorkspaceFeatureStore } from "./feature.store";
+import { WorkspaceFeatureStore } from "./feature.store";
 import type { IHomeStore } from "./home";
 import { HomeStore } from "./home";
 import type { IWebhookStore } from "./webhook.store";
@@ -69,6 +71,7 @@ export interface IWorkspaceRootStore {
   webhook: IWebhookStore;
   apiToken: IApiTokenStore;
   home: IHomeStore;
+  feature: IWorkspaceFeatureStore;
 }
 
 export class WorkspaceRootStore implements IWorkspaceRootStore {
@@ -86,6 +89,7 @@ export class WorkspaceRootStore implements IWorkspaceRootStore {
   // sub-stores
   webhook: IWebhookStore;
   apiToken: IApiTokenStore;
+  feature: IWorkspaceFeatureStore;
 
   constructor(_rootStore: RootStore) {
     makeObservable(this, {
@@ -122,6 +126,7 @@ export class WorkspaceRootStore implements IWorkspaceRootStore {
     // sub-stores
     this.webhook = new WebhookStore(_rootStore);
     this.apiToken = new ApiTokenStore(_rootStore);
+    this.feature = new WorkspaceFeatureStore(this);
   }
 
   /**

@@ -6,6 +6,7 @@
  */
 
 "use client";
+import { useState } from "react";
 import { observer } from "mobx-react";
 import { useParams, usePathname } from "next/navigation";
 import { SettingsOutline } from "@makeplane/propel/icons";
@@ -24,6 +25,7 @@ import { useAppRailPreferences } from "@/hooks/use-navigation-preferences";
 import { useAppRailVisibility } from "@/lib/app-rail/context";
 import { DesktopSidebarWorkspaceMenu } from "@/components/desktop";
 // local imports
+import { CustomizeNavigationDialog } from "./customize-navigation-dialog";
 import { AppSidebarItemsRoot } from "./items-root";
 import { useTranslation } from "@plane/i18n";
 
@@ -35,6 +37,9 @@ export const AppRailRoot = observer(() => {
   // preferences
   const { preferences, updateDisplayMode } = useAppRailPreferences();
   const { isCollapsed, toggleAppRail } = useAppRailVisibility();
+  // the dialog holds the order of the apps and the default app, so every app needs a way to it,
+  // also one without the Projects sidebar and its customise button
+  const [isCustomizeDialogOpen, setIsCustomizeDialogOpen] = useState(false);
   // derived values
   const isWorkspaceSettingsPath = pathname.includes(`/${workspaceSlug}/settings`) && !projectId;
   const showLabel = preferences.displayMode === "icon_with_label";
@@ -48,6 +53,7 @@ export const AppRailRoot = observer(() => {
         display: "block",
       }}
     >
+      <CustomizeNavigationDialog isOpen={isCustomizeDialogOpen} onClose={() => setIsCustomizeDialogOpen(false)} />
       <ContextMenu>
         <ContextMenuTrigger render={<div className="h-full" />}>
           <div className="flex h-full flex-col justify-between gap-4 px-2 py-3">
@@ -84,6 +90,7 @@ export const AppRailRoot = observer(() => {
             selected={preferences.displayMode === "icon_with_label"}
           />
           <ContextMenuSeparator />
+          <ContextMenuItem onClick={() => setIsCustomizeDialogOpen(true)} label={t("customize_navigation")} />
           <ContextMenuItem
             onClick={toggleAppRail}
             label={isCollapsed ? t("app_text.navigation.dock_app_rail") : t("app_text.navigation.undock_app_rail")}

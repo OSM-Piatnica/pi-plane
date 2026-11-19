@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Predvolená aplikácia",
+      "default_app_description": "Aplikácia, ktorá sa otvorí pri vstupe do tohto pracovného priestoru.",
+      "heading": "Aplikácie",
+      "last_used_app": "Naposledy použitá aplikácia"
+    },
     "switch_to": {
       "projects": "Prepnúť na Projekty"
     }
@@ -228,6 +234,9 @@
     "loading": "Načítavanie typov…",
     "property_values_save_failed": "Pracovná položka bola vytvorená, ale ďalšie vlastnosti sa nepodarilo uložiť. Doplňte ich v detaile pracovnej položky.",
     "select_placeholder": "Typ"
+  },
+  "workspace_features": {
+    "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore."
   },
   "workspace_settings": {
     "settings": {

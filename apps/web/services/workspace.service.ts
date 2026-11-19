@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -418,6 +419,18 @@ export class WorkspaceService extends APIService {
     data: Partial<IWorkspaceUserPropertiesResponse>
   ): Promise<IWorkspaceUserPropertiesResponse> {
     return this.patch(`/api/workspaces/${workspaceSlug}/user-properties/`, data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The workspace's feature switches: `{ key: is_enabled }` for every available feature */
+  async updateWorkspaceFeatures(
+    workspaceSlug: string,
+    data: Record<string, boolean>
+  ): Promise<Record<string, boolean>> {
+    return this.patch(`/api/workspaces/${workspaceSlug}/features/`, data)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;
