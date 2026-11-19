@@ -1,0 +1,9 @@
+.env
+.env.*
+*.pem
+*.cer
+sync_state.json
+sync.lock
+__pycache__/
+tests/
+.pytest_cache/

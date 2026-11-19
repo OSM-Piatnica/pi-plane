@@ -65,6 +65,23 @@ x-live-env: &live-env
   API_BASE_URL: ${API_BASE_URL:-http://api:8000}
   LIVE_SERVER_SECRET_KEY: ${LIVE_SERVER_SECRET_KEY}
 
+# Microsoft 365 Copilot connector (docs/copilot-connector.md). Plain defaults only: Swarm cannot read a nested ${...}.
+x-copilot-connector-env: &copilot-connector-env
+  AZURE_TENANT_ID: ${COPILOT_AZURE_TENANT_ID:-}
+  AZURE_CLIENT_ID: ${COPILOT_AZURE_CLIENT_ID:-}
+  AZURE_CLIENT_SECRET: ${COPILOT_AZURE_CLIENT_SECRET:-}
+  GRAPH_CONNECTION_ID: ${COPILOT_GRAPH_CONNECTION_ID:-piplaneconnector}
+  GRAPH_CONNECTION_NAME: ${COPILOT_GRAPH_CONNECTION_NAME:-Pi-Plane Graph Connector}
+  # links to work items in Copilot use the public address; the API is called inside the stack
+  PLANE_BASE_URL: ${WEB_URL:-http://localhost}
+  PLANE_API_URL: ${COPILOT_PLANE_API_URL:-http://api:8000}
+  PLANE_WORKSPACE_SLUG: ${COPILOT_PLANE_WORKSPACE_SLUG:-}
+  PLANE_API_TOKEN: ${COPILOT_PLANE_API_TOKEN:-}
+  PLANE_ICON_URL: ${COPILOT_ICON_URL:-}
+  DEFAULT_ACL_TYPE: ${COPILOT_ACL_TYPE:-precise}
+  COPILOT_SYNC_INTERVAL_MINUTES: ${COPILOT_SYNC_INTERVAL_MINUTES:-30}
+  STATE_DIR: /data
+
 x-app-env: &app-env
   WEB_URL: ${WEB_URL:-http://localhost}
   DEBUG: ${DEBUG:-0}
@@ -198,6 +215,22 @@ services:
       - plane-db
       - plane-redis
 
+  # Syncs work items to Microsoft 365 Copilot. Off unless COPILOT_CONNECTOR_REPLICAS=1 (needs an Entra ID app
+  # and a bot token from God Mode); see docs/copilot-connector.md
+  copilot-connector:
+    image: ${IMAGE_REPO:-ghcr.io/osm-piatnica/pi-plane}-copilot-connector:${APP_RELEASE:-latest}
+    deploy:
+      replicas: ${COPILOT_CONNECTOR_REPLICAS:-0}
+      restart_policy:
+        condition: any
+        delay: 60s
+    environment:
+      <<: *copilot-connector-env
+    volumes:
+      - copilot_connector_data:/data
+    depends_on:
+      - api
+
   # Comment this if you already have a database running
   plane-db:
     image: postgres:15.7-alpine
@@ -283,3 +316,4 @@ volumes:
   rabbitmq_data:
   proxy_config:
   proxy_data:
+  copilot_connector_data:

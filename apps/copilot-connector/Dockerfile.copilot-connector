@@ -1,0 +1,37 @@
+# Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
+# SPDX-License-Identifier: AGPL-3.0-only
+# See the LICENSE file for details.
+#
+# Microsoft 365 Copilot connector for Pi-Plane: syncs work items to Microsoft Graph on a schedule.
+# Build context: apps/copilot-connector. See docs/copilot-connector.md.
+FROM python:3.12.12-alpine
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PIP_NO_CACHE_DIR=1
+ENV STATE_DIR=/data
+
+# OS security updates, as in the API image: bump APK_SECURITY_PATCH to rebuild the layer
+ARG APK_SECURITY_PATCH=2026-10-31
+RUN echo "apk-security-patch ${APK_SECURITY_PATCH}" && apk update && apk upgrade --available \
+    && apk add --no-cache ca-certificates && rm -rf /var/cache/apk/*
+
+WORKDIR /app
+COPY requirements.txt ./
+# pip is build tooling only and is removed afterwards (its vendored certifi still trusts the emSign G3 root,
+# GHSA-6q48-6c7w-9gw2), as in the API image
+RUN pip install --no-compile -r requirements.txt \
+    && rm -rf /usr/local/lib/python3.12/site-packages/pip \
+              /usr/local/lib/python3.12/site-packages/pip-*.dist-info \
+              /usr/local/bin/pip /usr/local/bin/pip3 /usr/local/bin/pip3.12
+
+COPY config.py graph_auth.py graph_users.py graph_connection.py html_text.py plane_client.py \
+     sync_service.py scheduler.py plane_graph_diag.py ./
+
+RUN addgroup -S connector && adduser -S -G connector -H connector \
+    && mkdir -p /data && chown connector:connector /data
+USER connector
+VOLUME ["/data"]
+
+CMD ["python", "scheduler.py"]
