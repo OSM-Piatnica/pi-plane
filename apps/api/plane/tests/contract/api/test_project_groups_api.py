@@ -214,6 +214,22 @@ class TestProjectGroupsApi:
         ]
         assert set(response.json()[0]) == {"id", "name", "source", "parent_id"}
 
+    def test_assignable_with_members_lists_who_each_group_concerns(self, api_key_client, workspace, project):
+        sales = _group(workspace, "Sales")
+        poland = _group(workspace, "Poland", parent=sales)
+        _link(api_key_client, workspace, project, sales)
+        anna = _person(workspace)
+        jan = _person(workspace)
+        _join(sales, anna)
+        _join(poland, jan)
+
+        response = api_key_client.get(_url(workspace, project) + "?assignable=1&members=1")
+
+        assert response.status_code == 200
+        by_name = {g["name"]: set(g["member_ids"]) for g in response.json()}
+        # a group concerns its own people and the people of the groups below it
+        assert by_name == {"Sales": {str(anna.id), str(jan.id)}, "Poland": {str(jan.id)}}
+
 
 @pytest.mark.contract
 @pytest.mark.django_db

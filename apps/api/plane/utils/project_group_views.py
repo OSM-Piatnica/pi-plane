@@ -41,18 +41,26 @@ def wants_assignable(request):
     return str(request.query_params.get("assignable", "")).lower() in {"1", "true"}
 
 
+def wants_members(request):
+    return str(request.query_params.get("members", "")).lower() in {"1", "true"}
+
+
 def list_groups(request, project, serializer_class):
     """The groups of the project, or with ``?assignable=1`` the groups its work items can be assigned to."""
     if wants_assignable(request):
         ids = assignable_group_ids(project.id, project.workspace_id)
         groups = UserGroup.objects.filter(workspace_id=project.workspace_id, id__in=ids).order_by("name")
-        return Response(
-            [
-                {"id": group.id, "name": group.name, "source": group.source, "parent_id": group.parent_id}
-                for group in groups
-            ],
-            status=status.HTTP_200_OK,
-        )
+        rows = []
+        for group in groups:
+            row = {"id": group.id, "name": group.name, "source": group.source, "parent_id": group.parent_id}
+            if wants_members(request):
+                # ?members=1: the people of the group and of the groups below it, i.e. who a work item assigned
+                # to the group concerns (integrations use it to decide who may see such a work item)
+                row["member_ids"] = sorted(
+                    str(user_id) for user_id in member_user_ids(project.workspace_id, [group.id])
+                )
+            rows.append(row)
+        return Response(rows, status=status.HTTP_200_OK)
     links = ProjectGroup.objects.filter(project=project, group__deleted_at__isnull=True).order_by("group__name")
     return Response(present_links(project, links, serializer_class), status=status.HTTP_200_OK)
 
