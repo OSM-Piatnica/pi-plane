@@ -12,7 +12,6 @@ import { computedFn } from "mobx-utils";
 import type { EUserPermissions } from "@plane/constants";
 import type { IWorkspaceBulkInviteFormData, IWorkspaceMember, IWorkspaceMemberInvitation } from "@plane/types";
 // services
-import { userGroupService } from "@/services/user-group.service";
 import { WorkspaceService } from "@/services/workspace.service";
 // types
 import type { IRouterStore } from "@/store/router.store";
@@ -28,7 +27,6 @@ export interface IWorkspaceMembership {
   member: string;
   role: EUserPermissions;
   is_active?: boolean;
-  department?: string | null;
 }
 
 export interface IWorkspaceMemberStore {
@@ -53,7 +51,6 @@ export interface IWorkspaceMemberStore {
   fetchWorkspaceMemberInvitations: (workspaceSlug: string) => Promise<IWorkspaceMemberInvitation[]>;
   // crud actions
   updateMember: (workspaceSlug: string, userId: string, data: { role: EUserPermissions }) => Promise<void>;
-  updateMemberDepartment: (workspaceSlug: string, userId: string, departmentId: string | null) => Promise<void>;
   removeMemberFromWorkspace: (workspaceSlug: string, userId: string) => Promise<void>;
   // invite actions
   inviteMembersToWorkspace: (workspaceSlug: string, data: IWorkspaceBulkInviteFormData) => Promise<void>;
@@ -93,7 +90,6 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
       // actions
       fetchWorkspaceMembers: action,
       updateMember: action,
-      updateMemberDepartment: action,
       removeMemberFromWorkspace: action,
       fetchWorkspaceMemberInvitations: action,
       updateMemberInvitation: action,
@@ -214,7 +210,6 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
       role: workspaceMember.role,
       member: this.memberRoot?.memberMap?.[workspaceMember.member],
       is_active: workspaceMember.is_active,
-      department: workspaceMember.department ?? null,
     };
     return memberDetails;
   });
@@ -248,7 +243,6 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
             member: member.member.id,
             role: member.role,
             is_active: member.is_active,
-            department: member.department ?? null,
           });
         });
       });
@@ -275,29 +269,6 @@ export class WorkspaceMemberStore implements IWorkspaceMemberStore {
       // revert back to original members in case of error
       runInAction(() => {
         set(this.workspaceMemberMap, [workspaceSlug, userId], originalProjectMemberData);
-      });
-      throw error;
-    }
-  };
-
-  /**
-   * @description set the department of a workspace member (null takes it away)
-   * @param workspaceSlug
-   * @param userId
-   * @param departmentId
-   */
-  updateMemberDepartment = async (workspaceSlug: string, userId: string, departmentId: string | null) => {
-    const membership = this.workspaceMemberMap?.[workspaceSlug]?.[userId];
-    if (!membership) throw new Error("Member not found");
-    const previous = membership.department ?? null;
-    try {
-      runInAction(() => {
-        set(this.workspaceMemberMap, [workspaceSlug, userId, "department"], departmentId);
-      });
-      await userGroupService.setMemberDepartment(workspaceSlug, membership.id, departmentId);
-    } catch (error) {
-      runInAction(() => {
-        set(this.workspaceMemberMap, [workspaceSlug, userId, "department"], previous);
       });
       throw error;
     }

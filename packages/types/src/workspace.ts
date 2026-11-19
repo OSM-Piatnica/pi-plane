@@ -97,8 +97,6 @@ export interface IWorkspaceMember {
   display_name?: string;
   last_login_medium?: TLoginMediums;
   is_active?: boolean;
-  /** The id of the person's department (a user group of kind "department"); not sent to guests. */
-  department?: string | null;
 }
 
 export interface IWorkspaceMemberMe {
@@ -114,8 +112,6 @@ export interface IWorkspaceMemberMe {
   view_props: IWorkspaceViewProps;
   workspace: string;
   draft_issue_count: number;
-  /** The id of the person's department (a user group of kind "department"). */
-  department?: string | null;
 }
 
 export interface ILastActiveWorkspaceDetails {

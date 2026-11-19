@@ -2,23 +2,22 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-"""The department of a workspace member and the group membership that goes with it."""
+"""Departments as groups: codes, order, the one-department rule and the sign-in sync."""
 
 import pytest
-from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 
 from plane.authentication.provider.oidc.groups import ExternalGroup
 from plane.db.models import GroupKind, GroupSource, User, UserGroup, UserGroupMember, Workspace, WorkspaceMember
 from plane.utils.departments import (
     DepartmentError,
-    adopt_department,
-    adopt_department_for_members,
+    check_one_department,
     code_taken,
+    department_map,
+    department_of,
     is_valid_color,
     next_sort_order,
     normalize_code,
-    set_department,
 )
 from plane.utils.user_group_sync import sync_external_groups
 
@@ -30,8 +29,24 @@ def _department(workspace, name, code="", **extra):
     return UserGroup.objects.create(workspace=workspace, name=name, code=code, kind=GroupKind.DEPARTMENT, **extra)
 
 
-def _fresh(member):
-    return WorkspaceMember.objects.get(pk=member.pk)
+def _join(group, member, **extra):
+    return UserGroupMember.objects.create(workspace=group.workspace, group=group, user=member.member, **extra)
+
+
+def _in(group, member):
+    return UserGroupMember.objects.filter(group=group, user=member.member).exists()
+
+
+def _mirror(ws, member, *groups):
+    """Sign in with these provider groups, then return the mirrored groups marked as departments."""
+    sync_external_groups(member.member, GroupSource.ENTRA, list(groups))
+    found = []
+    for group in groups:
+        mirrored = UserGroup.objects.get(workspace=ws, external_id=group.id)
+        mirrored.kind = GroupKind.DEPARTMENT
+        mirrored.save(update_fields=["kind"])
+        found.append(mirrored)
+    return found
 
 
 @pytest.mark.unit
@@ -80,134 +95,95 @@ class TestDepartments:
 
         assert next_sort_order(ws.id) == 35000
 
-    def test_setting_a_department_keeps_the_group_membership_in_step(self, ws, pat):
-        marketing, quality = _department(ws, "Marketing", "RM"), _department(ws, "Quality", "QA")
-
-        set_department(pat, marketing)
-        set_department(pat, quality)
-
-        assert _fresh(pat).department_id == quality.id
-        groups = set(UserGroupMember.objects.filter(user=pat.member).values_list("group_id", flat=True))
-        assert groups == {quality.id}
-
-        set_department(pat, None)
-
-        assert _fresh(pat).department_id is None
-        assert not UserGroupMember.objects.filter(user=pat.member).exists()
-
-    def test_a_membership_made_before_is_reused(self, ws, pat):
+    def test_my_department_is_the_active_department_group_i_belong_to(self, ws, pat):
         marketing = _department(ws, "Marketing", "RM")
-        UserGroupMember.objects.create(workspace=ws, group=marketing, user=pat.member)
-
-        set_department(pat, marketing)
-
-        assert UserGroupMember.objects.filter(group=marketing, user=pat.member).count() == 1
-
-    def test_what_is_not_an_active_department_of_the_workspace_is_refused(self, ws, pat, create_user):
-        other = Workspace.objects.create(name="O", slug="o", owner=create_user)
-        candidates = [
-            UserGroup.objects.create(workspace=ws, name="Sales"),
-            _department(ws, "Closed", "CL", is_active=False),
-            _department(other, "Foreign", "FR"),
-            _department(ws, "Mirrored", "MI", source=GroupSource.ENTRA, external_id="department:mi"),
-        ]
-
-        for group in candidates:
-            with pytest.raises(DepartmentError):
-                set_department(pat, group)
-        assert _fresh(pat).department_id is None
-
-    def test_the_model_refuses_a_department_written_around_the_helper(self, ws, pat, create_user):
-        other = Workspace.objects.create(name="O", slug="o", owner=create_user)
+        closed = _department(ws, "Closed", "CL", is_active=False)
         plain = UserGroup.objects.create(workspace=ws, name="Sales")
+        below = UserGroup.objects.create(workspace=ws, name="Team", parent=marketing)
+        for group in (closed, plain, below):
+            _join(group, pat)
+        # Neither a switched-off department, a plain group nor a group below a department counts
+        assert department_of(ws.id, pat.member_id) is None
 
-        for group in (plain, _department(other, "Foreign", "FR")):
-            pat.department = group
-            with pytest.raises(ValidationError):
-                pat.save()
-            with pytest.raises(ValidationError):
-                pat.save(update_fields=["department"])
-        assert _fresh(pat).department_id is None
+        _join(marketing, pat)
 
-    def test_adopting_never_replaces_a_department(self, ws, pat):
+        assert department_of(ws.id, pat.member_id) == marketing
+        assert department_map(ws.id) == {pat.member_id: marketing.id}
+
+    def test_a_second_active_department_is_refused_with_the_names(self, ws, pat):
         marketing, quality = _department(ws, "Marketing", "RM"), _department(ws, "Quality", "QA")
-        plain = UserGroup.objects.create(workspace=ws, name="Sales")
+        closed = _department(ws, "Closed", "CL", is_active=False)
+        _join(marketing, pat)
 
-        adopt_department(ws.id, pat.member_id, plain)
-        assert _fresh(pat).department_id is None
-        adopt_department(ws.id, pat.member_id, marketing)
-        adopt_department(ws.id, pat.member_id, quality)
+        with pytest.raises(DepartmentError, match="Marketing"):
+            check_one_department(quality, [pat.member_id])
+        # The same department again, a switched-off one and a plain group are fine
+        check_one_department(marketing, [pat.member_id])
+        check_one_department(closed, [pat.member_id])
+        check_one_department(UserGroup.objects.create(workspace=ws, name="Sales"), [pat.member_id])
 
-        assert _fresh(pat).department_id == marketing.id
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestDepartmentSync:
+    """At sign-in the provider's first listed active department wins; see docs/departments.md."""
+
+    @pytest.fixture
+    def ws(self, create_user):
+        workspace = Workspace.objects.create(name="W", slug="w", owner=create_user)
+        WorkspaceMember.objects.create(workspace=workspace, member=create_user, role=20)
+        return workspace
+
+    @pytest.fixture
+    def pat(self, ws):
+        user = User.objects.create(email="pat@example.com", username="pat")
+        return WorkspaceMember.objects.create(workspace=ws, member=user, role=15)
 
     def test_a_mirrored_group_marked_as_a_department_follows_the_provider(self, ws, pat):
-        # The first sign-in mirrors the group; nothing is a department until a workspace admin says so
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
-        mirrored = UserGroup.objects.get(workspace=ws, external_id="department:it")
-        assert mirrored.kind == GroupKind.GROUP and _fresh(pat).department_id is None
+        (it,) = _mirror(ws, pat, IT)
+        assert department_of(ws.id, pat.member_id) == it
 
-        mirrored.kind = GroupKind.DEPARTMENT
-        mirrored.save(update_fields=["kind"])
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
-
-        assert _fresh(pat).department_id == mirrored.id
-
-        # Moved to another department at the provider: the old one is no longer theirs
+        # Moved to another department at the provider: the new one is theirs in the same sign-in
+        sync_external_groups(pat.member, GroupSource.ENTRA, [HR])
+        hr = UserGroup.objects.get(workspace=ws, external_id=HR.id)
+        hr.kind = GroupKind.DEPARTMENT
+        hr.save(update_fields=["kind"])
         sync_external_groups(pat.member, GroupSource.ENTRA, [HR])
 
-        assert _fresh(pat).department_id is None
-        assert not UserGroupMember.objects.filter(group=mirrored, user=pat.member).exists()
+        assert not _in(it, pat)
+        assert department_of(ws.id, pat.member_id) == hr
 
-    def test_the_sync_leaves_a_department_chosen_by_hand_alone(self, ws, pat):
+    def test_of_two_departments_at_the_provider_the_first_listed_is_kept(self, ws, pat):
+        it, hr = _mirror(ws, pat, IT, HR)
+        # Marked as departments after the first sign-in: the next one settles it
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT, HR])
+
+        assert _in(it, pat) and not _in(hr, pat)
+
+        sync_external_groups(pat.member, GroupSource.ENTRA, [HR, IT])
+
+        assert _in(hr, pat) and not _in(it, pat)
+        assert department_of(ws.id, pat.member_id) == hr
+
+    def test_the_providers_department_replaces_one_made_by_hand(self, ws, pat):
         marketing = _department(ws, "Marketing", "RM")
-        set_department(pat, marketing)
+        closed = _department(ws, "Closed", "CL", is_active=False)
+        _join(marketing, pat)
+        _join(closed, pat)
+
+        (it,) = _mirror(ws, pat, IT)
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
+
+        assert not _in(marketing, pat)
+        # A switched-off department is not a department of anybody, so it stays
+        assert _in(closed, pat)
+        assert department_of(ws.id, pat.member_id) == it
+
+    def test_without_a_department_at_the_provider_the_hand_made_one_stays(self, ws, pat):
+        marketing = _department(ws, "Marketing", "RM")
+        _join(marketing, pat)
 
         sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
         sync_external_groups(pat.member, GroupSource.ENTRA, [])
 
-        assert _fresh(pat).department_id == marketing.id
-        assert UserGroupMember.objects.filter(group=marketing, user=pat.member).exists()
-
-    def test_a_move_between_departments_at_the_provider_lands_in_one_sign_in(self, ws, pat):
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT, HR])
-        UserGroup.objects.filter(workspace=ws, external_id__in=["department:it", "department:hr"]).update(
-            kind=GroupKind.DEPARTMENT
-        )
-        it = UserGroup.objects.get(workspace=ws, external_id="department:it")
-        hr = UserGroup.objects.get(workspace=ws, external_id="department:hr")
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
-        assert _fresh(pat).department_id == it.id
-
-        # The old department is cleared before the new one is adopted, so it does not take two sign-ins
-        sync_external_groups(pat.member, GroupSource.ENTRA, [HR])
-
-        assert _fresh(pat).department_id == hr.id
-
-    def test_a_department_from_the_provider_is_not_changed_by_hand(self, ws, pat):
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
-        mirrored = UserGroup.objects.get(workspace=ws, external_id="department:it")
-        mirrored.kind = GroupKind.DEPARTMENT
-        mirrored.save(update_fields=["kind"])
-        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
-        marketing = _department(ws, "Marketing", "RM")
-
-        for target in (marketing, None):
-            with pytest.raises(DepartmentError):
-                set_department(_fresh(pat), target)
-
-        assert _fresh(pat).department_id == mirrored.id
-        assert not UserGroupMember.objects.filter(group=marketing, user=pat.member).exists()
-
-    def test_a_group_that_becomes_a_department_is_given_to_its_members_without_one(self, ws, pat, create_user):
-        marketing = _department(ws, "Marketing", "RM")
-        set_department(pat, marketing)
-        sales = UserGroup.objects.create(workspace=ws, name="Sales")
-        UserGroupMember.objects.create(workspace=ws, group=sales, user=pat.member)
-        UserGroupMember.objects.create(workspace=ws, group=sales, user=create_user)
-
-        sales.kind = GroupKind.DEPARTMENT
-        sales.save(update_fields=["kind"])
-        adopt_department_for_members(sales)
-
-        assert _fresh(pat).department_id == marketing.id
-        assert WorkspaceMember.objects.get(workspace=ws, member=create_user).department_id == sales.id
+        assert department_of(ws.id, pat.member_id) == marketing

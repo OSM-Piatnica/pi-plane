@@ -230,15 +230,6 @@ class WorkspaceMember(BaseModel):
     getting_started_checklist = models.JSONField(default=dict)
     tips = models.JSONField(default=dict)
     explored_features = models.JSONField(default=dict)
-    # The department the person works in: a user group of kind "department" of the same workspace. It is set
-    # through plane.utils.departments, which keeps the membership of that group in step.
-    department = models.ForeignKey(
-        "db.UserGroup",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="department_members",
-    )
 
     class Meta:
         unique_together = ["workspace", "member", "deleted_at"]
@@ -253,24 +244,6 @@ class WorkspaceMember(BaseModel):
         verbose_name_plural = "Workspace Members"
         db_table = "workspace_members"
         ordering = ("-created_at",)
-
-    def clean(self):
-        super().clean()
-        department = self.department
-        if department is None:
-            return
-        if department.workspace_id != self.workspace_id:
-            raise ValidationError({"department": "The department belongs to another workspace."})
-        if department.kind != "department":
-            raise ValidationError({"department": "This group is not a department."})
-
-    def save(self, *args, **kwargs):
-        # Checked on every write that can change the department, so no path can store a group of another
-        # workspace or of another kind
-        update_fields = kwargs.get("update_fields")
-        if self.department_id and (update_fields is None or "department" in update_fields):
-            self.clean()
-        super().save(*args, **kwargs)
 
     def __str__(self):
         """Return members of the workspace"""

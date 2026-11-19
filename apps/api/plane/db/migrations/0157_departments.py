@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-import django.db.models.deletion
 from django.db import migrations, models
 
 
@@ -47,22 +46,6 @@ class Migration(migrations.Migration):
                 ),
                 fields=("workspace", "code"),
                 name="user_group_unique_department_code_when_deleted_at_null",
-            ),
-        ),
-        migrations.AddField(
-            model_name="usergroupmember",
-            name="via_department",
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name="workspacemember",
-            name="department",
-            field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                related_name="department_members",
-                to="db.usergroup",
             ),
         ),
     ]

@@ -12,10 +12,9 @@ from rest_framework.response import Response
 
 # Module imports
 from plane.bgtasks.group_membership_notification_task import ADDED, ROLE_CHANGED, notify_group_membership
-from plane.app.permissions import ROLE, WorkSpaceAdminPermission, WorkspaceViewerPermission, allow_permission
+from plane.app.permissions import ROLE, WorkSpaceAdminPermission, WorkspaceViewerPermission
 from plane.app.serializers.user_group import (
     DepartmentLiteSerializer,
-    WorkspaceMemberDepartmentSerializer,
     UserGroupMemberSerializer,
     UserGroupMemberWriteSerializer,
     UserGroupSerializer,
@@ -32,12 +31,10 @@ from plane.db.models import (
 from plane.utils.departments import (
     DepartmentError,
     active_departments,
-    adopt_department,
-    adopt_department_for_members,
-    clear_department,
+    check_one_department,
     code_taken,
+    department_map,
     next_sort_order,
-    set_department,
 )
 from plane.utils.project_groups import reconcile_user, reconcile_workspace
 from plane.utils.user_groups import (
@@ -236,8 +233,14 @@ class UserGroupDetailEndpoint(_GroupView):
                 return _error(DEPARTMENT_ADMIN_MESSAGE, status.HTTP_403_FORBIDDEN)
             if new_kind == GroupKind.DEPARTMENT and code_taken(workspace.id, data.get("code", group.code), group.id):
                 return _error(CODE_TAKEN_MESSAGE, status.HTTP_409_CONFLICT)
+        # Turning a group into a department, or switching a department on, makes it count as its members'
+        # department: refused when any of them already belongs to another active department
         becomes_department = new_kind == GroupKind.DEPARTMENT and not group.is_department
-        stops_being_department = group.is_department and new_kind != GroupKind.DEPARTMENT
+        starts_counting = (
+            new_kind == GroupKind.DEPARTMENT
+            and data.get("is_active", group.is_active)
+            and (becomes_department or not group.is_active)
+        )
 
         parent_id = group.parent_id
         if "parent" in data:
@@ -269,13 +272,13 @@ class UserGroupDetailEndpoint(_GroupView):
         try:
             with transaction.atomic():
                 group = serializer.save(**extra)
-                if stops_being_department:
-                    clear_department(workspace.id, [group.id])
-                elif becomes_department:
-                    # Its members who have no department get this one, as when someone joins a department
-                    adopt_department_for_members(group)
+                if starts_counting:
+                    member_ids = UserGroupMember.objects.filter(group=group).values_list("user_id", flat=True)
+                    check_one_department(group, member_ids)
         except IntegrityError as exc:
             return _conflict(exc)
+        except DepartmentError as exc:
+            return _error(str(exc))
         if moved:
             # Who belongs to the groups above changed with it, and so do the projects those give
             reconcile_workspace(workspace.id)
@@ -297,8 +300,6 @@ class UserGroupDetailEndpoint(_GroupView):
             IssueGroupAssignee.objects.filter(group=group).delete()
             # ... nor does a project have it as a member
             ProjectGroup.objects.filter(group=group).delete()
-            # ... nor is it anybody's department
-            clear_department(workspace.id, [group.id])
             group.delete()
         reconcile_workspace(workspace.id)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -337,10 +338,19 @@ class UserGroupMembersEndpoint(_GroupView):
         if UserGroupMember.objects.filter(group=group, user_id=user_id).exists():
             return _error("This person is already in the group.", status.HTTP_409_CONFLICT)
 
-        membership = UserGroupMember.objects.create(
-            workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
-        )
-        adopt_department(workspace.id, user_id, group)
+        try:
+            with transaction.atomic():
+                if group.is_department:
+                    # The person's row is locked, so two departments cannot be added at once
+                    WorkspaceMember.objects.select_for_update().filter(
+                        workspace=workspace, member_id=user_id, is_active=True
+                    ).first()
+                    check_one_department(group, [user_id])
+                membership = UserGroupMember.objects.create(
+                    workspace=workspace, group=group, user_id=user_id, role=serializer.validated_data["role"]
+                )
+        except DepartmentError as exc:
+            return _error(str(exc), status.HTTP_409_CONFLICT)
         reconcile_user(workspace.id, user_id)
         notify_group_membership.delay(str(group.id), str(user_id), str(request.user.id), ADDED, membership.role)
         return Response(UserGroupMemberSerializer(membership).data, status=status.HTTP_201_CREATED)
@@ -376,12 +386,7 @@ class UserGroupMemberDetailEndpoint(_GroupView):
         serializer.is_valid(raise_exception=True)
         previous_role = membership.role
         membership.role = serializer.validated_data["role"]
-        update_fields = ["role", "updated_at"]
-        if membership.role != previous_role and membership.via_department:
-            # Changed by hand: the membership is no longer only what the department assignment made
-            membership.via_department = False
-            update_fields.append("via_department")
-        membership.save(update_fields=update_fields)
+        membership.save(update_fields=["role", "updated_at"])
         if membership.role != previous_role:
             notify_group_membership.delay(
                 str(membership.group_id), str(user_id), str(request.user.id), ROLE_CHANGED, membership.role
@@ -392,15 +397,13 @@ class UserGroupMemberDetailEndpoint(_GroupView):
         _, membership, error = self._check(request, slug, pk, user_id)
         if error:
             return error
-        with transaction.atomic():
-            membership.delete()
-            clear_department(membership.workspace_id, [membership.group_id], user_id=membership.user_id)
+        membership.delete()
         reconcile_user(membership.workspace_id, membership.user_id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DepartmentListEndpoint(BaseAPIView):
-    """The departments that are switched on, for pickers and the notice to people without one (any member)."""
+    """The departments that are switched on, in their order, for pickers and labels (any member, guests included)."""
 
     permission_classes = [WorkspaceViewerPermission]
 
@@ -409,35 +412,20 @@ class DepartmentListEndpoint(BaseAPIView):
         return Response(DepartmentLiteSerializer(active_departments(workspace.id), many=True).data)
 
 
-class WorkspaceMemberDepartmentEndpoint(BaseAPIView):
+class DepartmentMembersEndpoint(BaseAPIView):
     """
-    The department of a workspace member, set by a workspace admin only (their own included).
+    Who works in which department: ``{user id: department id}``, derived from the memberships of active departments.
 
-    Members and guests do not choose their department: belonging to a department's group can make a person a member
-    of the projects the group is a member of, so choosing it would let anyone into those projects.
+    Read only: a department is given by putting the person in its group (workspace admins) or by the identity
+    provider. Guests, who do not see the groups, only get their own department.
     """
 
-    @allow_permission(allowed_roles=[ROLE.ADMIN], level="WORKSPACE")
-    def patch(self, request, slug, pk):
+    permission_classes = [WorkspaceViewerPermission]
+
+    def get(self, request, slug):
         workspace = Workspace.objects.get(slug=slug)
-        member = (
-            WorkspaceMember.objects.filter(workspace=workspace, pk=pk, is_active=True, member__is_bot=False)
-            .select_related("department")
-            .first()
-        )
-        if member is None:
-            return _error("Workspace member not found.", status.HTTP_404_NOT_FOUND)
-
-        serializer = WorkspaceMemberDepartmentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        department_id = serializer.validated_data["department"]
-        department = None
-        if department_id is not None:
-            department = UserGroup.objects.filter(workspace=workspace, pk=department_id).first()
-            if department is None:
-                return _error("The department does not exist in this workspace.")
-        try:
-            set_department(member, department)
-        except DepartmentError as exc:
-            return _error(str(exc))
-        return Response({"id": member.id, "department": member.department_id}, status=status.HTTP_200_OK)
+        is_guest = WorkspaceMember.objects.filter(
+            workspace=workspace, member=request.user, is_active=True, role=ROLE.GUEST.value
+        ).exists()
+        found = department_map(workspace.id, [request.user.id] if is_guest else None)
+        return Response({str(user_id): str(group_id) for user_id, group_id in found.items()})

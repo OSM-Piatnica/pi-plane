@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-"""Departments: user groups of kind "department", and the department of a workspace member."""
+"""Departments: user groups of kind "department", one active department per person, managed by workspace admins."""
 
 import pytest
 from rest_framework.test import APIClient
@@ -12,7 +12,7 @@ from plane.db.models import GroupKind, GroupRole, GroupSource, User, UserGroup, 
 SLUG = "test-workspace"
 GROUPS = f"/api/workspaces/{SLUG}/user-groups/"
 DEPARTMENTS = f"/api/workspaces/{SLUG}/departments/"
-MEMBERS = f"/api/workspaces/{SLUG}/members/"
+DEPARTMENT_MEMBERS = f"/api/workspaces/{SLUG}/departments/members/"
 
 
 def _person(workspace, email, role=15):
@@ -29,14 +29,6 @@ def _as(user):
 
 def _department(workspace, name, code="", **extra):
     return UserGroup.objects.create(workspace=workspace, name=name, code=code, kind=GroupKind.DEPARTMENT, **extra)
-
-
-def _member(workspace, user):
-    return WorkspaceMember.objects.get(workspace=workspace, member=user)
-
-
-def _department_url(workspace, user):
-    return f"{MEMBERS}{_member(workspace, user).id}/department/"
 
 
 def _in_group(group, user):
@@ -146,34 +138,39 @@ class TestDepartmentDictionary:
         assert UserGroup.objects.filter(pk=nested.pk, name="Logistics").exists()
         assert _in_group(own, pat)
 
-    def test_a_group_that_becomes_a_department_gives_it_to_its_members_without_one(self, session_client, workspace):
-        pat, ola, eve = (
-            _person(workspace, "pat@example.com"),
-            _person(workspace, "ola@example.com"),
-            _person(workspace, "eve@example.com"),
-        )
+    def test_a_group_whose_members_have_another_department_cannot_become_one(self, session_client, workspace):
+        pat, ola = _person(workspace, "pat@example.com"), _person(workspace, "ola@example.com")
         quality = _department(workspace, "Quality", "QA")
-        WorkspaceMember.objects.filter(workspace=workspace, member=ola).update(department=quality)
         UserGroupMember.objects.create(workspace=workspace, group=quality, user=ola)
         sales = UserGroup.objects.create(workspace=workspace, name="Sales")
-        below = UserGroup.objects.create(workspace=workspace, name="Poland", parent=sales)
         for person in (pat, ola):
             UserGroupMember.objects.create(workspace=workspace, group=sales, user=person)
-        UserGroupMember.objects.create(workspace=workspace, group=below, user=eve)
 
-        response = session_client.patch(f"{GROUPS}{sales.id}/", {"kind": "department", "code": "SL"}, format="json")
+        refused = session_client.patch(f"{GROUPS}{sales.id}/", {"kind": "department", "code": "SL"}, format="json")
 
-        assert response.status_code == 200
-        assert _member(workspace, pat).department_id == sales.id
-        # someone with a department keeps it, and the members of a group below are not direct members
-        assert _member(workspace, ola).department_id == quality.id
-        assert _member(workspace, eve).department_id is None
+        assert refused.status_code == 400
+        assert "ola" in refused.data["error"] and "Quality" in refused.data["error"]
+        assert UserGroup.objects.get(pk=sales.pk).kind == GroupKind.GROUP
 
-        back = session_client.patch(f"{GROUPS}{sales.id}/", {"kind": "group"}, format="json")
+        UserGroupMember.objects.filter(group=quality, user=ola).delete()
+        accepted = session_client.patch(f"{GROUPS}{sales.id}/", {"kind": "department", "code": "SL"}, format="json")
 
-        assert back.status_code == 200
-        assert _member(workspace, pat).department_id is None
-        assert _member(workspace, ola).department_id == quality.id
+        assert accepted.status_code == 200 and accepted.data["kind"] == "department"
+
+    def test_a_department_whose_members_have_another_cannot_be_switched_on(self, session_client, workspace):
+        pat = _person(workspace, "pat@example.com")
+        quality = _department(workspace, "Quality", "QA")
+        closed = _department(workspace, "Closed", "CL", is_active=False)
+        for group in (quality, closed):
+            UserGroupMember.objects.create(workspace=workspace, group=group, user=pat)
+
+        refused = session_client.patch(f"{GROUPS}{closed.id}/", {"is_active": True}, format="json")
+        # Switching off and back on a department nobody else claims is fine
+        off = session_client.patch(f"{GROUPS}{quality.id}/", {"is_active": False}, format="json")
+        on = session_client.patch(f"{GROUPS}{closed.id}/", {"is_active": True}, format="json")
+
+        assert refused.status_code == 400 and "Quality" in refused.data["error"]
+        assert off.status_code == 200 and on.status_code == 200
 
     def test_a_code_that_is_too_long_once_upper_cased_is_refused(self, session_client, workspace):
         # "ß" is one character, its upper case "SS" two: 16 of them become 32
@@ -237,203 +234,67 @@ class TestDepartmentDictionary:
 
 @pytest.mark.contract
 @pytest.mark.django_db
-class TestMemberDepartment:
-    def test_an_admin_sets_a_department_and_the_person_joins_its_group(self, session_client, workspace):
+class TestDepartmentMembers:
+    def test_an_admin_adds_a_person_to_one_department_only(self, session_client, workspace):
         pat = _person(workspace, "pat@example.com")
-        marketing = _department(workspace, "Marketing", "RM")
+        marketing, quality = _department(workspace, "Marketing", "RM"), _department(workspace, "Quality", "QA")
+        closed = _department(workspace, "Closed", "CL", is_active=False)
 
-        response = session_client.patch(
-            _department_url(workspace, pat), {"department": str(marketing.id)}, format="json"
-        )
+        first = session_client.post(f"{GROUPS}{marketing.id}/members/", {"user_id": str(pat.id)}, format="json")
+        second = session_client.post(f"{GROUPS}{quality.id}/members/", {"user_id": str(pat.id)}, format="json")
+        switched_off = session_client.post(f"{GROUPS}{closed.id}/members/", {"user_id": str(pat.id)}, format="json")
 
-        assert response.status_code == 200 and str(response.data["department"]) == str(marketing.id)
-        assert _member(workspace, pat).department_id == marketing.id
-        assert _in_group(marketing, pat)
+        assert first.status_code == 201
+        assert second.status_code == 409 and "Marketing" in second.data["error"]
+        assert switched_off.status_code == 201
+        assert not _in_group(quality, pat)
 
-    def test_an_admin_sets_their_own_department(self, session_client, workspace, create_user):
-        marketing = _department(workspace, "Marketing", "RM")
+        # Moving a person is taking them out of one department and putting them in the other
+        removed = session_client.delete(f"{GROUPS}{marketing.id}/members/{pat.id}/")
+        moved = session_client.post(f"{GROUPS}{quality.id}/members/", {"user_id": str(pat.id)}, format="json")
 
-        response = session_client.patch(
-            _department_url(workspace, create_user), {"department": str(marketing.id)}, format="json"
-        )
-
-        assert response.status_code == 200
-        assert _member(workspace, create_user).department_id == marketing.id
+        assert removed.status_code == 204 and moved.status_code == 201
 
     @pytest.mark.parametrize("role", [15, 5])
-    def test_members_and_guests_cannot_set_their_own_department(self, session_client, workspace, role):
+    def test_members_and_guests_cannot_join_a_department(self, session_client, workspace, role):
         person = _person(workspace, "pat@example.com", role=role)
         marketing = _department(workspace, "Marketing", "RM")
 
-        response = _as(person).patch(
-            _department_url(workspace, person), {"department": str(marketing.id)}, format="json"
-        )
+        response = _as(person).post(f"{GROUPS}{marketing.id}/members/", {"user_id": str(person.id)}, format="json")
 
         assert response.status_code == 403
-        assert _member(workspace, person).department_id is None
         assert not _in_group(marketing, person)
 
-    def test_a_member_cannot_get_into_a_project_through_the_department_endpoint(
-        self, session_client, workspace, create_user
-    ):
-        from plane.db.models import Project, ProjectGroup, ProjectMember
-
-        pat = _person(workspace, "pat@example.com")
-        finance = _department(workspace, "Finance", "FI")
-        project = Project.objects.create(
-            name="Budget", identifier="BUD", workspace=workspace, created_by=create_user, network=0
-        )
-        ProjectMember.objects.create(project=project, member=create_user, role=20, is_active=True)
-        ProjectGroup.objects.create(project=project, workspace=workspace, group=finance)
-
-        response = _as(pat).patch(_department_url(workspace, pat), {"department": str(finance.id)}, format="json")
-
-        assert response.status_code == 403
-        assert not ProjectMember.objects.filter(project=project, member=pat, is_active=True).exists()
-        # The same department given by a workspace admin does give the project: that is why it is theirs to give
-        session_client.patch(_department_url(workspace, pat), {"department": str(finance.id)}, format="json")
-        assert ProjectMember.objects.filter(project=project, member=pat, is_active=True).exists()
-
-    def test_a_member_cannot_set_the_department_of_another_person(self, session_client, workspace):
+    def test_who_works_where_is_derived_from_the_department_groups(self, session_client, workspace):
         pat, ola = _person(workspace, "pat@example.com"), _person(workspace, "ola@example.com")
+        guest = _person(workspace, "guest@example.com", role=5)
         marketing = _department(workspace, "Marketing", "RM")
-
-        response = _as(pat).patch(_department_url(workspace, ola), {"department": str(marketing.id)}, format="json")
-
-        assert response.status_code == 403
-        assert _member(workspace, ola).department_id is None
-
-    def test_an_admin_moves_a_person_between_departments(self, session_client, workspace):
-        pat = _person(workspace, "pat@example.com")
-        marketing, quality = _department(workspace, "Marketing", "RM"), _department(workspace, "Quality", "QA")
-        url = _department_url(workspace, pat)
-
-        session_client.patch(url, {"department": str(marketing.id)}, format="json")
-        moved = session_client.patch(url, {"department": str(quality.id)}, format="json")
-
-        assert moved.status_code == 200
-        assert _member(workspace, pat).department_id == quality.id
-        assert _in_group(quality, pat) and not _in_group(marketing, pat)
-
-        cleared = session_client.patch(url, {"department": None}, format="json")
-
-        assert cleared.status_code == 200 and cleared.data["department"] is None
-        assert _member(workspace, pat).department_id is None
-        assert not _in_group(quality, pat)
-
-    def test_only_an_active_department_of_the_workspace_can_be_chosen(self, session_client, workspace, create_user):
-        pat = _person(workspace, "pat@example.com")
-        plain = UserGroup.objects.create(workspace=workspace, name="Sales")
         closed = _department(workspace, "Closed", "CL", is_active=False)
-        from plane.db.models import Workspace
+        team = UserGroup.objects.create(workspace=workspace, name="Team", parent=marketing)
+        UserGroupMember.objects.create(workspace=workspace, group=marketing, user=pat)
+        UserGroupMember.objects.create(workspace=workspace, group=marketing, user=guest)
+        UserGroupMember.objects.create(workspace=workspace, group=closed, user=ola)
+        UserGroupMember.objects.create(workspace=workspace, group=team, user=ola)
 
-        other = Workspace.objects.create(name="Other", slug="other", owner=create_user)
-        foreign = _department(other, "Foreign", "FR")
-        url = _department_url(workspace, pat)
+        everyone = _as(pat).get(DEPARTMENT_MEMBERS)
+        own = _as(guest).get(DEPARTMENT_MEMBERS)
 
-        for group in (plain, closed, foreign):
-            response = session_client.patch(url, {"department": str(group.id)}, format="json")
-            assert response.status_code == 400, group.name
-        assert session_client.patch(url, {}, format="json").status_code == 400
-        assert _member(workspace, pat).department_id is None
+        assert everyone.status_code == 200
+        assert everyone.data == {str(pat.id): str(marketing.id), str(guest.id): str(marketing.id)}
+        # A guest only learns their own department
+        assert own.data == {str(guest.id): str(marketing.id)}
 
-    def test_a_mirrored_department_is_only_for_the_people_the_provider_put_in_it(self, session_client, workspace):
-        pat, ola = _person(workspace, "pat@example.com"), _person(workspace, "ola@example.com")
-        mirrored = _department(workspace, "Department: IT", "IT", source=GroupSource.ENTRA, external_id="department:it")
-        UserGroupMember.objects.create(workspace=workspace, group=mirrored, user=pat, managed_externally=True)
+    def test_the_members_list_carries_no_department_field(self, session_client, workspace):
+        response = session_client.get(f"/api/workspaces/{SLUG}/members/")
 
-        refused = session_client.patch(_department_url(workspace, ola), {"department": str(mirrored.id)}, format="json")
-        accepted = session_client.patch(
-            _department_url(workspace, pat), {"department": str(mirrored.id)}, format="json"
-        )
+        assert response.status_code == 200
+        assert all("department" not in row for row in response.data)
 
-        assert refused.status_code == 400 and accepted.status_code == 200
-        assert _member(workspace, pat).department_id == mirrored.id
-
-    def test_a_department_from_the_provider_cannot_be_changed_or_cleared_here(self, session_client, workspace):
-        pat = _person(workspace, "pat@example.com")
-        mirrored = _department(workspace, "Department: IT", "IT", source=GroupSource.ENTRA, external_id="department:it")
-        UserGroupMember.objects.create(workspace=workspace, group=mirrored, user=pat, managed_externally=True)
-        WorkspaceMember.objects.filter(workspace=workspace, member=pat).update(department=mirrored)
-        local = _department(workspace, "Marketing", "RM")
-        url = _department_url(workspace, pat)
-
-        changed = session_client.patch(url, {"department": str(local.id)}, format="json")
-        cleared = session_client.patch(url, {"department": None}, format="json")
-
-        assert changed.status_code == 400 and cleared.status_code == 400
-        assert "identity provider" in changed.data["error"]
-        assert _member(workspace, pat).department_id == mirrored.id
-        assert _in_group(mirrored, pat) and not _in_group(local, pat)
-
-    def test_changing_the_department_keeps_hand_made_and_group_admin_memberships(self, session_client, workspace):
-        pat, ola = _person(workspace, "pat@example.com"), _person(workspace, "ola@example.com")
-        marketing, quality, sales = (
-            _department(workspace, "Marketing", "RM"),
-            _department(workspace, "Quality", "QA"),
-            _department(workspace, "Sales", "SL"),
-        )
-        # Pat is made the group admin of Marketing after getting it as department
-        session_client.patch(_department_url(workspace, pat), {"department": str(marketing.id)}, format="json")
-        session_client.patch(f"{GROUPS}{marketing.id}/members/{pat.id}/", {"role": GroupRole.ADMIN}, format="json")
-        # Ola was put into Quality by hand before it became her department
-        UserGroupMember.objects.create(workspace=workspace, group=quality, user=ola)
-        session_client.patch(_department_url(workspace, ola), {"department": str(quality.id)}, format="json")
-
-        session_client.patch(_department_url(workspace, pat), {"department": str(sales.id)}, format="json")
-        session_client.patch(_department_url(workspace, ola), {"department": str(sales.id)}, format="json")
-
-        assert _member(workspace, pat).department_id == sales.id
-        assert UserGroupMember.objects.get(group=marketing, user=pat).role == GroupRole.ADMIN
-        assert _member(workspace, ola).department_id == sales.id
-        assert _in_group(quality, ola)
-
-    def test_the_members_list_carries_the_department(self, session_client, workspace):
+    def test_a_deleted_department_is_nobodys(self, session_client, workspace):
         pat = _person(workspace, "pat@example.com")
         marketing = _department(workspace, "Marketing", "RM")
-        session_client.patch(_department_url(workspace, pat), {"department": str(marketing.id)}, format="json")
+        UserGroupMember.objects.create(workspace=workspace, group=marketing, user=pat)
 
-        rows = {row["member"]["id"]: row for row in session_client.get(MEMBERS).data}
-        me = session_client.get(f"/api/workspaces/{SLUG}/workspace-members/me/")
+        assert session_client.delete(f"{GROUPS}{marketing.id}/").status_code == 204
 
-        assert str(rows[pat.id]["department"]) == str(marketing.id)
-        assert "department" in me.data and me.data["department"] is None
-
-    def test_joining_a_department_group_gives_a_person_without_one_that_department(self, session_client, workspace):
-        pat = _person(workspace, "pat@example.com")
-        marketing, quality = _department(workspace, "Marketing", "RM"), _department(workspace, "Quality", "QA")
-
-        session_client.post(f"{GROUPS}{marketing.id}/members/", {"user_id": str(pat.id)}, format="json")
-        # A second department group by hand does not replace the one the person has
-        session_client.post(f"{GROUPS}{quality.id}/members/", {"user_id": str(pat.id)}, format="json")
-
-        assert _member(workspace, pat).department_id == marketing.id
-
-        session_client.delete(f"{GROUPS}{marketing.id}/members/{pat.id}/")
-
-        assert _member(workspace, pat).department_id is None
-
-    def test_a_department_that_is_deleted_or_turned_into_a_group_leaves_its_people(self, session_client, workspace):
-        pat, ola = _person(workspace, "pat@example.com"), _person(workspace, "ola@example.com")
-        marketing, quality = _department(workspace, "Marketing", "RM"), _department(workspace, "Quality", "QA")
-        session_client.patch(_department_url(workspace, pat), {"department": str(marketing.id)}, format="json")
-        session_client.patch(_department_url(workspace, ola), {"department": str(quality.id)}, format="json")
-
-        turned = session_client.patch(f"{GROUPS}{marketing.id}/", {"kind": "group"}, format="json")
-        deleted = session_client.delete(f"{GROUPS}{quality.id}/")
-
-        assert turned.status_code == 200 and deleted.status_code == 204
-        assert _member(workspace, pat).department_id is None
-        assert _member(workspace, ola).department_id is None
-        # Still a member of what is now a plain group
-        assert _in_group(marketing, pat)
-
-    def test_switching_a_department_off_keeps_it_on_its_people(self, session_client, workspace):
-        pat = _person(workspace, "pat@example.com")
-        marketing = _department(workspace, "Marketing", "RM")
-        session_client.patch(_department_url(workspace, pat), {"department": str(marketing.id)}, format="json")
-
-        response = session_client.patch(f"{GROUPS}{marketing.id}/", {"is_active": False}, format="json")
-
-        assert response.status_code == 200 and response.data["is_active"] is False
-        assert _member(workspace, pat).department_id == marketing.id
+        assert session_client.get(DEPARTMENT_MEMBERS).data == {}

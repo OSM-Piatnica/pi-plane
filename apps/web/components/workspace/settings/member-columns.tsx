@@ -23,7 +23,7 @@ import { Select } from "@plane/blocks/select";
 // helpers
 import { getFileURL } from "@plane/utils";
 // components
-import { DepartmentColorDot, DepartmentSelect } from "@/components/workspace/departments/department-select";
+import { DepartmentColorDot } from "@/components/workspace/departments/department-color-dot";
 // helpers
 import { getDepartmentLabel } from "@/helpers/department";
 // hooks
@@ -34,8 +34,6 @@ export interface RowData {
   member: IWorkspaceMember;
   role: EUserPermissions;
   is_active: boolean;
-  /** The id of the person's department. */
-  department?: string | null;
 }
 
 type NameProps = {
@@ -199,70 +197,24 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
 
 type DepartmentProps = {
   rowData: RowData;
-  workspaceSlug: string;
-  /** Every department of the workspace, the ones that are switched off included. */
+  /** Every department of the workspace. */
   departments: TUserGroup[];
+  /** The id of the person's department: the active department group they belong to. */
+  departmentId: string | undefined;
 };
 
-// react-doctor-disable-next-line only-export-components -- observer() wraps a component; the rule does not recognise the MobX HOC, so this export is a component
-export const DepartmentColumn = observer(function DepartmentColumn(props: DepartmentProps) {
-  const { rowData, workspaceSlug, departments } = props;
-  // translation
-  const { t } = useTranslation();
-  // store hooks
-  const { allowPermissions, setWorkspaceUserDepartment } = useUserPermissions();
-  const {
-    workspace: { updateMemberDepartment },
-  } = useMember();
-  const { data: currentUser } = useUser();
-
-  // derived values
-  const isCurrentUser = currentUser?.id === rowData.member.id;
-  const isAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
-  // Only a workspace admin sets departments (their own included): a department's group can open projects
-  const canEdit = isAdmin && rowData.is_active !== false;
-  const current = departments.find((department) => department.id === rowData.department) ?? null;
-  // What can be chosen: the departments that are switched on. One the identity provider manages is only
-  // for the people the provider put in it, so it is offered to nobody but the person who has it.
-  const offered = departments.filter((department) => department.is_active && !department.is_external);
-
-  if (!canEdit) {
-    if (!current) return null;
-    return (
-      <div className={`flex w-full items-center gap-2 ${rowData.is_active === false ? "text-placeholder" : ""}`}>
-        <DepartmentColorDot color={current.color} />
-        <span className="truncate">{getDepartmentLabel(current)}</span>
-      </div>
-    );
-  }
-
-  const handleChange = (departmentId: string | null) => {
-    if (!workspaceSlug) return;
-    updateMemberDepartment(workspaceSlug.toString(), rowData.member.id, departmentId)
-      .then(() => {
-        if (isCurrentUser) setWorkspaceUserDepartment(workspaceSlug.toString(), departmentId);
-        return undefined;
-      })
-      .catch((err: unknown) => {
-        const error = err as { error?: string };
-        setToast({
-          type: "error",
-          title: t("toast.error"),
-          message: error?.error ?? t("something_went_wrong_please_try_again"),
-        });
-      });
-  };
-
+/**
+ * The person's department, read only. A department is a group: workspace admins change it on the Groups page by
+ * changing who is in the department's group (or the identity provider does).
+ */
+export function DepartmentColumn(props: DepartmentProps) {
+  const { rowData, departments, departmentId } = props;
+  const current = departmentId ? departments.find((department) => department.id === departmentId) : undefined;
+  if (!current) return null;
   return (
-    <div className="w-full">
-      <DepartmentSelect
-        departments={offered}
-        value={rowData.department ?? null}
-        current={current}
-        onChange={handleChange}
-        allowNone
-        variant="select-ghost-md"
-      />
+    <div className={`flex w-full items-center gap-2 ${rowData.is_active === false ? "text-placeholder" : ""}`}>
+      <DepartmentColorDot color={current.color} />
+      <span className="truncate">{getDepartmentLabel(current)}</span>
     </div>
   );
-});
+}

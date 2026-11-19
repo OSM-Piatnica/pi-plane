@@ -22,7 +22,7 @@ import { getDepartmentsKey, getMovedSortOrder, getUserGroupsKey, sortDepartments
 // services
 import { userGroupService } from "@/services/user-group.service";
 // local imports
-import { DepartmentColorDot } from "./department-select";
+import { DepartmentColorDot } from "./department-color-dot";
 import { DepartmentFormModal } from "./department-form-modal";
 import { DepartmentImportModal } from "./department-import-modal";
 

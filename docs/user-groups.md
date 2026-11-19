@@ -11,7 +11,7 @@ A workspace can organise its people into groups, for example by department or te
 
 ## Departments
 
-A group can be marked as a department: the unit a person works in, with a code and a colour, one per person. See [Departments](departments.md).
+A group can be marked as a department: the unit a person works in, with a code and a colour. A person belongs to at most one active department, and only workspace admins (or the identity provider) manage who is in one. See [Departments](departments.md).
 
 ## Who may change what
 

@@ -31,7 +31,7 @@ class GroupSource(models.TextChoices):
 
 
 class GroupKind(models.TextChoices):
-    """What a group stands for. A department is the unit a person works in: one per person and workspace."""
+    """What a group stands for. A department is the unit a person works in: at most one active per person."""
 
     GROUP = "group", "Group"
     DEPARTMENT = "department", "Department"
@@ -52,7 +52,7 @@ class UserGroup(BaseModel):
     color = models.CharField(max_length=9, blank=True, default="")
     # The place of a department in lists and pickers
     sort_order = models.FloatField(default=65535)
-    # A department that is switched off stays on the people who have it, and is no longer offered to choose
+    # A department that is switched off keeps its members but no longer counts as anybody's department
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -102,9 +102,6 @@ class UserGroupMember(BaseModel):
     role = models.PositiveSmallIntegerField(choices=GroupRole.choices, default=GroupRole.MEMBER)
     # Rows written by the sign-in sync are replaced by it; the ones made by hand are never touched by it
     managed_externally = models.BooleanField(default=False)
-    # Made by giving the person this group as their department: taken out again when the department changes,
-    # unless the person has been made a group admin since (then the membership is theirs to keep)
-    via_department = models.BooleanField(default=False)
 
     class Meta:
         constraints = [

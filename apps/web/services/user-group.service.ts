@@ -8,6 +8,7 @@ import { API_BASE_URL } from "@plane/constants";
 import type {
   EUserGroupRole,
   TDepartment,
+  TDepartmentMembers,
   TFilterableUserGroup,
   TUserGroup,
   TUserGroupFormData,
@@ -30,7 +31,7 @@ export class UserGroupService extends APIService {
       });
   }
 
-  /** The departments a person can choose from; open to every member of the workspace, guests included. */
+  /** The departments that are switched on, in their order; open to every member of the workspace, guests included. */
   async listDepartments(workspaceSlug: string): Promise<TDepartment[]> {
     return this.get(`/api/workspaces/${workspaceSlug}/departments/`)
       .then((response) => response?.data)
@@ -39,15 +40,9 @@ export class UserGroupService extends APIService {
       });
   }
 
-  /** Sets the department of a workspace member (by the id of the membership); null takes it away. */
-  async setMemberDepartment(
-    workspaceSlug: string,
-    workspaceMemberId: string,
-    departmentId: string | null
-  ): Promise<{ id: string; department: string | null }> {
-    return this.patch(`/api/workspaces/${workspaceSlug}/members/${workspaceMemberId}/department/`, {
-      department: departmentId,
-    })
+  /** Who works in which department: user id to department (group) id. Guests only get their own. */
+  async listDepartmentMembers(workspaceSlug: string): Promise<TDepartmentMembers> {
+    return this.get(`/api/workspaces/${workspaceSlug}/departments/members/`)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

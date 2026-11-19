@@ -71,10 +71,6 @@ class DepartmentLiteSerializer(serializers.ModelSerializer):
         read_only_fields = fields
 
 
-class WorkspaceMemberDepartmentSerializer(serializers.Serializer):
-    department = serializers.UUIDField(allow_null=True)
-
-
 class UserGroupMemberSerializer(serializers.ModelSerializer):
     user = UserLiteSerializer(read_only=True)
     group_name = serializers.CharField(source="group.name", read_only=True)

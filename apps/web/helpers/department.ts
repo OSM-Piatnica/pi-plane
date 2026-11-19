@@ -27,8 +27,10 @@ export const DEPARTMENT_COLORS = [
 ];
 const SORT_ORDER_STEP = 10000;
 
-/** The SWR key of the departments a person can choose from. */
+/** The SWR key of the departments that are switched on (the list for pickers). */
 export const getDepartmentsKey = (workspaceSlug: string) => `WORKSPACE_DEPARTMENTS_${workspaceSlug}`;
+/** The SWR key of who works in which department (derived from the department groups). */
+export const getDepartmentMembersKey = (workspaceSlug: string) => `WORKSPACE_DEPARTMENT_MEMBERS_${workspaceSlug}`;
 /** The SWR key of every group of the workspace (shared with the groups settings). */
 export const getUserGroupsKey = (workspaceSlug: string) => `USER_GROUPS_${workspaceSlug}`;
 const HEX_COLOR = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
@@ -128,24 +130,3 @@ export function getMovedSortOrder(
 /** "RM · Marketing", or the name alone for a department without a code. */
 export const getDepartmentLabel = (department: Pick<TDepartment, "name" | "code">): string =>
   department.code ? `${department.code} · ${department.name}` : department.name;
-
-/**
- * Whether to ask a person for their department: they are a workspace admin (only admins set departments), the
- * workspace has departments to choose from, the person has none, and they have not put the question off in this
- * browser session.
- */
-export function shouldAskForDepartment(args: {
-  departments: unknown[] | undefined;
-  /** The department on the person's membership; undefined while it is not loaded. */
-  currentDepartment: string | null | undefined;
-  /** False until the person's membership is loaded. */
-  isMembershipLoaded: boolean;
-  isPostponed: boolean;
-  /** Whether the person is a workspace admin. */
-  isAdmin: boolean;
-}): boolean {
-  const { departments, currentDepartment, isMembershipLoaded, isPostponed, isAdmin } = args;
-  if (!isAdmin || !isMembershipLoaded || isPostponed) return false;
-  if (!departments || departments.length === 0) return false;
-  return !currentDepartment;
-}

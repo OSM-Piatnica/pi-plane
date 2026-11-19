@@ -45,7 +45,7 @@ def is_sole_admin_of_any_project(slug, user_id):
 
 
 # Guests only get id/member/role; the web app also reads is_active (suspended state) and created_at (join date).
-NON_GUEST_FIELDS = ("id", "member", "role", "is_active", "created_at", "department")
+NON_GUEST_FIELDS = ("id", "member", "role", "is_active", "created_at")
 
 
 class WorkSpaceMemberViewSet(BaseViewSet):

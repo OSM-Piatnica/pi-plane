@@ -12,7 +12,6 @@ import {
   normalizeDepartmentCode,
   parseDepartmentList,
   planDepartmentImport,
-  shouldAskForDepartment,
   sortDepartments,
 } from "@/helpers/department";
 
@@ -135,35 +134,5 @@ describe("small helpers", () => {
   it("labels a department with its code when it has one", () => {
     expect(getDepartmentLabel({ name: "Marketing", code: "RM" })).toBe("RM · Marketing");
     expect(getDepartmentLabel({ name: "Marketing", code: "" })).toBe("Marketing");
-  });
-});
-
-describe("shouldAskForDepartment", () => {
-  const base = {
-    departments: [{}],
-    currentDepartment: null,
-    isMembershipLoaded: true,
-    isPostponed: false,
-    isAdmin: true,
-  };
-
-  it("asks a workspace admin without a department when the workspace has departments", () => {
-    expect(shouldAskForDepartment(base)).toBe(true);
-    expect(shouldAskForDepartment({ ...base, currentDepartment: undefined })).toBe(true);
-  });
-
-  it("does not ask when there is nothing to choose, or nothing is known yet", () => {
-    expect(shouldAskForDepartment({ ...base, departments: [] })).toBe(false);
-    expect(shouldAskForDepartment({ ...base, departments: undefined })).toBe(false);
-    expect(shouldAskForDepartment({ ...base, isMembershipLoaded: false })).toBe(false);
-  });
-
-  it("does not ask members or guests, who cannot set their department", () => {
-    expect(shouldAskForDepartment({ ...base, isAdmin: false })).toBe(false);
-  });
-
-  it("does not ask a person who has a department or put the question off", () => {
-    expect(shouldAskForDepartment({ ...base, currentDepartment: "d1" })).toBe(false);
-    expect(shouldAskForDepartment({ ...base, isPostponed: true })).toBe(false);
   });
 });

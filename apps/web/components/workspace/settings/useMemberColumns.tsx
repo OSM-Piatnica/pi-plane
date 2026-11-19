@@ -17,7 +17,7 @@ import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import type { IMemberFilters } from "@/store/member/utils";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
-import { getUserGroupsKey } from "@/helpers/department";
+import { getDepartmentMembersKey, getUserGroupsKey } from "@/helpers/department";
 import { userGroupService } from "@/services/user-group.service";
 
 const isSuspended = (rowData: RowData) => rowData.is_active === false;
@@ -50,6 +50,13 @@ export const useMemberColumns = () => {
     workspaceSlug ? () => userGroupService.list(workspaceSlug.toString()) : null
   );
   const departments = (groups ?? []).filter((group) => group.kind === "department");
+  // Who works where is derived from the department groups on the server
+  const { data: departmentMembers } = useSWR(
+    workspaceSlug && canSeeDepartments && departments.length > 0
+      ? getDepartmentMembersKey(workspaceSlug.toString())
+      : null,
+    workspaceSlug ? () => userGroupService.listDepartmentMembers(workspaceSlug.toString()) : null
+  );
 
   // handlers
   const handleDisplayFilterUpdate = (filterUpdates: Partial<IMemberFilters>) => {
@@ -138,7 +145,11 @@ export const useMemberColumns = () => {
             defaultWidth: 200,
             content: t("workspace_settings.settings.departments.department"),
             tdRender: (rowData: RowData) => (
-              <DepartmentColumn rowData={rowData} workspaceSlug={workspaceSlug} departments={departments} />
+              <DepartmentColumn
+                rowData={rowData}
+                departments={departments}
+                departmentId={departmentMembers?.[rowData.member.id]}
+              />
             ),
           },
         ]
