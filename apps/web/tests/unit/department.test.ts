@@ -139,9 +139,15 @@ describe("small helpers", () => {
 });
 
 describe("shouldAskForDepartment", () => {
-  const base = { departments: [{}], currentDepartment: null, isMembershipLoaded: true, isPostponed: false };
+  const base = {
+    departments: [{}],
+    currentDepartment: null,
+    isMembershipLoaded: true,
+    isPostponed: false,
+    isAdmin: true,
+  };
 
-  it("asks a member without a department when the workspace has departments", () => {
+  it("asks a workspace admin without a department when the workspace has departments", () => {
     expect(shouldAskForDepartment(base)).toBe(true);
     expect(shouldAskForDepartment({ ...base, currentDepartment: undefined })).toBe(true);
   });
@@ -150,6 +156,10 @@ describe("shouldAskForDepartment", () => {
     expect(shouldAskForDepartment({ ...base, departments: [] })).toBe(false);
     expect(shouldAskForDepartment({ ...base, departments: undefined })).toBe(false);
     expect(shouldAskForDepartment({ ...base, isMembershipLoaded: false })).toBe(false);
+  });
+
+  it("does not ask members or guests, who cannot set their department", () => {
+    expect(shouldAskForDepartment({ ...base, isAdmin: false })).toBe(false);
   });
 
   it("does not ask a person who has a department or put the question off", () => {

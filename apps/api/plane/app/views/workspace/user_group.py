@@ -3,7 +3,7 @@
 # See the LICENSE file for details.
 
 # Django imports
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.db.models import Count, Q
 
 # Third party imports
@@ -33,6 +33,7 @@ from plane.utils.departments import (
     DepartmentError,
     active_departments,
     adopt_department,
+    adopt_department_for_members,
     clear_department,
     code_taken,
     next_sort_order,
@@ -67,6 +68,13 @@ def _error(message, code=status.HTTP_400_BAD_REQUEST):
     return Response({"error": message}, status=code)
 
 
+def _conflict(exc):
+    """The answer to a unique constraint that a concurrent request won (between our check and our write)."""
+    if "department_code" in str(exc):
+        return _error(CODE_TAKEN_MESSAGE, status.HTTP_409_CONFLICT)
+    return _error("A group with this name already exists here.", status.HTTP_409_CONFLICT)
+
+
 class _GroupView(BaseAPIView):
     """Groups are shown to everyone who is not a guest; what a person may change is decided per group."""
 
@@ -87,7 +95,10 @@ class _GroupView(BaseAPIView):
         )
         for group in groups:
             group.can_manage = admin or group.id in ruled
-            group.can_delete = admin or (group.parent_id is not None and group.parent_id in ruled)
+            # A department is only ever removed by a workspace admin
+            group.can_delete = admin or (
+                not group.is_department and group.parent_id is not None and group.parent_id in ruled
+            )
         return UserGroupSerializer(groups, many=True).data
 
     def _check_parent(self, workspace, group, parent_id):
@@ -157,7 +168,11 @@ class UserGroupListEndpoint(_GroupView):
                 if "sort_order" not in data:
                     extra["sort_order"] = next_sort_order(workspace.id)
 
-        group = serializer.save(workspace=workspace, **extra)
+        try:
+            with transaction.atomic():
+                group = serializer.save(workspace=workspace, **extra)
+        except IntegrityError as exc:
+            return _conflict(exc)
         return Response(
             self._present(request, workspace, UserGroup.objects.filter(pk=group.pk))[0],
             status=status.HTTP_201_CREATED,
@@ -251,10 +266,16 @@ class UserGroupDetailEndpoint(_GroupView):
         extra = {}
         if becomes_department and "sort_order" not in data:
             extra["sort_order"] = next_sort_order(workspace.id)
-        with transaction.atomic():
-            serializer.save(**extra)
-            if stops_being_department:
-                clear_department(workspace.id, [group.id])
+        try:
+            with transaction.atomic():
+                group = serializer.save(**extra)
+                if stops_being_department:
+                    clear_department(workspace.id, [group.id])
+                elif becomes_department:
+                    # Its members who have no department get this one, as when someone joins a department
+                    adopt_department_for_members(group)
+        except IntegrityError as exc:
+            return _conflict(exc)
         if moved:
             # Who belongs to the groups above changed with it, and so do the projects those give
             reconcile_workspace(workspace.id)
@@ -355,7 +376,12 @@ class UserGroupMemberDetailEndpoint(_GroupView):
         serializer.is_valid(raise_exception=True)
         previous_role = membership.role
         membership.role = serializer.validated_data["role"]
-        membership.save(update_fields=["role", "updated_at"])
+        update_fields = ["role", "updated_at"]
+        if membership.role != previous_role and membership.via_department:
+            # Changed by hand: the membership is no longer only what the department assignment made
+            membership.via_department = False
+            update_fields.append("via_department")
+        membership.save(update_fields=update_fields)
         if membership.role != previous_role:
             notify_group_membership.delay(
                 str(membership.group_id), str(user_id), str(request.user.id), ROLE_CHANGED, membership.role
@@ -374,7 +400,7 @@ class UserGroupMemberDetailEndpoint(_GroupView):
 
 
 class DepartmentListEndpoint(BaseAPIView):
-    """The departments a person can choose from: open to every member of the workspace, guests included."""
+    """The departments that are switched on, for pickers and the notice to people without one (any member)."""
 
     permission_classes = [WorkspaceViewerPermission]
 
@@ -384,18 +410,23 @@ class DepartmentListEndpoint(BaseAPIView):
 
 
 class WorkspaceMemberDepartmentEndpoint(BaseAPIView):
-    """The department of a workspace member: a workspace admin sets anyone's, everybody else their own."""
+    """
+    The department of a workspace member, set by a workspace admin only (their own included).
 
-    @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST], level="WORKSPACE")
+    Members and guests do not choose their department: belonging to a department's group can make a person a member
+    of the projects the group is a member of, so choosing it would let anyone into those projects.
+    """
+
+    @allow_permission(allowed_roles=[ROLE.ADMIN], level="WORKSPACE")
     def patch(self, request, slug, pk):
         workspace = Workspace.objects.get(slug=slug)
-        member = WorkspaceMember.objects.filter(
-            workspace=workspace, pk=pk, is_active=True, member__is_bot=False
-        ).first()
+        member = (
+            WorkspaceMember.objects.filter(workspace=workspace, pk=pk, is_active=True, member__is_bot=False)
+            .select_related("department")
+            .first()
+        )
         if member is None:
             return _error("Workspace member not found.", status.HTTP_404_NOT_FOUND)
-        if member.member_id != request.user.id and not is_workspace_admin(request.user, workspace.id):
-            return _error("Only a workspace admin can set the department of another person.", status.HTTP_403_FORBIDDEN)
 
         serializer = WorkspaceMemberDepartmentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

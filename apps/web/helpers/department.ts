@@ -130,8 +130,9 @@ export const getDepartmentLabel = (department: Pick<TDepartment, "name" | "code"
   department.code ? `${department.code} · ${department.name}` : department.name;
 
 /**
- * Whether to ask a person for their department: the workspace has departments to choose from, the person has
- * none, and they have not put the question off in this browser session.
+ * Whether to ask a person for their department: they are a workspace admin (only admins set departments), the
+ * workspace has departments to choose from, the person has none, and they have not put the question off in this
+ * browser session.
  */
 export function shouldAskForDepartment(args: {
   departments: unknown[] | undefined;
@@ -140,9 +141,11 @@ export function shouldAskForDepartment(args: {
   /** False until the person's membership is loaded. */
   isMembershipLoaded: boolean;
   isPostponed: boolean;
+  /** Whether the person is a workspace admin. */
+  isAdmin: boolean;
 }): boolean {
-  const { departments, currentDepartment, isMembershipLoaded, isPostponed } = args;
-  if (!isMembershipLoaded || isPostponed) return false;
+  const { departments, currentDepartment, isMembershipLoaded, isPostponed, isAdmin } = args;
+  if (!isAdmin || !isMembershipLoaded || isPostponed) return false;
   if (!departments || departments.length === 0) return false;
   return !currentDepartment;
 }

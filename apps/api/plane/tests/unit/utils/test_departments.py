@@ -13,6 +13,7 @@ from plane.db.models import GroupKind, GroupSource, User, UserGroup, UserGroupMe
 from plane.utils.departments import (
     DepartmentError,
     adopt_department,
+    adopt_department_for_members,
     code_taken,
     is_valid_color,
     next_sort_order,
@@ -166,3 +167,47 @@ class TestDepartments:
 
         assert _fresh(pat).department_id == marketing.id
         assert UserGroupMember.objects.filter(group=marketing, user=pat.member).exists()
+
+    def test_a_move_between_departments_at_the_provider_lands_in_one_sign_in(self, ws, pat):
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT, HR])
+        UserGroup.objects.filter(workspace=ws, external_id__in=["department:it", "department:hr"]).update(
+            kind=GroupKind.DEPARTMENT
+        )
+        it = UserGroup.objects.get(workspace=ws, external_id="department:it")
+        hr = UserGroup.objects.get(workspace=ws, external_id="department:hr")
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
+        assert _fresh(pat).department_id == it.id
+
+        # The old department is cleared before the new one is adopted, so it does not take two sign-ins
+        sync_external_groups(pat.member, GroupSource.ENTRA, [HR])
+
+        assert _fresh(pat).department_id == hr.id
+
+    def test_a_department_from_the_provider_is_not_changed_by_hand(self, ws, pat):
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
+        mirrored = UserGroup.objects.get(workspace=ws, external_id="department:it")
+        mirrored.kind = GroupKind.DEPARTMENT
+        mirrored.save(update_fields=["kind"])
+        sync_external_groups(pat.member, GroupSource.ENTRA, [IT])
+        marketing = _department(ws, "Marketing", "RM")
+
+        for target in (marketing, None):
+            with pytest.raises(DepartmentError):
+                set_department(_fresh(pat), target)
+
+        assert _fresh(pat).department_id == mirrored.id
+        assert not UserGroupMember.objects.filter(group=marketing, user=pat.member).exists()
+
+    def test_a_group_that_becomes_a_department_is_given_to_its_members_without_one(self, ws, pat, create_user):
+        marketing = _department(ws, "Marketing", "RM")
+        set_department(pat, marketing)
+        sales = UserGroup.objects.create(workspace=ws, name="Sales")
+        UserGroupMember.objects.create(workspace=ws, group=sales, user=pat.member)
+        UserGroupMember.objects.create(workspace=ws, group=sales, user=create_user)
+
+        sales.kind = GroupKind.DEPARTMENT
+        sales.save(update_fields=["kind"])
+        adopt_department_for_members(sales)
+
+        assert _fresh(pat).department_id == marketing.id
+        assert WorkspaceMember.objects.get(workspace=ws, member=create_user).department_id == sales.id

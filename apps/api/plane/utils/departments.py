@@ -7,13 +7,19 @@ Departments: user groups of kind "department", and the one department a person h
 
 A department is a user group, so it nests, takes members, can be mirrored from the identity provider and can be
 assigned work like any other group. On top of that a workspace member has at most one department
-(``WorkspaceMember.department``). The two are kept in step here:
+(``WorkspaceMember.department``). Only workspace admins give people their department (or the identity provider
+does), because belonging to a department's group can give access to the projects the group is a member of.
 
-* a person's department is always a group they belong to: choosing a local department puts them in it, and taking
-  them out of the group (by hand, or by the sign-in sync) clears the department;
-* changing the department takes the person out of the previous one, unless the identity provider put them there;
-* a department managed by the identity provider can only be chosen by people the provider put in it;
-* a person may belong to further department groups by hand; only the one on the workspace member is "theirs".
+The department and the group membership are kept in step here:
+
+* a person's department is always a group they belong to: giving a local department puts them in it (a membership
+  marked ``via_department``), and taking them out of the group (by hand, or by the sign-in sync) clears it;
+* changing the department takes the person out of the previous one only when the department assignment made that
+  membership and it is still a plain one: a membership made by hand, or one where the person has since been made a
+  group admin, stays;
+* a department that comes from the identity provider (an external group the provider put the person in) is the
+  provider's: it cannot be changed or cleared here, only at the provider, like the provider's group memberships;
+* a person may belong to further department groups; only the one on the workspace member is "theirs".
 """
 
 import re
@@ -26,6 +32,9 @@ from plane.utils.project_groups import reconcile_user
 
 COLOR_PATTERN = re.compile(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
 SORT_ORDER_STEP = 10000
+# The longest code the database stores (``UserGroup.code``)
+CODE_MAX_LENGTH = 16
+PROVIDER_DEPARTMENT_MESSAGE = "This person's department comes from the identity provider and can only be changed there."
 
 
 class DepartmentError(ValueError):
@@ -60,17 +69,28 @@ def code_taken(workspace_id, code, exclude_id=None):
 
 
 def active_departments(workspace_id):
-    """The departments a person can choose from, in their order."""
+    """The departments that can be given to people, in their order."""
     return UserGroup.objects.filter(workspace_id=workspace_id, kind=GroupKind.DEPARTMENT, is_active=True).order_by(
         "sort_order", "name"
     )
+
+
+def comes_from_provider(workspace_member):
+    """True when the person's department is a group the identity provider manages and put them in."""
+    department = workspace_member.department
+    if department is None or not department.is_external:
+        return False
+    return UserGroupMember.objects.filter(
+        group=department, user_id=workspace_member.member_id, managed_externally=True
+    ).exists()
 
 
 def set_department(workspace_member, department):
     """
     Give a workspace member a department (a UserGroup), or none (``None``), keeping the group memberships in step.
 
-    Raises DepartmentError when the group cannot be the person's department.
+    Raises DepartmentError when the group cannot be the person's department, or when the department the person
+    has comes from the identity provider.
     """
     previous_id = workspace_member.department_id
     new_id = department.id if department is not None else None
@@ -78,6 +98,9 @@ def set_department(workspace_member, department):
         return workspace_member
     user_id = workspace_member.member_id
     workspace_id = workspace_member.workspace_id
+
+    if comes_from_provider(workspace_member):
+        raise DepartmentError(PROVIDER_DEPARTMENT_MESSAGE)
 
     is_member = False
     if department is not None:
@@ -95,11 +118,22 @@ def set_department(workspace_member, department):
 
     with transaction.atomic():
         if previous_id:
-            # Only what was put in by hand is taken out: the provider's memberships are its own
-            UserGroupMember.objects.filter(group_id=previous_id, user_id=user_id, managed_externally=False).delete()
+            # Only the plain membership the department assignment made is taken out: one made by hand, one where
+            # the person has become a group admin, and the provider's own all stay
+            UserGroupMember.objects.filter(
+                group_id=previous_id,
+                user_id=user_id,
+                via_department=True,
+                role=GroupRole.MEMBER,
+                managed_externally=False,
+            ).delete()
         if department is not None and not is_member:
             UserGroupMember.objects.create(
-                workspace_id=workspace_id, group=department, user_id=user_id, role=GroupRole.MEMBER
+                workspace_id=workspace_id,
+                group=department,
+                user_id=user_id,
+                role=GroupRole.MEMBER,
+                via_department=True,
             )
         workspace_member.department = department
         workspace_member.save(update_fields=["department", "updated_at"])
@@ -113,6 +147,20 @@ def adopt_department(workspace_id, user_id, group):
         return
     WorkspaceMember.objects.filter(
         workspace_id=workspace_id, member_id=user_id, is_active=True, department__isnull=True
+    ).update(department=group)
+
+
+def adopt_department_for_members(group):
+    """
+    A group that has just become a department is given as department to its own members who have none.
+
+    Only the group's direct members count, not those of the groups below it. One update, so it runs in bulk.
+    """
+    if group.kind != GroupKind.DEPARTMENT or not group.is_active:
+        return
+    member_ids = UserGroupMember.objects.filter(group=group).values_list("user_id", flat=True)
+    WorkspaceMember.objects.filter(
+        workspace_id=group.workspace_id, member_id__in=member_ids, is_active=True, department__isnull=True
     ).update(department=group)
 
 

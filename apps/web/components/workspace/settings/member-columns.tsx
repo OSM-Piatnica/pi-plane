@@ -219,8 +219,8 @@ export const DepartmentColumn = observer(function DepartmentColumn(props: Depart
   // derived values
   const isCurrentUser = currentUser?.id === rowData.member.id;
   const isAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
-  // A workspace admin sets anyone's department, everybody else their own
-  const canEdit = (isAdmin || isCurrentUser) && rowData.is_active !== false;
+  // Only a workspace admin sets departments (their own included): a department's group can open projects
+  const canEdit = isAdmin && rowData.is_active !== false;
   const current = departments.find((department) => department.id === rowData.department) ?? null;
   // What can be chosen: the departments that are switched on. One the identity provider manages is only
   // for the people the provider put in it, so it is offered to nobody but the person who has it.

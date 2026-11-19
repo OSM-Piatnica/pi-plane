@@ -118,11 +118,13 @@ def _sync_workspace(workspace_id, user, source, groups):
     # Parents are created before the groups below them (ensure goes up first), whatever the order of the list
     done = {}
     current = set()
+    joined = []
     for external_id, entry in wanted.items():
         group = ensure(external_id, done)
         if group is None or not entry.get("member", True):
             continue
         current.add(group.id)
+        joined.append(group)
         if not UserGroupMember.objects.filter(group=group, user=user).exists():
             UserGroupMember.objects.create(
                 workspace_id=workspace_id,
@@ -131,8 +133,6 @@ def _sync_workspace(workspace_id, user, source, groups):
                 role=GroupRole.MEMBER,
                 managed_externally=True,
             )
-        # A mirrored group a workspace admin marked as a department becomes the department of whoever has none
-        adopt_department(workspace_id, user.id, group)
 
     # Left at the provider: only what this sync put in is taken out. Groups stay, even when nobody is left in them.
     left = UserGroupMember.objects.filter(
@@ -144,6 +144,11 @@ def _sync_workspace(workspace_id, user, source, groups):
     # A department the person left at the provider is no longer theirs
     clear_department(workspace_id, list(left.values_list("group_id", flat=True)), user_id=user.id)
     left.delete()
+
+    # Only then: a mirrored group a workspace admin marked as a department becomes the department of whoever has
+    # none, so a move from one department to another at the provider lands on the new one in the same sign-in
+    for group in joined:
+        adopt_department(workspace_id, user.id, group)
 
 
 def _as_data(group):

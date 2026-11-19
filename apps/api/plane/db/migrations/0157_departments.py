@@ -50,6 +50,11 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
+            model_name="usergroupmember",
+            name="via_department",
+            field=models.BooleanField(default=False),
+        ),
+        migrations.AddField(
             model_name="workspacemember",
             name="department",
             field=models.ForeignKey(

@@ -13,7 +13,7 @@ A department is a [user group](user-groups.md) of the kind _department_. There i
 - a **place** in the list. The arrows on the settings page move a department up and down; pickers show the departments in this order.
 - a switch. A department that is **switched off** stays on the people who have it, and is no longer offered to choose.
 
-Only workspace admins add departments and change the code, the colour, the place, the switch or the kind of a group. Departments also appear on the Groups page, where their members can be managed as for any group.
+Only workspace admins add departments and change the code, the colour, the place, the switch or the kind of a group. Departments also appear on the Groups page. Unlike other groups, a department is managed by workspace admins only: a group admin of a department cannot change its members, rename it, move it, delete it or create subgroups under it. Ordinary groups nested below a department stay with their own group admins.
 
 ### Import from a list
 
@@ -27,16 +27,17 @@ IT;IT services
 
 ## The department of a person
 
-- A workspace admin sets anyone's department in **Settings → Members**, in the **Department** column. Everybody else can set their own there. The column appears once the workspace has a department; guests do not see it.
-- A member who has no department is asked for it when they open the workspace, as soon as the workspace has at least one department to choose from. The question can be put off with **Later**; it comes back in the next browser session. This is also what a person sees right after accepting an invitation or finishing onboarding.
+- Only workspace admins set departments, their own included, in **Settings → Members**, in the **Department** column. Members and guests cannot choose their department: a department's group can be a member of projects, so choosing one would let anyone into those projects. The column appears once the workspace has a department; members see it read-only, guests do not see it.
+- A workspace admin who has no department is asked for their own when they open the workspace, as soon as the workspace has at least one department to choose from. The question can be put off with **Later**; it comes back in the next browser session.
 
 ### How the department and the group membership go together
 
 A person's department is always a group they belong to:
 
-- Choosing a department puts the person in that group (as a plain member). Changing it takes them out of the previous department's group; taking the department away does the same.
+- Giving a person a department puts them in that group (as a plain member). Changing it, or taking it away, takes them out of the previous department's group, but only when that membership was made by giving the department and is still a plain one: a membership added by hand on the Groups page, or one where the person has since been made a group admin, stays.
 - Taking a person out of the group (on the Groups page) clears their department when it was that one.
 - Putting a person who has no department into a department's group makes it their department. A person who already has one keeps it: they may belong to further department groups, and only the one set on them counts as theirs.
+- Turning a plain group into a department gives it as department to those of its direct members who have none.
 - Deleting a department, or turning it back into a plain group, leaves its people without a department. They stay in the workspace.
 
 ### Departments from the identity provider
@@ -45,17 +46,17 @@ Groups mirrored from the identity provider (see [Groups managed outside](user-gr
 
 - at each sign-in, a person the provider puts in that group and who has no department gets it as their department;
 - a person who leaves the group at the provider loses the department;
-- nobody can choose such a department by hand unless the provider already put them in it, because the provider decides who belongs to it;
-- a department a person chose by hand is never replaced by the sign-in.
+- such a department can be given by hand only to a person the provider already put in it, because the provider decides who belongs to it;
+- a department that comes from the provider cannot be changed or cleared in Plane, only at the provider; a person moved to another department at the provider gets the new one at their next sign-in;
+- a department a workspace admin gave by hand is never replaced by the sign-in.
 
 ## API
 
 - `GET /api/workspaces/<slug>/user-groups/?kind=department` lists the departments (in their order); `kind=group` lists the other groups. Create and change take `kind`, `code`, `color`, `sort_order` and `is_active` (workspace admins only).
-- `GET /api/workspaces/<slug>/departments/` is the list for pickers: the departments that are switched on, open to every member of the workspace, guests included.
-- `PATCH /api/workspaces/<slug>/members/<workspace member id>/department/` with `{"department": "<group id>"}` or `{"department": null}` sets a person's department: an admin anyone's, everybody else their own.
+- `GET /api/workspaces/<slug>/departments/` lists the departments that are switched on, open to every member of the workspace, guests included.
+- `PATCH /api/workspaces/<slug>/members/<workspace member id>/department/` with `{"department": "<group id>"}` or `{"department": null}` sets a person's department (workspace admins only).
 - The workspace members list and `workspace-members/me/` carry `department` (the id of the group).
 
 ## Not there yet
 
-- The department is not asked for inside the onboarding steps or on the invitation page itself; the question comes when the person first opens the workspace, and it can be put off.
 - RACI roles on work items, filters and notifications by department come with later changes.

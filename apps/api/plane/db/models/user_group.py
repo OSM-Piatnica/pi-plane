@@ -102,6 +102,9 @@ class UserGroupMember(BaseModel):
     role = models.PositiveSmallIntegerField(choices=GroupRole.choices, default=GroupRole.MEMBER)
     # Rows written by the sign-in sync are replaced by it; the ones made by hand are never touched by it
     managed_externally = models.BooleanField(default=False)
+    # Made by giving the person this group as their department: taken out again when the department changes,
+    # unless the person has been made a group admin since (then the membership is theirs to keep)
+    via_department = models.BooleanField(default=False)
 
     class Meta:
         constraints = [

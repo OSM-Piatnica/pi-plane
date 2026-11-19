@@ -8,6 +8,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 import useSWR from "swr";
 // plane imports
+import { EUserPermissions } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import {
@@ -53,8 +54,9 @@ const writePostponed = (workspaceSlug: string) => {
 };
 
 /**
- * Asks a member of the workspace for their department when the workspace has departments and they have none.
- * It can be put off ("Later") until the next browser session, so it never stands in the way of work.
+ * Asks a workspace admin for their own department when the workspace has departments and they have none.
+ * Only workspace admins give people their department (a department's group can open projects), so nobody else
+ * is asked. It can be put off ("Later") until the next browser session, so it never stands in the way of work.
  */
 export const DepartmentPrompt = observer(function DepartmentPrompt(props: Props) {
   const { workspaceSlug } = props;
@@ -62,7 +64,8 @@ export const DepartmentPrompt = observer(function DepartmentPrompt(props: Props)
   const { workspaceUserInfo, setWorkspaceUserDepartment } = useUserPermissions();
   // derived values
   const membership = workspaceSlug ? workspaceUserInfo[workspaceSlug] : undefined;
-  const needsDepartment = Boolean(membership) && !membership?.department;
+  const isAdmin = membership?.role === EUserPermissions.ADMIN;
+  const needsDepartment = isAdmin && !membership?.department;
 
   // The list is only read for people who have no department yet
   const { data: departments } = useSWR(
@@ -71,7 +74,7 @@ export const DepartmentPrompt = observer(function DepartmentPrompt(props: Props)
     { revalidateOnFocus: false }
   );
 
-  if (!workspaceSlug || !membership) return null;
+  if (!workspaceSlug || !membership || !isAdmin) return null;
   // Departments the identity provider manages are given by it, and cannot be chosen
   const choosable = departments?.filter((department) => !department.is_external);
 
@@ -80,6 +83,7 @@ export const DepartmentPrompt = observer(function DepartmentPrompt(props: Props)
       key={workspaceSlug}
       workspaceSlug={workspaceSlug}
       workspaceMemberId={membership.id}
+      isAdmin={isAdmin}
       currentDepartment={membership.department}
       departments={choosable}
       onSaved={(departmentId) => setWorkspaceUserDepartment(workspaceSlug, departmentId)}
@@ -90,13 +94,14 @@ export const DepartmentPrompt = observer(function DepartmentPrompt(props: Props)
 type DialogProps = {
   workspaceSlug: string;
   workspaceMemberId: string;
+  isAdmin: boolean;
   currentDepartment: string | null | undefined;
   departments: Awaited<ReturnType<typeof userGroupService.listDepartments>> | undefined;
   onSaved: (departmentId: string) => void;
 };
 
 function DepartmentPromptDialog(props: DialogProps) {
-  const { workspaceSlug, workspaceMemberId, currentDepartment, departments, onSaved } = props;
+  const { workspaceSlug, workspaceMemberId, isAdmin, currentDepartment, departments, onSaved } = props;
   // translation
   const { t } = useTranslation();
   // states
@@ -109,6 +114,7 @@ function DepartmentPromptDialog(props: DialogProps) {
     currentDepartment,
     isMembershipLoaded: true,
     isPostponed,
+    isAdmin,
   });
   if (!isOpen || !departments) return null;
 
