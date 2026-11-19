@@ -1,0 +1,4 @@
+# Synchronizacja (scheduler.py, sync_service.py, graph_connection.py) - to trafia do obrazu
+requests==2.34.2
+msal==1.39.0
+python-dotenv==1.2.3

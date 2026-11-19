@@ -1,0 +1,4 @@
+# Serwer MCP (plane_mcp_server.py) - uruchamiany osobno, nie jest czescia obrazu synchronizacji
+-r requirements.txt
+mcp==2.3.0
+PyJWT[crypto]==2.14.0

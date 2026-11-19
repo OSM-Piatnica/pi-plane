@@ -1,0 +1,14 @@
+# sekrety (klucz aplikacji Entra ID, bot token Plane) - nigdy do repozytorium
+.env
+.env.*
+!.env.example
+*.pem
+*.cer
+*.key
+*.pfx
+# lokalny stan synchronizacji (identyfikatory i skroty wyslanych zadan)
+sync_state.json
+sync_state.tmp
+sync.lock
+sync.log
+__pycache__/
