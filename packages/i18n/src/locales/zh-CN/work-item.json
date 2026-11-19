@@ -756,7 +756,8 @@
         "removed": "移除了开始日期。",
         "removed_with_issue": "移除了 <issue/> 的开始日期。",
         "set": "将开始日期设置为 <value/>。",
-        "set_with_issue": "将 <issue/> 的开始日期设置为 <value/>。"
+        "set_with_issue": "将 <issue/> 的开始日期设置为 <value/>。",
+        "shifted": "在 <cause/> 更改后自动将开始日期移至 <value/>。"
       },
       "state": {
         "set": "将状态设置为 <value/>。",
@@ -766,7 +767,8 @@
         "removed": "移除了结束日期。",
         "removed_with_issue": "移除了 <issue/> 的结束日期。",
         "set": "将结束日期设置为 <value/>。",
-        "set_with_issue": "将 <issue/> 的结束日期设置为 <value/>。"
+        "set_with_issue": "将 <issue/> 的结束日期设置为 <value/>。",
+        "shifted": "在 <cause/> 更改后自动将结束日期移至 <value/>。"
       },
       "target_date": {
         "removed": "移除了截止日期。",
@@ -1011,6 +1013,11 @@
         "disabled": "停用了可追溯关系",
         "enabled": "启用了可追溯关系",
         "fallback": "更新了可追溯关系"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "停用了顺延依赖工作项的提议",
+        "enabled": "启用了顺延依赖工作项的提议",
+        "fallback": "更新了顺延依赖工作项的提议"
       },
       "is_time_tracking_enabled": {
         "disabled": "停用了时间跟踪",

@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Quando un elemento di lavoro ha un assegnatario, solo i suoi assegnatari, il responsabile del progetto e gli admin del progetto possono modificarlo: campi, stato, date, sotto-elementi, relazioni, link, allegati, cicli e moduli, eliminazione e archiviazione. Tutti possono ancora commentare. Gli elementi senza assegnatario restano aperti a tutti i membri.",
           "title": "Solo gli assegnatari, il responsabile del progetto e gli admin possono modificare un elemento di lavoro"
+        },
+        "reschedule_offer": {
+          "description": "Quando una modifica delle date violerebbe una dipendenza, viene proposto di spostare più avanti gli elementi di lavoro dipendenti invece di rifiutare la modifica. Quando è disattivata, una modifica di questo tipo viene rifiutata.",
+          "title": "Proponi di spostare gli elementi di lavoro dipendenti"
         }
       },
       "save_error": "Impossibile salvare la configurazione del flusso di lavoro.",

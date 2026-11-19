@@ -76,6 +76,7 @@ export const iconsMap: ActivityIconMap = {
   is_parent_completion_rule_enabled: GitBranchOutline,
   is_blocked_status_rule_enabled: GitBranchOutline,
   is_assignee_edit_rule_enabled: GitBranchOutline,
+  is_reschedule_offer_enabled: GitBranchOutline,
   is_relation_schedule_enabled: GitBranchOutline,
   is_relation_traceability_enabled: GitBranchOutline,
   is_relation_relates_to_enabled: GitBranchOutline,
@@ -341,6 +342,15 @@ export const messages = (
           t("activity_feed.project.is_assignee_edit_rule_enabled.enabled"),
           t("activity_feed.project.is_assignee_edit_rule_enabled.disabled"),
           t("activity_feed.project.is_assignee_edit_rule_enabled.fallback")
+        ),
+      };
+    case "is_reschedule_offer_enabled":
+      return {
+        message: booleanText(
+          newValue,
+          t("activity_feed.project.is_reschedule_offer_enabled.enabled"),
+          t("activity_feed.project.is_reschedule_offer_enabled.disabled"),
+          t("activity_feed.project.is_reschedule_offer_enabled.fallback")
         ),
       };
     case "is_relation_schedule_enabled":

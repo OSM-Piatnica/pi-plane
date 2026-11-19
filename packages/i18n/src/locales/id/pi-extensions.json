@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Setelah item kerja memiliki penerima tugas, hanya penerima tugasnya, pemimpin proyek, dan admin proyek yang dapat mengubahnya: kolom, status, tanggal, sub-item, relasi, tautan, lampiran, siklus dan modul, penghapusan dan pengarsipan. Semua orang tetap dapat berkomentar. Item kerja tanpa penerima tugas tetap terbuka bagi semua anggota.",
           "title": "Hanya penerima tugas, pemimpin proyek, dan admin yang dapat mengubah item kerja"
+        },
+        "reschedule_offer": {
+          "description": "Jika perubahan tanggal akan melanggar dependensi, item kerja yang bergantung ditawarkan untuk dipindahkan ke waktu yang lebih lambat alih-alih menolak perubahan. Jika dinonaktifkan, perubahan seperti itu ditolak.",
+          "title": "Tawarkan pemindahan item kerja yang bergantung"
         }
       },
       "save_error": "Tidak dapat menyimpan konfigurasi workflow.",

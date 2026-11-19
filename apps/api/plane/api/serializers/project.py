@@ -102,6 +102,7 @@ class ProjectCreateSerializer(BaseSerializer):
             "is_relation_traceability_enabled",
             "is_relation_relates_to_enabled",
             "is_relation_duplicate_enabled",
+            "is_reschedule_offer_enabled",
         ]
 
         read_only_fields = [

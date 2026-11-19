@@ -9,6 +9,7 @@ import { RANDOM_EMOJI_CODES } from "@plane/constants";
 import type { IProject } from "@plane/types";
 import { getRandomCoverImage } from "@/helpers/cover-image.helper";
 import { RELATION_TOGGLE_DEFAULTS } from "@/helpers/relation-type-toggles";
+import { RESCHEDULE_OFFER_DEFAULT } from "@/helpers/reschedule";
 
 export const getProjectFormValues = (): Partial<IProject> => ({
   cover_image_url: getRandomCoverImage(),
@@ -33,5 +34,6 @@ export const getProjectFormValues = (): Partial<IProject> => ({
   is_parent_completion_rule_enabled: false,
   is_blocked_status_rule_enabled: false,
   is_assignee_edit_rule_enabled: false,
+  is_reschedule_offer_enabled: RESCHEDULE_OFFER_DEFAULT,
   ...RELATION_TOGGLE_DEFAULTS,
 });

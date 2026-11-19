@@ -756,7 +756,8 @@
         "removed": "odstránený dátum začiatku.",
         "removed_with_issue": "odstránený dátum začiatku z <issue/>.",
         "set": "nastavený dátum začiatku na <value/>.",
-        "set_with_issue": "nastavený dátum začiatku na <value/> pre <issue/>."
+        "set_with_issue": "nastavený dátum začiatku na <value/> pre <issue/>.",
+        "shifted": "automaticky posunutý dátum začiatku na <value/> po zmene položky <cause/>."
       },
       "state": {
         "set": "nastavený stav na <value/>.",
@@ -766,7 +767,8 @@
         "removed": "odstránený dátum dokončenia.",
         "removed_with_issue": "odstránený dátum dokončenia z <issue/>.",
         "set": "nastavený dátum dokončenia na <value/>.",
-        "set_with_issue": "nastavený dátum dokončenia na <value/> pre <issue/>."
+        "set_with_issue": "nastavený dátum dokončenia na <value/> pre <issue/>.",
+        "shifted": "automaticky posunutý dátum dokončenia na <value/> po zmene položky <cause/>."
       },
       "target_date": {
         "removed": "odstránený termín.",
@@ -1011,6 +1013,11 @@
         "disabled": "vypol(a) vzťahy sledovateľnosti",
         "enabled": "zapol(a) vzťahy sledovateľnosti",
         "fallback": "aktualizoval(a) vzťahy sledovateľnosti"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "vypol(a) ponúkanie posunutia závislých pracovných položiek",
+        "enabled": "zapol(a) ponúkanie posunutia závislých pracovných položiek",
+        "fallback": "aktualizoval(a) ponúkanie posunutia závislých pracovných položiek"
       },
       "is_time_tracking_enabled": {
         "disabled": "vypnuté sledovanie času",

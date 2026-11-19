@@ -544,6 +544,31 @@ class IssueActivitySerializer(BaseSerializer):
     project_detail = ProjectLiteSerializer(read_only=True, source="project")
     workspace_detail = WorkspaceLiteSerializer(read_only=True, source="workspace")
     source_data = serializers.SerializerMethodField()
+    shift_cause = serializers.SerializerMethodField()
+
+    def get_shift_cause(self, obj):
+        """The work item whose change moved this one along, for a date entry written by a shift of dependents.
+
+        Its reference is read now, not when the entry was written, so the link survives a changed identifier. One
+        query per distinct cause in a list of entries.
+        """
+        if obj.field not in ("start_date", "finish_date") or not obj.old_identifier:
+            return None
+        causes = self.root.__dict__.setdefault("_shift_causes", {})
+        cause_id = str(obj.old_identifier)
+        if cause_id not in causes:
+            cause = (
+                Issue.objects.filter(pk=cause_id, workspace_id=obj.workspace_id)
+                .values("id", "project_id", "sequence_id", "project__identifier")
+                .first()
+            )
+            causes[cause_id] = cause and {
+                "id": str(cause["id"]),
+                "project_id": str(cause["project_id"]),
+                "sequence_id": cause["sequence_id"],
+                "project_identifier": cause["project__identifier"],
+            }
+        return causes[cause_id]
 
     def get_source_data(self, obj):
         if hasattr(obj, "issue") and hasattr(obj.issue, "source_data") and obj.issue.source_data:

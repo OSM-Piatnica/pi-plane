@@ -119,6 +119,9 @@ class Project(ChangeTrackerMixin, BaseModel):
     is_relation_traceability_enabled = models.BooleanField(default=False)
     is_relation_relates_to_enabled = models.BooleanField(default=True)
     is_relation_duplicate_enabled = models.BooleanField(default=True)
+    # Offer to move dependent work items when a date change breaks a relation; off refuses the change
+    # (plane.utils.issue_reschedule)
+    is_reschedule_offer_enabled = models.BooleanField(default=True)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(

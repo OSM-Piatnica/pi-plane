@@ -31,3 +31,4 @@ export * from "./label-activity-chip";
 export * from "./helpers/activity-block";
 export * from "./helpers/issue-user";
 export * from "./helpers/issue-link";
+export * from "./helpers/shift-cause-link";

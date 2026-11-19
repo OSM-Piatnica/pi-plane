@@ -4,6 +4,7 @@
 
 """A date change that comes too early for what depends on it is offered with the dependents shifted along."""
 
+import json
 from datetime import date
 from unittest import mock
 
@@ -126,8 +127,12 @@ class TestOfferToShiftDependents:
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert dates(predecessor) == (date(2026, 1, 1), date(2026, 1, 14))
         assert dates(successor) == (date(2026, 1, 15), date(2026, 1, 24))
-        recorded = sorted(call.kwargs["requested_data"] for call in activity.call_args_list)
-        assert recorded == ['{"finish_date": "2026-01-24"}', '{"start_date": "2026-01-15"}']
+        # each entry also names the work item whose change moved the dependent
+        recorded = sorted(sorted(json.loads(call.kwargs["requested_data"]).items()) for call in activity.call_args_list)
+        assert recorded == [
+            [("finish_date", "2026-01-24"), ("shifted_after", str(predecessor.id))],
+            [("shifted_after", str(predecessor.id)), ("start_date", "2026-01-15")],
+        ]
 
     def test_the_shift_follows_the_chain(self, session_client, workspace, project):
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))

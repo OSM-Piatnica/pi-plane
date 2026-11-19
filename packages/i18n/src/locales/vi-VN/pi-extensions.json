@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Khi một mục công việc đã có người được giao, chỉ những người được giao, trưởng dự án và quản trị viên dự án mới được thay đổi: trường, trạng thái, ngày, mục con, quan hệ, liên kết, tệp đính kèm, chu kỳ và mô-đun, xóa và lưu trữ. Mọi người vẫn có thể bình luận. Mục chưa có người được giao vẫn mở cho mọi thành viên.",
           "title": "Chỉ người được giao, trưởng dự án và quản trị viên mới được thay đổi mục công việc"
+        },
+        "reschedule_offer": {
+          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối.",
+          "title": "Đề xuất dời các mục công việc phụ thuộc"
         }
       },
       "save_error": "Không thể lưu cấu hình quy trình làm việc.",

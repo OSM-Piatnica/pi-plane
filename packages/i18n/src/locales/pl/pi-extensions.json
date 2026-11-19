@@ -174,6 +174,10 @@
         "assignee_edit": {
           "description": "Gdy element pracy ma przypisaną osobę, mogą go zmieniać tylko przypisane osoby, lider projektu i administratorzy projektu: pola, stan, daty, elementy podrzędne, relacje, linki, załączniki, cykle i moduły, usuwanie i archiwizację. Komentować nadal może każdy. Elementy pracy bez przypisanej osoby pozostają otwarte dla wszystkich członków.",
           "title": "Elementy pracy mogą zmieniać tylko osoby przypisane, lider projektu i administratorzy"
+        },
+        "reschedule_offer": {
+          "description": "Gdy zmiana dat naruszyłaby zależność, zamiast odrzucać zmianę proponuj przesunięcie zależnych elementów pracy na później. Po wyłączeniu taka zmiana jest odrzucana.",
+          "title": "Proponuj przesunięcie zależnych elementów pracy"
         }
       },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",
