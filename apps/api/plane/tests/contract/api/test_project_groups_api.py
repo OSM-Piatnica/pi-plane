@@ -219,11 +219,12 @@ class TestProjectGroupsApi:
     def test_assignable_with_members_lists_who_each_group_concerns(self, api_key_client, workspace, project):
         sales = _group(workspace, "Sales")
         poland = _group(workspace, "Poland", parent=sales)
-        _link(api_key_client, workspace, project, sales)
         anna = _person(workspace)
         jan = _person(workspace)
         _join(sales, anna)
         _join(poland, jan)
+        # linking the group makes its people members of the project; the list names only those
+        _link(api_key_client, workspace, project, sales)
 
         response = api_key_client.get(_url(workspace, project) + "?assignable=1&members=1")
 
@@ -234,13 +235,13 @@ class TestProjectGroupsApi:
 
     def test_members_lists_only_active_people_of_the_project(self, api_key_client, workspace, project):
         sales = _group(workspace, "Sales")
-        _link(api_key_client, workspace, project, sales)
         inside = _person(workspace)
         outside = _person(workspace)
         left = _person(workspace)
         _join(sales, inside)
         _join(sales, outside)
         _join(sales, left)
+        _link(api_key_client, workspace, project, sales)
         ProjectMember.objects.filter(project=project, member=left).update(is_active=False)
         ProjectMember.objects.filter(project=project, member=outside).delete()
 
