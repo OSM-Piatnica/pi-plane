@@ -13,6 +13,9 @@ import type {
   IInstanceAdmin,
   IInstanceConfiguration,
   IInstanceInfo,
+  TInstanceServiceToken,
+  TInstanceServiceTokenCreate,
+  TInstanceServiceTokenCreated,
   TInstanceTheme,
   TInstanceThemeCreate,
   TPage,
@@ -208,6 +211,46 @@ export class InstanceService extends APIService {
    */
   async deleteTheme(themeId: string): Promise<void> {
     return this.delete(`/api/instances/themes/${themeId}/`)
+      .then(() => undefined)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Fetches the bot tokens (read-only tokens of workspace service accounts), in God Mode
+   * @returns {Promise<TInstanceServiceToken[]>} The bot tokens, without the token values
+   * @throws {Error} If the API request fails
+   */
+  async serviceTokens(): Promise<TInstanceServiceToken[]> {
+    return this.get("/api/instances/service-tokens/")
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Creates a bot token: the workspace's service account joins every project of the workspace
+   * @param {TInstanceServiceTokenCreate} data The workspace, name and optional expiry
+   * @returns {Promise<TInstanceServiceTokenCreated>} The new token, the only time its value is returned
+   * @throws {Error} If the API request fails
+   */
+  async createServiceToken(data: TInstanceServiceTokenCreate): Promise<TInstanceServiceTokenCreated> {
+    return this.post("/api/instances/service-tokens/", data)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /**
+   * Revokes a bot token; applications using it lose access at once
+   * @param {string} tokenId The token to revoke
+   * @throws {Error} If the API request fails
+   */
+  async deleteServiceToken(tokenId: string): Promise<void> {
+    return this.delete(`/api/instances/service-tokens/${tokenId}/`)
       .then(() => undefined)
       .catch((error) => {
         throw error?.response?.data;

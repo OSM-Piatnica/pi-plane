@@ -7,3 +7,7 @@ from django.apps import AppConfig
 
 class DbConfig(AppConfig):
     name = "plane.db"
+
+    def ready(self):
+        # Registers the receiver that adds the workspace's service account to new projects
+        from plane.utils import service_account  # noqa: F401

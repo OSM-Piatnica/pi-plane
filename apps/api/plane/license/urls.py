@@ -21,6 +21,8 @@ from plane.license.api.views import (
     InstanceWorkSpaceEndpoint,
     InstanceThemeEndpoint,
     InstanceThemeDetailEndpoint,
+    InstanceServiceTokenEndpoint,
+    InstanceServiceTokenDetailEndpoint,
 )
 
 urlpatterns = [
@@ -76,4 +78,10 @@ urlpatterns = [
     path("workspaces/", InstanceWorkSpaceEndpoint.as_view(), name="instance-workspace"),
     path("themes/", InstanceThemeEndpoint.as_view(), name="instance-themes"),
     path("themes/<uuid:pk>/", InstanceThemeDetailEndpoint.as_view(), name="instance-theme-detail"),
+    path("service-tokens/", InstanceServiceTokenEndpoint.as_view(), name="instance-service-tokens"),
+    path(
+        "service-tokens/<uuid:pk>/",
+        InstanceServiceTokenDetailEndpoint.as_view(),
+        name="instance-service-token-detail",
+    ),
 ]

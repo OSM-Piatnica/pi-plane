@@ -41,6 +41,16 @@ ASSIGNABLE_PARAMETER = OpenApiParameter(
     type=OpenApiTypes.BOOL,
     location=OpenApiParameter.QUERY,
 )
+MEMBERS_PARAMETER = OpenApiParameter(
+    name="members",
+    description=(
+        "With assignable=1, pass 1 to add member_ids to each group: the people of the group and of the groups below "
+        "it, i.e. who a work item assigned to the group concerns."
+    ),
+    required=False,
+    type=OpenApiTypes.BOOL,
+    location=OpenApiParameter.QUERY,
+)
 GROUP_NOT_FOUND_RESPONSE = OpenApiResponse(description="Group not found in the project")
 GROUP_CONFLICT_RESPONSE = OpenApiResponse(description="The group is already a member of the project")
 
@@ -61,7 +71,7 @@ class ProjectGroupListCreateAPIEndpoint(BaseAPIView):
         summary="List project groups",
         description="Retrieve the user groups that are members of the project, with the role each gives its people.",
         tags=["Project Groups"],
-        parameters=[WORKSPACE_SLUG_PARAMETER, PROJECT_ID_PARAMETER, ASSIGNABLE_PARAMETER],
+        parameters=[WORKSPACE_SLUG_PARAMETER, PROJECT_ID_PARAMETER, ASSIGNABLE_PARAMETER, MEMBERS_PARAMETER],
         responses={
             200: OpenApiResponse(
                 description="Groups of the project (or, with assignable=1, the groups work items can be assigned to)",

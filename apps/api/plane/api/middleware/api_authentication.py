@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Django imports
@@ -8,10 +9,13 @@ from django.db.models import Q
 
 # Third party imports
 from rest_framework import authentication
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, PermissionDenied
+from rest_framework.permissions import SAFE_METHODS
 
 # Module imports
-from plane.db.models import APIToken
+from plane.db.models import APIToken, BotTypeEnum
+
+SERVICE_ACCOUNT_READ_ONLY_MESSAGE = "Bot tokens created in God Mode are read-only."
 
 
 class APIKeyAuthentication(authentication.BaseAuthentication):
@@ -52,4 +56,8 @@ class APIKeyAuthentication(authentication.BaseAuthentication):
 
         # Mark the underlying Django request, which is the one APITokenLogMiddleware sees
         getattr(request, "_request", request).api_key_authenticated = True
+
+        # The service account is a member of every project, so its tokens may only read
+        if user.is_bot and user.bot_type == BotTypeEnum.SERVICE_ACCOUNT and request.method not in SAFE_METHODS:
+            raise PermissionDenied(SERVICE_ACCOUNT_READ_ONLY_MESSAGE)
         return user, token

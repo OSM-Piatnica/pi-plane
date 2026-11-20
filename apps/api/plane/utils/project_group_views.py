@@ -13,9 +13,9 @@ messages and the effects on the project members are the same on both sides. Each
 from rest_framework import status
 from rest_framework.response import Response
 
-from plane.db.models import Project, ProjectGroup, UserGroup, WorkspaceMember
+from plane.db.models import Project, ProjectGroup, ProjectMember, UserGroup, WorkspaceMember
 from plane.utils.project_groups import assignable_group_ids, reconcile_project
-from plane.utils.user_groups import member_user_ids
+from plane.utils.user_groups import member_user_ids, member_user_ids_by_group
 
 GROUP_NOT_IN_PROJECT_MESSAGE = "Group not found in the project."
 
@@ -41,18 +41,35 @@ def wants_assignable(request):
     return str(request.query_params.get("assignable", "")).lower() in {"1", "true"}
 
 
+def wants_members(request):
+    return str(request.query_params.get("members", "")).lower() in {"1", "true"}
+
+
 def list_groups(request, project, serializer_class):
     """The groups of the project, or with ``?assignable=1`` the groups its work items can be assigned to."""
     if wants_assignable(request):
         ids = assignable_group_ids(project.id, project.workspace_id)
         groups = UserGroup.objects.filter(workspace_id=project.workspace_id, id__in=ids).order_by("name")
-        return Response(
-            [
-                {"id": group.id, "name": group.name, "source": group.source, "parent_id": group.parent_id}
-                for group in groups
-            ],
-            status=status.HTTP_200_OK,
-        )
+        groups = list(groups)
+        members = {}
+        if wants_members(request):
+            # ?members=1: the people of the group and of the groups below it, i.e. who a work item assigned
+            # to the group concerns (integrations use it to decide who may see such a work item). Only people who
+            # are active, non-bot members of this project are listed.
+            in_project = set(
+                ProjectMember.objects.filter(project=project, is_active=True, member__is_bot=False).values_list(
+                    "member_id", flat=True
+                )
+            )
+            by_group = member_user_ids_by_group(project.workspace_id, [group.id for group in groups])
+            members = {group_id: sorted(str(u) for u in ids & in_project) for group_id, ids in by_group.items()}
+        rows = []
+        for group in groups:
+            row = {"id": group.id, "name": group.name, "source": group.source, "parent_id": group.parent_id}
+            if group.id in members:
+                row["member_ids"] = members[group.id]
+            rows.append(row)
+        return Response(rows, status=status.HTTP_200_OK)
     links = ProjectGroup.objects.filter(project=project, group__deleted_at__isnull=True).order_by("group__name")
     return Response(present_links(project, links, serializer_class), status=status.HTTP_200_OK)
 

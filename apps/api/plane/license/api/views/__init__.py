@@ -30,3 +30,6 @@ from .workspace import (
 
 
 from .theme import InstanceThemeEndpoint, InstanceThemeDetailEndpoint
+
+
+from .service_token import InstanceServiceTokenEndpoint, InstanceServiceTokenDetailEndpoint
