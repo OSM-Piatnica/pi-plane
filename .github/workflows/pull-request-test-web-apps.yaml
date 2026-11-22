@@ -10,13 +10,12 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
-      # base branch changes must re-run the tests. Other edits (title/body) re-run them too:
-      # the trigger cannot filter on the change, and a skipped run would mask the real result.
+      # base branch changes re-run the tests; other edits only mirror the latest result (see gate job)
       - "edited"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  # always a full run, so the newest run (including an edit) supersedes older ones safely
+  # title/description edits get their own group so they can never cancel (or be mistaken for) a real run
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.action == 'edited' && github.event.changes.base == null && 'edit' || 'run' }}
   cancel-in-progress: true
 
 permissions:
@@ -29,7 +28,7 @@ jobs:
     name: Detect changed paths
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && !(github.event.action == 'edited' && github.event.changes.base == null))
     permissions:
       contents: read
       pull-requests: read
@@ -98,20 +97,47 @@ jobs:
   # Single stable check to mark as required in branch protection / rulesets.
   # A skipped required check counts as passing, so this job fails unless the tests
   # actually succeeded, or were legitimately not needed (no relevant files changed).
+  # On a title/description edit (base unchanged) the tests are not re-run: the gate
+  # instead waits for and mirrors the latest "Web app tests" result for the same commit.
   # It is skipped only for draft PRs, which cannot be merged anyway.
   web-app-tests:
     name: Web app tests
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     needs: [changes, test-web-apps]
     if: always() && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+    permissions:
+      contents: read
+      checks: read
     steps:
       - name: Verify results
         env:
+          GH_TOKEN: ${{ github.token }}
+          GATE: Web app tests
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          EDIT_ONLY: ${{ github.event.action == 'edited' && github.event.changes.base == null }}
           CHANGES: ${{ needs.changes.result }}
           RUN: ${{ needs.changes.outputs.run }}
           TESTS: ${{ needs.test-web-apps.result }}
         run: |
-          echo "changes=$CHANGES run=$RUN tests=$TESTS"
+          echo "edit_only=$EDIT_ONLY changes=$CHANGES run=$RUN tests=$TESTS"
+          if [ "$EDIT_ONLY" = "true" ]; then
+            # Mirror the newest non-cancelled, non-skipped result of this gate for the commit,
+            # ignoring this run. Fail if there is none, so an unknown state never passes.
+            deadline=$((SECONDS + 2400))
+            while :; do
+              row="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/check-runs?per_page=100" --jq '.check_runs[] | select(.name == env.GATE) | select((.details_url // "") | contains("/runs/" + env.GITHUB_RUN_ID + "/") | not) | select(.conclusion != "cancelled" and .conclusion != "skipped") | [.started_at, .status, (.conclusion // "")] | @tsv' | sort | tail -n 1)"
+              if [ -z "$row" ]; then echo "No earlier $GATE result for $HEAD_SHA"; exit 1; fi
+              status="$(echo "$row" | cut -f2)"; conclusion="$(echo "$row" | cut -f3)"
+              echo "latest: status=$status conclusion=$conclusion"
+              if [ "$status" = "completed" ]; then
+                [ "$conclusion" = "success" ] && exit 0
+                exit 1
+              fi
+              [ "$SECONDS" -lt "$deadline" ] || { echo "Timed out waiting for $GATE"; exit 1; }
+              sleep 30
+            done
+          fi
           [ "$CHANGES" = "success" ] || exit 1
           if [ "$RUN" = "true" ]; then
             [ "$TESTS" = "success" ] || exit 1
