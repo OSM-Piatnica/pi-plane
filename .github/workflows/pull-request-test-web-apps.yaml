@@ -10,30 +10,51 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
-      - "edited"
-    paths:
-      - "apps/**"
-      - "!apps/api/**"
-      - "packages/**"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "turbo.json"
-      - ".github/workflows/pull-request-test-web-apps.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
-  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
+  # Path filtering lives here (not in the trigger) so the workflow always runs and the
+  # required "Web app tests" gate below always reports a result.
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - name: Match changed files
+        id: filter
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          files="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" --jq '.[] | .filename, (.previous_filename // empty)')"
+          if echo "$files" | grep -E '^(apps/|packages/|package\.json$|pnpm-lock\.yaml$|turbo\.json$|\.github/workflows/pull-request-test-web-apps\.yaml$)' | grep -Ev '^apps/api/' > /dev/null; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   test-web-apps:
     name: test:web-apps
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     env:
       TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
       TURBO_SCM_HEAD: ${{ github.sha }}
@@ -69,3 +90,27 @@ jobs:
       # The turbo `test` task depends on ^build, so the workspace packages are built first.
       - name: Run tests
         run: pnpm turbo run test --affected
+
+  # Single stable check to mark as required in branch protection / rulesets.
+  # A skipped required check counts as passing, so this job fails unless the tests
+  # actually succeeded, or were legitimately not needed (no relevant files changed).
+  # It is skipped only for draft PRs, which cannot be merged anyway.
+  web-app-tests:
+    name: Web app tests
+    runs-on: ubuntu-latest
+    needs: [changes, test-web-apps]
+    if: always() && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+    steps:
+      - name: Verify results
+        env:
+          CHANGES: ${{ needs.changes.result }}
+          RUN: ${{ needs.changes.outputs.run }}
+          TESTS: ${{ needs.test-web-apps.result }}
+        run: |
+          echo "changes=$CHANGES run=$RUN tests=$TESTS"
+          [ "$CHANGES" = "success" ] || exit 1
+          if [ "$RUN" = "true" ]; then
+            [ "$TESTS" = "success" ] || exit 1
+          else
+            [ "$TESTS" = "skipped" ] || exit 1
+          fi
