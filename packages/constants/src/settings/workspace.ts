@@ -8,6 +8,7 @@
 // plane imports
 import type { TWorkspaceSettingsItem, TWorkspaceSettingsTabs } from "@plane/types";
 import { EUserWorkspaceRoles } from "@plane/types";
+import { WORKSPACE_FEATURE_LIST } from "../workspace-features";
 
 export enum WORKSPACE_SETTINGS_CATEGORY {
   ADMINISTRATION = "administration",
@@ -58,6 +59,14 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
     access: [EUserWorkspaceRoles.ADMIN],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/departments/`,
   },
+  // Workspace feature switches (docs/workspace-features.md); listed only while a feature is available
+  features: {
+    key: "features",
+    i18n_label: "common.features",
+    href: `/settings/features`,
+    access: [EUserWorkspaceRoles.ADMIN],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/features/`,
+  },
   export: {
     key: "export",
     i18n_label: "workspace_settings.settings.exports.title",
@@ -102,6 +111,16 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
   },
 };
 
+/**
+ * Whether a settings page is offered at all, before permissions are looked at. The Features page
+ * has nothing to show until a feature switch is available, so until then it has no entry in the
+ * sidebar or the command palette. `features` can be passed to decide for another list (tests).
+ */
+export const isWorkspaceSettingsItemAvailable = (
+  item: Pick<TWorkspaceSettingsItem, "key">,
+  features: readonly { isAvailable: boolean }[] = WORKSPACE_FEATURE_LIST
+): boolean => item.key !== "features" || features.some((feature) => feature.isAvailable);
+
 export const WORKSPACE_SETTINGS_ACCESS = Object.fromEntries(
   Object.entries(WORKSPACE_SETTINGS).map(([_, { href, access }]) => [href, access])
 );
@@ -112,8 +131,9 @@ export const GROUPED_WORKSPACE_SETTINGS: Record<WORKSPACE_SETTINGS_CATEGORY, TWo
     WORKSPACE_SETTINGS["members"],
     WORKSPACE_SETTINGS["groups"],
     WORKSPACE_SETTINGS["departments"],
+    WORKSPACE_SETTINGS["features"],
     WORKSPACE_SETTINGS["export"],
-  ],
+  ].filter((item) => isWorkspaceSettingsItemAvailable(item)),
   [WORKSPACE_SETTINGS_CATEGORY.FEATURES]: [
     WORKSPACE_SETTINGS["work-item-types"],
     WORKSPACE_SETTINGS["work-item-templates"],

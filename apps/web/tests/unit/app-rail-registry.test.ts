@@ -13,6 +13,7 @@ import {
   getActiveAppRailAppKey,
   getAppRailSwitchKeySequence,
   getEnabledAppRailApps,
+  getWorkspaceFeatureFlags,
   hasMultipleAppRailApps,
   validateAppRailApps,
 } from "@plane/utils";
@@ -30,6 +31,7 @@ const CONTEXT: TAppRailContext = {
   workspace: undefined,
   user: undefined,
   workspaceRole: undefined,
+  features: getWorkspaceFeatureFlags(undefined),
 };
 
 // a second app that exists only in this test: production registers Projects alone

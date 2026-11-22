@@ -13,13 +13,14 @@ import { useAppRailApps } from "./use-app-rail-apps";
 
 /** App rail commands for the command palette; empty while only one app is enabled */
 export const useAppRailPowerKCommands = (): TPowerKCommandConfig[] => {
-  const { enabledApps } = useAppRailApps();
+  // the rail apps first, so `g1`, `g2`, ... match the rail; hidden apps keep an entry after them
+  const { orderedApps } = useAppRailApps();
   // read the context directly: the palette is also mounted outside a workspace (profile
   // settings), where there is no rail and `useAppRailVisibility` would throw
   const railVisibility = useContext(AppRailVisibilityContext);
 
   return buildAppRailSwitchCommands(
-    enabledApps,
+    orderedApps,
     APP_RAIL_APP_ICONS,
     railVisibility && { isCollapsed: railVisibility.isCollapsed, toggle: railVisibility.toggleAppRail }
   );

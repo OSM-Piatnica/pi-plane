@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Ứng dụng mặc định",
+      "default_app_description": "Ứng dụng sẽ mở khi bạn vào không gian làm việc này.",
+      "heading": "Ứng dụng",
+      "last_used_app": "Ứng dụng dùng gần đây nhất"
+    },
     "switch_to": {
       "projects": "Chuyển sang Dự án"
     }
@@ -248,6 +254,9 @@
     "loading": "Đang tải loại…",
     "property_values_save_failed": "Mục công việc đã được tạo, nhưng không thể lưu các thuộc tính bổ sung. Hãy điền chúng từ trang chi tiết mục công việc.",
     "select_placeholder": "Loại"
+  },
+  "workspace_features": {
+    "description": "Bật hoặc tắt các phần của Pi-Plane cho mọi người trong không gian làm việc này."
   },
   "workspace_settings": {
     "settings": {
