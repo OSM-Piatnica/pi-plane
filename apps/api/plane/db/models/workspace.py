@@ -353,6 +353,8 @@ class WorkspaceUserProperties(BaseModel):
         choices=NavigationControlPreference.choices,
         default=NavigationControlPreference.ACCORDION,
     )
+    # key of the rail app the user lands in when opening the workspace (plane.utils.app_rail); null: no preference
+    default_app = models.CharField(max_length=50, null=True, blank=True)
 
     class Meta:
         unique_together = ["workspace", "user", "deleted_at"]

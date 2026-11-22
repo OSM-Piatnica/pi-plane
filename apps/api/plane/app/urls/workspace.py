@@ -52,6 +52,7 @@ from plane.app.views import (
     WorkspaceHomePreferenceViewSet,
     WorkspaceStickyViewSet,
     WorkspaceUserPreferenceViewSet,
+    WorkspaceFeatureEndpoint,
     WorkspaceWorkItemTemplateViewSet,
     WorkspaceIssueTypeViewSet,
     WorkspaceProjectTemplateViewSet,
@@ -380,5 +381,11 @@ urlpatterns = [
         "workspaces/<str:slug>/sidebar-preferences/",
         WorkspaceUserPreferenceViewSet.as_view(),
         name="workspace-user-preference",
+    ),
+    # Feature switches
+    path(
+        "workspaces/<str:slug>/features/",
+        WorkspaceFeatureEndpoint.as_view(),
+        name="workspace-features",
     ),
 ]

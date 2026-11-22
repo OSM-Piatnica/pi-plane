@@ -36,6 +36,7 @@ from plane.app.permissions import (
 from plane.app.serializers import WorkSpaceSerializer, WorkspaceThemeSerializer
 from plane.app.views.base import BaseAPIView, BaseViewSet
 from plane.app.views.workspace.user import _visible_issues_q
+from plane.utils.workspace_features import prefetch_workspace_features
 from plane.db.models import (
     Issue,
     IssueActivity,
@@ -70,7 +71,7 @@ class WorkSpaceViewSet(BaseViewSet):
             .values("count")
         )
 
-        return (
+        return prefetch_workspace_features(
             self.filter_queryset(super().get_queryset().select_related("owner"))
             .order_by("name")
             .filter(
@@ -192,7 +193,7 @@ class UserWorkSpacesEndpoint(BaseAPIView):
             "role"
         )
 
-        workspace = (
+        workspace = prefetch_workspace_features(
             Workspace.objects.prefetch_related(
                 Prefetch(
                     "workspace_member",
