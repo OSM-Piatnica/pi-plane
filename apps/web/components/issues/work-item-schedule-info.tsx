@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 import { CalendarClock, Hourglass } from "lucide-react";
 // plane imports
 import { useTranslation } from "@plane/i18n";
-import type { TIssue } from "@plane/types";
+import type { TIssue, TScheduleAnalysisItem } from "@plane/types";
 import { cn, renderFormattedDate } from "@plane/utils";
 // components
 import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/property-list-item";
@@ -25,13 +25,12 @@ type Props = {
 };
 
 /**
- * Float and "needed by" of a work item, read-only, from the critical path analysis of the timeline. Shown only while
- * the critical path is switched on and its analysis covers this work item (a truncated one covers none); a completed
- * or cancelled work item has neither. "Needed by" is red when the earliest finish, not only the planned one, is late.
+ * The schedule analysis item of a work item, or undefined while the critical path is off or the analysis in the store
+ * is stale for it. The analysis goes stale when this work item's dates, state or relations change here. Answers to
+ * requests made before the change are not shown (`staleUpTo`); others, such as a refresh of the timeline for another
+ * work item, keep what is shown in place instead of blanking it while they load.
  */
-export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props: Props) {
-  const { issue, projectId } = props;
-  const { t } = useTranslation();
+function useFreshScheduleAnalysisItem(issue: TIssue, projectId: string): TScheduleAnalysisItem | undefined {
   const {
     isCriticalPathEnabled,
     scheduleAnalysis,
@@ -43,9 +42,6 @@ export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props
     relation: { relationMap, getRelationLag },
   } = useIssueDetail();
 
-  // The analysis goes stale when this work item's dates, state or relations change here. Answers to requests made
-  // before the change are not shown (`staleUpTo`); others, such as a refresh of the timeline for another work item,
-  // keep what is shown in place instead of blanking it while they load.
   const analysisKey = isCriticalPathEnabled
     ? getScheduleAnalysisKey([issue.id], () => issue, relationMap, getRelationLag)
     : "";
@@ -68,9 +64,11 @@ export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props
   }, [changeId, projectId, refreshScheduleAnalysis]);
 
   const isFresh = scheduleAnalysisResultId > tracked.staleUpTo;
-  const item = isCriticalPathEnabled && isFresh ? getScheduleAnalysisItem(scheduleAnalysis, issue.id) : undefined;
-  if (!item || item.is_fixed || item.total_float === null) return null;
+  return isCriticalPathEnabled && isFresh ? getScheduleAnalysisItem(scheduleAnalysis, issue.id) : undefined;
+}
 
+const ScheduleInfoRows = observer(function ScheduleInfoRows({ item }: { item: TScheduleAnalysisItem }) {
+  const { t } = useTranslation();
   const isCritical = item.is_critical;
   // dates are ISO "YYYY-MM-DD" strings, so they compare as text
   const isNeededByMissed = !!item.needed_by && item.earliest_finish > item.needed_by;
@@ -101,4 +99,16 @@ export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props
       )}
     </>
   );
+});
+
+/**
+ * Float and "needed by" of a work item, read-only, from the critical path analysis of the timeline. Shown only while
+ * the critical path is switched on and its analysis covers this work item (a truncated one covers none); a completed
+ * or cancelled work item has neither. "Needed by" is red when the earliest finish, not only the planned one, is late.
+ */
+export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props: Props) {
+  const { issue, projectId } = props;
+  const item = useFreshScheduleAnalysisItem(issue, projectId);
+  if (!item || item.is_fixed || item.total_float === null) return null;
+  return <ScheduleInfoRows item={item} />;
 });
