@@ -1,5 +1,8 @@
 name: Test web apps
 
+# the suffix lets edit-only runs tell real runs apart from other edit-only runs
+run-name: ${{ github.event.action == 'edited' && github.event.changes.base == null && 'Test web apps (edit)' || 'Test web apps' }}
+
 on:
   workflow_dispatch:
   pull_request:
@@ -98,7 +101,7 @@ jobs:
   # A skipped required check counts as passing, so this job fails unless the tests
   # actually succeeded, or were legitimately not needed (no relevant files changed).
   # On a title/description edit (base unchanged) the tests are not re-run: the gate
-  # instead waits for and mirrors the latest "Web app tests" result for the same commit.
+  # instead waits for and mirrors the latest real run of this workflow for the same commit.
   # It is skipped only for draft PRs, which cannot be merged anyway.
   web-app-tests:
     name: Web app tests
@@ -108,11 +111,12 @@ jobs:
     if: always() && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
     permissions:
       contents: read
-      checks: read
+      actions: read
     steps:
       - name: Verify results
         env:
           GH_TOKEN: ${{ github.token }}
+          WF_PATH: .github/workflows/pull-request-test-web-apps.yaml
           GATE: Web app tests
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           EDIT_ONLY: ${{ github.event.action == 'edited' && github.event.changes.base == null }}
@@ -122,14 +126,15 @@ jobs:
         run: |
           echo "edit_only=$EDIT_ONLY changes=$CHANGES run=$RUN tests=$TESTS"
           if [ "$EDIT_ONLY" = "true" ]; then
-            # Mirror the newest non-cancelled, non-skipped result of this gate for the commit,
-            # ignoring this run. Fail if there is none, so an unknown state never passes.
+            # Mirror the newest real (non-edit-only) run of this workflow for the same commit,
+            # ignoring this run. Wait while it is still running. Fail if there is none, or it
+            # did not succeed, so an unknown state never passes.
             deadline=$((SECONDS + 2400))
             while :; do
-              row="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/check-runs?per_page=100" --jq '.check_runs[] | select(.name == env.GATE) | select((.details_url // "") | contains("/runs/" + env.GITHUB_RUN_ID + "/") | not) | select(.conclusion != "cancelled" and .conclusion != "skipped") | [.started_at, .status, (.conclusion // "")] | @tsv' | sort | tail -n 1)"
-              if [ -z "$row" ]; then echo "No earlier $GATE result for $HEAD_SHA"; exit 1; fi
+              row="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${HEAD_SHA}&event=pull_request&per_page=100" --jq '.workflow_runs[] | select(.path == env.WF_PATH) | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.display_title | endswith("(edit)") | not) | [.created_at, .status, (.conclusion // "")] | @tsv' | sort | tail -n 1)"
+              if [ -z "$row" ]; then echo "No other $GATE run for $HEAD_SHA"; exit 1; fi
               status="$(echo "$row" | cut -f2)"; conclusion="$(echo "$row" | cut -f3)"
-              echo "latest: status=$status conclusion=$conclusion"
+              echo "latest real run: status=$status conclusion=$conclusion"
               if [ "$status" = "completed" ]; then
                 [ "$conclusion" = "success" ] && exit 0
                 exit 1
