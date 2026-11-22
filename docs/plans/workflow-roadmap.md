@@ -24,7 +24,7 @@ The folder `Gantt-RACI-dla-IT/Procedura OSM` is an internal document. Do not com
 
 - Run `git fetch origin` and branch from `origin/preview`. Open PRs only against `OSM-Piatnica/pi-plane` (`gh pr create --repo OSM-Piatnica/pi-plane`), never upstream.
 - Copyright headers: new files get the OSM Piątnica header, modified upstream files keep the Plane header plus the "Modified by" line. A rename is not a modification.
-- Migrations live in the `db` app and are numbered in sequence from `0157`. Parallel PRs will collide: the PR that merges second rebases and renumbers its migration.
+- Migrations live in the `db` app and are numbered in sequence from `0158` (`0157` is taken by departments; A1 is `0158_issue_type_kind`). Parallel PRs will collide: the PR that merges second rebases and renumbers its migration.
 - Every feature needs tests: API in `apps/api/plane/tests/{unit,contract/app,contract/api}` (run through `compose-test.yaml`), web in `apps/web/tests/unit` (vitest), pure logic in the package that owns it.
 - New strings go to `packages/i18n/src/locales/en/pi-extensions.json` first, then every locale. Use the `translate` skill. Polish is the primary audience.
 - Primitives come from `@makeplane/propel`, composites from `@plane/blocks`. Do not bump propel in these PRs.
