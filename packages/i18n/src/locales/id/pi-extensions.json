@@ -212,6 +212,21 @@
     }
   },
   "reject": "Tolak",
+  "schedule_analysis": {
+    "critical_bar": "Di jalur kritis: keterlambatan menggeser akhir proyek",
+    "critical_path": "Jalur kritis",
+    "critical_path_tooltip": "Menyoroti item kerja yang keterlambatannya menggeser akhir proyek.",
+    "cycles": "Beberapa item kerja saling bergantung secara melingkar; relasi tersebut diabaikan.",
+    "float": "Kelonggaran",
+    "float_critical": "Tidak ada (jalur kritis)",
+    "float_days": "{count, plural, one {# hari kerja} other {# hari kerja}}",
+    "float_help": "Jumlah hari kerja item kerja ini dapat mundur tanpa menggeser akhir proyek",
+    "inverted": "Beberapa item kerja selesai sebelum dimulai; item tersebut diabaikan.",
+    "load_error": "Tidak dapat memuat jalur kritis.",
+    "needed_by": "Dibutuhkan paling lambat",
+    "needed_by_help": "Tanggal selesai paling lambat agar item kerja yang bergantung pada item ini tetap memenuhi tanggal jatuh temponya",
+    "truncated": "Hanya item kerja bertanggal yang pertama yang dianalisis (batas: {count}). Tidak ada yang disorot."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Anda belum memiliki catatan impor saat ini. Setelah Anda mengimpor file ke dalam proyek, semua catatan akan muncul di sini.",

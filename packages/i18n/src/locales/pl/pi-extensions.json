@@ -218,6 +218,21 @@
     }
   },
   "reject": "Odrzuć",
+  "schedule_analysis": {
+    "critical_bar": "Na ścieżce krytycznej: opóźnienie przesuwa koniec projektu",
+    "critical_path": "Ścieżka krytyczna",
+    "critical_path_tooltip": "Wyróżnia elementy pracy, których opóźnienie przesuwa koniec projektu.",
+    "cycles": "Niektóre elementy pracy zależą od siebie nawzajem w pętli; te zależności pominięto.",
+    "float": "Zapas",
+    "float_critical": "Brak (ścieżka krytyczna)",
+    "float_days": "{count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}",
+    "float_help": "O ile dni roboczych ten element pracy może się opóźnić bez przesunięcia końca projektu",
+    "inverted": "Niektóre elementy pracy kończą się przed rozpoczęciem; pominięto je.",
+    "load_error": "Nie udało się wczytać ścieżki krytycznej.",
+    "needed_by": "Najpóźniej do",
+    "needed_by_help": "Najpóźniejsze zakończenie, przy którym elementy pracy zależne od tego zdążą na swoje terminy",
+    "truncated": "Przeanalizowano tylko pierwsze elementy pracy z datami (limit: {count}). Nic nie jest wyróżnione."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Obecnie nie masz żadnych rekordów importu. Po wczytaniu pliku do projektu wszystkie rekordy pojawią się tutaj.",

@@ -54,6 +54,55 @@ export type TGanttBlockRollup = TGanttDateRollup & {
   is_target_inferred: boolean;
 };
 
+/** Critical path analysis of one work item, as the server computes it. Dates are ISO "YYYY-MM-DD" strings. */
+export type TScheduleAnalysisItem = {
+  earliest_start: string;
+  earliest_finish: string;
+  latest_start: string;
+  latest_finish: string;
+  /** Working days the work item can slip without moving the end of the project; null for a fixed work item. */
+  total_float: number | null;
+  is_critical: boolean;
+  /** Completed or cancelled: the analysis leaves its dates alone. */
+  is_fixed: boolean;
+  /** The latest finish that still lets the work items depending on this one meet their due dates. */
+  needed_by: string | null;
+};
+
+/**
+ * A dependency on the critical path: it drives its successor, whose earliest date is exactly what it asks for. `source`
+ * is the predecessor and `relation_type` the rule seen from it.
+ */
+export type TScheduleCriticalLink = {
+  source: string;
+  target: string;
+  relation_type: "blocking" | "start_before" | "finish_before" | "start_before_finish";
+};
+
+/** The answer of the schedule analysis endpoint of a project (optionally of one module or cycle). */
+export type TScheduleAnalysis = {
+  project_start: string | null;
+  project_end: string | null;
+  items: Record<string, TScheduleAnalysisItem>;
+  critical_ids: string[];
+  critical_links: TScheduleCriticalLink[];
+  /** Work items that depend on each other in a circle; the relations inside a circle are left out. */
+  cycles: string[][];
+  /** Work items without both dates, left out. */
+  undated_count: number;
+  /** Work items whose finish is before their start, left out. */
+  inverted_count: number;
+  /** Left-out work items (of both kinds above) that a dependency links to an analysed one. */
+  undated_linked_ids: string[];
+  weekend_days: number[];
+  analysed_count: number;
+  max_items: number;
+  /** More dated work items than `max_items`: only the first ones were analysed, so nothing should be highlighted. */
+  truncated: boolean;
+};
+
+export type TScheduleAnalysisScope = { module?: string; cycle?: string };
+
 export interface IBlockUpdateData {
   sort_order?: {
     destinationIndex: number;

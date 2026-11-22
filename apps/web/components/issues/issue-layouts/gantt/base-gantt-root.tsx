@@ -43,6 +43,7 @@ import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import { GanttQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
 import { IssueGanttBlock } from "./blocks";
+import { GanttCriticalPathToggle, GanttScheduleAnalysisLoader } from "./critical-path-toggle";
 import { GanttHierarchyControls } from "./hierarchy-controls";
 import { GanttRollupToggle } from "./rollup-toggle";
 
@@ -333,6 +334,12 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
                     />
                   )}
                   <GanttRollupToggle />
+                  {!isEpic && (
+                    <>
+                      <GanttScheduleAnalysisLoader issueIds={issuesIds} storeType={storeType} />
+                      <GanttCriticalPathToggle />
+                    </>
+                  )}
                 </>
               }
             />

@@ -212,6 +212,21 @@
     }
   },
   "reject": "Afwijzen",
+  "schedule_analysis": {
+    "critical_bar": "Op het kritieke pad: een vertraging verschuift het einde van het project",
+    "critical_path": "Kritiek pad",
+    "critical_path_tooltip": "Markeert de werkitems waarvan een vertraging het einde van het project verschuift.",
+    "cycles": "Sommige werkitems zijn in een kring van elkaar afhankelijk; die relaties zijn weggelaten.",
+    "float": "Speling",
+    "float_critical": "Geen (kritiek pad)",
+    "float_days": "{count, plural, one {# werkdag} other {# werkdagen}}",
+    "float_help": "Aantal werkdagen dat dit werkitem kan uitlopen zonder het einde van het project te verschuiven",
+    "inverted": "Sommige werkitems eindigen voordat ze beginnen; ze zijn weggelaten.",
+    "load_error": "Het kritieke pad kon niet worden geladen.",
+    "needed_by": "Uiterlijk nodig op",
+    "needed_by_help": "Laatste afronding waarmee de werkitems die hiervan afhankelijk zijn hun vervaldatum halen",
+    "truncated": "Alleen de eerste werkitems met datums zijn geanalyseerd (limiet: {count}). Er wordt niets gemarkeerd."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Je hebt momenteel geen importrecords. Zodra je een bestand in een project importeert, verschijnen alle records hier.",
