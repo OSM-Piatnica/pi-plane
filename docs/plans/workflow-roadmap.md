@@ -84,7 +84,7 @@ Rules that follow from kind:
 
 **A1. `IssueType.kind` (API). Size M.**
 - Migration: add `kind` (`CharField`, choices above, default `standard`, indexed). Data migration sets `kind="epic"` where `is_epic` is true.
-- Keep `is_epic` as a stored field for compatibility with upstream code and the public API; keep it in sync in `IssueType.save()` and add a check constraint `is_epic = (kind = 'epic')`.
+- Keep `is_epic` as a stored field for compatibility with upstream code and the public API; keep it in sync in `IssueType.save()` and add a check constraint `is_epic = (kind = 'epic')`. Removing the field is tracked in [#512](https://github.com/OSM-Piatnica/pi-plane/issues/512).
 - Replace direct `is_epic` reads in fork code with `kind` where the code is ours (`utils/project_issue_types.py`, `utils/work_item_hierarchy.py`, `utils/epic_progress.py`); leave upstream call sites alone.
 - Generalise `ensure_project_epic_type` into `ensure_project_kind_type(project, kind)`; the Epics endpoint keeps its URL and behaviour.
 - Serializers expose `kind` read-only. `issue_type_assignment_error` rejects switching into or out of system-managed kinds.
