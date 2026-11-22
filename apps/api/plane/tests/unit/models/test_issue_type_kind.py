@@ -5,7 +5,7 @@
 """`IssueType.kind` says what the system does with a type; `is_epic` stays equal to `kind == "epic"`.
 
 Covers the sync in `save()`, the check constraint that guards writes that skip `save()`, the data step of
-migration 0157, the type each kind gets on demand, and the progress manager that leaves out Epics and reviews.
+migration 0158, the type each kind gets on demand, and the progress manager that leaves out Epics and reviews.
 """
 
 from importlib import import_module
@@ -40,7 +40,7 @@ from plane.utils.project_issue_types import (
     workspace_kind_type,
 )
 
-migration = import_module("plane.db.migrations.0157_issue_type_kind")
+migration = import_module("plane.db.migrations.0158_issue_type_kind")
 
 CONSTRAINT_NAME = "issue_type_is_epic_matches_kind"
 SYSTEM_KINDS = [IssueTypeKind.EPIC, IssueTypeKind.MILESTONE, IssueTypeKind.APPROVAL, IssueTypeKind.REVIEW]
@@ -259,7 +259,7 @@ class TestKindMigration:
             editor.add_constraint(IssueType, constraint)
 
     def test_the_migration_follows_0156_and_adds_the_constraint(self):
-        assert migration.Migration.dependencies == [("db", "0156_user_notification_preference_group_assignment")]
+        assert migration.Migration.dependencies == [("db", "0157_departments")]
         names = [type(operation).__name__ for operation in migration.Migration.operations]
         assert names == ["AddField", "RunPython", "AddConstraint"]
         assert migration.Migration.operations[2].constraint.name == CONSTRAINT_NAME
