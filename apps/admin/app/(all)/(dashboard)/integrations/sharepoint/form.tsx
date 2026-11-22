@@ -10,6 +10,14 @@ import { Button } from "@makeplane/propel/components/button";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { setToast } from "@plane/blocks/toast";
 import type { IFormattedInstanceConfiguration, TInstanceSharePointConfigurationKeys } from "@plane/types";
+import {
+  SHAREPOINT_DEFAULT_MAX_FILE_SIZE,
+  SHAREPOINT_MAX_MAX_FILE_SIZE,
+  SHAREPOINT_MIN_MAX_FILE_SIZE,
+  bytesToMegabytesText,
+  getSharePointMaxFileSize,
+  sharePointMaxFileSizeToSave,
+} from "@plane/utils";
 // components
 import { CodeBlock } from "@/components/common/code-block";
 import type { TControllerInputFormField } from "@/components/common/controller-input";
@@ -17,13 +25,6 @@ import { ControllerInput } from "@/components/common/controller-input";
 // hooks
 import { useInstance } from "@/hooks/store";
 // local
-import {
-  DEFAULT_MAX_FILE_SIZE_MB,
-  MAX_MAX_FILE_SIZE_MB,
-  bytesToMegabytes,
-  isValidMegabytes,
-  megabytesToBytes,
-} from "./file-size";
 import { SharePointConnectionTest } from "./test-connection";
 
 type Props = {
@@ -38,13 +39,26 @@ type TApiError = { error?: string };
 const ENTRA_APP_REGISTRATIONS_URL =
   "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade";
 const MAX_FILE_SIZE_DESCRIPTION_ID = "SHAREPOINT_MAX_FILE_SIZE-description";
+const DEFAULT_MAX_FILE_SIZE_MB = bytesToMegabytesText(SHAREPOINT_DEFAULT_MAX_FILE_SIZE);
+const MIN_MAX_FILE_SIZE_MB = bytesToMegabytesText(SHAREPOINT_MIN_MAX_FILE_SIZE);
+const MAX_MAX_FILE_SIZE_MB = bytesToMegabytesText(SHAREPOINT_MAX_MAX_FILE_SIZE);
+const FORM_KEYS = [
+  "SHAREPOINT_TENANT_ID",
+  "SHAREPOINT_CLIENT_ID",
+  "SHAREPOINT_CLIENT_SECRET",
+  "SHAREPOINT_MAX_FILE_SIZE",
+] as const satisfies readonly (keyof SharePointFormValues)[];
 
-const formValues = (config: IFormattedInstanceConfiguration): SharePointFormValues => ({
-  SHAREPOINT_TENANT_ID: config.SHAREPOINT_TENANT_ID ?? "",
-  SHAREPOINT_CLIENT_ID: config.SHAREPOINT_CLIENT_ID ?? "",
-  SHAREPOINT_CLIENT_SECRET: config.SHAREPOINT_CLIENT_SECRET ?? "",
-  SHAREPOINT_MAX_FILE_SIZE: bytesToMegabytes(config.SHAREPOINT_MAX_FILE_SIZE),
-});
+const formValues = (config: IFormattedInstanceConfiguration): SharePointFormValues => {
+  const size = getSharePointMaxFileSize(config.SHAREPOINT_MAX_FILE_SIZE);
+  return {
+    SHAREPOINT_TENANT_ID: config.SHAREPOINT_TENANT_ID ?? "",
+    SHAREPOINT_CLIENT_ID: config.SHAREPOINT_CLIENT_ID ?? "",
+    SHAREPOINT_CLIENT_SECRET: config.SHAREPOINT_CLIENT_SECRET ?? "",
+    // Shown exactly as saved (in megabytes, not rounded); empty while the default applies
+    SHAREPOINT_MAX_FILE_SIZE: size.isDefault ? "" : bytesToMegabytesText(size.applied),
+  };
+};
 
 export function InstanceSharePointConfigForm(props: Props) {
   const { config } = props;
@@ -55,8 +69,10 @@ export function InstanceSharePointConfigForm(props: Props) {
     handleSubmit,
     control,
     reset,
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isDirty, dirtyFields, isSubmitting },
   } = useForm<SharePointFormValues>({ defaultValues: formValues(config) });
+  // What the server applies now, from what is saved (not from what is being typed)
+  const savedSize = getSharePointMaxFileSize(config.SHAREPOINT_MAX_FILE_SIZE);
 
   const hasSavedCredentials =
     Boolean(config.SHAREPOINT_TENANT_ID) &&
@@ -123,11 +139,15 @@ export function InstanceSharePointConfigForm(props: Props) {
       SHAREPOINT_CLIENT_SECRET: formData.SHAREPOINT_CLIENT_SECRET.trim(),
       SHAREPOINT_MAX_FILE_SIZE: formData.SHAREPOINT_MAX_FILE_SIZE.trim(),
     };
+    // Only what the administrator changed is sent: a value saved elsewhere (the environment, the API) stays as it is
+    const payload: Partial<SharePointFormValues> = {};
+    for (const key of FORM_KEYS) {
+      if (!dirtyFields[key]) continue;
+      payload[key] =
+        key === "SHAREPOINT_MAX_FILE_SIZE" ? (sharePointMaxFileSizeToSave(values[key]) ?? values[key]) : values[key];
+    }
     try {
-      await updateInstanceConfigurations({
-        ...values,
-        SHAREPOINT_MAX_FILE_SIZE: megabytesToBytes(values.SHAREPOINT_MAX_FILE_SIZE),
-      });
+      await updateInstanceConfigurations(payload);
       // What was saved is the new starting point: the form is clean and the connection can be tested
       reset(values);
       setToast({ type: "success", title: "Success", message: "SharePoint settings saved" });
@@ -180,8 +200,8 @@ export function InstanceSharePointConfigForm(props: Props) {
                 name="SHAREPOINT_MAX_FILE_SIZE"
                 rules={{
                   validate: (value) =>
-                    isValidMegabytes(value) ||
-                    `Enter a whole number from 1 to ${MAX_MAX_FILE_SIZE_MB.toLocaleString()}.`,
+                    sharePointMaxFileSizeToSave(value) !== undefined ||
+                    `Enter a size from ${MIN_MAX_FILE_SIZE_MB} to ${Number(MAX_MAX_FILE_SIZE_MB).toLocaleString()} MB.`,
                 }}
                 render={({ field: { value, onChange, ref } }) => (
                   <Input
@@ -189,23 +209,31 @@ export function InstanceSharePointConfigForm(props: Props) {
                     id="SHAREPOINT_MAX_FILE_SIZE"
                     name="SHAREPOINT_MAX_FILE_SIZE"
                     type="number"
-                    min={1}
+                    min={MIN_MAX_FILE_SIZE_MB}
                     max={MAX_MAX_FILE_SIZE_MB}
-                    step={1}
+                    step="any"
                     value={value}
                     onChange={onChange}
                     ref={ref}
                     aria-invalid={Boolean(errors.SHAREPOINT_MAX_FILE_SIZE)}
                     aria-describedby={MAX_FILE_SIZE_DESCRIPTION_ID}
-                    placeholder={String(DEFAULT_MAX_FILE_SIZE_MB)}
+                    placeholder={DEFAULT_MAX_FILE_SIZE_MB}
                   />
                 )}
               />
             </InputGroup>
             <p id={MAX_FILE_SIZE_DESCRIPTION_ID} className="pt-0.5 text-11 text-tertiary">
               The largest file a person can put in SharePoint through Pi-Plane. Leave empty for the default of{" "}
-              {DEFAULT_MAX_FILE_SIZE_MB} MB. It is apart from the upload limit on the General page.
+              {DEFAULT_MAX_FILE_SIZE_MB} MB. It is apart from the upload limit on the General page. In force now:{" "}
+              {bytesToMegabytesText(savedSize.applied)} MB{savedSize.isDefault ? " (the default)" : ""}.
             </p>
+            {savedSize.ignoredValue !== undefined && (
+              <p className="text-11 text-danger-primary">
+                The saved value “{savedSize.ignoredValue}” is not a size from {MIN_MAX_FILE_SIZE_MB} to{" "}
+                {Number(MAX_MAX_FILE_SIZE_MB).toLocaleString()} MB in bytes, so the default of{" "}
+                {DEFAULT_MAX_FILE_SIZE_MB} MB applies. Enter a size and save to replace it.
+              </p>
+            )}
             {errors.SHAREPOINT_MAX_FILE_SIZE?.message && (
               <p className="text-11 text-danger-primary">{errors.SHAREPOINT_MAX_FILE_SIZE.message}</p>
             )}

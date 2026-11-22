@@ -61,21 +61,31 @@ Administrator), and a SharePoint administrator (or an owner of the site collecti
    }
    ```
 
-   Or with PnP PowerShell, as a SharePoint administrator:
+   Or with [PnP PowerShell](https://pnp.github.io/powershell/), as a SharePoint administrator. Since 9 September
+   2024 PnP PowerShell no longer signs in through its own shared app: you need an app registration of your own for
+   PowerShell (not the Pi-Plane one) and pass its client ID to `Connect-PnPOnline`. PnP documents
+   `Register-PnPEntraIDAppForInteractiveLogin` for creating it, and the grant cmdlets need the delegated Graph
+   permission `Sites.FullControl.All` on that PowerShell app.
 
    ```powershell
-   Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/Projects -Interactive
-   Grant-PnPAzureADAppSitePermission -AppId "<Application (client) ID>" -DisplayName "Pi-Plane" `
+   # Once: an app registration for PnP PowerShell itself (needs at least the Application Developer role)
+   Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP PowerShell" -Tenant contoso.onmicrosoft.com
+
+   Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/Projects -Interactive `
+     -ClientId "<client ID of the PnP PowerShell app>"
+   Grant-PnPEntraIDAppSitePermission -AppId "<Pi-Plane Application (client) ID>" -DisplayName "Pi-Plane" `
      -Site https://contoso.sharepoint.com/sites/Projects -Permissions Write
    ```
 
    To see or remove grants later: `GET /sites/{site-id}/permissions` and
-   `DELETE /sites/{site-id}/permissions/{permission-id}`, or `Get-PnPAzureADAppSitePermission` and
-   `Revoke-PnPAzureADAppSitePermission`.
+   `DELETE /sites/{site-id}/permissions/{permission-id}`, or `Get-PnPEntraIDAppSitePermission -Site <site URL>`
+   and `Revoke-PnPEntraIDAppSitePermission -PermissionId <id> -Site <site URL>`. Older PnP PowerShell versions
+   named these cmdlets `*-PnPAzureADAppSitePermission`.
 
-   Both forms are taken from Microsoft's and PnP's documentation and were **not run** by the authors of this
-   integration. In particular not confirmed: the exact role names your tenant accepts, the permission the caller
-   needs, and how long a new grant takes to apply.
+   The Graph calls are the primary way described here. The PnP cmdlet names, parameters and permissions were checked
+   against the PnP PowerShell documentation (November 2026). Neither form was **run** against a live tenant by the
+   authors of this integration, so it is **unverified** in particular: the exact role names your tenant accepts,
+   the permission the caller needs, and how long a new grant takes to apply.
 
 ## Configuring Pi-Plane
 
@@ -101,7 +111,9 @@ copied into the database once, by `configure_instance`, and the admin app rules 
 
 `SHAREPOINT_MAX_FILE_SIZE` has nothing to do with `FILE_SIZE_LIMIT` ([file uploads](file-uploads.md)): that one
 bounds what goes into Pi-Plane's own storage. Nothing enforces the SharePoint size yet, because nothing is uploaded
-yet.
+yet. The admin app shows the saved size in megabytes without rounding (a value set in bytes, say `1000000000`,
+shows as 953.67431640625), says which size is in force, warns when the saved value cannot be used (then the default
+applies), and saves the size only when it was changed in the form.
 
 The apps learn whether SharePoint can be used from `is_sharepoint_enabled` in the instance information
 (`GET /api/instances/`): true when it is switched on and the three credentials are saved. No credential is part of
@@ -121,6 +133,7 @@ in the admin app.
 | Graph does not accept the token            | `token_rejected`        | The `Sites.Selected` permission or the admin consent is missing.                      |
 | Microsoft is limiting requests             | `throttled`             | Try again later.                                                                      |
 | Microsoft could not be reached             | `transport_error`       | The API server has no route to Microsoft (firewall, proxy, DNS).                      |
+| Microsoft took too long                    | `timeout`               | The whole test did not finish within 25 seconds. Try again later.                     |
 | The address is not a SharePoint site       | `invalid_site_url`      | Only `https://<tenant>.sharepoint.com/...` is accepted.                               |
 | Nothing is saved yet                       | `not_configured`        | Save the three credentials first.                                                     |
 
@@ -132,6 +145,13 @@ the admin app shows what Microsoft itself said, shortened, which helps in such a
 
 The API server must be able to open HTTPS connections to `login.microsoftonline.com` and `graph.microsoft.com`.
 Proxy settings of the environment (`HTTPS_PROXY`) are deliberately not used by this client.
+
+**Time limit.** One operation (the connection test: signing in, looking up the site and listing its libraries,
+with every retry and wait) is stopped after **25 seconds** and answered with `timeout`. That is well under the 60
+seconds after which reverse proxies commonly give up on a request, so the administrator sees Pi-Plane's own
+message instead of a gateway error. Within that time a request that Microsoft throttles (429 or 503) is tried at
+most four times; the wait before each new try is what `Retry-After` asks for, but never less than 1, 2 and then 4
+seconds, and a wait that would not fit in the remaining time is not started.
 
 ## What is not built yet
 
@@ -149,10 +169,13 @@ Proxy settings of the environment (`HTTPS_PROXY`) are deliberately not used by t
 ## For developers
 
 - `apps/api/plane/utils/sharepoint/client.py`: `SharePointClient`. Every network exchange goes through `_send`
-  (time-outs, a cap on the size of an answer, a bounded retry on 429 and 503 that honours `Retry-After`), every
-  Graph call through `request` (bearer token, one token refresh on 401, typed errors). The token is cached in the
-  Django cache (Redis) until five minutes before it expires. The secret and the tokens are kept out of logs and
-  error texts. New Graph calls are small methods that build a path from validated IDs.
+  (time-outs, a cap on the size of an answer, a bounded retry on 429 and 503 that honours `Retry-After` with the
+  backoff as the shortest wait), every Graph call through `request` (bearer token, one token refresh on 401, typed
+  errors). A client has one deadline for all its work, counted from when it is made (`deadline`, default
+  `DEFAULT_DEADLINE` = 25 s; a background job may pass a longer one or `None`), after which it raises
+  `SharePointTimeoutError`. The token is cached in the Django cache (Redis) until five minutes before it expires;
+  when the cache fails the client logs it once and asks Microsoft for a token each time. The secret and the tokens
+  are kept out of logs and error texts. New Graph calls are small methods that build a path from validated IDs.
 - `apps/api/plane/utils/sharepoint/errors.py`: the errors, each with a stable `code`.
 - `apps/api/plane/utils/sharepoint/config.py`: reading the settings, `get_sharepoint_client()`,
   `is_sharepoint_enabled()`, `get_sharepoint_max_file_size()`.

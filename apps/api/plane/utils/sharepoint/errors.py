@@ -81,6 +81,12 @@ class SharePointTransportError(SharePointError):
     code = "transport_error"
 
 
+class SharePointTimeoutError(SharePointTransportError):
+    """The operation ran out of time: the client's deadline passed before Microsoft had answered everything."""
+
+    code = "timeout"
+
+
 class SharePointResponseError(SharePointError):
     """Graph answered with an error that is none of the above (for example 400 or 500)."""
 

@@ -35,6 +35,7 @@ from plane.utils.sharepoint.errors import (
     SharePointPermissionError,
     SharePointResponseError,
     SharePointThrottledError,
+    SharePointTimeoutError,
     SharePointTransportError,
 )
 
@@ -513,8 +514,27 @@ class TestThrottling:
         with pytest.raises(SharePointThrottledError) as raised:
             client.get_site("https://contoso.sharepoint.com/sites/Projects")
         assert len(microsoft.graph_requests) == MAX_ATTEMPTS
-        assert client.waits == [1.0] * (MAX_ATTEMPTS - 1)
+        # A short Retry-After does not shorten the backoff
+        assert client.waits == [1.0, 2.0, 4.0]
         assert (raised.value.code, raised.value.retry_after, raised.value.status) == ("throttled", 1.0, 429)
+
+    @pytest.mark.parametrize("value", ["0", "-5", "nan", "-inf", "inf", "soon", "Mon, 99 Foo 2026 99:99:99 GMT"])
+    def test_a_retry_after_that_asks_for_no_wait_still_waits_the_backoff(self, make_client, value):
+        microsoft = FakeMicrosoft(
+            graph=[graph_error(429, headers={"Retry-After": value}), httpx.Response(200, json=SITE_JSON)]
+        )
+        client = make_client(microsoft)
+        assert client.get_site("https://contoso.sharepoint.com/sites/Projects").id == SITE_ID
+        assert client.waits == [1.0]
+
+    def test_a_retry_after_in_the_past_still_waits_the_backoff(self, make_client):
+        when = format_datetime(datetime.now(UTC) - timedelta(minutes=5), usegmt=True)
+        microsoft = FakeMicrosoft(
+            graph=[graph_error(503, headers={"Retry-After": when}), httpx.Response(200, json=SITE_JSON)]
+        )
+        client = make_client(microsoft)
+        client.get_site("https://contoso.sharepoint.com/sites/Projects")
+        assert client.waits == [1.0]
 
     def test_a_long_retry_after_is_not_slept_through(self, make_client):
         microsoft = FakeMicrosoft(graph=lambda request: graph_error(429, headers={"Retry-After": "3600"}))
@@ -537,6 +557,136 @@ class TestThrottling:
         client = make_client(microsoft)
         assert client.get_token() == "token-1"
         assert client.waits == [2.0]
+
+
+class FakeClock:
+    """A monotonic clock that only moves when the client sleeps or a fake answer takes time."""
+
+    def __init__(self):
+        self.now = 1000.0
+        self.waits = []
+
+    def __call__(self):
+        return self.now
+
+    def sleep(self, seconds):
+        self.waits.append(seconds)
+        self.now += seconds
+
+
+class TestDeadline:
+    """One operation of a client (token, Graph calls, retries and waits) ends within its deadline."""
+
+    def build(self, microsoft, cache, clock, **options):
+        return SharePointClient(
+            TENANT,
+            CLIENT_ID,
+            SECRET,
+            transport=httpx.MockTransport(microsoft),
+            cache=cache,
+            sleep=clock.sleep,
+            clock=clock,
+            **options,
+        )
+
+    def test_the_default_deadline_is_well_under_proxy_time_outs(self):
+        assert 20 <= client_module.DEFAULT_DEADLINE <= 30
+
+    def test_waits_stop_at_the_deadline(self, cache):
+        clock = FakeClock()
+        microsoft = FakeMicrosoft(graph=lambda request: graph_error(429, headers={"Retry-After": "10"}))
+        with self.build(microsoft, cache, clock, max_wait=1000, deadline=25) as client:
+            with pytest.raises(SharePointThrottledError):
+                client.get_site("https://contoso.sharepoint.com/sites/Projects")
+        # 10 + 10 leaves 5 s: a third wait of 10 s would pass the deadline, so it is not started
+        assert clock.waits == [10.0, 10.0]
+        assert clock.now - 1000.0 < 25
+
+    def test_a_slow_answer_uses_up_the_deadline_for_the_calls_after_it(self, cache):
+        clock = FakeClock()
+
+        def slow_drives(request):
+            clock.now += 30
+            return httpx.Response(
+                200, json={"value": [], "@odata.nextLink": f"{GRAPH_ROOT}/sites/{SITE_ID}/drives?p=2"}
+            )
+
+        microsoft = FakeMicrosoft(graph=slow_drives)
+        with self.build(microsoft, cache, clock, deadline=25) as client:
+            with pytest.raises(SharePointTimeoutError) as raised:
+                client.list_drives(SITE_ID)
+        assert raised.value.code == "timeout"
+        assert "25 seconds" in raised.value.message
+        assert isinstance(raised.value, SharePointTransportError)
+        # The second page is never asked for
+        assert len(microsoft.graph_requests) == 1
+
+    def test_lost_connections_are_not_retried_past_the_deadline(self, cache):
+        clock = FakeClock()
+
+        def hang(request):
+            clock.now += 20
+            raise httpx.ReadTimeout("timed out")
+
+        microsoft = FakeMicrosoft(graph=hang)
+        with self.build(microsoft, cache, clock, deadline=25) as client:
+            client.get_token()
+            with pytest.raises(SharePointTransportError):
+                client.get_site("https://contoso.sharepoint.com/sites/Projects")
+        # 20 s gone: the 1 s backoff still fits, the second try uses the rest and nothing more is tried
+        assert len(microsoft.graph_requests) == 2
+        assert clock.waits == [1.0]
+
+    def test_each_request_is_given_only_the_time_that_is_left(self, cache):
+        clock = FakeClock()
+        microsoft = FakeMicrosoft(graph=[httpx.Response(200, json=SITE_JSON)])
+        with self.build(microsoft, cache, clock, deadline=25) as client:
+            client.get_token()
+            clock.now += 22
+            client.get_site("https://contoso.sharepoint.com/sites/Projects")
+        timeout = microsoft.graph_requests[0].extensions["timeout"]
+        assert timeout["read"] == pytest.approx(3.0)
+        assert timeout["connect"] == pytest.approx(3.0)
+
+    def test_no_deadline_when_none_is_asked_for(self, cache):
+        clock = FakeClock()
+        microsoft = FakeMicrosoft(graph=[httpx.Response(200, json=SITE_JSON)])
+        with self.build(microsoft, cache, clock, deadline=None) as client:
+            clock.now += 10_000
+            assert client.get_site("https://contoso.sharepoint.com/sites/Projects").id == SITE_ID
+
+
+class BrokenCache:
+    """A cache whose backend is down, as django-redis raises when Redis cannot be reached."""
+
+    def __init__(self):
+        self.calls = 0
+
+    def _fail(self, *args, **kwargs):
+        self.calls += 1
+        raise ConnectionError("Error 111 connecting to redis://:hunter2@cache:6379. Connection refused.")
+
+    get = set = delete = _fail
+
+
+class TestCacheFailure:
+    def test_without_a_cache_the_token_is_fetched_every_time(self, caplog):
+        caplog.set_level(logging.DEBUG)
+        cache = BrokenCache()
+        microsoft = FakeMicrosoft(graph=[graph_error(401), httpx.Response(200, json=SITE_JSON)])
+        with SharePointClient(
+            TENANT, CLIENT_ID, SECRET, transport=httpx.MockTransport(microsoft), cache=cache, sleep=lambda s: None
+        ) as client:
+            assert client.get_token() == "token-1"
+            assert client.get_token() == "token-2"
+            # A rejected token is replaced (and "forgotten") without the cache either
+            assert client.get_site("https://contoso.sharepoint.com/sites/Projects").id == SITE_ID
+        assert cache.calls > 3
+        warnings = [record for record in caplog.records if "token cache" in record.getMessage()]
+        assert len(warnings) == 1
+        assert "ConnectionError" in warnings[0].getMessage()
+        for confidential in (SECRET, "hunter2", "token-1", "token-2"):
+            assert confidential not in caplog.text
 
 
 class TestSiteUrl:

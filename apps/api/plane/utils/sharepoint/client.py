@@ -29,6 +29,7 @@ Nothing here writes the client secret or a token to a log or into an error.
 import hashlib
 import json as json_module
 import logging
+import math
 import re
 import time
 from dataclasses import dataclass
@@ -47,6 +48,7 @@ from .errors import (
     SharePointPermissionError,
     SharePointResponseError,
     SharePointThrottledError,
+    SharePointTimeoutError,
     SharePointTransportError,
 )
 
@@ -57,15 +59,22 @@ GRAPH_ROOT = "https://graph.microsoft.com/v1.0"
 GRAPH_SCOPE = "https://graph.microsoft.com/.default"
 
 # Seconds: connecting, and waiting for each part of an answer
-TIMEOUT = httpx.Timeout(15.0, connect=5.0)
+READ_TIMEOUT = 15.0
+CONNECT_TIMEOUT = 5.0
+TIMEOUT = httpx.Timeout(READ_TIMEOUT, connect=CONNECT_TIMEOUT)
+# Seconds one operation of a client may take in all (the token, every Graph call, every retry and every wait),
+# counted from when the client is made. Well under the 60 s after which proxies commonly give up on a request, so an
+# administrator gets Pi-Plane's own message instead of a gateway time-out. Work that is not answering a person (a
+# background job) may pass a longer ``deadline``, or None.
+DEFAULT_DEADLINE = 25.0
 # Site, library and item metadata is a few kilobytes; a page of a collection some hundreds. Nothing is megabytes.
 MAX_RESPONSE_BYTES = 4 * 1024 * 1024
 # A request is tried this many times in all when Graph answers 429 or 503 (or, for a GET, does not answer)
 MAX_ATTEMPTS = 4
-# The longest a request waits between its tries, all waits together. A longer Retry-After is not slept through:
-# the caller gets a SharePointThrottledError that says how long Graph asked for.
+# The longest a request waits between its tries, all waits together (and never past the deadline). A longer
+# Retry-After is not slept through: the caller gets a SharePointThrottledError that says how long Graph asked for.
 DEFAULT_MAX_WAIT = 20.0
-# The wait before the next try when Graph names none: 1 s, 2 s, 4 s
+# The wait before the next try: 1 s, 2 s, 4 s. Also the shortest wait after a 429 or 503, whatever Retry-After says
 BACKOFF = 1.0
 THROTTLED_STATUSES = (429, 503)
 # A token is dropped this long before Microsoft would stop accepting it
@@ -271,27 +280,34 @@ class DriveItem:
 
 
 def _retry_after(headers) -> float | None:
-    """What Retry-After asks for in seconds (it is a number of seconds or an HTTP date); None when it says nothing."""
+    """
+    What Retry-After asks for in seconds (it is a number of seconds or an HTTP date); None when it says nothing
+    usable (missing, neither a number nor a date, or not finite). A time in the past, or a negative number, is 0.
+    """
     raw = (headers.get("Retry-After") or "").strip()
     if not raw:
         return None
     try:
-        return max(0.0, float(raw))
+        seconds = float(raw)
     except ValueError:
-        pass
-    try:
-        when = parsedate_to_datetime(raw)
-    except (TypeError, ValueError):
+        try:
+            when = parsedate_to_datetime(raw)
+        except (TypeError, ValueError, IndexError, OverflowError):
+            return None
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=UTC)
+        seconds = (when - datetime.now(UTC)).total_seconds()
+    if not math.isfinite(seconds):
         return None
-    if when.tzinfo is None:
-        when = when.replace(tzinfo=UTC)
-    return max(0.0, (when - datetime.now(UTC)).total_seconds())
+    return max(0.0, seconds)
 
 
 class SharePointClient:
     """
     Talks to Microsoft Graph as the application itself. One instance per piece of work; ``close()`` it or use it in
-    a ``with`` block. ``transport``, ``cache`` and ``sleep`` are there for the tests, which run without a network.
+    a ``with`` block. The work has to be done within ``deadline`` seconds of making the client (DEFAULT_DEADLINE);
+    after that every call raises SharePointTimeoutError. ``transport``, ``cache``, ``sleep`` and ``clock`` are there
+    for the tests, which run without a network.
     """
 
     def __init__(
@@ -303,7 +319,9 @@ class SharePointClient:
         transport: httpx.BaseTransport | None = None,
         cache=None,
         sleep=time.sleep,
+        clock=time.monotonic,
         max_wait: float = DEFAULT_MAX_WAIT,
+        deadline: float | None = DEFAULT_DEADLINE,
     ):
         self._tenant_id = validate_tenant_id(tenant_id)
         self._client_id = validate_client_id(client_id)
@@ -312,7 +330,12 @@ class SharePointClient:
             raise SharePointInputError("The client secret is empty.", code="invalid_client_secret")
         self._cache = default_cache if cache is None else cache
         self._sleep = sleep
+        self._clock = clock
         self._max_wait = max_wait
+        self._deadline_seconds = deadline
+        self._deadline_at = None if deadline is None else clock() + deadline
+        # The cache only saves token requests: when it fails, the client goes on without it and says so once
+        self._cache_failure_logged = False
         # Texts that must never leave this object in a message: the secret, and each token as it is issued
         self._confidential = {self._client_secret}
         # Never follow a redirect (the token would travel with it) and never pick up proxy settings or credentials
@@ -357,18 +380,42 @@ class SharePointClient:
                 raise SharePointTransportError("Microsoft sent an answer that is not JSON.") from None
             return None
 
+    def _remaining(self) -> float | None:
+        """Seconds left until the deadline; None when there is none."""
+        return None if self._deadline_at is None else self._deadline_at - self._clock()
+
+    def _timed_out(self) -> SharePointTimeoutError:
+        return SharePointTimeoutError(
+            f"Microsoft took too long: Pi-Plane stopped waiting after {self._deadline_seconds:g} seconds. "
+            "Try again later."
+        )
+
+    def _may_wait(self, pause: float, waited: float) -> bool:
+        """Whether waiting `pause` seconds stays within the wait budget of a request and leaves time to try again."""
+        if waited + pause > self._max_wait:
+            return False
+        remaining = self._remaining()
+        return remaining is None or pause < remaining
+
     def _send(self, method: str, url: str, *, what: str, **kwargs):
         """
         One HTTP exchange with Microsoft, and the only code here that touches the network. Returns the status and the
         parsed body. Tries again, a bounded number of times and for a bounded time, when the answer is 429 or 503
-        (waiting as long as ``Retry-After`` says) and, for a GET, when no answer arrives.
+        (waiting as long as ``Retry-After`` says, but at least the backoff) and, for a GET, when no answer arrives.
+        Neither a request nor a wait goes past the deadline of the client.
         """
         waited = 0.0
         for attempt in range(1, MAX_ATTEMPTS + 1):
+            remaining = self._remaining()
+            if remaining is not None and remaining <= 0:
+                raise self._timed_out()
+            timeout = TIMEOUT
+            if remaining is not None:
+                timeout = httpx.Timeout(min(READ_TIMEOUT, remaining), connect=min(CONNECT_TIMEOUT, remaining))
             last_attempt = attempt == MAX_ATTEMPTS
             fallback_wait = BACKOFF * 2 ** (attempt - 1)
             try:
-                with self._http.stream(method, url, **kwargs) as response:
+                with self._http.stream(method, url, timeout=timeout, **kwargs) as response:
                     status = response.status_code
                     wait = _retry_after(response.headers)
                     payload = self._read(response)
@@ -376,10 +423,13 @@ class SharePointClient:
                 # The exception is not chained or quoted: it carries the request, whose body may hold the secret
                 reason = type(exc).__name__
                 logger.warning("SharePoint: %s got no answer (%s), attempt %s", what, reason, attempt)
-                if method == "GET" and not last_attempt and waited + fallback_wait <= self._max_wait:
+                if method == "GET" and not last_attempt and self._may_wait(fallback_wait, waited):
                     self._sleep(fallback_wait)
                     waited += fallback_wait
                     continue
+                remaining = self._remaining()
+                if remaining is not None and remaining <= 0:
+                    raise self._timed_out() from None
                 timed_out = isinstance(exc, httpx.TimeoutException)
                 raise SharePointTransportError(
                     "Microsoft did not answer in time." if timed_out else "Microsoft could not be reached.",
@@ -390,9 +440,10 @@ class SharePointClient:
                 logger.debug("SharePoint: %s answered %s", what, status)
                 return status, payload
 
-            pause = fallback_wait if wait is None else wait
+            # Never sooner than the backoff, however little Retry-After asks for (0, negative, not a number)
+            pause = fallback_wait if wait is None else max(fallback_wait, wait)
             logger.warning("SharePoint: %s answered %s (retry after %s s), attempt %s", what, status, wait, attempt)
-            if last_attempt or waited + pause > self._max_wait:
+            if last_attempt or not self._may_wait(pause, waited):
                 raise SharePointThrottledError(
                     "Microsoft is limiting requests right now. Try again later.", retry_after=wait, status=status
                 )
@@ -408,16 +459,38 @@ class SharePointClient:
         identity = f"{self._tenant_id}\0{self._client_id}\0{self._client_secret}"
         return f"sharepoint:token:{hashlib.sha256(identity.encode()).hexdigest()}"
 
+    def _cache_failed(self, exc: Exception):
+        # Only the kind of failure is logged: the message of a cache client may hold its address or password
+        if not self._cache_failure_logged:
+            self._cache_failure_logged = True
+            logger.warning("SharePoint: the token cache is not available (%s); going on without it", type(exc).__name__)
+
+    def _cache_get(self, key):
+        try:
+            return self._cache.get(key)
+        except Exception as exc:  # any error of the cache backend (Redis down): the token is fetched instead
+            self._cache_failed(exc)
+            return None
+
+    def _cache_set(self, key, value, timeout):
+        try:
+            self._cache.set(key, value, timeout)
+        except Exception as exc:  # see _cache_get
+            self._cache_failed(exc)
+
     def forget_token(self):
-        self._cache.delete(self._token_cache_key)
+        try:
+            self._cache.delete(self._token_cache_key)
+        except Exception as exc:  # see _cache_get
+            self._cache_failed(exc)
 
     def get_token(self, *, force_refresh: bool = False) -> str:
         """
         An access token for Graph, from the cache or, when there is none (or ``force_refresh``), from the tenant's
-        token endpoint. It is kept until five minutes before it expires.
+        token endpoint. It is kept until five minutes before it expires; without a working cache every call asks anew.
         """
         if not force_refresh:
-            token = self._cache.get(self._token_cache_key)
+            token = self._cache_get(self._token_cache_key)
             if token:
                 self._confidential.add(token)
                 return token
@@ -446,7 +519,7 @@ class SharePointClient:
         except (TypeError, ValueError):
             lifetime = 0
         if lifetime > TOKEN_EXPIRY_MARGIN:
-            self._cache.set(self._token_cache_key, token, lifetime - TOKEN_EXPIRY_MARGIN)
+            self._cache_set(self._token_cache_key, token, lifetime - TOKEN_EXPIRY_MARGIN)
         return token
 
     def _token_error(self, status: int, payload: dict) -> SharePointError:

@@ -16,11 +16,14 @@ from uuid import uuid4
 
 import httpx
 import pytest
+from django.conf import settings as django_settings
+from django.contrib.auth import login
 from django.core.cache import cache
-from django.test import override_settings
+from django.test import RequestFactory, override_settings
 from django.utils import timezone
 
 from plane.db.models import User
+from plane.db.models.session import SessionStore
 from plane.license.models import Instance, InstanceAdmin, InstanceConfiguration
 from plane.license.utils.encryption import decrypt_data, encrypt_data
 from plane.utils.instance_config_variables import instance_config_variables
@@ -110,6 +113,8 @@ class FakeMicrosoft:
         self.token_answer = None
         self.site_answer = None
         self.drives_answer = None
+        # Seconds the clients built on this fake may take; None keeps the client's own default
+        self.deadline = None
 
     def hosts(self):
         return [request.url.host for request in self.requests]
@@ -155,6 +160,8 @@ def microsoft(monkeypatch):
     fake = FakeMicrosoft()
 
     def build(tenant_id, client_id, client_secret, **options):
+        if fake.deadline is not None:
+            options["deadline"] = fake.deadline
         return SharePointClient(
             tenant_id,
             client_id,
@@ -203,6 +210,52 @@ class TestWhoMayTestTheConnection:
     def test_the_path_goes_to_the_admin_session(self):
         # SessionMiddleware reads the God Mode cookie for every path with "instances" in it, and only for those
         assert "instances" in TEST_CONNECTION
+
+
+def signed_in_session(user):
+    """
+    The key of a session in which `user` is signed in, made the way the sign-in endpoints make it (Django's
+    ``login()`` on the project's session store), so a request carrying it goes through the real session middleware
+    and session authentication instead of ``force_authenticate``.
+    """
+    request = RequestFactory().post("/api/instances/admins/sign-in/")
+    request.session = SessionStore()
+    login(request, user)
+    request.session.save()
+    return request.session.session_key
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestTheGodModeSession:
+    """`/api/instances/*` is authenticated by the God Mode cookie (`admin-session-id`) only."""
+
+    def test_the_god_mode_cookie_lets_an_instance_admin_test(self, api_client, instance_admin, credentials, microsoft):
+        api_client.cookies[django_settings.ADMIN_SESSION_COOKIE_NAME] = signed_in_session(instance_admin.user)
+        response = run_test(api_client)
+        assert response.status_code == 200, response.data
+        assert microsoft.hosts() == ["login.microsoftonline.com"]
+
+    def test_the_web_app_cookie_is_not_enough(self, api_client, instance_admin, credentials, microsoft):
+        # The same signed-in session, sent as the cookie of the web app: the instance paths do not read it
+        api_client.cookies[django_settings.SESSION_COOKIE_NAME] = signed_in_session(instance_admin.user)
+        assert run_test(api_client).status_code in (401, 403)
+        assert microsoft.requests == []
+
+    def test_a_god_mode_session_of_someone_who_is_not_an_admin_is_refused(
+        self, api_client, instance, credentials, microsoft
+    ):
+        member = User.objects.create(email="member@plane.so", username=uuid4().hex)
+        api_client.cookies[django_settings.ADMIN_SESSION_COOKIE_NAME] = signed_in_session(member)
+        assert run_test(api_client).status_code == 403
+        assert microsoft.requests == []
+
+    def test_a_request_from_another_site_is_refused(self, api_client, instance_admin, credentials, microsoft):
+        # Cookie-authenticated writes must come from Pi-Plane's own origins
+        api_client.cookies[django_settings.ADMIN_SESSION_COOKIE_NAME] = signed_in_session(instance_admin.user)
+        response = api_client.post(TEST_CONNECTION, {}, format="json", HTTP_ORIGIN="https://evil.example")
+        assert response.status_code == 403
+        assert microsoft.requests == []
 
 
 @pytest.mark.contract
@@ -351,6 +404,28 @@ class TestTheConnectionTest:
     def test_graph_out_of_reach(self, session_client, instance_admin, credentials, microsoft):
         microsoft.site_answer = httpx.ConnectError("no route")
         assert run_test(session_client, SITE_URL).data["error_code"] == "transport_error"
+
+    def test_running_out_of_time_says_so(self, session_client, instance_admin, credentials, microsoft):
+        # The deadline is already used up: nothing is sent, and the answer names the time-out
+        microsoft.deadline = 0
+        response = run_test(session_client, SITE_URL)
+        assert response.status_code == 400
+        assert response.data["error_code"] == "timeout"
+        assert "seconds" in response.data["error"]
+        assert microsoft.requests == []
+
+    def test_the_test_has_the_default_deadline(self, monkeypatch, instance_admin, credentials):
+        built = {}
+
+        def build(*args, **options):
+            built.update(options)
+            raise SharePointConfigurationError("stop here")
+
+        monkeypatch.setattr(sharepoint_config, "SharePointClient", build)
+        with pytest.raises(SharePointConfigurationError):
+            get_sharepoint_client(require_enabled=False)
+        # Nothing overrides the client's own deadline (DEFAULT_DEADLINE), which is well under proxy time-outs
+        assert "deadline" not in built
 
     def test_another_graph_error(self, session_client, instance_admin, credentials, microsoft):
         microsoft.site_answer = graph_error(500)
