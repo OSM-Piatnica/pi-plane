@@ -30,7 +30,6 @@ import {
   toggleGanttRow,
 } from "@/helpers/gantt-sub-work-items.helper";
 import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
-import { getScheduleAnalysisKey, getScheduleAnalysisScope } from "@/helpers/schedule-analysis.helper";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -44,7 +43,7 @@ import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import { GanttQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
 import { IssueGanttBlock } from "./blocks";
-import { GanttCriticalPathToggle } from "./critical-path-toggle";
+import { GanttCriticalPathToggle, GanttScheduleAnalysisLoader } from "./critical-path-toggle";
 import { GanttHierarchyControls } from "./hierarchy-controls";
 import { GanttRollupToggle } from "./rollup-toggle";
 
@@ -73,20 +72,18 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
   const { viewId, isCompletedCycle = false, isEpic = false } = props;
   const { t } = useTranslation();
   // router
-  const { workspaceSlug, projectId, moduleId, cycleId } = useParams();
+  const { workspaceSlug, projectId } = useParams();
 
   const storeType = useIssueStoreType() as GanttStoreType;
   const { issues, issuesFilter } = useIssues(storeType);
   const { fetchIssues, fetchNextIssues, updateIssue, quickAddIssue } = useIssuesActions(storeType);
   const { initGantt, refreshBlockPositions } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
-  const { isDateRollupEnabled, fetchDateRollups, isCriticalPathEnabled, fetchScheduleAnalysis } =
-    useIssuesTimeLineChart();
+  const { isDateRollupEnabled, fetchDateRollups } = useIssuesTimeLineChart();
   // store hooks
   const { allowPermissions } = useUserPermissions();
   const {
     issue: { getIssueById: getWorkItemById },
     subIssues: { subIssuesByIssueId, fetchSubIssues },
-    relation: { relationMap, getRelationLag },
   } = useIssueDetail();
   // how far the sub-work items below their parent are unfolded, per person and per view
   const { storedValue: storedExpansion, setValue: setExpansion } = useLocalStorage<TGanttExpansion>(
@@ -157,36 +154,6 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
     // parentIds comes from the same inputs as rollupKey
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [rollupKey, isDateRollupEnabled, workspaceSlug, projectId, fetchDateRollups]);
-
-  // The critical path comes from the server, and only while its toggle is on. It is asked for again when a date, a
-  // state, a relation or a lag of a loaded work item changes: the key stands for all of those.
-  const analysisScope = getScheduleAnalysisScope(storeType, {
-    moduleId: moduleId?.toString(),
-    cycleId: cycleId?.toString(),
-  });
-  const analysisKey = isCriticalPathEnabled
-    ? getScheduleAnalysisKey(issuesIds, getWorkItemById, relationMap, getRelationLag)
-    : "";
-  useEffect(() => {
-    if (!isCriticalPathEnabled || isEpic || !workspaceSlug || !projectId) return;
-    const timeout = setTimeout(() => {
-      fetchScheduleAnalysis(workspaceSlug.toString(), projectId.toString(), analysisScope).catch(() => {
-        setToast({ type: "error", title: t("toast.error"), message: t("schedule_analysis.load_error") });
-      });
-    }, 300);
-    return () => clearTimeout(timeout);
-    // analysisScope comes from the route and the store type; t only matters when the request fails
-    // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    analysisKey,
-    isCriticalPathEnabled,
-    isEpic,
-    workspaceSlug,
-    projectId,
-    analysisScope.module,
-    analysisScope.cycle,
-    fetchScheduleAnalysis,
-  ]);
 
   // a new choice of levels or rows starts afresh: failed parents may be tried again
   useEffect(() => {
@@ -367,7 +334,12 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
                     />
                   )}
                   <GanttRollupToggle />
-                  {!isEpic && <GanttCriticalPathToggle />}
+                  {!isEpic && (
+                    <>
+                      <GanttScheduleAnalysisLoader issueIds={issuesIds} storeType={storeType} />
+                      <GanttCriticalPathToggle />
+                    </>
+                  )}
                 </>
               }
             />

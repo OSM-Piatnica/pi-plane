@@ -216,10 +216,11 @@
     "float_critical": "None (critical path)",
     "float_days": "{count, plural, one {# working day} other {# working days}}",
     "float_help": "Working days this work item can slip without moving the end of the project",
+    "inverted": "Some work items finish before they start; they were left out.",
     "load_error": "Could not load the critical path.",
     "needed_by": "Needed by",
     "needed_by_help": "Latest finish that lets the work items depending on this one meet their due dates",
-    "truncated": "Only the first dated work items were analysed (limit: {count})."
+    "truncated": "Only the first dated work items were analysed (limit: {count}). Nothing is highlighted."
   },
   "settings_empty_state": {
     "imports": {

@@ -216,10 +216,11 @@
     "float_critical": "Žádná (kritická cesta)",
     "float_days": "{count, plural, one {# pracovní den} few {# pracovní dny} many {# pracovního dne} other {# pracovních dnů}}",
     "float_help": "O kolik pracovních dnů se tato pracovní položka může zpozdit, aniž by se posunul konec projektu",
+    "inverted": "Některé pracovní položky končí dříve, než začínají; byly vynechány.",
     "load_error": "Kritickou cestu se nepodařilo načíst.",
     "needed_by": "Potřeba do",
     "needed_by_help": "Nejpozdější dokončení, při kterém pracovní položky závislé na této stihnou své termíny",
-    "truncated": "Analyzovány byly jen první pracovní položky s daty (limit: {count})."
+    "truncated": "Analyzovány byly jen první pracovní položky s daty (limit: {count}). Nic není zvýrazněno."
   },
   "settings_empty_state": {
     "imports": {

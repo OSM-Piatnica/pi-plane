@@ -96,6 +96,7 @@ class TestScheduleAnalysis:
         body = response.json()
         assert (body["project_start"], body["project_end"]) == ("2027-06-07", "2027-06-18")
         assert body["critical_ids"] == [str(d.id)]
+        assert body["critical_links"] == []
         assert body["items"][str(a.id)] == {
             "earliest_start": "2027-06-07",
             "earliest_finish": "2027-06-09",
@@ -157,14 +158,25 @@ class TestScheduleAnalysis:
         half = make_issue(project, create_user, "Start only", "2027-06-01")
         relate(a, half)
         body = get(session_client, project).json()
-        assert body["undated_count"] == 2
+        assert (body["undated_count"], body["inverted_count"]) == (2, 0)
         assert body["undated_linked_ids"] == [str(half.id)]
         assert str(undated.id) not in body["items"] and str(half.id) not in body["items"]
+        # a finish before the start is left out and counted on its own, and does not count towards the cap
+        inverted = make_issue(project, create_user, "Inverted", "2027-06-01", "2027-06-02")
+        Issue.objects.filter(pk=inverted.pk).update(finish_date=date(2027, 5, 28))
+        relate(inverted, a)
+        body = get(session_client, project).json()
+        assert (body["undated_count"], body["inverted_count"], body["analysed_count"]) == (2, 1, 4)
+        assert sorted(body["undated_linked_ids"]) == sorted([str(half.id), str(inverted.id)])
+        assert str(inverted.id) not in body["items"]
         # D set the end; archived, the chain A-B-C does
         Issue.objects.filter(pk=d.pk).update(archived_at=timezone.now())
         body = get(session_client, project).json()
         assert body["project_end"] == "2027-06-16"
         assert sorted(body["critical_ids"]) == sorted([str(a.id), str(b.id), str(c.id)])
+        assert sorted((link["source"], link["target"]) for link in body["critical_links"]) == sorted(
+            [(str(a.id), str(b.id)), (str(b.id), str(c.id))]
+        )
         # a deleted relation no longer counts
         IssueRelation.objects.filter(issue=c, related_issue=b).update(deleted_at=timezone.now())
         body = get(session_client, project).json()

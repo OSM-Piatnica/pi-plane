@@ -15,7 +15,8 @@ them (``issue_relation_constraints``, ``issue_reschedule``): the requirement a p
 The rules, in short (``docs/critical-path.md`` has them for people):
 
 * **What is analysed.** Work items with both dates. One with no dates or only one date is left out and counted; the
-  ones that have a timeline relation are listed, because a chain is broken there.
+  ones that have a timeline relation are listed, because a chain is broken there. One whose finish is before its start
+  is left out the same way, but counted on its own (``inverted_count``).
 * **Planned dates are the starting point.** Pi-Plane does not schedule work items by itself, people set the dates. So
   the planned start is a "start no earlier than" bound: the earliest start is the later of the planned start and what
   the predecessors allow. In a plan that keeps every relation the earliest dates are the planned dates; where a
@@ -25,12 +26,17 @@ The rules, in short (``docs/critical-path.md`` has them for people):
   finish is what keeps every successor within its own latest dates.
 * **Total float** is the number of working days from the earliest to the latest finish. A work item with no float is
   **critical**: any delay to it moves the project end.
+* **Critical links.** A relation is on the critical path when it is driving: both of its work items are critical and
+  the date it asks of the successor is the successor's earliest date, so that it has no slack of its own. A relation
+  between two critical work items that leaves the successor room (it could start or finish later as far as this
+  relation goes) is not critical.
 * **Fixed points.** Completed and cancelled work items are not moved by the analysis and have no float: their dates
   stay as planned. They still hold back their successors in the forward pass (like the date rules do), but ask
   nothing of their predecessors in the backward pass, as a late predecessor can no longer delay them.
 * **Due dates** (``target_date``) never make a work item critical. They feed a separate backward pass that gives
-  ``needed_by``: the latest finish that still lets every open work item downstream meet its due date. It is None when
-  nothing downstream has a due date. A work item's own due date is not part of its own ``needed_by``.
+  ``needed_by``: the latest finish that still lets every open work item downstream meet its due date. A completed or
+  cancelled work item stops the chain: its due date, and those beyond it, do not count. It is None when nothing
+  counted downstream has a due date. A work item's own due date is not part of its own ``needed_by``.
 * **Hierarchy is ignored.** Every dated work item is a node of its own; a parent is not a predecessor of its
   sub-work items and relations of a parent do not pass down to them.
 * **Cycles.** Work items that depend on each other in a circle are reported. The relations inside such a circle are
@@ -151,15 +157,20 @@ def analyse_schedule(items, relations, weekend_days=()):
         and ``state_group``
     :param relations: ``(issue_id, related_issue_id, relation_type, lag_days)`` as stored (forward types only)
     :param weekend_days: the project's non-working days, 0 = Sunday ... 6 = Saturday
-    :return: dict with ``project_start``, ``project_end``, ``items`` (id -> result), ``critical_ids``, ``cycles``,
-        ``undated_count`` and ``undated_linked_ids``; dates are ``date`` objects
+    :return: dict with ``project_start``, ``project_end``, ``items`` (id -> result), ``critical_ids``,
+        ``critical_links``, ``cycles``, ``undated_count``, ``inverted_count`` and ``undated_linked_ids``; dates are
+        ``date`` objects
     """
     nodes = {}
-    undated = set()
+    # left out: work items without both dates, and those whose finish is before their start
+    undated, inverted = set(), set()
     for item in items:
         start, finish = to_work_item_date(item.get("start_date")), to_work_item_date(item.get("finish_date"))
-        if start is None or finish is None or finish < start:
+        if start is None or finish is None:
             undated.add(item["id"])
+            continue
+        if finish < start:
+            inverted.add(item["id"])
             continue
         start, finish = effective_start(start, weekend_days), effective_finish(finish, weekend_days)
         if finish < start:
@@ -181,7 +192,7 @@ def analyse_schedule(items, relations, weekend_days=()):
         mapping = _STORED_AS_PREDECESSOR_RULE.get(relation_type)
         if mapping is None or issue_id == related_id:
             continue
-        undated_linked.update(end for end in (issue_id, related_id) if end in undated)
+        undated_linked.update(end for end in (issue_id, related_id) if end in undated or end in inverted)
         if issue_id not in nodes or related_id not in nodes:
             continue
         issue_is_predecessor, rule = mapping
@@ -284,13 +295,31 @@ def analyse_schedule(items, relations, weekend_days=()):
             "needed_by": needed_by.get(node_id),
         }
 
+    # driving relations between critical work items: the successor's earliest date is exactly what the relation asks
+    critical_links = []
+    critical = set(critical_ids)
+    for predecessor_id in order:
+        if predecessor_id not in critical:
+            continue
+        predecessor = earliest[predecessor_id]
+        for rule, successor_id, lag in edges_out.get(predecessor_id, ()):
+            if successor_id not in critical:
+                continue
+            field_name, bound = _successor_requirement(
+                rule, predecessor["start_date"], predecessor["finish_date"], lag, weekend_days
+            )
+            if bound >= earliest[successor_id][field_name]:
+                critical_links.append({"source": predecessor_id, "target": successor_id, "relation_type": rule})
+
     return {
         "project_start": project_start,
         "project_end": project_end,
         "items": results,
         "critical_ids": critical_ids,
+        "critical_links": critical_links,
         "cycles": cycles,
         "undated_count": len(undated),
+        "inverted_count": len(inverted),
         "undated_linked_ids": sorted(undated_linked, key=str),
     }
 
@@ -309,8 +338,13 @@ def serialize_analysis(analysis: dict) -> dict:
             for issue_id, result in analysis["items"].items()
         },
         "critical_ids": [str(issue_id) for issue_id in analysis["critical_ids"]],
+        "critical_links": [
+            {"source": str(link["source"]), "target": str(link["target"]), "relation_type": link["relation_type"]}
+            for link in analysis["critical_links"]
+        ],
         "cycles": [[str(issue_id) for issue_id in cycle] for cycle in analysis["cycles"]],
         "undated_count": analysis["undated_count"],
+        "inverted_count": analysis["inverted_count"],
         "undated_linked_ids": [str(issue_id) for issue_id in analysis["undated_linked_ids"]],
     }
 
@@ -319,15 +353,20 @@ def analyse_queryset(queryset, project_id, weekend_days, max_items=MAX_ANALYSED_
     """Analyse the work items of ``queryset``: those of project ``project_id`` the person may see, maybe narrowed to
     a module or a cycle.
 
-    Nothing is cached, every call computes from four queries: the dated work items, the project's timeline
-    relations, the undated work items those relations touch and a count of the undated ones. When more than
-    ``max_items`` work items are dated, only the first ones by start date are analysed and ``truncated`` is set.
+    Nothing is cached, every call computes from five queries: the dated work items, the project's timeline
+    relations, the left-out work items those relations touch and counts of the undated and the inverted ones. Work
+    items whose finish is before their start do not count as dated here, nor towards the cap. When more than
+    ``max_items`` work items are dated, only the first ones by start date are analysed and ``truncated`` is set: the
+    answer then describes a cut-off network and must not be shown as the critical path of the whole scope.
     """
+    from django.db.models import F, Q
+
     from plane.db.models import IssueRelation
 
-    is_dated = {"start_date__isnull": False, "finish_date__isnull": False}
+    is_dated = Q(start_date__isnull=False, finish_date__isnull=False)
+    is_inverted = is_dated & Q(finish_date__lt=F("start_date"))
     rows = list(
-        queryset.filter(**is_dated)
+        queryset.filter(is_dated & ~is_inverted)
         .order_by("start_date", "finish_date", "sequence_id")
         .values("id", "start_date", "finish_date", "target_date", "state__group")[: max_items + 1]
     )
@@ -343,23 +382,23 @@ def analyse_queryset(queryset, project_id, weekend_days, max_items=MAX_ANALYSED_
             relation_type__in=STORED_TIMELINE_RELATION_TYPES,
         ).values_list("issue_id", "related_issue_id", "relation_type", "lag_days")
     )
-    # work items without both dates only matter where a relation links them to an analysed one
+    # left-out work items only matter where a relation links them to an analysed one
     linked_ids = set()
     for issue_id, related_id, _, _ in relations:
         if issue_id in analysed_ids and related_id not in analysed_ids:
             linked_ids.add(related_id)
         elif related_id in analysed_ids and issue_id not in analysed_ids:
             linked_ids.add(issue_id)
-    undated = queryset.exclude(**is_dated)
-    items += [
-        {"id": issue_id, "start_date": None, "finish_date": None}
-        for issue_id in undated.filter(id__in=linked_ids).values_list("id", flat=True)
-    ]
+    undated = queryset.exclude(is_dated)
+    items += list(
+        queryset.filter(~is_dated | is_inverted).filter(id__in=linked_ids).values("id", "start_date", "finish_date")
+    )
 
     payload = serialize_analysis(analyse_schedule(items, relations, weekend_days))
     payload.update(
         {
             "undated_count": undated.count(),
+            "inverted_count": queryset.filter(is_inverted).count(),
             "weekend_days": list(weekend_days or ()),
             "analysed_count": len(analysed_ids),
             "max_items": max_items,

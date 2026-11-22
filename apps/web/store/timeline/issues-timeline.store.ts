@@ -34,6 +34,12 @@ export interface IIssuesTimeLineStore extends IBaseTimelineStore {
   /** The last analysis the server answered, while the critical path is on. */
   scheduleAnalysis: TScheduleAnalysis | undefined;
   isScheduleAnalysisLoading: boolean;
+  /**
+   * Counts the requests for an analysis: `scheduleAnalysisRequestId` is the last one asked for, `scheduleAnalysisResultId`
+   * the one whose answer is in `scheduleAnalysis`. An answer to a request made before a change does not reflect it.
+   */
+  scheduleAnalysisRequestId: number;
+  scheduleAnalysisResultId: number;
   toggleCriticalPath: () => void;
   /** Fetch the critical path analysis of a project, or of one module or cycle of it. */
   fetchScheduleAnalysis: (workspaceSlug: string, projectId: string, scope?: TScheduleAnalysisScope) => Promise<void>;
@@ -53,6 +59,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
   // what the analysis in the store was asked for, and a counter that lets a late answer of an older request be dropped
   scheduleAnalysisRequest: TScheduleAnalysisRequest | undefined = undefined;
   scheduleAnalysisRequestId = 0;
+  scheduleAnalysisResultId = 0;
 
   issueService = new IssueService();
 
@@ -66,6 +73,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
       isCriticalPathEnabled: observable.ref,
       scheduleAnalysis: observable.ref,
       isScheduleAnalysisLoading: observable.ref,
+      scheduleAnalysisResultId: observable.ref,
       toggleCriticalPath: action,
     });
 
@@ -130,6 +138,7 @@ export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTim
       if (requestId !== this.scheduleAnalysisRequestId) return;
       runInAction(() => {
         this.scheduleAnalysis = analysis;
+        this.scheduleAnalysisResultId = requestId;
         this.isScheduleAnalysisLoading = false;
       });
     } catch (error) {

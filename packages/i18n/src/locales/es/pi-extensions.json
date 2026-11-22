@@ -216,10 +216,11 @@
     "float_critical": "Ninguna (ruta crítica)",
     "float_days": "{count, plural, one {# día laborable} other {# días laborables}}",
     "float_help": "Días laborables que este elemento de trabajo puede retrasarse sin desplazar el final del proyecto",
+    "inverted": "Algunos elementos de trabajo terminan antes de empezar; se omitieron.",
     "load_error": "No se pudo cargar la ruta crítica.",
     "needed_by": "Necesario para el",
     "needed_by_help": "Finalización más tardía que permite a los elementos de trabajo que dependen de este cumplir sus fechas de vencimiento",
-    "truncated": "Solo se analizaron los primeros elementos de trabajo con fechas (límite: {count})."
+    "truncated": "Solo se analizaron los primeros elementos de trabajo con fechas (límite: {count}). No se resalta nada."
   },
   "settings_empty_state": {
     "imports": {

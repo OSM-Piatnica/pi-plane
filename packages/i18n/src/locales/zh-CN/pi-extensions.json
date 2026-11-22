@@ -216,10 +216,11 @@
     "float_critical": "无（关键路径）",
     "float_days": "{count, plural, one {# 个工作日} other {# 个工作日}}",
     "float_help": "在不推迟项目结束时间的前提下，此工作项可以延后的工作日数",
+    "inverted": "部分工作项的结束日期早于开始日期；这些工作项已被排除。",
     "load_error": "无法加载关键路径。",
     "needed_by": "最迟需要完成于",
     "needed_by_help": "能让依赖此工作项的工作项赶上截止日期的最晚结束时间",
-    "truncated": "仅分析了最前面的带日期工作项（上限：{count}）。"
+    "truncated": "仅分析了最前面的带日期工作项（上限：{count}）。不会突出显示任何内容。"
   },
   "settings_empty_state": {
     "imports": {

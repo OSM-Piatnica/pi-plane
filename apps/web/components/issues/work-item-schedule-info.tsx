@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { CalendarClock, Hourglass } from "lucide-react";
 // plane imports
@@ -26,34 +26,50 @@ type Props = {
 
 /**
  * Float and "needed by" of a work item, read-only, from the critical path analysis of the timeline. Shown only while
- * the critical path is switched on and its analysis covers this work item; a completed or cancelled work item has
- * neither.
+ * the critical path is switched on and its analysis covers this work item (a truncated one covers none); a completed
+ * or cancelled work item has neither. "Needed by" is red when the earliest finish, not only the planned one, is late.
  */
 export const WorkItemScheduleInfo = observer(function WorkItemScheduleInfo(props: Props) {
   const { issue, projectId } = props;
   const { t } = useTranslation();
-  const { isCriticalPathEnabled, scheduleAnalysis, isScheduleAnalysisLoading, refreshScheduleAnalysis } =
-    useIssuesTimeLineChart();
+  const {
+    isCriticalPathEnabled,
+    scheduleAnalysis,
+    scheduleAnalysisRequestId,
+    scheduleAnalysisResultId,
+    refreshScheduleAnalysis,
+  } = useIssuesTimeLineChart();
   const {
     relation: { relationMap, getRelationLag },
   } = useIssueDetail();
 
-  // The analysis goes stale when this work item's dates, state or relations change here: ask for it again. The first
-  // render only remembers the key, as the analysis in the store was made from what is shown.
+  // The analysis goes stale when this work item's dates, state or relations change here. Answers to requests made
+  // before the change are not shown (`staleUpTo`); others, such as a refresh of the timeline for another work item,
+  // keep what is shown in place instead of blanking it while they load.
   const analysisKey = isCriticalPathEnabled
     ? getScheduleAnalysisKey([issue.id], () => issue, relationMap, getRelationLag)
     : "";
-  const previousKeyRef = useRef(analysisKey);
+  const [tracked, setTracked] = useState({ issueId: issue.id, key: analysisKey, staleUpTo: 0 });
+  if (tracked.issueId !== issue.id) {
+    // another work item: the analysis in the store covers it as it is
+    setTracked({ issueId: issue.id, key: analysisKey, staleUpTo: 0 });
+  } else if (tracked.key !== analysisKey) {
+    // switching the critical path on is no change of the work item
+    const isChange = !!tracked.key && !!analysisKey;
+    setTracked({ ...tracked, key: analysisKey, staleUpTo: isChange ? scheduleAnalysisRequestId : tracked.staleUpTo });
+  }
+  const changeId = tracked.staleUpTo;
   useEffect(() => {
-    if (previousKeyRef.current === analysisKey) return;
-    previousKeyRef.current = analysisKey;
-    if (!analysisKey) return;
+    if (!changeId) return;
+    // a short wait lets the update of the work item reach the server first, and folds quick edits into one request;
     // a failed refresh clears the analysis in the store, so nothing stale is left to show
-    refreshScheduleAnalysis(projectId).catch(() => undefined);
-  }, [analysisKey, projectId, refreshScheduleAnalysis]);
+    const timeout = setTimeout(() => refreshScheduleAnalysis(projectId).catch(() => undefined), 500);
+    return () => clearTimeout(timeout);
+  }, [changeId, projectId, refreshScheduleAnalysis]);
 
-  const item = isCriticalPathEnabled ? getScheduleAnalysisItem(scheduleAnalysis, issue.id) : undefined;
-  if (!item || item.is_fixed || item.total_float === null || isScheduleAnalysisLoading) return null;
+  const isFresh = scheduleAnalysisResultId > tracked.staleUpTo;
+  const item = isCriticalPathEnabled && isFresh ? getScheduleAnalysisItem(scheduleAnalysis, issue.id) : undefined;
+  if (!item || item.is_fixed || item.total_float === null) return null;
 
   const isCritical = item.is_critical;
   // dates are ISO "YYYY-MM-DD" strings, so they compare as text

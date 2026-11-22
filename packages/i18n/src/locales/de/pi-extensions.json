@@ -216,10 +216,11 @@
     "float_critical": "Keiner (kritischer Pfad)",
     "float_days": "{count, plural, one {# Arbeitstag} other {# Arbeitstage}}",
     "float_help": "Arbeitstage, um die sich dieses Arbeitselement verzögern kann, ohne das Projektende zu verschieben",
+    "inverted": "Einige Arbeitselemente enden vor ihrem Beginn; sie wurden ausgelassen.",
     "load_error": "Der kritische Pfad konnte nicht geladen werden.",
     "needed_by": "Benötigt bis",
     "needed_by_help": "Spätester Abschluss, bei dem die von diesem abhängigen Arbeitselemente ihre Fälligkeitsdaten einhalten",
-    "truncated": "Nur die ersten Arbeitselemente mit Terminen wurden analysiert (Limit: {count})."
+    "truncated": "Nur die ersten Arbeitselemente mit Terminen wurden analysiert (Limit: {count}). Es wird nichts hervorgehoben."
   },
   "settings_empty_state": {
     "imports": {

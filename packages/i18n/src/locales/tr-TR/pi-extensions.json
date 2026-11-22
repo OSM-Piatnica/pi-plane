@@ -216,10 +216,11 @@
     "float_critical": "Yok (kritik yol)",
     "float_days": "{count, plural, one {# iş günü} other {# iş günü}}",
     "float_help": "Bu iş öğesinin proje bitişini kaydırmadan gecikebileceği iş günü sayısı",
+    "inverted": "Bazı iş öğeleri başlamadan önce bitiyor; bunlar dışarıda bırakıldı.",
     "load_error": "Kritik yol yüklenemedi.",
     "needed_by": "En geç gereken tarih",
     "needed_by_help": "Bu öğeye bağlı iş öğelerinin son tarihlerine yetişmesini sağlayan en geç bitiş",
-    "truncated": "Yalnızca tarihli ilk iş öğeleri analiz edildi (sınır: {count})."
+    "truncated": "Yalnızca tarihli ilk iş öğeleri analiz edildi (sınır: {count}). Hiçbir şey vurgulanmadı."
   },
   "settings_empty_state": {
     "imports": {

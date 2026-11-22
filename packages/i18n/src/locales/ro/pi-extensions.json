@@ -216,10 +216,11 @@
     "float_critical": "Niciuna (drum critic)",
     "float_days": "{count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}",
     "float_help": "Câte zile lucrătoare poate întârzia această activitate fără a muta sfârșitul proiectului",
+    "inverted": "Unele activități se termină înainte să înceapă; au fost omise.",
     "load_error": "Drumul critic nu a putut fi încărcat.",
     "needed_by": "Necesar până la",
     "needed_by_help": "Cea mai târzie finalizare care permite activităților dependente de aceasta să își respecte termenele limită",
-    "truncated": "Au fost analizate doar primele activități cu date (limită: {count})."
+    "truncated": "Au fost analizate doar primele activități cu date (limită: {count}). Nimic nu este evidențiat."
   },
   "settings_empty_state": {
     "imports": {

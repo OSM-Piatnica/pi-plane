@@ -216,10 +216,11 @@
     "float_critical": "Nenhuma (caminho crítico)",
     "float_days": "{count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}",
     "float_help": "Dias úteis que este item de trabalho pode atrasar sem deslocar o fim do projeto",
+    "inverted": "Alguns itens de trabalho terminam antes de começar; eles foram ignorados.",
     "load_error": "Não foi possível carregar o caminho crítico.",
     "needed_by": "Necessário até",
     "needed_by_help": "Conclusão mais tardia que permite aos itens de trabalho que dependem deste cumprir as datas de vencimento",
-    "truncated": "Apenas os primeiros itens de trabalho com datas foram analisados (limite: {count})."
+    "truncated": "Apenas os primeiros itens de trabalho com datas foram analisados (limite: {count}). Nada é destacado."
   },
   "settings_empty_state": {
     "imports": {

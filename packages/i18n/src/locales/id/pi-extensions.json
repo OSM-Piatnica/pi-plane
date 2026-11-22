@@ -216,10 +216,11 @@
     "float_critical": "Tidak ada (jalur kritis)",
     "float_days": "{count, plural, one {# hari kerja} other {# hari kerja}}",
     "float_help": "Jumlah hari kerja item kerja ini dapat mundur tanpa menggeser akhir proyek",
+    "inverted": "Beberapa item kerja selesai sebelum dimulai; item tersebut diabaikan.",
     "load_error": "Tidak dapat memuat jalur kritis.",
     "needed_by": "Dibutuhkan paling lambat",
     "needed_by_help": "Tanggal selesai paling lambat agar item kerja yang bergantung pada item ini tetap memenuhi tanggal jatuh temponya",
-    "truncated": "Hanya item kerja bertanggal yang pertama yang dianalisis (batas: {count})."
+    "truncated": "Hanya item kerja bertanggal yang pertama yang dianalisis (batas: {count}). Tidak ada yang disorot."
   },
   "settings_empty_state": {
     "imports": {

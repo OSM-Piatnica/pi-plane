@@ -57,8 +57,10 @@ const analysis = (overrides: Partial<TScheduleAnalysis> = {}): TScheduleAnalysis
     done: item({ total_float: null, is_critical: false, is_fixed: true }),
   },
   critical_ids: ["a", "b"],
+  critical_links: [{ source: "a", target: "b", relation_type: "blocking" }],
   cycles: [],
   undated_count: 0,
+  inverted_count: 0,
   undated_linked_ids: [],
   weekend_days: [0, 6],
   analysed_count: 4,
@@ -91,11 +93,27 @@ describe("what the timeline highlights", () => {
     expect(getScheduleAnalysisItem(analysis(), "c")?.total_float).toBe(3);
   });
 
-  it("is a dependency line only when both of its ends are critical", () => {
-    expect(isDependencyCritical(analysis(), { sourceId: "a", targetId: "b" })).toBe(true);
-    expect(isDependencyCritical(analysis(), { sourceId: "a", targetId: "c" })).toBe(false);
-    expect(isDependencyCritical(analysis(), { sourceId: "c", targetId: "b" })).toBe(false);
-    expect(isDependencyCritical(undefined, { sourceId: "a", targetId: "b" })).toBe(false);
+  it("is a dependency line only when the server lists it as critical, whichever end stores it", () => {
+    expect(isDependencyCritical(analysis(), { sourceId: "a", targetId: "b", relationType: "blocking" })).toBe(true);
+    expect(isDependencyCritical(analysis(), { sourceId: "a", targetId: "b", relationType: "blocked_by" })).toBe(true);
+    expect(isDependencyCritical(analysis(), { sourceId: "b", targetId: "a", relationType: "blocking" })).toBe(false);
+    expect(isDependencyCritical(undefined, { sourceId: "a", targetId: "b", relationType: "blocking" })).toBe(false);
+  });
+
+  it("is not a dependency line between two critical work items that leaves the later one room", () => {
+    // a and b are both critical, but only their finish-to-start relation drives b
+    const edge = { sourceId: "a", targetId: "b" } as const;
+    expect(isDependencyCritical(analysis(), { ...edge, relationType: "finish_before" })).toBe(false);
+    expect(isDependencyCritical(analysis(), { ...edge, relationType: "finish_after" })).toBe(false);
+    const ss = analysis({ critical_links: [{ source: "a", target: "b", relation_type: "start_before" }] });
+    expect(isDependencyCritical(ss, { ...edge, relationType: "start_after" })).toBe(true);
+  });
+
+  it("is nothing when the analysis was cut short", () => {
+    const truncated = analysis({ truncated: true });
+    expect(isWorkItemCritical(truncated, "a")).toBe(false);
+    expect(getScheduleAnalysisItem(truncated, "c")).toBeUndefined();
+    expect(isDependencyCritical(truncated, { sourceId: "a", targetId: "b", relationType: "blocking" })).toBe(false);
   });
 });
 
@@ -108,6 +126,7 @@ describe("getScheduleAnalysisNotices", () => {
       "truncated",
       "cycles",
     ]);
+    expect(getScheduleAnalysisNotices(analysis({ inverted_count: 2 }))).toEqual(["inverted"]);
   });
 });
 
@@ -247,6 +266,25 @@ describe("IssuesTimeLineStore critical path", () => {
     firstRequest.resolve(analysis({ critical_ids: ["old"] }));
     await first;
     expect(store.scheduleAnalysis?.critical_ids).toEqual(["new"]);
+    // the answer in the store is the one of the second request
+    expect(store.scheduleAnalysisRequestId).toBe(2);
+    expect(store.scheduleAnalysisResultId).toBe(2);
+  });
+
+  it("tells which request the analysis in the store answers", async () => {
+    getScheduleAnalysis.mockResolvedValue(analysis());
+    const store = createStore();
+    store.toggleCriticalPath();
+    await store.fetchScheduleAnalysis("acme", "p1");
+    expect(store.scheduleAnalysisResultId).toBe(store.scheduleAnalysisRequestId);
+    const open = deferred();
+    getScheduleAnalysis.mockReturnValue(open.promise);
+    const pending = store.fetchScheduleAnalysis("acme", "p1");
+    // still the older answer: a component changed before this request knows it is stale
+    expect(store.scheduleAnalysisResultId).toBeLessThan(store.scheduleAnalysisRequestId);
+    open.resolve(analysis());
+    await pending;
+    expect(store.scheduleAnalysisResultId).toBe(store.scheduleAnalysisRequestId);
   });
 
   it("clears the analysis when the request fails, and when it is switched off", async () => {

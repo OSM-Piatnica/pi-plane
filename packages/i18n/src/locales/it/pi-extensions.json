@@ -216,10 +216,11 @@
     "float_critical": "Nessuno (percorso critico)",
     "float_days": "{count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}",
     "float_help": "Giorni lavorativi di cui questo elemento di lavoro può slittare senza spostare la fine del progetto",
+    "inverted": "Alcuni elementi di lavoro terminano prima di iniziare; sono stati esclusi.",
     "load_error": "Impossibile caricare il percorso critico.",
     "needed_by": "Necessario entro",
     "needed_by_help": "Ultima data di fine che consente agli elementi di lavoro che dipendono da questo di rispettare le scadenze",
-    "truncated": "Sono stati analizzati solo i primi elementi di lavoro con date (limite: {count})."
+    "truncated": "Sono stati analizzati solo i primi elementi di lavoro con date (limite: {count}). Non viene evidenziato nulla."
   },
   "settings_empty_state": {
     "imports": {

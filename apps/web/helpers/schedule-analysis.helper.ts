@@ -9,9 +9,11 @@ import type {
   TScheduleAnalysis,
   TScheduleAnalysisItem,
   TScheduleAnalysisScope,
+  TScheduleCriticalLink,
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import { TIMELINE_RELATION_TYPES } from "@plane/utils";
+import type { TTimelineRelationType } from "@plane/utils";
 
 /**
  * The critical path of the timeline is computed by the server (`plane.utils.schedule_analysis`); the web app only
@@ -69,22 +71,59 @@ export const getScheduleAnalysisKey = (
     })
     .join(";");
 
-/** The analysed work item, when there is an analysis and it covers it. */
+/**
+ * The analysed work item, when there is an analysis and it covers it. A truncated analysis describes a cut-off part of
+ * the plan, so it covers nothing.
+ */
 export const getScheduleAnalysisItem = (
   analysis: TScheduleAnalysis | undefined,
   issueId: string | undefined
-): TScheduleAnalysisItem | undefined => (analysis && issueId ? analysis.items[issueId] : undefined);
+): TScheduleAnalysisItem | undefined =>
+  analysis && !analysis.truncated && issueId ? analysis.items[issueId] : undefined;
 
 export const isWorkItemCritical = (analysis: TScheduleAnalysis | undefined, issueId: string | undefined): boolean =>
   !!getScheduleAnalysisItem(analysis, issueId)?.is_critical;
 
-/** A dependency line is on the critical path when the work items at both of its ends are. */
+// a relation type as stored on either work item, as the rule seen from the predecessor (the server's `relation_type`)
+const PREDECESSOR_RULE: Record<TTimelineRelationType, TScheduleCriticalLink["relation_type"]> = {
+  blocked_by: "blocking",
+  blocking: "blocking",
+  start_before: "start_before",
+  start_after: "start_before",
+  finish_before: "finish_before",
+  finish_after: "finish_before",
+  start_before_finish: "start_before_finish",
+  finish_after_start: "start_before_finish",
+};
+
+const linkKey = (source: string, target: string, rule: string) => `${source}>${target}:${rule}`;
+
+// one lookup per answer: every dependency line asks, on every render of the timeline
+const criticalLinkKeysCache = new WeakMap<TScheduleAnalysis, Set<string>>();
+const getCriticalLinkKeys = (analysis: TScheduleAnalysis): Set<string> => {
+  let keys = criticalLinkKeysCache.get(analysis);
+  if (!keys) {
+    keys = new Set(
+      (analysis.critical_links ?? []).map((link) => linkKey(link.source, link.target, link.relation_type))
+    );
+    criticalLinkKeysCache.set(analysis, keys);
+  }
+  return keys;
+};
+
+/**
+ * A dependency line is on the critical path when the server lists it as critical: it drives its successor. A line
+ * between two critical work items that leaves the successor room is not. `sourceId` is the predecessor.
+ */
 export const isDependencyCritical = (
   analysis: TScheduleAnalysis | undefined,
-  edge: { sourceId: string; targetId: string }
-): boolean => isWorkItemCritical(analysis, edge.sourceId) && isWorkItemCritical(analysis, edge.targetId);
+  edge: { sourceId: string; targetId: string; relationType: TTimelineRelationType }
+): boolean =>
+  !!analysis &&
+  !analysis.truncated &&
+  getCriticalLinkKeys(analysis).has(linkKey(edge.sourceId, edge.targetId, PREDECESSOR_RULE[edge.relationType]));
 
-export type TScheduleAnalysisNotice = "truncated" | "cycles";
+export type TScheduleAnalysisNotice = "truncated" | "cycles" | "inverted";
 
 /** What a person should know about the limits of an analysis, next to the toggle. */
 export const getScheduleAnalysisNotices = (analysis: TScheduleAnalysis | undefined): TScheduleAnalysisNotice[] => {
@@ -92,5 +131,6 @@ export const getScheduleAnalysisNotices = (analysis: TScheduleAnalysis | undefin
   const notices: TScheduleAnalysisNotice[] = [];
   if (analysis.truncated) notices.push("truncated");
   if (analysis.cycles.length > 0) notices.push("cycles");
+  if ((analysis.inverted_count ?? 0) > 0) notices.push("inverted");
   return notices;
 };

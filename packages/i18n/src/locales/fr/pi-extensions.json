@@ -216,10 +216,11 @@
     "float_critical": "Aucune (chemin critique)",
     "float_days": "{count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}",
     "float_help": "Nombre de jours ouvrés dont cet élément de travail peut glisser sans déplacer la fin du projet",
+    "inverted": "Certains éléments de travail se terminent avant de commencer ; ils ont été ignorés.",
     "load_error": "Impossible de charger le chemin critique.",
     "needed_by": "Requis pour le",
     "needed_by_help": "Fin au plus tard permettant aux éléments de travail qui dépendent de celui-ci de respecter leur date d’échéance",
-    "truncated": "Seuls les premiers éléments de travail datés ont été analysés (limite : {count})."
+    "truncated": "Seuls les premiers éléments de travail datés ont été analysés (limite : {count}). Rien n’est mis en évidence."
   },
   "settings_empty_state": {
     "imports": {

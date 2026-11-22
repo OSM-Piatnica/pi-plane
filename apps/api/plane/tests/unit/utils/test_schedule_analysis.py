@@ -300,9 +300,19 @@ class TestUndated:
         )
         assert set(result["items"]) == {"A"}
         assert result["undated_count"] == 3
+        assert result["inverted_count"] == 0
         # only the ones a relation meets are listed: the chain is broken there
         assert result["undated_linked_ids"] == ["none", "start only"]
         assert floats(result) == {"A": 0}
+
+    def test_a_finish_before_the_start_is_left_out_and_counted_on_its_own(self):
+        result = analyse(
+            [item("A", "6-07", "6-08"), item("inverted", "6-11", "6-09"), item("none")],
+            [blocked_by("inverted", "A")],
+        )
+        assert set(result["items"]) == {"A"}
+        assert (result["undated_count"], result["inverted_count"]) == (1, 1)
+        assert result["undated_linked_ids"] == ["inverted"]
 
     def test_relations_to_work_items_that_are_not_given_are_ignored(self):
         result = analyse([item("A", "6-07", "6-08")], [blocked_by("A", "elsewhere"), blocked_by("elsewhere", "A")])
@@ -320,6 +330,49 @@ class TestUndated:
         result = analyse([])
         assert result["project_start"] is None and result["project_end"] is None
         assert result["items"] == {} and result["critical_ids"] == [] and result["cycles"] == []
+        assert result["critical_links"] == []
+
+
+def links(result):
+    return sorted((link["source"], link["target"], link["relation_type"]) for link in result["critical_links"])
+
+
+@pytest.mark.unit
+class TestCriticalLinks:
+    def test_a_chain_without_gaps_links_its_work_items(self):
+        result = analyse(
+            [item("A", "6-07", "6-08"), item("B", "6-09", "6-11"), item("C", "6-14", "6-15")],
+            [blocked_by("B", "A"), blocked_by("C", "B")],
+        )
+        assert links(result) == [("A", "B", "blocking"), ("B", "C", "blocking")]
+
+    def test_a_relation_with_slack_between_two_critical_work_items_is_not_critical(self):
+        # A drives D to the end; B ends with the project too, but A only asks B to finish by 11 June: room to spare
+        result = analyse(
+            [item("A", "6-07", "6-11"), item("D", "6-14", "6-18"), item("B", "6-14", "6-18")],
+            [blocked_by("D", "A"), ("A", "B", "finish_before", 0)],
+        )
+        assert floats(result) == {"A": 0, "B": 0, "D": 0}
+        assert links(result) == [("A", "D", "blocking")]
+
+    def test_a_relation_to_a_work_item_with_float_is_not_critical(self):
+        result = analyse(
+            [item("A", "6-07", "6-11"), item("B", "6-14", "6-15"), item("C", "6-07", "6-18")],
+            [blocked_by("B", "A")],
+        )
+        assert links(result) == []
+
+    def test_a_broken_relation_drives_the_pushed_successor(self):
+        # B is planned before A finishes: the analysis pushes B, so the relation is what sets B's dates
+        result = analyse([item("A", "6-07", "6-11"), item("B", "6-09", "6-10")], [blocked_by("B", "A")])
+        assert links(result) == [("A", "B", "blocking")]
+
+    def test_start_to_start(self):
+        result = analyse(
+            [item("A", "6-07", "6-08"), item("B", "6-07", "6-18")],
+            [("A", "B", "start_before", 0)],
+        )
+        assert links(result) == [("A", "B", "start_before")]
 
 
 @pytest.mark.unit
@@ -491,3 +544,5 @@ class TestSerialize:
             "needed_by": "2027-06-15",
         }
         assert sorted(payload["critical_ids"]) == ["A", "B"]
+        assert payload["critical_links"] == [{"source": "A", "target": "B", "relation_type": "blocking"}]
+        assert payload["inverted_count"] == 0
