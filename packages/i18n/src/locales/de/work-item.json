@@ -906,7 +906,9 @@
         "removed_with_issue": "hat das Startdatum von <issue/> entfernt",
         "removed_without_issue": "hat das Startdatum entfernt",
         "set_with_issue": "hat das Startdatum von <issue/> auf <value/> gesetzt",
-        "set_without_issue": "hat das Startdatum auf <value/> gesetzt"
+        "set_without_issue": "hat das Startdatum auf <value/> gesetzt",
+        "shifted_with_issue": "hat das Startdatum von <issue/> automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde",
+        "shifted_without_issue": "hat das Startdatum automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde"
       },
       "state": {
         "set_with_issue": "hat den Status von <issue/> auf <value/> gesetzt",
@@ -916,7 +918,9 @@
         "removed_with_issue": "hat das Fertigstellungsdatum von <issue/> entfernt",
         "removed_without_issue": "hat das Fertigstellungsdatum entfernt",
         "set_with_issue": "hat das Fertigstellungsdatum von <issue/> auf <value/> gesetzt",
-        "set_without_issue": "hat das Fertigstellungsdatum auf <value/> gesetzt"
+        "set_without_issue": "hat das Fertigstellungsdatum auf <value/> gesetzt",
+        "shifted_with_issue": "hat das Fertigstellungsdatum von <issue/> automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde",
+        "shifted_without_issue": "hat das Fertigstellungsdatum automatisch auf <value/> verschoben, nachdem <cause/> geändert wurde"
       },
       "target_date": {
         "removed_with_issue": "hat das Fälligkeitsdatum von <issue/> entfernt",

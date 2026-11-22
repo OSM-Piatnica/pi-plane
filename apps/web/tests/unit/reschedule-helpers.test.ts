@@ -44,6 +44,10 @@ describe("getShiftCause", () => {
     expect(getShiftCause(entry({ field: "blocked_by" }))).toBeUndefined();
   });
 
+  it("takes the workspace from the page when the entry has none", () => {
+    expect(getShiftCause(entry({ workspace_detail: undefined }), "osm")?.href).toBe("/osm/browse/WDR-12/");
+  });
+
   it("is undefined when the link cannot be built", () => {
     expect(getShiftCause(entry({ workspace_detail: undefined }))).toBeUndefined();
     expect(getShiftCause(entry({ shift_cause: { ...cause, project_identifier: "" } }))).toBeUndefined();

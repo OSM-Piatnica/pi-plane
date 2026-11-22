@@ -906,7 +906,9 @@
         "removed_with_issue": "eliminó la fecha de inicio de <issue/>",
         "removed_without_issue": "eliminó la fecha de inicio",
         "set_with_issue": "estableció la fecha de inicio de <issue/> en <value/>",
-        "set_without_issue": "estableció la fecha de inicio en <value/>"
+        "set_without_issue": "estableció la fecha de inicio en <value/>",
+        "shifted_with_issue": "movió automáticamente la fecha de inicio de <issue/> al <value/> tras el cambio de <cause/>",
+        "shifted_without_issue": "movió automáticamente la fecha de inicio al <value/> tras el cambio de <cause/>"
       },
       "state": {
         "set_with_issue": "estableció el estado de <issue/> en <value/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "eliminó la fecha de finalización de <issue/>",
         "removed_without_issue": "eliminó la fecha de finalización",
         "set_with_issue": "estableció la fecha de finalización de <issue/> en <value/>",
-        "set_without_issue": "estableció la fecha de finalización en <value/>"
+        "set_without_issue": "estableció la fecha de finalización en <value/>",
+        "shifted_with_issue": "movió automáticamente la fecha de finalización de <issue/> al <value/> tras el cambio de <cause/>",
+        "shifted_without_issue": "movió automáticamente la fecha de finalización al <value/> tras el cambio de <cause/>"
       },
       "target_date": {
         "removed_with_issue": "eliminó la fecha de vencimiento de <issue/>",

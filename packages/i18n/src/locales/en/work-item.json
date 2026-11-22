@@ -906,7 +906,9 @@
         "removed_with_issue": "removed the start date from <issue/>",
         "removed_without_issue": "removed the start date",
         "set_with_issue": "set the start date to <value/> for <issue/>",
-        "set_without_issue": "set the start date to <value/>"
+        "set_without_issue": "set the start date to <value/>",
+        "shifted_with_issue": "moved the start date of <issue/> to <value/> automatically after <cause/> changed",
+        "shifted_without_issue": "moved the start date to <value/> automatically after <cause/> changed"
       },
       "state": {
         "set_with_issue": "set the state to <value/> for <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "removed the finish date from <issue/>",
         "removed_without_issue": "removed the finish date",
         "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "set_without_issue": "set the finish date to <value/>",
+        "shifted_with_issue": "moved the finish date of <issue/> to <value/> automatically after <cause/> changed",
+        "shifted_without_issue": "moved the finish date to <value/> automatically after <cause/> changed"
       },
       "target_date": {
         "removed_with_issue": "removed the due date from <issue/>",

@@ -906,7 +906,9 @@
         "removed_with_issue": "usunięto datę rozpoczęcia z <issue/>",
         "removed_without_issue": "usunięto datę rozpoczęcia",
         "set_with_issue": "ustawiono datę rozpoczęcia na <value/> dla <issue/>",
-        "set_without_issue": "ustawiono datę rozpoczęcia na <value/>"
+        "set_without_issue": "ustawiono datę rozpoczęcia na <value/>",
+        "shifted_with_issue": "automatycznie przesunięto datę rozpoczęcia <issue/> na <value/> po zmianie <cause/>",
+        "shifted_without_issue": "automatycznie przesunięto datę rozpoczęcia na <value/> po zmianie <cause/>"
       },
       "state": {
         "set_with_issue": "ustawiono stan na <value/> dla <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "usunięto datę zakończenia z <issue/>",
         "removed_without_issue": "usunięto datę zakończenia",
         "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>",
-        "set_without_issue": "ustawiono datę zakończenia na <value/>"
+        "set_without_issue": "ustawiono datę zakończenia na <value/>",
+        "shifted_with_issue": "automatycznie przesunięto datę zakończenia <issue/> na <value/> po zmianie <cause/>",
+        "shifted_without_issue": "automatycznie przesunięto datę zakończenia na <value/> po zmianie <cause/>"
       },
       "target_date": {
         "removed_with_issue": "usunięto termin z <issue/>",

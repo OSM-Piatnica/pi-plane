@@ -906,7 +906,9 @@
         "removed_with_issue": "видалено дату початку з <issue/>",
         "removed_without_issue": "видалено дату початку",
         "set_with_issue": "встановлено дату початку <value/> для <issue/>",
-        "set_without_issue": "встановлено дату початку <value/>"
+        "set_without_issue": "встановлено дату початку <value/>",
+        "shifted_with_issue": "автоматично зсунуто дату початку <issue/> на <value/> після зміни <cause/>",
+        "shifted_without_issue": "автоматично зсунуто дату початку на <value/> після зміни <cause/>"
       },
       "state": {
         "set_with_issue": "встановлено стан <value/> для <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "видалено дату завершення з <issue/>",
         "removed_without_issue": "видалено дату завершення",
         "set_with_issue": "встановлено дату завершення <value/> для <issue/>",
-        "set_without_issue": "встановлено дату завершення <value/>"
+        "set_without_issue": "встановлено дату завершення <value/>",
+        "shifted_with_issue": "автоматично зсунуто дату завершення <issue/> на <value/> після зміни <cause/>",
+        "shifted_without_issue": "автоматично зсунуто дату завершення на <value/> після зміни <cause/>"
       },
       "target_date": {
         "removed_with_issue": "видалено крайній термін з <issue/>",

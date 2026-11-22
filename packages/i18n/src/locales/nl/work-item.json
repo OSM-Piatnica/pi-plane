@@ -906,7 +906,9 @@
         "removed_with_issue": "verwijderde de startdatum van <issue/>",
         "removed_without_issue": "verwijderde de startdatum",
         "set_with_issue": "stelde de startdatum in op <value/> voor <issue/>",
-        "set_without_issue": "stelde de startdatum in op <value/>"
+        "set_without_issue": "stelde de startdatum in op <value/>",
+        "shifted_with_issue": "verplaatste de startdatum van <issue/> automatisch naar <value/> na de wijziging van <cause/>",
+        "shifted_without_issue": "verplaatste de startdatum automatisch naar <value/> na de wijziging van <cause/>"
       },
       "state": {
         "set_with_issue": "stelde de status in op <value/> voor <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "verwijderde de afrondingsdatum van <issue/>",
         "removed_without_issue": "verwijderde de afrondingsdatum",
         "set_with_issue": "stelde de afrondingsdatum in op <value/> voor <issue/>",
-        "set_without_issue": "stelde de afrondingsdatum in op <value/>"
+        "set_without_issue": "stelde de afrondingsdatum in op <value/>",
+        "shifted_with_issue": "verplaatste de afrondingsdatum van <issue/> automatisch naar <value/> na de wijziging van <cause/>",
+        "shifted_without_issue": "verplaatste de afrondingsdatum automatisch naar <value/> na de wijziging van <cause/>"
       },
       "target_date": {
         "removed_with_issue": "verwijderde de vervaldatum van <issue/>",

@@ -906,7 +906,9 @@
         "removed_with_issue": "ha rimosso la data di inizio da <issue/>",
         "removed_without_issue": "ha rimosso la data di inizio",
         "set_with_issue": "ha impostato la data di inizio di <issue/> su <value/>",
-        "set_without_issue": "ha impostato la data di inizio su <value/>"
+        "set_without_issue": "ha impostato la data di inizio su <value/>",
+        "shifted_with_issue": "ha spostato automaticamente la data di inizio di <issue/> al <value/> dopo la modifica di <cause/>",
+        "shifted_without_issue": "ha spostato automaticamente la data di inizio al <value/> dopo la modifica di <cause/>"
       },
       "state": {
         "set_with_issue": "ha impostato lo stato di <issue/> su <value/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "ha rimosso la data di fine da <issue/>",
         "removed_without_issue": "ha rimosso la data di fine",
         "set_with_issue": "ha impostato la data di fine di <issue/> su <value/>",
-        "set_without_issue": "ha impostato la data di fine su <value/>"
+        "set_without_issue": "ha impostato la data di fine su <value/>",
+        "shifted_with_issue": "ha spostato automaticamente la data di fine di <issue/> al <value/> dopo la modifica di <cause/>",
+        "shifted_without_issue": "ha spostato automaticamente la data di fine al <value/> dopo la modifica di <cause/>"
       },
       "target_date": {
         "removed_with_issue": "ha rimosso la scadenza da <issue/>",

@@ -906,7 +906,9 @@
         "removed_with_issue": "menghapus tanggal mulai dari <issue/>",
         "removed_without_issue": "menghapus tanggal mulai",
         "set_with_issue": "menetapkan tanggal mulai untuk <issue/> menjadi <value/>",
-        "set_without_issue": "menetapkan tanggal mulai menjadi <value/>"
+        "set_without_issue": "menetapkan tanggal mulai menjadi <value/>",
+        "shifted_with_issue": "memindahkan tanggal mulai <issue/> secara otomatis ke <value/> setelah <cause/> berubah",
+        "shifted_without_issue": "memindahkan tanggal mulai secara otomatis ke <value/> setelah <cause/> berubah"
       },
       "state": {
         "set_with_issue": "menetapkan status untuk <issue/> menjadi <value/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "menghapus tanggal selesai dari <issue/>",
         "removed_without_issue": "menghapus tanggal selesai",
         "set_with_issue": "menetapkan tanggal selesai untuk <issue/> menjadi <value/>",
-        "set_without_issue": "menetapkan tanggal selesai menjadi <value/>"
+        "set_without_issue": "menetapkan tanggal selesai menjadi <value/>",
+        "shifted_with_issue": "memindahkan tanggal selesai <issue/> secara otomatis ke <value/> setelah <cause/> berubah",
+        "shifted_without_issue": "memindahkan tanggal selesai secara otomatis ke <value/> setelah <cause/> berubah"
       },
       "target_date": {
         "removed_with_issue": "menghapus tanggal jatuh tempo dari <issue/>",

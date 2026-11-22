@@ -906,7 +906,9 @@
         "removed_with_issue": "премахна началната дата от <issue/>",
         "removed_without_issue": "премахна началната дата",
         "set_with_issue": "зададе началната дата на <value/> за <issue/>",
-        "set_without_issue": "зададе началната дата на <value/>"
+        "set_without_issue": "зададе началната дата на <value/>",
+        "shifted_with_issue": "премести автоматично началната дата на <issue/> на <value/> след промяната на <cause/>",
+        "shifted_without_issue": "премести автоматично началната дата на <value/> след промяната на <cause/>"
       },
       "state": {
         "set_with_issue": "зададе състоянието на <value/> за <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "премахна датата на приключване от <issue/>",
         "removed_without_issue": "премахна датата на приключване",
         "set_with_issue": "зададе датата на приключване на <value/> за <issue/>",
-        "set_without_issue": "зададе датата на приключване на <value/>"
+        "set_without_issue": "зададе датата на приключване на <value/>",
+        "shifted_with_issue": "премести автоматично датата на приключване на <issue/> на <value/> след промяната на <cause/>",
+        "shifted_without_issue": "премести автоматично датата на приключване на <value/> след промяната на <cause/>"
       },
       "target_date": {
         "removed_with_issue": "премахна крайния срок от <issue/>",

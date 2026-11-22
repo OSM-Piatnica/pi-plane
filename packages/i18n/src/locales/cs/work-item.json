@@ -906,7 +906,9 @@
         "removed_with_issue": "odebráno datum začátku z <issue/>",
         "removed_without_issue": "odebráno datum začátku",
         "set_with_issue": "nastaveno datum začátku na <value/> u <issue/>",
-        "set_without_issue": "nastaveno datum začátku na <value/>"
+        "set_without_issue": "nastaveno datum začátku na <value/>",
+        "shifted_with_issue": "automaticky posunuto datum začátku položky <issue/> na <value/> po změně položky <cause/>",
+        "shifted_without_issue": "automaticky posunuto datum začátku na <value/> po změně položky <cause/>"
       },
       "state": {
         "set_with_issue": "nastaven stav na <value/> u <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "odebráno datum dokončení z <issue/>",
         "removed_without_issue": "odebráno datum dokončení",
         "set_with_issue": "nastaveno datum dokončení na <value/> u <issue/>",
-        "set_without_issue": "nastaveno datum dokončení na <value/>"
+        "set_without_issue": "nastaveno datum dokončení na <value/>",
+        "shifted_with_issue": "automaticky posunuto datum dokončení položky <issue/> na <value/> po změně položky <cause/>",
+        "shifted_without_issue": "automaticky posunuto datum dokončení na <value/> po změně položky <cause/>"
       },
       "target_date": {
         "removed_with_issue": "odebrán termín z <issue/>",

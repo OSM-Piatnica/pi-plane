@@ -11,9 +11,18 @@ from unittest import mock
 
 import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from plane.bgtasks.issue_activities_task import issue_activity
-from plane.db.models import Issue, IssueActivity, IssueRelation, Project, ProjectMember
+from plane.db.models import (
+    Issue,
+    IssueActivity,
+    IssueRelation,
+    Project,
+    ProjectMember,
+    User,
+    WorkspaceMember,
+)
 
 ACTIVITY = "plane.utils.issue_reschedule.issue_activity.delay"
 
@@ -104,9 +113,7 @@ def causes(activity):
     """Shifted work item id -> the ids its activity entries name as the cause."""
     found = {}
     for call in activity.call_args_list:
-        found.setdefault(call.kwargs["issue_id"], set()).add(
-            json.loads(call.kwargs["requested_data"]).get("shifted_after")
-        )
+        found.setdefault(call.kwargs["issue_id"], set()).add(call.kwargs.get("shifted_after"))
     return found
 
 
@@ -225,9 +232,86 @@ class TestCauseInHistory:
 
         issue_activity(
             type="issue.activity.updated",
-            requested_data=json.dumps(
-                {"start_date": "2026-01-02", "shifted_after": "00000000-0000-4000-8000-000000000000"}
-            ),
+            requested_data=json.dumps({"start_date": "2026-01-02"}),
+            current_instance=json.dumps({"start_date": "2026-01-01"}),
+            issue_id=str(a.id),
+            actor_id=None,
+            project_id=str(project.id),
+            epoch=1767225600,
+            shifted_after="00000000-0000-4000-8000-000000000000",
+        )
+
+        entry = IssueActivity.objects.get(issue=a, field="start_date")
+        assert entry.comment == "updated the start date to "
+        assert entry.old_identifier is None
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestForgedCause:
+    """A client cannot make its own date change look like an automatic shift after another work item."""
+
+    @pytest.fixture
+    def hidden(self, workspace, create_user):
+        # a work item in a project the person is not a member of
+        secret = Project.objects.create(
+            name="Secret", identifier="SEC", workspace=workspace, created_by=create_user, weekend_days=[]
+        )
+        return item(secret, "hidden", date(2026, 1, 1), date(2026, 1, 10))
+
+    def assert_plain(self, item_, field_name):
+        entry = IssueActivity.objects.get(issue=item_, field=field_name)
+        assert entry.comment in ("updated the start date to ", "updated the finish date to")
+        assert entry.old_identifier is None
+
+    def run_queued(self, task_mock):
+        for call in task_mock.delay.call_args_list:
+            if call.kwargs.get("type") == "issue.activity.updated":
+                assert "shifted_after" not in call.kwargs
+                issue_activity(**call.kwargs)
+
+    def test_app_api(self, session_client, workspace, project, hidden):
+        a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
+
+        with (
+            mock.patch("plane.app.views.issue.base.issue_activity") as task,
+            mock.patch("plane.app.views.issue.base.model_activity"),
+        ):
+            response = session_client.patch(
+                issue_url(workspace, project, a),
+                {"start_date": "2026-01-02", "finish_date": "2026-01-12", "shifted_after": str(hidden.id)},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_204_NO_CONTENT, response.content
+        self.run_queued(task)
+
+        self.assert_plain(a, "start_date")
+        self.assert_plain(a, "finish_date")
+        history = session_client.get(issue_url(workspace, project, a) + "history/")
+        assert {row["shift_cause"] for row in history.json() if row.get("field") in ("start_date", "finish_date")} == {
+            None
+        }
+
+    def test_public_api(self, api_key_client, workspace, project, hidden):
+        a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
+
+        with mock.patch("plane.api.views.issue.issue_activity") as task:
+            response = api_key_client.patch(
+                public_url(workspace, project, a),
+                {"start_date": "2026-01-02", "shifted_after": str(hidden.id)},
+                format="json",
+            )
+        assert response.status_code == status.HTTP_200_OK, response.content
+        self.run_queued(task)
+
+        self.assert_plain(a, "start_date")
+
+    def test_the_task_drops_a_cause_in_the_requested_data(self, workspace, project, hidden):
+        a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))
+
+        issue_activity(
+            type="issue.activity.updated",
+            requested_data=json.dumps({"start_date": "2026-01-02", "shifted_after": str(hidden.id)}),
             current_instance=json.dumps({"start_date": "2026-01-01"}),
             issue_id=str(a.id),
             actor_id=None,
@@ -235,9 +319,7 @@ class TestCauseInHistory:
             epoch=1767225600,
         )
 
-        entry = IssueActivity.objects.get(issue=a, field="start_date")
-        assert entry.comment == "updated the start date to "
-        assert entry.old_identifier is None
+        self.assert_plain(a, "start_date")
 
 
 @pytest.mark.contract
@@ -270,6 +352,24 @@ class TestOfferSwitchedOff:
         assert response.status_code == status.HTTP_200_OK, response.data
         project.refresh_from_db()
         assert project.is_reschedule_offer_enabled is False
+
+    def test_a_member_who_is_not_an_admin_cannot_switch_it(self, workspace, project):
+        member = User.objects.create(email="member@example.com", username="member")
+        WorkspaceMember.objects.create(workspace=workspace, member=member, role=15)
+        ProjectMember.objects.create(project=project, member=member, role=15, is_active=True)
+        client = APIClient()
+        client.force_authenticate(user=member)
+
+        with mock.patch("plane.app.views.project.base.model_activity"):
+            response = client.patch(
+                f"/api/workspaces/{workspace.slug}/projects/{project.id}/",
+                {"is_reschedule_offer_enabled": False},
+                format="json",
+            )
+
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+        project.refresh_from_db()
+        assert project.is_reschedule_offer_enabled is True
 
     @pytest.mark.parametrize("confirmed", [False, True])
     def test_app_update_is_refused(self, session_client, workspace, project, pair, switched_off, confirmed):

@@ -39,6 +39,8 @@ import { getPriorityLabel } from "@/helpers/activity-values";
 import { useLabel } from "@/hooks/store/use-label";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { ShiftCauseLink } from "@/components/issues/issue-detail/issue-activity/activity/actions/helpers/shift-cause-link";
+import { getShiftCause } from "@/helpers/reschedule";
 import { renderTaggedText } from "@/helpers/tagged-text";
 // types
 
@@ -523,13 +525,26 @@ const activityDetails: {
     icon: <GridOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   start_date: {
-    message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
+    message: (activity, showIssue, workspaceSlug, t, formatDate) => {
       if (!activity.new_value)
         return renderTaggedText(
           showIssue
             ? t("activity_feed.profile.start_date.removed_with_issue")
             : t("activity_feed.profile.start_date.removed_without_issue"),
           issueTag(activity)
+        );
+      // moved along with the work item it depends on: name and link that one
+      const cause = getShiftCause(activity, workspaceSlug);
+      if (cause)
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.start_date.shifted_with_issue")
+            : t("activity_feed.profile.start_date.shifted_without_issue"),
+          {
+            ...issueTag(activity),
+            ...emphasisTag(formatDate(activity.new_value), NOWRAP_VALUE_CLASS),
+            cause: () => <ShiftCauseLink cause={cause} />,
+          }
         );
       return renderTaggedText(
         showIssue
@@ -541,13 +556,26 @@ const activityDetails: {
     icon: <CalendarOutline width={12} height={12} className="text-secondary" aria-hidden="true" />,
   },
   finish_date: {
-    message: (activity, showIssue, _workspaceSlug, t, formatDate) => {
+    message: (activity, showIssue, workspaceSlug, t, formatDate) => {
       if (!activity.new_value)
         return renderTaggedText(
           showIssue
             ? t("activity_feed.profile.finish_date.removed_with_issue")
             : t("activity_feed.profile.finish_date.removed_without_issue"),
           issueTag(activity)
+        );
+      // moved along with the work item it depends on: name and link that one
+      const cause = getShiftCause(activity, workspaceSlug);
+      if (cause)
+        return renderTaggedText(
+          showIssue
+            ? t("activity_feed.profile.finish_date.shifted_with_issue")
+            : t("activity_feed.profile.finish_date.shifted_without_issue"),
+          {
+            ...issueTag(activity),
+            ...emphasisTag(formatDate(activity.new_value), NOWRAP_VALUE_CLASS),
+            cause: () => <ShiftCauseLink cause={cause} />,
+          }
         );
       return renderTaggedText(
         showIssue

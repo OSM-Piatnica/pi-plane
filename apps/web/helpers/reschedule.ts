@@ -23,14 +23,22 @@ export type TShiftCauseLink = { ref: string; href: string };
 /**
  * The work item whose change moved this one along, for a start or finish date entry written by a shift of dependents:
  * its reference (`WDR-12`) and the link to it. Undefined for any other entry, and when that work item is gone.
+ * `workspaceSlug` stands in for an entry that carries no workspace detail.
  */
 export const getShiftCause = (
-  activity: Pick<TIssueActivity, "field" | "shift_cause" | "workspace_detail"> | undefined
+  activity:
+    | {
+        field?: string | null;
+        shift_cause?: TIssueActivity["shift_cause"];
+        workspace_detail?: { slug?: string | null } | null;
+      }
+    | undefined,
+  workspaceSlug?: string
 ): TShiftCauseLink | undefined => {
   const cause = activity?.shift_cause;
   if (!activity || !cause) return undefined;
   if (activity.field !== "start_date" && activity.field !== "finish_date") return undefined;
-  const workspaceSlug = activity.workspace_detail?.slug;
+  workspaceSlug = workspaceSlug || activity.workspace_detail?.slug || undefined;
   if (!workspaceSlug || !cause.project_identifier || cause.sequence_id === null || cause.sequence_id === undefined)
     return undefined;
   return {

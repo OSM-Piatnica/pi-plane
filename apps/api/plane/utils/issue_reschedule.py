@@ -19,7 +19,8 @@ A project can switch the offer off (``Project.is_reschedule_offer_enabled``): a 
 breaks a relation is then refused as it was before the offer existed, also when the request carries
 ``shift_dependents``. The project of the work item that is changed decides, not those of its dependents.
 
-Each dependent that moves gets an activity entry naming the work item whose change moved it (``SHIFT_CAUSE_KEY``).
+Each dependent that moves gets an activity entry naming the work item whose change moved it, passed to the activity
+task as ``shifted_after`` beside the requested data (which a client can fill, so it never carries the cause).
 """
 
 import json
@@ -32,7 +33,7 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.exceptions import APIException
 
-from plane.bgtasks.issue_activities_task import SHIFT_CAUSE_KEY, issue_activity
+from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import Project, ProjectMember
 from plane.utils.issue_relation_constraints import _as_date
 from plane.utils.work_item_duration import (
@@ -276,9 +277,7 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
             activities.append(
                 {
                     "type": "issue.activity.updated",
-                    "requested_data": json.dumps(
-                        {field_name: after, SHIFT_CAUSE_KEY: cause_id} if cause_id else {field_name: after}
-                    ),
+                    "requested_data": json.dumps({field_name: after}),
                     "current_instance": json.dumps({field_name: before}),
                     "issue_id": issue_id,
                     "actor_id": str(actor_id),
@@ -286,6 +285,8 @@ def apply_shifts(plan: ReschedulePlan, actor_id) -> None:
                     "epoch": epoch,
                     # a dependent moved along is not the person's doing: no subscription to it
                     "subscriber": False,
+                    # the work item whose change moved this one, named in the entry (never taken from a payload)
+                    "shifted_after": cause_id,
                 }
             )
 

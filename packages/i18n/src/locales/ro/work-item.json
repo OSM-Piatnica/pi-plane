@@ -906,7 +906,9 @@
         "removed_with_issue": "a eliminat data de început din <issue/>",
         "removed_without_issue": "a eliminat data de început",
         "set_with_issue": "a setat data de început la <value/> pentru <issue/>",
-        "set_without_issue": "a setat data de început la <value/>"
+        "set_without_issue": "a setat data de început la <value/>",
+        "shifted_with_issue": "a mutat automat data de început pentru <issue/> la <value/> după modificarea <cause/>",
+        "shifted_without_issue": "a mutat automat data de început la <value/> după modificarea <cause/>"
       },
       "state": {
         "set_with_issue": "a setat starea la <value/> pentru <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "a eliminat data de finalizare din <issue/>",
         "removed_without_issue": "a eliminat data de finalizare",
         "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>",
-        "set_without_issue": "a setat data de finalizare la <value/>"
+        "set_without_issue": "a setat data de finalizare la <value/>",
+        "shifted_with_issue": "a mutat automat data de finalizare pentru <issue/> la <value/> după modificarea <cause/>",
+        "shifted_without_issue": "a mutat automat data de finalizare la <value/> după modificarea <cause/>"
       },
       "target_date": {
         "removed_with_issue": "a eliminat termenul limită din <issue/>",

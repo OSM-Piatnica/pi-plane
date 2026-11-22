@@ -906,7 +906,9 @@
         "removed_with_issue": "đã xóa ngày bắt đầu khỏi <issue/>",
         "removed_without_issue": "đã xóa ngày bắt đầu",
         "set_with_issue": "đã đặt ngày bắt đầu là <value/> cho <issue/>",
-        "set_without_issue": "đã đặt ngày bắt đầu là <value/>"
+        "set_without_issue": "đã đặt ngày bắt đầu là <value/>",
+        "shifted_with_issue": "đã tự động dời ngày bắt đầu của <issue/> sang <value/> sau khi <cause/> thay đổi",
+        "shifted_without_issue": "đã tự động dời ngày bắt đầu sang <value/> sau khi <cause/> thay đổi"
       },
       "state": {
         "set_with_issue": "đã đặt trạng thái là <value/> cho <issue/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "đã xóa ngày kết thúc khỏi <issue/>",
         "removed_without_issue": "đã xóa ngày kết thúc",
         "set_with_issue": "đã đặt ngày kết thúc là <value/> cho <issue/>",
-        "set_without_issue": "đã đặt ngày kết thúc là <value/>"
+        "set_without_issue": "đã đặt ngày kết thúc là <value/>",
+        "shifted_with_issue": "đã tự động dời ngày kết thúc của <issue/> sang <value/> sau khi <cause/> thay đổi",
+        "shifted_without_issue": "đã tự động dời ngày kết thúc sang <value/> sau khi <cause/> thay đổi"
       },
       "target_date": {
         "removed_with_issue": "đã xóa ngày hết hạn khỏi <issue/>",

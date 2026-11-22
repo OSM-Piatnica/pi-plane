@@ -906,7 +906,9 @@
         "removed_with_issue": "<issue/> öğesinden başlangıç tarihini kaldırdı",
         "removed_without_issue": "başlangıç tarihini kaldırdı",
         "set_with_issue": "<issue/> için başlangıç tarihini <value/> olarak ayarladı",
-        "set_without_issue": "başlangıç tarihini <value/> olarak ayarladı"
+        "set_without_issue": "başlangıç tarihini <value/> olarak ayarladı",
+        "shifted_with_issue": "<cause/> değiştikten sonra <issue/> öğesinin başlangıç tarihini otomatik olarak <value/> tarihine taşıdı",
+        "shifted_without_issue": "<cause/> değiştikten sonra başlangıç tarihini otomatik olarak <value/> tarihine taşıdı"
       },
       "state": {
         "set_with_issue": "<issue/> için durumu <value/> olarak ayarladı",
@@ -916,7 +918,9 @@
         "removed_with_issue": "<issue/> öğesinden planlanan bitiş tarihini kaldırdı",
         "removed_without_issue": "planlanan bitiş tarihini kaldırdı",
         "set_with_issue": "<issue/> için planlanan bitiş tarihini <value/> olarak ayarladı",
-        "set_without_issue": "planlanan bitiş tarihini <value/> olarak ayarladı"
+        "set_without_issue": "planlanan bitiş tarihini <value/> olarak ayarladı",
+        "shifted_with_issue": "<cause/> değiştikten sonra <issue/> öğesinin planlanan bitiş tarihini otomatik olarak <value/> tarihine taşıdı",
+        "shifted_without_issue": "<cause/> değiştikten sonra planlanan bitiş tarihini otomatik olarak <value/> tarihine taşıdı"
       },
       "target_date": {
         "removed_with_issue": "<issue/> öğesinden son tarihi kaldırdı",

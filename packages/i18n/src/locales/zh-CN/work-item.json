@@ -906,7 +906,9 @@
         "removed_with_issue": "移除了 <issue/> 的开始日期",
         "removed_without_issue": "移除了开始日期",
         "set_with_issue": "将 <issue/> 的开始日期设置为 <value/>",
-        "set_without_issue": "将开始日期设置为 <value/>"
+        "set_without_issue": "将开始日期设置为 <value/>",
+        "shifted_with_issue": "在 <cause/> 更改后自动将 <issue/> 的开始日期移至 <value/>",
+        "shifted_without_issue": "在 <cause/> 更改后自动将开始日期移至 <value/>"
       },
       "state": {
         "set_with_issue": "将 <issue/> 的状态设置为 <value/>",
@@ -916,7 +918,9 @@
         "removed_with_issue": "移除了 <issue/> 的结束日期",
         "removed_without_issue": "移除了结束日期",
         "set_with_issue": "将 <issue/> 的结束日期设置为 <value/>",
-        "set_without_issue": "将结束日期设置为 <value/>"
+        "set_without_issue": "将结束日期设置为 <value/>",
+        "shifted_with_issue": "在 <cause/> 更改后自动将 <issue/> 的结束日期移至 <value/>",
+        "shifted_without_issue": "在 <cause/> 更改后自动将结束日期移至 <value/>"
       },
       "target_date": {
         "removed_with_issue": "移除了 <issue/> 的截止日期",

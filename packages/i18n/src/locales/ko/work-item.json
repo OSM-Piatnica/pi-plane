@@ -906,7 +906,9 @@
         "removed_with_issue": "<issue/>에서 시작 날짜를 제거했습니다",
         "removed_without_issue": "시작 날짜를 제거했습니다",
         "set_with_issue": "<issue/>의 시작 날짜를 <value/>(으)로 설정했습니다",
-        "set_without_issue": "시작 날짜를 <value/>(으)로 설정했습니다"
+        "set_without_issue": "시작 날짜를 <value/>(으)로 설정했습니다",
+        "shifted_with_issue": "<cause/> 변경에 따라 <issue/>의 시작 날짜를 <value/>(으)로 자동 이동했습니다",
+        "shifted_without_issue": "<cause/> 변경에 따라 시작 날짜를 <value/>(으)로 자동 이동했습니다"
       },
       "state": {
         "set_with_issue": "<issue/>의 상태를 <value/>(으)로 설정했습니다",
@@ -916,7 +918,9 @@
         "removed_with_issue": "<issue/>에서 완료일을 제거했습니다",
         "removed_without_issue": "완료일을 제거했습니다",
         "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다",
-        "set_without_issue": "완료일을 <value/>(으)로 설정했습니다"
+        "set_without_issue": "완료일을 <value/>(으)로 설정했습니다",
+        "shifted_with_issue": "<cause/> 변경에 따라 <issue/>의 완료일을 <value/>(으)로 자동 이동했습니다",
+        "shifted_without_issue": "<cause/> 변경에 따라 완료일을 <value/>(으)로 자동 이동했습니다"
       },
       "target_date": {
         "removed_with_issue": "<issue/>에서 마감일을 제거했습니다",
