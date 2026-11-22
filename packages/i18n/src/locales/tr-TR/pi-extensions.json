@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Aç",
+        "add": "Departman ekle",
+        "code": "Kod",
+        "code_hint": "Kısa bir etiket, örneğin RM.",
+        "color": "Renk",
+        "created": "Departman eklendi.",
+        "deactivate": "Kapat",
+        "delete_content": "Bu departmandaki kişiler çalışma alanında kalır ve departmansız olur. Departmana atanmış iş öğeleri bu atamayı kaybeder. Bu işlem geri alınamaz.",
+        "deleted": "Departman silindi.",
+        "department": "Departman",
+        "description": "Kuruluşunuzun departmanları. Her kişinin çalışma alanında bir departmanı vardır. Departman aynı zamanda bir gruptur; bu nedenle üyeleri vardır ve iş öğeleri departmana atanabilir.",
+        "edit": "Departmanı düzenle",
+        "empty": "Henüz departman yok.",
+        "import": "Listeyi içe aktar",
+        "import_done": "Eklenen departmanlar: {count}.",
+        "import_hint": "Her satıra bir departmanı KOD;Ad biçiminde yapıştırın. Zaten var olan departmanlar atlanır.",
+        "import_invalid_lines": "Kullanılamayan satırlar: {lines}",
+        "import_summary": "Eklenecek: {create}. Zaten var: {existing}.",
+        "import_title": "Departmanları içe aktar",
+        "inactive": "Kapalı",
+        "move_down": "Aşağı taşı",
+        "move_up": "Yukarı taşı",
+        "no_color": "Renk yok",
+        "title": "Departmanlar",
+        "updated": "Departman kaydedildi."
+      },
       "exports": {
         "all_projects": "Tüm projeler",
         "history": {

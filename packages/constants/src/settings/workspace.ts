@@ -50,6 +50,14 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
     access: [EUserWorkspaceRoles.ADMIN, EUserWorkspaceRoles.MEMBER],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/groups/`,
   },
+  departments: {
+    key: "departments",
+    i18n_label: "workspace_settings.settings.departments.title",
+    href: `/settings/departments`,
+    // The dictionary of departments is kept by the workspace admins
+    access: [EUserWorkspaceRoles.ADMIN],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/departments/`,
+  },
   export: {
     key: "export",
     i18n_label: "workspace_settings.settings.exports.title",
@@ -103,6 +111,7 @@ export const GROUPED_WORKSPACE_SETTINGS: Record<WORKSPACE_SETTINGS_CATEGORY, TWo
     WORKSPACE_SETTINGS["general"],
     WORKSPACE_SETTINGS["members"],
     WORKSPACE_SETTINGS["groups"],
+    WORKSPACE_SETTINGS["departments"],
     WORKSPACE_SETTINGS["export"],
   ],
   [WORKSPACE_SETTINGS_CATEGORY.FEATURES]: [

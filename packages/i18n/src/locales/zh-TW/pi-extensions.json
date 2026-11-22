@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "啟用",
+        "add": "新增部門",
+        "code": "代碼",
+        "code_hint": "簡短的標示，例如 RM。",
+        "color": "顏色",
+        "created": "已新增部門。",
+        "deactivate": "停用",
+        "delete_content": "此部門中的人員仍會保留在工作區中，但不再屬於任何部門。指派給該部門的工作事項將失去此指派。此動作無法復原。",
+        "deleted": "已刪除部門。",
+        "department": "部門",
+        "description": "貴組織的部門。每個人在工作區中屬於一個部門。部門同時也是群組，因此擁有成員，也可以將工作事項指派給部門。",
+        "edit": "編輯部門",
+        "empty": "尚無部門。",
+        "import": "匯入清單",
+        "import_done": "已新增部門：{count}。",
+        "import_hint": "每行貼上一個部門，格式為「代碼;名稱」。已存在的部門會被略過。",
+        "import_invalid_lines": "無法使用的行：{lines}",
+        "import_summary": "待新增：{create}。已存在：{existing}。",
+        "import_title": "匯入部門",
+        "inactive": "已停用",
+        "move_down": "下移",
+        "move_up": "上移",
+        "no_color": "無顏色",
+        "title": "部門",
+        "updated": "已儲存部門。"
+      },
       "exports": {
         "all_projects": "所有專案",
         "history": {

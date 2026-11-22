@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Ativar",
+        "add": "Adicionar departamento",
+        "code": "Código",
+        "code_hint": "Uma sigla curta, por exemplo RM.",
+        "color": "Cor",
+        "created": "Departamento adicionado.",
+        "deactivate": "Desativar",
+        "delete_content": "As pessoas deste departamento permanecem no espaço de trabalho e ficam sem departamento. Os itens de trabalho atribuídos ao departamento perdem essa atribuição. Esta ação não pode ser anulada.",
+        "deleted": "Departamento eliminado.",
+        "department": "Departamento",
+        "description": "Os departamentos da sua organização. Cada pessoa tem um departamento no espaço de trabalho. Um departamento é também um grupo, pelo que tem membros e é possível atribuir-lhe itens de trabalho.",
+        "edit": "Editar departamento",
+        "empty": "Ainda não há departamentos.",
+        "import": "Importar lista",
+        "import_done": "Departamentos adicionados: {count}.",
+        "import_hint": "Cole um departamento por linha no formato CÓDIGO;Nome. Os departamentos que já existem são ignorados.",
+        "import_invalid_lines": "Linhas que não podem ser utilizadas: {lines}",
+        "import_summary": "A adicionar: {create}. Já existem: {existing}.",
+        "import_title": "Importar departamentos",
+        "inactive": "Desativado",
+        "move_down": "Mover para baixo",
+        "move_up": "Mover para cima",
+        "no_color": "Sem cor",
+        "title": "Departamentos",
+        "updated": "Departamento guardado."
+      },
       "exports": {
         "all_projects": "Todos os projetos",
         "history": {

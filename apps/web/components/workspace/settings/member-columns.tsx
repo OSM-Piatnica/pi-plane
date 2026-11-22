@@ -17,11 +17,15 @@ import { Icon } from "@makeplane/propel/components/icon";
 import { IconButton } from "@makeplane/propel/components/icon-button";
 import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/components/menu";
 import { setToast } from "@plane/blocks/toast";
-import type { IUser, IWorkspaceMember } from "@plane/types";
+import type { IUser, IWorkspaceMember, TUserGroup } from "@plane/types";
 // plane ui
 import { Select } from "@plane/blocks/select";
 // helpers
 import { getFileURL } from "@plane/utils";
+// components
+import { DepartmentColorDot } from "@/components/workspace/departments/department-color-dot";
+// helpers
+import { getDepartmentLabel } from "@/helpers/department";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
@@ -190,3 +194,27 @@ export const AccountTypeColumn = observer(function AccountTypeColumn(props: Acco
     </>
   );
 });
+
+type DepartmentProps = {
+  rowData: RowData;
+  /** Every department of the workspace. */
+  departments: TUserGroup[];
+  /** The id of the person's department: the active department group they belong to. */
+  departmentId: string | undefined;
+};
+
+/**
+ * The person's department, read only. A department is a group: workspace admins change it on the Groups page by
+ * changing who is in the department's group (or the identity provider does).
+ */
+export function DepartmentColumn(props: DepartmentProps) {
+  const { rowData, departments, departmentId } = props;
+  const current = departmentId ? departments.find((department) => department.id === departmentId) : undefined;
+  if (!current) return null;
+  return (
+    <div className={`flex w-full items-center gap-2 ${rowData.is_active === false ? "text-placeholder" : ""}`}>
+      <DepartmentColorDot color={current.color} />
+      <span className="truncate">{getDepartmentLabel(current)}</span>
+    </div>
+  );
+}

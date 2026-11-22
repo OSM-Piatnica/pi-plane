@@ -245,6 +245,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Włącz",
+        "add": "Dodaj dział",
+        "code": "Kod",
+        "code_hint": "Krótkie oznaczenie, na przykład RM.",
+        "color": "Kolor",
+        "created": "Dodano dział.",
+        "deactivate": "Wyłącz",
+        "delete_content": "Osoby z tego działu pozostają w przestrzeni roboczej i nie mają działu. Elementy pracy przypisane do działu tracą to przypisanie. Tej operacji nie można cofnąć.",
+        "deleted": "Usunięto dział.",
+        "department": "Dział",
+        "description": "Działy organizacji. Każda osoba ma w przestrzeni roboczej jeden dział. Dział jest też grupą, więc ma członków i można do niego przypisywać elementy pracy.",
+        "edit": "Edytuj dział",
+        "empty": "Nie ma jeszcze żadnych działów.",
+        "import": "Importuj listę",
+        "import_done": "Dodane działy: {count}.",
+        "import_hint": "Wklej po jednym dziale w wierszu w postaci KOD;Nazwa. Działy, które już istnieją, są pomijane.",
+        "import_invalid_lines": "Wiersze, których nie można użyć: {lines}",
+        "import_summary": "Do dodania: {create}. Już istnieją: {existing}.",
+        "import_title": "Importuj działy",
+        "inactive": "Wyłączony",
+        "move_down": "Przenieś w dół",
+        "move_up": "Przenieś w górę",
+        "no_color": "Bez koloru",
+        "title": "Działy",
+        "updated": "Zapisano dział."
+      },
       "exports": {
         "all_projects": "Wszystkie projekty",
         "history": {

@@ -15,7 +15,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db.models import OuterRef, Subquery, UUIDField, Value
 from django.db.models.functions import Coalesce
 
-from plane.db.models import GroupRole, IssueGroupAssignee, UserGroup, UserGroupMember, WorkspaceMember
+from plane.db.models import GroupKind, GroupRole, IssueGroupAssignee, UserGroup, UserGroupMember, WorkspaceMember
 
 # Nesting this deep is far beyond what an organisation chart needs; it only guards against runaway trees.
 MAX_GROUP_DEPTH = 10
@@ -107,12 +107,24 @@ def is_workspace_admin(user, workspace_id):
     ).exists()
 
 
+def department_ids(workspace_id):
+    """The groups of the workspace that are departments."""
+    return set(
+        UserGroup.objects.filter(workspace_id=workspace_id, kind=GroupKind.DEPARTMENT).values_list("id", flat=True)
+    )
+
+
 def administered_group_ids(user, workspace_id):
-    """The groups a person rules over: those they administer and everything below them."""
+    """
+    The groups a person rules over: those they administer and everything below them.
+
+    Departments are left out: who works in which department is the workspace admins' to decide, so only they
+    manage a department, its members and what is created under it. Ordinary groups below a department stay ruled.
+    """
     own = UserGroupMember.objects.filter(
         workspace_id=workspace_id, user=user, role=GroupRole.ADMIN, managed_externally=False
     ).values_list("group_id", flat=True)
-    return descendant_ids(workspace_id, list(own))
+    return descendant_ids(workspace_id, list(own)) - department_ids(workspace_id)
 
 
 def can_manage_group(user, workspace_id, group_id, *, admin_checked=None):
@@ -129,9 +141,14 @@ def can_create_group(user, workspace_id, parent_id):
 
 
 def can_delete_group(user, workspace_id, group):
-    """Whoever rules over the parent may remove a group; a group admin cannot remove the group they administer."""
+    """
+    Whoever rules over the parent may remove a group; a group admin cannot remove the group they administer.
+    A department is removed (or moved) by a workspace admin only.
+    """
     if is_workspace_admin(user, workspace_id):
         return True
+    if group.kind == GroupKind.DEPARTMENT:
+        return False
     return group.parent_id is not None and group.parent_id in administered_group_ids(user, workspace_id)
 
 

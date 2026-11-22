@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "启用",
+        "add": "添加部门",
+        "code": "代码",
+        "code_hint": "简短的标识，例如 RM。",
+        "color": "颜色",
+        "created": "部门已添加。",
+        "deactivate": "停用",
+        "delete_content": "此部门中的人员仍保留在工作空间中，但不再属于任何部门。分配给该部门的工作项将失去此分配。此操作无法撤销。",
+        "deleted": "部门已删除。",
+        "department": "部门",
+        "description": "贵组织的部门。每个人在工作空间中属于一个部门。部门同时也是用户组，因此拥有成员，也可以向其分配工作项。",
+        "edit": "编辑部门",
+        "empty": "还没有部门。",
+        "import": "导入列表",
+        "import_done": "已添加部门：{count}。",
+        "import_hint": "每行粘贴一个部门，格式为“代码;名称”。已存在的部门将被跳过。",
+        "import_invalid_lines": "无法使用的行：{lines}",
+        "import_summary": "待添加：{create}。已存在：{existing}。",
+        "import_title": "导入部门",
+        "inactive": "已停用",
+        "move_down": "下移",
+        "move_up": "上移",
+        "no_color": "无颜色",
+        "title": "部门",
+        "updated": "部门已保存。"
+      },
       "exports": {
         "all_projects": "所有项目",
         "history": {

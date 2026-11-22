@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Zapnúť",
+        "add": "Pridať oddelenie",
+        "code": "Kód",
+        "code_hint": "Krátke označenie, napríklad RM.",
+        "color": "Farba",
+        "created": "Oddelenie bolo pridané.",
+        "deactivate": "Vypnúť",
+        "delete_content": "Ľudia z tohto oddelenia zostanú v pracovnom priestore a nebudú mať žiadne oddelenie. Pracovným položkám priradeným oddeleniu sa toto priradenie zruší. Túto akciu nemožno vrátiť späť.",
+        "deleted": "Oddelenie bolo zmazané.",
+        "department": "Oddelenie",
+        "description": "Oddelenia vašej organizácie. Každý človek má v pracovnom priestore jedno oddelenie. Oddelenie je zároveň skupinou, takže má členov a možno mu priraďovať pracovné položky.",
+        "edit": "Upraviť oddelenie",
+        "empty": "Zatiaľ nie sú žiadne oddelenia.",
+        "import": "Importovať zoznam",
+        "import_done": "Pridané oddelenia: {count}.",
+        "import_hint": "Vložte na každý riadok jedno oddelenie v tvare KÓD;Názov. Oddelenia, ktoré už existujú, sa vynechajú.",
+        "import_invalid_lines": "Riadky, ktoré nemožno použiť: {lines}",
+        "import_summary": "Na pridanie: {create}. Už existujú: {existing}.",
+        "import_title": "Importovať oddelenia",
+        "inactive": "Vypnuté",
+        "move_down": "Presunúť nadol",
+        "move_up": "Presunúť nahor",
+        "no_color": "Bez farby",
+        "title": "Oddelenia",
+        "updated": "Oddelenie bolo uložené."
+      },
       "exports": {
         "all_projects": "Všetky projekty",
         "history": {

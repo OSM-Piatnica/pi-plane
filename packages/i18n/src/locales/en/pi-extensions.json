@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Switch on",
+        "add": "Add department",
+        "code": "Code",
+        "code_hint": "A short label, for example RM.",
+        "color": "Colour",
+        "created": "Department added.",
+        "deactivate": "Switch off",
+        "delete_content": "People in this department stay in the workspace and have no department. Work items assigned to the department lose that assignment. This action cannot be undone.",
+        "deleted": "Department deleted.",
+        "department": "Department",
+        "description": "The departments of your organisation. Each person has one department in the workspace. A department is also a group, so it has members and work items can be assigned to it.",
+        "edit": "Edit department",
+        "empty": "There are no departments yet.",
+        "import": "Import list",
+        "import_done": "Departments added: {count}.",
+        "import_hint": "Paste one department per line in the form CODE;Name. Departments that already exist are left out.",
+        "import_invalid_lines": "Lines that cannot be used: {lines}",
+        "import_summary": "To add: {create}. Already there: {existing}.",
+        "import_title": "Import departments",
+        "inactive": "Switched off",
+        "move_down": "Move down",
+        "move_up": "Move up",
+        "no_color": "No colour",
+        "title": "Departments",
+        "updated": "Department saved."
+      },
       "exports": {
         "all_projects": "All projects",
         "history": {

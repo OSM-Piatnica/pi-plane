@@ -231,6 +231,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Aktifkan",
+        "add": "Tambah departemen",
+        "code": "Kode",
+        "code_hint": "Label singkat, misalnya RM.",
+        "color": "Warna",
+        "created": "Departemen ditambahkan.",
+        "deactivate": "Nonaktifkan",
+        "delete_content": "Orang-orang dalam departemen ini tetap berada di ruang kerja dan tidak memiliki departemen. Item kerja yang ditugaskan ke departemen kehilangan penugasan tersebut. Tindakan ini tidak dapat dibatalkan.",
+        "deleted": "Departemen dihapus.",
+        "department": "Departemen",
+        "description": "Departemen di organisasi Anda. Setiap orang memiliki satu departemen di ruang kerja. Departemen juga merupakan grup, sehingga memiliki anggota dan item kerja dapat ditugaskan kepadanya.",
+        "edit": "Ubah departemen",
+        "empty": "Belum ada departemen.",
+        "import": "Impor daftar",
+        "import_done": "Departemen yang ditambahkan: {count}.",
+        "import_hint": "Tempelkan satu departemen per baris dalam format KODE;Nama. Departemen yang sudah ada dilewati.",
+        "import_invalid_lines": "Baris yang tidak dapat digunakan: {lines}",
+        "import_summary": "Akan ditambahkan: {create}. Sudah ada: {existing}.",
+        "import_title": "Impor departemen",
+        "inactive": "Nonaktif",
+        "move_down": "Pindahkan ke bawah",
+        "move_up": "Pindahkan ke atas",
+        "no_color": "Tanpa warna",
+        "title": "Departemen",
+        "updated": "Departemen disimpan."
+      },
       "exports": {
         "all_projects": "Semua proyek",
         "history": {
