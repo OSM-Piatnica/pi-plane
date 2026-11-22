@@ -31,7 +31,8 @@ import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useChartPalette } from "@/hooks/use-chart-palette";
-import { useIssuesTimeLineChart, useTimeLineChart } from "@/hooks/use-timeline-chart";
+import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
+import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
 // local imports
@@ -65,7 +66,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
   const chartPalette = useChartPalette();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
-  const { isCriticalPathEnabled, scheduleAnalysis } = useIssuesTimeLineChart();
+  const { isCriticalPathEnabled, scheduleAnalysis } = useScheduleAnalysis();
   const { t } = useTranslation();
 
   // derived values

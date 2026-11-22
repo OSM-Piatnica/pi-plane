@@ -134,3 +134,20 @@ export const getScheduleAnalysisNotices = (analysis: TScheduleAnalysis | undefin
   if ((analysis.inverted_count ?? 0) > 0) notices.push("inverted");
   return notices;
 };
+
+/**
+ * The ids of the work items in a layout, whether it is a plain list of ids, grouped by one property (list, kanban) or
+ * by two (kanban with sub-groups). A work item in several groups, such as one with two labels, counts once.
+ */
+export const flattenIssueIds = (grouped: unknown): string[] => {
+  const ids = new Set<string>();
+  const collect = (value: unknown) => {
+    if (Array.isArray(value)) {
+      for (const entry of value) if (typeof entry === "string") ids.add(entry);
+    } else if (value && typeof value === "object") {
+      Object.values(value).forEach(collect);
+    }
+  };
+  collect(grouped);
+  return [...ids];
+};

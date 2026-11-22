@@ -14,7 +14,11 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import type { TIssueFilterPriorityObject } from "./common";
-import { ISSUE_DISPLAY_PROPERTIES_KEYS, SUB_ISSUES_DISPLAY_PROPERTIES_KEYS } from "./common";
+import {
+  ISSUE_DISPLAY_PROPERTIES_KEYS,
+  PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
+  SUB_ISSUES_DISPLAY_PROPERTIES_KEYS,
+} from "./common";
 
 import type { TIssueLayout } from "./layout";
 
@@ -311,7 +315,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
     ],
     layoutOptions: {
       list: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           group_by: [
             "state",
@@ -348,7 +352,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         },
       },
       kanban: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           group_by: [
             "state",
@@ -409,7 +413,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         },
       },
       spreadsheet: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           order_by: [
             "sort_order",

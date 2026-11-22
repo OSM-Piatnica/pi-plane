@@ -62,6 +62,8 @@ import type { IProjectViewStore } from "./project-view.store";
 import { ProjectViewStore } from "./project-view.store";
 import type { IRouterStore } from "./router.store";
 import { RouterStore } from "./router.store";
+import type { IScheduleAnalysisStore } from "./schedule-analysis.store";
+import { ScheduleAnalysisStore } from "./schedule-analysis.store";
 import type { IStickyStore } from "./sticky/sticky.store";
 import { StickyStore } from "./sticky/sticky.store";
 import type { IThemeStore } from "./theme.store";
@@ -76,6 +78,7 @@ enableStaticRendering(typeof window === "undefined");
 
 export class RootStore {
   timelineStore: ITimelineStore;
+  scheduleAnalysis: IScheduleAnalysisStore;
   workspaceRoot: IWorkspaceRootStore;
   projectRoot: IProjectRootStore;
   memberRoot: IMemberRootStore;
@@ -139,6 +142,7 @@ export class RootStore {
     this.workItemFilters = new WorkItemFilterStore();
     this.powerK = new PowerKStore();
     this.timelineStore = new TimeLineStore(this);
+    this.scheduleAnalysis = new ScheduleAnalysisStore();
   }
 
   resetOnSignOut() {
@@ -173,5 +177,6 @@ export class RootStore {
     this.editorAssetStore = new EditorAssetStore();
     this.workItemFilters = new WorkItemFilterStore();
     this.powerK = new PowerKStore();
+    this.scheduleAnalysis = new ScheduleAnalysisStore();
   }
 }

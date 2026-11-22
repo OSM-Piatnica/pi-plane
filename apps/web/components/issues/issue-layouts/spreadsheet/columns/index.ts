@@ -11,6 +11,7 @@ export * from "./created-on-column";
 export * from "./due-date-column";
 export * from "./finish-date-column";
 export * from "./duration-column";
+export * from "./float-column";
 export * from "./estimate-column";
 export * from "./label-column";
 export * from "./link-column";

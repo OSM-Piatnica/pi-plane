@@ -308,6 +308,15 @@ export const SUB_ISSUES_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)
   "state",
 ];
 
+/**
+ * The display properties of the pages of one project. Float comes from the schedule analysis of a project, so the
+ * pages that mix projects (workspace views, profile) do not offer it.
+ */
+export const PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [
+  ...ISSUE_DISPLAY_PROPERTIES_KEYS,
+  "float",
+];
+
 export const ISSUE_DISPLAY_PROPERTIES: {
   key: keyof IIssueDisplayProperties;
   titleTranslationKey: string;
@@ -335,6 +344,10 @@ export const ISSUE_DISPLAY_PROPERTIES: {
   {
     key: "duration",
     titleTranslationKey: "duration",
+  },
+  {
+    key: "float",
+    titleTranslationKey: "schedule_analysis.float",
   },
   { key: "labels", titleTranslationKey: "common.labels" },
   {
@@ -373,6 +386,7 @@ export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
   "due_date",
   "finish_date",
   "duration",
+  "float",
   "estimate",
   "created_on",
   "updated_on",
@@ -443,6 +457,10 @@ export const SPREADSHEET_PROPERTY_DETAILS: {
     descendingOrderKey: "-duration",
     descendingOrderTitle: "Long",
     icon: "Timer",
+  },
+  float: {
+    i18n_title: "schedule_analysis.float",
+    icon: "Hourglass",
   },
   estimate: {
     i18n_title: "common.estimate",

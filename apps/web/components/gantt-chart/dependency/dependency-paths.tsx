@@ -18,7 +18,8 @@ import {
 import { isDependencyCritical } from "@/helpers/schedule-analysis.helper";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useGetIssueWeekendDays } from "@/hooks/use-project-weekend-days";
-import { useIssuesTimeLineChart, useTimeLineChartStore } from "@/hooks/use-timeline-chart";
+import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
+import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type Props = {
   isEpic?: boolean;
@@ -35,7 +36,7 @@ const DEP_WIDTH_CRITICAL = 3.5;
 
 export const TimelineDependencyPaths = observer(function TimelineDependencyPaths(_props: Props) {
   const { blockIds, getBlockById, isDependencyEnabled } = useTimeLineChartStore();
-  const { isCriticalPathEnabled, scheduleAnalysis } = useIssuesTimeLineChart();
+  const { isCriticalPathEnabled, scheduleAnalysis } = useScheduleAnalysis();
   const {
     relation,
     issue: { getIssueById },

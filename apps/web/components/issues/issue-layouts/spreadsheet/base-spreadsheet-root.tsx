@@ -13,6 +13,8 @@ import { useParams } from "next/navigation";
 import { ALL_ISSUES, EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import type { EIssuesStoreType, IIssueDisplayFilterOptions } from "@plane/types";
 import { EIssueLayoutTypes } from "@plane/types";
+// components
+import { ScheduleAnalysisLoader } from "@/components/issues/schedule-analysis-loader";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -115,10 +117,14 @@ export const BaseSpreadsheetRoot = observer(function BaseSpreadsheetRoot(props: 
     [isCompletedCycle, canEditProperties, removeIssue, updateIssue, removeIssueFromView, archiveIssue, restoreIssue]
   );
 
+  // Float comes from the schedule analysis of one project, which the loader asks for while the column is shown
+  const isFloatShown = !!issuesFilter.issueFilters?.displayProperties?.float && !isEpic;
+
   if (!Array.isArray(issueIds)) return null;
 
   return (
     <IssueLayoutHOC layout={EIssueLayoutTypes.SPREADSHEET}>
+      <ScheduleAnalysisLoader issueIds={issueIds} storeType={storeType} source="columns" isEnabled={isFloatShown} />
       <SpreadsheetView
         displayProperties={issuesFilter.issueFilters?.displayProperties ?? {}}
         displayFilters={issuesFilter.issueFilters?.displayFilters ?? {}}

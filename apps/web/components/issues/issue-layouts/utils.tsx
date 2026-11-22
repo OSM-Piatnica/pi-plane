@@ -7,7 +7,7 @@
 
 import type { CSSProperties, FC } from "react";
 import { extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { Timer } from "lucide-react";
+import { Hourglass, Timer } from "lucide-react";
 import { clone, isNil } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import {
@@ -90,6 +90,7 @@ import {
   SpreadsheetDueDateColumn,
   SpreadsheetFinishDateColumn,
   SpreadsheetDurationColumn,
+  SpreadsheetFloatColumn,
   SpreadsheetEstimateColumn,
   SpreadsheetLabelColumn,
   SpreadsheetModuleColumn,
@@ -1028,6 +1029,7 @@ export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
   AttachOutline: AttachOutline,
   WorkItemsOutline: WorkItemsOutline,
   Timer: Timer,
+  Hourglass: Hourglass,
 };
 
 export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpreadsheetColumn } = {
@@ -1036,6 +1038,7 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   due_date: SpreadsheetDueDateColumn,
   finish_date: SpreadsheetFinishDateColumn,
   duration: SpreadsheetDurationColumn,
+  float: SpreadsheetFloatColumn,
   estimate: SpreadsheetEstimateColumn,
   labels: SpreadsheetLabelColumn,
   modules: SpreadsheetModuleColumn,

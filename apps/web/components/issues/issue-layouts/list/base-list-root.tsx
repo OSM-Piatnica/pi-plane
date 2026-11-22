@@ -15,6 +15,10 @@ import { EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plan
 import type { EIssuesStoreType, GroupByColumnTypes, TGroupedIssues, TIssueKanbanFilters } from "@plane/types";
 import { EIssueLayoutTypes } from "@plane/types";
 // constants
+// components
+import { ScheduleAnalysisLoader } from "@/components/issues/schedule-analysis-loader";
+// helpers
+import { flattenIssueIds } from "@/helpers/schedule-analysis.helper";
 // hooks
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -78,6 +82,7 @@ export const BaseListRoot = observer(function BaseListRoot(props: IBaseListRoot)
 
   const displayFilters = issuesFilter?.issueFilters?.displayFilters;
   const displayProperties = issuesFilter?.issueFilters?.displayProperties;
+  const isFloatShown = !!displayProperties?.float && !isEpic;
   const orderBy = displayFilters?.order_by || undefined;
 
   const group_by = (displayFilters?.group_by || null) as GroupByColumnTypes | null;
@@ -159,6 +164,12 @@ export const BaseListRoot = observer(function BaseListRoot(props: IBaseListRoot)
   return (
     <IssueLayoutHOC layout={EIssueLayoutTypes.LIST}>
       <div className={`relative size-full bg-surface-2`}>
+        <ScheduleAnalysisLoader
+          issueIds={isFloatShown ? flattenIssueIds(groupedIssueIds) : []}
+          storeType={storeType}
+          source="columns"
+          isEnabled={isFloatShown}
+        />
         <List
           issuesMap={issueMap}
           displayProperties={displayProperties}
