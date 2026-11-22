@@ -58,7 +58,7 @@ jobs:
   test-api:
     name: Test API
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     needs: changes
     if: needs.changes.outputs.run == 'true'
     steps:

@@ -27,6 +27,7 @@ from plane.utils.issue_relation_types import DIRECTED_RELATIONS, SYMMETRIC_RELAT
 from plane.utils.uuid import convert_uuid_to_integer
 from .description import Description
 from .state import StateGroup
+from .issue_type import PROGRESS_EXCLUDED_ISSUE_TYPE_KINDS
 
 
 def get_default_properties():
@@ -110,14 +111,14 @@ class IssueManager(SoftDeletionManager):
 
 
 class IssueProgressManager(IssueManager):
-    """The work items that count in progress numbers of modules and cycles: ``issue_objects`` without Epics.
+    """The work items that count in progress numbers of modules and cycles: ``issue_objects`` without Epics and reviews.
 
-    An Epic is a work item with children, so counting it next to them counts the same work twice. It still shows
-    in lists. A work item without a type counts.
+    An Epic is a work item with children, so counting it next to them counts the same work twice; a review is one
+    step of an approval, so an acceptance counts once. Both still show in lists. A work item without a type counts.
     """
 
     def get_queryset(self):
-        return super().get_queryset().exclude(type__is_epic=True)
+        return super().get_queryset().exclude(type__kind__in=PROGRESS_EXCLUDED_ISSUE_TYPE_KINDS)
 
 
 class Issue(ChangeTrackerMixin, ProjectBaseModel):

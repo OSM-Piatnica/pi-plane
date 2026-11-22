@@ -24,7 +24,7 @@ The folder `Gantt-RACI-dla-IT/Procedura OSM` is an internal document. Do not com
 
 - Run `git fetch origin` and branch from `origin/preview`. Open PRs only against `OSM-Piatnica/pi-plane` (`gh pr create --repo OSM-Piatnica/pi-plane`), never upstream.
 - Copyright headers: new files get the OSM Piątnica header, modified upstream files keep the Plane header plus the "Modified by" line. A rename is not a modification.
-- Migrations live in the `db` app and are numbered in sequence from `0157`. Parallel PRs will collide: the PR that merges second rebases and renumbers its migration.
+- Migrations live in the `db` app and are numbered in sequence from `0158` (`0157` is taken by departments; A1 is `0158_issue_type_kind`). Parallel PRs will collide: the PR that merges second rebases and renumbers its migration.
 - Every feature needs tests: API in `apps/api/plane/tests/{unit,contract/app,contract/api}` (run through `compose-test.yaml`), web in `apps/web/tests/unit` (vitest), pure logic in the package that owns it.
 - New strings go to `packages/i18n/src/locales/en/pi-extensions.json` first, then every locale. Use the `translate` skill. Polish is the primary audience.
 - Primitives come from `@makeplane/propel`, composites from `@plane/blocks`. Do not bump propel in these PRs.
@@ -84,7 +84,7 @@ Rules that follow from kind:
 
 **A1. `IssueType.kind` (API). Size M.**
 - Migration: add `kind` (`CharField`, choices above, default `standard`, indexed). Data migration sets `kind="epic"` where `is_epic` is true.
-- Keep `is_epic` as a stored field for compatibility with upstream code and the public API; keep it in sync in `IssueType.save()` and add a check constraint `is_epic = (kind = 'epic')`.
+- Keep `is_epic` as a stored field for compatibility with upstream code and the public API; keep it in sync in `IssueType.save()` and add a check constraint `is_epic = (kind = 'epic')`. Removing the field is tracked in [#512](https://github.com/OSM-Piatnica/pi-plane/issues/512).
 - Replace direct `is_epic` reads in fork code with `kind` where the code is ours (`utils/project_issue_types.py`, `utils/work_item_hierarchy.py`, `utils/epic_progress.py`); leave upstream call sites alone.
 - Generalise `ensure_project_epic_type` into `ensure_project_kind_type(project, kind)`; the Epics endpoint keeps its URL and behaviour.
 - Serializers expose `kind` read-only. `issue_type_assignment_error` rejects switching into or out of system-managed kinds.
