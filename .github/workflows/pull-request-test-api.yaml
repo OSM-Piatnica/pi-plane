@@ -1,5 +1,8 @@
 name: Test API
 
+# the suffix lets edit-only runs tell real runs apart from other edit-only runs
+run-name: ${{ github.event.action == 'edited' && github.event.changes.base == null && 'Test API (edit)' || 'Test API' }}
+
 on:
   workflow_dispatch:
   pull_request:
@@ -10,26 +13,54 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
+      # base branch changes re-run the tests; other edits only mirror the latest result (see gate job)
       - "edited"
-    paths:
-      - "apps/api/**"
-      - "compose-test.yaml"
-      - ".github/workflows/pull-request-test-api.yaml"
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
-  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
+  # title/description edits get their own group so they can never cancel (or be mistaken for) a real run
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.action == 'edited' && github.event.changes.base == null && 'edit' || 'run' }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
+  # Path filtering lives here (not in the trigger) so the workflow always runs and the
+  # required "API tests" gate below always reports a result.
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && !(github.event.action == 'edited' && github.event.changes.base == null))
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - name: Match changed files
+        id: filter
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          files="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR}/files" --jq '.[] | .filename, (.previous_filename // empty)')"
+          if echo "$files" | grep -E '^(apps/api/|compose-test\.yaml$|\.github/workflows/pull-request-test-api\.yaml$)' > /dev/null; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   test-api:
     name: Test API
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.draft == false && (github.event.action != 'edited' || github.event.changes.base != null))
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -51,3 +82,56 @@ jobs:
       - name: Tear down test stack
         if: always()
         run: docker compose -f compose-test.yaml down -v
+
+  # Single stable check to mark as required in branch protection / rulesets.
+  # A skipped required check counts as passing, so this job fails unless the tests
+  # actually succeeded, or were legitimately not needed (no relevant files changed).
+  # On a title/description edit (base unchanged) the tests are not re-run: the gate
+  # instead waits for and mirrors the latest real run of this workflow for the same commit.
+  # It is skipped only for draft PRs, which cannot be merged anyway.
+  api-tests:
+    name: API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: [changes, test-api]
+    if: always() && (github.event_name == 'workflow_dispatch' || github.event.pull_request.draft == false)
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Verify results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WF_PATH: .github/workflows/pull-request-test-api.yaml
+          GATE: API tests
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          EDIT_ONLY: ${{ github.event.action == 'edited' && github.event.changes.base == null }}
+          CHANGES: ${{ needs.changes.result }}
+          RUN: ${{ needs.changes.outputs.run }}
+          TESTS: ${{ needs.test-api.result }}
+        run: |
+          echo "edit_only=$EDIT_ONLY changes=$CHANGES run=$RUN tests=$TESTS"
+          if [ "$EDIT_ONLY" = "true" ]; then
+            # Mirror the newest real (non-edit-only) run of this workflow for the same commit,
+            # ignoring this run. Wait while it is still running. Fail if there is none, or it
+            # did not succeed, so an unknown state never passes.
+            deadline=$((SECONDS + 2400))
+            while :; do
+              row="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${HEAD_SHA}&event=pull_request&per_page=100" --jq '.workflow_runs[] | select(.path == env.WF_PATH) | select(.id != (env.GITHUB_RUN_ID | tonumber)) | select(.display_title | endswith("(edit)") | not) | [.created_at, .status, (.conclusion // "")] | @tsv' | sort | tail -n 1)"
+              if [ -z "$row" ]; then echo "No other $GATE run for $HEAD_SHA"; exit 1; fi
+              status="$(echo "$row" | cut -f2)"; conclusion="$(echo "$row" | cut -f3)"
+              echo "latest real run: status=$status conclusion=$conclusion"
+              if [ "$status" = "completed" ]; then
+                [ "$conclusion" = "success" ] && exit 0
+                exit 1
+              fi
+              [ "$SECONDS" -lt "$deadline" ] || { echo "Timed out waiting for $GATE"; exit 1; }
+              sleep 30
+            done
+          fi
+          [ "$CHANGES" = "success" ] || exit 1
+          if [ "$RUN" = "true" ]; then
+            [ "$TESTS" = "success" ] || exit 1
+          else
+            [ "$TESTS" = "skipped" ] || exit 1
+          fi
