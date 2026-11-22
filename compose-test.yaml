@@ -4,7 +4,7 @@
 #   ./setup.sh    # creates apps/api/.env (and the other env files) from .env.example
 #
 # Usage:
-#   # Run the full suite (defaults to `pytest`):
+#   # Run the full suite (defaults to `pytest --durations=30`):
 #   docker compose -f compose-test.yaml up --build --abort-on-container-exit --exit-code-from api-tests
 #
 #   # Run a subset by overriding the command:
@@ -149,7 +149,8 @@ services:
         mkdir -p plane/static-assets/collected-static
         exec "$@"
       - --
-    command: ["pytest"]
+    # --durations prints the slowest tests so the CI log shows where the time goes.
+    command: ["pytest", "--durations=30"]
 
 networks:
   test_env:
