@@ -72,6 +72,9 @@ jobs:
           fetch-depth: 50
           filter: blob:none
 
+      - name: Deliberate failure (test only)
+        run: exit 1
+
       - name: Set up Node.js
         uses: actions/setup-node@v6
 
