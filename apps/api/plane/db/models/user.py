@@ -53,6 +53,8 @@ def get_default_product_tour():
 
 class BotTypeEnum(models.TextChoices):
     WORKSPACE_SEED = "WORKSPACE_SEED", "Workspace Seed"
+    # The account behind the bot tokens instance admins create in God Mode (plane.utils.service_account)
+    SERVICE_ACCOUNT = "SERVICE_ACCOUNT", "Service Account"
 
 
 class User(AbstractBaseUser, PermissionsMixin):

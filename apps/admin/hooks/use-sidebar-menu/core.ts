@@ -5,13 +5,21 @@
  * See the LICENSE file for details.
  */
 
-import { BrainCog, Palette } from "lucide-react";
+import { Bot, BrainCog, Palette } from "lucide-react";
 // plane imports
 import { ImageOutline, LockOutline, MailOutline, SettingsOutline, WorkspaceOutline } from "@makeplane/propel/icons";
 // types
 import type { TSidebarMenuItem } from "./types";
 
-export type TCoreSidebarMenuKey = "general" | "email" | "workspace" | "authentication" | "ai" | "image" | "themes";
+export type TCoreSidebarMenuKey =
+  | "general"
+  | "email"
+  | "workspace"
+  | "authentication"
+  | "ai"
+  | "image"
+  | "themes"
+  | "botTokens";
 
 export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem> = {
   general: {
@@ -55,5 +63,11 @@ export const coreSidebarMenuLinks: Record<TCoreSidebarMenuKey, TSidebarMenuItem>
     name: "Themes",
     description: "Add colour themes for everyone on this instance.",
     href: `/themes/`,
+  },
+  botTokens: {
+    Icon: Bot,
+    name: "Bot tokens",
+    description: "Read-only API tokens that see every project.",
+    href: `/bot-tokens/`,
   },
 };

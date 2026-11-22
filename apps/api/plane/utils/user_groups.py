@@ -89,6 +89,23 @@ def member_user_ids(workspace_id, group_ids):
     )
 
 
+def member_user_ids_by_group(workspace_id, group_ids):
+    """{group id: everyone who belongs to it, counting the groups below it}, with two queries for all groups."""
+    parents = _parent_map(workspace_id)
+    direct = {}
+    for group_id, user_id in UserGroupMember.objects.filter(workspace_id=workspace_id).values_list(
+        "group_id", "user_id"
+    ):
+        direct.setdefault(group_id, set()).add(user_id)
+    result = {}
+    for group_id in group_ids:
+        members = set()
+        for below in descendant_ids(workspace_id, [group_id], parents):
+            members |= direct.get(below, set())
+        result[group_id] = members
+    return result
+
+
 def group_ids_of_user(workspace_id, user_id):
     """Every group a person belongs to: their own, plus the groups above them."""
     parents = _parent_map(workspace_id)

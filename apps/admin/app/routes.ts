@@ -23,6 +23,7 @@ export default [
     route("ai", "./(all)/(dashboard)/ai/page.tsx"),
     route("image", "./(all)/(dashboard)/image/page.tsx"),
     route("themes", "./(all)/(dashboard)/themes/page.tsx"),
+    route("bot-tokens", "./(all)/(dashboard)/bot-tokens/page.tsx"),
   ]),
   // Catch-all route for 404 handling - must be last
   route("*", "./components/404.tsx"),
