@@ -10,9 +10,13 @@ on:
       - "synchronize"
       - "ready_for_review"
       - "reopened"
+      # base branch changes must re-run the tests. Other edits (title/body) re-run them too:
+      # the trigger cannot filter on the change, and a skipped run would mask the real result.
+      - "edited"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
+  # always a full run, so the newest run (including an edit) supersedes older ones safely
   cancel-in-progress: true
 
 permissions:
