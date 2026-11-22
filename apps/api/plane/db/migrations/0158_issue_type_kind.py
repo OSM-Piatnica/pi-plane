@@ -18,7 +18,7 @@ def keep_is_epic(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("db", "0156_user_notification_preference_group_assignment"),
+        ("db", "0157_departments"),
     ]
 
     operations = [

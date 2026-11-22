@@ -40,7 +40,7 @@ from plane.utils.project_issue_types import (
     workspace_kind_type,
 )
 
-migration = import_module("plane.db.migrations.0157_issue_type_kind")
+migration = import_module("plane.db.migrations.0158_issue_type_kind")
 
 CONSTRAINT_NAME = "issue_type_is_epic_matches_kind"
 SYSTEM_KINDS = [IssueTypeKind.EPIC, IssueTypeKind.MILESTONE, IssueTypeKind.APPROVAL, IssueTypeKind.REVIEW]
