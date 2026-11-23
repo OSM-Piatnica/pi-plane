@@ -27,7 +27,7 @@ from plane.utils.project_groups import (
     remove_member,
     set_direct_role,
 )
-from plane.utils.permissions import ProjectMemberPermission, WorkSpaceAdminPermission, ProjectAdminPermission
+from plane.utils.permissions import ProjectMemberPermission, WorkSpaceAdminPermission, ProjectAdminPermission, ROLE
 from plane.utils.openapi import (
     WORKSPACE_SLUG_PARAMETER,
     PROJECT_ID_PARAMETER,
@@ -43,9 +43,20 @@ from plane.utils.openapi import (
 )
 
 
-def _user_with_group_fields(project_member, user):
+def member_fields(request, slug, serializer_class):
+    """Fields of a member serializer the caller may see: workspace guests do not get
+    email addresses, as in the web app's workspace member list."""
+    fields = list(serializer_class.Meta.fields)
+    if not WorkspaceMember.objects.filter(
+        workspace__slug=slug, member=request.user, is_active=True, role__gt=ROLE.GUEST.value
+    ).exists():
+        fields = [field for field in fields if field != "email"]
+    return fields
+
+
+def _user_with_group_fields(project_member, user, fields=None):
     """The user as the public API lists them, with how their project membership comes about."""
-    data = dict(UserLiteSerializer(user).data)
+    data = dict(UserLiteSerializer(user, fields=fields).data)
     data["via_group"] = project_member.via_group
     data["group_role"] = project_member.group_role
     data["direct_role"] = project_member.direct_role
@@ -159,10 +170,16 @@ class ProjectMemberListCreateAPIEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        # Active members only, with the fields the caller may see (no emails for workspace guests)
         project_members = list(
-            ProjectMember.objects.filter(project_id=project_id, workspace__slug=slug).select_related("member")
+            ProjectMember.objects.filter(project_id=project_id, workspace__slug=slug, is_active=True).select_related(
+                "member"
+            )
         )
-        users = [_user_with_group_fields(project_member, project_member.member) for project_member in project_members]
+        fields = member_fields(request, slug, UserLiteSerializer)
+        users = [
+            _user_with_group_fields(project_member, project_member.member, fields) for project_member in project_members
+        ]
         return Response(users, status=status.HTTP_200_OK)
 
     @extend_schema(
@@ -214,7 +231,10 @@ class ProjectMemberDetailAPIEndpoint(ProjectMemberListCreateAPIEndpoint):
         project_member = ProjectMember.objects.select_related("member").get(
             project_id=project_id, workspace__slug=slug, pk=pk
         )
-        return Response(_user_with_group_fields(project_member, project_member.member), status=status.HTTP_200_OK)
+        fields = member_fields(request, slug, UserLiteSerializer)
+        return Response(
+            _user_with_group_fields(project_member, project_member.member, fields), status=status.HTTP_200_OK
+        )
 
     @extend_schema(
         operation_id="update_project_member",
@@ -357,5 +377,9 @@ class ProjectMemberLiteAPIEndpoint(BaseAPIView):
         return self.paginate(
             request=request,
             queryset=project_members,
-            on_results=lambda members: ProjectMemberLiteAPISerializer(members, many=True).data,
+            on_results=lambda members: (
+                ProjectMemberLiteAPISerializer(
+                    members, many=True, fields=member_fields(request, slug, ProjectMemberLiteAPISerializer)
+                ).data
+            ),
         )

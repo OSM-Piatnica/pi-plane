@@ -130,8 +130,10 @@ ISSUE_GROUP_BY_ALLOWLIST = frozenset(
         "target_date",
         "finish_date",
         "start_date",
-        # the work item hierarchy: one group per parent
+        # the work item hierarchy: one group per parent, one per Epic. epic_id is an annotation added by
+        # issue_queryset_grouper; the paginator rejects it where it is absent
         "parent_id",
+        "epic_id",
         # annotations of issue_queryset_grouper: calendar day, time buckets of a date
         "schedule_date",
         "start_date_bucket",

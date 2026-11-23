@@ -16,6 +16,7 @@ import { SidebarPropertyListItem } from "@/components/common/layout/sidebar/prop
 import { DateSelect } from "@/components/dropdowns/date-select";
 import { DurationDropdown } from "@/components/dropdowns/duration";
 import { DateAlert } from "@/components/issues/issue-details/sidebar/date-alert";
+import { WorkItemScheduleInfo } from "@/components/issues/work-item-schedule-info";
 // hooks
 import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
@@ -56,7 +57,7 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
 
   return (
     <>
-      <SidebarPropertyListItem icon={StartDateOutline} label={t("common.order_by.start_date")}>
+      <SidebarPropertyListItem propertyKey="start_date" icon={StartDateOutline} label={t("common.order_by.start_date")}>
         <DateSelect
           testId="work-item-start-date-select"
           placeholder={t("issue.add.start_date")}
@@ -71,7 +72,7 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
         />
       </SidebarPropertyListItem>
 
-      <SidebarPropertyListItem icon={DueDateOutline} label={t("common.order_by.finish_date")}>
+      <SidebarPropertyListItem propertyKey="finish_date" icon={DueDateOutline} label={t("common.order_by.finish_date")}>
         <div className="w-full" title={t("issue.dates.help.finish")}>
           <DateSelect
             testId="work-item-finish-date-select"
@@ -89,7 +90,7 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
         </div>
       </SidebarPropertyListItem>
 
-      <SidebarPropertyListItem icon={DueDateOutline} label={t("common.order_by.due_date")}>
+      <SidebarPropertyListItem propertyKey="due_date" icon={DueDateOutline} label={t("common.order_by.due_date")}>
         <div className="flex w-full items-center gap-2" title={t("issue.dates.help.due")}>
           <DateSelect
             testId="work-item-due-date-select"
@@ -124,7 +125,7 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
         </div>
       )}
 
-      <SidebarPropertyListItem icon={Timer} label={t("duration")}>
+      <SidebarPropertyListItem propertyKey="duration" icon={Timer} label={t("duration")}>
         <DurationDropdown
           placeholder={t("issue.add.duration")}
           value={issue.duration}
@@ -135,6 +136,8 @@ export const WorkItemPlanningDates = observer(function WorkItemPlanningDates(pro
           hideIcon
         />
       </SidebarPropertyListItem>
+
+      <WorkItemScheduleInfo issue={issue} projectId={issue.project_id ?? projectId} />
     </>
   );
 });

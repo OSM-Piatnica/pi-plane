@@ -756,7 +756,8 @@
         "removed": "removed the start date.",
         "removed_with_issue": "removed the start date from <issue/>.",
         "set": "set the start date to <value/>.",
-        "set_with_issue": "set the start date to <value/> for <issue/>."
+        "set_with_issue": "set the start date to <value/> for <issue/>.",
+        "shifted": "moved the start date to <value/> automatically after <cause/> changed."
       },
       "state": {
         "set": "set the state to <value/>.",
@@ -766,7 +767,8 @@
         "removed": "removed the finish date.",
         "removed_with_issue": "removed the finish date from <issue/>.",
         "set": "set the finish date to <value/>.",
-        "set_with_issue": "set the finish date to <value/> for <issue/>."
+        "set_with_issue": "set the finish date to <value/> for <issue/>.",
+        "shifted": "moved the finish date to <value/> automatically after <cause/> changed."
       },
       "target_date": {
         "removed": "removed the due date.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "removed the start date from <issue/>",
         "removed_without_issue": "removed the start date",
         "set_with_issue": "set the start date to <value/> for <issue/>",
-        "set_without_issue": "set the start date to <value/>"
+        "set_without_issue": "set the start date to <value/>",
+        "shifted_with_issue": "moved the start date of <issue/> to <value/> automatically after <cause/> changed",
+        "shifted_without_issue": "moved the start date to <value/> automatically after <cause/> changed"
       },
       "state": {
         "set_with_issue": "set the state to <value/> for <issue/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "removed the finish date from <issue/>",
         "removed_without_issue": "removed the finish date",
         "set_with_issue": "set the finish date to <value/> for <issue/>",
-        "set_without_issue": "set the finish date to <value/>"
+        "set_without_issue": "set the finish date to <value/>",
+        "shifted_with_issue": "moved the finish date of <issue/> to <value/> automatically after <cause/> changed",
+        "shifted_without_issue": "moved the finish date to <value/> automatically after <cause/> changed"
       },
       "target_date": {
         "removed_with_issue": "removed the due date from <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "disabled traceability relations",
         "enabled": "enabled traceability relations",
         "fallback": "updated traceability relations"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "disabled the offer to shift dependent work items",
+        "enabled": "enabled the offer to shift dependent work items",
+        "fallback": "updated the offer to shift dependent work items"
       },
       "is_time_tracking_enabled": {
         "disabled": "disabled time tracking",

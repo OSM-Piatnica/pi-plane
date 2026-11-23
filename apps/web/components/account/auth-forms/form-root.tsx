@@ -40,7 +40,7 @@ const authService = new AuthService();
 export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot) {
   const { authStep, authMode, email, setEmail, setAuthMode, setAuthStep, setErrorInfo, currentAuthMode } = props;
   // translation
-  const { t } = useTranslation();
+  const { t, currentLocale } = useTranslation();
   // router
   const router = useAppRouter();
   // query params
@@ -97,7 +97,8 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
   // generating the one-time code
   const generateEmailOneTimeCode = async (emailAddress: string): Promise<{ code: string } | undefined> => {
     if (!isSMTPConfigured) return;
-    const payload = { email: emailAddress };
+    // the code email is written in the language picked on this page when the address has no account yet
+    const payload = { email: emailAddress, language: currentLocale };
     return await authService
       .generateOneTimeCode(payload)
       .then(() => ({ code: "" }))
@@ -135,6 +136,7 @@ export const AuthFormRoot = observer(function AuthFormRoot(props: TAuthFormRoot)
           setAuthStep(step);
         }}
         nextPath={nextPath || undefined}
+        setErrorInfo={setErrorInfo}
       />
     );
   }

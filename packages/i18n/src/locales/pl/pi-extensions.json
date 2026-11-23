@@ -174,6 +174,10 @@
         "assignee_edit": {
           "description": "Gdy element pracy ma przypisaną osobę, mogą go zmieniać tylko przypisane osoby, lider projektu i administratorzy projektu: pola, stan, daty, elementy podrzędne, relacje, linki, załączniki, cykle i moduły, usuwanie i archiwizację. Komentować nadal może każdy. Elementy pracy bez przypisanej osoby pozostają otwarte dla wszystkich członków.",
           "title": "Elementy pracy mogą zmieniać tylko osoby przypisane, lider projektu i administratorzy"
+        },
+        "reschedule_offer": {
+          "description": "Gdy zmiana dat naruszyłaby zależność, zamiast odrzucać zmianę proponuj przesunięcie zależnych elementów pracy na później. Po wyłączeniu taka zmiana jest odrzucana.",
+          "title": "Proponuj przesunięcie zależnych elementów pracy"
         }
       },
       "save_error": "Nie udało się zapisać konfiguracji workflow.",
@@ -218,6 +222,22 @@
     }
   },
   "reject": "Odrzuć",
+  "schedule_analysis": {
+    "critical_bar": "Na ścieżce krytycznej: opóźnienie przesuwa koniec projektu",
+    "critical_path": "Ścieżka krytyczna",
+    "critical_path_tooltip": "Wyróżnia elementy pracy, których opóźnienie przesuwa koniec projektu.",
+    "cycles": "Niektóre elementy pracy zależą od siebie nawzajem w pętli; te zależności pominięto.",
+    "filter_ignored": "Filtr Ścieżka krytyczna został pominięty: zbyt wiele elementów pracy ma daty, aby wyznaczyć ścieżkę krytyczną.",
+    "float": "Zapas",
+    "float_critical": "Brak (ścieżka krytyczna)",
+    "float_days": "{count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}",
+    "float_help": "O ile dni roboczych ten element pracy może się opóźnić bez przesunięcia końca projektu",
+    "inverted": "Niektóre elementy pracy kończą się przed rozpoczęciem; pominięto je.",
+    "load_error": "Nie udało się wczytać ścieżki krytycznej.",
+    "needed_by": "Najpóźniej do",
+    "needed_by_help": "Najpóźniejsze zakończenie, przy którym elementy pracy zależne od tego zdążą na swoje terminy",
+    "truncated": "Przeanalizowano tylko pierwsze elementy pracy z datami (limit: {count}). Nic nie jest wyróżnione."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Obecnie nie masz żadnych rekordów importu. Po wczytaniu pliku do projektu wszystkie rekordy pojawią się tutaj.",
@@ -245,6 +265,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Włącz",
+        "add": "Dodaj dział",
+        "code": "Kod",
+        "code_hint": "Krótkie oznaczenie, na przykład RM.",
+        "color": "Kolor",
+        "created": "Dodano dział.",
+        "deactivate": "Wyłącz",
+        "delete_content": "Osoby z tego działu pozostają w przestrzeni roboczej i nie mają działu. Elementy pracy przypisane do działu tracą to przypisanie. Tej operacji nie można cofnąć.",
+        "deleted": "Usunięto dział.",
+        "department": "Dział",
+        "description": "Działy organizacji. Każda osoba ma w przestrzeni roboczej jeden dział. Dział jest też grupą, więc ma członków i można do niego przypisywać elementy pracy.",
+        "edit": "Edytuj dział",
+        "empty": "Nie ma jeszcze żadnych działów.",
+        "import": "Importuj listę",
+        "import_done": "Dodane działy: {count}.",
+        "import_hint": "Wklej po jednym dziale w wierszu w postaci KOD;Nazwa. Działy, które już istnieją, są pomijane.",
+        "import_invalid_lines": "Wiersze, których nie można użyć: {lines}",
+        "import_summary": "Do dodania: {create}. Już istnieją: {existing}.",
+        "import_title": "Importuj działy",
+        "inactive": "Wyłączony",
+        "move_down": "Przenieś w dół",
+        "move_up": "Przenieś w górę",
+        "no_color": "Bez koloru",
+        "title": "Działy",
+        "updated": "Zapisano dział."
+      },
       "exports": {
         "all_projects": "Wszystkie projekty",
         "history": {

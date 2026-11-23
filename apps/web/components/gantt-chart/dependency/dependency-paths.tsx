@@ -15,8 +15,10 @@ import {
   getDependencyAnchorSides,
   getBlockAnchorPoints,
 } from "@/helpers/gantt-dependency-helpers";
+import { isDependencyCritical } from "@/helpers/schedule-analysis.helper";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useGetIssueWeekendDays } from "@/hooks/use-project-weekend-days";
+import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 
 type Props = {
@@ -27,9 +29,14 @@ const DEP_STROKE = "var(--txt-secondary)";
 const DEP_MARKER = "color-mix(in srgb, var(--txt-secondary) 72%, black)";
 const DEP_STROKE_INVALID = "#DC2626";
 const DEP_MARKER_INVALID = "#B91C1C";
+// the critical path: the colour of the frame around critical bars, and a heavier line
+const DEP_STROKE_CRITICAL = "var(--border-danger-strong, #DC2626)";
+const DEP_WIDTH = 2;
+const DEP_WIDTH_CRITICAL = 3.5;
 
 export const TimelineDependencyPaths = observer(function TimelineDependencyPaths(_props: Props) {
   const { blockIds, getBlockById, isDependencyEnabled } = useTimeLineChartStore();
+  const { isCriticalPathEnabled, scheduleAnalysis } = useScheduleAnalysis();
   const {
     relation,
     issue: { getIssueById },
@@ -64,6 +71,18 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
         <marker id="gantt-dep-arrow-invalid" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
           <path d="M0,0 L8,4 L0,8 Z" fill={DEP_MARKER_INVALID} />
         </marker>
+        {/* sized in user space: the heavier line must not scale the arrow head up */}
+        <marker
+          id="gantt-dep-arrow-critical"
+          markerUnits="userSpaceOnUse"
+          markerWidth="12"
+          markerHeight="12"
+          refX="10"
+          refY="5"
+          orient="auto"
+        >
+          <path d="M0,0 L10,5 L0,10 Z" fill={DEP_STROKE_CRITICAL} />
+        </marker>
       </defs>
       {edges.map((edge) => {
         const fromBlock = getBlockById(edge.sourceId);
@@ -80,15 +99,23 @@ export const TimelineDependencyPaths = observer(function TimelineDependencyPaths
         const from = fromAnchor[sides.from];
         const to = toAnchor[sides.to];
         const d = buildDependencyPathD(from.x, from.y, to.x, to.y, sides.from, sides.to);
-        const stroke = edge.isInvalid ? DEP_STROKE_INVALID : DEP_STROKE;
+        // a broken rule stays red and thin: it is not part of a path that holds
+        const isCritical = isCriticalPathEnabled && !edge.isInvalid && isDependencyCritical(scheduleAnalysis, edge);
+        const stroke = edge.isInvalid ? DEP_STROKE_INVALID : isCritical ? DEP_STROKE_CRITICAL : DEP_STROKE;
+        const marker = edge.isInvalid
+          ? "gantt-dep-arrow-invalid"
+          : isCritical
+            ? "gantt-dep-arrow-critical"
+            : "gantt-dep-arrow";
         return (
           <path
             key={edge.id}
             d={d}
             fill="none"
             stroke={stroke}
-            strokeWidth={2}
-            markerEnd={edge.isInvalid ? "url(#gantt-dep-arrow-invalid)" : "url(#gantt-dep-arrow)"}
+            strokeWidth={isCritical ? DEP_WIDTH_CRITICAL : DEP_WIDTH}
+            markerEnd={`url(#${marker})`}
+            data-critical={isCritical || undefined}
           />
         );
       })}

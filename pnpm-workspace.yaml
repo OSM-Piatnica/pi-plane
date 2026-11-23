@@ -47,9 +47,9 @@ overrides:
   # text). 3.0.9 is the last release without it; drop this pin once a fixed release is out.
   "@tiptap/y-tiptap": 3.0.9
   # @makeplane/propel and @plane/blocks must share one Base UI copy: two copies mean two
-  # React contexts, so a blocks part rendered inside a propel root cannot see it. 1.6 is also
-  # what propel was built against; the 1.9 line changes the toast manager types.
-  "@base-ui/react": 1.6.0
+  # React contexts, so a blocks part rendered inside a propel root cannot see it. 1.8 is what
+  # propel 0.9.7 was built against; the 1.9 line changes the toast manager types.
+  "@base-ui/react": 1.8.0
   # Force a single React across the whole graph. With node-linker=isolated,
   # auto-install-peers and resolution-mode=highest, a dependency still declaring a
   # React 18 peer can otherwise pull in a second copy, which surfaces as an invalid

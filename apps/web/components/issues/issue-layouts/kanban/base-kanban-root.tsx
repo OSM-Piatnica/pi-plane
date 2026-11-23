@@ -14,7 +14,11 @@ import { useParams } from "next/navigation";
 import { EIssueFilterType, EUserPermissions, EUserPermissionsLevel } from "@plane/constants";
 import type { EIssuesStoreType } from "@plane/types";
 import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
-//hooks
+// components
+import { ScheduleAnalysisLoader } from "@/components/issues/schedule-analysis-loader";
+// helpers
+import { flattenIssueIds } from "@/helpers/schedule-analysis.helper";
+// hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useUserPermissions } from "@/hooks/store/user";
@@ -86,6 +90,7 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
 
   const displayFilters = issuesFilter?.issueFilters?.displayFilters;
   const displayProperties = issuesFilter?.issueFilters?.displayProperties;
+  const isFloatShown = !!displayProperties?.float && !isEpic;
 
   const sub_group_by = displayFilters?.sub_group_by;
   const group_by = displayFilters?.group_by;
@@ -225,6 +230,12 @@ export const BaseKanBanRoot = observer(function BaseKanBanRoot(props: IBaseKanBa
           ref={scrollableContainerRef}
         >
           <div className="relative h-full w-max min-w-full bg-surface-2">
+            <ScheduleAnalysisLoader
+              issueIds={isFloatShown ? flattenIssueIds(groupedIssueIds) : []}
+              storeType={storeType}
+              source="columns"
+              isEnabled={isFloatShown}
+            />
             <div className="h-full w-max">
               <KanBanView
                 issuesMap={issueMap}

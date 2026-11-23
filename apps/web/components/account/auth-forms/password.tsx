@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -14,6 +15,7 @@ import { CloseCircleOutline, HideOutline, ShowOutline } from "@makeplane/propel/
 import { Banner } from "@makeplane/propel/components/banner";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { API_BASE_URL, E_PASSWORD_STRENGTH } from "@plane/constants";
+import { useSignUpVerificationCode } from "@plane/hooks";
 import { useTranslation } from "@plane/i18n";
 import { Button } from "@makeplane/propel/components/button";
 import { PasswordStrengthIndicator } from "@plane/blocks/auth";
@@ -22,7 +24,9 @@ import { getPasswordStrength } from "@plane/utils";
 import { ForgotPasswordPopover } from "@/components/account/auth-forms/forgot-password-popover";
 // constants
 // helpers
-import { EAuthModes, EAuthSteps } from "@/helpers/authentication.helper";
+import type { TAuthErrorInfo } from "@/helpers/authentication.helper";
+import { EAuthModes, EAuthSteps, authErrorHandler } from "@/helpers/authentication.helper";
+import type { EAuthenticationErrorCodes } from "@/helpers/authentication.helper";
 // services
 import { AuthService } from "@/services/auth.service";
 
@@ -33,6 +37,7 @@ type Props = {
   handleEmailClear: () => void;
   handleAuthStep: (step: EAuthSteps) => void;
   nextPath: string | undefined;
+  setErrorInfo: (errorInfo: TAuthErrorInfo | undefined) => void;
 };
 
 type TPasswordFormValues = {
@@ -49,7 +54,7 @@ const defaultValues: TPasswordFormValues = {
 const authService = new AuthService();
 
 export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props) {
-  const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath } = props;
+  const { email, isSMTPConfigured, handleAuthStep, handleEmailClear, mode, nextPath, setErrorInfo } = props;
   // plane imports
   const { t, currentLocale } = useTranslation();
   // ref
@@ -65,6 +70,21 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
   const [isPasswordInputFocused, setIsPasswordInputFocused] = useState(false);
   const [isRetryPasswordInputFocused, setIsRetryPasswordInputFocused] = useState(false);
   const [isBannerMessage, setBannerMessage] = useState(false);
+  // sign-up: the code sent to the address, asked for once the password is set
+  const signUpCode = useSignUpVerificationCode({
+    // the code email is written in the language picked on this page
+    requestCode: () =>
+      authService.requestSignUpVerificationCode({ email: passwordFormData.email, language: currentLocale }),
+    onRequestStart: () => setErrorInfo(undefined),
+    onRequestError: (error) => {
+      const errorhandler = authErrorHandler(
+        (error as { error_code?: number } | undefined)?.error_code?.toString() as EAuthenticationErrorCodes,
+        t,
+        passwordFormData.email
+      );
+      if (errorhandler?.type) setErrorInfo(errorhandler);
+    },
+  });
 
   const handleShowPassword = (key: keyof typeof showPassword) =>
     setShowPassword((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -108,10 +128,20 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
     () =>
       !(
         !isSubmitting &&
+        !signUpCode.isRequesting &&
         !!passwordFormData.password &&
-        (mode === EAuthModes.SIGN_UP ? passwordFormData.password === passwordFormData.confirm_password : true)
+        (mode === EAuthModes.SIGN_UP
+          ? passwordFormData.password === passwordFormData.confirm_password && !signUpCode.isCodeMissing
+          : true)
       ),
-    [isSubmitting, mode, passwordFormData.confirm_password, passwordFormData.password]
+    [
+      isSubmitting,
+      signUpCode.isRequesting,
+      signUpCode.isCodeMissing,
+      mode,
+      passwordFormData.confirm_password,
+      passwordFormData.password,
+    ]
   );
 
   const password = passwordFormData?.password ?? "";
@@ -149,12 +179,14 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
             mode === EAuthModes.SIGN_UP
               ? getPasswordStrength(passwordFormData.password) === E_PASSWORD_STRENGTH.STRENGTH_VALID
               : true;
-          if (isPasswordValid) {
-            setIsSubmitting(true);
-            if (formRef.current) formRef.current.submit(); // Manually submit the form if the condition is met
-          } else {
+          if (!isPasswordValid) {
             setBannerMessage(true);
+            return;
           }
+          // A new account first gets the code sent to the address, unless no code is asked for
+          if (mode === EAuthModes.SIGN_UP && !(await signUpCode.continueToSubmit())) return;
+          setIsSubmitting(true);
+          if (formRef.current) formRef.current.submit(); // Manually submit the form if the condition is met
         }}
         onError={() => {
           setIsSubmitting(false);
@@ -272,6 +304,46 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
           </div>
         )}
 
+        {mode === EAuthModes.SIGN_UP && signUpCode.isCodeStep && (
+          <div className="space-y-1">
+            <label htmlFor="sign-up-code" className="text-13 font-medium text-tertiary">
+              {t("auth.common.one_time_code.label")}
+            </label>
+            <InputGroup size="2xl">
+              <Input
+                size="2xl"
+                id="sign-up-code"
+                name="code"
+                value={signUpCode.code}
+                onChange={(e) => signUpCode.setCode(e.target.value)}
+                placeholder={t("auth.common.one_time_code.enter_code")}
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                // oxlint-disable-next-line jsx-a11y/no-autofocus -- the code is the only thing left to fill in at this step
+                autoFocus
+              />
+            </InputGroup>
+            <div className="flex w-full items-center justify-end px-1 pt-1 text-11">
+              <button
+                type="button"
+                onClick={() => void signUpCode.requestCode()}
+                className={
+                  signUpCode.isRequesting || signUpCode.resendTimer > 0
+                    ? "text-placeholder"
+                    : "font-medium text-accent-secondary hover:text-accent-secondary"
+                }
+                disabled={signUpCode.isRequesting || signUpCode.resendTimer > 0}
+              >
+                {signUpCode.resendTimer > 0
+                  ? t("auth.common.resend_in", { seconds: signUpCode.resendTimer })
+                  : signUpCode.isRequesting
+                    ? t("auth.common.one_time_code.requesting_new_code")
+                    : t("common.resend")}
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-2.5">
           {mode === EAuthModes.SIGN_IN ? (
             <>
@@ -302,8 +374,12 @@ export const AuthPasswordForm = observer(function AuthPasswordForm(props: Props)
               size="lg"
               stretch="full"
               disabled={isButtonDisabled}
-              loading={isSubmitting}
-              label={t("app_text.auth_password.create_account")}
+              loading={isSubmitting || signUpCode.isRequesting}
+              label={
+                signUpCode.isRequesting && !signUpCode.isCodeStep
+                  ? t("auth.common.one_time_code.sending_code")
+                  : t("app_text.auth_password.create_account")
+              }
             />
           )}
         </div>

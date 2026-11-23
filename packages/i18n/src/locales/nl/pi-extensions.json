@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Zodra een werkitem een toegewezen persoon heeft, mogen alleen de toegewezenen, de projectleider en de projectbeheerders het wijzigen: velden, status, data, subitems, relaties, links, bijlagen, cycli en modules, verwijderen en archiveren. Iedereen kan nog reageren. Werkitems zonder toegewezen persoon blijven open voor alle leden.",
           "title": "Alleen toegewezenen, de projectleider en beheerders mogen een werkitem wijzigen"
+        },
+        "reschedule_offer": {
+          "description": "Als een datumwijziging een afhankelijkheid zou verbreken, wordt aangeboden de afhankelijke werkitems later te plannen in plaats van de wijziging te weigeren. Staat dit uit, dan wordt een dergelijke wijziging geweigerd.",
+          "title": "Aanbieden om afhankelijke werkitems te verplaatsen"
         }
       },
       "save_error": "Kon workflowconfiguratie niet opslaan.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Afwijzen",
+  "schedule_analysis": {
+    "critical_bar": "Op het kritieke pad: een vertraging verschuift het einde van het project",
+    "critical_path": "Kritiek pad",
+    "critical_path_tooltip": "Markeert de werkitems waarvan een vertraging het einde van het project verschuift.",
+    "cycles": "Sommige werkitems zijn in een kring van elkaar afhankelijk; die relaties zijn weggelaten.",
+    "filter_ignored": "Het filter Kritiek pad is weggelaten: er zijn te veel werkitems met datums om het kritieke pad te bepalen.",
+    "float": "Speling",
+    "float_critical": "Geen (kritiek pad)",
+    "float_days": "{count, plural, one {# werkdag} other {# werkdagen}}",
+    "float_help": "Aantal werkdagen dat dit werkitem kan uitlopen zonder het einde van het project te verschuiven",
+    "inverted": "Sommige werkitems eindigen voordat ze beginnen; ze zijn weggelaten.",
+    "load_error": "Het kritieke pad kon niet worden geladen.",
+    "needed_by": "Uiterlijk nodig op",
+    "needed_by_help": "Laatste afronding waarmee de werkitems die hiervan afhankelijk zijn hun vervaldatum halen",
+    "truncated": "Alleen de eerste werkitems met datums zijn geanalyseerd (limiet: {count}). Er wordt niets gemarkeerd."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Je hebt momenteel geen importrecords. Zodra je een bestand in een project importeert, verschijnen alle records hier.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Inschakelen",
+        "add": "Afdeling toevoegen",
+        "code": "Code",
+        "code_hint": "Een korte aanduiding, bijvoorbeeld RM.",
+        "color": "Kleur",
+        "created": "Afdeling toegevoegd.",
+        "deactivate": "Uitschakelen",
+        "delete_content": "De mensen in deze afdeling blijven in de werkruimte en hebben geen afdeling meer. Werkitems die aan de afdeling zijn toegewezen, verliezen die toewijzing. Deze actie kan niet ongedaan worden gemaakt.",
+        "deleted": "Afdeling verwijderd.",
+        "department": "Afdeling",
+        "description": "De afdelingen van uw organisatie. Elke persoon heeft één afdeling in de werkruimte. Een afdeling is ook een groep: ze heeft dus leden en er kunnen werkitems aan worden toegewezen.",
+        "edit": "Afdeling bewerken",
+        "empty": "Er zijn nog geen afdelingen.",
+        "import": "Lijst importeren",
+        "import_done": "Toegevoegde afdelingen: {count}.",
+        "import_hint": "Plak één afdeling per regel in de vorm CODE;Naam. Afdelingen die al bestaan, worden overgeslagen.",
+        "import_invalid_lines": "Regels die niet bruikbaar zijn: {lines}",
+        "import_summary": "Toe te voegen: {create}. Bestaan al: {existing}.",
+        "import_title": "Afdelingen importeren",
+        "inactive": "Uitgeschakeld",
+        "move_down": "Omlaag verplaatsen",
+        "move_up": "Omhoog verplaatsen",
+        "no_color": "Geen kleur",
+        "title": "Afdelingen",
+        "updated": "Afdeling opgeslagen."
+      },
       "exports": {
         "all_projects": "Alle projecten",
         "history": {

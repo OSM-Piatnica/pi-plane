@@ -127,7 +127,8 @@ def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, export
     """
     Upload a ZIP file to S3 and generate a presigned URL.
     """
-    file_name = f"{workspace_id}/{export_filename}"
+    # the object key carries the full export token; the name of the file a person downloads is its last segment
+    file_name = f"{workspace_id}/{token_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
 
     if settings.STORAGE_PROVIDER == "azure":
@@ -136,8 +137,7 @@ def upload_to_s3(zip_file: io.BytesIO, workspace_id: UUID, token_id: str, export
 
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": "application/zip"}
-    if settings.USE_MINIO:
-        extra_args["ACL"] = "public-read"
+    # private: the archive is only fetched through its presigned URL
 
     upload_s3.upload_fileobj(zip_file, settings.AWS_STORAGE_BUCKET_NAME, file_name, ExtraArgs=extra_args)
 
@@ -159,7 +159,8 @@ def upload_export_file_to_s3(
     export_filename: str,
     content_type: str,
 ) -> None:
-    file_name = f"{workspace_id}/{export_filename}"
+    # the object key carries the full export token; the name of the file a person downloads is its last segment
+    file_name = f"{workspace_id}/{token_id}/{export_filename}"
     expires_in = 7 * 24 * 60 * 60
 
     if settings.STORAGE_PROVIDER == "azure":
@@ -168,8 +169,7 @@ def upload_export_file_to_s3(
 
     upload_s3 = _get_s3_client()
     extra_args = {"ContentType": content_type}
-    if settings.USE_MINIO:
-        extra_args["ACL"] = "public-read"
+    # private: the archive is only fetched through its presigned URL
 
     upload_s3.upload_fileobj(file_buffer, settings.AWS_STORAGE_BUCKET_NAME, file_name, ExtraArgs=extra_args)
 

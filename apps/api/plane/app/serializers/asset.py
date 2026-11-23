@@ -1,9 +1,28 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
+
+from django.conf import settings
+from rest_framework import serializers
 
 from .base import BaseSerializer
 from plane.db.models import FileAsset
+from plane.utils.file_size_limit import get_file_size_limit
+
+
+def validate_uploaded_file(file):
+    """Check a file that a legacy multipart route is about to save to storage.
+
+    The object is stored under the content type the client declares, so that type
+    must be present and in the allowlist the presigned (v2) routes enforce.
+    """
+    if getattr(file, "content_type", None) not in settings.ATTACHMENT_MIME_TYPES:
+        raise serializers.ValidationError("Invalid file type.")
+    # The limit the instance administrator set, which is what the presigned routes enforce, not the bare setting
+    if file.size > get_file_size_limit():
+        raise serializers.ValidationError("File too large.")
+    return file
 
 
 class FileAssetSerializer(BaseSerializer):
@@ -35,3 +54,6 @@ class FileAssetSerializer(BaseSerializer):
             "is_uploaded",
             "storage_metadata",
         ]
+
+    def validate_asset(self, value):
+        return validate_uploaded_file(value)

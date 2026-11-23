@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Bir iş öğesine biri atandığında, onu yalnızca atananlar, proje lideri ve proje yöneticileri değiştirebilir: alanlar, durum, tarihler, alt öğeler, ilişkiler, bağlantılar, ekler, döngüler ve modüller, silme ve arşivleme. Yorum yapmayı herkes sürdürebilir. Kimsenin atanmadığı iş öğeleri tüm üyelere açık kalır.",
           "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
+        },
+        "reschedule_offer": {
+          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir.",
+          "title": "Bağımlı iş öğelerini taşımayı öner"
         }
       },
       "save_error": "İş akışı yapılandırması kaydedilemedi.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Reddet",
+  "schedule_analysis": {
+    "critical_bar": "Kritik yol üzerinde: gecikme proje bitişini kaydırır",
+    "critical_path": "Kritik yol",
+    "critical_path_tooltip": "Gecikmesi proje bitişini kaydıran iş öğelerini vurgular.",
+    "cycles": "Bazı iş öğeleri döngüsel olarak birbirine bağlı; bu ilişkiler dışarıda bırakıldı.",
+    "filter_ignored": "Kritik yol filtresi dışarıda bırakıldı: kritik yolu bulmak için tarihli çok fazla iş öğesi var.",
+    "float": "Bolluk",
+    "float_critical": "Yok (kritik yol)",
+    "float_days": "{count, plural, one {# iş günü} other {# iş günü}}",
+    "float_help": "Bu iş öğesinin proje bitişini kaydırmadan gecikebileceği iş günü sayısı",
+    "inverted": "Bazı iş öğeleri başlamadan önce bitiyor; bunlar dışarıda bırakıldı.",
+    "load_error": "Kritik yol yüklenemedi.",
+    "needed_by": "En geç gereken tarih",
+    "needed_by_help": "Bu öğeye bağlı iş öğelerinin son tarihlerine yetişmesini sağlayan en geç bitiş",
+    "truncated": "Yalnızca tarihli ilk iş öğeleri analiz edildi (sınır: {count}). Hiçbir şey vurgulanmadı."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Şu anda hiç içe aktarma kaydınız yok. Bir projeye dosya içe aktardığınızda, tüm kayıtlar burada görünecek.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Aç",
+        "add": "Departman ekle",
+        "code": "Kod",
+        "code_hint": "Kısa bir etiket, örneğin RM.",
+        "color": "Renk",
+        "created": "Departman eklendi.",
+        "deactivate": "Kapat",
+        "delete_content": "Bu departmandaki kişiler çalışma alanında kalır ve departmansız olur. Departmana atanmış iş öğeleri bu atamayı kaybeder. Bu işlem geri alınamaz.",
+        "deleted": "Departman silindi.",
+        "department": "Departman",
+        "description": "Kuruluşunuzun departmanları. Her kişinin çalışma alanında bir departmanı vardır. Departman aynı zamanda bir gruptur; bu nedenle üyeleri vardır ve iş öğeleri departmana atanabilir.",
+        "edit": "Departmanı düzenle",
+        "empty": "Henüz departman yok.",
+        "import": "Listeyi içe aktar",
+        "import_done": "Eklenen departmanlar: {count}.",
+        "import_hint": "Her satıra bir departmanı KOD;Ad biçiminde yapıştırın. Zaten var olan departmanlar atlanır.",
+        "import_invalid_lines": "Kullanılamayan satırlar: {lines}",
+        "import_summary": "Eklenecek: {create}. Zaten var: {existing}.",
+        "import_title": "Departmanları içe aktar",
+        "inactive": "Kapalı",
+        "move_down": "Aşağı taşı",
+        "move_up": "Yukarı taşı",
+        "no_color": "Renk yok",
+        "title": "Departmanlar",
+        "updated": "Departman kaydedildi."
+      },
       "exports": {
         "all_projects": "Tüm projeler",
         "history": {

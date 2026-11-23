@@ -756,7 +756,8 @@
         "removed": "시작 날짜를 제거했습니다.",
         "removed_with_issue": "<issue/>에서 시작 날짜를 제거했습니다.",
         "set": "시작 날짜를 <value/>(으)로 설정했습니다.",
-        "set_with_issue": "<issue/>의 시작 날짜를 <value/>(으)로 설정했습니다."
+        "set_with_issue": "<issue/>의 시작 날짜를 <value/>(으)로 설정했습니다.",
+        "shifted": "<cause/> 변경에 따라 시작 날짜를 <value/>(으)로 자동 이동했습니다."
       },
       "state": {
         "set": "상태를 <value/>(으)로 설정했습니다.",
@@ -766,7 +767,8 @@
         "removed": "완료일을 제거했습니다.",
         "removed_with_issue": "<issue/>에서 완료일을 제거했습니다.",
         "set": "완료일을 <value/>(으)로 설정했습니다.",
-        "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다."
+        "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다.",
+        "shifted": "<cause/> 변경에 따라 완료일을 <value/>(으)로 자동 이동했습니다."
       },
       "target_date": {
         "removed": "마감일을 제거했습니다.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "<issue/>에서 시작 날짜를 제거했습니다",
         "removed_without_issue": "시작 날짜를 제거했습니다",
         "set_with_issue": "<issue/>의 시작 날짜를 <value/>(으)로 설정했습니다",
-        "set_without_issue": "시작 날짜를 <value/>(으)로 설정했습니다"
+        "set_without_issue": "시작 날짜를 <value/>(으)로 설정했습니다",
+        "shifted_with_issue": "<cause/> 변경에 따라 <issue/>의 시작 날짜를 <value/>(으)로 자동 이동했습니다",
+        "shifted_without_issue": "<cause/> 변경에 따라 시작 날짜를 <value/>(으)로 자동 이동했습니다"
       },
       "state": {
         "set_with_issue": "<issue/>의 상태를 <value/>(으)로 설정했습니다",
@@ -914,7 +918,9 @@
         "removed_with_issue": "<issue/>에서 완료일을 제거했습니다",
         "removed_without_issue": "완료일을 제거했습니다",
         "set_with_issue": "<issue/>의 완료일을 <value/>(으)로 설정했습니다",
-        "set_without_issue": "완료일을 <value/>(으)로 설정했습니다"
+        "set_without_issue": "완료일을 <value/>(으)로 설정했습니다",
+        "shifted_with_issue": "<cause/> 변경에 따라 <issue/>의 완료일을 <value/>(으)로 자동 이동했습니다",
+        "shifted_without_issue": "<cause/> 변경에 따라 완료일을 <value/>(으)로 자동 이동했습니다"
       },
       "target_date": {
         "removed_with_issue": "<issue/>에서 마감일을 제거했습니다",
@@ -1011,6 +1017,11 @@
         "disabled": "추적성 관계을(를) 비활성화했습니다",
         "enabled": "추적성 관계을(를) 활성화했습니다",
         "fallback": "추적성 관계을(를) 업데이트했습니다"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "종속된 작업 항목 이동 제안을 비활성화했습니다",
+        "enabled": "종속된 작업 항목 이동 제안을 활성화했습니다",
+        "fallback": "종속된 작업 항목 이동 제안을 업데이트했습니다"
       },
       "is_time_tracking_enabled": {
         "disabled": "시간 추적을 비활성화했습니다",

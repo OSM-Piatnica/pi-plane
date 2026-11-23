@@ -756,7 +756,8 @@
         "removed": "usunięto datę rozpoczęcia.",
         "removed_with_issue": "usunięto datę rozpoczęcia z <issue/>.",
         "set": "ustawiono datę rozpoczęcia na <value/>.",
-        "set_with_issue": "ustawiono datę rozpoczęcia na <value/> dla <issue/>."
+        "set_with_issue": "ustawiono datę rozpoczęcia na <value/> dla <issue/>.",
+        "shifted": "automatycznie przesunięto datę rozpoczęcia na <value/> po zmianie <cause/>."
       },
       "state": {
         "set": "ustawiono stan na <value/>.",
@@ -766,7 +767,8 @@
         "removed": "usunięto datę zakończenia.",
         "removed_with_issue": "usunięto datę zakończenia z <issue/>.",
         "set": "ustawiono datę zakończenia na <value/>.",
-        "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>."
+        "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>.",
+        "shifted": "automatycznie przesunięto datę zakończenia na <value/> po zmianie <cause/>."
       },
       "target_date": {
         "removed": "usunięto termin.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "usunięto datę rozpoczęcia z <issue/>",
         "removed_without_issue": "usunięto datę rozpoczęcia",
         "set_with_issue": "ustawiono datę rozpoczęcia na <value/> dla <issue/>",
-        "set_without_issue": "ustawiono datę rozpoczęcia na <value/>"
+        "set_without_issue": "ustawiono datę rozpoczęcia na <value/>",
+        "shifted_with_issue": "automatycznie przesunięto datę rozpoczęcia <issue/> na <value/> po zmianie <cause/>",
+        "shifted_without_issue": "automatycznie przesunięto datę rozpoczęcia na <value/> po zmianie <cause/>"
       },
       "state": {
         "set_with_issue": "ustawiono stan na <value/> dla <issue/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "usunięto datę zakończenia z <issue/>",
         "removed_without_issue": "usunięto datę zakończenia",
         "set_with_issue": "ustawiono datę zakończenia na <value/> dla <issue/>",
-        "set_without_issue": "ustawiono datę zakończenia na <value/>"
+        "set_without_issue": "ustawiono datę zakończenia na <value/>",
+        "shifted_with_issue": "automatycznie przesunięto datę zakończenia <issue/> na <value/> po zmianie <cause/>",
+        "shifted_without_issue": "automatycznie przesunięto datę zakończenia na <value/> po zmianie <cause/>"
       },
       "target_date": {
         "removed_with_issue": "usunięto termin z <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "wyłączono relacje śledzenia",
         "enabled": "włączono relacje śledzenia",
         "fallback": "zaktualizowano relacje śledzenia"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "wyłączono proponowanie przesunięcia zależnych elementów pracy",
+        "enabled": "włączono proponowanie przesunięcia zależnych elementów pracy",
+        "fallback": "zaktualizowano proponowanie przesunięcia zależnych elementów pracy"
       },
       "is_time_tracking_enabled": {
         "disabled": "wyłączono śledzenie czasu",

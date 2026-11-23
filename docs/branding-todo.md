@@ -4,7 +4,7 @@ The Pi-Plane logo replaced the Plane logo in the apps, icons, spinners and READM
 
 ## 1. Email logo
 
-Done in part. The emails no longer load the logo from `media.docs.plane.so`: every template calls `{% email_logo %}`, which shows the name "Pi-Plane" in type by default. An instance can show an image instead by setting `EMAIL_LOGO_URL` (a PNG for light backgrounds) and `EMAIL_LOGO_URL_ON_DARK` (a PNG for the dark header of the digest-style emails), both https addresses; see `apps/api/.env.example`. The default could become an image once a Pi-Plane logo is hosted at a stable public address and set as the default of those two settings.
+Done in part. The emails no longer load the logo from `media.docs.plane.so`: every template calls `{% email_logo %}`, which shows the name "Pi-Plane" in type by default. An instance can show an image instead by setting `EMAIL_LOGO_URL_ON_DARK` (a PNG for dark backgrounds, an https address; see `apps/api/.env.example`): every email has a dark header, so that is the one shown. `EMAIL_LOGO_URL` (a PNG for light backgrounds) is used by no email now. The default could become an image once a Pi-Plane logo is hosted at a stable public address and set as the default of those two settings.
 
 The templates still load third-party and upstream-hosted pictures:
 

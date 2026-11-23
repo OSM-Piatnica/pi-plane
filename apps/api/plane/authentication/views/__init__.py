@@ -16,6 +16,8 @@ from .app.one_time_code import OneTimeCodeGenerateEndpoint, OneTimeCodeSignInEnd
 
 from .app.signout import SignOutAuthEndpoint
 
+from .signup_verification import SignUpVerificationCodeEndpoint
+
 
 from .space.email import SignInAuthSpaceEndpoint, SignUpAuthSpaceEndpoint
 

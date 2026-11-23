@@ -6,6 +6,7 @@
  */
 
 import type { ICycle } from "./cycle";
+import type { TIssueActivityShiftCause } from "./issues/activity/issue_activity";
 import type { TIssue } from "./issues/issue";
 import type { IModule } from "./module";
 import type { IProjectLite } from "./project";
@@ -108,6 +109,8 @@ export interface IIssueActivity {
   verb: string;
   workspace: string;
   workspace_detail?: IWorkspaceLite;
+  /** Set on a start or finish date entry written when the work item was moved along with another one. */
+  shift_cause?: TIssueActivityShiftCause | null;
 }
 
 export type TIssuePriorities = "urgent" | "high" | "medium" | "low" | "none";
@@ -132,12 +135,13 @@ export type GroupByColumnTypes =
   | "target_date_bucket"
   | "finish_date_bucket"
   | "team_project"
-  | "parent";
+  | "parent"
+  | "epic";
 
 export type TGetColumns = {
   isWorkspaceLevel?: boolean;
   projectId?: string;
-  // ids of the groups in the grouped response, for groups that cannot be listed up front (parents)
+  // ids of the groups in the grouped response, for groups that cannot be listed up front (parents, Epics)
   groupIds?: string[];
 };
 

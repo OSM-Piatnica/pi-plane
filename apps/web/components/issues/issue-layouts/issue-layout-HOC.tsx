@@ -19,6 +19,7 @@ import { useIssues } from "@/hooks/store/use-issues";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 // local imports
 import { IssueLayoutEmptyState } from "./empty-states";
+import { IgnoredFiltersNotice } from "./ignored-filters-notice";
 
 function ActiveLoader(props: { layout: EIssueLayoutTypes }) {
   const { layout } = props;
@@ -51,13 +52,20 @@ export const IssueLayoutHOC = observer(function IssueLayoutHOC(props: Props) {
 
   const issueCount = issues.getGroupIssueCount(undefined, undefined, false);
 
-  if (issues?.getIssueLoader() === "init-loader" || issueCount === undefined) {
-    return <ActiveLoader layout={layout} />;
-  }
+  const isLoading = issues?.getIssueLoader() === "init-loader" || issueCount === undefined;
+  const isEmpty = !isLoading && issueCount === 0 && layout !== EIssueLayoutTypes.CALENDAR;
 
-  if (issues.getGroupIssueCount(undefined, undefined, false) === 0 && layout !== EIssueLayoutTypes.CALENDAR) {
-    return <IssueLayoutEmptyState storeType={storeType} />;
-  }
-
-  return <LayoutErrorBoundary key={layout}>{props.children}</LayoutErrorBoundary>;
+  // the notice is outside of the loader and the empty state: the first fetch of a list happens behind the loader
+  return (
+    <>
+      <IgnoredFiltersNotice />
+      {isLoading ? (
+        <ActiveLoader layout={layout} />
+      ) : isEmpty ? (
+        <IssueLayoutEmptyState storeType={storeType} />
+      ) : (
+        <LayoutErrorBoundary key={layout}>{props.children}</LayoutErrorBoundary>
+      )}
+    </>
+  );
 });

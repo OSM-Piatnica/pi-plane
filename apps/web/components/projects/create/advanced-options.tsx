@@ -15,6 +15,7 @@ type TAdvancedKey = keyof Pick<
   | "is_parent_completion_rule_enabled"
   | "is_blocked_status_rule_enabled"
   | "is_assignee_edit_rule_enabled"
+  | "is_reschedule_offer_enabled"
   | "is_relation_schedule_enabled"
   | "is_relation_traceability_enabled"
   | "is_relation_relates_to_enabled"
@@ -27,6 +28,7 @@ const RULES: TAdvancedItem[] = [
   { key: "is_parent_completion_rule_enabled", i18nPrefix: "project_settings.workflows.rules.parent_completion" },
   { key: "is_blocked_status_rule_enabled", i18nPrefix: "project_settings.workflows.rules.blocked_status" },
   { key: "is_assignee_edit_rule_enabled", i18nPrefix: "project_settings.workflows.rules.assignee_edit" },
+  { key: "is_reschedule_offer_enabled", i18nPrefix: "project_settings.workflows.rules.reschedule_offer" },
 ];
 
 const RELATION_TYPES: TAdvancedItem[] = [

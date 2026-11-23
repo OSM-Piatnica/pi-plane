@@ -756,7 +756,8 @@
         "removed": "a eliminat data de început.",
         "removed_with_issue": "a eliminat data de început din <issue/>.",
         "set": "a setat data de început la <value/>.",
-        "set_with_issue": "a setat data de început la <value/> pentru <issue/>."
+        "set_with_issue": "a setat data de început la <value/> pentru <issue/>.",
+        "shifted": "a mutat automat data de început la <value/> după modificarea <cause/>."
       },
       "state": {
         "set": "a setat starea la <value/>.",
@@ -766,7 +767,8 @@
         "removed": "a eliminat data de finalizare.",
         "removed_with_issue": "a eliminat data de finalizare din <issue/>.",
         "set": "a setat data de finalizare la <value/>.",
-        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>."
+        "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>.",
+        "shifted": "a mutat automat data de finalizare la <value/> după modificarea <cause/>."
       },
       "target_date": {
         "removed": "a eliminat termenul limită.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "a eliminat data de început din <issue/>",
         "removed_without_issue": "a eliminat data de început",
         "set_with_issue": "a setat data de început la <value/> pentru <issue/>",
-        "set_without_issue": "a setat data de început la <value/>"
+        "set_without_issue": "a setat data de început la <value/>",
+        "shifted_with_issue": "a mutat automat data de început pentru <issue/> la <value/> după modificarea <cause/>",
+        "shifted_without_issue": "a mutat automat data de început la <value/> după modificarea <cause/>"
       },
       "state": {
         "set_with_issue": "a setat starea la <value/> pentru <issue/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "a eliminat data de finalizare din <issue/>",
         "removed_without_issue": "a eliminat data de finalizare",
         "set_with_issue": "a setat data de finalizare la <value/> pentru <issue/>",
-        "set_without_issue": "a setat data de finalizare la <value/>"
+        "set_without_issue": "a setat data de finalizare la <value/>",
+        "shifted_with_issue": "a mutat automat data de finalizare pentru <issue/> la <value/> după modificarea <cause/>",
+        "shifted_without_issue": "a mutat automat data de finalizare la <value/> după modificarea <cause/>"
       },
       "target_date": {
         "removed_with_issue": "a eliminat termenul limită din <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "a dezactivat relațiile de trasabilitate",
         "enabled": "a activat relațiile de trasabilitate",
         "fallback": "a actualizat relațiile de trasabilitate"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "a dezactivat propunerea de mutare a activităților dependente",
+        "enabled": "a activat propunerea de mutare a activităților dependente",
+        "fallback": "a actualizat propunerea de mutare a activităților dependente"
       },
       "is_time_tracking_enabled": {
         "disabled": "a dezactivat urmărirea timpului",

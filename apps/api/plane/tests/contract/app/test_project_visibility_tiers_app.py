@@ -117,8 +117,9 @@ class TestFindingProjectsBySearch:
     def test_other_workspace_members_find_private_and_public_but_not_secret(self, workspace, projects, outsider):
         assert _found_by_search(_client(outsider), workspace) == {"PRV", "PUB"}
 
-    def test_guests_find_only_public_projects(self, workspace, projects, guest):
-        assert _found_by_search(_client(guest), workspace) == {"PUB"}
+    def test_guests_find_only_their_own_projects(self, workspace, projects, guest):
+        # Same rule as the project list: a guest sees nothing they are not a member of
+        assert _found_by_search(_client(guest), workspace) == set()
 
 
 @pytest.mark.contract

@@ -20,6 +20,8 @@ import { findTotalDaysInRange, generateWorkItemLink } from "@plane/utils";
 import { getTimelineDatesText } from "@/components/gantt-chart/blocks/due-marker";
 import { SIDEBAR_WIDTH_VAR } from "@/components/gantt-chart/constants";
 import { isBlockRolledUp } from "@/components/gantt-chart/views/helpers";
+// helpers
+import { isWorkItemCritical } from "@/helpers/schedule-analysis.helper";
 // hooks
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
@@ -29,6 +31,7 @@ import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useChartPalette } from "@/hooks/use-chart-palette";
+import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
 import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
@@ -63,11 +66,13 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
   const chartPalette = useChartPalette();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
+  const { isCriticalPathEnabled, scheduleAnalysis } = useScheduleAnalysis();
   const { t } = useTranslation();
 
   // derived values
   const issueDetails = getIssueById(issueId);
   const isRolledUp = isBlockRolledUp(getBlockById(issueId));
+  const isCritical = isCriticalPathEnabled && isWorkItemCritical(scheduleAnalysis, issueId);
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
@@ -158,6 +163,14 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
                   backgroundImage:
                     "repeating-linear-gradient(135deg, transparent 0 5px, rgba(128, 128, 128, 0.28) 5px 10px)",
                 }}
+              />
+            )}
+            {isCritical && (
+              // on the critical path: a delay of this work item moves the end of the project
+              <div
+                title={t("schedule_analysis.critical_bar")}
+                className="pointer-events-none absolute -inset-px rounded-sm border-2 border-danger-strong"
+                data-testid="gantt-critical-bar"
               />
             )}
             <div

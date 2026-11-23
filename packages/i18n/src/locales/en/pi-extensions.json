@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Once a work item has an assignee, only its assignees, the project lead and project admins can change it: fields, state, dates, sub-items, relations, links, attachments, cycles and modules, deleting and archiving. Everyone can still comment. Work items without an assignee stay open to all members.",
           "title": "Only assignees, the project lead and admins can change a work item"
+        },
+        "reschedule_offer": {
+          "description": "When a date change would break a dependency, offer to move the dependent work items later instead of refusing the change. When off, such a change is refused.",
+          "title": "Offer to shift dependent work items"
         }
       },
       "save_error": "Could not save workflow configuration.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Reject",
+  "schedule_analysis": {
+    "critical_bar": "On the critical path: a delay moves the end of the project",
+    "critical_path": "Critical path",
+    "critical_path_tooltip": "Highlights the work items whose delay moves the end of the project.",
+    "cycles": "Some work items depend on each other in a circle; those relations were left out.",
+    "filter_ignored": "The Critical path filter was left out: too many work items have dates to find the critical path.",
+    "float": "Float",
+    "float_critical": "None (critical path)",
+    "float_days": "{count, plural, one {# working day} other {# working days}}",
+    "float_help": "Working days this work item can slip without moving the end of the project",
+    "inverted": "Some work items finish before they start; they were left out.",
+    "load_error": "Could not load the critical path.",
+    "needed_by": "Needed by",
+    "needed_by_help": "Latest finish that lets the work items depending on this one meet their due dates",
+    "truncated": "Only the first dated work items were analysed (limit: {count}). Nothing is highlighted."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "You don't have any import records right now. Once you import a file into a project, all records will appear here.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Switch on",
+        "add": "Add department",
+        "code": "Code",
+        "code_hint": "A short label, for example RM.",
+        "color": "Colour",
+        "created": "Department added.",
+        "deactivate": "Switch off",
+        "delete_content": "People in this department stay in the workspace and have no department. Work items assigned to the department lose that assignment. This action cannot be undone.",
+        "deleted": "Department deleted.",
+        "department": "Department",
+        "description": "The departments of your organisation. Each person has one department in the workspace. A department is also a group, so it has members and work items can be assigned to it.",
+        "edit": "Edit department",
+        "empty": "There are no departments yet.",
+        "import": "Import list",
+        "import_done": "Departments added: {count}.",
+        "import_hint": "Paste one department per line in the form CODE;Name. Departments that already exist are left out.",
+        "import_invalid_lines": "Lines that cannot be used: {lines}",
+        "import_summary": "To add: {create}. Already there: {existing}.",
+        "import_title": "Import departments",
+        "inactive": "Switched off",
+        "move_down": "Move down",
+        "move_up": "Move up",
+        "no_color": "No colour",
+        "title": "Departments",
+        "updated": "Department saved."
+      },
       "exports": {
         "all_projects": "All projects",
         "history": {

@@ -4,11 +4,15 @@
 # Adapted from the work item hierarchy rules of Hangar (szymczag/hangar, AGPL-3.0-only).
 # See the LICENSE file for details.
 
-"""Server-side rules for a work item's parent: same project, no cycle, an Epic has no parent."""
+"""Server-side rules for a work item's parent: same project, no cycle, and the rules of the type kinds.
+
+The kind of a type (`IssueTypeKind`) has a level. An Epic has no parent, a review is only a child of an approval,
+and a child's level is never above its parent's. A work item without a type counts as the standard kind.
+"""
 
 from django.db import connection
 
-from plane.db.models import Issue
+from plane.db.models import ISSUE_TYPE_KIND_LEVELS, Issue, IssueTypeKind
 
 MAX_HIERARCHY_DEPTH = 100
 # One request attaches at most this many sub-work items
@@ -95,18 +99,50 @@ def parent_ancestry_ids(*, parent_id, project_id, workspace_id):
     return {row[0] for row in rows}
 
 
+def work_item_kind(issue_type) -> IssueTypeKind:
+    """The kind of a work item with this type; no type is the standard kind."""
+
+    return IssueTypeKind(issue_type.kind) if issue_type is not None else IssueTypeKind.STANDARD
+
+
+def parent_kind_error(child_kind, parent_kind):
+    """Why a work item of `child_kind` cannot sit under `parent_kind`, or None when it can.
+
+    `parent_kind` is None for a work item without a parent.
+    """
+
+    child_kind = IssueTypeKind(child_kind)
+    if parent_kind is None:
+        if child_kind == IssueTypeKind.REVIEW:
+            return "Review work items must have an approval work item as their parent"
+        return None
+    parent_kind = IssueTypeKind(parent_kind)
+    if child_kind == IssueTypeKind.EPIC:
+        return "Epic work items cannot have a parent"
+    if child_kind == IssueTypeKind.REVIEW and parent_kind != IssueTypeKind.APPROVAL:
+        return "Review work items must have an approval work item as their parent"
+    if ISSUE_TYPE_KIND_LEVELS[child_kind] > ISSUE_TYPE_KIND_LEVELS[parent_kind]:
+        return f"A {child_kind.label.lower()} work item cannot be a child of a {parent_kind.label.lower()} work item"
+    return None
+
+
 def validate_work_item_parent(*, project_id, workspace_id, issue_type, parent, issue_id=None):
     """Check a type/parent pair before it is saved and return the parent as found in the project.
 
     `issue_type` is the type the work item will have afterwards, `issue_id` is None for a new work item.
     """
 
+    child_kind = work_item_kind(issue_type)
     if parent is None:
+        kind_error = parent_kind_error(child_kind, None)
+        if kind_error:
+            raise WorkItemInvariantError("parent_id", kind_error)
         return None
 
     scoped_parent = (
         Issue.objects.filter(pk=parent.pk, workspace_id=workspace_id, project_id=project_id)
-        .only("id", "parent_id")
+        .select_related("type")
+        .only("id", "parent_id", "type_id", "type__kind")
         .first()
     )
     if scoped_parent is None:
@@ -115,8 +151,9 @@ def validate_work_item_parent(*, project_id, workspace_id, issue_type, parent, i
     if issue_id is not None and scoped_parent.id == issue_id:
         raise WorkItemInvariantError("parent_id", "A work item cannot be its own parent")
 
-    if issue_type is not None and issue_type.is_epic:
-        raise WorkItemInvariantError("parent_id", "Epic work items cannot have a parent")
+    kind_error = parent_kind_error(child_kind, work_item_kind(scoped_parent.type))
+    if kind_error:
+        raise WorkItemInvariantError("parent_id", kind_error)
 
     ancestry_ids = parent_ancestry_ids(
         parent_id=scoped_parent.id,

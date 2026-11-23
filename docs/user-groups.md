@@ -9,6 +9,10 @@ A workspace can organise its people into groups, for example by department or te
 - A person can belong to any number of groups, and only people who are active members of the workspace can join. Belonging to a group also means belonging to every group above it, so the members of a group are its own members plus those of all groups below it.
 - Deleting a group needs its subgroups to be deleted or moved first. It removes the memberships and the work item assignments of the group.
 
+## Departments
+
+A group can be marked as a department: the unit a person works in, with a code and a colour. A person belongs to at most one active department, and only workspace admins (or the identity provider) manage who is in one. See [Departments](departments.md).
+
 ## Who may change what
 
 Everyone in the workspace except guests sees the groups. Changes are limited:

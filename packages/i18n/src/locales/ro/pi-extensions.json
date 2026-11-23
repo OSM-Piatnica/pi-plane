@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Când o activitate are o persoană atribuită, doar cei atribuiți, liderul proiectului și administratorii proiectului o pot modifica: câmpuri, stare, date, sub-activități, relații, linkuri, atașamente, cicluri și module, ștergere și arhivare. Oricine poate comenta în continuare. Activitățile fără persoană atribuită rămân deschise tuturor membrilor.",
           "title": "O activitate pot să o modifice doar cei atribuiți, liderul proiectului și administratorii"
+        },
+        "reschedule_offer": {
+          "description": "Când o modificare de dată ar încălca o dependență, se propune mutarea mai târziu a activităților dependente în loc să se refuze modificarea. Când opțiunea este dezactivată, o astfel de modificare este refuzată.",
+          "title": "Propune mutarea activităților dependente"
         }
       },
       "save_error": "Nu s-a putut salva configurația fluxului de lucru.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Respinge",
+  "schedule_analysis": {
+    "critical_bar": "Pe drumul critic: o întârziere mută sfârșitul proiectului",
+    "critical_path": "Drum critic",
+    "critical_path_tooltip": "Evidențiază activitățile a căror întârziere mută sfârșitul proiectului.",
+    "cycles": "Unele activități depind una de alta în cerc; aceste relații au fost omise.",
+    "filter_ignored": "Filtrul Drum critic a fost omis: prea multe activități au date pentru a putea stabili drumul critic.",
+    "float": "Rezervă",
+    "float_critical": "Niciuna (drum critic)",
+    "float_days": "{count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}",
+    "float_help": "Câte zile lucrătoare poate întârzia această activitate fără a muta sfârșitul proiectului",
+    "inverted": "Unele activități se termină înainte să înceapă; au fost omise.",
+    "load_error": "Drumul critic nu a putut fi încărcat.",
+    "needed_by": "Necesar până la",
+    "needed_by_help": "Cea mai târzie finalizare care permite activităților dependente de aceasta să își respecte termenele limită",
+    "truncated": "Au fost analizate doar primele activități cu date (limită: {count}). Nimic nu este evidențiat."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Nu ai nicio înregistrare de import momentan. După ce imporți un fișier într-un proiect, toate înregistrările vor apărea aici.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activează",
+        "add": "Adaugă departament",
+        "code": "Cod",
+        "code_hint": "O etichetă scurtă, de exemplu RM.",
+        "color": "Culoare",
+        "created": "Departament adăugat.",
+        "deactivate": "Dezactivează",
+        "delete_content": "Persoanele din acest departament rămân în spațiul de lucru și nu mai au departament. Activitățile atribuite departamentului pierd această atribuire. Această acțiune nu poate fi anulată.",
+        "deleted": "Departament șters.",
+        "department": "Departament",
+        "description": "Departamentele organizației dumneavoastră. Fiecare persoană are un departament în spațiul de lucru. Un departament este și un grup, așadar are membri și i se pot atribui activități.",
+        "edit": "Editează departamentul",
+        "empty": "Nu există încă niciun departament.",
+        "import": "Importă lista",
+        "import_done": "Departamente adăugate: {count}.",
+        "import_hint": "Lipiți câte un departament pe linie, în forma COD;Nume. Departamentele care există deja sunt omise.",
+        "import_invalid_lines": "Linii care nu pot fi folosite: {lines}",
+        "import_summary": "De adăugat: {create}. Există deja: {existing}.",
+        "import_title": "Importă departamente",
+        "inactive": "Dezactivat",
+        "move_down": "Mută în jos",
+        "move_up": "Mută în sus",
+        "no_color": "Fără culoare",
+        "title": "Departamente",
+        "updated": "Departament salvat."
+      },
       "exports": {
         "all_projects": "Toate proiectele",
         "history": {

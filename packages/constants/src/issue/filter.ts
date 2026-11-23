@@ -14,7 +14,11 @@ import type {
 } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import type { TIssueFilterPriorityObject } from "./common";
-import { ISSUE_DISPLAY_PROPERTIES_KEYS, SUB_ISSUES_DISPLAY_PROPERTIES_KEYS } from "./common";
+import {
+  ISSUE_DISPLAY_PROPERTIES_KEYS,
+  PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
+  SUB_ISSUES_DISPLAY_PROPERTIES_KEYS,
+} from "./common";
 
 import type { TIssueLayout } from "./layout";
 
@@ -37,6 +41,7 @@ export enum EServerGroupByToFilterOptions {
   "project_id" = "project",
   "created_by" = "created_by",
   "parent_id" = "parent",
+  "epic_id" = "epic",
 }
 
 export enum EIssueFilterType {
@@ -295,6 +300,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   issues: {
     filters: [
       "priority",
+      "is_critical",
       "state_group",
       "state_id",
       "cycle_id",
@@ -310,7 +316,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
     ],
     layoutOptions: {
       list: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           group_by: [
             "state",
@@ -321,6 +327,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "assignees",
             "created_by",
             "parent",
+            "epic",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
@@ -346,7 +353,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         },
       },
       kanban: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           group_by: [
             "state",
@@ -357,6 +364,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "assignees",
             "created_by",
             "parent",
+            "epic",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
@@ -370,6 +378,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
             "assignees",
             "created_by",
             "parent",
+            "epic",
             "start_date_bucket",
             "target_date_bucket",
             "finish_date_bucket",
@@ -405,7 +414,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         },
       },
       spreadsheet: {
-        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_properties: PROJECT_ISSUE_DISPLAY_PROPERTIES_KEYS,
         display_filters: {
           order_by: [
             "sort_order",

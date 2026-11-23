@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Hneď ako má pracovná položka priradenú osobu, môžu ju meniť len priradení, vedúci projektu a správcovia projektu: polia, stav, dátumy, podriadené položky, vzťahy, odkazy, prílohy, cykly a moduly, mazanie a archiváciu. Komentovať môže naďalej každý. Pracovné položky bez priradenej osoby zostávajú otvorené všetkým členom.",
           "title": "Pracovnú položku môžu meniť len priradení, vedúci projektu a správcovia"
+        },
+        "reschedule_offer": {
+          "description": "Keď by zmena dátumu porušila závislosť, ponúkne sa posunutie závislých pracovných položiek na neskôr namiesto odmietnutia zmeny. Ak je voľba vypnutá, takáto zmena sa odmietne.",
+          "title": "Ponúkať posunutie závislých pracovných položiek"
         }
       },
       "save_error": "Uloženie konfigurácie pracovného postupu zlyhalo.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Zamietnuť",
+  "schedule_analysis": {
+    "critical_bar": "Na kritickej ceste: oneskorenie posunie koniec projektu",
+    "critical_path": "Kritická cesta",
+    "critical_path_tooltip": "Zvýrazní pracovné položky, ktorých oneskorenie posunie koniec projektu.",
+    "cycles": "Niektoré pracovné položky od seba závisia v kruhu; tieto väzby boli vynechané.",
+    "filter_ignored": "Filter Kritická cesta bol vynechaný: pracovných položiek s dátumami je príliš veľa na určenie kritickej cesty.",
+    "float": "Rezerva",
+    "float_critical": "Žiadna (kritická cesta)",
+    "float_days": "{count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}",
+    "float_help": "O koľko pracovných dní sa táto pracovná položka môže oneskoriť bez posunutia konca projektu",
+    "inverted": "Niektoré pracovné položky končia skôr, než začínajú; boli vynechané.",
+    "load_error": "Kritickú cestu sa nepodarilo načítať.",
+    "needed_by": "Potrebné do",
+    "needed_by_help": "Najneskoršie dokončenie, pri ktorom pracovné položky závislé od tejto stihnú svoje termíny",
+    "truncated": "Analyzované boli len prvé pracovné položky s dátumami (limit: {count}). Nič nie je zvýraznené."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Zatiaľ nemáte žiadne záznamy o importoch. Po importovaní súboru do projektu sa tu zobrazia všetky záznamy.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Zapnúť",
+        "add": "Pridať oddelenie",
+        "code": "Kód",
+        "code_hint": "Krátke označenie, napríklad RM.",
+        "color": "Farba",
+        "created": "Oddelenie bolo pridané.",
+        "deactivate": "Vypnúť",
+        "delete_content": "Ľudia z tohto oddelenia zostanú v pracovnom priestore a nebudú mať žiadne oddelenie. Pracovným položkám priradeným oddeleniu sa toto priradenie zruší. Túto akciu nemožno vrátiť späť.",
+        "deleted": "Oddelenie bolo zmazané.",
+        "department": "Oddelenie",
+        "description": "Oddelenia vašej organizácie. Každý človek má v pracovnom priestore jedno oddelenie. Oddelenie je zároveň skupinou, takže má členov a možno mu priraďovať pracovné položky.",
+        "edit": "Upraviť oddelenie",
+        "empty": "Zatiaľ nie sú žiadne oddelenia.",
+        "import": "Importovať zoznam",
+        "import_done": "Pridané oddelenia: {count}.",
+        "import_hint": "Vložte na každý riadok jedno oddelenie v tvare KÓD;Názov. Oddelenia, ktoré už existujú, sa vynechajú.",
+        "import_invalid_lines": "Riadky, ktoré nemožno použiť: {lines}",
+        "import_summary": "Na pridanie: {create}. Už existujú: {existing}.",
+        "import_title": "Importovať oddelenia",
+        "inactive": "Vypnuté",
+        "move_down": "Presunúť nadol",
+        "move_up": "Presunúť nahor",
+        "no_color": "Bez farby",
+        "title": "Oddelenia",
+        "updated": "Oddelenie bolo uložené."
+      },
       "exports": {
         "all_projects": "Všetky projekty",
         "history": {

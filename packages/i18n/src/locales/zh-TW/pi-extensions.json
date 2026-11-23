@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "工作事項有負責人後，只有其負責人、專案負責人和專案管理員可以變更它：欄位、狀態、日期、子工作事項、關係、連結、附件、週期和模組，以及刪除和封存。任何人仍可留言。沒有負責人的工作事項對所有成員開放。",
           "title": "只有負責人、專案負責人和管理員可以變更工作事項"
+        },
+        "reschedule_offer": {
+          "description": "當日期變更會破壞相依關係時，提議將相依的工作事項順延，而不是拒絕該變更。關閉後，此類變更將被拒絕。",
+          "title": "提議順延相依的工作事項"
         }
       },
       "save_error": "無法儲存工作流程設定。",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "拒絕",
+  "schedule_analysis": {
+    "critical_bar": "位於關鍵路徑上：延誤會延後專案結束時間",
+    "critical_path": "關鍵路徑",
+    "critical_path_tooltip": "醒目顯示一旦延誤就會延後專案結束時間的工作事項。",
+    "cycles": "部分工作事項彼此循環相依；這些關係已被排除。",
+    "filter_ignored": "已忽略「關鍵路徑」篩選器：含日期的工作事項過多，無法判定關鍵路徑。",
+    "float": "浮時",
+    "float_critical": "無（關鍵路徑）",
+    "float_days": "{count, plural, one {# 個工作日} other {# 個工作日}}",
+    "float_help": "在不延後專案結束時間的前提下，此工作事項可以延後的工作日數",
+    "inverted": "部分工作事項的結束日期早於開始日期；這些工作事項已被排除。",
+    "load_error": "無法載入關鍵路徑。",
+    "needed_by": "最遲需完成於",
+    "needed_by_help": "能讓相依於此工作事項的工作事項趕上截止日期的最晚結束時間",
+    "truncated": "僅分析了最前面的含日期工作事項（上限：{count}）。不會醒目標示任何內容。"
+  },
   "settings_empty_state": {
     "imports": {
       "description": "您目前沒有任何匯入紀錄。將檔案匯入專案後，所有紀錄都會顯示在這裡。",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "啟用",
+        "add": "新增部門",
+        "code": "代碼",
+        "code_hint": "簡短的標示，例如 RM。",
+        "color": "顏色",
+        "created": "已新增部門。",
+        "deactivate": "停用",
+        "delete_content": "此部門中的人員仍會保留在工作區中，但不再屬於任何部門。指派給該部門的工作事項將失去此指派。此動作無法復原。",
+        "deleted": "已刪除部門。",
+        "department": "部門",
+        "description": "貴組織的部門。每個人在工作區中屬於一個部門。部門同時也是群組，因此擁有成員，也可以將工作事項指派給部門。",
+        "edit": "編輯部門",
+        "empty": "尚無部門。",
+        "import": "匯入清單",
+        "import_done": "已新增部門：{count}。",
+        "import_hint": "每行貼上一個部門，格式為「代碼;名稱」。已存在的部門會被略過。",
+        "import_invalid_lines": "無法使用的行：{lines}",
+        "import_summary": "待新增：{create}。已存在：{existing}。",
+        "import_title": "匯入部門",
+        "inactive": "已停用",
+        "move_down": "下移",
+        "move_up": "上移",
+        "no_color": "無顏色",
+        "title": "部門",
+        "updated": "已儲存部門。"
+      },
       "exports": {
         "all_projects": "所有專案",
         "history": {

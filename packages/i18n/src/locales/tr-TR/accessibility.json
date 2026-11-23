@@ -45,6 +45,20 @@
       "open": "Renk seçiciyi aç",
       "swatches": "Hazır renkler",
       "hex_input": "Hex renk"
+    },
+    "calendar": {
+      "choose_month": "Ayı seç",
+      "choose_year": "Yılı seç",
+      "previous_month": "Önceki ay",
+      "next_month": "Sonraki ay",
+      "previous_year": "Önceki yıl",
+      "next_year": "Sonraki yıl",
+      "previous_year_page": "Önceki 12 yıl",
+      "next_year_page": "Sonraki 12 yıl",
+      "month_view": "{year} için ay seç",
+      "year_view": "{first_year} - {last_year} arasından yıl seç",
+      "today_date": "Bugün, {date}",
+      "selected_date": "{date}, seçili"
     }
   }
 }

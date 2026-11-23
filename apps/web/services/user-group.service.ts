@@ -7,9 +7,12 @@
 import { API_BASE_URL } from "@plane/constants";
 import type {
   EUserGroupRole,
+  TDepartment,
+  TDepartmentMembers,
   TFilterableUserGroup,
   TUserGroup,
   TUserGroupFormData,
+  TUserGroupKind,
   TUserGroupMember,
 } from "@plane/types";
 import { APIService } from "@/services/api.service";
@@ -19,8 +22,27 @@ export class UserGroupService extends APIService {
     super(API_BASE_URL);
   }
 
-  async list(workspaceSlug: string): Promise<TUserGroup[]> {
-    return this.get(`/api/workspaces/${workspaceSlug}/user-groups/`)
+  /** Every group of the workspace, or only the groups of one kind (departments come in their own order). */
+  async list(workspaceSlug: string, kind?: TUserGroupKind): Promise<TUserGroup[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/user-groups/`, { params: kind ? { kind } : undefined })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The departments that are switched on, in their order; open to every member of the workspace, guests included. */
+  async listDepartments(workspaceSlug: string): Promise<TDepartment[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/departments/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Who works in which department: user id to department (group) id. Guests only get their own. */
+  async listDepartmentMembers(workspaceSlug: string): Promise<TDepartmentMembers> {
+    return this.get(`/api/workspaces/${workspaceSlug}/departments/members/`)
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

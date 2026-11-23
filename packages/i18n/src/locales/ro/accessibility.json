@@ -45,6 +45,20 @@
       "open": "Deschide selectorul de culoare",
       "swatches": "Culori predefinite",
       "hex_input": "Culoare hexazecimală"
+    },
+    "calendar": {
+      "choose_month": "Alege luna",
+      "choose_year": "Alege anul",
+      "previous_month": "Luna anterioară",
+      "next_month": "Luna următoare",
+      "previous_year": "Anul anterior",
+      "next_year": "Anul următor",
+      "previous_year_page": "Cei 12 ani anteriori",
+      "next_year_page": "Următorii 12 ani",
+      "month_view": "Alege luna pentru {year}",
+      "year_view": "Alege anul de la {first_year} la {last_year}",
+      "today_date": "Astăzi, {date}",
+      "selected_date": "{date}, selectat"
     }
   }
 }

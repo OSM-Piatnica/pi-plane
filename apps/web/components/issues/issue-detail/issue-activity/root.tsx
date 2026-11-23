@@ -1,5 +1,6 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
+ * Copyright (c) 2026-present Okręgowa Spółdzielnia Mleczarska w Piątnicy
  * SPDX-License-Identifier: AGPL-3.0-only
  * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
@@ -8,12 +9,14 @@
 import { useMemo } from "react";
 import uniq from "lodash-es/uniq";
 import { observer } from "mobx-react";
+import { ChevronDown } from "lucide-react";
 // plane package imports
 import type { TActivityFilters } from "@plane/constants";
 import { E_SORT_ORDER, defaultActivityFilters, EUserPermissions } from "@plane/constants";
 import { useLocalStorage } from "@plane/hooks";
 // i18n
 import { useTranslation } from "@plane/i18n";
+import { cn } from "@plane/utils";
 import { useSpaceEnabled } from "@/hooks/use-space-enabled";
 //types
 import type { TFileSignedURLResponse, TIssueComment } from "@plane/types";
@@ -55,6 +58,10 @@ export const IssueActivity = observer(function IssueActivity(props: TIssueActivi
     defaultActivityFilters
   );
   const { setValue: setSortOrder, storedValue: sortOrder } = useLocalStorage("activity_sort_order", E_SORT_ORDER.ASC);
+  const { storedValue: isActivityCollapsed, setValue: setActivityCollapsed } = useLocalStorage<boolean>(
+    "work_item_activity_collapsed",
+    false
+  );
   // store hooks
   const {
     issue: { getIssueById },
@@ -110,8 +117,17 @@ export const IssueActivity = observer(function IssueActivity(props: TIssueActivi
     <div className="space-y-4">
       {/* header */}
       <div className="flex items-center justify-between">
-        <div className="text-h5-medium text-primary">{t("common.activity")}</div>
-        <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setActivityCollapsed(!isActivityCollapsed)}
+          aria-expanded={!isActivityCollapsed}
+          aria-label={isActivityCollapsed ? t("common.expand_activity") : t("common.collapse_activity")}
+          className="flex items-center gap-1 rounded-sm text-primary hover:text-secondary"
+        >
+          <span className="text-h5-medium">{t("common.activity")}</span>
+          <ChevronDown className={cn("size-4 shrink-0 transition-transform", { "-rotate-90": isActivityCollapsed })} />
+        </button>
+        <div className={cn("flex items-center gap-2", { hidden: isActivityCollapsed })}>
           {isWorklogButtonEnabled && (
             <IssueActivityWorklogCreateButton
               workspaceSlug={workspaceSlug}
@@ -131,7 +147,7 @@ export const IssueActivity = observer(function IssueActivity(props: TIssueActivi
       </div>
 
       {/* rendering activity */}
-      <div className="space-y-3">
+      <div className={cn("space-y-3", { hidden: isActivityCollapsed })}>
         <div className="min-h-[200px]">
           <div className="space-y-3">
             {!disabled && sortOrder === E_SORT_ORDER.DESC && renderCommentCreationBox}

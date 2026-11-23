@@ -25,6 +25,7 @@ from plane.db.models import (
     IssueSequence,
     IssueSubscriber,
     IssueType,
+    IssueTypeKind,
     Label,
     Module,
     ModuleIssue,
@@ -45,6 +46,8 @@ from plane.utils.issue_relation_mapper import get_actual_relation
 from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATIONS, SYMMETRIC_RELATIONS
 from plane.utils.relation_type_toggles import relation_type_enabled
 from plane.utils.issue_type_property import validate_property_value
+from plane.utils.project_issue_types import is_system_managed_type
+from plane.utils.work_item_hierarchy import parent_kind_error, work_item_kind
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
     reconcile_work_item_duration,
@@ -654,6 +657,12 @@ def import_work_items_into_project(
         issue_type = types_by_name.get(issue_type_name) if issue_type_name else None
         if issue_type_name and issue_type is None:
             warnings.append(f'Row {index + 1}: unknown issue type "{row.get("issue_type")}", left empty')
+        elif is_system_managed_type(issue_type):
+            # Approval and review work items are made by the system, with the records that belong to them
+            warnings.append(
+                f'Row {index + 1}: issue type "{row.get("issue_type")}" is managed by the system, left empty'
+            )
+            issue_type = None
 
         # Labels missing from the project are created, so a file imports the same way into
         # a fresh project as into one that was prepared by hand.
@@ -987,8 +996,13 @@ def import_work_items_into_project(
                     f'Work item "{item["external_key"]}": parent "{parent_key}" is not in this project, skipped'
                 )
                 continue
-            if issue.type is not None and issue.type.is_epic:
+            child_kind = work_item_kind(issue.type)
+            if child_kind == IssueTypeKind.EPIC:
                 warnings.append(f'Work item "{item["external_key"]}": an Epic cannot have a parent, skipped')
+                continue
+            kind_error = parent_kind_error(child_kind, work_item_kind(parent.type))
+            if kind_error:
+                warnings.append(f'Work item "{item["external_key"]}": {kind_error}, skipped')
                 continue
             # Only work items of this file get a new parent, so a cycle can only run through them
             ancestor = parent

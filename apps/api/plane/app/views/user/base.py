@@ -35,6 +35,7 @@ from plane.app.serializers import (
 )
 from plane.app.views.base import BaseAPIView, BaseViewSet
 from plane.utils.workspace_defaults import inherit_workspace_timezone
+from plane.app.views.workspace.user import _visible_issues_q
 from plane.db.models import (
     Account,
     IssueActivity,
@@ -51,6 +52,7 @@ from plane.utils.order_queryset import ACTIVITY_ORDER_BY_ALLOWLIST, sanitize_ord
 from plane.authentication.utils.host import user_ip
 from plane.bgtasks.user_deactivation_email_task import user_deactivation_email
 from plane.utils.host import base_host
+from plane.utils.numeric_code import generate_numeric_code
 from plane.bgtasks.user_email_update_task import send_email_update_one_time_code, send_email_update_confirmation
 from plane.authentication.rate_limit import AuthenticationThrottle, EmailVerificationThrottle
 from plane.authentication.provider.credentials.one_time_code import OneTimeCodeProvider
@@ -169,7 +171,7 @@ class UserEndpoint(BaseViewSet):
             # Include user ID to bind the code to the specific user
             cache_key = f"one_time_code_email_update_{user.id}_{new_email}"
             ## Generate a random token
-            token = str(secrets.randbelow(900000) + 100000)
+            token = generate_numeric_code()
             # Store in cache with 10 minute expiration
             cache_data = json.dumps({"token": token})
             cache.set(cache_key, cache_data, timeout=600)
@@ -416,9 +418,10 @@ class UpdateUserTourCompletedEndpoint(BaseAPIView):
 
 class UserActivityEndpoint(BaseAPIView, BasePaginator):
     def get(self, request):
-        queryset = IssueActivity.objects.filter(actor=request.user).select_related(
-            "actor", "workspace", "issue", "project"
-        )
+        # The serializer embeds the live issue, so only issues the user can still see
+        queryset = IssueActivity.objects.filter(
+            _visible_issues_q(request.user, prefix="issue__"), actor=request.user
+        ).select_related("actor", "workspace", "issue", "project")
 
         return self.paginate(
             order_by=sanitize_order_by(

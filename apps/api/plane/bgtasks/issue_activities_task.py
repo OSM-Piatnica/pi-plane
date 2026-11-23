@@ -313,6 +313,46 @@ def track_target_date(
         )
 
 
+# Key in the requested data of a date change: the id of the work item whose change moved this one along
+# (plane.utils.issue_reschedule). Such an entry names its cause in the comment and keeps its id in old_identifier.
+# Requested data mostly comes from a client's payload, so ``issue_activity`` drops this key from it and sets it only
+# from its own ``shifted_after`` argument, which only the shift of dependents passes.
+SHIFT_CAUSE_KEY = "shifted_after"
+
+
+def with_trusted_shift_cause(requested_data, shifted_after=None):
+    """``requested_data`` (JSON text or a dict) without a client-supplied cause, carrying ``shifted_after`` if given."""
+    if requested_data is None:
+        return None
+    if isinstance(requested_data, dict):
+        data = dict(requested_data)
+    else:
+        try:
+            data = json.loads(requested_data)
+        except (TypeError, ValueError):
+            return requested_data
+        if not isinstance(data, dict):
+            return requested_data
+    if SHIFT_CAUSE_KEY not in data and not shifted_after:
+        return requested_data
+    data.pop(SHIFT_CAUSE_KEY, None)
+    if shifted_after:
+        data[SHIFT_CAUSE_KEY] = str(shifted_after)
+    return data if isinstance(requested_data, dict) else json.dumps(data)
+
+
+def shift_cause(requested_data, workspace_id):
+    """``(id, display reference)`` of the work item whose change shifted this one, or ``(None, None)``."""
+    cause_id = requested_data.get(SHIFT_CAUSE_KEY)
+    if not cause_id or not is_valid_uuid(str(cause_id)):
+        return None, None
+    # A dependent can be in another project than its cause, so only the workspace is enforced
+    cause = Issue.objects.filter(pk=cause_id, workspace_id=workspace_id).select_related("project").first()
+    if cause is None:
+        return None, None
+    return cause.id, f"{cause.project.identifier}-{cause.sequence_id}"
+
+
 # Track changes in issue finish date (the planned end of the work, distinct from the due date)
 def track_finish_date(
     requested_data,
@@ -325,6 +365,7 @@ def track_finish_date(
     epoch,
 ):
     if current_instance.get("finish_date") != requested_data.get("finish_date"):
+        cause_id, cause_ref = shift_cause(requested_data, workspace_id)
         issue_activities.append(
             IssueActivity(
                 issue_id=issue_id,
@@ -338,10 +379,13 @@ def track_finish_date(
                 project_id=project_id,
                 workspace_id=workspace_id,
                 comment=(
-                    "set the finish date by default (copied from the due date) to"
+                    f"moved the finish date automatically after {cause_ref} changed to"
+                    if cause_ref
+                    else "set the finish date by default (copied from the due date) to"
                     if requested_data.get("finish_date_origin") == "defaulted"
                     else "updated the finish date to"
                 ),
+                old_identifier=cause_id,
                 epoch=epoch,
             )
         )
@@ -359,6 +403,7 @@ def track_start_date(
     epoch,
 ):
     if current_instance.get("start_date") != requested_data.get("start_date"):
+        cause_id, cause_ref = shift_cause(requested_data, workspace_id)
         issue_activities.append(
             IssueActivity(
                 issue_id=issue_id,
@@ -371,7 +416,12 @@ def track_start_date(
                 field="start_date",
                 project_id=project_id,
                 workspace_id=workspace_id,
-                comment="updated the start date to ",
+                comment=(
+                    f"moved the start date automatically after {cause_ref} changed to"
+                    if cause_ref
+                    else "updated the start date to "
+                ),
+                old_identifier=cause_id,
                 epoch=epoch,
             )
         )
@@ -1754,9 +1804,13 @@ def issue_activity(
     notification=False,
     origin=None,
     intake=None,
+    shifted_after=None,
 ):
+    """``shifted_after``: the work item whose change moved this one, set only by the shift of dependents."""
     try:
         issue_activities = []
+        # the cause of an automatic shift comes from the shift itself, never from a client's payload
+        requested_data = with_trusted_shift_cause(requested_data, shifted_after)
 
         # check if project_id is valid
         if not is_valid_uuid(str(project_id)):

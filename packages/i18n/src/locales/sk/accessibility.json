@@ -45,6 +45,20 @@
       "open": "Otvoriť výber farby",
       "swatches": "Prednastavené farby",
       "hex_input": "Hexadecimálna farba"
+    },
+    "calendar": {
+      "choose_month": "Vybrať mesiac",
+      "choose_year": "Vybrať rok",
+      "previous_month": "Predchádzajúci mesiac",
+      "next_month": "Nasledujúci mesiac",
+      "previous_year": "Predchádzajúci rok",
+      "next_year": "Nasledujúci rok",
+      "previous_year_page": "Predchádzajúcich 12 rokov",
+      "next_year_page": "Nasledujúcich 12 rokov",
+      "month_view": "Výber mesiaca pre rok {year}",
+      "year_view": "Výber roku od {first_year} do {last_year}",
+      "today_date": "Dnes, {date}",
+      "selected_date": "{date}, vybraté"
     }
   }
 }

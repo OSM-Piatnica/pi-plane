@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Dès qu’un élément de travail a un assigné, seuls ses assignés, le responsable du projet et les admins du projet peuvent le modifier : champs, état, dates, sous-éléments, relations, liens, pièces jointes, cycles et modules, suppression et archivage. Tout le monde peut toujours commenter. Les éléments sans assigné restent ouverts à tous les membres.",
           "title": "Seuls les assignés, le responsable du projet et les admins peuvent modifier un élément de travail"
+        },
+        "reschedule_offer": {
+          "description": "Si un changement de date devait enfreindre une dépendance, proposer de décaler plus tard les éléments de travail dépendants au lieu de refuser le changement. Lorsque ce réglage est désactivé, un tel changement est refusé.",
+          "title": "Proposer de décaler les éléments de travail dépendants"
         }
       },
       "save_error": "Impossible d'enregistrer la configuration du workflow.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Rejeter",
+  "schedule_analysis": {
+    "critical_bar": "Sur le chemin critique : un retard déplace la fin du projet",
+    "critical_path": "Chemin critique",
+    "critical_path_tooltip": "Met en évidence les éléments de travail dont le retard déplace la fin du projet.",
+    "cycles": "Certains éléments de travail dépendent les uns des autres en boucle ; ces relations ont été ignorées.",
+    "filter_ignored": "Le filtre Chemin critique a été ignoré : trop d’éléments de travail ont des dates pour déterminer le chemin critique.",
+    "float": "Marge",
+    "float_critical": "Aucune (chemin critique)",
+    "float_days": "{count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}",
+    "float_help": "Nombre de jours ouvrés dont cet élément de travail peut glisser sans déplacer la fin du projet",
+    "inverted": "Certains éléments de travail se terminent avant de commencer ; ils ont été ignorés.",
+    "load_error": "Impossible de charger le chemin critique.",
+    "needed_by": "Requis pour le",
+    "needed_by_help": "Fin au plus tard permettant aux éléments de travail qui dépendent de celui-ci de respecter leur date d’échéance",
+    "truncated": "Seuls les premiers éléments de travail datés ont été analysés (limite : {count}). Rien n’est mis en évidence."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Vous n'avez actuellement aucun enregistrement d'import. Une fois que vous aurez importé un fichier dans un projet, tous les enregistrements apparaîtront ici.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activer",
+        "add": "Ajouter un département",
+        "code": "Code",
+        "code_hint": "Un libellé court, par exemple RM.",
+        "color": "Couleur",
+        "created": "Département ajouté.",
+        "deactivate": "Désactiver",
+        "delete_content": "Les personnes de ce département restent dans l’espace de travail et n’ont plus de département. Les éléments de travail attribués au département perdent cette attribution. Cette action est irréversible.",
+        "deleted": "Département supprimé.",
+        "department": "Département",
+        "description": "Les départements de votre organisation. Chaque personne a un département dans l’espace de travail. Un département est aussi un groupe : il a donc des membres et des éléments de travail peuvent lui être attribués.",
+        "edit": "Modifier le département",
+        "empty": "Il n’y a pas encore de départements.",
+        "import": "Importer la liste",
+        "import_done": "Départements ajoutés : {count}.",
+        "import_hint": "Collez un département par ligne au format CODE;Nom. Les départements qui existent déjà sont ignorés.",
+        "import_invalid_lines": "Lignes inutilisables : {lines}",
+        "import_summary": "À ajouter : {create}. Déjà présents : {existing}.",
+        "import_title": "Importer des départements",
+        "inactive": "Désactivé",
+        "move_down": "Déplacer vers le bas",
+        "move_up": "Déplacer vers le haut",
+        "no_color": "Aucune couleur",
+        "title": "Départements",
+        "updated": "Département enregistré."
+      },
       "exports": {
         "all_projects": "Tous les projets",
         "history": {

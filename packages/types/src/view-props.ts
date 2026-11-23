@@ -30,6 +30,7 @@ export type TIssueGroupByOptions =
   | "finish_date_bucket"
   | "team_project"
   | "parent"
+  | "epic"
   | null;
 
 export type TIssueOrderByOptions =
@@ -118,6 +119,7 @@ export type TIssueParams =
   | "layout"
   | "expand"
   | "parent"
+  | "epic"
   | "filters";
 
 export type TCalendarLayouts = "month" | "week";
@@ -141,6 +143,7 @@ export const WORK_ITEM_FILTER_PROPERTY_KEYS = [
   "cycle_id",
   "module_id",
   "project_id",
+  "is_critical",
   "created_at",
   "updated_at",
 ] as const;
@@ -215,6 +218,7 @@ export interface IIssueDisplayProperties {
   due_date?: boolean;
   finish_date?: boolean;
   duration?: boolean;
+  float?: boolean;
   labels?: boolean;
   key?: boolean;
   priority?: boolean;

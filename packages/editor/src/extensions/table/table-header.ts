@@ -8,6 +8,8 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 // constants
 import { CORE_EXTENSIONS } from "@/constants/extension";
+// helpers
+import { isValidCssColor } from "@/helpers/common";
 // local imports
 import { DEFAULT_COLUMN_WIDTH } from "./table";
 
@@ -58,11 +60,15 @@ export const TableHeader = Node.create<TableHeaderOptions>({
   },
 
   renderHTML({ node, HTMLAttributes }) {
+    const { background } = node.attrs;
+
     return [
       "th",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-        style: `background-color: ${node.attrs.background};`,
-      }),
+      mergeAttributes(
+        this.options.HTMLAttributes,
+        HTMLAttributes,
+        isValidCssColor(background) ? { style: `background-color: ${background};` } : {}
+      ),
       0,
     ];
   },

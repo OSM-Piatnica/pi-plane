@@ -6,7 +6,6 @@
 # Python imports
 import json
 import os
-import secrets
 
 
 # Module imports
@@ -18,13 +17,14 @@ from plane.authentication.adapter.error import (
     AuthenticationException,
 )
 from plane.db.models import User
+from plane.utils.numeric_code import generate_numeric_code
 
 
 class OneTimeCodeProvider(CredentialAdapter):
     provider = "magic-code"
 
     # Max wrong-code verification attempts per issued token before the token
-    # is invalidated. Prevents brute-forcing the 6-digit code space within
+    # is invalidated. Prevents brute-forcing the 8-digit code space within
     # the token TTL window.
     MAX_VERIFY_ATTEMPTS = 5
 
@@ -45,6 +45,9 @@ class OneTimeCodeProvider(CredentialAdapter):
         "end "
         "return count"
     )
+
+    # The same script under a public name, for the counters of the sign-up verification code
+    INCREMENT_COUNTER_SCRIPT = _INCREMENT_COUNTER_SCRIPT
 
     @staticmethod
     def _verify_attempts_key(token_key):
@@ -85,7 +88,7 @@ class OneTimeCodeProvider(CredentialAdapter):
 
     def initiate(self):
         ## Generate a random token
-        token = str(secrets.randbelow(900000) + 100000)
+        token = generate_numeric_code()
 
         ri = redis_instance()
 

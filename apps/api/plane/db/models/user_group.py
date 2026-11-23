@@ -30,6 +30,13 @@ class GroupSource(models.TextChoices):
     OIDC = "oidc", "Single sign-on"
 
 
+class GroupKind(models.TextChoices):
+    """What a group stands for. A department is the unit a person works in: at most one active per person."""
+
+    GROUP = "group", "Group"
+    DEPARTMENT = "department", "Department"
+
+
 class UserGroup(BaseModel):
     workspace = models.ForeignKey("db.Workspace", on_delete=models.CASCADE, related_name="user_groups")
     name = models.CharField(max_length=255)
@@ -38,9 +45,23 @@ class UserGroup(BaseModel):
     source = models.CharField(max_length=20, choices=GroupSource.choices, default=GroupSource.LOCAL)
     # The identity provider's own id for a group managed outside; empty for local groups
     external_id = models.CharField(max_length=255, null=True, blank=True)
+    kind = models.CharField(max_length=20, choices=GroupKind.choices, default=GroupKind.GROUP)
+    # The short name of a department ("RM"); empty when it has none
+    code = models.CharField(max_length=16, blank=True, default="")
+    # A hex colour ("#3f76ff") the department is drawn with; empty when it has none
+    color = models.CharField(max_length=9, blank=True, default="")
+    # The place of a department in lists and pickers
+    sort_order = models.FloatField(default=65535)
+    # A department that is switched off keeps its members but no longer counts as anybody's department
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         constraints = [
+            models.UniqueConstraint(
+                fields=["workspace", "code"],
+                condition=Q(deleted_at__isnull=True, kind="department") & ~Q(code=""),
+                name="user_group_unique_department_code_when_deleted_at_null",
+            ),
             models.UniqueConstraint(
                 fields=["workspace", "parent", "name"],
                 condition=Q(deleted_at__isnull=True, parent__isnull=False),
@@ -65,6 +86,10 @@ class UserGroup(BaseModel):
     @property
     def is_external(self):
         return self.source != GroupSource.LOCAL
+
+    @property
+    def is_department(self):
+        return self.kind == GroupKind.DEPARTMENT
 
     def __str__(self):
         return f"{self.name} <{self.workspace_id}>"

@@ -67,7 +67,8 @@ export const SpreadsheetView = observer(function SpreadsheetView(props: Props) {
   const isEstimateEnabled: boolean = currentProjectDetails?.estimate !== null;
 
   const spreadsheetColumnsList = isWorkspaceLevel
-    ? SPREADSHEET_PROPERTY_LIST
+    ? // Float is the float of a work item in the schedule of its project
+      SPREADSHEET_PROPERTY_LIST.filter((property) => property !== "float")
     : SPREADSHEET_PROPERTY_LIST.filter((property) => {
         if (property === "cycle" && !currentProjectDetails?.cycle_view) return false;
         if (property === "modules" && !currentProjectDetails?.module_view) return false;

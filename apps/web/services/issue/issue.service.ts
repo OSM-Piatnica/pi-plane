@@ -13,6 +13,8 @@ import type {
   IIssueDisplayProperties,
   TBulkOperationsPayload,
   TGanttDateRollup,
+  TScheduleAnalysis,
+  TScheduleAnalysisScope,
   TIssue,
   TIssueActivity,
   TIssueLink,
@@ -150,6 +152,19 @@ export class IssueService extends APIService {
     return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-date-rollups/`, {
       params: { issue_ids: issueIds.join(",") },
     })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Critical path, float and "needed by" dates of the project's dated work items, or of one module or cycle. */
+  async getScheduleAnalysis(
+    workspaceSlug: string,
+    projectId: string,
+    scope: TScheduleAnalysisScope = {}
+  ): Promise<TScheduleAnalysis> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/schedule-analysis/`, { params: scope })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

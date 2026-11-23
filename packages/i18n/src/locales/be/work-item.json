@@ -756,7 +756,8 @@
         "removed": "— прыбрана дата пачатку.",
         "removed_with_issue": "— прыбрана дата пачатку з <issue/>.",
         "set": "— дата пачатку: <value/>.",
-        "set_with_issue": "— дата пачатку для <issue/>: <value/>."
+        "set_with_issue": "— дата пачатку для <issue/>: <value/>.",
+        "shifted": "— дата пачатку аўтаматычна перасунута на <value/> пасля змены <cause/>."
       },
       "state": {
         "set": "— стан: <value/>.",
@@ -766,7 +767,8 @@
         "removed": "— прыбрана дата завяршэння.",
         "removed_with_issue": "— прыбрана дата завяршэння з <issue/>.",
         "set": "— дата завяршэння: <value/>.",
-        "set_with_issue": "— дата завяршэння для <issue/>: <value/>."
+        "set_with_issue": "— дата завяршэння для <issue/>: <value/>.",
+        "shifted": "— дата завяршэння аўтаматычна перасунута на <value/> пасля змены <cause/>."
       },
       "target_date": {
         "removed": "— прыбраны тэрмін выканання.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "— прыбраная дата пачатку з <issue/>",
         "removed_without_issue": "— прыбраная дата пачатку",
         "set_with_issue": "— дата пачатку для <issue/>: <value/>",
-        "set_without_issue": "— дата пачатку: <value/>"
+        "set_without_issue": "— дата пачатку: <value/>",
+        "shifted_with_issue": "— дата пачатку <issue/> аўтаматычна перасунута на <value/> пасля змены <cause/>",
+        "shifted_without_issue": "— дата пачатку аўтаматычна перасунута на <value/> пасля змены <cause/>"
       },
       "state": {
         "set_with_issue": "— стан для <issue/>: <value/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "— прыбраная дата завяршэння з <issue/>",
         "removed_without_issue": "— прыбраная дата завяршэння",
         "set_with_issue": "— дата завяршэння для <issue/>: <value/>",
-        "set_without_issue": "— дата завяршэння: <value/>"
+        "set_without_issue": "— дата завяршэння: <value/>",
+        "shifted_with_issue": "— дата завяршэння <issue/> аўтаматычна перасунута на <value/> пасля змены <cause/>",
+        "shifted_without_issue": "— дата завяршэння аўтаматычна перасунута на <value/> пасля змены <cause/>"
       },
       "target_date": {
         "removed_with_issue": "— прыбраны тэрмін выканання з <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "— адключаныя сувязі адсочвання",
         "enabled": "— уключаныя сувязі адсочвання",
         "fallback": "— абноўленыя сувязі адсочвання"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "— адключаная прапанова перасоўваць залежныя працоўныя элементы",
+        "enabled": "— уключаная прапанова перасоўваць залежныя працоўныя элементы",
+        "fallback": "— абноўленая прапанова перасоўваць залежныя працоўныя элементы"
       },
       "is_time_tracking_enabled": {
         "disabled": "— адключаны ўлік часу",

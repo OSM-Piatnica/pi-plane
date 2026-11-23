@@ -82,7 +82,14 @@ from .workspace import (
 
 from .favorite import UserFavorite
 
-from .issue_type import IssueType, ProjectIssueType
+from .issue_type import (
+    ISSUE_TYPE_KIND_LEVELS,
+    PROGRESS_EXCLUDED_ISSUE_TYPE_KINDS,
+    SYSTEM_MANAGED_ISSUE_TYPE_KINDS,
+    IssueType,
+    IssueTypeKind,
+    ProjectIssueType,
+)
 from .issue_type_property import IssueTypeProperty, IssuePropertyValue
 
 from .recent_visit import UserRecentVisit
@@ -112,6 +119,7 @@ from .project_copy_job import ProjectCopyJob
 from .description import Description, DescriptionVersion
 
 from .user_group import (
+    GroupKind,
     GroupRole,
     GroupSource,
     IssueGroupAssignee,
@@ -119,4 +127,14 @@ from .user_group import (
     ProjectGroupRole,
     UserGroup,
     UserGroupMember,
+)
+
+from .initiative import (
+    Initiative,
+    InitiativeEpic,
+    InitiativeHealth,
+    InitiativeKind,
+    InitiativeProject,
+    InitiativeStatus,
+    InitiativeUpdate,
 )

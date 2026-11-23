@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Setelah item kerja memiliki penerima tugas, hanya penerima tugasnya, pemimpin proyek, dan admin proyek yang dapat mengubahnya: kolom, status, tanggal, sub-item, relasi, tautan, lampiran, siklus dan modul, penghapusan dan pengarsipan. Semua orang tetap dapat berkomentar. Item kerja tanpa penerima tugas tetap terbuka bagi semua anggota.",
           "title": "Hanya penerima tugas, pemimpin proyek, dan admin yang dapat mengubah item kerja"
+        },
+        "reschedule_offer": {
+          "description": "Jika perubahan tanggal akan melanggar dependensi, item kerja yang bergantung ditawarkan untuk dipindahkan ke waktu yang lebih lambat alih-alih menolak perubahan. Jika dinonaktifkan, perubahan seperti itu ditolak.",
+          "title": "Tawarkan pemindahan item kerja yang bergantung"
         }
       },
       "save_error": "Tidak dapat menyimpan konfigurasi workflow.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Tolak",
+  "schedule_analysis": {
+    "critical_bar": "Di jalur kritis: keterlambatan menggeser akhir proyek",
+    "critical_path": "Jalur kritis",
+    "critical_path_tooltip": "Menyoroti item kerja yang keterlambatannya menggeser akhir proyek.",
+    "cycles": "Beberapa item kerja saling bergantung secara melingkar; relasi tersebut diabaikan.",
+    "filter_ignored": "Filter Jalur kritis diabaikan: terlalu banyak item kerja bertanggal untuk menentukan jalur kritis.",
+    "float": "Kelonggaran",
+    "float_critical": "Tidak ada (jalur kritis)",
+    "float_days": "{count, plural, one {# hari kerja} other {# hari kerja}}",
+    "float_help": "Jumlah hari kerja item kerja ini dapat mundur tanpa menggeser akhir proyek",
+    "inverted": "Beberapa item kerja selesai sebelum dimulai; item tersebut diabaikan.",
+    "load_error": "Tidak dapat memuat jalur kritis.",
+    "needed_by": "Dibutuhkan paling lambat",
+    "needed_by_help": "Tanggal selesai paling lambat agar item kerja yang bergantung pada item ini tetap memenuhi tanggal jatuh temponya",
+    "truncated": "Hanya item kerja bertanggal yang pertama yang dianalisis (batas: {count}). Tidak ada yang disorot."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Anda belum memiliki catatan impor saat ini. Setelah Anda mengimpor file ke dalam proyek, semua catatan akan muncul di sini.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Aktifkan",
+        "add": "Tambah departemen",
+        "code": "Kode",
+        "code_hint": "Label singkat, misalnya RM.",
+        "color": "Warna",
+        "created": "Departemen ditambahkan.",
+        "deactivate": "Nonaktifkan",
+        "delete_content": "Orang-orang dalam departemen ini tetap berada di ruang kerja dan tidak memiliki departemen. Item kerja yang ditugaskan ke departemen kehilangan penugasan tersebut. Tindakan ini tidak dapat dibatalkan.",
+        "deleted": "Departemen dihapus.",
+        "department": "Departemen",
+        "description": "Departemen di organisasi Anda. Setiap orang memiliki satu departemen di ruang kerja. Departemen juga merupakan grup, sehingga memiliki anggota dan item kerja dapat ditugaskan kepadanya.",
+        "edit": "Ubah departemen",
+        "empty": "Belum ada departemen.",
+        "import": "Impor daftar",
+        "import_done": "Departemen yang ditambahkan: {count}.",
+        "import_hint": "Tempelkan satu departemen per baris dalam format KODE;Nama. Departemen yang sudah ada dilewati.",
+        "import_invalid_lines": "Baris yang tidak dapat digunakan: {lines}",
+        "import_summary": "Akan ditambahkan: {create}. Sudah ada: {existing}.",
+        "import_title": "Impor departemen",
+        "inactive": "Nonaktif",
+        "move_down": "Pindahkan ke bawah",
+        "move_up": "Pindahkan ke atas",
+        "no_color": "Tanpa warna",
+        "title": "Departemen",
+        "updated": "Departemen disimpan."
+      },
       "exports": {
         "all_projects": "Semua proyek",
         "history": {

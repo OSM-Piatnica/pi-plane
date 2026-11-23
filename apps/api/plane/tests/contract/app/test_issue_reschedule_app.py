@@ -128,6 +128,8 @@ class TestOfferToShiftDependents:
         assert dates(successor) == (date(2026, 1, 15), date(2026, 1, 24))
         recorded = sorted(call.kwargs["requested_data"] for call in activity.call_args_list)
         assert recorded == ['{"finish_date": "2026-01-24"}', '{"start_date": "2026-01-15"}']
+        # each entry also names the work item whose change moved the dependent, apart from the requested data
+        assert {call.kwargs["shifted_after"] for call in activity.call_args_list} == {str(predecessor.id)}
 
     def test_the_shift_follows_the_chain(self, session_client, workspace, project):
         a = item(project, "a", date(2026, 1, 1), date(2026, 1, 10))

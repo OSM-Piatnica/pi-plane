@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Cuando un elemento de trabajo tiene un asignado, solo sus asignados, el responsable del proyecto y los administradores del proyecto pueden cambiarlo: campos, estado, fechas, sub-elementos, relaciones, enlaces, adjuntos, ciclos y módulos, eliminar y archivar. Todos pueden seguir comentando. Los elementos sin asignado siguen abiertos a todos los miembros.",
           "title": "Solo los asignados, el responsable del proyecto y los administradores pueden cambiar un elemento de trabajo"
+        },
+        "reschedule_offer": {
+          "description": "Cuando un cambio de fechas rompería una dependencia, se ofrece mover más adelante los elementos de trabajo dependientes en lugar de rechazar el cambio. Si está desactivado, ese cambio se rechaza.",
+          "title": "Ofrecer mover los elementos de trabajo dependientes"
         }
       },
       "save_error": "No se pudo guardar la configuración del flujo de trabajo.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Rechazar",
+  "schedule_analysis": {
+    "critical_bar": "En la ruta crítica: un retraso desplaza el final del proyecto",
+    "critical_path": "Ruta crítica",
+    "critical_path_tooltip": "Resalta los elementos de trabajo cuyo retraso desplaza el final del proyecto.",
+    "cycles": "Algunos elementos de trabajo dependen entre sí en círculo; esas relaciones se omitieron.",
+    "filter_ignored": "Se omitió el filtro Ruta crítica: hay demasiados elementos de trabajo con fechas para determinar la ruta crítica.",
+    "float": "Holgura",
+    "float_critical": "Ninguna (ruta crítica)",
+    "float_days": "{count, plural, one {# día laborable} other {# días laborables}}",
+    "float_help": "Días laborables que este elemento de trabajo puede retrasarse sin desplazar el final del proyecto",
+    "inverted": "Algunos elementos de trabajo terminan antes de empezar; se omitieron.",
+    "load_error": "No se pudo cargar la ruta crítica.",
+    "needed_by": "Necesario para el",
+    "needed_by_help": "Finalización más tardía que permite a los elementos de trabajo que dependen de este cumplir sus fechas de vencimiento",
+    "truncated": "Solo se analizaron los primeros elementos de trabajo con fechas (límite: {count}). No se resalta nada."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Aún no tienes registros de importación. Una vez que importes un archivo a un proyecto, todos los registros aparecerán aquí.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Activar",
+        "add": "Añadir departamento",
+        "code": "Código",
+        "code_hint": "Una etiqueta corta, por ejemplo RM.",
+        "color": "Color",
+        "created": "Departamento añadido.",
+        "deactivate": "Desactivar",
+        "delete_content": "Las personas de este departamento permanecen en el espacio de trabajo y quedan sin departamento. Los elementos de trabajo asignados al departamento pierden esa asignación. Esta acción no se puede deshacer.",
+        "deleted": "Departamento eliminado.",
+        "department": "Departamento",
+        "description": "Los departamentos de su organización. Cada persona tiene un departamento en el espacio de trabajo. Un departamento es también un grupo, por lo que tiene miembros y se le pueden asignar elementos de trabajo.",
+        "edit": "Editar departamento",
+        "empty": "Aún no hay departamentos.",
+        "import": "Importar lista",
+        "import_done": "Departamentos añadidos: {count}.",
+        "import_hint": "Pegue un departamento por línea con el formato CÓDIGO;Nombre. Los departamentos que ya existen se omiten.",
+        "import_invalid_lines": "Líneas que no se pueden usar: {lines}",
+        "import_summary": "Por añadir: {create}. Ya existen: {existing}.",
+        "import_title": "Importar departamentos",
+        "inactive": "Desactivado",
+        "move_down": "Mover abajo",
+        "move_up": "Mover arriba",
+        "no_color": "Sin color",
+        "title": "Departamentos",
+        "updated": "Departamento guardado."
+      },
       "exports": {
         "all_projects": "Todos los proyectos",
         "history": {

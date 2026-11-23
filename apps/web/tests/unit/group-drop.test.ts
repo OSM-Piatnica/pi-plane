@@ -5,7 +5,8 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { getGroupDropValue } from "@/helpers/group-drop";
+import type { TIssue } from "@plane/types";
+import { getGroupDropValue, withEpicDropParent } from "@/helpers/group-drop";
 
 // 2026-03-04 is a Wednesday, 2026-03-08 a Sunday
 describe("getGroupDropValue", () => {
@@ -83,5 +84,37 @@ describe("getGroupDropValue with the week of the project", () => {
     expect(getGroupDropValue("finish_date_bucket", null, "no_date", "this_week", "2026-03-04", [0, 6], 0)).toBe(
       "2026-03-06"
     );
+  });
+});
+
+describe("grouping by the hierarchy", () => {
+  it("drops a work item into a parent group as that parent, and out of it as no parent", () => {
+    expect(getGroupDropValue("parent", "old-parent", "old-parent", "new-parent")).toBe("new-parent");
+    expect(getGroupDropValue("parent", "old-parent", "old-parent", "None")).toBeNull();
+  });
+
+  it("drops a work item into an Epic group as that Epic, and into None as no Epic", () => {
+    expect(getGroupDropValue("epic", "epic-a", "epic-a", "epic-b")).toBe("epic-b");
+    expect(getGroupDropValue("epic", "epic-a", "epic-a", "None")).toBeNull();
+  });
+});
+
+describe("withEpicDropParent", () => {
+  it("turns the Epic of a drop into the parent", () => {
+    expect(withEpicDropParent({ id: "task", epic_id: "epic-b" })).toEqual({
+      id: "task",
+      epic_id: "epic-b",
+      parent_id: "epic-b",
+    });
+  });
+
+  it("drops out of every Epic into no parent", () => {
+    expect(withEpicDropParent<Partial<TIssue>>({ id: "task", epic_id: null }).parent_id).toBeNull();
+  });
+
+  it("leaves any other drop alone", () => {
+    const update = { id: "task", parent_id: "parent-b" };
+    expect(withEpicDropParent(update)).toBe(update);
+    expect(withEpicDropParent({ id: "task", priority: "high" } as const)).toEqual({ id: "task", priority: "high" });
   });
 });

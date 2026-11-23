@@ -7,7 +7,7 @@
 
 import type { CSSProperties, FC } from "react";
 import { extractInstruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { Timer } from "lucide-react";
+import { Hourglass, Timer } from "lucide-react";
 import { clone, isNil } from "lodash-es";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import {
@@ -19,6 +19,7 @@ import {
   LabelsOutline,
   LinkOutline,
   MembersOutline,
+  EpicOutline,
   ModuleOutline,
   ParentOutline,
   PriorityOutline,
@@ -74,7 +75,7 @@ import {
   DATE_BUCKET_NO_DAY_LEFT_ERROR,
 } from "@/helpers/group-column";
 import { getBucketContext } from "@/helpers/date-bucket-today";
-import { getGroupDropValue } from "@/helpers/group-drop";
+import { getGroupDropValue, withEpicDropParent } from "@/helpers/group-drop";
 import { orderWorkItemGroups } from "@/helpers/work-item-hierarchy-groups";
 import { resolveWeekendDays } from "@/helpers/weekend-days";
 import { store } from "@/lib/store-context";
@@ -89,6 +90,7 @@ import {
   SpreadsheetDueDateColumn,
   SpreadsheetFinishDateColumn,
   SpreadsheetDurationColumn,
+  SpreadsheetFloatColumn,
   SpreadsheetEstimateColumn,
   SpreadsheetLabelColumn,
   SpreadsheetModuleColumn,
@@ -185,6 +187,7 @@ export const getGroupByColumns = ({
     finish_date_bucket: () => getDateBucketColumns("finish_date"),
     team_project: getTeamProjectColumns,
     parent: getParentColumns,
+    epic: getEpicColumns,
   };
 
   // Get and return the columns for the specified group by option
@@ -192,34 +195,51 @@ export const getGroupByColumns = ({
 };
 
 /**
- * The groups of a parent grouping: the parents that the loaded work items reference, in identifier order, and the
- * work items without a parent. A group that is not loaded (yet) shows a placeholder name; one the person cannot open
- * keeps it.
+ * The groups of a grouping by a work item (a parent, an Epic): the work items that the loaded work items reference, in
+ * identifier order, and the work items without one. A group that is not loaded (yet) shows a placeholder name; one the
+ * person cannot open keeps it.
  */
-const getParentColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] => {
+const getWorkItemGroupColumns = (
+  groupIds: string[] | undefined,
+  payloadFor: (workItemId: string | null) => Partial<TIssue>,
+  noneIcon: React.ReactElement,
+  unresolvedName: string
+): IGroupByColumn[] => {
   const { getIssueById } = store.issue.issues;
   const { getProjectIdentifierById } = store.projectRoot.project;
-  const parents = orderWorkItemGroups(groupIds, getIssueById);
+  const workItems = orderWorkItemGroups(groupIds, getIssueById);
 
-  const columns: IGroupByColumn[] = parents.map(({ workItemId, workItem }) => {
+  const columns: IGroupByColumn[] = workItems.map(({ workItemId, workItem }) => {
     const projectIdentifier = workItem?.project_id ? getProjectIdentifierById(workItem.project_id) : undefined;
     return {
       id: workItemId,
       name: workItem
         ? `${projectIdentifier ? `${projectIdentifier}-${workItem.sequence_id} ` : ""}${workItem.name}`
-        : "Parent",
+        : unresolvedName,
       icon: <WorkItemGroupIcon workItemId={workItemId} />,
-      payload: { parent_id: workItemId },
+      payload: payloadFor(workItemId),
     };
   });
-  columns.push({
-    id: "None",
-    name: "None",
-    icon: <ParentOutline className="h-3.5 w-3.5" />,
-    payload: { parent_id: null },
-  });
+  columns.push({ id: "None", name: "None", icon: noneIcon, payload: payloadFor(null) });
   return columns;
 };
+
+const getParentColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (parentId) => ({ parent_id: parentId }),
+    <ParentOutline className="h-3.5 w-3.5" />,
+    "Parent"
+  );
+
+// A work item moved to an Epic group goes directly under that Epic, hence both fields
+const getEpicColumns = ({ groupIds }: TGetColumns): IGroupByColumn[] =>
+  getWorkItemGroupColumns(
+    groupIds,
+    (epicId) => ({ parent_id: epicId, epic_id: epicId }),
+    <EpicOutline className="h-3.5 w-3.5" />,
+    "Epic"
+  );
 
 /**
  * The groups of a date: its time buckets. The names are built where no translation is available, so they are
@@ -735,6 +755,9 @@ export const handleGroupDragDrop = async (
     updatedIssue = { ...updatedIssue, [subGroupKey]: subGroupValue };
   }
 
+  // moving a work item to an Epic group places it directly under that Epic
+  updatedIssue = withEpicDropParent(updatedIssue);
+
   if (updatedIssue && sourceIssue?.project_id) {
     return await updateIssueOnDrop(sourceIssue?.project_id, sourceIssue.id, updatedIssue, issueUpdates);
   }
@@ -1006,6 +1029,7 @@ export const SpreadSheetPropertyIconMap: Record<string, FC<ISvgIcons>> = {
   AttachOutline: AttachOutline,
   WorkItemsOutline: WorkItemsOutline,
   Timer: Timer,
+  Hourglass: Hourglass,
 };
 
 export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpreadsheetColumn } = {
@@ -1014,6 +1038,7 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   due_date: SpreadsheetDueDateColumn,
   finish_date: SpreadsheetFinishDateColumn,
   duration: SpreadsheetDurationColumn,
+  float: SpreadsheetFloatColumn,
   estimate: SpreadsheetEstimateColumn,
   labels: SpreadsheetLabelColumn,
   modules: SpreadsheetModuleColumn,

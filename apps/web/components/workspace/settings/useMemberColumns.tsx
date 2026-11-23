@@ -7,15 +7,18 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import useSWR from "swr";
 import { EUserPermissions, EUserPermissionsLevel, LOGIN_MEDIUM_LABELS } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 import { MemberHeaderColumn } from "@/components/project/member-header-column";
 import type { RowData } from "@/components/workspace/settings/member-columns";
-import { AccountTypeColumn, NameColumn } from "@/components/workspace/settings/member-columns";
+import { AccountTypeColumn, DepartmentColumn, NameColumn } from "@/components/workspace/settings/member-columns";
 import { useMember } from "@/hooks/store/use-member";
 import { useUser, useUserPermissions } from "@/hooks/store/user";
 import type { IMemberFilters } from "@/store/member/utils";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { getDepartmentMembersKey, getUserGroupsKey } from "@/helpers/department";
+import { userGroupService } from "@/services/user-group.service";
 
 const isSuspended = (rowData: RowData) => rowData.is_active === false;
 
@@ -37,6 +40,23 @@ export const useMemberColumns = () => {
 
   // derived values
   const isAdmin = allowPermissions([EUserPermissions.ADMIN], EUserPermissionsLevel.WORKSPACE);
+  // The groups are not shown to guests, and neither is anybody's department
+  const canSeeDepartments = allowPermissions(
+    [EUserPermissions.ADMIN, EUserPermissions.MEMBER],
+    EUserPermissionsLevel.WORKSPACE
+  );
+  const { data: groups } = useSWR(
+    workspaceSlug && canSeeDepartments ? getUserGroupsKey(workspaceSlug.toString()) : null,
+    workspaceSlug ? () => userGroupService.list(workspaceSlug.toString()) : null
+  );
+  const departments = (groups ?? []).filter((group) => group.kind === "department");
+  // Who works where is derived from the department groups on the server
+  const { data: departmentMembers } = useSWR(
+    workspaceSlug && canSeeDepartments && departments.length > 0
+      ? getDepartmentMembersKey(workspaceSlug.toString())
+      : null,
+    workspaceSlug ? () => userGroupService.listDepartmentMembers(workspaceSlug.toString()) : null
+  );
 
   // handlers
   const handleDisplayFilterUpdate = (filterUpdates: Partial<IMemberFilters>) => {
@@ -116,6 +136,24 @@ export const useMemberColumns = () => {
       ),
       tdRender: (rowData: RowData) => <AccountTypeColumn rowData={rowData} workspaceSlug={workspaceSlug} />,
     },
+
+    // The column is there only when the workspace has departments
+    ...(departments.length > 0
+      ? [
+          {
+            key: "Department",
+            defaultWidth: 200,
+            content: t("workspace_settings.settings.departments.department"),
+            tdRender: (rowData: RowData) => (
+              <DepartmentColumn
+                rowData={rowData}
+                departments={departments}
+                departmentId={departmentMembers?.[rowData.member.id]}
+              />
+            ),
+          },
+        ]
+      : []),
 
     {
       key: "Authentication",

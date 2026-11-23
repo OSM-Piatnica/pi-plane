@@ -9,6 +9,7 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { create } from "axios";
 import { normalizeAPIRequestURL } from "@plane/services";
+import { announceIgnoredFilters } from "@/helpers/ignored-filters.helper";
 
 export abstract class APIService {
   protected baseURL: string;
@@ -39,7 +40,11 @@ export abstract class APIService {
     });
 
     this.axiosInstance.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        // a list the server did not filter by every condition: let the layout tell the person
+        announceIgnoredFilters(response.headers);
+        return response;
+      },
       (error) => {
         if (error.response && error.response.status === 401) {
           const url = String(error.config?.url ?? "");

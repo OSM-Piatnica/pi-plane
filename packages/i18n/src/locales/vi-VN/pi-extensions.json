@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Khi một mục công việc đã có người được giao, chỉ những người được giao, trưởng dự án và quản trị viên dự án mới được thay đổi: trường, trạng thái, ngày, mục con, quan hệ, liên kết, tệp đính kèm, chu kỳ và mô-đun, xóa và lưu trữ. Mọi người vẫn có thể bình luận. Mục chưa có người được giao vẫn mở cho mọi thành viên.",
           "title": "Chỉ người được giao, trưởng dự án và quản trị viên mới được thay đổi mục công việc"
+        },
+        "reschedule_offer": {
+          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối.",
+          "title": "Đề xuất dời các mục công việc phụ thuộc"
         }
       },
       "save_error": "Không thể lưu cấu hình quy trình làm việc.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Từ chối",
+  "schedule_analysis": {
+    "critical_bar": "Nằm trên đường găng: chậm trễ sẽ đẩy lùi ngày kết thúc dự án",
+    "critical_path": "Đường găng",
+    "critical_path_tooltip": "Làm nổi bật các mục công việc mà sự chậm trễ sẽ đẩy lùi ngày kết thúc dự án.",
+    "cycles": "Một số mục công việc phụ thuộc vòng tròn vào nhau; các quan hệ đó đã bị bỏ qua.",
+    "filter_ignored": "Bộ lọc Đường găng đã bị bỏ qua: có quá nhiều mục công việc có ngày để xác định đường găng.",
+    "float": "Thời gian dự trữ",
+    "float_critical": "Không có (đường găng)",
+    "float_days": "{count, plural, one {# ngày làm việc} other {# ngày làm việc}}",
+    "float_help": "Số ngày làm việc mà mục công việc này có thể trễ mà không đẩy lùi ngày kết thúc dự án",
+    "inverted": "Một số mục công việc kết thúc trước khi bắt đầu; chúng đã bị bỏ qua.",
+    "load_error": "Không thể tải đường găng.",
+    "needed_by": "Cần xong trước",
+    "needed_by_help": "Ngày kết thúc muộn nhất để các mục công việc phụ thuộc vào mục này vẫn kịp ngày hết hạn",
+    "truncated": "Chỉ những mục công việc có ngày đầu tiên được phân tích (giới hạn: {count}). Không có gì được làm nổi bật."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Bạn hiện chưa có bản ghi nhập nào. Sau khi bạn nhập một tệp vào dự án, tất cả các bản ghi sẽ xuất hiện tại đây.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Bật",
+        "add": "Thêm phòng ban",
+        "code": "Mã",
+        "code_hint": "Một nhãn ngắn, ví dụ RM.",
+        "color": "Màu",
+        "created": "Đã thêm phòng ban.",
+        "deactivate": "Tắt",
+        "delete_content": "Những người trong phòng ban này vẫn ở lại không gian làm việc và không có phòng ban. Các mục công việc được giao cho phòng ban sẽ mất lượt giao đó. Không thể hoàn tác hành động này.",
+        "deleted": "Đã xóa phòng ban.",
+        "department": "Phòng ban",
+        "description": "Các phòng ban của tổ chức bạn. Mỗi người có một phòng ban trong không gian làm việc. Phòng ban cũng là một nhóm, vì vậy có thành viên và có thể được giao các mục công việc.",
+        "edit": "Chỉnh sửa phòng ban",
+        "empty": "Chưa có phòng ban nào.",
+        "import": "Nhập danh sách",
+        "import_done": "Số phòng ban đã thêm: {count}.",
+        "import_hint": "Dán mỗi dòng một phòng ban theo dạng MÃ;Tên. Các phòng ban đã tồn tại sẽ được bỏ qua.",
+        "import_invalid_lines": "Các dòng không dùng được: {lines}",
+        "import_summary": "Sẽ thêm: {create}. Đã có: {existing}.",
+        "import_title": "Nhập phòng ban",
+        "inactive": "Đã tắt",
+        "move_down": "Chuyển xuống",
+        "move_up": "Chuyển lên",
+        "no_color": "Không có màu",
+        "title": "Phòng ban",
+        "updated": "Đã lưu phòng ban."
+      },
       "exports": {
         "all_projects": "Tất cả dự án",
         "history": {

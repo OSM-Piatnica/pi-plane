@@ -15,7 +15,8 @@ import logging
 from django.db import transaction
 from django.utils import timezone
 
-from plane.db.models import Account, GroupRole, GroupSource, UserGroup, UserGroupMember, WorkspaceMember
+from plane.db.models import Account, GroupKind, GroupRole, GroupSource, UserGroup, UserGroupMember, WorkspaceMember
+from plane.utils.departments import department_memberships
 from plane.utils.project_groups import reconcile_user
 from plane.utils.user_groups import MAX_GROUP_DEPTH
 
@@ -66,6 +67,11 @@ def _sync_workspace(workspace_id, user, source, groups):
     A group the provider places under another (``parent_id``) is nested under it here, the parents created first
     and without members of their own. For such a group the sync owns the place in the tree: it is put back under
     the provider's parent whenever someone moved it. A group the provider gives no parent is never moved.
+
+    Departments (mirrored groups a workspace admin marked as departments) follow the one-department rule: of the
+    active departments the provider lists for the person, only the first in the provider's order is joined, the
+    later ones are skipped (and logged). The provider's department wins over a hand-made membership of another
+    active department, which is taken out (and logged); another provider's memberships are left to that provider.
     """
     wanted = {group["id"]: group for group in groups}
     existing = {
@@ -117,10 +123,21 @@ def _sync_workspace(workspace_id, user, source, groups):
     # Parents are created before the groups below them (ensure goes up first), whatever the order of the list
     done = {}
     current = set()
+    department = None
     for external_id, entry in wanted.items():
         group = ensure(external_id, done)
         if group is None or not entry.get("member", True):
             continue
+        if group.kind == GroupKind.DEPARTMENT and group.is_active:
+            if department is not None:
+                logger.warning(
+                    "Group sync: %s is in more than one department at the provider; kept %s, skipped %s",
+                    user.id,
+                    department.id,
+                    group.id,
+                )
+                continue
+            department = group
         current.add(group.id)
         if not UserGroupMember.objects.filter(group=group, user=user).exists():
             UserGroupMember.objects.create(
@@ -132,12 +149,27 @@ def _sync_workspace(workspace_id, user, source, groups):
             )
 
     # Left at the provider: only what this sync put in is taken out. Groups stay, even when nobody is left in them.
-    UserGroupMember.objects.filter(
+    left = UserGroupMember.objects.filter(
         workspace_id=workspace_id,
         user=user,
         managed_externally=True,
         group__source=source,
-    ).exclude(group_id__in=current).delete()
+    ).exclude(group_id__in=current)
+    left.delete()
+
+    if department is not None:
+        # The provider's department is the person's one: a hand-made membership of another active department goes
+        others = department_memberships(workspace_id, [user.id], exclude_group_id=department.id).filter(
+            managed_externally=False
+        )
+        for membership in others:
+            logger.warning(
+                "Group sync: %s left department %s for %s given by the provider",
+                user.id,
+                membership.group_id,
+                department.id,
+            )
+        others.delete()
 
 
 def _as_data(group):

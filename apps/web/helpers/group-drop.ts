@@ -8,7 +8,7 @@ import { clone, concat, pull, uniq } from "lodash-es";
 // plane imports
 import type { TBucketToday } from "@plane/utils";
 import { getDateBucketDropDate, getDateBucketEdge, isDateBucketGroupBy } from "@plane/utils";
-import type { TIssueGroupByOptions } from "@plane/types";
+import type { TIssue, TIssueGroupByOptions } from "@plane/types";
 
 /**
  * The new value of the property a group by is made of, after a work item was dropped from one group into another.
@@ -43,3 +43,11 @@ export const getGroupDropValue = (
   }
   return destinationGroupId === "None" ? null : destinationGroupId;
 };
+
+/**
+ * A work item dropped into an Epic group goes directly under that Epic: the drop sets `epic_id`, which only the
+ * server derives, so the change that is sent is a new parent (none for the "None" group). Any other drop is
+ * left as it is.
+ */
+export const withEpicDropParent = <T extends Partial<TIssue>>(update: T): T =>
+  "epic_id" in update ? { ...update, parent_id: update.epic_id ?? null } : update;

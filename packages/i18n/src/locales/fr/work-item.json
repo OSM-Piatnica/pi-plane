@@ -756,7 +756,8 @@
         "removed": "a supprimé la date de début.",
         "removed_with_issue": "a supprimé la date de début de <issue/>.",
         "set": "a défini la date de début sur <value/>.",
-        "set_with_issue": "a défini la date de début de <issue/> sur <value/>."
+        "set_with_issue": "a défini la date de début de <issue/> sur <value/>.",
+        "shifted": "a décalé automatiquement la date de début au <value/> après la modification de <cause/>."
       },
       "state": {
         "set": "a défini l’état sur <value/>.",
@@ -766,7 +767,8 @@
         "removed": "a supprimé la date de fin.",
         "removed_with_issue": "a supprimé la date de fin de <issue/>.",
         "set": "a défini la date de fin sur <value/>.",
-        "set_with_issue": "a défini la date de fin de <issue/> sur <value/>."
+        "set_with_issue": "a défini la date de fin de <issue/> sur <value/>.",
+        "shifted": "a décalé automatiquement la date de fin au <value/> après la modification de <cause/>."
       },
       "target_date": {
         "removed": "a supprimé la date d’échéance.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "a supprimé la date de début de <issue/>",
         "removed_without_issue": "a supprimé la date de début",
         "set_with_issue": "a défini la date de début de <issue/> sur <value/>",
-        "set_without_issue": "a défini la date de début sur <value/>"
+        "set_without_issue": "a défini la date de début sur <value/>",
+        "shifted_with_issue": "a décalé automatiquement la date de début de <issue/> au <value/> après la modification de <cause/>",
+        "shifted_without_issue": "a décalé automatiquement la date de début au <value/> après la modification de <cause/>"
       },
       "state": {
         "set_with_issue": "a défini l’état de <issue/> sur <value/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "a supprimé la date de fin de <issue/>",
         "removed_without_issue": "a supprimé la date de fin",
         "set_with_issue": "a défini la date de fin de <issue/> sur <value/>",
-        "set_without_issue": "a défini la date de fin sur <value/>"
+        "set_without_issue": "a défini la date de fin sur <value/>",
+        "shifted_with_issue": "a décalé automatiquement la date de fin de <issue/> au <value/> après la modification de <cause/>",
+        "shifted_without_issue": "a décalé automatiquement la date de fin au <value/> après la modification de <cause/>"
       },
       "target_date": {
         "removed_with_issue": "a supprimé la date d’échéance de <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "a désactivé les relations de traçabilité",
         "enabled": "a activé les relations de traçabilité",
         "fallback": "a mis à jour les relations de traçabilité"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "a désactivé la proposition de décalage des éléments de travail dépendants",
+        "enabled": "a activé la proposition de décalage des éléments de travail dépendants",
+        "fallback": "a mis à jour la proposition de décalage des éléments de travail dépendants"
       },
       "is_time_tracking_enabled": {
         "disabled": "a désactivé le suivi du temps",

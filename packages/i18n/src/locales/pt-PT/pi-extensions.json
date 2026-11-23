@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Quando um item de trabalho tem um responsável, só os responsáveis, o líder do projeto e os administradores do projeto o podem alterar: campos, estado, datas, sub-itens, relações, ligações, anexos, ciclos e módulos, eliminar e arquivar. Todos podem continuar a comentar. Os itens sem responsável continuam abertos a todos os membros.",
           "title": "Só os responsáveis, o líder do projeto e os administradores podem alterar um item de trabalho"
+        },
+        "reschedule_offer": {
+          "description": "Quando uma alteração de datas quebraria uma dependência, é proposto mover para mais tarde os itens de trabalho dependentes em vez de recusar a alteração. Quando desativada, essa alteração é recusada.",
+          "title": "Propor mover os itens de trabalho dependentes"
         }
       },
       "save_error": "Não foi possível guardar a configuração do fluxo de trabalho.",
@@ -212,6 +216,22 @@
     }
   },
   "reject": "Rejeitar",
+  "schedule_analysis": {
+    "critical_bar": "No caminho crítico: um atraso desloca o fim do projeto",
+    "critical_path": "Caminho crítico",
+    "critical_path_tooltip": "Realça os itens de trabalho cujo atraso desloca o fim do projeto.",
+    "cycles": "Alguns itens de trabalho dependem uns dos outros em círculo; essas relações foram ignoradas.",
+    "filter_ignored": "O filtro Caminho crítico foi ignorado: existem demasiados itens de trabalho com datas para determinar o caminho crítico.",
+    "float": "Folga",
+    "float_critical": "Nenhuma (caminho crítico)",
+    "float_days": "{count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}",
+    "float_help": "Dias úteis que este item de trabalho pode atrasar-se sem deslocar o fim do projeto",
+    "inverted": "Alguns itens de trabalho terminam antes de começar; foram ignorados.",
+    "load_error": "Não foi possível carregar o caminho crítico.",
+    "needed_by": "Necessário até",
+    "needed_by_help": "Conclusão mais tardia que permite aos itens de trabalho que dependem deste cumprir as datas de vencimento",
+    "truncated": "Apenas os primeiros itens de trabalho com datas foram analisados (limite: {count}). Nada é destacado."
+  },
   "settings_empty_state": {
     "imports": {
       "description": "Ainda não tem nenhum registo de importação. Assim que importar um ficheiro para um projeto, todos os registos aparecerão aqui.",
@@ -231,6 +251,33 @@
   },
   "workspace_settings": {
     "settings": {
+      "departments": {
+        "activate": "Ativar",
+        "add": "Adicionar departamento",
+        "code": "Código",
+        "code_hint": "Uma sigla curta, por exemplo RM.",
+        "color": "Cor",
+        "created": "Departamento adicionado.",
+        "deactivate": "Desativar",
+        "delete_content": "As pessoas deste departamento permanecem no espaço de trabalho e ficam sem departamento. Os itens de trabalho atribuídos ao departamento perdem essa atribuição. Esta ação não pode ser anulada.",
+        "deleted": "Departamento eliminado.",
+        "department": "Departamento",
+        "description": "Os departamentos da sua organização. Cada pessoa tem um departamento no espaço de trabalho. Um departamento é também um grupo, pelo que tem membros e é possível atribuir-lhe itens de trabalho.",
+        "edit": "Editar departamento",
+        "empty": "Ainda não há departamentos.",
+        "import": "Importar lista",
+        "import_done": "Departamentos adicionados: {count}.",
+        "import_hint": "Cole um departamento por linha no formato CÓDIGO;Nome. Os departamentos que já existem são ignorados.",
+        "import_invalid_lines": "Linhas que não podem ser utilizadas: {lines}",
+        "import_summary": "A adicionar: {create}. Já existem: {existing}.",
+        "import_title": "Importar departamentos",
+        "inactive": "Desativado",
+        "move_down": "Mover para baixo",
+        "move_up": "Mover para cima",
+        "no_color": "Sem cor",
+        "title": "Departamentos",
+        "updated": "Departamento guardado."
+      },
       "exports": {
         "all_projects": "Todos os projetos",
         "history": {

@@ -45,6 +45,20 @@
       "open": "Kleurkiezer openen",
       "swatches": "Vooraf ingestelde kleuren",
       "hex_input": "Hexkleur"
+    },
+    "calendar": {
+      "choose_month": "Maand kiezen",
+      "choose_year": "Jaar kiezen",
+      "previous_month": "Vorige maand",
+      "next_month": "Volgende maand",
+      "previous_year": "Vorig jaar",
+      "next_year": "Volgend jaar",
+      "previous_year_page": "Vorige 12 jaar",
+      "next_year_page": "Volgende 12 jaar",
+      "month_view": "Maand kiezen voor {year}",
+      "year_view": "Jaar kiezen van {first_year} tot {last_year}",
+      "today_date": "Vandaag, {date}",
+      "selected_date": "{date}, geselecteerd"
     }
   }
 }

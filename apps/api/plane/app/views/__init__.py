@@ -82,11 +82,22 @@ from .workspace.invite import (
 from .workspace.label import WorkspaceLabelsEndpoint
 from .workspace.admin_message import WorkspaceAdminMessageEndpoint
 from .workspace.user_group import (
+    DepartmentListEndpoint,
+    DepartmentMembersEndpoint,
     UserGroupDetailEndpoint,
     UserGroupFilterableEndpoint,
     UserGroupListEndpoint,
     UserGroupMemberDetailEndpoint,
     UserGroupMembersEndpoint,
+)
+from .workspace.initiative import (
+    InitiativeDetailEndpoint,
+    InitiativeEpicDetailEndpoint,
+    InitiativeEpicsEndpoint,
+    InitiativeListEndpoint,
+    InitiativeProjectDetailEndpoint,
+    InitiativeProjectsEndpoint,
+    InitiativeUpdatesEndpoint,
 )
 from .workspace.state import WorkspaceStatesEndpoint
 from .workspace.user import (
@@ -157,6 +168,7 @@ from .issue.base import (
 
 from .issue.activity import IssueActivityEndpoint
 from .issue.hierarchy import IssueDateRollupEndpoint
+from .issue.schedule import ProjectScheduleAnalysisEndpoint
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint

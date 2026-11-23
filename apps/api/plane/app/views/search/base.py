@@ -332,15 +332,16 @@ class SearchEndpoint(BaseAPIView):
     permission_classes = (WorkspaceUserPermission,)
 
     def discoverable_projects_q(self, slug):
-        """Projects the user may find by name: their own and the Public ones, plus the Private
-        ones (listed but locked) unless the user is a guest. Secret projects are members-only."""
-        networks = [ProjectNetwork.PUBLIC.value]
+        """Projects the user may find by name, as in the project list: the ones they are an active member of and,
+        unless they are a workspace guest, the Public ones plus the Private ones (listed but locked). Secret
+        projects are members-only."""
+        own = Q(project_projectmember__member=self.request.user, project_projectmember__is_active=True)
         is_guest = WorkspaceMember.objects.filter(
             member=self.request.user, workspace__slug=slug, is_active=True, role=ROLE.GUEST.value
         ).exists()
-        if not is_guest:
-            networks.append(ProjectNetwork.PRIVATE.value)
-        return Q(project_projectmember__member=self.request.user) | Q(network__in=networks)
+        if is_guest:
+            return own
+        return own | Q(network__in=[ProjectNetwork.PUBLIC.value, ProjectNetwork.PRIVATE.value])
 
     def get(self, request, slug):
         query = request.query_params.get("query", False)

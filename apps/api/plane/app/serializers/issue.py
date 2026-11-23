@@ -15,6 +15,7 @@ from rest_framework import serializers
 
 # Module imports
 from .base import BaseSerializer, DynamicBaseSerializer
+from .asset import validate_uploaded_file
 from .user import UserLiteSerializer
 from .state import StateLiteSerializer
 from .project import ProjectLiteSerializer
@@ -56,7 +57,7 @@ from plane.utils.content_validator import (
 )
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
-from plane.utils.project_issue_types import issue_type_assignment_error
+from plane.utils.project_issue_types import issue_type_assignment_error, raise_issue_type_assignment_error
 from plane.utils.work_item_dates import apply_date_rules
 from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
@@ -303,10 +304,13 @@ class IssueCreateSerializer(BaseSerializer):
 
         issue_type = attrs.get("type")
         project_id = self.context.get("project_id")
-        if issue_type is not None and project_id:
-            type_error = issue_type_assignment_error(project_id, issue_type, getattr(self.instance, "type", None))
+        # Checked whenever a type was sent, null included: clearing the type is a change of type as well
+        if "type" in attrs and project_id:
+            type_error = issue_type_assignment_error(
+                project_id, issue_type, getattr(self.instance, "type", None), existing=self.instance is not None
+            )
             if type_error:
-                raise serializers.ValidationError(type_error)
+                raise_issue_type_assignment_error(type_error)
 
         # Parent rules (same project, no cycle, an Epic has no parent) hold for the type and parent the work
         # item ends up with, so a type change alone is checked against the parent it already has.
@@ -543,6 +547,31 @@ class IssueActivitySerializer(BaseSerializer):
     project_detail = ProjectLiteSerializer(read_only=True, source="project")
     workspace_detail = WorkspaceLiteSerializer(read_only=True, source="workspace")
     source_data = serializers.SerializerMethodField()
+    shift_cause = serializers.SerializerMethodField()
+
+    def get_shift_cause(self, obj):
+        """The work item whose change moved this one along, for a date entry written by a shift of dependents.
+
+        Its reference is read now, not when the entry was written, so the link survives a changed identifier. One
+        query per distinct cause in a list of entries.
+        """
+        if obj.field not in ("start_date", "finish_date") or not obj.old_identifier:
+            return None
+        causes = self.root.__dict__.setdefault("_shift_causes", {})
+        cause_id = str(obj.old_identifier)
+        if cause_id not in causes:
+            cause = (
+                Issue.objects.filter(pk=cause_id, workspace_id=obj.workspace_id)
+                .values("id", "project_id", "sequence_id", "project__identifier")
+                .first()
+            )
+            causes[cause_id] = cause and {
+                "id": str(cause["id"]),
+                "project_id": str(cause["project_id"]),
+                "sequence_id": cause["sequence_id"],
+                "project_identifier": cause["project__identifier"],
+            }
+        return causes[cause_id]
 
     def get_source_data(self, obj):
         if hasattr(obj, "issue") and hasattr(obj.issue, "source_data") and obj.issue.source_data:
@@ -835,6 +864,9 @@ class IssueAttachmentSerializer(BaseSerializer):
             "project",
             "issue",
         ]
+
+    def validate_asset(self, value):
+        return validate_uploaded_file(value)
 
 
 class IssueAttachmentLiteSerializer(DynamicBaseSerializer):

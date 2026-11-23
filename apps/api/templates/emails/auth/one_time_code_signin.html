@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{% etr "one_time_code.subject" code=code %}</title>
+    <title>{% if sign_up %}{% etr "sign_up_code.subject" code=code %}{% else %}{% etr "one_time_code.subject" code=code %}{% endif %}</title>
 
     <style>
       /* Basic resets for email clients */
@@ -79,7 +79,7 @@
         visibility: hidden;
       "
     >
-      {% etr "one_time_code.preheader" code=code %}
+      {% if sign_up %}{% etr "sign_up_code.preheader" code=code %}{% else %}{% etr "one_time_code.preheader" code=code %}{% endif %}
     </span>
 
     <!-- Outer Wrapper -->
@@ -93,7 +93,7 @@
             <table role="presentation" width="100%" style="background-color: #000000">
               <tr>
                 <td style="padding: 24px 40px; text-align: center">
-                  {% email_logo "dark" 120 %}
+                  {% email_logo "white" 120 "center" %}
                 </td>
               </tr>
             </table>
@@ -123,7 +123,7 @@
 
                   <!-- Heading -->
                   <h1 style="margin: 0 0 12px; font-size: 22px; line-height: 1.35; font-weight: 600; color: #111111">
-                    {% etr "one_time_code.heading" %}
+                    {% if sign_up %}{% etr "sign_up_code.heading" %}{% else %}{% etr "one_time_code.heading" %}{% endif %}
                   </h1>
 
                   <!-- Code chip -->
@@ -149,12 +149,12 @@
 
                   <!-- Main info -->
                   <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
-                    {% etr "one_time_code.info" %}
+                    {% if sign_up %}{% etr "sign_up_code.info" %}{% else %}{% etr "one_time_code.info" %}{% endif %}
                   </p>
 
                   <!-- Secondary info -->
                   <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: #5f5e5e">
-                    {% etr "one_time_code.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}
+                    {% if sign_up %}{% etr "sign_up_code.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}{% else %}{% etr "one_time_code.note" email=email span_style="font-family: 'Courier New', Courier, monospace; font-size: 12px; background-color: #f3f3f3; padding: 2px 4px; border-radius: 3px; border: 1px solid #e9e9e9;" %}{% endif %}
                   </p>
                 </td>
               </tr>
