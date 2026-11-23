@@ -578,7 +578,7 @@ Each has a default the plan assumes.
 | 11  | Maximum file size for SharePoint documents?                                                                                                                      | 500 MB                                                                                                                   | B2               |
 | 13  | One department per person, or several? ([#508](https://github.com/OSM-Piatnica/pi-plane/issues/508))                                                             | One (as merged in D1)                                                                                                    | D2, D3, D9       |
 | 14  | Sort lists by Float? ([#518](https://github.com/OSM-Piatnica/pi-plane/issues/518))                                                                               | No; Float is read-only, the critical path filter (#519) covers "show me what is critical"                                | D5 follow-ups    |
-| 15  | Sub-items and a moved parent (#478): should sub-items follow, should a rolled-up span count in dependencies, should sub-items inherit the parent's predecessors? | No change: roll-up stays display only (recommended answers, if decided: see D8c)                                                                                    | D8, D7           |
+| 15  | Sub-items and a moved parent (#478): should sub-items follow, should a rolled-up span count in dependencies, should sub-items inherit the parent's predecessors? | No change: roll-up stays display only (recommended answers, if decided: see D8c)                                         | D8, D7           |
 
 ## 11. Risks
 
