@@ -413,8 +413,16 @@ Already delivered before this plan: dependency shifting with confirmation, relat
 - Reschedule dialog warns when a shifted item's new `finish_date` passes its due date (`target_date`): "DEMO-41 will exceed its deadline by 3 days", counted in working days. Not in #478, whose description says there is no deadline separate from the due date yet; the due date is that deadline, so this needs no D7 and is a small follow-up PR (D8b).
 - Activity entry of a shifted item links to the item that caused the shift.
 - Project setting "Offer to shift dependent items" (default on).
-- Check that the cascade covers sub-items when a parent with roll-up is moved. #478 found it does not (roll-up is display only) and changed nothing; whether sub-items should follow, whether a rolled-up span should count in dependencies, and whether sub-items inherit a parent's predecessors are decision 15.
-- Shifting backwards stays out of scope.
+- Check that the cascade covers sub-items when a parent with roll-up is moved. #478 found it does not (roll-up is display only) and changed nothing; whether sub-items should follow, whether a rolled-up span should count in dependencies, and whether sub-items inherit a parent's predecessors are decision 15; recommended answers in D8c.
+- Shifting backwards stays out of scope of D8. Tracked separately in [#521](https://github.com/OSM-Piatnica/pi-plane/issues/521).
+
+**D8c. Sub-items when a parent is moved (decision 15). Size M. Needs D8 ([#478](https://github.com/OSM-Piatnica/pi-plane/pull/478)).**
+
+- Starting point: [#478](https://github.com/OSM-Piatnica/pi-plane/pull/478) (section C) found that a parent keeps its own stored dates, relations are checked against those, and sub-items are not part of the shift offer. It changed no behaviour and left three questions open. Recommended decisions:
+  1. **Sub-items follow a moved parent: opt-in in the reschedule dialog.** The sub-items are listed in the same dialog, default on, for both a manual move and a shift. Not moved silently, because sub-items may be placed outside the parent on purpose.
+  2. **A parent with roll-up counts its rolled-up span in dependencies.** For relation checks and the shift offer, use the effective span (the roll-up where it extends past the parent's own dates), so a late sub-item pushes the parent's successors and no longer overruns them unreported. Do after 1.
+  3. **Sub-items do not inherit the predecessors of their parent.** Inheriting creates implicit constraints across items and projects that are hard to explain. Revisit only if users ask once 1 and 2 are in.
+- Update the tests and the table in `docs/working-days.md` from [#478](https://github.com/OSM-Piatnica/pi-plane/pull/478) to the new behaviour.
 
 **D9. Focus endpoint: next tasks and blockers. Size M. Needs D2 for the department parts.**
 
@@ -527,7 +535,7 @@ Stickies stay under Projects and Home (they are personal notes, not a destinatio
 
 ```
 Wave 1 (parallel):  A1   B1   D1   G1   D5   F1          (done except B1, which waits for a test tenant)
-Wave 2:             A2   B2   D2   G2 G3   D6   D8 D8b   F2
+Wave 2:             A2   B2   D2   G2 G3   D6   D8 D8b D8c   F2
 Wave 3:             B3 B4   C2   D3 D4   D9   A3   F3
 Wave 4:             C1   C3   D7   E1 E2   A4   F4
 Wave 5:             C4   C5   E3 E4   F5
@@ -570,7 +578,7 @@ Each has a default the plan assumes.
 | 11  | Maximum file size for SharePoint documents?                                                                                                                      | 500 MB                                                                                                                   | B2               |
 | 13  | One department per person, or several? ([#508](https://github.com/OSM-Piatnica/pi-plane/issues/508))                                                             | One (as merged in D1)                                                                                                    | D2, D3, D9       |
 | 14  | Sort lists by Float? ([#518](https://github.com/OSM-Piatnica/pi-plane/issues/518))                                                                               | No; Float is read-only, the critical path filter (#519) covers "show me what is critical"                                | D5 follow-ups    |
-| 15  | Sub-items and a moved parent (#478): should sub-items follow, should a rolled-up span count in dependencies, should sub-items inherit the parent's predecessors? | No change: roll-up stays display only                                                                                    | D8, D7           |
+| 15  | Sub-items and a moved parent (#478): should sub-items follow, should a rolled-up span count in dependencies, should sub-items inherit the parent's predecessors? | No change: roll-up stays display only (recommended answers, if decided: see D8c)                                         | D8, D7           |
 
 ## 11. Risks
 
