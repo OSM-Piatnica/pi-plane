@@ -34,6 +34,7 @@ from plane.app.serializers import ModuleDetailSerializer
 from plane.db.models import Issue, Module, ModuleLink, UserFavorite, Project
 from plane.utils.group_filters import add_group_info, filter_by_groups_param
 from plane.utils.analytics_plot import burndown_plot
+from plane.utils.estimate import estimate_value_as_float
 from plane.utils.timezone_converter import user_timezone_converter
 
 
@@ -119,7 +120,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(completed_estimate_points=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(completed_estimate_points=Sum(estimate_value_as_float()))
             .values("completed_estimate_points")[:1]
         )
 
@@ -130,7 +131,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(total_estimate_points=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(total_estimate_points=Sum(estimate_value_as_float()))
             .values("total_estimate_points")[:1]
         )
         backlog_estimate_point = (
@@ -141,7 +142,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(backlog_estimate_point=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(backlog_estimate_point=Sum(estimate_value_as_float()))
             .values("backlog_estimate_point")[:1]
         )
         unstarted_estimate_point = (
@@ -152,7 +153,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(unstarted_estimate_point=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(unstarted_estimate_point=Sum(estimate_value_as_float()))
             .values("unstarted_estimate_point")[:1]
         )
         started_estimate_point = (
@@ -163,7 +164,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(started_estimate_point=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(started_estimate_point=Sum(estimate_value_as_float()))
             .values("started_estimate_point")[:1]
         )
         cancelled_estimate_point = (
@@ -174,7 +175,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                 issue_module__deleted_at__isnull=True,
             )
             .values("issue_module__module_id")
-            .annotate(cancelled_estimate_point=Sum(Cast("estimate_point__value", FloatField())))
+            .annotate(cancelled_estimate_point=Sum(estimate_value_as_float()))
             .values("cancelled_estimate_point")[:1]
         )
         return (
@@ -361,10 +362,10 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                         "avatar_url",
                         "display_name",
                     )
-                    .annotate(total_estimates=Sum(Cast("estimate_point__value", FloatField())))
+                    .annotate(total_estimates=Sum(estimate_value_as_float()))
                     .annotate(
                         completed_estimates=Sum(
-                            Cast("estimate_point__value", FloatField()),
+                            estimate_value_as_float(),
                             filter=Q(
                                 completed_at__isnull=False,
                                 archived_at__isnull=True,
@@ -374,7 +375,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                     )
                     .annotate(
                         pending_estimates=Sum(
-                            Cast("estimate_point__value", FloatField()),
+                            estimate_value_as_float(),
                             filter=Q(
                                 completed_at__isnull=True,
                                 archived_at__isnull=True,
@@ -395,10 +396,10 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                     .annotate(color=F("labels__color"))
                     .annotate(label_id=F("labels__id"))
                     .values("label_name", "color", "label_id")
-                    .annotate(total_estimates=Sum(Cast("estimate_point__value", FloatField())))
+                    .annotate(total_estimates=Sum(estimate_value_as_float()))
                     .annotate(
                         completed_estimates=Sum(
-                            Cast("estimate_point__value", FloatField()),
+                            estimate_value_as_float(),
                             filter=Q(
                                 completed_at__isnull=False,
                                 archived_at__isnull=True,
@@ -408,7 +409,7 @@ class ModuleArchiveUnarchiveEndpoint(BaseAPIView):
                     )
                     .annotate(
                         pending_estimates=Sum(
-                            Cast("estimate_point__value", FloatField()),
+                            estimate_value_as_float(),
                             filter=Q(
                                 completed_at__isnull=True,
                                 archived_at__isnull=True,
