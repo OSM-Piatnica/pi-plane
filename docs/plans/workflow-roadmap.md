@@ -199,7 +199,7 @@ Why not per-user (delegated) tokens: the SSO flow deliberately stores no provide
 
 **Client access.** The browser uploads straight to the Graph upload session URL in chunks and downloads from the pre-authenticated download URL, the same pattern the attachment endpoints use (API issues a URL, then redirects or returns it). B1 must confirm with a real tenant that both work cross-origin from the Pi-Plane origin; if either does not, fall back to a streaming proxy endpoint in the API with range support. The rest of the plan does not depend on which path wins.
 
-**Dependencies.** No MSAL: client-credentials token requests are one POST. Use `httpx` (already a dependency), cache the token in Redis until shortly before expiry, and put all Graph calls in one module with retry on 429 and 503 honouring `Retry-After`. There is prior Graph code to follow in `authentication/provider/oidc/groups.py`.
+**Dependencies.** No MSAL: client-credentials token requests are one POST. Use `httpx` (a test-only dependency until B2; B2 makes it a runtime dependency, decision 16), cache the token in Redis until shortly before expiry, and put all Graph calls in one module with retry on 429 and 503 honouring `Retry-After`. There is prior Graph code to follow in `authentication/provider/oidc/groups.py`.
 
 ### PRs
 
@@ -579,6 +579,7 @@ Each has a default the plan assumes.
 | 13  | One department per person, or several? ([#508](https://github.com/OSM-Piatnica/pi-plane/issues/508))                                                             | One (as merged in D1)                                                                                                    | D2, D3, D9       |
 | 14  | Sort lists by Float? ([#518](https://github.com/OSM-Piatnica/pi-plane/issues/518))                                                                               | No; Float is read-only, the critical path filter (#519) covers "show me what is critical"                                | D5 follow-ups    |
 | 15  | Sub-items and a moved parent (#478): should sub-items follow, should a rolled-up span count in dependencies, should sub-items inherit the parent's predecessors? | No change: roll-up stays display only (recommended answers, if decided: see D8c)                                         | D8, D7           |
+| 16  | `httpx` as a runtime dependency of the API, for the SharePoint client ([#523](https://github.com/OSM-Piatnica/pi-plane/issues/523), from #479)?                  | Yes: same pinned version 0.28.1; the production image gains `httpx` and `httpcore`                                       | B2               |
 
 ## 11. Risks
 
