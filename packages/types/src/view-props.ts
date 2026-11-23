@@ -217,6 +217,7 @@ export interface IIssueDisplayProperties {
   due_date?: boolean;
   finish_date?: boolean;
   duration?: boolean;
+  float?: boolean;
   labels?: boolean;
   key?: boolean;
   priority?: boolean;

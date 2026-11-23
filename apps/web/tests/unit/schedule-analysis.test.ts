@@ -8,6 +8,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { TIssueRelationTypes, TScheduleAnalysis, TScheduleAnalysisItem } from "@plane/types";
 import { EIssuesStoreType } from "@plane/types";
 import {
+  flattenIssueIds,
   getScheduleAnalysisItem,
   getScheduleAnalysisKey,
   getScheduleAnalysisNotices,
@@ -15,8 +16,7 @@ import {
   isDependencyCritical,
   isWorkItemCritical,
 } from "@/helpers/schedule-analysis.helper";
-import type { RootStore } from "@/store/root.store";
-import { IssuesTimeLineStore } from "@/store/timeline/issues-timeline.store";
+import { ScheduleAnalysisStore } from "@/store/schedule-analysis.store";
 
 const getScheduleAnalysis = vi.hoisted(() => vi.fn());
 const storage = vi.hoisted(() => ({ values: {} as Record<string, unknown> }));
@@ -199,16 +199,21 @@ describe("getScheduleAnalysisKey", () => {
   });
 });
 
-describe("IssuesTimeLineStore critical path", () => {
-  const createStore = () =>
-    new IssuesTimeLineStore({ issue: { issues: { getIssueById: () => undefined } } } as unknown as RootStore);
+describe("ScheduleAnalysisStore", () => {
+  const createStore = () => new ScheduleAnalysisStore();
+  /** A store that something asks the analysis of, as the timeline does while its critical path is on. */
+  const createActiveStore = () => {
+    const store = createStore();
+    store.setDemand("timeline", true);
+    return store;
+  };
 
   beforeEach(() => {
     getScheduleAnalysis.mockReset();
     storage.values = {};
   });
 
-  it("is off by default and fetches nothing while it is off", async () => {
+  it("is off by default and fetches nothing while nothing asks for it", async () => {
     const store = createStore();
     expect(store.isCriticalPathEnabled).toBe(false);
     await store.fetchScheduleAnalysis("acme", "p1");
@@ -227,8 +232,7 @@ describe("IssuesTimeLineStore critical path", () => {
 
   it("fetches the analysis of the project, module or cycle once it is on", async () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     await store.fetchScheduleAnalysis("acme", "p1", { module: "m1" });
     expect(getScheduleAnalysis).toHaveBeenCalledWith("acme", "p1", { module: "m1" });
     expect(store.scheduleAnalysis?.critical_ids).toEqual(["a", "b"]);
@@ -237,8 +241,7 @@ describe("IssuesTimeLineStore critical path", () => {
 
   it("keeps the analysis while the same project is fetched again and drops it for another one", async () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     await store.fetchScheduleAnalysis("acme", "p1");
 
     const open = deferred();
@@ -256,8 +259,7 @@ describe("IssuesTimeLineStore critical path", () => {
   });
 
   it("drops the answer of a request that a newer one overtook", async () => {
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     const firstRequest = deferred();
     getScheduleAnalysis.mockReturnValueOnce(firstRequest.promise);
     getScheduleAnalysis.mockResolvedValueOnce(analysis({ critical_ids: ["new"] }));
@@ -273,8 +275,7 @@ describe("IssuesTimeLineStore critical path", () => {
 
   it("tells which request the analysis in the store answers", async () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     await store.fetchScheduleAnalysis("acme", "p1");
     expect(store.scheduleAnalysisResultId).toBe(store.scheduleAnalysisRequestId);
     const open = deferred();
@@ -289,8 +290,7 @@ describe("IssuesTimeLineStore critical path", () => {
 
   it("clears the analysis when the request fails, and when it is switched off", async () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     await store.fetchScheduleAnalysis("acme", "p1");
 
     getScheduleAnalysis.mockRejectedValue(new Error("boom"));
@@ -301,17 +301,16 @@ describe("IssuesTimeLineStore critical path", () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
     await store.fetchScheduleAnalysis("acme", "p1");
     expect(store.scheduleAnalysis).toBeDefined();
-    store.toggleCriticalPath();
+    store.setDemand("timeline", false);
     expect(store.scheduleAnalysis).toBeUndefined();
   });
 
-  it("an answer that arrives after switching off is ignored", async () => {
-    const store = createStore();
-    store.toggleCriticalPath();
+  it("an answer that arrives after nothing asks for it any more is ignored", async () => {
+    const store = createActiveStore();
     const open = deferred();
     getScheduleAnalysis.mockReturnValue(open.promise);
     const pending = store.fetchScheduleAnalysis("acme", "p1");
-    store.toggleCriticalPath();
+    store.setDemand("timeline", false);
     open.resolve(analysis());
     await pending;
     expect(store.scheduleAnalysis).toBeUndefined();
@@ -320,8 +319,7 @@ describe("IssuesTimeLineStore critical path", () => {
 
   it("refreshes with what was last asked for, and only for that project", async () => {
     getScheduleAnalysis.mockResolvedValue(analysis());
-    const store = createStore();
-    store.toggleCriticalPath();
+    const store = createActiveStore();
     await store.refreshScheduleAnalysis("p1");
     expect(getScheduleAnalysis).not.toHaveBeenCalled();
 
@@ -331,5 +329,42 @@ describe("IssuesTimeLineStore critical path", () => {
     await store.refreshScheduleAnalysis("p1");
     expect(getScheduleAnalysis).toHaveBeenCalledTimes(2);
     expect(getScheduleAnalysis).toHaveBeenLastCalledWith("acme", "p1", { cycle: "c1" });
+  });
+  it("keeps the analysis until the last thing asking for it stops asking", async () => {
+    getScheduleAnalysis.mockResolvedValue(analysis());
+    const store = createActiveStore();
+    store.setDemand("columns", true);
+    expect(store.isActive).toBe(true);
+    await store.fetchScheduleAnalysis("acme", "p1");
+
+    store.setDemand("timeline", false);
+    expect(store.isActive).toBe(true);
+    expect(store.scheduleAnalysis).toBeDefined();
+
+    store.setDemand("columns", false);
+    expect(store.isActive).toBe(false);
+    expect(store.scheduleAnalysis).toBeUndefined();
+  });
+
+  it("switching the critical path of the timeline on or off does not ask for anything by itself", () => {
+    const store = createStore();
+    store.toggleCriticalPath();
+    expect(store.isCriticalPathEnabled).toBe(true);
+    expect(store.isActive).toBe(false);
+    expect(getScheduleAnalysis).not.toHaveBeenCalled();
+  });
+});
+
+describe("flattenIssueIds", () => {
+  it("reads a plain list, one level of groups and two", () => {
+    expect(flattenIssueIds(["a", "b"])).toEqual(["a", "b"]);
+    expect(flattenIssueIds({ todo: ["a"], done: ["b", "c"] })).toEqual(["a", "b", "c"]);
+    expect(flattenIssueIds({ s1: { todo: ["a"], done: ["b"] }, s2: { todo: ["c"] } })).toEqual(["a", "b", "c"]);
+  });
+
+  it("counts a work item in several groups once and ignores what is not an id", () => {
+    expect(flattenIssueIds({ x: ["a", "b"], y: ["b"], z: [] })).toEqual(["a", "b"]);
+    expect(flattenIssueIds(undefined)).toEqual([]);
+    expect(flattenIssueIds({ x: [1, null, "a"] })).toEqual(["a"]);
   });
 });

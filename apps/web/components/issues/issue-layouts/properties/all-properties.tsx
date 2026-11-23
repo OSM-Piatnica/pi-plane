@@ -14,7 +14,7 @@ import { xor } from "lodash-es";
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 // icons
-import { AlertTriangle, Timer } from "lucide-react";
+import { AlertTriangle, Hourglass, Timer } from "lucide-react";
 import { AttachOutline, DueDateOutline, LinkOutline, StartDateOutline, ViewsOutline } from "@makeplane/propel/icons";
 // i18n
 import { useTranslation } from "@plane/i18n";
@@ -42,6 +42,7 @@ import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { useAppRouter } from "@/hooks/use-app-router";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import { usePlatformOS } from "@/hooks/use-platform-os";
+import { useWorkItemFloat } from "@/hooks/use-work-item-float";
 import { WorkItemLayoutAdditionalProperties } from "@/components/issues/issue-layouts/additional-properties";
 // local components
 import { IssuePropertyLabels } from "./labels";
@@ -94,6 +95,7 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
   // overdue concerns the due date only (and only active items); finish and due are independent
   const dateStatuses = getIssueDateStatuses(issue, stateDetails?.group, projectDetails?.timezone);
   const subIssueCount = issue?.sub_issues_count ?? 0;
+  const float = useWorkItemFloat(issue);
   const durationLabel =
     issue.duration === null || issue.duration === undefined ? null : t("duration_days", { count: issue.duration });
 
@@ -470,6 +472,30 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           >
             <Timer className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
             <div className="text-caption-sm-regular">{durationLabel}</div>
+          </div>
+        </Tooltip>
+      </WithDisplayPropertiesHOC>
+
+      {/* float */}
+      <WithDisplayPropertiesHOC
+        displayProperties={displayProperties}
+        displayPropertyKey="float"
+        shouldRenderProperty={(properties) => !!properties.float && !!float}
+      >
+        <Tooltip label={`${t("schedule_analysis.float")}: ${float?.label}`} disabled={isMobile}>
+          <div
+            role="presentation"
+            className={cn(
+              "flex h-5 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-sm border-[0.5px] border-strong px-2.5 py-1",
+              { "border-danger-strong text-danger-primary": float?.isCritical }
+            )}
+            onFocus={handleEventPropagation}
+            onClick={handleEventPropagation}
+            onKeyDown={handleEventPropagation}
+            data-testid="issue-float"
+          >
+            <Hourglass className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+            <div className="text-caption-sm-regular">{float?.label}</div>
           </div>
         </Tooltip>
       </WithDisplayPropertiesHOC>

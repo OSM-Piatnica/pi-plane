@@ -13,13 +13,14 @@ Based on the Gantt-RACI prototype by Paweł Niklewicz.
 ## Where it shows
 
 - **Timeline, "Critical path" button** (next to "Roll up dates"), in a project, a module, a cycle and a project view. When it is on, the bars of critical work items get a red frame and the critical dependencies (see "Critical dependencies" below) are drawn red and heavier. The choice is remembered per browser. It is off by default, and nothing is computed while it is off.
-- **Work item detail and peek view**, below "Duration", while the critical path is on:
+- **"Float" display property** of the list, kanban and spreadsheet layouts of a project, a module, a cycle and a project view (Display > Properties; off by default, saved with the other display properties). It shows the float of each work item in working days, in red when it is 0 (critical path). Nothing is shown for a work item the analysis does not cover (undated, completed or cancelled) or while the analysis is on its way. Turning the property on is what asks the server for the analysis; the "Critical path" button of the timeline is not needed and the two do not affect each other. The workspace views and the profile pages do not offer it, because a float only means something inside one project. It cannot be sorted by.
+- **Work item detail and peek view**, below "Duration", while the critical path is on or a Float column is shown:
   - **Float**: the working days the work item can slip without moving the end of the project, or "None (critical path)".
   - **Needed by**: shown when something that depends on the work item has a due date. In red when the work item's earliest finish is after it (its planned finish, or later where a dependency pushes it).
 
 In a module or a cycle the analysis covers only the work items of that module or cycle, so "the end" is the end of the module or cycle. A project view analyses the whole project, whatever the view filters. The timeline of epics has no critical path button.
 
-The analysis is asked for again when a date, a state, a dependency or a lag of a work item on the timeline changes. While a new answer is on its way the previous one stays on screen, except in the work item detail for a work item that was just changed there: its Float and Needed by are hidden until an answer that reflects the change arrives. A warning sign on the button says that the analysis is incomplete (see "Limits").
+The analysis is asked for again when a date, a state, a dependency or a lag of a loaded work item changes (on the timeline, or in a list layout that shows Float). A row in a list hides its Float until the answer that reflects its change arrives. While a new answer is on its way the previous one stays on screen, except for a work item that was just changed in its detail or in a list row: its Float and Needed by are hidden until an answer that reflects the change arrives. A warning sign on the button says that the analysis is incomplete (see "Limits").
 
 ## The rules
 
@@ -48,8 +49,8 @@ A gap between two linked work items is float for the earlier one. Example: B is 
 - At most **2000** dated work items are analysed in one request: the first ones by start date (work items whose finish is before their start do not count). The answer then has `truncated: true` and only describes a cut-off part of the plan, so the timeline highlights nothing and the work item detail shows no Float or Needed by; the button shows a warning.
 - Nothing is cached. Every request computes the analysis from five queries. Cached results would have to be invalidated by every change of a date, a state, a relation, a lag, module or cycle membership, the project's weekend days, archiving and deletion, also from bulk operations and imports; computing takes a few milliseconds for a project of a few hundred work items.
 - Holidays are not modelled, only the weekly pattern (as for durations).
-- Float and "needed by" in the work item detail come from the analysis the timeline loaded. They do not appear when the critical path is off, when the analysis is truncated, or for a work item outside the analysed module or cycle.
-- There is no "Float" column in the list and spreadsheet layouts yet.
+- Float and "needed by" in the work item detail come from the analysis that the timeline or a Float column loaded. They do not appear when neither is on, when the analysis is truncated, or for a work item outside the analysed module or cycle. A truncated analysis shows no Float column either.
+- A list layout only knows the work items it has loaded; the analysis itself always covers the whole project, module or cycle, whatever the filters hide.
 
 ## API
 
