@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useTranslation } from "@plane/i18n";
 import { PlaneLockup } from "@plane/blocks/icons";
 import { PageHead } from "@/components/core/page-title";
-import { EAuthModes } from "@/helpers/authentication.helper";
+import { EAuthModes, withNextPath } from "@/helpers/authentication.helper";
 import { useInstance } from "@/hooks/store/use-instance";
 import { AuthLanguageSelect } from "./language-select";
 
@@ -50,7 +50,7 @@ export const AuthHeader = observer(function AuthHeader({ type }: AuthHeaderProps
           <div className="flex flex-col items-end text-center text-13 font-medium text-tertiary sm:flex-row sm:items-center sm:gap-2">
             <span className="text-body-sm-regular text-tertiary">{t(authContentMap[type].text)}</span>
             <Link
-              href={authContentMap[type].linkHref}
+              href={withNextPath(authContentMap[type].linkHref)}
               className="text-body-sm-semibold text-accent-primary hover:underline"
             >
               {t(authContentMap[type].linkText)}
