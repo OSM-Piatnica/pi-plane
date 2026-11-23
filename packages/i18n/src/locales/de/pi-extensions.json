@@ -168,6 +168,10 @@
         "assignee_edit": {
           "description": "Sobald ein Arbeitselement eine zugewiesene Person hat, dürfen nur die Zugewiesenen, die Projektleitung und die Projektadmins es ändern: Felder, Status, Termine, untergeordnete Elemente, Beziehungen, Links, Anhänge, Zyklen und Module, Löschen und Archivieren. Kommentieren kann weiterhin jeder. Arbeitselemente ohne zugewiesene Person bleiben für alle Mitglieder offen.",
           "title": "Nur Zugewiesene, die Projektleitung und Admins dürfen ein Arbeitselement ändern"
+        },
+        "reschedule_offer": {
+          "description": "Wenn eine Datumsänderung eine Abhängigkeit verletzen würde, wird angeboten, die abhängigen Arbeitselemente nach hinten zu verschieben, statt die Änderung abzulehnen. Ist die Option ausgeschaltet, wird eine solche Änderung abgelehnt.",
+          "title": "Verschieben abhängiger Arbeitselemente anbieten"
         }
       },
       "save_error": "Workflow-Konfiguration konnte nicht gespeichert werden.",

@@ -16,6 +16,7 @@ import { SettingsContentWrapper } from "@/components/settings/content-wrapper";
 import { SettingsHeading } from "@/components/settings/heading";
 import { ProjectSettingsFeatureControlItem } from "@/components/settings/project/content/feature-control-item";
 import { RELATION_TOGGLE_DEFAULTS } from "@/helpers/relation-type-toggles";
+import { isRescheduleOfferEnabled } from "@/helpers/reschedule";
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
 import type { Route } from "./+types/page";
@@ -73,6 +74,14 @@ function WorkflowsSettingsPage({ params }: Route.ComponentProps) {
               featureProperty="is_assignee_edit_rule_enabled"
               projectId={projectId}
               value={!!currentProjectDetails?.is_assignee_edit_rule_enabled}
+              workspaceSlug={workspaceSlug}
+            />
+            <ProjectSettingsFeatureControlItem
+              title={t("project_settings.workflows.rules.reschedule_offer.title")}
+              description={t("project_settings.workflows.rules.reschedule_offer.description")}
+              featureProperty="is_reschedule_offer_enabled"
+              projectId={projectId}
+              value={isRescheduleOfferEnabled(currentProjectDetails)}
               workspaceSlug={workspaceSlug}
             />
           </div>

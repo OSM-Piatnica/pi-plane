@@ -756,7 +756,8 @@
         "removed": "removeu a data de início.",
         "removed_with_issue": "removeu a data de início de <issue/>.",
         "set": "definiu a data de início como <value/>.",
-        "set_with_issue": "definiu a data de início de <issue/> como <value/>."
+        "set_with_issue": "definiu a data de início de <issue/> como <value/>.",
+        "shifted": "moveu automaticamente a data de início para <value/> após a alteração de <cause/>."
       },
       "state": {
         "set": "definiu o estado como <value/>.",
@@ -766,7 +767,8 @@
         "removed": "removeu a data de conclusão.",
         "removed_with_issue": "removeu a data de conclusão de <issue/>.",
         "set": "definiu a data de conclusão como <value/>.",
-        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>."
+        "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>.",
+        "shifted": "moveu automaticamente a data de conclusão para <value/> após a alteração de <cause/>."
       },
       "target_date": {
         "removed": "removeu a data de vencimento.",
@@ -904,7 +906,9 @@
         "removed_with_issue": "removeu a data de início de <issue/>",
         "removed_without_issue": "removeu a data de início",
         "set_with_issue": "definiu a data de início de <issue/> como <value/>",
-        "set_without_issue": "definiu a data de início como <value/>"
+        "set_without_issue": "definiu a data de início como <value/>",
+        "shifted_with_issue": "moveu automaticamente a data de início de <issue/> para <value/> após a alteração de <cause/>",
+        "shifted_without_issue": "moveu automaticamente a data de início para <value/> após a alteração de <cause/>"
       },
       "state": {
         "set_with_issue": "definiu o estado de <issue/> como <value/>",
@@ -914,7 +918,9 @@
         "removed_with_issue": "removeu a data de conclusão de <issue/>",
         "removed_without_issue": "removeu a data de conclusão",
         "set_with_issue": "definiu a data de conclusão de <issue/> como <value/>",
-        "set_without_issue": "definiu a data de conclusão como <value/>"
+        "set_without_issue": "definiu a data de conclusão como <value/>",
+        "shifted_with_issue": "moveu automaticamente a data de conclusão de <issue/> para <value/> após a alteração de <cause/>",
+        "shifted_without_issue": "moveu automaticamente a data de conclusão para <value/> após a alteração de <cause/>"
       },
       "target_date": {
         "removed_with_issue": "removeu a data de vencimento de <issue/>",
@@ -1011,6 +1017,11 @@
         "disabled": "desativou as relações de rastreabilidade",
         "enabled": "ativou as relações de rastreabilidade",
         "fallback": "atualizou as relações de rastreabilidade"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "desativou a oferta de mover os itens de trabalho dependentes",
+        "enabled": "ativou a oferta de mover os itens de trabalho dependentes",
+        "fallback": "atualizou a oferta de mover os itens de trabalho dependentes"
       },
       "is_time_tracking_enabled": {
         "disabled": "desativou o controle de tempo",

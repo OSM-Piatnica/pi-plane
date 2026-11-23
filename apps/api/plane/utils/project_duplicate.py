@@ -391,6 +391,7 @@ PROJECT_SCALAR_FIELDS = (
     "is_relation_traceability_enabled",
     "is_relation_relates_to_enabled",
     "is_relation_duplicate_enabled",
+    "is_reschedule_offer_enabled",
     "guest_view_all_features",
     "archive_in",
     "close_in",

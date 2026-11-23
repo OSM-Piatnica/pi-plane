@@ -756,7 +756,8 @@
         "removed": "開始日を削除しました。",
         "removed_with_issue": "<issue/>から開始日を削除しました。",
         "set": "開始日を<value/>に設定しました。",
-        "set_with_issue": "<issue/>の開始日を<value/>に設定しました。"
+        "set_with_issue": "<issue/>の開始日を<value/>に設定しました。",
+        "shifted": "<cause/>の変更に伴い、開始日を自動的に<value/>に移動しました。"
       },
       "state": {
         "set": "状態を<value/>に設定しました。",
@@ -766,7 +767,8 @@
         "removed": "終了日を削除しました。",
         "removed_with_issue": "<issue/>から終了日を削除しました。",
         "set": "終了日を<value/>に設定しました。",
-        "set_with_issue": "<issue/>の終了日を<value/>に設定しました。"
+        "set_with_issue": "<issue/>の終了日を<value/>に設定しました。",
+        "shifted": "<cause/>の変更に伴い、終了日を自動的に<value/>に移動しました。"
       },
       "target_date": {
         "removed": "期限を削除しました。",
@@ -904,7 +906,9 @@
         "removed_with_issue": "<issue/>から開始日を削除しました",
         "removed_without_issue": "開始日を削除しました",
         "set_with_issue": "<issue/>の開始日を<value/>に設定しました",
-        "set_without_issue": "開始日を<value/>に設定しました"
+        "set_without_issue": "開始日を<value/>に設定しました",
+        "shifted_with_issue": "<cause/>の変更に伴い、<issue/>の開始日を自動的に<value/>に移動しました",
+        "shifted_without_issue": "<cause/>の変更に伴い、開始日を自動的に<value/>に移動しました"
       },
       "state": {
         "set_with_issue": "<issue/>の状態を<value/>に設定しました",
@@ -914,7 +918,9 @@
         "removed_with_issue": "<issue/>から終了日を削除しました",
         "removed_without_issue": "終了日を削除しました",
         "set_with_issue": "<issue/>の終了日を<value/>に設定しました",
-        "set_without_issue": "終了日を<value/>に設定しました"
+        "set_without_issue": "終了日を<value/>に設定しました",
+        "shifted_with_issue": "<cause/>の変更に伴い、<issue/>の終了日を自動的に<value/>に移動しました",
+        "shifted_without_issue": "<cause/>の変更に伴い、終了日を自動的に<value/>に移動しました"
       },
       "target_date": {
         "removed_with_issue": "<issue/>から期限を削除しました",
@@ -1011,6 +1017,11 @@
         "disabled": "トレーサビリティの関係を無効にしました",
         "enabled": "トレーサビリティの関係を有効にしました",
         "fallback": "トレーサビリティの関係を更新しました"
+      },
+      "is_reschedule_offer_enabled": {
+        "disabled": "依存する作業項目の移動の提案を無効にしました",
+        "enabled": "依存する作業項目の移動の提案を有効にしました",
+        "fallback": "依存する作業項目の移動の提案を更新しました"
       },
       "is_time_tracking_enabled": {
         "disabled": "時間トラッキングを無効にしました",
