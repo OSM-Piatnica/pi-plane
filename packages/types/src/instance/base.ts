@@ -11,6 +11,7 @@ import type {
   TInstanceEmailConfigurationKeys,
   TInstanceImageConfigurationKeys,
   TInstanceAuthenticationKeys,
+  TInstanceSharePointConfigurationKeys,
   TInstanceUploadConfigurationKeys,
   TInstanceWorkspaceConfigurationKeys,
   TCoreLoginMediums,
@@ -62,6 +63,8 @@ export interface IInstanceConfig {
   is_space_enabled?: boolean;
   /** Space is part of this installation; when it is not, the administrator cannot switch it on. */
   is_space_deployed?: boolean;
+  /** Documents can be kept in SharePoint: the administrator switched it on and saved the credentials. */
+  is_sharepoint_enabled?: boolean;
   github_app_name: string | undefined;
   slack_client_id: string | undefined;
   has_unsplash_configured: boolean;
@@ -106,6 +109,7 @@ export type TInstanceConfigurationKeys =
   | TInstanceEmailConfigurationKeys
   | TInstanceImageConfigurationKeys
   | TInstanceAuthenticationKeys
+  | TInstanceSharePointConfigurationKeys
   | TInstanceUploadConfigurationKeys
   | TInstanceWorkspaceConfigurationKeys;
 
