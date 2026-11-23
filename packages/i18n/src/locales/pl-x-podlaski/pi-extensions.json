@@ -223,6 +223,7 @@
     "critical_path": "Ścieżka krytyczna",
     "critical_path_tooltip": "Wyróżnia elementy pracy, których opóźnienie przesuwa koniec projektu.",
     "cycles": "Niektóre elementy pracy zależą od siebie nawzajem w pętli; te zależności pominięto.",
+    "filter_ignored": "Filtr Ścieżka krytyczna został pominięty: zbyt wiele elementów pracy ma daty, aby wyznaczyć ścieżkę krytyczną.",
     "float": "Zapas",
     "float_critical": "Brak (ścieżka krytyczna)",
     "float_days": "{count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}",

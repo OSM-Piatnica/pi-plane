@@ -225,12 +225,15 @@ class IssueFilterSet(BaseFilterSet):
     def filter_is_critical(self, queryset, name, value):
         """
         is_critical=true -> the critical work items, is_critical=false -> every other work item (also those the
-        analysis does not cover: undated, completed, cancelled)
+        analysis does not cover: undated, completed, cancelled). Where the analysis is cut off at its limit the
+        condition is left out (and reported in the X-Ignored-Filters header) instead of dropping work items.
         """
         if value in (True, "true", "True", 1, "1"):
-            return Q(id__in=critical_issue_ids(self.request))
+            ids = critical_issue_ids(self.request)
+            return Q() if ids is None else Q(id__in=ids)
         if value in (False, "false", "False", 0, "0"):
-            return ~Q(id__in=critical_issue_ids(self.request))
+            ids = critical_issue_ids(self.request)
+            return Q() if ids is None else ~Q(id__in=ids)
         return Q()  # No filter
 
     # Filter methods with soft delete exclusion for relations

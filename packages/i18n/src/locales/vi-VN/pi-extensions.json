@@ -217,6 +217,7 @@
     "critical_path": "Đường găng",
     "critical_path_tooltip": "Làm nổi bật các mục công việc mà sự chậm trễ sẽ đẩy lùi ngày kết thúc dự án.",
     "cycles": "Một số mục công việc phụ thuộc vòng tròn vào nhau; các quan hệ đó đã bị bỏ qua.",
+    "filter_ignored": "Bộ lọc Đường găng đã bị bỏ qua: có quá nhiều mục công việc có ngày để xác định đường găng.",
     "float": "Thời gian dự trữ",
     "float_critical": "Không có (đường găng)",
     "float_days": "{count, plural, one {# ngày làm việc} other {# ngày làm việc}}",

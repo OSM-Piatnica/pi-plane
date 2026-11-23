@@ -217,6 +217,7 @@
     "critical_path": "Ruta crítica",
     "critical_path_tooltip": "Resalta los elementos de trabajo cuyo retraso desplaza el final del proyecto.",
     "cycles": "Algunos elementos de trabajo dependen entre sí en círculo; esas relaciones se omitieron.",
+    "filter_ignored": "Se omitió el filtro Ruta crítica: hay demasiados elementos de trabajo con fechas para determinar la ruta crítica.",
     "float": "Holgura",
     "float_critical": "Ninguna (ruta crítica)",
     "float_days": "{count, plural, one {# día laborable} other {# días laborables}}",

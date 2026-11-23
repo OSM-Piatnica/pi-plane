@@ -100,8 +100,8 @@ It is judged by the same analysis as the timeline, always of the whole project, 
 
 Rules and limits:
 
-- Where the analysis is truncated (more than 2000 dated work items, see "Limits"), the list answers with an error (`critical_filter_truncated`) instead of leaving out work items without telling. A saved view with this filter in such a project therefore shows an error until the filter is removed.
+- Where the analysis is truncated (more than 2000 dated work items, see "Limits"), the critical path cannot be found, and a filter by it would drop work items without saying so. The condition is therefore **left out**: the list is filtered by the other conditions only, the response carries the header `X-Ignored-Filters: is_critical`, and the web app shows a warning ("The Critical path filter was left out: ..."), at most once a minute. A saved view with this filter in such a project works, but is not filtered by it.
 - Each list request that uses the filter runs the analysis once (not once per condition), so such a request costs about as much as one request of the endpoint above.
 - A guest who only sees their own work items gets the critical path of those alone, as in the analysis.
 
-API: `is_critical` (or `is_critical__exact`) with `true` or `false` in the `filters` parameter of the work item list endpoints of a project, a module and a cycle, for example `filters={"is_critical": true}`. On an endpoint that is not of one project it answers `critical_filter_needs_project`.
+API: `is_critical` (or `is_critical__exact`) with `true` or `false` in the `filters` parameter of the work item list endpoints of a project, a module and a cycle, for example `filters={"is_critical": true}`. On an endpoint that is not of one project it answers 400 `critical_filter_needs_project`. Where the condition is left out (see above), it applies to `false` as well as `true`.

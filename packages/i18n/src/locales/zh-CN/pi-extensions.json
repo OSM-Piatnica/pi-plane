@@ -217,6 +217,7 @@
     "critical_path": "关键路径",
     "critical_path_tooltip": "突出显示一旦延误就会推迟项目结束时间的工作项。",
     "cycles": "部分工作项相互循环依赖；这些关系已被排除。",
+    "filter_ignored": "已忽略“关键路径”筛选器：带日期的工作项过多，无法确定关键路径。",
     "float": "浮动时间",
     "float_critical": "无（关键路径）",
     "float_days": "{count, plural, one {# 个工作日} other {# 个工作日}}",

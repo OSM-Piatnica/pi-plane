@@ -217,6 +217,7 @@
     "critical_path": "關鍵路徑",
     "critical_path_tooltip": "醒目顯示一旦延誤就會延後專案結束時間的工作事項。",
     "cycles": "部分工作事項彼此循環相依；這些關係已被排除。",
+    "filter_ignored": "已忽略「關鍵路徑」篩選器：含日期的工作事項過多，無法判定關鍵路徑。",
     "float": "浮時",
     "float_critical": "無（關鍵路徑）",
     "float_days": "{count, plural, one {# 個工作日} other {# 個工作日}}",

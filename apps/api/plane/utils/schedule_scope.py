@@ -21,6 +21,22 @@ from plane.utils.weekend_days import default_weekend_days
 # the guest role of a project member (plane.app.permissions.ROLE.GUEST)
 GUEST_ROLE = 5
 
+# Response header that names the filters of a request the server left out, comma separated; the web app tells the
+# person (see plane.middleware.ignored_filters)
+IGNORED_FILTERS_HEADER = "X-Ignored-Filters"
+CRITICAL_FILTER = "is_critical"
+
+
+def mark_filter_ignored(request, name):
+    """Say that the filter ``name`` of ``request`` was left out of the answer."""
+    # the middleware reads the Django request; a DRF request wraps it and does not pass attributes on
+    django_request = getattr(request, "_request", request)
+    ignored = getattr(django_request, "ignored_filters", None)
+    if ignored is None:
+        ignored = django_request.ignored_filters = []
+    if name not in ignored:
+        ignored.append(name)
+
 
 def scoped_work_items(user, slug, project, module_id=None, cycle_id=None):
     """The work items a schedule analysis of ``project`` covers for ``user``: those of the project, narrowed to a module
@@ -65,8 +81,11 @@ def critical_issue_ids(request):
 
     The scope is read from the URL of the request. The answer is kept on the request, so a filter that appears several
     times in one request (inside a negation, say) is computed once. Raises a validation error where the filter has
-    no meaning: a list that is not of one project, or an analysis cut off at its limit, which describes only part
-    of the plan and would silently drop work items from the result.
+    no meaning: a list that is not of one project.
+
+    Returns None, and marks the filter as ignored (``X-Ignored-Filters``), when the analysis is cut off at its limit:
+    it describes only part of the plan, so filtering by it would silently drop work items. The list then comes back
+    unfiltered by this condition and the web app tells the person.
     """
     from plane.db.models import Project
 
@@ -94,15 +113,9 @@ def critical_issue_ids(request):
         raise ValidationError({"message": "Project not found", "code": "invalid_filter_scope"})
     analysis = analyse_scope(request.user, slug, project, module_id=module_id, cycle_id=cycle_id)
     if analysis["truncated"]:
-        raise ValidationError(
-            {
-                "message": (
-                    f"The critical path cannot be found: more than {analysis['max_items']} work items have dates, "
-                    "so only part of the plan was analysed"
-                ),
-                "code": "critical_filter_truncated",
-            }
-        )
+        mark_filter_ignored(request, CRITICAL_FILTER)
+        request._critical_issue_ids = (cache_key, None)
+        return None
     ids = {uuid.UUID(issue_id) for issue_id in analysis["critical_ids"]}
     request._critical_issue_ids = (cache_key, ids)
     return ids

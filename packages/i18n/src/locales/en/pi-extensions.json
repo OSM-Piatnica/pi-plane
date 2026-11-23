@@ -217,6 +217,7 @@
     "critical_path": "Critical path",
     "critical_path_tooltip": "Highlights the work items whose delay moves the end of the project.",
     "cycles": "Some work items depend on each other in a circle; those relations were left out.",
+    "filter_ignored": "The Critical path filter was left out: too many work items have dates to find the critical path.",
     "float": "Float",
     "float_critical": "None (critical path)",
     "float_days": "{count, plural, one {# working day} other {# working days}}",

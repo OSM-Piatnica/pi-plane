@@ -217,6 +217,7 @@
     "critical_path": "Kritická cesta",
     "critical_path_tooltip": "Zvýrazní pracovné položky, ktorých oneskorenie posunie koniec projektu.",
     "cycles": "Niektoré pracovné položky od seba závisia v kruhu; tieto väzby boli vynechané.",
+    "filter_ignored": "Filter Kritická cesta bol vynechaný: pracovných položiek s dátumami je príliš veľa na určenie kritickej cesty.",
     "float": "Rezerva",
     "float_critical": "Žiadna (kritická cesta)",
     "float_days": "{count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}",

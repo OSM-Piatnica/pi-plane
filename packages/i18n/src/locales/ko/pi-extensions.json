@@ -217,6 +217,7 @@
     "critical_path": "크리티컬 패스",
     "critical_path_tooltip": "지연되면 프로젝트 종료일이 밀리는 작업 항목을 강조 표시합니다.",
     "cycles": "일부 작업 항목이 서로 순환하여 의존합니다. 해당 관계는 분석에서 제외되었습니다.",
+    "filter_ignored": "크리티컬 패스 필터는 적용되지 않았습니다. 날짜가 있는 작업 항목이 너무 많아 크리티컬 패스를 구할 수 없습니다.",
     "float": "여유 기간",
     "float_critical": "없음(크리티컬 패스)",
     "float_days": "{count, plural, one {근무일 기준 #일} other {근무일 기준 #일}}",

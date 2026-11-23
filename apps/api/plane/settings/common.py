@@ -129,6 +129,7 @@ MIDDLEWARE = [
     "crum.CurrentRequestUserMiddleware",
     "django.middleware.gzip.GZipMiddleware",
     "plane.middleware.request_body_size.RequestBodySizeLimitMiddleware",
+    "plane.middleware.ignored_filters.IgnoredFiltersMiddleware",
     "plane.middleware.logger.APITokenLogMiddleware",
     "plane.middleware.logger.RequestLoggerMiddleware",
 ]
@@ -226,6 +227,8 @@ CORS_ALLOWED_ORIGINS, CORS_ALLOW_ALL_ORIGINS, CORS_ALLOW_CREDENTIALS = _cors_set
 )
 
 CORS_ALLOW_HEADERS = [*default_headers, "X-API-Key"]
+# a page on another origin may read which filters of a list were left out
+CORS_EXPOSE_HEADERS = ["X-Ignored-Filters"]
 
 # Application Settings
 WSGI_APPLICATION = "plane.wsgi.application"

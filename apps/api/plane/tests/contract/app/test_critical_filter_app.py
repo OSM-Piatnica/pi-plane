@@ -116,16 +116,31 @@ class TestCriticalFilter:
         response = session_client.get(url, {"filters": json.dumps({"is_critical": False})})
         assert names(response) == []
 
-    def test_an_analysis_cut_off_at_its_limit_is_refused_not_guessed(self, session_client, project, issues):
+    def test_an_analysis_cut_off_at_its_limit_leaves_the_filter_out_and_says_so(self, session_client, project, issues):
+        """It would only describe part of the plan, so it must not drop work items quietly: the list is not filtered
+        by it, and the X-Ignored-Filters header names the filter."""
         from plane.utils.schedule_analysis import analyse_queryset
 
         with mock.patch("plane.utils.schedule_scope.analyse_queryset") as analyse:
             analyse.side_effect = lambda queryset, project_id, weekend_days: analyse_queryset(
                 queryset, project_id, weekend_days, max_items=2
             )
-            response = project_list(session_client, project, is_critical=True)
-        assert response.status_code == 400
-        assert "critical_filter_truncated" in json.dumps(response.data)
+            for value in (True, False):
+                response = project_list(session_client, project, is_critical=value)
+                assert names(response) == ["A", "B", "D", "E"]
+                assert response["X-Ignored-Filters"] == "is_critical"
+            # the other conditions still apply
+            both = {"and": [{"is_critical": True}, {"priority": "urgent"}]}
+            response = session_client.get(
+                f"/api/workspaces/{project.workspace.slug}/projects/{project.id}/issues/",
+                {"filters": json.dumps(both)},
+            )
+            assert names(response) == []
+            assert response["X-Ignored-Filters"] == "is_critical"
+
+    def test_no_header_when_nothing_was_left_out(self, session_client, project, issues):
+        assert "X-Ignored-Filters" not in project_list(session_client, project, is_critical=True)
+        assert "X-Ignored-Filters" not in project_list(session_client, project)
 
     def test_it_needs_a_list_of_one_project(self, session_client, workspace, project, issues):
         """A global view mixes projects, so there is no single critical path to filter by."""

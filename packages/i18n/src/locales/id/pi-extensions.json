@@ -217,6 +217,7 @@
     "critical_path": "Jalur kritis",
     "critical_path_tooltip": "Menyoroti item kerja yang keterlambatannya menggeser akhir proyek.",
     "cycles": "Beberapa item kerja saling bergantung secara melingkar; relasi tersebut diabaikan.",
+    "filter_ignored": "Filter Jalur kritis diabaikan: terlalu banyak item kerja bertanggal untuk menentukan jalur kritis.",
     "float": "Kelonggaran",
     "float_critical": "Tidak ada (jalur kritis)",
     "float_days": "{count, plural, one {# hari kerja} other {# hari kerja}}",
