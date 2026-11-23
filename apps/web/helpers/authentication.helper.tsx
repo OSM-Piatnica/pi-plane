@@ -121,6 +121,17 @@ export type TAuthErrorInfo = {
   message: ReactNode;
 };
 
+/**
+ * Carries the current page's next_path over to another auth screen, so moving
+ * between sign-in and sign-up keeps the page to return to once signed in
+ * (an invite link, with its token, for one).
+ */
+export const withNextPath = (href: string): string => {
+  const nextPath = new URLSearchParams(window.location.search).get("next_path");
+  if (!nextPath) return href;
+  return `${href}${href.includes("?") ? "&" : "?"}next_path=${encodeURIComponent(nextPath)}`;
+};
+
 type TTranslate = (key: string, params?: Record<string, unknown>) => string;
 
 type TErrorCopy = {
@@ -204,7 +215,7 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     message: (t, email) =>
       linkMessage(
         t("auth.error_alerts.user_already_exists_message"),
-        `/sign-in${email ? `?email=${encodeURIComponent(email)}` : ``}`
+        withNextPath(`/sign-in${email ? `?email=${encodeURIComponent(email)}` : ``}`)
       ),
   },
   [EAuthenticationErrorCodes.REQUIRED_EMAIL_PASSWORD_SIGN_UP]: {
@@ -248,7 +259,7 @@ const errorCodeMessages: { [key in EAuthenticationErrorCodes]: TErrorCopy } = {
     message: (t, email) =>
       linkMessage(
         t("auth.error_alerts.user_does_not_exist_message"),
-        `/${email ? `?email=${encodeURIComponent(email)}` : ``}`
+        withNextPath(`/${email ? `?email=${encodeURIComponent(email)}` : ``}`)
       ),
   },
   [EAuthenticationErrorCodes.REQUIRED_EMAIL_PASSWORD_SIGN_IN]: {
