@@ -296,6 +296,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   issues: {
     filters: [
       "priority",
+      "is_critical",
       "state_group",
       "state_id",
       "cycle_id",

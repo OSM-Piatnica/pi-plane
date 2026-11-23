@@ -222,7 +222,7 @@ class TestScheduleAnalysis:
         assert body["items"][str(a.id)]["total_float"] == 2
 
     def test_more_dated_work_items_than_the_cap(self, session_client, project, network):
-        with mock.patch("plane.app.views.issue.schedule.analyse_queryset") as analyse:
+        with mock.patch("plane.utils.schedule_scope.analyse_queryset") as analyse:
             from plane.utils.schedule_analysis import analyse_queryset
 
             analyse.side_effect = lambda queryset, project_id, weekend_days: analyse_queryset(

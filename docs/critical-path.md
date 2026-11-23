@@ -91,3 +91,17 @@ Any project member may call it. A guest of a project that does not let guests se
 `total_float` is `null` and `is_fixed` is `true` for completed and cancelled work items. `undated_count` counts the work items without both dates; `inverted_count` counts those whose finish is before their start; `undated_linked_ids` lists the left-out work items of both kinds that a dependency links to an analysed work item. In `critical_links`, `source` is the work item that comes first and `relation_type` is the dependency seen from it (`blocking`, `start_before`, `finish_before` or `start_before_finish`).
 
 The code is in `apps/api/plane/utils/schedule_analysis.py`; it reuses the dependency rules and working-day arithmetic of `issue_reschedule.py` and `work_item_duration.py`, so the analysis agrees with the date checks and with "move dependents".
+
+## Filtering by the critical path
+
+The work item filters of a project, module, cycle and project view have a **Critical path** filter (Yes or No). **Yes** lists the critical work items (float 0), **No** every other work item, including undated, completed and cancelled ones, which the analysis does not rate. It combines with the other filters and can be saved in a view.
+
+It is judged by the same analysis as the timeline, always of the whole project, module or cycle the list belongs to, not of what the other filters leave: a work item is critical or not before any other filter is applied. The filter is not offered in workspace views, on the profile pages and in the archive, because their lists are not of one project.
+
+Rules and limits:
+
+- Where the analysis is truncated (more than 2000 dated work items, see "Limits"), the list answers with an error (`critical_filter_truncated`) instead of leaving out work items without telling. A saved view with this filter in such a project therefore shows an error until the filter is removed.
+- Each list request that uses the filter runs the analysis once (not once per condition), so such a request costs about as much as one request of the endpoint above.
+- A guest who only sees their own work items gets the critical path of those alone, as in the analysis.
+
+API: `is_critical` (or `is_critical__exact`) with `true` or `false` in the `filters` parameter of the work item list endpoints of a project, a module and a cycle, for example `filters={"is_critical": true}`. On an endpoint that is not of one project it answers `critical_filter_needs_project`.

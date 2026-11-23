@@ -5,6 +5,7 @@
  * See the LICENSE file for details.
  */
 
+export * from "./critical";
 export * from "./cycle";
 export * from "./date";
 export * from "./group";

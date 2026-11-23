@@ -11,6 +11,7 @@ from django_filters import FilterSet, filters
 
 from plane.db.models import Issue
 from plane.utils.group_filters import issue_group_q, resolve_for_request
+from plane.utils.schedule_scope import critical_issue_ids
 
 
 class UUIDInFilter(filters.BaseInFilter, filters.UUIDFilter):
@@ -162,6 +163,10 @@ class IssueFilterSet(BaseFilterSet):
 
     is_archived = filters.BooleanFilter(method="filter_is_archived")
 
+    # On the critical path of the schedule analysis of the project (or module or cycle) the list is of; only
+    # available in a list of one project
+    is_critical = filters.BooleanFilter(method="filter_is_critical")
+
     state_group = filters.CharFilter(field_name="state__group")
     state_group__in = CharInFilter(field_name="state__group", lookup_expr="in")
 
@@ -215,6 +220,17 @@ class IssueFilterSet(BaseFilterSet):
             return Q(archived_at__isnull=False)
         if value in (False, "false", "False", 0, "0"):
             return Q(archived_at__isnull=True)
+        return Q()  # No filter
+
+    def filter_is_critical(self, queryset, name, value):
+        """
+        is_critical=true -> the critical work items, is_critical=false -> every other work item (also those the
+        analysis does not cover: undated, completed, cancelled)
+        """
+        if value in (True, "true", "True", 1, "1"):
+            return Q(id__in=critical_issue_ids(self.request))
+        if value in (False, "false", "False", 0, "0"):
+            return ~Q(id__in=critical_issue_ids(self.request))
         return Q()  # No filter
 
     # Filter methods with soft delete exclusion for relations
