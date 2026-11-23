@@ -217,6 +217,7 @@
     "critical_path": "Kritik yol",
     "critical_path_tooltip": "Gecikmesi proje bitişini kaydıran iş öğelerini vurgular.",
     "cycles": "Bazı iş öğeleri döngüsel olarak birbirine bağlı; bu ilişkiler dışarıda bırakıldı.",
+    "filter_ignored": "Kritik yol filtresi dışarıda bırakıldı: kritik yolu bulmak için tarihli çok fazla iş öğesi var.",
     "float": "Bolluk",
     "float_critical": "Yok (kritik yol)",
     "float_days": "{count, plural, one {# iş günü} other {# iş günü}}",

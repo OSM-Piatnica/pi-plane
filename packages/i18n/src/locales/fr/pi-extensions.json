@@ -217,6 +217,7 @@
     "critical_path": "Chemin critique",
     "critical_path_tooltip": "Met en évidence les éléments de travail dont le retard déplace la fin du projet.",
     "cycles": "Certains éléments de travail dépendent les uns des autres en boucle ; ces relations ont été ignorées.",
+    "filter_ignored": "Le filtre Chemin critique a été ignoré : trop d’éléments de travail ont des dates pour déterminer le chemin critique.",
     "float": "Marge",
     "float_critical": "Aucune (chemin critique)",
     "float_days": "{count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}",

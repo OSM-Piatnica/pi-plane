@@ -217,6 +217,7 @@
     "critical_path": "Kritischer Pfad",
     "critical_path_tooltip": "Hebt die Arbeitselemente hervor, deren Verzögerung das Projektende verschiebt.",
     "cycles": "Einige Arbeitselemente hängen im Kreis voneinander ab; diese Beziehungen wurden ausgelassen.",
+    "filter_ignored": "Der Filter „Kritischer Pfad“ wurde ausgelassen: Zu viele Arbeitselemente haben Termine, um den kritischen Pfad zu bestimmen.",
     "float": "Puffer",
     "float_critical": "Keiner (kritischer Pfad)",
     "float_days": "{count, plural, one {# Arbeitstag} other {# Arbeitstage}}",

@@ -14,9 +14,8 @@ from rest_framework.response import Response
 # Module imports
 from .. import BaseAPIView
 from plane.app.permissions import ROLE, allow_permission
-from plane.db.models import Issue, Project, ProjectMember
-from plane.utils.schedule_analysis import analyse_queryset
-from plane.utils.weekend_days import default_weekend_days
+from plane.db.models import Project
+from plane.utils.schedule_scope import analyse_scope
 
 
 class ProjectScheduleAnalysisEndpoint(BaseAPIView):
@@ -40,27 +39,15 @@ class ProjectScheduleAnalysisEndpoint(BaseAPIView):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id):
-        scope = {}
-        for param, lookup in (("module", "issue_module"), ("cycle", "issue_cycle")):
+        ids = {}
+        for param in ("module", "cycle"):
             raw = request.GET.get(param)
             if not raw:
                 continue
             try:
-                scope[f"{lookup}__{param}_id"] = uuid.UUID(raw)
+                ids[f"{param}_id"] = uuid.UUID(raw)
             except ValueError:
                 return Response({"error": f"{param} must be an id"}, status=status.HTTP_400_BAD_REQUEST)
-            scope[f"{lookup}__deleted_at__isnull"] = True
 
         project = Project.objects.get(pk=project_id, workspace__slug=slug)
-        queryset = Issue.issue_objects.filter(workspace__slug=slug, project_id=project_id, **scope)
-        is_restricted_guest = (
-            not project.guest_view_all_features
-            and ProjectMember.objects.filter(
-                project_id=project_id, member=request.user, role=ROLE.GUEST.value, is_active=True
-            ).exists()
-        )
-        if is_restricted_guest:
-            queryset = queryset.filter(created_by=request.user)
-
-        weekend_days = default_weekend_days() if project.weekend_days is None else project.weekend_days
-        return Response(analyse_queryset(queryset, project.id, weekend_days), status=status.HTTP_200_OK)
+        return Response(analyse_scope(request.user, slug, project, **ids), status=status.HTTP_200_OK)

@@ -217,6 +217,7 @@
     "critical_path": "Caminho crítico",
     "critical_path_tooltip": "Realça os itens de trabalho cujo atraso desloca o fim do projeto.",
     "cycles": "Alguns itens de trabalho dependem uns dos outros em círculo; essas relações foram ignoradas.",
+    "filter_ignored": "O filtro Caminho crítico foi ignorado: existem demasiados itens de trabalho com datas para determinar o caminho crítico.",
     "float": "Folga",
     "float_critical": "Nenhuma (caminho crítico)",
     "float_days": "{count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}",

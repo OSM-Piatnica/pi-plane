@@ -217,6 +217,7 @@
     "critical_path": "Percorso critico",
     "critical_path_tooltip": "Evidenzia gli elementi di lavoro il cui ritardo sposta la fine del progetto.",
     "cycles": "Alcuni elementi di lavoro dipendono l’uno dall’altro in modo circolare; queste relazioni sono state escluse.",
+    "filter_ignored": "Il filtro Percorso critico è stato escluso: ci sono troppi elementi di lavoro con date per determinare il percorso critico.",
     "float": "Margine",
     "float_critical": "Nessuno (percorso critico)",
     "float_days": "{count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}",

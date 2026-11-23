@@ -217,6 +217,7 @@
     "critical_path": "Drum critic",
     "critical_path_tooltip": "Evidențiază activitățile a căror întârziere mută sfârșitul proiectului.",
     "cycles": "Unele activități depind una de alta în cerc; aceste relații au fost omise.",
+    "filter_ignored": "Filtrul Drum critic a fost omis: prea multe activități au date pentru a putea stabili drumul critic.",
     "float": "Rezervă",
     "float_critical": "Niciuna (drum critic)",
     "float_days": "{count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}",

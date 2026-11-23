@@ -6,6 +6,7 @@
  */
 
 import { useCallback, useMemo } from "react";
+import { Hourglass } from "lucide-react";
 import {
   AtOutline,
   CalendarOutline,
@@ -40,6 +41,7 @@ import {
   getAssigneeFilterConfig,
   getCreatedAtFilterConfig,
   getCreatedByFilterConfig,
+  getCriticalPathFilterConfig,
   getCycleFilterConfig,
   getFileURL,
   getGroupAssigneeFilterConfig,
@@ -251,6 +253,19 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
     [isFilterEnabled, filterableGroups, operatorConfigs]
   );
 
+  // critical path filter config: the schedule analysis is of one project, so only where there is one
+  const criticalPathFilterConfig = useMemo(
+    () =>
+      getCriticalPathFilterConfig<TWorkItemFilterProperty>("is_critical")({
+        isEnabled: isFilterEnabled("is_critical") && !!projectId,
+        filterIcon: Hourglass,
+        ...operatorConfigs,
+        // the filter has a "No" of its own
+        allowNegative: false,
+      }),
+    [isFilterEnabled, projectId, operatorConfigs]
+  );
+
   // mention filter config
   const mentionFilterConfig = useMemo(
     () =>
@@ -400,6 +415,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       stateGroupFilterConfig,
       assigneeFilterConfig,
       groupAssigneeFilterConfig,
+      criticalPathFilterConfig,
       priorityFilterConfig,
       projectFilterConfig,
       mentionFilterConfig,
@@ -423,6 +439,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       module_id: moduleFilterConfig,
       assignee_id: assigneeFilterConfig,
       group_assignee_id: groupAssigneeFilterConfig,
+      is_critical: criticalPathFilterConfig,
       mention_id: mentionFilterConfig,
       created_by_id: createdByFilterConfig,
       subscriber_id: subscriberFilterConfig,

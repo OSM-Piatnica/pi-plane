@@ -217,6 +217,7 @@
     "critical_path": "Kritiek pad",
     "critical_path_tooltip": "Markeert de werkitems waarvan een vertraging het einde van het project verschuift.",
     "cycles": "Sommige werkitems zijn in een kring van elkaar afhankelijk; die relaties zijn weggelaten.",
+    "filter_ignored": "Het filter Kritiek pad is weggelaten: er zijn te veel werkitems met datums om het kritieke pad te bepalen.",
     "float": "Speling",
     "float_critical": "Geen (kritiek pad)",
     "float_days": "{count, plural, one {# werkdag} other {# werkdagen}}",
