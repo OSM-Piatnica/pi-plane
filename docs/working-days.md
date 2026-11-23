@@ -30,7 +30,7 @@ The order differs from weekend days: **the person's own choice wins everywhere**
 
 ## What counts working days
 
-- **Duration** of a work item with a start and a due date counts the working days between them, at least 1.
+- **Duration** of a work item with a start and a finish date counts the working days between them, at least 1. The due date is a deadline and plays no part in it.
 - **Calendars and the timeline:** weekend days are shaded. The calendar hides weekend columns by default (the "Show weekends" option shows them); the timeline shades them in its week and month views.
 - **Relations** use the calendar of the dependent work item's project. The **lag** of a relation (the "Lag (days)" field, ±3650 days, available on every timeline relation type, not only start-to-finish) counts working days; a start or finish on a weekend day counts as the nearest working day. With a lag of zero a work item that must start after another finishes starts on the next working day.
 - **Moving dependents:** when a work item's dates change and others depend on it, Pi-Plane offers to move them, keeping each one's length in working days. It never moves work items in a completed or cancelled state, ones you may not edit, or more than 100 items; if any of these applies no move is offered and the change stays refused.
