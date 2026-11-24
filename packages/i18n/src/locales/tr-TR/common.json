@@ -797,7 +797,8 @@
     "developer": "Geliştirici",
     "work_structure": "İş yapısı",
     "execution": "Yürütme",
-    "administration": "Yönetim"
+    "administration": "Yönetim",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "X ekseni",

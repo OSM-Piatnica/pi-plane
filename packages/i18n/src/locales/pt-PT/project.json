@@ -134,7 +134,14 @@
         "title": "Nenhum ciclo arquivado ainda",
         "description": "Para organizar o seu projeto, arquive os ciclos concluídos. Encontre-os aqui quando forem arquivados."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Nome",
+      "start_date": "Data de início",
+      "manual": "Manual"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# item de trabalho cancelado está excluído deste relatório.} many {# de itens de trabalho cancelados estão excluídos deste relatório.} other {# itens de trabalho cancelados estão excluídos deste relatório.}}"
   },
   "project_views": {
     "empty_state": {

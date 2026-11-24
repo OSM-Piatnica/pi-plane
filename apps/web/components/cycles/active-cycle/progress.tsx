@@ -110,11 +110,7 @@ export const ActiveCycleProgress = observer(function ActiveCycleProgress(props: 
           ))}
           {cycle.cancelled_issues > 0 && (
             <span className="flex items-center gap-2 text-13 text-tertiary">
-              <span>
-                {`${cycle.cancelled_issues} cancelled ${
-                  cycle.cancelled_issues > 1 ? "work items are" : "work item is"
-                } excluded from this report.`}{" "}
-              </span>
+              <span>{t("project_cycles.cancelled_excluded_from_report", { count: cycle.cancelled_issues })} </span>
             </span>
           )}
         </div>

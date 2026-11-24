@@ -797,7 +797,8 @@
     "developer": "Vývojár",
     "work_structure": "Štruktúra práce",
     "execution": "Realizácia",
-    "administration": "Administrácia"
+    "administration": "Administrácia",
+    "of_total": "z {total}"
   },
   "chart": {
     "x_axis": "Os X",

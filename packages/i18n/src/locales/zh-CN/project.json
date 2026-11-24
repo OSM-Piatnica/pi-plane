@@ -134,7 +134,14 @@
         "title": "尚无已归档的周期",
         "description": "为了整理您的项目，归档已完成的周期。归档后可以在这里找到它们。"
       }
-    }
+    },
+    "order_by": {
+      "status": "状态",
+      "name": "名称",
+      "start_date": "开始日期",
+      "manual": "手动"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# 个已取消的工作项已从此报告中排除。} other {# 个已取消的工作项已从此报告中排除。}}"
   },
   "project_views": {
     "empty_state": {

@@ -134,7 +134,14 @@
         "title": "Keine archivierten Zyklen",
         "description": "Archivieren Sie abgeschlossene Zyklen, um Ordnung zu halten."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Name",
+      "start_date": "Startdatum",
+      "manual": "Manuell"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# abgebrochenes Arbeitselement wird aus diesem Bericht ausgeschlossen.} other {# abgebrochene Arbeitselemente werden aus diesem Bericht ausgeschlossen.}}"
   },
   "project_views": {
     "empty_state": {

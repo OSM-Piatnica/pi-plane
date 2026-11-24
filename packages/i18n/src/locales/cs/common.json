@@ -797,7 +797,8 @@
     "developer": "Vývojář",
     "work_structure": "Struktura práce",
     "execution": "Realizace",
-    "administration": "Administrace"
+    "administration": "Administrace",
+    "of_total": "z {total}"
   },
   "chart": {
     "x_axis": "Osa X",

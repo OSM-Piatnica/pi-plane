@@ -793,7 +793,8 @@
     "developer": "Разработчик",
     "work_structure": "Структура на работата",
     "execution": "Изпълнение",
-    "administration": "Администриране"
+    "administration": "Администриране",
+    "of_total": "от {total}"
   },
   "chart": {
     "x_axis": "Ос X",

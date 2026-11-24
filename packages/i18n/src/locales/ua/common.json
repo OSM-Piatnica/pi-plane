@@ -797,7 +797,8 @@
     "developer": "Розробник",
     "work_structure": "Структура роботи",
     "execution": "Виконання",
-    "administration": "Адміністрування"
+    "administration": "Адміністрування",
+    "of_total": "з {total}"
   },
   "chart": {
     "x_axis": "Вісь X",
