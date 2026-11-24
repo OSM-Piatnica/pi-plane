@@ -797,7 +797,8 @@
     "developer": "Geliştirici",
     "work_structure": "İş yapısı",
     "execution": "Yürütme",
-    "administration": "Yönetim"
+    "administration": "Yönetim",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "X ekseni",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "<name/> çalışma alanını silmek üzeresiniz. Onaylarsanız bu çalışma alanındaki tüm iş verilerinize erişiminizi kaybedersiniz ve geri alma imkanı olmaz. Lütfen çok dikkatli olun.",
       "delete_type_name": "Devam etmek için bu çalışma alanının adını yazın.",
-      "delete_final_confirmation": "Son onay için aşağıya <phrase/> yazın."
+      "delete_final_confirmation": "Son onay için aşağıya <phrase/> yazın.",
+      "remove_member_confirmation": "<name/> kullanıcısını kaldırmak istediğinizden emin misiniz? Artık bu çalışma alanına erişemeyecektir. Bu işlem geri alınamaz."
     },
     "workspace_settings": {
       "invitation_removed": "Davet başarıyla kaldırıldı.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "Tahminleri aç/kapat",
       "estimates_list": "Tahmin listesi",
       "archived_title": "Arşivlenmiş tahminler",
-      "archived_description": "Tahminlerde değişiklik yapıldı; bunlar eski sürümlerinizde bulunan ve kullanılmayan tahminlerdir. Bunlar hakkında daha fazla bilgiyi <link>buradan okuyun.</link>"
+      "archived_description": "Tahminlerde değişiklik yapıldı; bunlar eski sürümlerinizde bulunan ve kullanılmayan tahminlerdir. Bunlar hakkında daha fazla bilgiyi <link>buradan okuyun.</link>",
+      "add_your_own": "Kendi “<name/>” sisteminizi sıfırdan ekleyin."
     },
     "gantt": {
       "create_blocked_by_dependency": "Tarafından engellenen bağımlılık oluştur",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake formu kullanıcısı",
       "status": "Durum",
-      "created_by": "Oluşturan"
+      "created_by": "Oluşturan",
+      "decline_confirmation": "<id/> iş öğesini reddetmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "delete_confirmation": "<id/> iş öğesini silmek istediğinizden emin misiniz? İş öğesi yalnızca Intake’ten silinecektir ve bu işlem geri alınamaz."
     },
     "instance": {
       "contact_support": "Destekle iletişime geç",
@@ -1327,7 +1332,9 @@
       "install": "Yükle"
     },
     "attachments": {
-      "upload_progress": "Yükleme ilerlemesi"
+      "upload_progress": "Yükleme ilerlemesi",
+      "percent_done": "%{percent} tamamlandı",
+      "delete_confirmation": "<name/> ekini silmek istediğinizden emin misiniz? Bu ek kalıcı olarak kaldırılacaktır. Bu işlem geri alınamaz."
     },
     "labels": {
       "delete_confirmation": "<name/> etiketini silmek istediğinizden emin misiniz? Bu işlem etiketi tüm iş öğelerinden ve bu etikete göre filtrelenen tüm görünümlerden kaldıracaktır.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Sayfa herkese açık olarak işaretlendi ve herkese açık bölüme taşındı.} other {Sayfa özel olarak işaretlendi ve özel bölüme taşındı.}}",
+      "access_change_failed": "{access, select, public {Sayfa herkese açık olarak işaretlenemedi. Lütfen tekrar deneyin.} other {Sayfa özel olarak işaretlenemedi. Lütfen tekrar deneyin.}}"
     },
     "activity": {
-      "bot_name": "{name} Botu"
+      "bot_name": "{name} Botu",
+      "issue_type_changed": "{kind, select, both {türü <old/> yerine <new/> olarak değiştirdi} from {türü <old/> değerinden değiştirdi} to {türü <new/> olarak değiştirdi} other {türü değiştirdi}}",
+      "on_work_item": "şurada:"
     },
     "project": {
       "identifier": "Tanımlayıcı"
@@ -1446,7 +1457,9 @@
       "last_7_days": "Son 7 gün",
       "last_30_days": "Son 30 gün",
       "last_3_months": "Son 3 ay",
-      "duration": "Süre"
+      "duration": "Süre",
+      "header_for": "{title} analitiği",
+      "header_in": "{name} içinde"
     },
     "auth_labels": {
       "one_time_code": "Tek kullanımlık kod"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Durum grubu",
-      "subscriber": "Abone"
+      "subscriber": "Abone",
+      "more_count": "+{count} tane daha"
+    },
+    "mentions": {
+      "suspended_user": "@askıya alınmış kullanıcı",
+      "deactivated_user": "@devre dışı bırakılmış kullanıcı"
+    },
+    "automation": {
+      "customize_time_range": "Zaman aralığını özelleştir"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Şansımı deniyorum"
+    },
+    "parent_modal": {
+      "search_results": "Projede <term/> için arama sonuçları:"
+    },
+    "error_page": {
+      "title": "Görünüşe göre bir şeyler ters gitti!",
+      "description": "Bu hataları otomatik olarak takip ediyoruz ve her şeyi yeniden çalışır hale getirmek için çalışıyoruz. Sorun devam ederse bizimle iletişime geçmekten çekinmeyin. Bu sırada sayfayı yenilemeyi deneyin.",
+      "contact_support": "Destekle iletişime geçin",
+      "status_page": "Durum sayfası"
+    },
+    "links": {
+      "created_by": "{name} tarafından"
     }
   },
   "space_text": {

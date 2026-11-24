@@ -134,7 +134,14 @@
         "title": "Chưa có chu kỳ đã lưu trữ",
         "description": "Để tổ chức dự án của bạn, hãy lưu trữ chu kỳ đã hoàn thành. Bạn có thể tìm thấy chúng ở đây sau khi lưu trữ."
       }
-    }
+    },
+    "order_by": {
+      "status": "Trạng thái",
+      "name": "Tên",
+      "start_date": "Ngày bắt đầu",
+      "manual": "Thủ công"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# mục công việc đã hủy bị loại khỏi báo cáo này.} other {# mục công việc đã hủy bị loại khỏi báo cáo này.}}"
   },
   "project_views": {
     "empty_state": {

@@ -134,7 +134,14 @@
         "title": "Žiadne archivované cykly",
         "description": "Archivujte dokončené cykly pre poriadok."
       }
-    }
+    },
+    "order_by": {
+      "status": "Stav",
+      "name": "Názov",
+      "start_date": "Dátum začiatku",
+      "manual": "Manuálne"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {Z tohto prehľadu je vylúčená # zrušená pracovná položka.} few {Z tohto prehľadu sú vylúčené # zrušené pracovné položky.} many {Z tohto prehľadu je vylúčené # zrušenej pracovnej položky.} other {Z tohto prehľadu je vylúčených # zrušených pracovných položiek.}}"
   },
   "project_views": {
     "empty_state": {

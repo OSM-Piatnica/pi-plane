@@ -134,7 +134,14 @@
         "title": "Nog geen gearchiveerde cycli",
         "description": "Om je project op te ruimen, archiveer je voltooide cycli. Je vindt ze hier zodra ze zijn gearchiveerd."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Naam",
+      "start_date": "Startdatum",
+      "manual": "Handmatig"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# geannuleerd werkitem is uitgesloten van dit rapport.} other {# geannuleerde werkitems zijn uitgesloten van dit rapport.}}"
   },
   "project_views": {
     "empty_state": {

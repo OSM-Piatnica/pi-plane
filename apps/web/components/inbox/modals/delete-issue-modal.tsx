@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 // types
 import { PROJECT_ERROR_MESSAGES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { setToast } from "@plane/blocks/toast";
 import type { TIssue } from "@plane/types";
 // ui
@@ -76,14 +77,15 @@ export const DeleteInboxIssueModal = observer(function DeleteInboxIssueModal({
       isSubmitting={isDeleting}
       isOpen={isOpen}
       title={t("inbox_issue.modals.delete.title")}
-      // TODO: Need to translate the confirmation message
       content={
         <>
-          Are you sure you want to delete work item{" "}
-          <span className="font-medium break-words text-primary">
-            {projectDetails?.identifier}-{data?.sequence_id}
-          </span>
-          {""}? The work item will only be deleted from the intake and this action cannot be undone.
+          {renderTaggedText(t("app_text.inbox.delete_confirmation"), {
+            id: () => (
+              <span className="font-medium break-words text-primary">
+                {projectDetails?.identifier}-{data?.sequence_id}
+              </span>
+            ),
+          })}
         </>
       }
     />

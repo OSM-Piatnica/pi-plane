@@ -797,7 +797,8 @@
     "developer": "Vývojář",
     "work_structure": "Struktura práce",
     "execution": "Realizace",
-    "administration": "Administrace"
+    "administration": "Administrace",
+    "of_total": "z {total}"
   },
   "chart": {
     "x_axis": "Osa X",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Chystáte se smazat pracovní prostor <name/>. Pokud to potvrdíte, ztratíte přístup ke všem svým pracovním datům v tomto pracovním prostoru bez možnosti obnovení. Postupujte velmi opatrně.",
       "delete_type_name": "Pro pokračování zadejte název tohoto pracovního prostoru.",
-      "delete_final_confirmation": "Pro konečné potvrzení napište níže <phrase/>."
+      "delete_final_confirmation": "Pro konečné potvrzení napište níže <phrase/>.",
+      "remove_member_confirmation": "Opravdu chcete odebrat uživatele <name/>? Již nebude mít přístup k tomuto pracovnímu prostoru. Tuto akci nelze vrátit zpět."
     },
     "workspace_settings": {
       "invitation_removed": "Pozvánka byla úspěšně odebrána.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "Přepnout odhady",
       "estimates_list": "Seznam odhadů",
       "archived_title": "Archivované odhady",
-      "archived_description": "Odhady prošly změnou. Toto jsou odhady z vašich starších verzí, které se nepoužívaly. Více se o nich dozvíte <link>zde.</link>"
+      "archived_description": "Odhady prošly změnou. Toto jsou odhady z vašich starších verzí, které se nepoužívaly. Více se o nich dozvíte <link>zde.</link>",
+      "add_your_own": "Přidejte si vlastní systém „<name/>“ od začátku."
     },
     "gantt": {
       "create_blocked_by_dependency": "Vytvořit závislost „blokováno“",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Uživatel formuláře Intake",
       "status": "Stav",
-      "created_by": "Vytvořil"
+      "created_by": "Vytvořil",
+      "decline_confirmation": "Opravdu chcete zamítnout pracovní položku <id/>? Tuto akci nelze vrátit zpět.",
+      "delete_confirmation": "Opravdu chcete odstranit pracovní položku <id/>? Položka bude odstraněna pouze z Intake a tuto akci nelze vrátit zpět."
     },
     "instance": {
       "contact_support": "Kontaktovat podporu",
@@ -1327,7 +1332,9 @@
       "install": "Nainstalovat"
     },
     "attachments": {
-      "upload_progress": "Průběh nahrávání"
+      "upload_progress": "Průběh nahrávání",
+      "percent_done": "Hotovo {percent} %",
+      "delete_confirmation": "Opravdu chcete odstranit přílohu <name/>? Příloha bude trvale odstraněna. Tuto akci nelze vrátit zpět."
     },
     "labels": {
       "delete_confirmation": "Opravdu chcete smazat <name/>? Štítek bude odstraněn ze všech pracovních položek i ze všech pohledů, ve kterých je podle něj filtrováno.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Stránka byla označena jako veřejná a přesunuta do veřejné sekce.} other {Stránka byla označena jako soukromá a přesunuta do soukromé sekce.}}",
+      "access_change_failed": "{access, select, public {Stránku se nepodařilo označit jako veřejnou. Zkuste to prosím znovu.} other {Stránku se nepodařilo označit jako soukromou. Zkuste to prosím znovu.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {změnil(a) typ z <old/> na <new/>} from {změnil(a) typ z <old/>} to {změnil(a) typ na <new/>} other {změnil(a) typ}}",
+      "on_work_item": "u"
     },
     "project": {
       "identifier": "Identifikátor"
@@ -1446,7 +1457,9 @@
       "last_7_days": "Posledních 7 dní",
       "last_30_days": "Posledních 30 dní",
       "last_3_months": "Poslední 3 měsíce",
-      "duration": "Trvání"
+      "duration": "Trvání",
+      "header_for": "Analytika pro {title}",
+      "header_in": "v {name}"
     },
     "auth_labels": {
       "one_time_code": "Jednorázový kód"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Skupina stavů",
-      "subscriber": "Odběratel"
+      "subscriber": "Odběratel",
+      "more_count": "+{count} další"
+    },
+    "mentions": {
+      "suspended_user": "@pozastavený uživatel",
+      "deactivated_user": "@deaktivovaný uživatel"
+    },
+    "automation": {
+      "customize_time_range": "Přizpůsobit časové období"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Mám štěstí"
+    },
+    "parent_modal": {
+      "search_results": "Výsledky hledání <term/> v projektu:"
+    },
+    "error_page": {
+      "title": "Vypadá to, že se něco pokazilo!",
+      "description": "Tyto chyby sledujeme automaticky a pracujeme na obnovení provozu. Pokud problém přetrvává, neváhejte nás kontaktovat. Mezitím zkuste stránku obnovit.",
+      "contact_support": "Kontaktovat podporu",
+      "status_page": "Stránka se stavem"
+    },
+    "links": {
+      "created_by": "od {name}"
     }
   },
   "space_text": {

@@ -797,7 +797,8 @@
     "developer": "개발자",
     "work_structure": "작업 구조",
     "execution": "실행",
-    "administration": "관리"
+    "administration": "관리",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "X축",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "작업 공간 <name/>을(를) 삭제하려고 합니다. 확인하면 이 작업 공간의 모든 작업 데이터에 대한 접근 권한을 잃게 되며 복원할 수 없습니다. 매우 신중하게 진행하세요.",
       "delete_type_name": "계속하려면 이 작업 공간의 이름을 입력하세요.",
-      "delete_final_confirmation": "최종 확인을 위해 아래에 <phrase/>을(를) 입력하세요."
+      "delete_final_confirmation": "최종 확인을 위해 아래에 <phrase/>을(를) 입력하세요.",
+      "remove_member_confirmation": "<name/>님을 제거하시겠습니까? 더 이상 이 워크스페이스에 액세스할 수 없게 됩니다. 이 작업은 되돌릴 수 없습니다."
     },
     "workspace_settings": {
       "invitation_removed": "초대가 제거되었습니다.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "추정 전환",
       "estimates_list": "추정 목록",
       "archived_title": "아카이브된 추정",
-      "archived_description": "추정에 변경 사항이 있었습니다. 이전 버전에서 사용하지 않던 추정입니다. 자세한 내용은 <link>여기</link>를 참조하세요."
+      "archived_description": "추정에 변경 사항이 있었습니다. 이전 버전에서 사용하지 않던 추정입니다. 자세한 내용은 <link>여기</link>를 참조하세요.",
+      "add_your_own": "직접 만든 <name/> 시스템을 처음부터 추가하세요."
     },
     "gantt": {
       "create_blocked_by_dependency": "차단됨 종속성 생성",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake 양식 사용자",
       "status": "상태",
-      "created_by": "생성자"
+      "created_by": "생성자",
+      "decline_confirmation": "작업 항목 <id/>을(를) 거절하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+      "delete_confirmation": "작업 항목 <id/>을(를) 삭제하시겠습니까? 이 작업 항목은 Intake에서만 삭제되며 이 작업은 되돌릴 수 없습니다."
     },
     "instance": {
       "contact_support": "지원팀에 문의",
@@ -1327,7 +1332,9 @@
       "install": "설치"
     },
     "attachments": {
-      "upload_progress": "업로드 진행률"
+      "upload_progress": "업로드 진행률",
+      "percent_done": "{percent}% 완료",
+      "delete_confirmation": "첨부 파일 <name/>을(를) 삭제하시겠습니까? 이 첨부 파일은 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다."
     },
     "labels": {
       "delete_confirmation": "<name/>을(를) 삭제하시겠습니까? 모든 작업 항목과 이 레이블로 필터링하는 모든 보기에서 레이블이 제거됩니다.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "레터",
       "page_size_legal": "리걸",
-      "page_size_tabloid": "타블로이드"
+      "page_size_tabloid": "타블로이드",
+      "access_changed": "{access, select, public {페이지를 공개로 설정하고 공개 섹션으로 이동했습니다.} other {페이지를 비공개로 설정하고 비공개 섹션으로 이동했습니다.}}",
+      "access_change_failed": "{access, select, public {페이지를 공개로 설정하지 못했습니다. 다시 시도해 주세요.} other {페이지를 비공개로 설정하지 못했습니다. 다시 시도해 주세요.}}"
     },
     "activity": {
-      "bot_name": "{name} 봇"
+      "bot_name": "{name} 봇",
+      "issue_type_changed": "{kind, select, both {유형을 <old/>에서 <new/>(으)로 변경했습니다} from {유형을 <old/>에서 변경했습니다} to {유형을 <new/>(으)로 변경했습니다} other {유형을 변경했습니다}}",
+      "on_work_item": "대상:"
     },
     "project": {
       "identifier": "식별자"
@@ -1446,7 +1457,9 @@
       "last_7_days": "최근 7일",
       "last_30_days": "최근 30일",
       "last_3_months": "최근 3개월",
-      "duration": "기간"
+      "duration": "기간",
+      "header_for": "{title} 분석",
+      "header_in": "({name} 내)"
     },
     "auth_labels": {
       "one_time_code": "일회용 코드"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "상태 그룹",
-      "subscriber": "구독자"
+      "subscriber": "구독자",
+      "more_count": "+{count}개 더"
+    },
+    "mentions": {
+      "suspended_user": "@정지된 사용자",
+      "deactivated_user": "@비활성화된 사용자"
+    },
+    "automation": {
+      "customize_time_range": "기간 사용자 지정"
+    },
+    "issue_modal": {
+      "feeling_lucky": "운에 맡겨보기"
+    },
+    "parent_modal": {
+      "search_results": "프로젝트에서 <term/> 검색 결과:"
+    },
+    "error_page": {
+      "title": "문제가 발생한 것 같습니다.",
+      "description": "이러한 오류는 자동으로 기록되며, 정상화를 위해 작업 중입니다. 문제가 계속되면 언제든지 문의해 주세요. 그동안 페이지를 새로 고침해 보세요.",
+      "contact_support": "지원팀에 문의",
+      "status_page": "상태 페이지"
+    },
+    "links": {
+      "created_by": "{name}님이 생성"
     }
   },
   "space_text": {

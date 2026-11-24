@@ -797,7 +797,8 @@
     "developer": "Sviluppatore",
     "work_structure": "Struttura del lavoro",
     "execution": "Esecuzione",
-    "administration": "Amministrazione"
+    "administration": "Amministrazione",
+    "of_total": "su {total}"
   },
   "chart": {
     "x_axis": "Asse X",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Sta per eliminare lo spazio di lavoro <name/>. Se conferma, perderà l'accesso a tutti i dati di lavoro in questo spazio di lavoro senza alcuna possibilità di ripristino. Proceda con estrema cautela.",
       "delete_type_name": "Digiti il nome di questo spazio di lavoro per continuare.",
-      "delete_final_confirmation": "Per la conferma finale, digiti <phrase/> qui sotto."
+      "delete_final_confirmation": "Per la conferma finale, digiti <phrase/> qui sotto.",
+      "remove_member_confirmation": "Vuole davvero rimuovere <name/>? Non avrà più accesso a questo spazio di lavoro. Questa azione non può essere annullata."
     },
     "workspace_settings": {
       "invitation_removed": "Invito rimosso correttamente.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "Attiva/disattiva stime",
       "estimates_list": "Elenco delle stime",
       "archived_title": "Stime archiviate",
-      "archived_description": "Le stime sono state modificate: queste sono le stime delle sue versioni precedenti che non erano in uso. Maggiori informazioni <link>qui.</link>"
+      "archived_description": "Le stime sono state modificate: queste sono le stime delle sue versioni precedenti che non erano in uso. Maggiori informazioni <link>qui.</link>",
+      "add_your_own": "Aggiunga un proprio sistema «<name/>» da zero."
     },
     "gantt": {
       "create_blocked_by_dependency": "Crea dipendenza «bloccato da»",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Utente del modulo Intake",
       "status": "Stato",
-      "created_by": "Creato da"
+      "created_by": "Creato da",
+      "decline_confirmation": "Vuole davvero rifiutare l’elemento di lavoro <id/>? Questa azione non può essere annullata.",
+      "delete_confirmation": "Vuole davvero eliminare l’elemento di lavoro <id/>? L’elemento verrà eliminato solo da Intake e questa azione non può essere annullata."
     },
     "instance": {
       "contact_support": "Contatta il supporto",
@@ -1327,7 +1332,9 @@
       "install": "Installa"
     },
     "attachments": {
-      "upload_progress": "Avanzamento del caricamento"
+      "upload_progress": "Avanzamento del caricamento",
+      "percent_done": "{percent}% completato",
+      "delete_confirmation": "Vuole davvero eliminare l’allegato <name/>? Verrà rimosso in modo permanente. Questa azione non può essere annullata."
     },
     "labels": {
       "delete_confirmation": "Eliminare davvero <name/>? Verrà rimossa l'etichetta da tutti gli elementi di lavoro e da tutte le viste in cui viene usata come filtro.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {La pagina è stata contrassegnata come pubblica e spostata nella sezione pubblica.} other {La pagina è stata contrassegnata come privata e spostata nella sezione privata.}}",
+      "access_change_failed": "{access, select, public {Non è stato possibile contrassegnare la pagina come pubblica. Riprovi.} other {Non è stato possibile contrassegnare la pagina come privata. Riprovi.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {ha cambiato il tipo da <old/> a <new/>} from {ha cambiato il tipo da <old/>} to {ha cambiato il tipo in <new/>} other {ha cambiato il tipo}}",
+      "on_work_item": "su"
     },
     "project": {
       "identifier": "Identificatore"
@@ -1446,7 +1457,9 @@
       "last_7_days": "Ultimi 7 giorni",
       "last_30_days": "Ultimi 30 giorni",
       "last_3_months": "Ultimi 3 mesi",
-      "duration": "Durata"
+      "duration": "Durata",
+      "header_for": "Analisi per {title}",
+      "header_in": "in {name}"
     },
     "auth_labels": {
       "one_time_code": "Codice monouso"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Gruppo di stati",
-      "subscriber": "Abbonato"
+      "subscriber": "Abbonato",
+      "more_count": "+{count} altri"
+    },
+    "mentions": {
+      "suspended_user": "@utente sospeso",
+      "deactivated_user": "@utente disattivato"
+    },
+    "automation": {
+      "customize_time_range": "Personalizza l’intervallo di tempo"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Mi sento fortunato"
+    },
+    "parent_modal": {
+      "search_results": "Risultati della ricerca di <term/> nel progetto:"
+    },
+    "error_page": {
+      "title": "Sembra che qualcosa sia andato storto!",
+      "description": "Monitoriamo automaticamente questi errori e stiamo lavorando per ripristinare il servizio. Se il problema persiste, ci contatti pure. Nel frattempo, provi ad aggiornare la pagina.",
+      "contact_support": "Contatta l’assistenza",
+      "status_page": "Pagina di stato"
+    },
+    "links": {
+      "created_by": "di {name}"
     }
   },
   "space_text": {

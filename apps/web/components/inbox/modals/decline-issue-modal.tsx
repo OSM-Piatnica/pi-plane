@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React, { useState } from "react";
 // types
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import type { TIssue } from "@plane/types";
 // ui
 import { ConfirmDialog } from "@plane/blocks/dialog";
@@ -53,14 +55,15 @@ export function DeclineIssueModal(props: Props) {
       isSubmitting={isDeclining}
       isOpen={isOpen}
       title={t("inbox_issue.modals.decline.title")}
-      // TODO: Need to translate the confirmation message
       content={
         <>
-          Are you sure you want to decline work item{" "}
-          <span className="font-medium break-words text-primary">
-            {projectDetails?.identifier}-{data?.sequence_id}
-          </span>
-          {""}? This action cannot be undone.
+          {renderTaggedText(t("app_text.inbox.decline_confirmation"), {
+            id: () => (
+              <span className="font-medium break-words text-primary">
+                {projectDetails?.identifier}-{data?.sequence_id}
+              </span>
+            ),
+          })}
         </>
       }
       primaryButtonText={{

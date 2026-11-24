@@ -9,7 +9,9 @@
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
 import { Layers } from "lucide-react";
+import { useTranslation } from "@plane/i18n";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import {
   IssueActivityBlockComponent,
   IssueLink,
@@ -22,6 +24,7 @@ export type TIssueTypeActivity = { activityId: string; showIssue?: boolean; ends
 export const IssueTypeActivity = observer(function IssueTypeActivity(props: TIssueTypeActivity) {
   const { activityId, showIssue = true, ends } = props;
   const { workspaceSlug } = useParams();
+  const { t } = useTranslation();
   const {
     activity: { getActivityById },
   } = useIssueDetail();
@@ -33,6 +36,13 @@ export const IssueTypeActivity = observer(function IssueTypeActivity(props: TIss
   const oldType = activity.old_identifier ? typeMap[String(activity.old_identifier)] : undefined;
   const newType = activity.new_identifier ? typeMap[String(activity.new_identifier)] : undefined;
 
+  const typeChip = (type: NonNullable<typeof oldType>) => (
+    <span className="inline-flex items-center gap-1 rounded border border-subtle bg-surface-2 px-1 py-0.5 text-11">
+      <SwitcherIcon logo_props={type.logo_props} LabelIcon={Layers} size={10} />
+      {type.name}
+    </span>
+  );
+
   return (
     <IssueActivityBlockComponent
       icon={<Layers height={14} width={14} className="text-secondary" />}
@@ -40,29 +50,18 @@ export const IssueTypeActivity = observer(function IssueTypeActivity(props: TIss
       ends={ends}
     >
       <>
-        changed the type
-        {oldType ? (
+        {renderTaggedText(
+          t("app_text.activity.issue_type_changed", {
+            kind: oldType && newType ? "both" : oldType ? "from" : newType ? "to" : "other",
+          }),
+          { old: () => (oldType ? typeChip(oldType) : null), new: () => (newType ? typeChip(newType) : null) }
+        )}
+        {showIssue ? (
           <>
             {" "}
-            from{" "}
-            <span className="inline-flex items-center gap-1 rounded border border-subtle bg-surface-2 px-1 py-0.5 text-11">
-              <SwitcherIcon logo_props={oldType.logo_props} LabelIcon={Layers} size={10} />
-              {oldType.name}
-            </span>
+            {t("app_text.activity.on_work_item")} <IssueLink activityId={activityId} />
           </>
         ) : null}
-        {newType ? (
-          <>
-            {" "}
-            to{" "}
-            <span className="inline-flex items-center gap-1 rounded border border-subtle bg-surface-2 px-1 py-0.5 text-11">
-              <SwitcherIcon logo_props={newType.logo_props} LabelIcon={Layers} size={10} />
-              {newType.name}
-            </span>
-          </>
-        ) : null}
-        {showIssue ? " on " : null}
-        {showIssue ? <IssueLink activityId={activityId} /> : null}
       </>
     </IssueActivityBlockComponent>
   );

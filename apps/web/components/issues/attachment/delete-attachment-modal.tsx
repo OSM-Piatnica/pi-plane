@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -8,6 +9,7 @@ import { useState } from "react";
 import { observer } from "mobx-react";
 // plane-i18n
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // types
 import type { TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
@@ -72,10 +74,9 @@ export const IssueAttachmentDeleteModal = observer(function IssueAttachmentDelet
       title={t("attachment.delete")}
       content={
         <>
-          {/* TODO: Translate here */}
-          Are you sure you want to delete attachment-{" "}
-          <span className="font-bold">{getFileName(attachment.attributes.name)}</span>? This attachment will be
-          permanently removed. This action cannot be undone.
+          {renderTaggedText(t("app_text.attachments.delete_confirmation"), {
+            name: () => <span className="font-bold">{getFileName(attachment.attributes.name)}</span>,
+          })}
         </>
       }
     />

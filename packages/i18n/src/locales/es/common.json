@@ -797,7 +797,8 @@
     "developer": "Desarrollador",
     "work_structure": "Estructura de trabajo",
     "execution": "Ejecución",
-    "administration": "Administración"
+    "administration": "Administración",
+    "of_total": "de {total}"
   },
   "chart": {
     "x_axis": "Eje X",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Está a punto de eliminar el espacio de trabajo <name/>. Si lo confirma, perderá el acceso a todos los datos de trabajo de este espacio de trabajo sin ninguna forma de restaurarlos. Proceda con mucho cuidado.",
       "delete_type_name": "Escriba el nombre de este espacio de trabajo para continuar.",
-      "delete_final_confirmation": "Para la confirmación final, escriba <phrase/> a continuación."
+      "delete_final_confirmation": "Para la confirmación final, escriba <phrase/> a continuación.",
+      "remove_member_confirmation": "¿Está seguro de que desea eliminar a <name/>? Ya no tendrá acceso a este espacio de trabajo. Esta acción no se puede deshacer."
     },
     "workspace_settings": {
       "invitation_removed": "Invitación eliminada correctamente.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "Mostrar u ocultar estimaciones",
       "estimates_list": "Lista de estimaciones",
       "archived_title": "Estimaciones archivadas",
-      "archived_description": "Las estimaciones han sufrido un cambio; estas son las estimaciones de sus versiones anteriores que no estaban en uso. Obtenga más información sobre ellas <link>aquí.</link>"
+      "archived_description": "Las estimaciones han sufrido un cambio; estas son las estimaciones de sus versiones anteriores que no estaban en uso. Obtenga más información sobre ellas <link>aquí.</link>",
+      "add_your_own": "Agregue su propio sistema «<name/>» desde cero."
     },
     "gantt": {
       "create_blocked_by_dependency": "Crear dependencia de bloqueado por",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Usuario del formulario de Intake",
       "status": "Estado",
-      "created_by": "Creado por"
+      "created_by": "Creado por",
+      "decline_confirmation": "¿Está seguro de que desea rechazar el elemento de trabajo <id/>? Esta acción no se puede deshacer.",
+      "delete_confirmation": "¿Está seguro de que desea eliminar el elemento de trabajo <id/>? El elemento solo se eliminará de Intake y esta acción no se puede deshacer."
     },
     "instance": {
       "contact_support": "Contactar con soporte",
@@ -1327,7 +1332,9 @@
       "install": "Instalar"
     },
     "attachments": {
-      "upload_progress": "Progreso de la carga"
+      "upload_progress": "Progreso de la carga",
+      "percent_done": "{percent} % completado",
+      "delete_confirmation": "¿Está seguro de que desea eliminar el adjunto <name/>? Se eliminará de forma permanente. Esta acción no se puede deshacer."
     },
     "labels": {
       "delete_confirmation": "¿Está seguro de que desea eliminar <name/>? Esto quitará la etiqueta de todos los elementos de trabajo y de las vistas en las que se esté filtrando por ella.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {La página se marcó como pública y se movió a la sección pública.} other {La página se marcó como privada y se movió a la sección privada.}}",
+      "access_change_failed": "{access, select, public {No se pudo marcar la página como pública. Inténtelo de nuevo.} other {No se pudo marcar la página como privada. Inténtelo de nuevo.}}"
     },
     "activity": {
-      "bot_name": "Bot de {name}"
+      "bot_name": "Bot de {name}",
+      "issue_type_changed": "{kind, select, both {cambió el tipo de <old/> a <new/>} from {cambió el tipo de <old/>} to {cambió el tipo a <new/>} other {cambió el tipo}}",
+      "on_work_item": "en"
     },
     "project": {
       "identifier": "Identificador"
@@ -1446,7 +1457,9 @@
       "last_7_days": "Últimos 7 días",
       "last_30_days": "Últimos 30 días",
       "last_3_months": "Últimos 3 meses",
-      "duration": "Duración"
+      "duration": "Duración",
+      "header_for": "Análisis de {title}",
+      "header_in": "en {name}"
     },
     "auth_labels": {
       "one_time_code": "Código de un solo uso"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Grupo de estados",
-      "subscriber": "Suscriptor"
+      "subscriber": "Suscriptor",
+      "more_count": "+{count} más"
+    },
+    "mentions": {
+      "suspended_user": "@usuario suspendido",
+      "deactivated_user": "@usuario desactivado"
+    },
+    "automation": {
+      "customize_time_range": "Personalizar el intervalo de tiempo"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Voy a tener suerte"
+    },
+    "parent_modal": {
+      "search_results": "Resultados de la búsqueda de <term/> en el proyecto:"
+    },
+    "error_page": {
+      "title": "¡Parece que algo salió mal!",
+      "description": "Registramos estos errores automáticamente y trabajamos para que todo vuelva a funcionar. Si el problema continúa, no dude en ponerse en contacto con nosotros. Mientras tanto, intente actualizar la página.",
+      "contact_support": "Contactar con soporte",
+      "status_page": "Página de estado"
+    },
+    "links": {
+      "created_by": "por {name}"
     }
   },
   "space_text": {

@@ -797,7 +797,8 @@
     "developer": "開発者",
     "work_structure": "作業構造",
     "execution": "実行",
-    "administration": "管理"
+    "administration": "管理",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "エックス アクシス",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "ワークスペース <name/> を削除しようとしています。確認すると、このワークスペース内のすべての作業データにアクセスできなくなり、復元することはできません。十分にご注意ください。",
       "delete_type_name": "続行するには、このワークスペースの名前を入力してください。",
-      "delete_final_confirmation": "最終確認として、下に <phrase/> と入力してください。"
+      "delete_final_confirmation": "最終確認として、下に <phrase/> と入力してください。",
+      "remove_member_confirmation": "<name/> を削除してもよろしいですか？このワークスペースにアクセスできなくなります。この操作は元に戻せません。"
     },
     "workspace_settings": {
       "invitation_removed": "招待を削除しました。",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "見積もりを切り替え",
       "estimates_list": "見積もり一覧",
       "archived_title": "アーカイブされた見積もり",
-      "archived_description": "見積もりに変更がありました。これらは以前のバージョンで使用されていなかった見積もりです。詳細は <link>こちら。</link>"
+      "archived_description": "見積もりに変更がありました。これらは以前のバージョンで使用されていなかった見積もりです。詳細は <link>こちら。</link>",
+      "add_your_own": "独自の「<name/>」を一から追加します。"
     },
     "gantt": {
       "create_blocked_by_dependency": "ブロックされている依存関係を作成",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake フォームのユーザー",
       "status": "ステータス",
-      "created_by": "作成者"
+      "created_by": "作成者",
+      "decline_confirmation": "作業項目 <id/> を却下してもよろしいですか？この操作は元に戻せません。",
+      "delete_confirmation": "作業項目 <id/> を削除してもよろしいですか？この作業項目は Intake からのみ削除され、この操作は元に戻せません。"
     },
     "instance": {
       "contact_support": "サポートに問い合わせる",
@@ -1327,7 +1332,9 @@
       "install": "インストール"
     },
     "attachments": {
-      "upload_progress": "アップロードの進捗"
+      "upload_progress": "アップロードの進捗",
+      "percent_done": "{percent}% 完了",
+      "delete_confirmation": "添付ファイル <name/> を削除してもよろしいですか？この添付ファイルは完全に削除されます。この操作は元に戻せません。"
     },
     "labels": {
       "delete_confirmation": "<name/> を削除してもよろしいですか？ すべての作業項目、およびこのラベルでフィルターしているビューからラベルが削除されます。",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "レター",
       "page_size_legal": "リーガル",
-      "page_size_tabloid": "タブロイド"
+      "page_size_tabloid": "タブロイド",
+      "access_changed": "{access, select, public {ページを公開に設定し、公開セクションに移動しました。} other {ページを非公開に設定し、非公開セクションに移動しました。}}",
+      "access_change_failed": "{access, select, public {ページを公開に設定できませんでした。もう一度お試しください。} other {ページを非公開に設定できませんでした。もう一度お試しください。}}"
     },
     "activity": {
-      "bot_name": "{name} ボット"
+      "bot_name": "{name} ボット",
+      "issue_type_changed": "{kind, select, both {タイプを <old/> から <new/> に変更しました} from {タイプを <old/> から変更しました} to {タイプを <new/> に変更しました} other {タイプを変更しました}}",
+      "on_work_item": "対象:"
     },
     "project": {
       "identifier": "識別子"
@@ -1446,7 +1457,9 @@
       "last_7_days": "過去 7 日間",
       "last_30_days": "過去 30 日間",
       "last_3_months": "過去 3 か月",
-      "duration": "期間"
+      "duration": "期間",
+      "header_for": "{title} のアナリティクス",
+      "header_in": "（{name}）"
     },
     "auth_labels": {
       "one_time_code": "ワンタイムコード"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "ステータスグループ",
-      "subscriber": "購読者"
+      "subscriber": "購読者",
+      "more_count": "ほか {count} 件"
+    },
+    "mentions": {
+      "suspended_user": "@停止中のユーザー",
+      "deactivated_user": "@無効化されたユーザー"
+    },
+    "automation": {
+      "customize_time_range": "期間をカスタマイズ"
+    },
+    "issue_modal": {
+      "feeling_lucky": "おまかせで作成"
+    },
+    "parent_modal": {
+      "search_results": "プロジェクト内の <term/> の検索結果："
+    },
+    "error_page": {
+      "title": "問題が発生したようです。",
+      "description": "これらのエラーは自動的に記録されており、復旧に向けて対応しています。問題が解消しない場合は、お問い合わせください。それまでの間、ページの再読み込みをお試しください。",
+      "contact_support": "サポートに問い合わせる",
+      "status_page": "ステータスページ"
+    },
+    "links": {
+      "created_by": "{name} が作成"
     }
   },
   "space_text": {

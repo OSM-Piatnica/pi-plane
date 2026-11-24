@@ -134,7 +134,14 @@
         "title": "Aucun cycle archivé pour le moment",
         "description": "Pour organiser votre projet, archivez les cycles terminés. Retrouvez-les ici une fois archivés."
       }
-    }
+    },
+    "order_by": {
+      "status": "Statut",
+      "name": "Nom",
+      "start_date": "Date de début",
+      "manual": "Manuel"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# élément de travail annulé est exclu de ce rapport.} many {# d’éléments de travail annulés sont exclus de ce rapport.} other {# éléments de travail annulés sont exclus de ce rapport.}}"
   },
   "project_views": {
     "empty_state": {

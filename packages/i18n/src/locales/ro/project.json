@@ -134,7 +134,14 @@
         "title": "Niciun ciclu arhivat încă",
         "description": "Pentru a păstra proiectul ordonat, arhivează ciclurile completate. Le vei găsi aici după arhivare."
       }
-    }
+    },
+    "order_by": {
+      "status": "Stare",
+      "name": "Nume",
+      "start_date": "Data de început",
+      "manual": "Manual"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# activitate anulată este exclusă din acest raport.} few {# activități anulate sunt excluse din acest raport.} other {# de activități anulate sunt excluse din acest raport.}}"
   },
   "project_views": {
     "empty_state": {

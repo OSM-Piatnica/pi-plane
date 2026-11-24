@@ -25,6 +25,7 @@ const view = { dom: { contains: () => true } };
 // minimal stand-in for a click on (or inside) an <a>: the handler resolves the anchor with closest("a")
 const makeClickEvent = (href: string, overrides: Record<string, unknown> = {}) => ({
   button: 0,
+  preventDefault: vi.fn(),
   target: { closest: () => ({ href, target: "_blank" }) },
   ...overrides,
 });
@@ -49,17 +50,22 @@ describe("clickHandler", () => {
     "file:///etc/passwd",
     "about:blank",
   ])("does not open %j", (href) => {
-    const result = getHandleClick()(view, 0, makeClickEvent(href));
+    const event = makeClickEvent(href);
+    const result = getHandleClick()(view, 0, event);
     expect(result).toBe(false);
     expect(open).not.toHaveBeenCalled();
+    expect(event.preventDefault).not.toHaveBeenCalled();
   });
 
   it.each(["https://example.com/", "http://example.com/?q=javascript:alert(1)", "mailto:user@example.com"])(
     "opens %j",
     (href) => {
-      const result = getHandleClick()(view, 0, makeClickEvent(href));
+      const event = makeClickEvent(href);
+      const result = getHandleClick()(view, 0, event);
       expect(result).toBe(true);
       expect(open).toHaveBeenCalledWith(href, "_blank", "noopener,noreferrer");
+      // the native <a target="_blank"> navigation is stopped, or a read-only view opens the link twice
+      expect(event.preventDefault).toHaveBeenCalledTimes(1);
     }
   );
 
@@ -92,17 +98,27 @@ describe("clickHandler target", () => {
 
   it("honours _self and opens every other stored target in a new tab", () => {
     const handleClick = getHandleClick();
-    handleClick(view, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/", target: "_self" }) } });
+    handleClick(
+      view,
+      0,
+      makeClickEvent("https://example.com/", {
+        target: { closest: () => ({ href: "https://example.com/", target: "_self" }) },
+      })
+    );
     expect(open).toHaveBeenLastCalledWith("https://example.com/", "_self", "noopener,noreferrer");
-    handleClick(view, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/", target: "evil" }) } });
+    handleClick(
+      view,
+      0,
+      makeClickEvent("https://example.com/", {
+        target: { closest: () => ({ href: "https://example.com/", target: "evil" }) },
+      })
+    );
     expect(open).toHaveBeenLastCalledWith("https://example.com/", "_blank", "noopener,noreferrer");
   });
 
   it("ignores an anchor that is outside the editor", () => {
     const outside = { dom: { contains: () => false } };
-    expect(
-      getHandleClick()(outside, 0, { button: 0, target: { closest: () => ({ href: "https://example.com/" }) } })
-    ).toBe(false);
+    expect(getHandleClick()(outside, 0, makeClickEvent("https://example.com/"))).toBe(false);
     expect(open).not.toHaveBeenCalled();
   });
 });

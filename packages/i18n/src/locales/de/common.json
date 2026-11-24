@@ -797,7 +797,8 @@
     "developer": "Entwickler",
     "work_structure": "Arbeitsstruktur",
     "execution": "Ausführung",
-    "administration": "Verwaltung"
+    "administration": "Verwaltung",
+    "of_total": "von {total}"
   },
   "chart": {
     "x_axis": "X-Achse",
@@ -1172,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Sie sind dabei, den Arbeitsbereich <name/> zu löschen. Wenn Sie bestätigen, verlieren Sie den Zugriff auf alle Ihre Arbeitsdaten in diesem Arbeitsbereich, ohne Möglichkeit zur Wiederherstellung. Gehen Sie mit größter Vorsicht vor.",
       "delete_type_name": "Geben Sie den Namen dieses Arbeitsbereichs ein, um fortzufahren.",
-      "delete_final_confirmation": "Geben Sie zur endgültigen Bestätigung unten <phrase/> ein."
+      "delete_final_confirmation": "Geben Sie zur endgültigen Bestätigung unten <phrase/> ein.",
+      "remove_member_confirmation": "Möchten Sie <name/> wirklich entfernen? Die Person hat dann keinen Zugriff mehr auf diesen Arbeitsbereich. Diese Aktion kann nicht rückgängig gemacht werden."
     },
     "workspace_settings": {
       "invitation_removed": "Einladung erfolgreich entfernt.",
@@ -1287,7 +1289,8 @@
       "toggle_estimates": "Schätzungen umschalten",
       "estimates_list": "Schätzungsliste",
       "archived_title": "Archivierte Schätzungen",
-      "archived_description": "Schätzungen wurden überarbeitet. Dies sind die Schätzungen aus Ihren älteren Versionen, die nicht verwendet wurden. Mehr darüber erfahren Sie <link>hier.</link>"
+      "archived_description": "Schätzungen wurden überarbeitet. Dies sind die Schätzungen aus Ihren älteren Versionen, die nicht verwendet wurden. Mehr darüber erfahren Sie <link>hier.</link>",
+      "add_your_own": "Eigenes System „<name/>“ von Grund auf hinzufügen."
     },
     "gantt": {
       "create_blocked_by_dependency": "Abhängigkeit „blockiert durch“ erstellen",
@@ -1301,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake-Formular-Benutzer",
       "status": "Status",
-      "created_by": "Erstellt von"
+      "created_by": "Erstellt von",
+      "decline_confirmation": "Möchten Sie das Arbeitselement <id/> wirklich ablehnen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "delete_confirmation": "Möchten Sie das Arbeitselement <id/> wirklich löschen? Das Arbeitselement wird nur aus dem Intake gelöscht, und diese Aktion kann nicht rückgängig gemacht werden."
     },
     "instance": {
       "contact_support": "Support kontaktieren",
@@ -1327,7 +1332,9 @@
       "install": "Installieren"
     },
     "attachments": {
-      "upload_progress": "Upload-Fortschritt"
+      "upload_progress": "Upload-Fortschritt",
+      "percent_done": "{percent} % erledigt",
+      "delete_confirmation": "Möchten Sie den Anhang <name/> wirklich löschen? Er wird endgültig entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
     },
     "labels": {
       "delete_confirmation": "Möchten Sie <name/> wirklich löschen? Dadurch wird das Label aus allen Arbeitselementen und aus allen Ansichten entfernt, in denen nach diesem Label gefiltert wird.",
@@ -1394,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Die Seite wurde als öffentlich markiert und in den öffentlichen Bereich verschoben.} other {Die Seite wurde als privat markiert und in den privaten Bereich verschoben.}}",
+      "access_change_failed": "{access, select, public {Die Seite konnte nicht als öffentlich markiert werden. Bitte versuchen Sie es erneut.} other {Die Seite konnte nicht als privat markiert werden. Bitte versuchen Sie es erneut.}}"
     },
     "activity": {
-      "bot_name": "{name}-Bot"
+      "bot_name": "{name}-Bot",
+      "issue_type_changed": "{kind, select, both {hat den Typ von <old/> zu <new/> geändert} from {hat den Typ von <old/> geändert} to {hat den Typ zu <new/> geändert} other {hat den Typ geändert}}",
+      "on_work_item": "bei"
     },
     "project": {
       "identifier": "Kennung"
@@ -1446,7 +1457,9 @@
       "last_7_days": "Letzte 7 Tage",
       "last_30_days": "Letzte 30 Tage",
       "last_3_months": "Letzte 3 Monate",
-      "duration": "Dauer"
+      "duration": "Dauer",
+      "header_for": "Analysen für {title}",
+      "header_in": "in {name}"
     },
     "auth_labels": {
       "one_time_code": "Einmalcode"
@@ -1456,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Statusgruppe",
-      "subscriber": "Abonnent"
+      "subscriber": "Abonnent",
+      "more_count": "+{count} weitere"
+    },
+    "mentions": {
+      "suspended_user": "@gesperrter Benutzer",
+      "deactivated_user": "@deaktivierter Benutzer"
+    },
+    "automation": {
+      "customize_time_range": "Zeitraum anpassen"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Auf gut Glück"
+    },
+    "parent_modal": {
+      "search_results": "Suchergebnisse für <term/> im Projekt:"
+    },
+    "error_page": {
+      "title": "Hier ist leider etwas schiefgelaufen!",
+      "description": "Wir erfassen solche Fehler automatisch und arbeiten daran, dass alles bald wieder läuft. Wenn das Problem weiterhin besteht, kontaktieren Sie uns gern. Laden Sie die Seite in der Zwischenzeit neu.",
+      "contact_support": "Support kontaktieren",
+      "status_page": "Statusseite"
+    },
+    "links": {
+      "created_by": "von {name}"
     }
   },
   "space_text": {

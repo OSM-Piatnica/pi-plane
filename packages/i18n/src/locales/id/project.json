@@ -134,7 +134,14 @@
         "title": "Belum ada siklus yang diarsipkan",
         "description": "Untuk membersihkan proyek Anda, arsipkan siklus yang telah diselesaikan. Temukan di sini setelah diarsipkan."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Nama",
+      "start_date": "Tanggal mulai",
+      "manual": "Manual"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# item kerja yang dibatalkan dikecualikan dari laporan ini.} other {# item kerja yang dibatalkan dikecualikan dari laporan ini.}}"
   },
   "project_views": {
     "empty_state": {

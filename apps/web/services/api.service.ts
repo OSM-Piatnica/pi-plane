@@ -51,7 +51,10 @@ export abstract class APIService {
             // Na stronie wejściowej ("/") żądanie o bieżącego użytkownika też zwraca 401, więc przekierowanie
             // "/" na "/?next_path=/" przeładowywałoby stronę w nieskończoność. Odbijamy tylko z tras prywatnych.
             if (currentPath !== "/") {
-              window.location.replace(`/${currentPath ? `?next_path=${encodeURIComponent(currentPath)}` : ``}`);
+              // the query string goes along too: an invite link keeps its invitation id and token there
+              window.location.replace(
+                `/${currentPath ? `?next_path=${encodeURIComponent(currentPath + window.location.search)}` : ``}`
+              );
             }
           }
         }

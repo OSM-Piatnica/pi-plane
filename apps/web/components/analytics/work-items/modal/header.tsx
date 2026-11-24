@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // plane package imports
 import { ArrowCollapseOutline, CloseOutline, FullScreenOutline } from "@makeplane/propel/icons";
+import { useTranslation } from "@plane/i18n";
 import type { ICycle, IModule } from "@plane/types";
 // icons
 
@@ -21,11 +23,14 @@ type Props = {
 
 export const WorkItemsModalHeader = observer(function WorkItemsModalHeader(props: Props) {
   const { fullScreen, handleClose, setFullScreen, title, cycle, module } = props;
+  const { t } = useTranslation();
 
   return (
     <div className="flex items-center justify-between gap-4 bg-surface-1 px-5 py-4 text-13">
       <h3 className="break-words">
-        Analytics for {title} {cycle && `in ${cycle.name}`} {module && `in ${module.name}`}
+        {t("app_text.analytics.header_for", { title })}{" "}
+        {cycle && t("app_text.analytics.header_in", { name: cycle.name })}{" "}
+        {module && t("app_text.analytics.header_in", { name: module.name })}
       </h3>
       <div className="flex items-center gap-2">
         <button

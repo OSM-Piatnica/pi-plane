@@ -134,7 +134,14 @@
         "title": "Brak zarchiwizowanych cykli",
         "description": "Archiwizuj ukończone cykle, aby zachować porządek."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Nazwa",
+      "start_date": "Data początku",
+      "manual": "Ręcznie"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {Z tego raportu wykluczono # anulowany element pracy.} few {Z tego raportu wykluczono # anulowane elementy pracy.} many {Z tego raportu wykluczono # anulowanych elementów pracy.} other {Z tego raportu wykluczono # anulowanego elementu pracy.}}"
   },
   "project_views": {
     "empty_state": {
