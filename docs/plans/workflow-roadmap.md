@@ -26,7 +26,7 @@ Updated by every roadmap PR (see "Keeping this plan current" below). Steps not l
 | D8     | open            | [#478](https://github.com/OSM-Piatnica/pi-plane/pull/478)                                                                                                                              | `0160`; the deadline warning is left over (see D8)                                                                                             |
 | F1     | merged          | [#472](https://github.com/OSM-Piatnica/pi-plane/pull/472), [#477](https://github.com/OSM-Piatnica/pi-plane/pull/477)                                                                   | `0159_initiatives`; `docs/initiatives.md`                                                                                                      |
 | G1     | merged          | [#474](https://github.com/OSM-Piatnica/pi-plane/pull/474)                                                                                                                              | `docs/app-rail.md`                                                                                                                             |
-| G2, G3 | open            | [#480](https://github.com/OSM-Piatnica/pi-plane/pull/480)                                                                                                                              | `0161`, merges after #478                                                                                                                      |
+| G2, G3 | merged          | [#480](https://github.com/OSM-Piatnica/pi-plane/pull/480)                                                                                                                              | `0161`; nothing visible until a second app or a feature is available; `docs/workspace-features.md`                                             |
 
 ### Keeping this plan current
 
@@ -450,7 +450,7 @@ What Lite shows:
 
 Who gets it:
 
-- `WorkspaceMember.default_app` (projects, lite, approvals; nullable). Workspace setting for the default per role, for example guests land in Lite.
+- The person's `default_app` (G2, on `WorkspaceUserProperties`). Workspace setting for the default per role, for example guests land in Lite (E4).
 - The user can switch at any time through the rail unless a workspace admin restricts a role to Lite (`WorkspaceMember.allowed_apps`, optional, later).
 
 ### PRs
@@ -514,13 +514,15 @@ Stickies stay under Projects and Home (they are personal notes, not a destinatio
 - Rail shows only enabled apps; with one app it keeps today's behaviour.
 - Keyboard shortcuts and command palette entries for switching apps.
 
-**G2. Preferences. Size S. Needs G1. Open: #480 (with G3).**
+**G2. Preferences. Size S. Needs G1. Merged: #480 (with G3).**
 
-- `WorkspaceMember.default_app`; landing redirect after sign-in; last used app remembered per workspace; rail order and hidden apps through the existing `WorkspaceUserPreference` pinning mechanism and the customise dialog.
+- `default_app`; landing redirect after sign-in; last used app remembered per workspace; rail order and hidden apps through the existing `WorkspaceUserPreference` pinning mechanism and the customise dialog.
+- Changed from the plan: `default_app` is on `WorkspaceUserProperties` (the person's own setting, through `/user-properties/`), not on `WorkspaceMember`. The landing is decided once per user and workspace entry: deep link, then default app, then last used app, then the workspace root. A default per role, an admin setting another member's default and `allowed_apps` are left to E4.
 
-**G3. Workspace feature switches. Size S. Open: #480 (with G2).**
+**G3. Workspace feature switches. Size S. Merged: #480 (with G2).**
 
-- There is no workspace feature model today. Add `WorkspaceFeature` (or boolean fields on `Workspace`) for: lite, approvals, initiatives, wiki, RACI. Workspace settings page "Features". The rail registry reads it.
+- Delivered: a `WorkspaceFeature` table (workspace, key, is_enabled; no row means off) for `lite`, `approvals`, `initiatives`, `wiki`, `raci`; `GET`/`PATCH /api/workspaces/<slug>/features/` (admins change); workspace settings page "Features"; the rail registry's `isEnabled` gets `features`.
+- Each key is also marked "available" (`utils/workspace_features.py`, `packages/constants/src/workspace-features.ts`), and none is yet. The PR that builds a feature marks its key available and adds the feature's title and description strings. See `docs/workspace-features.md`.
 
 **G4. Workspace wiki. Size L. Can be last.**
 

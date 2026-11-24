@@ -6,6 +6,7 @@
 
 import type { IUser } from "./users";
 import type { EUserWorkspaceRoles, IWorkspace } from "./workspace";
+import type { TWorkspaceFeatureFlags } from "./workspace-features";
 
 /**
  * Keys of the apps that can appear in the app rail. Adding an app starts here: the registry
@@ -20,6 +21,11 @@ export type TAppRailContext = {
   workspace: IWorkspace | undefined;
   user: IUser | undefined;
   workspaceRole: EUserWorkspaceRoles | undefined;
+  /**
+   * The workspace's feature switches (see `docs/workspace-features.md`). Every key is present and
+   * false until the workspace has loaded, so `({ features }) => features.approvals` is enough.
+   */
+  features: TWorkspaceFeatureFlags;
 };
 
 /**

@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Aplikacja domyślna",
+      "default_app_description": "Aplikacja otwierana po wejściu do tej przestrzeni roboczej.",
+      "heading": "Aplikacje",
+      "last_used_app": "Ostatnio używana aplikacja"
+    },
     "switch_to": {
       "projects": "Przełącz na Projekty"
     }
@@ -262,6 +268,9 @@
     "total_projects": "Łączna liczba projektów",
     "total_users": "Łączna liczba użytkowników",
     "total_work_items": "Łączna liczba {entity}"
+  },
+  "workspace_features": {
+    "description": "Włączanie i wyłączanie części Pi-Plane dla wszystkich w tej przestrzeni roboczej."
   },
   "workspace_settings": {
     "settings": {

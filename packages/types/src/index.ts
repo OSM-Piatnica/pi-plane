@@ -62,6 +62,7 @@ export * from "./workflow";
 export * from "./issue-type";
 export * from "./navigation-preferences";
 export * from "./workspace";
+export * from "./workspace-features";
 export * from "./workspace-draft-issues/base";
 export * from "./workspace-notifications";
 export * from "./workspace-views";

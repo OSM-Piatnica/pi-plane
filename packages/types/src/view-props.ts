@@ -272,6 +272,8 @@ export interface IProjectUserPropertiesResponse extends IIssueFiltersResponse {
 export interface IWorkspaceUserPropertiesResponse extends IIssueFiltersResponse {
   navigation_project_limit?: number;
   navigation_control_preference?: "ACCORDION" | "TABBED";
+  /** Key of the rail app the user lands in when opening the workspace; null: no preference */
+  default_app?: string | null;
   // Note: show_limited_projects is derived from navigation_project_limit (0 = false, >0 = true)
 }
 

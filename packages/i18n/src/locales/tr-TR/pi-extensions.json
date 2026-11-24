@@ -5,6 +5,12 @@
     }
   },
   "app_rail": {
+    "preferences": {
+      "default_app": "Varsayılan uygulama",
+      "default_app_description": "Bu çalışma alanına girdiğinizde açılan uygulama.",
+      "heading": "Uygulamalar",
+      "last_used_app": "Son kullanılan uygulama"
+    },
     "switch_to": {
       "projects": "Projeler'e geç"
     }
@@ -248,6 +254,9 @@
     "loading": "Türler yükleniyor…",
     "property_values_save_failed": "İş öğesi oluşturuldu, ancak ek özellikler kaydedilemedi. Bunları iş öğesi ayrıntılarından doldurun.",
     "select_placeholder": "Tür"
+  },
+  "workspace_features": {
+    "description": "Pi-Plane bölümlerini bu çalışma alanındaki herkes için açın veya kapatın."
   },
   "workspace_settings": {
     "settings": {

@@ -1,5 +1,6 @@
 # Copyright (c) 2023-present Plane Software, Inc. and contributors
 # SPDX-License-Identifier: AGPL-3.0-only
+# Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
 # See the LICENSE file for details.
 
 # Module imports
@@ -8,6 +9,7 @@ from plane.db.models.workspace import WorkspaceUserPreference
 from plane.app.serializers.workspace import WorkspaceUserPreferenceSerializer
 from plane.app.permissions import allow_permission, ROLE
 from plane.db.models import Workspace
+from plane.utils.app_rail import is_app_rail_preference_key
 
 
 # Third party imports
@@ -90,7 +92,15 @@ class WorkspaceUserPreferenceViewSet(BaseAPIView):
             ).first()
 
             if not preference:
-                continue
+                # rows of the rail apps are created on first write: without one, an app is shown in registry order
+                if not is_app_rail_preference_key(key):
+                    continue
+                preference, _ = WorkspaceUserPreference.objects.get_or_create(
+                    key=key,
+                    workspace=Workspace.objects.get(slug=slug),
+                    user=request.user,
+                    defaults={"is_pinned": True},
+                )
 
             if "is_pinned" in data:
                 preference.is_pinned = data["is_pinned"]

@@ -47,4 +47,5 @@ export * from "./version";
 export * from "./work-item-filters";
 export * from "./work-item";
 export * from "./workspace";
+export * from "./workspace-features";
 export * from "./user-group-filter";

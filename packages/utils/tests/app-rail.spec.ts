@@ -7,15 +7,25 @@
 import { describe, expect, it } from "vitest";
 import type { TAppRailApp, TAppRailContext } from "@plane/types";
 import {
+  arrangeAppRailApps,
+  buildAppRailPreferenceUpdate,
+  canHideAppRailApp,
   getActiveAppRailAppKey,
+  getAppRailDefaultAppKey,
   getAppRailDockItems,
+  getAppRailLandingApp,
+  getAppRailLandingRedirect,
+  getAppRailPreferenceKey,
   getAppRailRouteAccess,
   getAppRailState,
   getAppRailSwitchKeySequence,
   getEnabledAppRailApps,
   hasMultipleAppRailApps,
+  isWorkspaceRootPath,
+  resolveAppRailLanding,
   validateAppRailApps,
 } from "../src/app-rail";
+import { getWorkspaceFeatureFlags } from "../src/workspace-features";
 
 type TKey = "projects" | "approvals" | "wiki";
 
@@ -39,6 +49,7 @@ const context = (overrides: Partial<TAppRailContext> = {}): TAppRailContext => (
   workspace: undefined,
   user: undefined,
   workspaceRole: undefined,
+  features: getWorkspaceFeatureFlags(undefined),
   ...overrides,
 });
 
@@ -248,5 +259,332 @@ describe("getAppRailRouteAccess", () => {
       redirectTo: undefined,
     });
     expect(getAppRailRouteAccess([], "approvals", "acme")).toEqual({ isAllowed: false, redirectTo: undefined });
+  });
+});
+
+describe("isEnabled with workspace feature switches", () => {
+  // what a feature-gated app will declare once its feature is available
+  const gated = [projects, app("approvals", { isEnabled: ({ features }) => features.approvals }), wiki];
+
+  it("hands every feature flag to the predicate, all off by default", () => {
+    expect(context().features).toEqual({ lite: false, approvals: false, initiatives: false, wiki: false, raci: false });
+    expect(getEnabledAppRailApps(gated, context()).map((a) => a.key)).toEqual(["projects", "wiki"]);
+  });
+
+  it("offers the app once the workspace switches its feature on", () => {
+    const features = { ...context().features, approvals: true };
+    expect(getEnabledAppRailApps(gated, context({ features })).map((a) => a.key)).toEqual([
+      "projects",
+      "approvals",
+      "wiki",
+    ]);
+  });
+
+  it("closes the app's routes while the feature is off", () => {
+    const enabled = getEnabledAppRailApps(gated, context());
+    expect(getAppRailRouteAccess(enabled, "approvals", "acme")).toEqual({ isAllowed: false, redirectTo: "/acme/" });
+  });
+});
+
+const keys = (apps: readonly TAppRailApp<TKey>[]) => apps.map((a) => a.key);
+const pref = (key: TKey, is_pinned: boolean, sort_order?: number) => ({
+  [getAppRailPreferenceKey(key)]: { is_pinned, sort_order },
+});
+
+describe("arrangeAppRailApps", () => {
+  it("uses the prefix the API accepts", () => {
+    expect(getAppRailPreferenceKey("approvals")).toBe("app_rail:approvals");
+  });
+
+  it("keeps registry order with nothing hidden when there are no preferences", () => {
+    for (const preferences of [undefined, null, {}]) {
+      const arrangement = arrangeAppRailApps(APPS, preferences);
+      expect(keys(arrangement.railApps)).toEqual(["projects", "approvals", "wiki"]);
+      expect(keys(arrangement.orderedApps)).toEqual(["projects", "approvals", "wiki"]);
+      expect(arrangement.items.every((item) => !item.isHidden)).toBe(true);
+    }
+  });
+
+  it("ignores the sidebar preferences that are not about apps", () => {
+    const preferences = { drafts: { is_pinned: false, sort_order: 0 }, approvals: { is_pinned: false, sort_order: 0 } };
+    expect(keys(arrangeAppRailApps(APPS, preferences).railApps)).toEqual(["projects", "approvals", "wiki"]);
+  });
+
+  it("orders by the stored position", () => {
+    const preferences = { ...pref("projects", true, 2), ...pref("approvals", true, 1), ...pref("wiki", true, 0) };
+    expect(keys(arrangeAppRailApps(APPS, preferences).railApps)).toEqual(["wiki", "approvals", "projects"]);
+  });
+
+  it("puts apps without a stored position after the others, in registry order", () => {
+    // wiki was moved first before approvals existed for this user
+    const preferences = { ...pref("wiki", true, 0) };
+    expect(keys(arrangeAppRailApps(APPS, preferences).railApps)).toEqual(["wiki", "projects", "approvals"]);
+  });
+
+  it("breaks equal positions by registry order", () => {
+    const preferences = { ...pref("wiki", true, 5), ...pref("projects", true, 5), ...pref("approvals", true, 5) };
+    expect(keys(arrangeAppRailApps(APPS, preferences).railApps)).toEqual(["projects", "approvals", "wiki"]);
+  });
+
+  it("takes a hidden app out of the rail and lists it after the rail apps", () => {
+    const preferences = { ...pref("projects", false, 0), ...pref("approvals", true, 1), ...pref("wiki", true, 2) };
+    const arrangement = arrangeAppRailApps(APPS, preferences);
+    expect(keys(arrangement.railApps)).toEqual(["approvals", "wiki"]);
+    expect(keys(arrangement.orderedApps)).toEqual(["approvals", "wiki", "projects"]);
+    // the dialog keeps the user's order and shows the hidden state
+    expect(arrangement.items.map((item) => [item.app.key, item.isHidden])).toEqual([
+      ["projects", true],
+      ["approvals", false],
+      ["wiki", false],
+    ]);
+  });
+
+  it("hides nothing when every app is hidden", () => {
+    const preferences = { ...pref("projects", false), ...pref("approvals", false), ...pref("wiki", false) };
+    const arrangement = arrangeAppRailApps(APPS, preferences);
+    expect(keys(arrangement.railApps)).toEqual(["projects", "approvals", "wiki"]);
+    expect(arrangement.items.some((item) => item.isHidden)).toBe(false);
+  });
+
+  it("cannot hide a single enabled app, whatever is stored", () => {
+    const arrangement = arrangeAppRailApps([projects], pref("projects", false, 3));
+    expect(keys(arrangement.railApps)).toEqual(["projects"]);
+  });
+
+  it("drops the preferences of apps that are not enabled", () => {
+    const preferences = { ...pref("approvals", true, 0), ...pref("wiki", true, 1), ...pref("projects", true, 2) };
+    expect(keys(arrangeAppRailApps([projects, wiki], preferences).railApps)).toEqual(["wiki", "projects"]);
+  });
+
+  it("ignores a position that is not a number", () => {
+    const preferences = { "app_rail:wiki": { is_pinned: true, sort_order: Number.NaN } };
+    expect(keys(arrangeAppRailApps(APPS, preferences).railApps)).toEqual(["projects", "approvals", "wiki"]);
+  });
+});
+
+describe("getAppRailState with preferences", () => {
+  const preferences = {
+    "app_rail:wiki": { is_pinned: true, sort_order: 0 },
+    "app_rail:projects": { is_pinned: true, sort_order: 1 },
+    "app_rail:approvals": { is_pinned: false, sort_order: 2 },
+  };
+
+  it("keeps enabled apps in registry order and arranges the rail", () => {
+    const state = getAppRailState(APPS, context(), "/acme/wiki/", preferences);
+    expect(state.enabledApps.map((a) => a.key)).toEqual(["projects", "approvals", "wiki"]);
+    expect(state.railApps.map((a) => a.key)).toEqual(["wiki", "projects"]);
+    expect(state.orderedApps.map((a) => a.key)).toEqual(["wiki", "projects", "approvals"]);
+    expect(getAppRailDockItems(state, "acme").map((item) => [item.key, item.isActive])).toEqual([
+      ["wiki", true],
+      ["projects", false],
+    ]);
+  });
+
+  it("still counts a hidden app as enabled: its routes open and it is the active app", () => {
+    const state = getAppRailState(APPS, context(), "/acme/approvals/", preferences);
+    expect(state.activeAppKey).toBe("approvals");
+    expect(state.hasMultipleApps).toBe(true);
+    expect(getAppRailRouteAccess(state.enabledApps, "approvals", "acme")).toEqual({ isAllowed: true });
+    expect(getAppRailDockItems(state, "acme").some((item) => item.isActive)).toBe(false);
+  });
+
+  it("changes nothing for a single app", () => {
+    const state = getAppRailState([projects], context(), "/acme/", { "app_rail:projects": { is_pinned: false } });
+    expect(state.railApps.map((a) => a.key)).toEqual(["projects"]);
+    expect(state.hasMultipleApps).toBe(false);
+  });
+});
+
+describe("buildAppRailPreferenceUpdate and canHideAppRailApp", () => {
+  const items = [
+    { app: wiki, isHidden: false },
+    { app: projects, isHidden: true },
+    { app: approvals, isHidden: false },
+  ];
+
+  it("writes one row per app with its position", () => {
+    expect(buildAppRailPreferenceUpdate(items)).toEqual([
+      { key: "app_rail:wiki", is_pinned: true, sort_order: 0 },
+      { key: "app_rail:projects", is_pinned: false, sort_order: 1 },
+      { key: "app_rail:approvals", is_pinned: true, sort_order: 2 },
+    ]);
+  });
+
+  it("round-trips through arrangeAppRailApps", () => {
+    const stored = Object.fromEntries(buildAppRailPreferenceUpdate(items).map(({ key, ...rest }) => [key, rest]));
+    expect(arrangeAppRailApps(APPS, stored).items.map((item) => [item.app.key, item.isHidden])).toEqual(
+      items.map((item) => [item.app.key, item.isHidden])
+    );
+  });
+
+  it("lets an app be hidden while another stays in the rail", () => {
+    expect(canHideAppRailApp(items, "wiki")).toBe(true);
+    expect(canHideAppRailApp(items, "approvals")).toBe(true);
+  });
+
+  it("does not let the last app of the rail be hidden", () => {
+    const oneLeft = [
+      { app: wiki, isHidden: false },
+      { app: projects, isHidden: true },
+    ];
+    expect(canHideAppRailApp(oneLeft, "wiki")).toBe(false);
+  });
+});
+
+describe("isWorkspaceRootPath", () => {
+  it("is true for the workspace root only", () => {
+    expect(isWorkspaceRootPath("/acme", "acme")).toBe(true);
+    expect(isWorkspaceRootPath("/acme/", "acme")).toBe(true);
+    expect(isWorkspaceRootPath("/acme/?tab=1#top", "acme")).toBe(true);
+    expect(isWorkspaceRootPath("/acme/projects/", "acme")).toBe(false);
+    expect(isWorkspaceRootPath("/acme/settings/", "acme")).toBe(false);
+  });
+
+  it("is false outside the workspace or without one", () => {
+    expect(isWorkspaceRootPath("/other/", "acme")).toBe(false);
+    expect(isWorkspaceRootPath("/i/PRJ-1/", "acme")).toBe(false);
+    expect(isWorkspaceRootPath("/acme/", undefined)).toBe(false);
+  });
+});
+
+describe("getAppRailLandingApp", () => {
+  it("prefers the default app, then the last used app", () => {
+    expect(getAppRailLandingApp(APPS, "wiki", "approvals")?.key).toBe("wiki");
+    expect(getAppRailLandingApp(APPS, null, "approvals")?.key).toBe("approvals");
+    expect(getAppRailLandingApp(APPS, undefined, undefined)).toBeUndefined();
+  });
+
+  it("skips a default app that is not enabled for the user and falls to the last used app", () => {
+    expect(getAppRailLandingApp([projects, wiki], "approvals", "wiki")?.key).toBe("wiki");
+    expect(getAppRailLandingApp([projects, wiki], "approvals", undefined)).toBeUndefined();
+  });
+
+  it("skips a last used app that is no longer enabled", () => {
+    expect(getAppRailLandingApp([projects, wiki], undefined, "approvals")).toBeUndefined();
+  });
+
+  it("ignores keys that are not apps", () => {
+    expect(getAppRailLandingApp(APPS, "nonsense", "__proto__")).toBeUndefined();
+    expect(getAppRailLandingApp(APPS, "", "")).toBeUndefined();
+  });
+
+  it("lands a user without the root's app in their first enabled app", () => {
+    // for example a role restricted to one app later: the root belongs to Projects, which is off
+    expect(getAppRailLandingApp([approvals, wiki], undefined, undefined)?.key).toBe("approvals");
+    expect(getAppRailLandingApp([wiki], "projects", "projects")?.key).toBe("wiki");
+    expect(getAppRailLandingApp([], undefined, undefined)).toBeUndefined();
+  });
+});
+
+describe("getAppRailLandingRedirect", () => {
+  const landing = (overrides: Partial<Parameters<typeof getAppRailLandingRedirect<TKey>>[0]> = {}) =>
+    getAppRailLandingRedirect<TKey>({
+      enabledApps: APPS,
+      pathname: "/acme/",
+      workspaceSlug: "acme",
+      defaultAppKey: undefined,
+      lastUsedAppKey: undefined,
+      ...overrides,
+    });
+
+  it("leaves the root as it is without a default or a last used app", () => {
+    expect(landing()).toBeUndefined();
+  });
+
+  it("goes to the default app", () => {
+    expect(landing({ defaultAppKey: "approvals" })).toBe("/acme/approvals/");
+    expect(landing({ pathname: "/acme", defaultAppKey: "approvals" })).toBe("/acme/approvals/");
+  });
+
+  it("goes to the last used app when there is no default", () => {
+    expect(landing({ lastUsedAppKey: "wiki" })).toBe("/acme/wiki/");
+  });
+
+  it("prefers the default app over the last used app", () => {
+    expect(landing({ defaultAppKey: "approvals", lastUsedAppKey: "wiki" })).toBe("/acme/approvals/");
+  });
+
+  it("never redirects a deep link", () => {
+    for (const pathname of ["/acme/projects/p1/issues/", "/acme/wiki/", "/acme/settings/", "/acme/notifications/"]) {
+      expect(landing({ pathname, defaultAppKey: "approvals", lastUsedAppKey: "wiki" })).toBeUndefined();
+    }
+  });
+
+  it("does not redirect to the app that already owns the root", () => {
+    expect(landing({ defaultAppKey: "projects", lastUsedAppKey: "wiki" })).toBeUndefined();
+    expect(landing({ lastUsedAppKey: "projects" })).toBeUndefined();
+  });
+
+  it("falls back when the default app was switched off for the user", () => {
+    expect(landing({ enabledApps: [projects, wiki], defaultAppKey: "approvals", lastUsedAppKey: "wiki" })).toBe(
+      "/acme/wiki/"
+    );
+    expect(landing({ enabledApps: [projects, wiki], defaultAppKey: "approvals" })).toBeUndefined();
+  });
+
+  it("does nothing with a single app, whatever is stored", () => {
+    expect(landing({ enabledApps: [projects], defaultAppKey: "approvals", lastUsedAppKey: "wiki" })).toBeUndefined();
+    expect(landing({ enabledApps: [projects], defaultAppKey: "projects" })).toBeUndefined();
+  });
+
+  it("does nothing without a workspace", () => {
+    expect(landing({ workspaceSlug: undefined, defaultAppKey: "approvals" })).toBeUndefined();
+  });
+
+  it("sends a user who cannot use the root's app to their first app", () => {
+    expect(landing({ enabledApps: [wiki] })).toBe("/acme/wiki/");
+  });
+});
+
+describe("resolveAppRailLanding", () => {
+  const input = {
+    enabledApps: APPS,
+    pathname: "/acme/",
+    workspaceSlug: "acme",
+    defaultAppKey: undefined,
+    lastUsedAppKey: undefined,
+    isDefaultAppKnown: true,
+  };
+
+  it("waits at the root of a multi-app workspace until the default app is known", () => {
+    expect(resolveAppRailLanding({ ...input, isDefaultAppKnown: false })).toEqual({ isPending: true });
+    // the last used app does not shortcut the wait: the default app would win over it
+    expect(resolveAppRailLanding({ ...input, isDefaultAppKnown: false, lastUsedAppKey: "wiki" })).toEqual({
+      isPending: true,
+    });
+  });
+
+  it("decides once it is known", () => {
+    expect(resolveAppRailLanding(input)).toEqual({ isPending: false, redirectTo: undefined });
+    expect(resolveAppRailLanding({ ...input, defaultAppKey: "approvals" })).toEqual({
+      isPending: false,
+      redirectTo: "/acme/approvals/",
+    });
+  });
+
+  it("never waits with a single app: the shell behaves as before", () => {
+    expect(resolveAppRailLanding({ ...input, enabledApps: [projects], isDefaultAppKnown: false })).toEqual({
+      isPending: false,
+      redirectTo: undefined,
+    });
+  });
+
+  it("never waits on a deep link", () => {
+    expect(resolveAppRailLanding({ ...input, pathname: "/acme/projects/p1/", isDefaultAppKnown: false })).toEqual({
+      isPending: false,
+      redirectTo: undefined,
+    });
+  });
+});
+
+describe("getAppRailDefaultAppKey", () => {
+  it("shows the stored app when it is enabled", () => {
+    expect(getAppRailDefaultAppKey(APPS, "wiki")).toBe("wiki");
+  });
+
+  it("reads as no default when nothing is stored or the app is not enabled", () => {
+    expect(getAppRailDefaultAppKey(APPS, null)).toBeUndefined();
+    expect(getAppRailDefaultAppKey(APPS, undefined)).toBeUndefined();
+    expect(getAppRailDefaultAppKey([projects, wiki], "approvals")).toBeUndefined();
   });
 });
