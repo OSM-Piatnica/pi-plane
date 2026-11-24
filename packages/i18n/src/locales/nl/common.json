@@ -1173,7 +1173,8 @@
     "workspace": {
       "delete_warning": "U staat op het punt de werkruimte <name/> te verwijderen. Als u dit bevestigt, verliest u de toegang tot al uw werkgegevens in deze werkruimte, zonder mogelijkheid tot herstel. Ga uiterst voorzichtig te werk.",
       "delete_type_name": "Typ de naam van deze werkruimte om door te gaan.",
-      "delete_final_confirmation": "Typ ter definitieve bevestiging <phrase/> hieronder."
+      "delete_final_confirmation": "Typ ter definitieve bevestiging <phrase/> hieronder.",
+      "remove_member_confirmation": "Weet u zeker dat u <name/> wilt verwijderen? Deze persoon heeft dan geen toegang meer tot deze werkruimte. Deze actie kan niet ongedaan worden gemaakt."
     },
     "workspace_settings": {
       "invitation_removed": "Uitnodiging succesvol verwijderd.",
@@ -1288,7 +1289,8 @@
       "toggle_estimates": "Schattingen in-/uitschakelen",
       "estimates_list": "Schattingenlijst",
       "archived_title": "Gearchiveerde schattingen",
-      "archived_description": "Schattingen zijn gewijzigd. Dit zijn de schattingen uit uw oudere versies die niet in gebruik waren. Lees er meer over <link>hier.</link>"
+      "archived_description": "Schattingen zijn gewijzigd. Dit zijn de schattingen uit uw oudere versies die niet in gebruik waren. Lees er meer over <link>hier.</link>",
+      "add_your_own": "Voeg zelf een eigen systeem ‘<name/>’ toe, vanaf nul."
     },
     "gantt": {
       "create_blocked_by_dependency": "Afhankelijkheid 'geblokkeerd door' aanmaken",
@@ -1302,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Gebruiker van Intake-formulier",
       "status": "Status",
-      "created_by": "Aangemaakt door"
+      "created_by": "Aangemaakt door",
+      "decline_confirmation": "Weet u zeker dat u werkitem <id/> wilt afwijzen? Deze actie kan niet ongedaan worden gemaakt.",
+      "delete_confirmation": "Weet u zeker dat u werkitem <id/> wilt verwijderen? Het werkitem wordt alleen uit Intake verwijderd en deze actie kan niet ongedaan worden gemaakt."
     },
     "instance": {
       "contact_support": "Contact opnemen met support",
@@ -1328,7 +1332,9 @@
       "install": "Installeren"
     },
     "attachments": {
-      "upload_progress": "Uploadvoortgang"
+      "upload_progress": "Uploadvoortgang",
+      "percent_done": "{percent}% voltooid",
+      "delete_confirmation": "Weet u zeker dat u de bijlage <name/> wilt verwijderen? De bijlage wordt permanent verwijderd. Deze actie kan niet ongedaan worden gemaakt."
     },
     "labels": {
       "delete_confirmation": "Weet u zeker dat u <name/> wilt verwijderen? Hierdoor wordt het label verwijderd van alle werkitems en uit alle weergaven waarin op dit label wordt gefilterd.",
@@ -1395,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {De pagina is als openbaar gemarkeerd en verplaatst naar de openbare sectie.} other {De pagina is als privé gemarkeerd en verplaatst naar de privésectie.}}",
+      "access_change_failed": "{access, select, public {De pagina kon niet als openbaar worden gemarkeerd. Probeer het opnieuw.} other {De pagina kon niet als privé worden gemarkeerd. Probeer het opnieuw.}}"
     },
     "activity": {
-      "bot_name": "{name}-bot"
+      "bot_name": "{name}-bot",
+      "issue_type_changed": "{kind, select, both {heeft het type gewijzigd van <old/> naar <new/>} from {heeft het type gewijzigd van <old/>} to {heeft het type gewijzigd naar <new/>} other {heeft het type gewijzigd}}",
+      "on_work_item": "bij"
     },
     "project": {
       "identifier": "Identificatie"
@@ -1447,7 +1457,9 @@
       "last_7_days": "Laatste 7 dagen",
       "last_30_days": "Laatste 30 dagen",
       "last_3_months": "Laatste 3 maanden",
-      "duration": "Duur"
+      "duration": "Duur",
+      "header_for": "Analyse voor {title}",
+      "header_in": "in {name}"
     },
     "auth_labels": {
       "one_time_code": "Eenmalige code"
@@ -1457,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Statusgroep",
-      "subscriber": "Abonnee"
+      "subscriber": "Abonnee",
+      "more_count": "+{count} meer"
+    },
+    "mentions": {
+      "suspended_user": "@geschorste gebruiker",
+      "deactivated_user": "@gedeactiveerde gebruiker"
+    },
+    "automation": {
+      "customize_time_range": "Tijdsbereik aanpassen"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Ik voel me lucky"
+    },
+    "parent_modal": {
+      "search_results": "Zoekresultaten voor <term/> in project:"
+    },
+    "error_page": {
+      "title": "Het lijkt erop dat er iets is misgegaan!",
+      "description": "We houden deze fouten automatisch bij en werken eraan om alles weer aan de praat te krijgen. Blijft het probleem bestaan, neem dan gerust contact met ons op. Probeer in de tussentijd de pagina te vernieuwen.",
+      "contact_support": "Contact opnemen met support",
+      "status_page": "Statuspagina"
+    },
+    "links": {
+      "created_by": "door {name}"
     }
   },
   "space_text": {

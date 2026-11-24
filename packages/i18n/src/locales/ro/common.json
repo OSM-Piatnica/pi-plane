@@ -1173,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Urmează să ștergi spațiul de lucru <name/>. Dacă confirmi, vei pierde accesul la toate datele de lucru din acest spațiu de lucru, fără posibilitatea de a le restaura. Procedează cu mare atenție.",
       "delete_type_name": "Pentru a continua, introdu numele acestui spațiu de lucru.",
-      "delete_final_confirmation": "Pentru confirmarea finală, scrie mai jos <phrase/>."
+      "delete_final_confirmation": "Pentru confirmarea finală, scrie mai jos <phrase/>.",
+      "remove_member_confirmation": "Sigur doriți să eliminați utilizatorul <name/>? Nu va mai avea acces la acest spațiu de lucru. Această acțiune nu poate fi anulată."
     },
     "workspace_settings": {
       "invitation_removed": "Invitația a fost eliminată cu succes.",
@@ -1288,7 +1289,8 @@
       "toggle_estimates": "Comută estimările",
       "estimates_list": "Lista de estimări",
       "archived_title": "Estimări arhivate",
-      "archived_description": "Estimările au suferit o modificare. Acestea sunt estimările din versiunile tale mai vechi, care nu erau utilizate. Citește mai multe despre ele <link>aici.</link>"
+      "archived_description": "Estimările au suferit o modificare. Acestea sunt estimările din versiunile tale mai vechi, care nu erau utilizate. Citește mai multe despre ele <link>aici.</link>",
+      "add_your_own": "Adăugați propriul sistem „<name/>” de la zero."
     },
     "gantt": {
       "create_blocked_by_dependency": "Creează dependență „blocat de”",
@@ -1302,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Utilizator al formularului Intake",
       "status": "Stare",
-      "created_by": "Creat de"
+      "created_by": "Creat de",
+      "decline_confirmation": "Sigur doriți să respingeți activitatea <id/>? Această acțiune nu poate fi anulată.",
+      "delete_confirmation": "Sigur doriți să ștergeți activitatea <id/>? Activitatea va fi ștearsă doar din Intake, iar această acțiune nu poate fi anulată."
     },
     "instance": {
       "contact_support": "Contactează asistența",
@@ -1328,7 +1332,9 @@
       "install": "Instalează"
     },
     "attachments": {
-      "upload_progress": "Progresul încărcării"
+      "upload_progress": "Progresul încărcării",
+      "percent_done": "{percent}% finalizat",
+      "delete_confirmation": "Sigur doriți să ștergeți atașamentul <name/>? Acesta va fi eliminat definitiv. Această acțiune nu poate fi anulată."
     },
     "labels": {
       "delete_confirmation": "Sigur vrei să ștergi <name/>? Această acțiune va elimina eticheta din toate activitățile și din toate perspectivele în care se filtrează după ea.",
@@ -1395,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Pagina a fost marcată ca publică și mutată în secțiunea publică.} other {Pagina a fost marcată ca privată și mutată în secțiunea privată.}}",
+      "access_change_failed": "{access, select, public {Pagina nu a putut fi marcată ca publică. Încercați din nou.} other {Pagina nu a putut fi marcată ca privată. Încercați din nou.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {a schimbat tipul din <old/> în <new/>} from {a schimbat tipul din <old/>} to {a schimbat tipul în <new/>} other {a schimbat tipul}}",
+      "on_work_item": "la"
     },
     "project": {
       "identifier": "Identificator"
@@ -1447,7 +1457,9 @@
       "last_7_days": "Ultimele 7 zile",
       "last_30_days": "Ultimele 30 de zile",
       "last_3_months": "Ultimele 3 luni",
-      "duration": "Durată"
+      "duration": "Durată",
+      "header_for": "Statistici pentru {title}",
+      "header_in": "în {name}"
     },
     "auth_labels": {
       "one_time_code": "Cod de unică folosință"
@@ -1457,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Grup de stări",
-      "subscriber": "Abonat"
+      "subscriber": "Abonat",
+      "more_count": "+{count} în plus"
+    },
+    "mentions": {
+      "suspended_user": "@utilizator suspendat",
+      "deactivated_user": "@utilizator dezactivat"
+    },
+    "automation": {
+      "customize_time_range": "Personalizați intervalul de timp"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Mă simt norocos"
+    },
+    "parent_modal": {
+      "search_results": "Rezultatele căutării pentru <term/> în proiect:"
+    },
+    "error_page": {
+      "title": "Se pare că ceva nu a funcționat!",
+      "description": "Urmărim automat aceste erori și lucrăm la remedierea situației. Dacă problema persistă, nu ezitați să ne contactați. Între timp, încercați să reîmprospătați pagina.",
+      "contact_support": "Contactați asistența",
+      "status_page": "Pagina de stare"
+    },
+    "links": {
+      "created_by": "de {name}"
     }
   },
   "space_text": {

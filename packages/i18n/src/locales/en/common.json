@@ -1173,7 +1173,8 @@
     "workspace": {
       "delete_warning": "You are about to delete the workspace <name/>. If you confirm, you will lose access to all your work data in this workspace without any way to restore it. Tread very carefully.",
       "delete_type_name": "Type in this workspace's name to continue.",
-      "delete_final_confirmation": "For final confirmation, type <phrase/> below."
+      "delete_final_confirmation": "For final confirmation, type <phrase/> below.",
+      "remove_member_confirmation": "Are you sure you want to remove <name/>? They will no longer have access to this workspace. This action cannot be undone."
     },
     "workspace_settings": {
       "invitation_removed": "Invitation removed successfully.",
@@ -1288,7 +1289,8 @@
       "toggle_estimates": "Toggle estimates",
       "estimates_list": "Estimates list",
       "archived_title": "Archived estimates",
-      "archived_description": "Estimates have gone through a change, these are the estimates you had in your older versions which were not in use. Read more about them <link>here.</link>"
+      "archived_description": "Estimates have gone through a change, these are the estimates you had in your older versions which were not in use. Read more about them <link>here.</link>",
+      "add_your_own": "Add your own <name/> from scratch."
     },
     "gantt": {
       "create_blocked_by_dependency": "Create blocked-by dependency",
@@ -1302,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake Form user",
       "status": "Status",
-      "created_by": "Created By"
+      "created_by": "Created By",
+      "decline_confirmation": "Are you sure you want to decline work item <id/>? This action cannot be undone.",
+      "delete_confirmation": "Are you sure you want to delete work item <id/>? The work item will only be deleted from the intake and this action cannot be undone."
     },
     "instance": {
       "contact_support": "Contact Support",
@@ -1328,7 +1332,9 @@
       "install": "Install"
     },
     "attachments": {
-      "upload_progress": "Upload progress"
+      "upload_progress": "Upload progress",
+      "percent_done": "{percent}% done",
+      "delete_confirmation": "Are you sure you want to delete the attachment <name/>? This attachment will be permanently removed. This action cannot be undone."
     },
     "labels": {
       "delete_confirmation": "Are you sure you want to delete <name/>? This will remove the label from all the work item and from any views where the label is being filtered upon.",
@@ -1395,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {The page has been marked public and moved to the public section.} other {The page has been marked private and moved to the private section.}}",
+      "access_change_failed": "{access, select, public {The page couldn't be marked public. Please try again.} other {The page couldn't be marked private. Please try again.}}"
     },
     "activity": {
-      "bot_name": "{name} Bot"
+      "bot_name": "{name} Bot",
+      "issue_type_changed": "{kind, select, both {changed the type from <old/> to <new/>} from {changed the type from <old/>} to {changed the type to <new/>} other {changed the type}}",
+      "on_work_item": "on"
     },
     "project": {
       "identifier": "Identifier"
@@ -1447,7 +1457,9 @@
       "last_7_days": "Last 7 days",
       "last_30_days": "Last 30 days",
       "last_3_months": "Last 3 months",
-      "duration": "Duration"
+      "duration": "Duration",
+      "header_for": "Analytics for {title}",
+      "header_in": "in {name}"
     },
     "auth_labels": {
       "one_time_code": "One-time code"
@@ -1457,7 +1469,30 @@
     },
     "filters": {
       "state_group": "State Group",
-      "subscriber": "Subscriber"
+      "subscriber": "Subscriber",
+      "more_count": "+{count} more"
+    },
+    "mentions": {
+      "suspended_user": "@suspended user",
+      "deactivated_user": "@deactivated user"
+    },
+    "automation": {
+      "customize_time_range": "Customize time range"
+    },
+    "issue_modal": {
+      "feeling_lucky": "I'm feeling lucky"
+    },
+    "parent_modal": {
+      "search_results": "Search results for <term/> in project:"
+    },
+    "error_page": {
+      "title": "Looks like something went wrong!",
+      "description": "We track these errors automatically and are working on getting things back up and running. If the problem persists, feel free to contact us. In the meantime, try refreshing.",
+      "contact_support": "Contact Support",
+      "status_page": "Status Page"
+    },
+    "links": {
+      "created_by": "by {name}"
     }
   },
   "space_text": {

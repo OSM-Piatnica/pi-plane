@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,6 +10,7 @@ import { observer } from "mobx-react";
 // ui
 import { ConfirmDialog } from "@plane/blocks/dialog";
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // hooks
 import { useUser } from "@/hooks/store/user";
 
@@ -61,9 +63,9 @@ export const ConfirmWorkspaceMemberRemove = observer(function ConfirmWorkspaceMe
           t("workspace_settings.settings.members.leave_confirmation")
         ) : (
           <>
-            {/* TODO: Add translation here */}
-            Are you sure you want to remove member- <span className="font-bold">{userDetails?.display_name}</span>? They
-            will no longer have access to this workspace. This action cannot be undone.
+            {renderTaggedText(t("app_text.workspace.remove_member_confirmation"), {
+              name: () => <span className="font-bold">{userDetails?.display_name}</span>,
+            })}
           </>
         )
       }

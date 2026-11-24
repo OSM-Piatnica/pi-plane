@@ -1173,7 +1173,8 @@
     "workspace": {
       "delete_warning": "Za chwilę usuniesz przestrzeń roboczą <name/>. Jeśli to potwierdzisz, stracisz dostęp do wszystkich danych roboczych w tej przestrzeni bez możliwości ich przywrócenia. Zachowaj szczególną ostrożność.",
       "delete_type_name": "Aby kontynuować, wpisz nazwę tej przestrzeni roboczej.",
-      "delete_final_confirmation": "Aby potwierdzić ostatecznie, wpisz poniżej <phrase/>."
+      "delete_final_confirmation": "Aby potwierdzić ostatecznie, wpisz poniżej <phrase/>.",
+      "remove_member_confirmation": "Czy na pewno chcesz usunąć użytkownika <name/>? Utraci on dostęp do tej przestrzeni roboczej. Tej czynności nie można cofnąć."
     },
     "workspace_settings": {
       "invitation_removed": "Zaproszenie zostało pomyślnie usunięte.",
@@ -1288,7 +1289,8 @@
       "toggle_estimates": "Przełącz szacowania",
       "estimates_list": "Lista szacowań",
       "archived_title": "Zarchiwizowane szacowania",
-      "archived_description": "Szacowania zostały zmienione. To są szacowania z Twoich starszych wersji, które nie były używane. Więcej o nich przeczytasz <link>tutaj.</link>"
+      "archived_description": "Szacowania zostały zmienione. To są szacowania z Twoich starszych wersji, które nie były używane. Więcej o nich przeczytasz <link>tutaj.</link>",
+      "add_your_own": "Dodaj własny system „<name/>” od podstaw."
     },
     "gantt": {
       "create_blocked_by_dependency": "Utwórz zależność „blokowany przez”",
@@ -1302,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Użytkownik formularza Intake",
       "status": "Status",
-      "created_by": "Utworzone przez"
+      "created_by": "Utworzone przez",
+      "decline_confirmation": "Czy na pewno chcesz odrzucić element pracy <id/>? Tej czynności nie można cofnąć.",
+      "delete_confirmation": "Czy na pewno chcesz usunąć element pracy <id/>? Element zostanie usunięty tylko z Intake, a tej czynności nie można cofnąć."
     },
     "instance": {
       "contact_support": "Skontaktuj się z pomocą techniczną",
@@ -1328,7 +1332,9 @@
       "install": "Zainstaluj"
     },
     "attachments": {
-      "upload_progress": "Postęp przesyłania"
+      "upload_progress": "Postęp przesyłania",
+      "percent_done": "Ukończono {percent}%",
+      "delete_confirmation": "Czy na pewno chcesz usunąć załącznik <name/>? Zostanie on trwale usunięty. Tej czynności nie można cofnąć."
     },
     "labels": {
       "delete_confirmation": "Czy na pewno chcesz usunąć <name/>? Etykieta zostanie usunięta ze wszystkich elementów pracy oraz ze wszystkich widoków, w których jest używana do filtrowania.",
@@ -1395,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Strona została oznaczona jako publiczna i przeniesiona do sekcji publicznej.} other {Strona została oznaczona jako prywatna i przeniesiona do sekcji prywatnej.}}",
+      "access_change_failed": "{access, select, public {Nie udało się oznaczyć strony jako publicznej. Spróbuj ponownie.} other {Nie udało się oznaczyć strony jako prywatnej. Spróbuj ponownie.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {zmienił(a) typ z <old/> na <new/>} from {zmienił(a) typ z <old/>} to {zmienił(a) typ na <new/>} other {zmienił(a) typ}}",
+      "on_work_item": "w"
     },
     "project": {
       "identifier": "Identyfikator"
@@ -1447,7 +1457,9 @@
       "last_7_days": "Ostatnie 7 dni",
       "last_30_days": "Ostatnie 30 dni",
       "last_3_months": "Ostatnie 3 miesiące",
-      "duration": "Czas trwania"
+      "duration": "Czas trwania",
+      "header_for": "Analizy dla: {title}",
+      "header_in": "w: {name}"
     },
     "auth_labels": {
       "one_time_code": "Kod jednorazowy"
@@ -1457,7 +1469,30 @@
     },
     "filters": {
       "state_group": "Grupa stanów",
-      "subscriber": "Subskrybent"
+      "subscriber": "Subskrybent",
+      "more_count": "+{count} więcej"
+    },
+    "mentions": {
+      "suspended_user": "@zawieszony użytkownik",
+      "deactivated_user": "@dezaktywowany użytkownik"
+    },
+    "automation": {
+      "customize_time_range": "Dostosuj zakres czasu"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Szczęśliwy traf"
+    },
+    "parent_modal": {
+      "search_results": "Wyniki wyszukiwania <term/> w projekcie:"
+    },
+    "error_page": {
+      "title": "Wygląda na to, że coś poszło nie tak!",
+      "description": "Automatycznie rejestrujemy takie błędy i pracujemy nad przywróceniem działania. Jeśli problem nie ustępuje, skontaktuj się z nami. W międzyczasie spróbuj odświeżyć stronę.",
+      "contact_support": "Skontaktuj się z pomocą techniczną",
+      "status_page": "Strona statusu"
+    },
+    "links": {
+      "created_by": "przez {name}"
     }
   },
   "space_text": {

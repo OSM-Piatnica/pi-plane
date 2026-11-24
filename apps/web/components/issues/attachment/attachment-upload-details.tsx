@@ -59,7 +59,9 @@ export const IssueAttachmentsUploadDetails = observer(function IssueAttachmentsU
             aria-label={t("app_text.attachments.upload_progress")}
           />
         </span>
-        <div className="flex-shrink-0 text-13 font-medium">{uploadStatus.progress}% done</div>
+        <div className="flex-shrink-0 text-13 font-medium">
+          {t("app_text.attachments.percent_done", { percent: uploadStatus.progress })}
+        </div>
       </div>
     </div>
   );

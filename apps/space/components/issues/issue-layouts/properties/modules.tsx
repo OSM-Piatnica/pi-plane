@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -9,6 +10,7 @@ import { observer } from "mobx-react";
 import { ModuleOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
 // plane utils
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // hooks
 import { useModule } from "@/hooks/store/use-module";
@@ -19,6 +21,7 @@ type Props = {
 };
 
 export const IssueBlockModules = observer(function IssueBlockModules({ moduleIds, shouldShowBorder = true }: Props) {
+  const { t } = useTranslation();
   const { getModulesByIds } = useModule();
 
   const modules = getModulesByIds(moduleIds ?? []);
@@ -27,7 +30,7 @@ export const IssueBlockModules = observer(function IssueBlockModules({ moduleIds
 
   return (
     <div className="relative flex h-full flex-wrap items-center gap-1">
-      <Tooltip label={`Modules: ${modulesString || "None"}`}>
+      <Tooltip label={`${t("modules")}: ${modulesString || t("none")}`}>
         {modules.length <= 1 ? (
           <div
             key={modules?.[0]?.id}
@@ -37,13 +40,15 @@ export const IssueBlockModules = observer(function IssueBlockModules({ moduleIds
           >
             <div className="flex items-center gap-1.5 text-secondary">
               <ModuleOutline className="h-3 w-3 flex-shrink-0" />
-              <div className="text-11">{modules?.[0]?.name ?? "No Modules"}</div>
+              <div className="text-11">{modules?.[0]?.name ?? t("module.no_module")}</div>
             </div>
           </div>
         ) : (
           <div className="flex h-full flex-shrink-0 cursor-default items-center rounded-md border border-strong px-2.5 py-1 text-11">
             <div className="flex items-center gap-1.5 text-secondary">
-              <div className="text-11">{modules.length} Modules</div>
+              <div className="text-11">
+                {modules.length} {t("modules")}
+              </div>
             </div>
           </div>
         )}

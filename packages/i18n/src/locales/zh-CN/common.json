@@ -1173,7 +1173,8 @@
     "workspace": {
       "delete_warning": "您即将删除工作区 <name/>。确认后，您将无法访问此工作区中的所有工作数据，且无法恢复。请务必谨慎操作。",
       "delete_type_name": "请输入此工作区的名称以继续。",
-      "delete_final_confirmation": "为进行最终确认，请在下方输入 <phrase/>。"
+      "delete_final_confirmation": "为进行最终确认，请在下方输入 <phrase/>。",
+      "remove_member_confirmation": "确定要移除 <name/> 吗？对方将无法再访问此工作区。此操作无法撤销。"
     },
     "workspace_settings": {
       "invitation_removed": "邀请已成功移除。",
@@ -1288,7 +1289,8 @@
       "toggle_estimates": "切换估算",
       "estimates_list": "估算列表",
       "archived_title": "已归档的估算",
-      "archived_description": "估算已发生变更，这些是您在旧版本中使用过但已不再使用的估算。了解更多请 <link>点击此处。</link>"
+      "archived_description": "估算已发生变更，这些是您在旧版本中使用过但已不再使用的估算。了解更多请 <link>点击此处。</link>",
+      "add_your_own": "从零开始添加您自己的“<name/>”。"
     },
     "gantt": {
       "create_blocked_by_dependency": "创建被阻塞依赖",
@@ -1302,7 +1304,9 @@
     "inbox": {
       "intake_form_user": "Intake 表单用户",
       "status": "状态",
-      "created_by": "创建者"
+      "created_by": "创建者",
+      "decline_confirmation": "确定要拒绝工作项 <id/> 吗？此操作无法撤销。",
+      "delete_confirmation": "确定要删除工作项 <id/> 吗？该工作项仅会从 Intake 中删除，此操作无法撤销。"
     },
     "instance": {
       "contact_support": "联系支持",
@@ -1328,7 +1332,9 @@
       "install": "安装"
     },
     "attachments": {
-      "upload_progress": "上传进度"
+      "upload_progress": "上传进度",
+      "percent_done": "已完成 {percent}%",
+      "delete_confirmation": "确定要删除附件 <name/> 吗？此附件将被永久删除。此操作无法撤销。"
     },
     "labels": {
       "delete_confirmation": "确定要删除 <name/> 吗？这将从所有工作项以及按该标签筛选的任何视图中移除该标签。",
@@ -1395,10 +1401,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {页面已标记为公开，并已移至公开部分。} other {页面已标记为私有，并已移至私有部分。}}",
+      "access_change_failed": "{access, select, public {无法将页面标记为公开。请重试。} other {无法将页面标记为私有。请重试。}}"
     },
     "activity": {
-      "bot_name": "{name} 机器人"
+      "bot_name": "{name} 机器人",
+      "issue_type_changed": "{kind, select, both {将类型从 <old/> 更改为 <new/>} from {更改了类型（原为 <old/>）} to {将类型更改为 <new/>} other {更改了类型}}",
+      "on_work_item": "于"
     },
     "project": {
       "identifier": "标识符"
@@ -1447,7 +1457,9 @@
       "last_7_days": "过去 7 天",
       "last_30_days": "过去 30 天",
       "last_3_months": "过去 3 个月",
-      "duration": "时长"
+      "duration": "时长",
+      "header_for": "{title} 的分析",
+      "header_in": "在 {name} 中"
     },
     "auth_labels": {
       "one_time_code": "一次性验证码"
@@ -1457,7 +1469,30 @@
     },
     "filters": {
       "state_group": "状态组",
-      "subscriber": "订阅者"
+      "subscriber": "订阅者",
+      "more_count": "另有 {count} 项"
+    },
+    "mentions": {
+      "suspended_user": "@已停用的用户",
+      "deactivated_user": "@已停用的用户"
+    },
+    "automation": {
+      "customize_time_range": "自定义时间范围"
+    },
+    "issue_modal": {
+      "feeling_lucky": "手气不错"
+    },
+    "parent_modal": {
+      "search_results": "项目中 <term/> 的搜索结果："
+    },
+    "error_page": {
+      "title": "似乎出了点问题！",
+      "description": "我们会自动记录这些错误，并正在努力恢复服务。如果问题仍然存在，请随时联系我们。在此期间，请尝试刷新页面。",
+      "contact_support": "联系支持",
+      "status_page": "状态页"
+    },
+    "links": {
+      "created_by": "由 {name} 创建"
     }
   },
   "space_text": {

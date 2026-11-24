@@ -13,6 +13,7 @@ import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TEstimateSystemKeys } from "@plane/types";
 // components
 import { convertMinutesToHoursMinutesString } from "@plane/utils";
+import { renderTaggedText } from "@/helpers/tagged-text";
 import { isEstimateSystemEnabled } from "@/components/estimates/helper";
 import { UpgradeBadge } from "@/components/workspace/upgrade-badge";
 import { RadioInput } from "../radio-select";
@@ -85,8 +86,9 @@ export function EstimateCreateStageOne(props: TEstimateCreateStageOne) {
             >
               <p className="text-14 font-medium">{t("project_settings.estimates.create.custom")}</p>
               <p className="text-11 text-tertiary">
-                {/* TODO: Translate here */}
-                Add your own <span className="lowercase">{currentEstimateSystem.name}</span> from scratch.
+                {renderTaggedText(t("app_text.estimates.add_your_own"), {
+                  name: () => <span className="lowercase">{currentEstimateSystem.name}</span>,
+                })}
               </p>
             </button>
           </div>
