@@ -134,7 +134,14 @@
         "title": "アーカイブされたサイクルがまだありません",
         "description": "プロジェクトを整理するために、完了したサイクルをアーカイブします。アーカイブ後はここで確認できます。"
       }
-    }
+    },
+    "order_by": {
+      "status": "ステータス",
+      "name": "名前",
+      "start_date": "開始日",
+      "manual": "手動"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {キャンセルされた作業項目 # 件はこのレポートから除外されています。} other {キャンセルされた作業項目 # 件はこのレポートから除外されています。}}"
   },
   "project_views": {
     "empty_state": {

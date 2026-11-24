@@ -797,7 +797,8 @@
     "developer": "開発者",
     "work_structure": "作業構造",
     "execution": "実行",
-    "administration": "管理"
+    "administration": "管理",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "エックス アクシス",

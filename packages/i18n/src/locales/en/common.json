@@ -797,7 +797,8 @@
     "developer": "Developer",
     "work_structure": "Work structure",
     "execution": "Execution",
-    "administration": "Administration"
+    "administration": "Administration",
+    "of_total": "of {total}"
   },
   "chart": {
     "x_axis": "X-axis",

@@ -134,7 +134,14 @@
         "title": "No archived cycles yet",
         "description": "To tidy up your project, archive completed cycles. Find them here once archived."
       }
-    }
+    },
+    "order_by": {
+      "status": "Status",
+      "name": "Name",
+      "start_date": "Start date",
+      "manual": "Manual"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# cancelled work item is excluded from this report.} other {# cancelled work items are excluded from this report.}}"
   },
   "project_views": {
     "empty_state": {

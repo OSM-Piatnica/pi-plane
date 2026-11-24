@@ -797,7 +797,8 @@
     "developer": "Dezvoltator",
     "work_structure": "Structura lucrului",
     "execution": "Execuție",
-    "administration": "Administrare"
+    "administration": "Administrare",
+    "of_total": "din {total}"
   },
   "chart": {
     "x_axis": "axa-X",

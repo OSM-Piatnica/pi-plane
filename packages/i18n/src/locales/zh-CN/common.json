@@ -797,7 +797,8 @@
     "developer": "开发人员",
     "work_structure": "工作结构",
     "execution": "执行",
-    "administration": "管理"
+    "administration": "管理",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "X轴",
