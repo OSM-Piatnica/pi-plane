@@ -232,6 +232,9 @@ class SignUpAuthEndpoint(View):
             user = provider.authenticate()
             if verification:
                 verification.consume()
+                # The code sent to the address proved control of the mailbox
+                user.is_email_verified = True
+                user.save(update_fields=["is_email_verified"])
             # Login the user and record his device info
             user_login(request=request, user=user, is_app=True)
             # Get the redirection path

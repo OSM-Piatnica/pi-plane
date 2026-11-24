@@ -236,6 +236,17 @@ class TestSignInEndpoint:
         assert "_auth_user_id" in django_client.session
 
     @pytest.mark.django_db
+    def test_password_sign_in_leaves_email_unverified(self, django_client, setup_user, setup_instance):
+        """A password sign-in does not show control of the mailbox"""
+        response = django_client.post(
+            reverse("sign-in"), {"email": "user@plane.so", "password": "user@123"}, follow=False
+        )
+
+        assert "error_code" not in response.url
+        setup_user.refresh_from_db()
+        assert setup_user.is_email_verified is False
+
+    @pytest.mark.django_db
     def test_next_path_redirection(self, django_client, setup_user, setup_instance):
         """Test sign-in with next_path parameter"""
         url = reverse("sign-in")
@@ -338,6 +349,25 @@ class TestOneTimeCodeSignIn:
         # The user should now be authenticated
         assert "_auth_user_id" in django_client.session
         assert not ri.exists("one_time_code_user@plane.so:issued")
+
+    @pytest.mark.django_db
+    @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")
+    def test_one_time_code_sign_in_marks_email_verified(
+        self, mock_send_one_time_code, django_client, api_client, setup_user, setup_instance
+    ):
+        """Signing in with the emailed code verifies an existing account's email"""
+        ri = redis_instance()
+        ri.delete("one_time_code_user@plane.so")
+        ri.delete("one_time_code_user@plane.so:issued")
+        assert setup_user.is_email_verified is False
+
+        api_client.post(reverse("magic-generate"), {"email": "user@plane.so"}, format="json")
+        token = json.loads(ri.get("one_time_code_user@plane.so"))["token"]
+        response = django_client.post(reverse("magic-sign-in"), {"email": "user@plane.so", "code": token}, follow=False)
+
+        assert "error_code" not in response.url
+        setup_user.refresh_from_db()
+        assert setup_user.is_email_verified is True
 
     @pytest.mark.django_db
     @patch("plane.bgtasks.one_time_code_task.send_one_time_code.delay")

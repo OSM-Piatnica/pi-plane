@@ -172,11 +172,11 @@ def instance(db):
     )
 
 
-def sign_in(idp, provider="entra", surface="auth", token_kwargs=None, token=None, client=None):
+def sign_in(idp, provider="entra", surface="auth", token_kwargs=None, token=None, client=None, next_path=None):
     """Starts the sign-in and comes back from the provider; returns (client, callback response, authorize query)."""
     client = client or Client(HTTP_USER_AGENT="Mozilla/5.0")
     prefix = "space-oidc-initiate" if surface == "space" else "oidc-initiate"
-    start = client.get(reverse(prefix, args=[provider]))
+    start = client.get(reverse(prefix, args=[provider]), {"next_path": next_path} if next_path else {})
     assert start.status_code == 302 and start.url.startswith("https://idp.example.com/authorize"), start.url
     query = {k: v[0] for k, v in parse_qs(urlparse(start.url).query).items()}
     idp.id_token = token or make_token(query["nonce"], **(token_kwargs or {}))
@@ -218,6 +218,21 @@ class TestEntraSignIn:
         # The code exchange proves the possession of the PKCE verifier
         assert idp.exchanged[0]["code_verifier"]
         assert idp.exchanged[0]["code"] == "the-code"
+
+    def test_an_invite_link_given_as_next_path_comes_back_whole_and_the_email_is_verified(self, instance, idp):
+        # An invitee opens the emailed link while signed out: the link must survive the round trip to the provider
+        invite_link = "/workspace-invitations/?invitation_id=7f3c&slug=piatnica&token=abc.def.ghi"
+
+        client, response, _ = sign_in(idp, next_path=invite_link)
+
+        assert "error_code" not in response.url
+        target = urlparse(response.url)
+        landing = (
+            f"{target.path}?{target.query}" if target.path not in ("", "/") else parse_qs(target.query)["next_path"][0]
+        )
+        assert landing == invite_link
+        # Signing in at the provider shows control of the mailbox, so the person may claim invites by email
+        assert User.objects.get(email="ala.kowalska@piatnica.com.pl").is_email_verified is True
 
     def test_second_sign_in_reuses_the_user(self, instance, idp):
         sign_in(idp)
