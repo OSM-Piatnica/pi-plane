@@ -337,7 +337,7 @@ class TestAttachmentUploadCreatorMembership:
         return issue
 
     @pytest.mark.parametrize("is_active, expected", [(True, status.HTTP_200_OK), (False, status.HTTP_403_FORBIDDEN)])
-    @mock.patch("plane.api.views.issue.S3Storage")
+    @mock.patch("plane.api.views.issue.get_storage")
     def test_upload(self, s3, client_for, workspace, project, own_issue, member_user, is_active, expected):
         s3.return_value.generate_presigned_post.return_value = {}
         client = client_for(member_user)
