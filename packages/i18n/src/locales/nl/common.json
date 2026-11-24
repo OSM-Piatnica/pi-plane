@@ -797,7 +797,8 @@
     "developer": "Ontwikkelaar",
     "work_structure": "Werkstructuur",
     "execution": "Uitvoering",
-    "administration": "Beheer"
+    "administration": "Beheer",
+    "of_total": "van {total}"
   },
   "chart": {
     "x_axis": "X-as",

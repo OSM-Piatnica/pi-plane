@@ -797,7 +797,8 @@
     "developer": "დეველოპერი",
     "work_structure": "სამუშაოს სტრუქტურა",
     "execution": "შესრულება",
-    "administration": "ადმინისტრირება"
+    "administration": "ადმინისტრირება",
+    "of_total": "{total}-დან"
   },
   "chart": {
     "x_axis": "X-ღერძი",

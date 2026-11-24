@@ -134,7 +134,14 @@
         "title": "尚無已封存的週期",
         "description": "為了整理您的專案，可以封存已完成的週期。一旦封存，您可以在這裡找到它們。"
       }
-    }
+    },
+    "order_by": {
+      "status": "狀態",
+      "name": "名稱",
+      "start_date": "開始日期",
+      "manual": "手動"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# 個已取消的工作事項已從此報告中排除。} other {# 個已取消的工作事項已從此報告中排除。}}"
   },
   "project_views": {
     "empty_state": {

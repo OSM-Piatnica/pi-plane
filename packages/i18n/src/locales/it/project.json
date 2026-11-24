@@ -134,7 +134,14 @@
         "title": "Nessun ciclo archiviato ancora",
         "description": "Per organizzare il tuo progetto, archivia i cicli completati. Li troverai qui una volta archiviati."
       }
-    }
+    },
+    "order_by": {
+      "status": "Stato",
+      "name": "Nome",
+      "start_date": "Data di inizio",
+      "manual": "Manuale"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {# elemento di lavoro annullato è escluso da questo report.} many {# di elementi di lavoro annullati sono esclusi da questo report.} other {# elementi di lavoro annullati sono esclusi da questo report.}}"
   },
   "project_views": {
     "empty_state": {

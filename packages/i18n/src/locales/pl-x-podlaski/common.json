@@ -797,7 +797,8 @@
     "developer": "Dla programistów",
     "work_structure": "Struktura pracy",
     "execution": "Realizacja",
-    "administration": "Administracja"
+    "administration": "Administracja",
+    "of_total": "z {total}"
   },
   "chart": {
     "x_axis": "Oś X",

@@ -134,7 +134,14 @@
         "title": "Henüz arşivlenmiş döngü yok",
         "description": "Projenizi düzenli tutmak için tamamlanmış döngüleri arşivleyin. Arşivlendikten sonra burada bulabilirsiniz."
       }
-    }
+    },
+    "order_by": {
+      "status": "Durum",
+      "name": "Ad",
+      "start_date": "Başlangıç tarihi",
+      "manual": "Manuel"
+    },
+    "cancelled_excluded_from_report": "{count, plural, one {İptal edilen # iş öğesi bu rapordan hariç tutuldu.} other {İptal edilen # iş öğesi bu rapordan hariç tutuldu.}}"
   },
   "project_views": {
     "empty_state": {

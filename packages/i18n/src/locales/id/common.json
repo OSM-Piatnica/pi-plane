@@ -797,7 +797,8 @@
     "developer": "Developer",
     "work_structure": "Struktur kerja",
     "execution": "Pelaksanaan",
-    "administration": "Administrasi"
+    "administration": "Administrasi",
+    "of_total": "dari {total}"
   },
   "chart": {
     "x_axis": "Sumbu-X",

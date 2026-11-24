@@ -797,7 +797,8 @@
     "developer": "개발자",
     "work_structure": "작업 구조",
     "execution": "실행",
-    "administration": "관리"
+    "administration": "관리",
+    "of_total": "/ {total}"
   },
   "chart": {
     "x_axis": "X축",

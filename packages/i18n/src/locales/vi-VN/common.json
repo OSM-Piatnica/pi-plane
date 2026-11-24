@@ -797,7 +797,8 @@
     "developer": "Lập trình viên",
     "work_structure": "Cấu trúc công việc",
     "execution": "Thực thi",
-    "administration": "Quản trị"
+    "administration": "Quản trị",
+    "of_total": "trên {total}"
   },
   "chart": {
     "x_axis": "Trục X",
