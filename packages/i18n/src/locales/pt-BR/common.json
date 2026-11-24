@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Parece que algo deu errado!",
       "description": "Algo deu errado ao exibir esta página. Atualize a página ou volte para o início. Se o problema continuar, entre em contato com o suporte.",
-      "contact_support": "Falar com o suporte"
+      "contact_support": "Falar com o suporte",
+      "kind": {
+        "offline": {
+          "title": "Parece que você está offline",
+          "description": "Verifique sua conexão com a internet e atualize a página."
+        },
+        "access": {
+          "title": "Você não tem acesso a esta página",
+          "description": "Sua conta não tem permissão para abrir esta página. Peça acesso a um administrador do espaço de trabalho ou volte para o início."
+        },
+        "server": {
+          "title": "O servidor não conseguiu responder",
+          "description": "O servidor teve um problema com sua solicitação. Tente novamente em instantes. Se continuar acontecendo, entre em contato com o suporte."
+        },
+        "not_found": {
+          "title": "Esta página não foi encontrada"
+        }
+      },
+      "reference": "Referência: {reference}",
+      "copy_details": "Copiar detalhes"
     },
     "links": {
       "created_by": "por {name}"

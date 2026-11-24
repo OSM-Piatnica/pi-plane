@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Il semble que quelque chose ne se soit pas passé comme prévu !",
       "description": "Un problème est survenu lors de l’affichage de cette page. Actualisez la page ou retournez à l’accueil. Si le problème persiste, veuillez contacter l’assistance.",
-      "contact_support": "Contacter l’assistance"
+      "contact_support": "Contacter l’assistance",
+      "kind": {
+        "offline": {
+          "title": "Vous semblez être hors ligne",
+          "description": "Vérifiez votre connexion internet, puis actualisez la page."
+        },
+        "access": {
+          "title": "Vous n’avez pas accès à cette page",
+          "description": "Votre compte n’est pas autorisé à ouvrir cette page. Demandez l’accès à un administrateur de l’espace de travail ou retournez à l’accueil."
+        },
+        "server": {
+          "title": "Le serveur n’a pas pu répondre",
+          "description": "Le serveur a rencontré un problème avec votre demande. Réessayez dans un instant. Si cela persiste, veuillez contacter l’assistance."
+        },
+        "not_found": {
+          "title": "Cette page est introuvable"
+        }
+      },
+      "reference": "Référence : {reference}",
+      "copy_details": "Copier les détails"
     },
     "links": {
       "created_by": "par {name}"

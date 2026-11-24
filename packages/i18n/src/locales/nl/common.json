@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Het lijkt erop dat er iets is misgegaan!",
       "description": "Er is iets misgegaan bij het weergeven van deze pagina. Vernieuw de pagina of ga terug naar de startpagina. Blijft het probleem bestaan, neem dan contact op met support.",
-      "contact_support": "Contact opnemen met support"
+      "contact_support": "Contact opnemen met support",
+      "kind": {
+        "offline": {
+          "title": "U lijkt offline te zijn",
+          "description": "Controleer uw internetverbinding en vernieuw daarna de pagina."
+        },
+        "access": {
+          "title": "U heeft geen toegang tot deze pagina",
+          "description": "Uw account heeft geen toestemming om deze pagina te openen. Vraag een beheerder van de werkruimte om toegang of ga terug naar de startpagina."
+        },
+        "server": {
+          "title": "De server kon niet antwoorden",
+          "description": "De server had een probleem met uw verzoek. Probeer het zo meteen opnieuw. Blijft het gebeuren, neem dan contact op met support."
+        },
+        "not_found": {
+          "title": "Deze pagina is niet gevonden"
+        }
+      },
+      "reference": "Referentie: {reference}",
+      "copy_details": "Details kopiëren"
     },
     "links": {
       "created_by": "door {name}"

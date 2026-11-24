@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Hier ist leider etwas schiefgelaufen!",
       "description": "Beim Anzeigen dieser Seite ist etwas schiefgelaufen. Laden Sie die Seite neu oder kehren Sie zur Startseite zurück. Wenn das Problem weiterhin besteht, wenden Sie sich bitte an den Support.",
-      "contact_support": "Support kontaktieren"
+      "contact_support": "Support kontaktieren",
+      "kind": {
+        "offline": {
+          "title": "Sie scheinen offline zu sein",
+          "description": "Prüfen Sie Ihre Internetverbindung und laden Sie die Seite neu."
+        },
+        "access": {
+          "title": "Sie haben keinen Zugriff auf diese Seite",
+          "description": "Ihr Konto darf diese Seite nicht öffnen. Bitten Sie einen Administrator des Arbeitsbereichs um Zugriff oder kehren Sie zur Startseite zurück."
+        },
+        "server": {
+          "title": "Der Server konnte nicht antworten",
+          "description": "Beim Server ist bei Ihrer Anfrage ein Problem aufgetreten. Versuchen Sie es in einem Moment erneut. Wenn es weiterhin auftritt, wenden Sie sich bitte an den Support."
+        },
+        "not_found": {
+          "title": "Diese Seite wurde nicht gefunden"
+        }
+      },
+      "reference": "Referenz: {reference}",
+      "copy_details": "Details kopieren"
     },
     "links": {
       "created_by": "von {name}"

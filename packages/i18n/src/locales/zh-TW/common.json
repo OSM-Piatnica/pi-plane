@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "似乎出了點問題！",
       "description": "顯示此頁面時發生問題。請重新整理頁面或返回首頁。如果問題持續，請聯絡支援。",
-      "contact_support": "聯絡支援"
+      "contact_support": "聯絡支援",
+      "kind": {
+        "offline": {
+          "title": "您似乎已離線",
+          "description": "請檢查網路連線，然後重新整理頁面。"
+        },
+        "access": {
+          "title": "您無權存取此頁面",
+          "description": "您的帳號無權開啟此頁面。請向工作區管理員申請存取權限，或返回首頁。"
+        },
+        "server": {
+          "title": "伺服器無法回應",
+          "description": "伺服器處理您的請求時發生問題。請稍後再試。如果問題持續發生，請聯絡支援。"
+        },
+        "not_found": {
+          "title": "找不到此頁面"
+        }
+      },
+      "reference": "參考編號：{reference}",
+      "copy_details": "複製詳細資料"
     },
     "links": {
       "created_by": "由 {name} 建立"

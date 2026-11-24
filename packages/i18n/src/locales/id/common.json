@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Sepertinya terjadi kesalahan!",
       "description": "Terjadi kesalahan saat menampilkan halaman ini. Muat ulang halaman atau kembali ke beranda. Jika masalah berlanjut, silakan hubungi dukungan.",
-      "contact_support": "Hubungi dukungan"
+      "contact_support": "Hubungi dukungan",
+      "kind": {
+        "offline": {
+          "title": "Anda tampaknya sedang offline",
+          "description": "Periksa koneksi internet Anda, lalu muat ulang halaman."
+        },
+        "access": {
+          "title": "Anda tidak memiliki akses ke halaman ini",
+          "description": "Akun Anda tidak diizinkan membuka halaman ini. Minta akses kepada admin ruang kerja, atau kembali ke beranda."
+        },
+        "server": {
+          "title": "Server tidak dapat menjawab",
+          "description": "Server mengalami masalah dengan permintaan Anda. Coba lagi sebentar lagi. Jika terus terjadi, silakan hubungi dukungan."
+        },
+        "not_found": {
+          "title": "Halaman ini tidak ditemukan"
+        }
+      },
+      "reference": "Referensi: {reference}",
+      "copy_details": "Salin detail"
     },
     "links": {
       "created_by": "oleh {name}"
