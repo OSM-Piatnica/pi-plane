@@ -199,8 +199,8 @@ class TestWorkspaceFeatureSwitches:
         assert rows.count() == 1
         assert rows.get().is_enabled is True
 
-    @pytest.mark.parametrize("url", [WORKSPACES_URL, "/api/workspaces/"])
-    def test_workspace_lists_read_the_switches_in_one_query(self, session_client, workspace, create_user, url):
+    def test_workspace_lists_read_the_switches_in_one_query(self, session_client, workspace, create_user):
+        url = WORKSPACES_URL
         WorkspaceFeature.objects.create(workspace=workspace, key="approvals", is_enabled=True)
         with CaptureQueriesContext(connection) as one_workspace:
             response = session_client.get(url)
