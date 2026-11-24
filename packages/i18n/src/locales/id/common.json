@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Sepertinya terjadi kesalahan!",
-      "description": "Kami melacak kesalahan ini secara otomatis dan sedang berupaya memulihkan layanan. Jika masalah berlanjut, silakan hubungi kami. Sementara itu, coba muat ulang halaman.",
-      "contact_support": "Hubungi dukungan",
-      "status_page": "Halaman status"
+      "description": "Terjadi kesalahan saat menampilkan halaman ini. Muat ulang halaman atau kembali ke beranda. Jika masalah berlanjut, silakan hubungi dukungan.",
+      "contact_support": "Hubungi dukungan"
     },
     "links": {
       "created_by": "oleh {name}"

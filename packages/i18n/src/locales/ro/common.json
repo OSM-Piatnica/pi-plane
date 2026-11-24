@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Se pare că ceva nu a funcționat!",
-      "description": "Urmărim automat aceste erori și lucrăm la remedierea situației. Dacă problema persistă, nu ezitați să ne contactați. Între timp, încercați să reîmprospătați pagina.",
-      "contact_support": "Contactați asistența",
-      "status_page": "Pagina de stare"
+      "description": "A apărut o problemă la afișarea acestei pagini. Reîmprospătați pagina sau reveniți la pagina principală. Dacă problema persistă, contactați asistența.",
+      "contact_support": "Contactați asistența"
     },
     "links": {
       "created_by": "de {name}"

@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Looks like something went wrong!",
-      "description": "We track these errors automatically and are working on getting things back up and running. If the problem persists, feel free to contact us. In the meantime, try refreshing.",
-      "contact_support": "Contact Support",
-      "status_page": "Status Page"
+      "description": "Something went wrong while showing this page. Refresh the page or go back to the home page. If the problem continues, please contact support.",
+      "contact_support": "Contact Support"
     },
     "links": {
       "created_by": "by {name}"

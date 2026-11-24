@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Zdá sa, že sa niečo pokazilo!",
-      "description": "Tieto chyby sledujeme automaticky a pracujeme na obnovení prevádzky. Ak problém pretrváva, neváhajte nás kontaktovať. Medzitým skúste stránku obnoviť.",
-      "contact_support": "Kontaktovať podporu",
-      "status_page": "Stránka so stavom"
+      "description": "Pri zobrazení tejto stránky sa niečo pokazilo. Obnovte stránku alebo sa vráťte na úvodnú stránku. Ak problém pretrváva, kontaktujte podporu.",
+      "contact_support": "Kontaktovať podporu"
     },
     "links": {
       "created_by": "od {name}"

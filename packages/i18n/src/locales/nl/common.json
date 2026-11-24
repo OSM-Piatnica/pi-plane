@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Het lijkt erop dat er iets is misgegaan!",
-      "description": "We houden deze fouten automatisch bij en werken eraan om alles weer aan de praat te krijgen. Blijft het probleem bestaan, neem dan gerust contact met ons op. Probeer in de tussentijd de pagina te vernieuwen.",
-      "contact_support": "Contact opnemen met support",
-      "status_page": "Statuspagina"
+      "description": "Er is iets misgegaan bij het weergeven van deze pagina. Vernieuw de pagina of ga terug naar de startpagina. Blijft het probleem bestaan, neem dan contact op met support.",
+      "contact_support": "Contact opnemen met support"
     },
     "links": {
       "created_by": "door {name}"

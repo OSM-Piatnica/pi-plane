@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Görünüşe göre bir şeyler ters gitti!",
-      "description": "Bu hataları otomatik olarak takip ediyoruz ve her şeyi yeniden çalışır hale getirmek için çalışıyoruz. Sorun devam ederse bizimle iletişime geçmekten çekinmeyin. Bu sırada sayfayı yenilemeyi deneyin.",
-      "contact_support": "Destekle iletişime geçin",
-      "status_page": "Durum sayfası"
+      "description": "Bu sayfa gösterilirken bir şeyler ters gitti. Sayfayı yenileyin veya ana sayfaya dönün. Sorun devam ederse lütfen destekle iletişime geçin.",
+      "contact_support": "Destekle iletişime geçin"
     },
     "links": {
       "created_by": "{name} tarafından"
