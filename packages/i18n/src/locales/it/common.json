@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Sembra che qualcosa sia andato storto!",
-      "description": "Monitoriamo automaticamente questi errori e stiamo lavorando per ripristinare il servizio. Se il problema persiste, ci contatti pure. Nel frattempo, provi ad aggiornare la pagina.",
-      "contact_support": "Contatta l’assistenza",
-      "status_page": "Pagina di stato"
+      "description": "Si è verificato un problema durante la visualizzazione di questa pagina. Aggiorni la pagina o torni alla home. Se il problema persiste, contatti l’assistenza.",
+      "contact_support": "Contatta l’assistenza"
     },
     "links": {
       "created_by": "di {name}"

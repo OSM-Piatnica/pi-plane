@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Il semble que quelque chose ne se soit pas passé comme prévu !",
-      "description": "Nous suivons ces erreurs automatiquement et travaillons à rétablir le service. Si le problème persiste, n’hésitez pas à nous contacter. En attendant, essayez d’actualiser la page.",
-      "contact_support": "Contacter l’assistance",
-      "status_page": "Page d’état"
+      "description": "Un problème est survenu lors de l’affichage de cette page. Actualisez la page ou retournez à l’accueil. Si le problème persiste, veuillez contacter l’assistance.",
+      "contact_support": "Contacter l’assistance"
     },
     "links": {
       "created_by": "par {name}"

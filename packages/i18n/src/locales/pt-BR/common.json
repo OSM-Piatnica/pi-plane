@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Parece que algo deu errado!",
-      "description": "Registramos esses erros automaticamente e estamos trabalhando para restabelecer tudo. Se o problema persistir, entre em contato conosco. Enquanto isso, tente atualizar a página.",
-      "contact_support": "Falar com o suporte",
-      "status_page": "Página de status"
+      "description": "Algo deu errado ao exibir esta página. Atualize a página ou volte para o início. Se o problema continuar, entre em contato com o suporte.",
+      "contact_support": "Falar com o suporte"
     },
     "links": {
       "created_by": "por {name}"

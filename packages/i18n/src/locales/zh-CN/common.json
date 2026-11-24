@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "似乎出了点问题！",
-      "description": "我们会自动记录这些错误，并正在努力恢复服务。如果问题仍然存在，请随时联系我们。在此期间，请尝试刷新页面。",
-      "contact_support": "联系支持",
-      "status_page": "状态页"
+      "description": "显示此页面时出了点问题。请刷新页面或返回首页。如果问题仍然存在，请联系支持。",
+      "contact_support": "联系支持"
     },
     "links": {
       "created_by": "由 {name} 创建"
