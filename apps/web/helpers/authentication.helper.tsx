@@ -127,6 +127,8 @@ export type TAuthErrorInfo = {
  * (an invite link, with its token, for one).
  */
 export const withNextPath = (href: string): string => {
+  // error messages are also built where there is no window (the unit tests, server rendering)
+  if (typeof window === "undefined") return href;
   const nextPath = new URLSearchParams(window.location.search).get("next_path");
   if (!nextPath) return href;
   return `${href}${href.includes("?") ? "&" : "?"}next_path=${encodeURIComponent(nextPath)}`;
