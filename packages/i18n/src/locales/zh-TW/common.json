@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "似乎出了點問題！",
-      "description": "我們會自動記錄這些錯誤，並正在努力恢復服務。如果問題持續，請隨時與我們聯絡。在此期間，請嘗試重新整理頁面。",
-      "contact_support": "聯絡支援",
-      "status_page": "狀態頁"
+      "description": "顯示此頁面時發生問題。請重新整理頁面或返回首頁。如果問題持續，請聯絡支援。",
+      "contact_support": "聯絡支援"
     },
     "links": {
       "created_by": "由 {name} 建立"

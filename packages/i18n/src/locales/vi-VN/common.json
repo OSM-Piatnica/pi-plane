@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Có vẻ đã xảy ra sự cố!",
-      "description": "Chúng tôi tự động theo dõi các lỗi này và đang khắc phục để mọi thứ hoạt động trở lại. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi. Trong lúc chờ đợi, hãy thử làm mới trang.",
-      "contact_support": "Liên hệ hỗ trợ",
-      "status_page": "Trang trạng thái"
+      "description": "Đã xảy ra sự cố khi hiển thị trang này. Hãy làm mới trang hoặc quay lại trang chủ. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ hỗ trợ.",
+      "contact_support": "Liên hệ hỗ trợ"
     },
     "links": {
       "created_by": "bởi {name}"

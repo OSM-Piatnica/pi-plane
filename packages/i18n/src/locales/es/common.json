@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "¡Parece que algo salió mal!",
-      "description": "Registramos estos errores automáticamente y trabajamos para que todo vuelva a funcionar. Si el problema continúa, no dude en ponerse en contacto con nosotros. Mientras tanto, intente actualizar la página.",
-      "contact_support": "Contactar con soporte",
-      "status_page": "Página de estado"
+      "description": "Algo salió mal al mostrar esta página. Actualice la página o vuelva al inicio. Si el problema continúa, póngase en contacto con soporte.",
+      "contact_support": "Contactar con soporte"
     },
     "links": {
       "created_by": "por {name}"
