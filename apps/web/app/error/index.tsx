@@ -19,5 +19,5 @@ export function CustomErrorComponent({ error }: { error: unknown }) {
     return <DevErrorComponent error={error} onGoHome={handleGoHome} onReload={handleReload} />;
   }
 
-  return <ProdErrorComponent onGoHome={handleGoHome} onReload={handleReload} />;
+  return <ProdErrorComponent error={error} onGoHome={handleGoHome} onReload={handleReload} />;
 }

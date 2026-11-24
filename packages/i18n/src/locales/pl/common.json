@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Wygląda na to, że coś poszło nie tak!",
       "description": "Podczas wyświetlania tej strony coś poszło nie tak. Odśwież stronę lub wróć na stronę główną. Jeśli problem nie ustąpi, skontaktuj się z pomocą techniczną.",
-      "contact_support": "Skontaktuj się z pomocą techniczną"
+      "contact_support": "Skontaktuj się z pomocą techniczną",
+      "kind": {
+        "offline": {
+          "title": "Wygląda na to, że jesteś offline",
+          "description": "Sprawdź połączenie z internetem, a następnie odśwież stronę."
+        },
+        "access": {
+          "title": "Nie masz dostępu do tej strony",
+          "description": "Twoje konto nie ma uprawnień do otwarcia tej strony. Poproś administratora przestrzeni roboczej o dostęp lub wróć na stronę główną."
+        },
+        "server": {
+          "title": "Serwer nie mógł odpowiedzieć",
+          "description": "Serwer napotkał problem z Twoim żądaniem. Spróbuj ponownie za chwilę. Jeśli to się powtarza, skontaktuj się z pomocą techniczną."
+        },
+        "not_found": {
+          "title": "Nie znaleziono tej strony"
+        }
+      },
+      "reference": "Kod: {reference}",
+      "copy_details": "Kopiuj szczegóły"
     },
     "links": {
       "created_by": "przez {name}"

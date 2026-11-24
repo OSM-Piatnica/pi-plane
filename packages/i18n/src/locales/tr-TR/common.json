@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Görünüşe göre bir şeyler ters gitti!",
       "description": "Bu sayfa gösterilirken bir şeyler ters gitti. Sayfayı yenileyin veya ana sayfaya dönün. Sorun devam ederse lütfen destekle iletişime geçin.",
-      "contact_support": "Destekle iletişime geçin"
+      "contact_support": "Destekle iletişime geçin",
+      "kind": {
+        "offline": {
+          "title": "Çevrimdışı görünüyorsunuz",
+          "description": "İnternet bağlantınızı kontrol edin, ardından sayfayı yenileyin."
+        },
+        "access": {
+          "title": "Bu sayfaya erişiminiz yok",
+          "description": "Hesabınızın bu sayfayı açma izni yok. Çalışma alanı yöneticisinden erişim isteyin veya ana sayfaya dönün."
+        },
+        "server": {
+          "title": "Sunucu yanıt veremedi",
+          "description": "Sunucu isteğinizle ilgili bir sorun yaşadı. Biraz sonra tekrar deneyin. Sorun devam ederse lütfen destekle iletişime geçin."
+        },
+        "not_found": {
+          "title": "Bu sayfa bulunamadı"
+        }
+      },
+      "reference": "Referans: {reference}",
+      "copy_details": "Ayrıntıları kopyala"
     },
     "links": {
       "created_by": "{name} tarafından"

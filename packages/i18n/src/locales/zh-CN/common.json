@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "似乎出了点问题！",
       "description": "显示此页面时出了点问题。请刷新页面或返回首页。如果问题仍然存在，请联系支持。",
-      "contact_support": "联系支持"
+      "contact_support": "联系支持",
+      "kind": {
+        "offline": {
+          "title": "您似乎已离线",
+          "description": "请检查网络连接，然后刷新页面。"
+        },
+        "access": {
+          "title": "您无权访问此页面",
+          "description": "您的账号无权打开此页面。请向工作区管理员申请访问权限，或返回首页。"
+        },
+        "server": {
+          "title": "服务器无法响应",
+          "description": "服务器处理您的请求时出现问题。请稍后重试。如果问题持续出现，请联系支持。"
+        },
+        "not_found": {
+          "title": "找不到此页面"
+        }
+      },
+      "reference": "参考编号：{reference}",
+      "copy_details": "复制详情"
     },
     "links": {
       "created_by": "由 {name} 创建"

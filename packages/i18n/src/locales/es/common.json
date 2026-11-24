@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "¡Parece que algo salió mal!",
       "description": "Algo salió mal al mostrar esta página. Actualice la página o vuelva al inicio. Si el problema continúa, póngase en contacto con soporte.",
-      "contact_support": "Contactar con soporte"
+      "contact_support": "Contactar con soporte",
+      "kind": {
+        "offline": {
+          "title": "Parece que no tiene conexión",
+          "description": "Compruebe su conexión a internet y actualice la página."
+        },
+        "access": {
+          "title": "No tiene acceso a esta página",
+          "description": "Su cuenta no tiene permiso para abrir esta página. Solicite acceso a un administrador del espacio de trabajo o vuelva al inicio."
+        },
+        "server": {
+          "title": "El servidor no pudo responder",
+          "description": "El servidor tuvo un problema con su solicitud. Inténtelo de nuevo en un momento. Si sigue ocurriendo, póngase en contacto con soporte."
+        },
+        "not_found": {
+          "title": "No se encontró esta página"
+        }
+      },
+      "reference": "Referencia: {reference}",
+      "copy_details": "Copiar detalles"
     },
     "links": {
       "created_by": "por {name}"

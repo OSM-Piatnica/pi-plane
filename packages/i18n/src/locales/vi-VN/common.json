@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Có vẻ đã xảy ra sự cố!",
       "description": "Đã xảy ra sự cố khi hiển thị trang này. Hãy làm mới trang hoặc quay lại trang chủ. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ hỗ trợ.",
-      "contact_support": "Liên hệ hỗ trợ"
+      "contact_support": "Liên hệ hỗ trợ",
+      "kind": {
+        "offline": {
+          "title": "Có vẻ bạn đang ngoại tuyến",
+          "description": "Hãy kiểm tra kết nối internet, sau đó làm mới trang."
+        },
+        "access": {
+          "title": "Bạn không có quyền truy cập trang này",
+          "description": "Tài khoản của bạn không được phép mở trang này. Hãy nhờ quản trị viên không gian làm việc cấp quyền, hoặc quay lại trang chủ."
+        },
+        "server": {
+          "title": "Máy chủ không thể phản hồi",
+          "description": "Máy chủ gặp sự cố với yêu cầu của bạn. Hãy thử lại sau ít phút. Nếu vẫn tiếp diễn, vui lòng liên hệ hỗ trợ."
+        },
+        "not_found": {
+          "title": "Không tìm thấy trang này"
+        }
+      },
+      "reference": "Mã tham chiếu: {reference}",
+      "copy_details": "Sao chép chi tiết"
     },
     "links": {
       "created_by": "bởi {name}"

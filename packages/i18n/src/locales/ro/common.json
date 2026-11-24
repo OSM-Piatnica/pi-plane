@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Se pare că ceva nu a funcționat!",
       "description": "A apărut o problemă la afișarea acestei pagini. Reîmprospătați pagina sau reveniți la pagina principală. Dacă problema persistă, contactați asistența.",
-      "contact_support": "Contactați asistența"
+      "contact_support": "Contactați asistența",
+      "kind": {
+        "offline": {
+          "title": "Se pare că sunteți offline",
+          "description": "Verificați conexiunea la internet, apoi reîmprospătați pagina."
+        },
+        "access": {
+          "title": "Nu aveți acces la această pagină",
+          "description": "Contul dumneavoastră nu are voie să deschidă această pagină. Cereți acces unui administrator al spațiului de lucru sau reveniți la pagina principală."
+        },
+        "server": {
+          "title": "Serverul nu a putut răspunde",
+          "description": "Serverul a întâmpinat o problemă cu cererea dumneavoastră. Încercați din nou peste puțin timp. Dacă se repetă, contactați asistența."
+        },
+        "not_found": {
+          "title": "Această pagină nu a fost găsită"
+        }
+      },
+      "reference": "Referință: {reference}",
+      "copy_details": "Copiază detaliile"
     },
     "links": {
       "created_by": "de {name}"

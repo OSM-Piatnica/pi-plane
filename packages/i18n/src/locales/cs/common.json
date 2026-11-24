@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Vypadá to, že se něco pokazilo!",
       "description": "Při zobrazení této stránky se něco pokazilo. Obnovte stránku nebo se vraťte na úvodní stránku. Pokud problém přetrvává, kontaktujte prosím podporu.",
-      "contact_support": "Kontaktovat podporu"
+      "contact_support": "Kontaktovat podporu",
+      "kind": {
+        "offline": {
+          "title": "Zdá se, že jste offline",
+          "description": "Zkontrolujte připojení k internetu a obnovte stránku."
+        },
+        "access": {
+          "title": "K této stránce nemáte přístup",
+          "description": "Váš účet nemá oprávnění tuto stránku otevřít. Požádejte o přístup správce pracovního prostoru nebo se vraťte na úvodní stránku."
+        },
+        "server": {
+          "title": "Server neodpověděl",
+          "description": "Na serveru nastal problém s vaším požadavkem. Zkuste to za chvíli znovu. Pokud se to opakuje, kontaktujte prosím podporu."
+        },
+        "not_found": {
+          "title": "Tuto stránku se nepodařilo najít"
+        }
+      },
+      "reference": "Kód: {reference}",
+      "copy_details": "Kopírovat podrobnosti"
     },
     "links": {
       "created_by": "od {name}"

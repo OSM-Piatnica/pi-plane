@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Sembra che qualcosa sia andato storto!",
       "description": "Si è verificato un problema durante la visualizzazione di questa pagina. Aggiorni la pagina o torni alla home. Se il problema persiste, contatti l’assistenza.",
-      "contact_support": "Contatta l’assistenza"
+      "contact_support": "Contatta l’assistenza",
+      "kind": {
+        "offline": {
+          "title": "Sembra che sia offline",
+          "description": "Controlli la connessione a internet, poi aggiorni la pagina."
+        },
+        "access": {
+          "title": "Non ha accesso a questa pagina",
+          "description": "Il suo account non è autorizzato ad aprire questa pagina. Chieda l’accesso a un amministratore dello spazio di lavoro oppure torni alla home."
+        },
+        "server": {
+          "title": "Il server non ha potuto rispondere",
+          "description": "Il server ha avuto un problema con la sua richiesta. Riprovi tra un momento. Se continua, contatti l’assistenza."
+        },
+        "not_found": {
+          "title": "Questa pagina non è stata trovata"
+        }
+      },
+      "reference": "Riferimento: {reference}",
+      "copy_details": "Copia i dettagli"
     },
     "links": {
       "created_by": "di {name}"

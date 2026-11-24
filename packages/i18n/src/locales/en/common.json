@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Looks like something went wrong!",
       "description": "Something went wrong while showing this page. Refresh the page or go back to the home page. If the problem continues, please contact support.",
-      "contact_support": "Contact Support"
+      "contact_support": "Contact Support",
+      "kind": {
+        "offline": {
+          "title": "You appear to be offline",
+          "description": "Check your internet connection, then refresh the page."
+        },
+        "access": {
+          "title": "You don't have access to this page",
+          "description": "Your account is not allowed to open this page. Ask a workspace admin for access, or go back to the home page."
+        },
+        "server": {
+          "title": "The server could not answer",
+          "description": "The server had a problem with your request. Try again in a moment. If it keeps happening, please contact support."
+        },
+        "not_found": {
+          "title": "This page could not be found"
+        }
+      },
+      "reference": "Reference: {reference}",
+      "copy_details": "Copy details"
     },
     "links": {
       "created_by": "by {name}"

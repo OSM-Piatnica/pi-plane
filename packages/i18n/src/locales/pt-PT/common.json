@@ -1488,7 +1488,26 @@
     "error_page": {
       "title": "Parece que algo correu mal!",
       "description": "Algo correu mal ao apresentar esta página. Atualize a página ou volte ao início. Se o problema continuar, contacte o suporte.",
-      "contact_support": "Contactar o suporte"
+      "contact_support": "Contactar o suporte",
+      "kind": {
+        "offline": {
+          "title": "Parece que está offline",
+          "description": "Verifique a sua ligação à internet e atualize a página."
+        },
+        "access": {
+          "title": "Não tem acesso a esta página",
+          "description": "A sua conta não tem permissão para abrir esta página. Peça acesso a um administrador do espaço de trabalho ou volte ao início."
+        },
+        "server": {
+          "title": "O servidor não conseguiu responder",
+          "description": "O servidor teve um problema com o seu pedido. Tente novamente dentro de instantes. Se continuar a acontecer, contacte o suporte."
+        },
+        "not_found": {
+          "title": "Esta página não foi encontrada"
+        }
+      },
+      "reference": "Referência: {reference}",
+      "copy_details": "Copiar detalhes"
     },
     "links": {
       "created_by": "por {name}"
