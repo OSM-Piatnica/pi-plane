@@ -97,7 +97,7 @@ export function SelectMonthModal({ type, initialValues, isOpen, handleClose, han
           <DialogMain>
             <DialogHeader>
               <DialogHeading>
-                <DialogTitle>Customize time range</DialogTitle>
+                <DialogTitle>{t("app_text.automation.customize_time_range")}</DialogTitle>
               </DialogHeading>
             </DialogHeader>
             <DialogBody>

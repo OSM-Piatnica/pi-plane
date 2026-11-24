@@ -1,12 +1,14 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import { observer } from "mobx-react";
 // Plane
 import { Row } from "@plane/blocks/layout";
+import { useTranslation } from "@plane/i18n";
 // components
 import { cn } from "@plane/utils";
 import { BLOCK_HEIGHT } from "@/components/gantt-chart/constants";
@@ -22,6 +24,7 @@ type Props = {
 
 export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: Props) {
   const { blockId, isDragging } = props;
+  const { t } = useTranslation();
   // store hooks
   const { getBlockById, updateActiveBlockId, isBlockActive, getNumberOfDaysFromPosition } = useTimeLineChartStore();
   const block = getBlockById(blockId);
@@ -57,7 +60,7 @@ export const ModulesSidebarBlock = observer(function ModulesSidebarBlock(props: 
           </div>
           {duration !== undefined && (
             <div className="flex-shrink-0 text-13 text-secondary">
-              {duration} day{duration > 1 ? "s" : ""}
+              {t("activity_feed.issue.duration.days", { count: duration })}
             </div>
           )}
         </div>

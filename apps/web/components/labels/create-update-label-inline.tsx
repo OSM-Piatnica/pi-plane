@@ -118,7 +118,7 @@ export const CreateUpdateLabelInline = observer(
       } catch (error) {
         const errorMessage = getErrorMessage(error, "update");
         setToast({
-          title: "Oops!",
+          title: t("toast.error"),
           type: "error",
           message: errorMessage,
         });

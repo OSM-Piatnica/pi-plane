@@ -8,21 +8,27 @@
 import { useTheme } from "next-themes";
 // plane imports
 import { Button } from "@makeplane/propel/components/button";
+import { useTranslation } from "@plane/i18n";
 // assets
 import maintenanceModeDarkModeImage from "@/app/assets/instance/maintenance-mode-dark.svg?url";
 import maintenanceModeLightModeImage from "@/app/assets/instance/maintenance-mode-light.svg?url";
 // layouts
 import DefaultLayout from "@/layouts/default-layout";
 
-const linkMap = [
+const linkMap: {
+  key: string;
+  value: string;
+  labelKey?: "app_text.error_page.contact_support" | "app_text.error_page.status_page";
+  label?: string;
+}[] = [
   {
     key: "mail_to",
-    label: "Contact Support",
+    labelKey: "app_text.error_page.contact_support",
     value: "https://github.com/OSM-Piatnica/pi-plane/issues",
   },
   {
     key: "status",
-    label: "Status Page",
+    labelKey: "app_text.error_page.status_page",
     value: "https://status.plane.so/",
   },
   {
@@ -40,6 +46,7 @@ interface ProdErrorComponentProps {
 export function ProdErrorComponent({ onGoHome }: ProdErrorComponentProps) {
   // hooks
   const { resolvedTheme } = useTheme();
+  const { t } = useTranslation();
 
   // derived values
   const maintenanceModeImage = resolvedTheme === "dark" ? maintenanceModeDarkModeImage : maintenanceModeLightModeImage;
@@ -58,11 +65,8 @@ export function ProdErrorComponent({ onGoHome }: ProdErrorComponentProps) {
         </div>
         <div className="relative mt-4 flex w-full flex-col gap-4">
           <div className="flex flex-col gap-2.5">
-            <h1 className="text-left text-18 font-semibold text-primary">&#x1F6A7; Looks like something went wrong!</h1>
-            <span className="text-left text-14 font-medium text-secondary">
-              We track these errors automatically and working on getting things back up and running. If the problem
-              persists feel free to contact us. In the meantime, try refreshing.
-            </span>
+            <h1 className="text-left text-18 font-semibold text-primary">&#x1F6A7; {t("app_text.error_page.title")}</h1>
+            <span className="text-left text-14 font-medium text-secondary">{t("app_text.error_page.description")}</span>
           </div>
 
           <div className="mt-1 flex items-center justify-start gap-6">
@@ -74,14 +78,20 @@ export function ProdErrorComponent({ onGoHome }: ProdErrorComponentProps) {
                   rel="noopener noreferrer"
                   className="text-13 text-accent-primary hover:underline"
                 >
-                  {link.label}
+                  {link.labelKey ? t(link.labelKey) : link.label}
                 </a>
               </div>
             ))}
           </div>
 
           <div className="flex items-center justify-start gap-6">
-            <Button variant="primary" size="md" stretch="auto" label="Go to home" onClick={onGoHome} />
+            <Button
+              variant="primary"
+              size="md"
+              stretch="auto"
+              label={t("app_text.not_found.go_to_home")}
+              onClick={onGoHome}
+            />
           </div>
         </div>
       </div>
