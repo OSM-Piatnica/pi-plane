@@ -14,6 +14,7 @@ import { Combobox, ComboboxItem, ComboboxList, ComboboxSearch } from "@makeplane
 import { Dialog, DialogContent, DialogMain, DialogTitle } from "@makeplane/propel/components/dialog";
 // i18n
 import { useTranslation } from "@plane/i18n";
+import { renderTaggedText } from "@/helpers/tagged-text";
 // types
 import type { ISearchIssueResponse } from "@plane/types";
 // ui
@@ -131,13 +132,9 @@ export function ParentIssuesListModal({
             <div className="vertical-scrollbar scrollbar-md max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto overscroll-contain">
               {searchTerm !== "" && (
                 <h5 className="mx-2 text-13 text-secondary">
-                  Search results for{" "}
-                  <span className="text-primary">
-                    {'"'}
-                    {searchTerm}
-                    {'"'}
-                  </span>{" "}
-                  in project:
+                  {renderTaggedText(t("app_text.parent_modal.search_results"), {
+                    term: () => <span className="text-primary">{`"${searchTerm}"`}</span>,
+                  })}
                 </h5>
               )}
 

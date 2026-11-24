@@ -98,7 +98,7 @@ export const ActivityProfileSettingsList = observer(function ProfileActivityList
                       <div>
                         <div className="text-11">
                           {activityItem.actor_detail.is_bot
-                            ? activityItem.actor_detail.first_name + " Bot"
+                            ? `${activityItem.actor_detail.first_name} ${t("bot")}`
                             : activityItem.actor_detail.display_name}
                         </div>
                         <p className="mt-0.5 text-11 text-secondary">
@@ -164,7 +164,9 @@ export const ActivityProfileSettingsList = observer(function ProfileActivityList
                             {activityItem.field === "archived_at" && activityItem.new_value !== "restore" ? (
                               <span className="text-gray font-medium">Pi-Plane</span>
                             ) : activityItem.actor_detail.is_bot ? (
-                              <span className="text-gray font-medium">{activityItem.actor_detail.first_name} Bot</span>
+                              <span className="text-gray font-medium">
+                                {activityItem.actor_detail.first_name} {t("bot")}
+                              </span>
                             ) : (
                               <Link
                                 href={`/${activityItem.workspace_detail.slug}/profile/${activityItem.actor_detail.id}`}

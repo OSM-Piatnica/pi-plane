@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -75,7 +76,9 @@ export const CommentCard = observer(function CommentCard(props: Props) {
           <img
             src={getFileURL(comment.actor_detail.avatar_url)}
             alt={
-              comment.actor_detail.is_bot ? comment.actor_detail.first_name + " Bot" : comment.actor_detail.display_name
+              comment.actor_detail.is_bot
+                ? `${comment.actor_detail.first_name} ${t("bot")}`
+                : comment.actor_detail.display_name
             }
             height={30}
             width={30}
@@ -98,10 +101,14 @@ export const CommentCard = observer(function CommentCard(props: Props) {
       <div className="min-w-0 flex-1">
         <div>
           <div className="text-11">
-            {comment.actor_detail.is_bot ? comment.actor_detail.first_name + " Bot" : comment.actor_detail.display_name}
+            {comment.actor_detail.is_bot
+              ? `${comment.actor_detail.first_name} ${t("bot")}`
+              : comment.actor_detail.display_name}
           </div>
           <p className="mt-0.5 text-11 text-secondary">
-            <>commented {timeAgo(comment.created_at)}</>
+            <>
+              {t("notification.content.commented")} {timeAgo(comment.created_at)}
+            </>
           </p>
         </div>
         <div className="issue-comments-section p-0">

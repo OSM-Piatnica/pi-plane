@@ -1172,7 +1172,8 @@
     "workspace": {
       "delete_warning": "Bạn sắp xóa không gian làm việc <name/>. Nếu xác nhận, bạn sẽ mất quyền truy cập vào toàn bộ dữ liệu công việc trong không gian làm việc này và không thể khôi phục. Hãy hết sức cẩn trọng.",
       "delete_type_name": "Nhập tên của không gian làm việc này để tiếp tục.",
-      "delete_final_confirmation": "Để xác nhận lần cuối, hãy nhập <phrase/> bên dưới."
+      "delete_final_confirmation": "Để xác nhận lần cuối, hãy nhập <phrase/> bên dưới.",
+      "remove_member_confirmation": "Bạn có chắc chắn muốn xóa <name/> không? Họ sẽ không còn quyền truy cập vào không gian làm việc này. Hành động này không thể hoàn tác."
     },
     "workspace_settings": {
       "invitation_removed": "Đã xóa lời mời thành công.",
@@ -1287,7 +1288,8 @@
       "toggle_estimates": "Bật/tắt ước tính",
       "estimates_list": "Danh sách ước tính",
       "archived_title": "Ước tính đã lưu trữ",
-      "archived_description": "Các ước tính đã có thay đổi. Đây là những ước tính bạn có ở các phiên bản cũ hơn và hiện không còn được sử dụng. Tìm hiểu thêm về chúng <link>tại đây.</link>"
+      "archived_description": "Các ước tính đã có thay đổi. Đây là những ước tính bạn có ở các phiên bản cũ hơn và hiện không còn được sử dụng. Tìm hiểu thêm về chúng <link>tại đây.</link>",
+      "add_your_own": "Thêm hệ thống <name/> của riêng bạn từ đầu."
     },
     "gantt": {
       "create_blocked_by_dependency": "Tạo phụ thuộc bị chặn bởi",
@@ -1301,7 +1303,9 @@
     "inbox": {
       "intake_form_user": "Người dùng biểu mẫu Intake",
       "status": "Trạng thái",
-      "created_by": "Người tạo"
+      "created_by": "Người tạo",
+      "decline_confirmation": "Bạn có chắc chắn muốn từ chối mục công việc <id/> không? Hành động này không thể hoàn tác.",
+      "delete_confirmation": "Bạn có chắc chắn muốn xóa mục công việc <id/> không? Mục công việc chỉ bị xóa khỏi Intake và hành động này không thể hoàn tác."
     },
     "instance": {
       "contact_support": "Liên hệ hỗ trợ",
@@ -1327,7 +1331,9 @@
       "install": "Cài đặt"
     },
     "attachments": {
-      "upload_progress": "Tiến độ tải lên"
+      "upload_progress": "Tiến độ tải lên",
+      "percent_done": "Đã xong {percent}%",
+      "delete_confirmation": "Bạn có chắc chắn muốn xóa tệp đính kèm <name/> không? Tệp đính kèm này sẽ bị xóa vĩnh viễn. Hành động này không thể hoàn tác."
     },
     "labels": {
       "delete_confirmation": "Bạn có chắc chắn muốn xóa <name/> không? Thao tác này sẽ gỡ nhãn khỏi tất cả các mục công việc và khỏi mọi chế độ xem đang lọc theo nhãn này.",
@@ -1394,10 +1400,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Trang đã được đánh dấu là công khai và chuyển sang mục công khai.} other {Trang đã được đánh dấu là riêng tư và chuyển sang mục riêng tư.}}",
+      "access_change_failed": "{access, select, public {Không thể đánh dấu trang là công khai. Vui lòng thử lại.} other {Không thể đánh dấu trang là riêng tư. Vui lòng thử lại.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {đã đổi loại từ <old/> sang <new/>} from {đã đổi loại từ <old/>} to {đã đổi loại sang <new/>} other {đã đổi loại}}",
+      "on_work_item": "trên"
     },
     "project": {
       "identifier": "Mã định danh"
@@ -1446,7 +1456,9 @@
       "last_7_days": "7 ngày qua",
       "last_30_days": "30 ngày qua",
       "last_3_months": "3 tháng qua",
-      "duration": "Thời lượng"
+      "duration": "Thời lượng",
+      "header_for": "Phân tích cho {title}",
+      "header_in": "trong {name}"
     },
     "auth_labels": {
       "one_time_code": "Mã dùng một lần"
@@ -1456,7 +1468,30 @@
     },
     "filters": {
       "state_group": "Nhóm trạng thái",
-      "subscriber": "Người đăng ký"
+      "subscriber": "Người đăng ký",
+      "more_count": "+{count} mục khác"
+    },
+    "mentions": {
+      "suspended_user": "@người dùng bị tạm ngưng",
+      "deactivated_user": "@người dùng đã bị vô hiệu hóa"
+    },
+    "automation": {
+      "customize_time_range": "Tùy chỉnh khoảng thời gian"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Tôi cảm thấy may mắn"
+    },
+    "parent_modal": {
+      "search_results": "Kết quả tìm kiếm <term/> trong dự án:"
+    },
+    "error_page": {
+      "title": "Có vẻ đã xảy ra sự cố!",
+      "description": "Chúng tôi tự động theo dõi các lỗi này và đang khắc phục để mọi thứ hoạt động trở lại. Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi. Trong lúc chờ đợi, hãy thử làm mới trang.",
+      "contact_support": "Liên hệ hỗ trợ",
+      "status_page": "Trang trạng thái"
+    },
+    "links": {
+      "created_by": "bởi {name}"
     }
   },
   "space_text": {

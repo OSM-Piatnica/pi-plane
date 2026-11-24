@@ -1172,7 +1172,8 @@
     "workspace": {
       "delete_warning": "Chystáte sa zmazať pracovný priestor <name/>. Ak to potvrdíte, stratíte prístup ku všetkým svojim pracovným údajom v tomto pracovnom priestore bez možnosti obnovenia. Postupujte veľmi opatrne.",
       "delete_type_name": "Na pokračovanie zadajte názov tohto pracovného priestoru.",
-      "delete_final_confirmation": "Na konečné potvrdenie napíšte nižšie <phrase/>."
+      "delete_final_confirmation": "Na konečné potvrdenie napíšte nižšie <phrase/>.",
+      "remove_member_confirmation": "Naozaj chcete odstrániť používateľa <name/>? Už nebude mať prístup k tomuto pracovnému priestoru. Túto akciu nie je možné vrátiť späť."
     },
     "workspace_settings": {
       "invitation_removed": "Pozvánka bola úspešne odstránená.",
@@ -1287,7 +1288,8 @@
       "toggle_estimates": "Prepnúť odhady",
       "estimates_list": "Zoznam odhadov",
       "archived_title": "Archivované odhady",
-      "archived_description": "Odhady prešli zmenou. Toto sú odhady z vašich starších verzií, ktoré sa nepoužívali. Viac sa o nich dozviete <link>tu.</link>"
+      "archived_description": "Odhady prešli zmenou. Toto sú odhady z vašich starších verzií, ktoré sa nepoužívali. Viac sa o nich dozviete <link>tu.</link>",
+      "add_your_own": "Pridajte si vlastný systém „<name/>“ od začiatku."
     },
     "gantt": {
       "create_blocked_by_dependency": "Vytvoriť závislosť „blokované“",
@@ -1301,7 +1303,9 @@
     "inbox": {
       "intake_form_user": "Používateľ formulára Intake",
       "status": "Stav",
-      "created_by": "Vytvoril"
+      "created_by": "Vytvoril",
+      "decline_confirmation": "Naozaj chcete zamietnuť pracovnú položku <id/>? Túto akciu nie je možné vrátiť späť.",
+      "delete_confirmation": "Naozaj chcete odstrániť pracovnú položku <id/>? Položka bude odstránená iba z Intake a túto akciu nie je možné vrátiť späť."
     },
     "instance": {
       "contact_support": "Kontaktovať podporu",
@@ -1327,7 +1331,9 @@
       "install": "Nainštalovať"
     },
     "attachments": {
-      "upload_progress": "Priebeh nahrávania"
+      "upload_progress": "Priebeh nahrávania",
+      "percent_done": "Hotovo {percent} %",
+      "delete_confirmation": "Naozaj chcete odstrániť prílohu <name/>? Príloha bude natrvalo odstránená. Túto akciu nie je možné vrátiť späť."
     },
     "labels": {
       "delete_confirmation": "Naozaj chcete zmazať <name/>? Štítok sa odstráni zo všetkých pracovných položiek aj zo všetkých pohľadov, v ktorých sa podľa neho filtruje.",
@@ -1394,10 +1400,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Stránka bola označená ako verejná a presunutá do verejnej sekcie.} other {Stránka bola označená ako súkromná a presunutá do súkromnej sekcie.}}",
+      "access_change_failed": "{access, select, public {Stránku sa nepodarilo označiť ako verejnú. Skúste to prosím znova.} other {Stránku sa nepodarilo označiť ako súkromnú. Skúste to prosím znova.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {zmenil(a) typ z <old/> na <new/>} from {zmenil(a) typ z <old/>} to {zmenil(a) typ na <new/>} other {zmenil(a) typ}}",
+      "on_work_item": "pri"
     },
     "project": {
       "identifier": "Identifikátor"
@@ -1446,7 +1456,9 @@
       "last_7_days": "Posledných 7 dní",
       "last_30_days": "Posledných 30 dní",
       "last_3_months": "Posledné 3 mesiace",
-      "duration": "Trvanie"
+      "duration": "Trvanie",
+      "header_for": "Analytika pre {title}",
+      "header_in": "v {name}"
     },
     "auth_labels": {
       "one_time_code": "Jednorazový kód"
@@ -1456,7 +1468,30 @@
     },
     "filters": {
       "state_group": "Skupina stavov",
-      "subscriber": "Odberateľ"
+      "subscriber": "Odberateľ",
+      "more_count": "+{count} ďalších"
+    },
+    "mentions": {
+      "suspended_user": "@pozastavený používateľ",
+      "deactivated_user": "@deaktivovaný používateľ"
+    },
+    "automation": {
+      "customize_time_range": "Prispôsobiť časové obdobie"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Mám šťastie"
+    },
+    "parent_modal": {
+      "search_results": "Výsledky hľadania <term/> v projekte:"
+    },
+    "error_page": {
+      "title": "Zdá sa, že sa niečo pokazilo!",
+      "description": "Tieto chyby sledujeme automaticky a pracujeme na obnovení prevádzky. Ak problém pretrváva, neváhajte nás kontaktovať. Medzitým skúste stránku obnoviť.",
+      "contact_support": "Kontaktovať podporu",
+      "status_page": "Stránka so stavom"
+    },
+    "links": {
+      "created_by": "od {name}"
     }
   },
   "space_text": {

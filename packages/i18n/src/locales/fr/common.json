@@ -1172,7 +1172,8 @@
     "workspace": {
       "delete_warning": "Vous êtes sur le point de supprimer l’espace de travail <name/>. Si vous confirmez, vous perdrez l’accès à toutes vos données de travail dans cet espace de travail, sans aucune possibilité de les restaurer. Procédez avec la plus grande prudence.",
       "delete_type_name": "Saisissez le nom de cet espace de travail pour continuer.",
-      "delete_final_confirmation": "Pour la confirmation finale, saisissez <phrase/> ci-dessous."
+      "delete_final_confirmation": "Pour la confirmation finale, saisissez <phrase/> ci-dessous.",
+      "remove_member_confirmation": "Voulez-vous vraiment retirer <name/> ? Cette personne n’aura plus accès à cet espace de travail. Cette action est irréversible."
     },
     "workspace_settings": {
       "invitation_removed": "Invitation supprimée avec succès.",
@@ -1287,7 +1288,8 @@
       "toggle_estimates": "Activer/désactiver les estimations",
       "estimates_list": "Liste des estimations",
       "archived_title": "Estimations archivées",
-      "archived_description": "Les estimations ont fait l’objet d’une modification. Voici les estimations de vos anciennes versions, qui n’étaient pas utilisées. En savoir plus à ce sujet <link>ici.</link>"
+      "archived_description": "Les estimations ont fait l’objet d’une modification. Voici les estimations de vos anciennes versions, qui n’étaient pas utilisées. En savoir plus à ce sujet <link>ici.</link>",
+      "add_your_own": "Ajoutez votre propre système « <name/> » à partir de zéro."
     },
     "gantt": {
       "create_blocked_by_dependency": "Créer une dépendance « bloqué par »",
@@ -1301,7 +1303,9 @@
     "inbox": {
       "intake_form_user": "Utilisateur du formulaire Intake",
       "status": "Statut",
-      "created_by": "Créé par"
+      "created_by": "Créé par",
+      "decline_confirmation": "Voulez-vous vraiment refuser l’élément de travail <id/> ? Cette action est irréversible.",
+      "delete_confirmation": "Voulez-vous vraiment supprimer l’élément de travail <id/> ? L’élément sera supprimé uniquement d’Intake et cette action est irréversible."
     },
     "instance": {
       "contact_support": "Contacter le support",
@@ -1327,7 +1331,9 @@
       "install": "Installer"
     },
     "attachments": {
-      "upload_progress": "Progression du téléversement"
+      "upload_progress": "Progression du téléversement",
+      "percent_done": "{percent} % terminé",
+      "delete_confirmation": "Voulez-vous vraiment supprimer la pièce jointe <name/> ? Elle sera définitivement supprimée. Cette action est irréversible."
     },
     "labels": {
       "delete_confirmation": "Voulez-vous vraiment supprimer <name/> ? Cela retirera l’étiquette de tous les éléments de travail et de toutes les vues où elle sert de filtre.",
@@ -1394,10 +1400,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {La page a été marquée comme publique et déplacée vers la section publique.} other {La page a été marquée comme privée et déplacée vers la section privée.}}",
+      "access_change_failed": "{access, select, public {La page n’a pas pu être marquée comme publique. Veuillez réessayer.} other {La page n’a pas pu être marquée comme privée. Veuillez réessayer.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {a changé le type de <old/> en <new/>} from {a changé le type de <old/>} to {a changé le type en <new/>} other {a changé le type}}",
+      "on_work_item": "sur"
     },
     "project": {
       "identifier": "Identifiant"
@@ -1446,7 +1456,9 @@
       "last_7_days": "7 derniers jours",
       "last_30_days": "30 derniers jours",
       "last_3_months": "3 derniers mois",
-      "duration": "Durée"
+      "duration": "Durée",
+      "header_for": "Analytique pour {title}",
+      "header_in": "dans {name}"
     },
     "auth_labels": {
       "one_time_code": "Code à usage unique"
@@ -1456,7 +1468,30 @@
     },
     "filters": {
       "state_group": "Groupe d’états",
-      "subscriber": "Abonné"
+      "subscriber": "Abonné",
+      "more_count": "+{count} de plus"
+    },
+    "mentions": {
+      "suspended_user": "@utilisateur suspendu",
+      "deactivated_user": "@utilisateur désactivé"
+    },
+    "automation": {
+      "customize_time_range": "Personnaliser la période"
+    },
+    "issue_modal": {
+      "feeling_lucky": "J’ai de la chance"
+    },
+    "parent_modal": {
+      "search_results": "Résultats de la recherche de <term/> dans le projet :"
+    },
+    "error_page": {
+      "title": "Il semble que quelque chose ne se soit pas passé comme prévu !",
+      "description": "Nous suivons ces erreurs automatiquement et travaillons à rétablir le service. Si le problème persiste, n’hésitez pas à nous contacter. En attendant, essayez d’actualiser la page.",
+      "contact_support": "Contacter l’assistance",
+      "status_page": "Page d’état"
+    },
+    "links": {
+      "created_by": "par {name}"
     }
   },
   "space_text": {

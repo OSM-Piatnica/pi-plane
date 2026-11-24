@@ -1172,7 +1172,8 @@
     "workspace": {
       "delete_warning": "Anda akan menghapus ruang kerja <name/>. Jika Anda mengonfirmasi, Anda akan kehilangan akses ke semua data kerja di ruang kerja ini tanpa cara untuk memulihkannya. Harap berhati-hati.",
       "delete_type_name": "Ketik nama ruang kerja ini untuk melanjutkan.",
-      "delete_final_confirmation": "Untuk konfirmasi akhir, ketik <phrase/> di bawah."
+      "delete_final_confirmation": "Untuk konfirmasi akhir, ketik <phrase/> di bawah.",
+      "remove_member_confirmation": "Anda yakin ingin mengeluarkan <name/>? Mereka tidak akan lagi memiliki akses ke ruang kerja ini. Tindakan ini tidak dapat dibatalkan."
     },
     "workspace_settings": {
       "invitation_removed": "Undangan berhasil dihapus.",
@@ -1287,7 +1288,8 @@
       "toggle_estimates": "Alihkan perkiraan",
       "estimates_list": "Daftar perkiraan",
       "archived_title": "Perkiraan yang diarsipkan",
-      "archived_description": "Perkiraan telah mengalami perubahan; ini adalah perkiraan dari versi lama Anda yang tidak digunakan. Pelajari lebih lanjut tentangnya <link>di sini.</link>"
+      "archived_description": "Perkiraan telah mengalami perubahan; ini adalah perkiraan dari versi lama Anda yang tidak digunakan. Pelajari lebih lanjut tentangnya <link>di sini.</link>",
+      "add_your_own": "Tambahkan sistem <name/> Anda sendiri dari awal."
     },
     "gantt": {
       "create_blocked_by_dependency": "Buat dependensi diblokir oleh",
@@ -1301,7 +1303,9 @@
     "inbox": {
       "intake_form_user": "Pengguna formulir Intake",
       "status": "Status",
-      "created_by": "Dibuat oleh"
+      "created_by": "Dibuat oleh",
+      "decline_confirmation": "Anda yakin ingin menolak item kerja <id/>? Tindakan ini tidak dapat dibatalkan.",
+      "delete_confirmation": "Anda yakin ingin menghapus item kerja <id/>? Item kerja hanya akan dihapus dari Intake dan tindakan ini tidak dapat dibatalkan."
     },
     "instance": {
       "contact_support": "Hubungi dukungan",
@@ -1327,7 +1331,9 @@
       "install": "Pasang"
     },
     "attachments": {
-      "upload_progress": "Progres unggahan"
+      "upload_progress": "Progres unggahan",
+      "percent_done": "{percent}% selesai",
+      "delete_confirmation": "Anda yakin ingin menghapus lampiran <name/>? Lampiran ini akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan."
     },
     "labels": {
       "delete_confirmation": "Apakah Anda yakin ingin menghapus <name/>? Tindakan ini akan menghapus label dari semua item kerja dan dari tampilan mana pun yang memfilter berdasarkan label tersebut.",
@@ -1394,10 +1400,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {Halaman telah ditandai sebagai publik dan dipindahkan ke bagian publik.} other {Halaman telah ditandai sebagai privat dan dipindahkan ke bagian privat.}}",
+      "access_change_failed": "{access, select, public {Halaman tidak dapat ditandai sebagai publik. Silakan coba lagi.} other {Halaman tidak dapat ditandai sebagai privat. Silakan coba lagi.}}"
     },
     "activity": {
-      "bot_name": "Bot {name}"
+      "bot_name": "Bot {name}",
+      "issue_type_changed": "{kind, select, both {mengubah tipe dari <old/> menjadi <new/>} from {mengubah tipe dari <old/>} to {mengubah tipe menjadi <new/>} other {mengubah tipe}}",
+      "on_work_item": "pada"
     },
     "project": {
       "identifier": "Pengenal"
@@ -1446,7 +1456,9 @@
       "last_7_days": "7 hari terakhir",
       "last_30_days": "30 hari terakhir",
       "last_3_months": "3 bulan terakhir",
-      "duration": "Durasi"
+      "duration": "Durasi",
+      "header_for": "Analitik untuk {title}",
+      "header_in": "di {name}"
     },
     "auth_labels": {
       "one_time_code": "Kode sekali pakai"
@@ -1456,7 +1468,30 @@
     },
     "filters": {
       "state_group": "Grup status",
-      "subscriber": "Pelanggan"
+      "subscriber": "Pelanggan",
+      "more_count": "+{count} lainnya"
+    },
+    "mentions": {
+      "suspended_user": "@pengguna ditangguhkan",
+      "deactivated_user": "@pengguna dinonaktifkan"
+    },
+    "automation": {
+      "customize_time_range": "Sesuaikan rentang waktu"
+    },
+    "issue_modal": {
+      "feeling_lucky": "Saya beruntung"
+    },
+    "parent_modal": {
+      "search_results": "Hasil pencarian untuk <term/> di proyek:"
+    },
+    "error_page": {
+      "title": "Sepertinya terjadi kesalahan!",
+      "description": "Kami melacak kesalahan ini secara otomatis dan sedang berupaya memulihkan layanan. Jika masalah berlanjut, silakan hubungi kami. Sementara itu, coba muat ulang halaman.",
+      "contact_support": "Hubungi dukungan",
+      "status_page": "Halaman status"
+    },
+    "links": {
+      "created_by": "oleh {name}"
     }
   },
   "space_text": {

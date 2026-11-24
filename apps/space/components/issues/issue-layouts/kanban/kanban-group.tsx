@@ -17,6 +17,7 @@ import type {
   TPaginationData,
   TLoader,
 } from "@plane/types";
+import { useTranslation } from "@plane/i18n";
 import { cn } from "@plane/utils";
 // hooks
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
@@ -96,6 +97,8 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
   const groupIssueCount = getGroupIssueCount(groupId, subGroupId, false) ?? 0;
   const nextPageResults = getPaginationData(groupId, subGroupId)?.nextPageResults;
 
+  const { t } = useTranslation();
+
   const loadMore = isPaginating ? (
     <KanbanIssueBlockLoader />
   ) : (
@@ -104,8 +107,7 @@ export const KanbanGroup = observer(function KanbanGroup(props: IKanbanGroup) {
       className="w-full cursor-pointer p-3 text-left text-13 font-medium text-accent-primary hover:text-accent-secondary hover:underline"
       onClick={loadMoreIssuesInThisGroup}
     >
-      {" "}
-      Load More &darr;
+      {t("common.load_more")} &darr;
     </button>
   );
 

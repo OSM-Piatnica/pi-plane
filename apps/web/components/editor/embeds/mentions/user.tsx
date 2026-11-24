@@ -43,7 +43,7 @@ export const EditorUserMention = observer(function EditorUserMention(props: Prop
   if (!userDetails) {
     return (
       <div className="not-prose inline rounded-sm bg-layer-1 px-1 py-0.5 text-tertiary no-underline">
-        @suspended user
+        {t("app_text.mentions.suspended_user")}
       </div>
     );
   }

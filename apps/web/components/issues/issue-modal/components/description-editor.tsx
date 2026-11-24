@@ -258,7 +258,8 @@ export const IssueDescriptionEditor = observer(function IssueDescriptionEditor(p
                   "Generating response"
                 ) : (
                   <>
-                    <AiStar1Outline className="h-3.5 w-3.5" />I{"'"}m feeling lucky
+                    <AiStar1Outline className="h-3.5 w-3.5" />
+                    {t("app_text.issue_modal.feeling_lucky")}
                   </>
                 )}
               </button>

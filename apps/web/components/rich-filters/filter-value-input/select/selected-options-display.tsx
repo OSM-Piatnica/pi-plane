@@ -1,11 +1,13 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
 import React from "react";
 // plane imports
+import { useTranslation } from "@plane/i18n";
 import type { SingleOrArray, IFilterOption, TFilterValue } from "@plane/types";
 import { cn, toFilterArray } from "@plane/utils";
 import { EMPTY_FILTER_PLACEHOLDER_TEXT } from "../../shared";
@@ -20,6 +22,7 @@ type TSelectedOptionsDisplayProps<V extends TFilterValue> = {
 
 export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedOptionsDisplayProps<V>) {
   const { selectedValue, options, displayCount = 2, emptyValue = EMPTY_FILTER_PLACEHOLDER_TEXT, fallbackText } = props;
+  const { t } = useTranslation();
   // derived values
   const selectedArray = toFilterArray(selectedValue);
   const remainingCount = selectedArray.length - displayCount;
@@ -55,7 +58,7 @@ export function SelectedOptionsDisplay<V extends TFilterValue>(props: TSelectedO
       {remainingCount > 0 && (
         // Was a Headless UI `Transition show appear` doing nothing but a fade-in on mount (Ruling 36).
         <span className="ml-1 shrink-0 animate-fade-in whitespace-nowrap text-tertiary motion-reduce:animate-none">
-          +{remainingCount} more
+          {t("app_text.filters.more_count", { count: remainingCount })}
         </span>
       )}
     </div>

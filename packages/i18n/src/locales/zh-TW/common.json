@@ -1172,7 +1172,8 @@
     "workspace": {
       "delete_warning": "您即將刪除工作區 <name/>。確認後，您將無法存取此工作區中的所有工作資料，且無法復原。請務必謹慎操作。",
       "delete_type_name": "請輸入此工作區的名稱以繼續。",
-      "delete_final_confirmation": "為進行最終確認，請在下方輸入 <phrase/>。"
+      "delete_final_confirmation": "為進行最終確認，請在下方輸入 <phrase/>。",
+      "remove_member_confirmation": "確定要移除 <name/> 嗎？對方將無法再存取此工作區。此操作無法復原。"
     },
     "workspace_settings": {
       "invitation_removed": "邀請已成功移除。",
@@ -1287,7 +1288,8 @@
       "toggle_estimates": "切換評估",
       "estimates_list": "評估清單",
       "archived_title": "已封存的評估",
-      "archived_description": "評估已有變更，這些是您在舊版本中使用過但已不再使用的評估。了解更多請 <link>點選此處。</link>"
+      "archived_description": "評估已有變更，這些是您在舊版本中使用過但已不再使用的評估。了解更多請 <link>點選此處。</link>",
+      "add_your_own": "從頭開始新增您自己的「<name/>」。"
     },
     "gantt": {
       "create_blocked_by_dependency": "建立被阻擋相依性",
@@ -1301,7 +1303,9 @@
     "inbox": {
       "intake_form_user": "Intake 表單使用者",
       "status": "狀態",
-      "created_by": "建立者"
+      "created_by": "建立者",
+      "decline_confirmation": "確定要拒絕工作事項 <id/> 嗎？此操作無法復原。",
+      "delete_confirmation": "確定要刪除工作事項 <id/> 嗎？該工作事項僅會從 Intake 中刪除，此操作無法復原。"
     },
     "instance": {
       "contact_support": "聯絡支援",
@@ -1327,7 +1331,9 @@
       "install": "安裝"
     },
     "attachments": {
-      "upload_progress": "上傳進度"
+      "upload_progress": "上傳進度",
+      "percent_done": "已完成 {percent}%",
+      "delete_confirmation": "確定要刪除附件 <name/> 嗎？此附件將被永久刪除。此操作無法復原。"
     },
     "labels": {
       "delete_confirmation": "確定要刪除 <name/> 嗎？這將從所有工作事項以及依該標籤篩選的任何檢視中移除該標籤。",
@@ -1394,10 +1400,14 @@
       "export_markdown": "Markdown",
       "page_size_letter": "Letter",
       "page_size_legal": "Legal",
-      "page_size_tabloid": "Tabloid"
+      "page_size_tabloid": "Tabloid",
+      "access_changed": "{access, select, public {頁面已標示為公開，並已移至公開區段。} other {頁面已標示為私人，並已移至私人區段。}}",
+      "access_change_failed": "{access, select, public {無法將頁面標示為公開。請再試一次。} other {無法將頁面標示為私人。請再試一次。}}"
     },
     "activity": {
-      "bot_name": "{name} 機器人"
+      "bot_name": "{name} 機器人",
+      "issue_type_changed": "{kind, select, both {將類型從 <old/> 變更為 <new/>} from {變更了類型（原為 <old/>）} to {將類型變更為 <new/>} other {變更了類型}}",
+      "on_work_item": "於"
     },
     "project": {
       "identifier": "識別碼"
@@ -1446,7 +1456,9 @@
       "last_7_days": "過去 7 天",
       "last_30_days": "過去 30 天",
       "last_3_months": "過去 3 個月",
-      "duration": "時長"
+      "duration": "時長",
+      "header_for": "{title} 的分析",
+      "header_in": "在 {name} 中"
     },
     "auth_labels": {
       "one_time_code": "一次性驗證碼"
@@ -1456,7 +1468,30 @@
     },
     "filters": {
       "state_group": "狀態群組",
-      "subscriber": "訂閱者"
+      "subscriber": "訂閱者",
+      "more_count": "另有 {count} 項"
+    },
+    "mentions": {
+      "suspended_user": "@已停用的使用者",
+      "deactivated_user": "@已停用的使用者"
+    },
+    "automation": {
+      "customize_time_range": "自訂時間範圍"
+    },
+    "issue_modal": {
+      "feeling_lucky": "手氣不錯"
+    },
+    "parent_modal": {
+      "search_results": "專案中 <term/> 的搜尋結果："
+    },
+    "error_page": {
+      "title": "似乎出了點問題！",
+      "description": "我們會自動記錄這些錯誤，並正在努力恢復服務。如果問題持續，請隨時與我們聯絡。在此期間，請嘗試重新整理頁面。",
+      "contact_support": "聯絡支援",
+      "status_page": "狀態頁"
+    },
+    "links": {
+      "created_by": "由 {name} 建立"
     }
   },
   "space_text": {
