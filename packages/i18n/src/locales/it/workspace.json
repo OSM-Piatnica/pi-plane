@@ -398,6 +398,9 @@
       "updated": "Tema aggiornato",
       "updating": "Aggiornamento del tema...",
       "update_failed": "Impossibile aggiornare il tema. Riprova.",
+      "instance_managed": "Questo tema è impostato dall'amministratore, quindi i suoi colori non possono essere modificati qui. Copiarlo come tema personalizzato permette di apportare modifiche personali.",
+      "copy_as_custom": "Copia come tema personalizzato",
+      "copied_as_custom": "Copiato come tema personalizzato",
       "advanced": {
         "title": "Personalizzazione avanzata",
         "description": "Imposta i singoli colori come fanno i temi integrati. Tutto ciò che lasci su Auto segue i due colori qui sopra.",

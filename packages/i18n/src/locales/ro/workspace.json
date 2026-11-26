@@ -398,6 +398,9 @@
       "updated": "Tema a fost actualizată",
       "updating": "Se actualizează tema...",
       "update_failed": "Actualizarea temei a eșuat. Te rugăm să încerci din nou.",
+      "instance_managed": "Această temă este setată de administratorul dumneavoastră, deci culorile ei nu pot fi modificate aici. Copiați-o ca temă personalizată pentru a face propriile modificări.",
+      "copy_as_custom": "Copiază ca temă personalizată",
+      "copied_as_custom": "Copiată ca temă personalizată",
       "advanced": {
         "title": "Personalizare avansată",
         "description": "Setează culori individuale, așa cum fac temele integrate. Tot ce lași pe Automat urmează cele două culori de mai sus.",

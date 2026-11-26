@@ -398,6 +398,9 @@
       "updated": "Thema bijgewerkt",
       "updating": "Thema bijwerken...",
       "update_failed": "Thema bijwerken mislukt. Probeer het opnieuw.",
+      "instance_managed": "Dit thema is ingesteld door uw beheerder, dus de kleuren kunnen hier niet worden gewijzigd. Kopieer het als aangepast thema om uw eigen wijzigingen aan te brengen.",
+      "copy_as_custom": "Kopiëren als aangepast thema",
+      "copied_as_custom": "Gekopieerd als aangepast thema",
       "advanced": {
         "title": "Geavanceerde aanpassing",
         "description": "Stel afzonderlijke kleuren in zoals de ingebouwde thema's dat doen. Alles wat op Auto blijft staan, volgt de twee kleuren hierboven.",

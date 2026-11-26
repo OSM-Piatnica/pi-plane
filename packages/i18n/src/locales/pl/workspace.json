@@ -398,6 +398,9 @@
       "updated": "Motyw zaktualizowany",
       "updating": "Aktualizowanie motywu...",
       "update_failed": "Nie udało się zaktualizować motywu. Spróbuj ponownie.",
+      "instance_managed": "Ten motyw został ustawiony przez administratora, więc nie można tu zmieniać jego kolorów. Aby wprowadzić własne zmiany, należy skopiować go jako motyw niestandardowy.",
+      "copy_as_custom": "Kopiuj jako motyw niestandardowy",
+      "copied_as_custom": "Skopiowano jako motyw niestandardowy",
       "advanced": {
         "title": "Zaawansowane dostosowanie",
         "description": "Ustaw poszczególne kolory tak, jak robią to wbudowane motywy. Wszystko, co pozostanie na Auto, podąża za dwoma kolorami powyżej.",
