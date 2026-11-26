@@ -13,7 +13,7 @@ import type { TWorkspaceFeatureFlags } from "./workspace-features";
  * and the icon map are keyed by this union, so the compiler lists what is missing.
  * See `docs/app-rail.md`.
  */
-export type TAppRailAppKey = "projects";
+export type TAppRailAppKey = "projects" | "initiatives";
 
 /** What an app's `isEnabled` predicate may look at. Every field can be missing while data loads. */
 export type TAppRailContext = {

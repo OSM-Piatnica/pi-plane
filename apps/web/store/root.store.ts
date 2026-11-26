@@ -38,6 +38,8 @@ import type { IGlobalViewStore } from "./global-view.store";
 import { GlobalViewStore } from "./global-view.store";
 import type { IProjectInboxStore } from "./inbox/project-inbox.store";
 import { ProjectInboxStore } from "./inbox/project-inbox.store";
+import type { IInitiativeStore } from "./initiative.store";
+import { InitiativeStore } from "./initiative.store";
 import type { IInstanceStore } from "./instance.store";
 import { InstanceStore } from "./instance.store";
 import type { IIssueRootStore } from "./issue/root.store";
@@ -109,6 +111,7 @@ export class RootStore {
   editorAssetStore: IEditorAssetStore;
   workItemFilters: IWorkItemFilterStore;
   powerK: IPowerKStore;
+  initiative: IInitiativeStore;
 
   constructor() {
     this.router = new RouterStore();
@@ -143,6 +146,7 @@ export class RootStore {
     this.powerK = new PowerKStore();
     this.timelineStore = new TimeLineStore(this);
     this.scheduleAnalysis = new ScheduleAnalysisStore();
+    this.initiative = new InitiativeStore();
   }
 
   resetOnSignOut() {
@@ -178,5 +182,6 @@ export class RootStore {
     this.workItemFilters = new WorkItemFilterStore();
     this.powerK = new PowerKStore();
     this.scheduleAnalysis = new ScheduleAnalysisStore();
+    this.initiative = new InitiativeStore();
   }
 }

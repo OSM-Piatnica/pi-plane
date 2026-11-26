@@ -6,6 +6,7 @@
 
 import type { ComponentType } from "react";
 import type { TAppRailAppKey } from "@plane/types";
+import { InitiativesAppSidebar } from "@/app/(all)/[workspaceSlug]/(initiatives)/_sidebar";
 import { ProjectAppSidebar } from "@/app/(all)/[workspaceSlug]/(projects)/_sidebar";
 
 /**
@@ -17,6 +18,7 @@ import { ProjectAppSidebar } from "@/app/(all)/[workspaceSlug]/(projects)/_sideb
  */
 const APP_RAIL_APP_SIDEBARS: Partial<Record<TAppRailAppKey, ComponentType>> = {
   projects: ProjectAppSidebar,
+  initiatives: InitiativesAppSidebar,
 };
 
 /** The sidebar registered for a rail app, for use in that app's layout */

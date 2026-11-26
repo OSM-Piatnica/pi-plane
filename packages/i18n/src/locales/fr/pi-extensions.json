@@ -12,7 +12,11 @@
       "last_used_app": "Dernière application utilisée"
     },
     "switch_to": {
-      "projects": "Basculer vers Projets"
+      "projects": "Basculer vers Projets",
+      "initiatives": "Basculer vers Initiatives"
+    },
+    "apps": {
+      "initiatives": "Initiatives"
     }
   },
   "approve": "Approuver",
@@ -258,7 +262,13 @@
     "select_placeholder": "Type"
   },
   "workspace_features": {
-    "description": "Activez ou désactivez des parties de Pi-Plane pour tous les membres de cet espace de travail."
+    "description": "Activez ou désactivez des parties de Pi-Plane pour tous les membres de cet espace de travail.",
+    "items": {
+      "initiatives": {
+        "title": "Initiatives",
+        "description": "Objectifs et initiatives transversaux aux projets, avec suivi de la progression et mises à jour de statut."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -688,6 +698,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Initiatives",
+    "all": "Toutes les initiatives",
+    "without_goal": "Sans objectif",
+    "no_goal": "Aucun objectif",
+    "no_goals_yet": "Aucun objectif pour l’instant",
+    "no_lead": "Aucun responsable",
+    "new_goal": "Nouvel objectif",
+    "new_initiative": "Nouvelle initiative",
+    "create_goal": "Créer l’objectif",
+    "create_initiative": "Créer l’initiative",
+    "expand_goal": "Développer {name}",
+    "collapse_goal": "Réduire {name}",
+    "properties": "Propriétés",
+    "show_properties": "Afficher les propriétés",
+    "hide_properties": "Masquer les propriétés",
+    "description_placeholder": "Quel est son but, et comment saurez-vous qu’il est atteint ?",
+    "kind": {
+      "goal": "Objectif",
+      "initiative": "Initiative"
+    },
+    "status": {
+      "planned": "Planifié",
+      "active": "Actif",
+      "paused": "En pause",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "health": {
+      "on_track": "En bonne voie",
+      "at_risk": "À risque",
+      "off_track": "En dérive",
+      "none": "Aucune mise à jour pour l’instant",
+      "pick": "Santé"
+    },
+    "fields": {
+      "name": "Nom",
+      "status": "Statut",
+      "health": "Santé",
+      "lead": "Responsable",
+      "dates": "Dates",
+      "goal": "Objectif",
+      "created_by": "Créé par"
+    },
+    "form": {
+      "placeholder": "Nom de l’initiative",
+      "goal_placeholder": "Nom de l’objectif",
+      "name_required": "Un nom est requis."
+    },
+    "empty": {
+      "title": "Aucune initiative pour l’instant",
+      "description": "Regroupez le travail de plusieurs projets en initiatives, et les initiatives sous des objectifs, pour suivre leur progression en un seul endroit.",
+      "sidebar": "Les objectifs et initiatives que vous créez apparaissent ici."
+    },
+    "not_found": {
+      "title": "Initiative introuvable",
+      "description": "Elle a peut-être été supprimée, ou l’adresse est erronée."
+    },
+    "progress": {
+      "projects": "Éléments de travail des projets liés",
+      "epics": "Éléments de travail des Epics liés",
+      "done_of_total": "{done} sur {total} terminés",
+      "tooltip": "{percentage} % des éléments de travail terminés",
+      "partial_tooltip": "{percentage} % des éléments de travail visibles pour vous terminés",
+      "projects_empty": "Aucun élément de travail dans les projets liés pour l’instant.",
+      "epics_empty": "Aucun élément de travail enfant dans les Epics liés pour l’instant.",
+      "hidden_projects": "{count, plural, one {# projet lié ne vous est pas visible et n’est pas compté.} many {# de projets liés ne vous sont pas visibles et ne sont pas comptés.} other {# projets liés ne vous sont pas visibles et ne sont pas comptés.}}",
+      "hidden_epics": "{count, plural, one {# Epic lié ne vous est pas visible et n’est pas compté.} many {# d’Epics liés ne vous sont pas visibles et ne sont pas comptés.} other {# Epics liés ne vous sont pas visibles et ne sont pas comptés.}}",
+      "hidden_children": "Certains éléments de travail enfants se trouvent dans des projets auxquels vous n’avez pas accès et ne sont pas comptés.",
+      "explained": "Les deux chiffres sont comptés séparément : sinon, un Epic situé dans un projet lié serait compté deux fois."
+    },
+    "children": {
+      "title": "Initiatives",
+      "empty": "Aucune initiative ne contribue encore à cet objectif."
+    },
+    "projects": {
+      "title": "Projets",
+      "add": "Ajouter des projets",
+      "empty": "Aucun projet lié pour l’instant.",
+      "of_goal": "Les projets des initiatives de l’objectif. Liez les projets depuis une initiative.",
+      "remove": "Délier {name}",
+      "unknown": "Projet",
+      "archived": "Archivé"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Ajouter un Epic",
+      "search": "Rechercher des Epics par nom ou ID",
+      "none_to_add": "Aucun Epic à ajouter",
+      "empty": "Aucun Epic lié pour l’instant.",
+      "of_goal": "Les Epics des initiatives de l’objectif. Liez les Epics depuis une initiative.",
+      "remove": "Délier {name}",
+      "progress_of": "Progression de {name}"
+    },
+    "updates": {
+      "title": "Mises à jour de statut",
+      "text": "Mise à jour",
+      "placeholder": "Où en est-on ?",
+      "post": "Publier la mise à jour",
+      "posted": "La mise à jour a été publiée.",
+      "empty": "Aucune mise à jour de statut pour l’instant."
+    },
+    "delete": {
+      "action": "Supprimer",
+      "goal_title": "Supprimer l’objectif",
+      "initiative_title": "Supprimer l’initiative",
+      "goal_description": "Supprimer l’objectif {name} ? Ses initiatives sont conservées, sans objectif.",
+      "initiative_description": "Supprimer l’initiative {name} ? Ses liens vers les projets et les Epics ainsi que ses mises à jour de statut sont supprimés ; les projets et les Epics sont conservés."
+    },
+    "toast": {
+      "goal_created": "L’objectif a été créé.",
+      "initiative_created": "L’initiative a été créée.",
+      "goal_deleted": "L’objectif a été supprimé.",
+      "initiative_deleted": "L’initiative a été supprimée.",
+      "error": "Une erreur s’est produite. Veuillez réessayer."
     }
   }
 }

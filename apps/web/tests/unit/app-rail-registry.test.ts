@@ -34,7 +34,7 @@ const CONTEXT: TAppRailContext = {
   features: getWorkspaceFeatureFlags(undefined),
 };
 
-// a second app that exists only in this test: production registers Projects alone
+// an app that exists only in this test
 const fakeApp = (key: string): TAppRailApp =>
   ({
     key,
@@ -81,7 +81,7 @@ describe("APP_RAIL_APPS", () => {
     expect(getAppRailApp("projects")).toBe(APP_RAIL_APPS[0]);
   });
 
-  it("offers Projects alone, so the rail and the switch commands stay off", () => {
+  it("offers Projects alone while Initiatives is switched off, so the rail and the switch commands stay off", () => {
     const enabled = getEnabledAppRailApps(APP_RAIL_APPS, CONTEXT);
     expect(enabled.map((app) => app.key)).toEqual<TAppRailAppKey[]>(["projects"]);
     expect(hasMultipleAppRailApps(enabled)).toBe(false);
@@ -96,6 +96,19 @@ describe("APP_RAIL_APPS", () => {
     expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/projects/p1/issues/", "acme")).toBe("projects");
     expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/notifications/", "acme")).toBeUndefined();
     expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/settings/", "acme")).toBeUndefined();
+  });
+
+  it("registers Initiatives at /:workspaceSlug/initiatives, behind its switch", () => {
+    const initiatives = getAppRailApp("initiatives");
+    expect(APP_RAIL_APPS.map((app) => app.key)).toEqual<TAppRailAppKey[]>(["projects", "initiatives"]);
+    expect(initiatives.getHref("acme")).toBe("/acme/initiatives/");
+    expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/initiatives/", "acme")).toBe("initiatives");
+    expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/initiatives/abc", "acme")).toBe("initiatives");
+    expect(getActiveAppRailAppKey(APP_RAIL_APPS, "/acme/initiatives-old/", "acme")).toBe("projects");
+    const on = { ...CONTEXT, features: { ...CONTEXT.features, initiatives: true }, workspaceRole: 15 };
+    const enabled = getEnabledAppRailApps(APP_RAIL_APPS, on as TAppRailContext);
+    expect(enabled.map((app) => app.key)).toEqual<TAppRailAppKey[]>(["projects", "initiatives"]);
+    expect(buildAppRailSwitchCommands(enabled).map((command) => command.keySequence)).toEqual(["g1", "g2"]);
   });
 
   it("uses labels that exist in the English locale", () => {

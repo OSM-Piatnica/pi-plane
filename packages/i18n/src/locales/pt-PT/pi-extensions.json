@@ -12,7 +12,11 @@
       "last_used_app": "Última aplicação utilizada"
     },
     "switch_to": {
-      "projects": "Mudar para Projetos"
+      "projects": "Mudar para Projetos",
+      "initiatives": "Mudar para Iniciativas"
+    },
+    "apps": {
+      "initiatives": "Iniciativas"
     }
   },
   "approve": "Aprovar",
@@ -258,7 +262,13 @@
     "select_placeholder": "Tipo"
   },
   "workspace_features": {
-    "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho."
+    "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho.",
+    "items": {
+      "initiatives": {
+        "title": "Iniciativas",
+        "description": "Objetivos e iniciativas que abrangem vários projetos, com progresso e atualizações de estado."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -688,6 +698,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Iniciativas",
+    "all": "Todas as iniciativas",
+    "without_goal": "Sem objetivo",
+    "no_goal": "Nenhum objetivo",
+    "no_goals_yet": "Ainda não existem objetivos",
+    "no_lead": "Sem responsável",
+    "new_goal": "Novo objetivo",
+    "new_initiative": "Nova iniciativa",
+    "create_goal": "Criar objetivo",
+    "create_initiative": "Criar iniciativa",
+    "expand_goal": "Expandir {name}",
+    "collapse_goal": "Fechar {name}",
+    "properties": "Propriedades",
+    "show_properties": "Mostrar propriedades",
+    "hide_properties": "Ocultar propriedades",
+    "description_placeholder": "Para que serve e como saberá que está concluído?",
+    "kind": {
+      "goal": "Objetivo",
+      "initiative": "Iniciativa"
+    },
+    "status": {
+      "planned": "Planeado",
+      "active": "Ativo",
+      "paused": "Em pausa",
+      "completed": "Concluído",
+      "cancelled": "Cancelado"
+    },
+    "health": {
+      "on_track": "No bom caminho",
+      "at_risk": "Em risco",
+      "off_track": "Desviado",
+      "none": "Ainda sem atualizações",
+      "pick": "Saúde"
+    },
+    "fields": {
+      "name": "Nome",
+      "status": "Estado",
+      "health": "Saúde",
+      "lead": "Responsável",
+      "dates": "Datas",
+      "goal": "Objetivo",
+      "created_by": "Criado por"
+    },
+    "form": {
+      "placeholder": "Nome da iniciativa",
+      "goal_placeholder": "Nome do objetivo",
+      "name_required": "O nome é obrigatório."
+    },
+    "empty": {
+      "title": "Ainda não existem iniciativas",
+      "description": "Agrupe o trabalho de vários projetos em iniciativas, e as iniciativas em objetivos, para acompanhar o progresso num só lugar.",
+      "sidebar": "Os objetivos e as iniciativas que criar aparecem aqui."
+    },
+    "not_found": {
+      "title": "Iniciativa não encontrada",
+      "description": "Pode ter sido eliminada, ou o endereço está incorreto."
+    },
+    "progress": {
+      "projects": "Itens de trabalho nos projetos associados",
+      "epics": "Itens de trabalho dos Epics associados",
+      "done_of_total": "{done} de {total} concluídos",
+      "tooltip": "{percentage}% dos itens de trabalho concluídos",
+      "partial_tooltip": "{percentage}% dos itens de trabalho que lhe são visíveis concluídos",
+      "projects_empty": "Ainda não existem itens de trabalho nos projetos associados.",
+      "epics_empty": "Ainda não existem itens de trabalho filhos nos Epics associados.",
+      "hidden_projects": "{count, plural, one {# projeto associado não lhe é visível e não é contabilizado.} many {# de projetos associados não lhe são visíveis e não são contabilizados.} other {# projetos associados não lhe são visíveis e não são contabilizados.}}",
+      "hidden_epics": "{count, plural, one {# Epic associado não lhe é visível e não é contabilizado.} many {# de Epics associados não lhe são visíveis e não são contabilizados.} other {# Epics associados não lhe são visíveis e não são contabilizados.}}",
+      "hidden_children": "Alguns itens de trabalho filhos estão em projetos a que não tem acesso e não são contabilizados.",
+      "explained": "Os dois valores são contabilizados separadamente: caso contrário, um Epic dentro de um projeto associado seria contado duas vezes."
+    },
+    "children": {
+      "title": "Iniciativas",
+      "empty": "Ainda nenhuma iniciativa contribui para este objetivo."
+    },
+    "projects": {
+      "title": "Projetos",
+      "add": "Adicionar projetos",
+      "empty": "Ainda não existem projetos associados.",
+      "of_goal": "Os projetos das iniciativas do objetivo. Associe projetos numa iniciativa.",
+      "remove": "Desassociar {name}",
+      "unknown": "Projeto",
+      "archived": "Arquivado"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Adicionar Epic",
+      "search": "Pesquisar Epics por nome ou ID",
+      "none_to_add": "Nenhum Epic para adicionar",
+      "empty": "Ainda não existem Epics associados.",
+      "of_goal": "Os Epics das iniciativas do objetivo. Associe Epics numa iniciativa.",
+      "remove": "Desassociar {name}",
+      "progress_of": "Progresso de {name}"
+    },
+    "updates": {
+      "title": "Atualizações de estado",
+      "text": "Atualização",
+      "placeholder": "Como está a correr?",
+      "post": "Publicar atualização",
+      "posted": "A atualização foi publicada.",
+      "empty": "Ainda não existem atualizações de estado."
+    },
+    "delete": {
+      "action": "Eliminar",
+      "goal_title": "Eliminar objetivo",
+      "initiative_title": "Eliminar iniciativa",
+      "goal_description": "Eliminar o objetivo {name}? As respetivas iniciativas mantêm-se, sem objetivo.",
+      "initiative_description": "Eliminar a iniciativa {name}? As respetivas associações a projetos e Epics e as atualizações de estado são removidas; os projetos e os Epics mantêm-se."
+    },
+    "toast": {
+      "goal_created": "O objetivo foi criado.",
+      "initiative_created": "A iniciativa foi criada.",
+      "goal_deleted": "O objetivo foi eliminado.",
+      "initiative_deleted": "A iniciativa foi eliminada.",
+      "error": "Ocorreu um erro. Tente novamente."
     }
   }
 }
