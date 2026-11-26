@@ -21,10 +21,15 @@ breaks a relation is then refused as it was before the offer existed, also when 
 
 Each dependent that moves gets an activity entry naming the work item whose change moved it, passed to the activity
 task as ``shifted_after`` beside the requested data (which a client can fill, so it never carries the cause).
+
+The offer warns about the deadline: each shifted work item whose new ``finish_date`` passes its due date
+(``target_date``, which shifting never changes) carries the overrun in working days of its own project. A work item
+that was late already is warned about only when the shift makes it later still, with the overrun it had before.
 """
 
 import json
 from collections import deque
+from datetime import timedelta
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -94,6 +99,35 @@ def _successor_requirement(relation_type, pred_start, pred_finish, lag, weekend_
     return None
 
 
+def deadline_overrun(finish_date, target_date, weekend_days=()) -> int:
+    """
+    Working days by which work that finishes on ``finish_date`` passes its due date ``target_date``; 0 when it does
+    not, or when either date is missing.
+
+    The working days after the due date up to the finish are counted, so a finish on a weekend day right after
+    the due date is not late, and a due date on a weekend day is met by work that ends on the working day before.
+    """
+    finish_date, target_date = _as_date(finish_date), _as_date(target_date)
+    if finish_date is None or target_date is None or finish_date <= target_date:
+        return 0
+    return count_working_days(target_date + timedelta(days=1), finish_date, weekend_days)
+
+
+def deadline_warning(issue, new_finish_date) -> dict:
+    """
+    ``deadline_overrun_days`` (and ``previous_deadline_overrun_days``) for a work item moved to ``new_finish_date``.
+
+    The overrun is given only when the shift makes the work item pass its due date by more than before (otherwise
+    None); the previous overrun only beside it, and only when the work item was late already.
+    """
+    weekend_days = weekend_days_of(issue)
+    before = deadline_overrun(issue.finish_date, issue.target_date, weekend_days)
+    after = deadline_overrun(new_finish_date, issue.target_date, weekend_days)
+    if after <= before:
+        return {"deadline_overrun_days": None, "previous_deadline_overrun_days": None}
+    return {"deadline_overrun_days": after, "previous_deadline_overrun_days": before or None}
+
+
 def _move_to(dates, field_name, earliest, weekend_days):
     """
     The ``(start_date, finish_date)`` of a work item whose ``field_name`` has to move to ``earliest``: the other date
@@ -133,6 +167,8 @@ class ReschedulePlan:
                     "finish_date": _iso(issue.finish_date),
                     "new_start_date": _iso(entry["start_date"]),
                     "new_finish_date": _iso(entry["finish_date"]),
+                    "target_date": _iso(issue.target_date),
+                    **deadline_warning(issue, entry["finish_date"]),
                 }
             )
         return {

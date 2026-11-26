@@ -81,6 +81,8 @@
       "reschedule": {
         "confirm": "Przesuń",
         "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
+        "deadline_overrun": "{issue} przekroczy termin o {count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}.",
+        "deadline_overrun_more": "{issue} jest już {previous, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}} po terminie i przekroczy go o {count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}.",
         "title": "Przesunąć także zależne elementy pracy?"
       },
       "duplicate_cancel": {

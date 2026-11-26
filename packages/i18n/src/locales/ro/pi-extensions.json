@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Mută",
         "content": "Această modificare ar încălca dependențe. Aceste activități pot fi mutate mai târziu, păstrându-și durata, astfel încât toate dependențele să rămână respectate:",
+        "deadline_overrun": "{issue} va depăși data limită cu {count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}.",
+        "deadline_overrun_more": "{issue} depășește deja data limită cu {previous, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}} și o va depăși cu {count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}.",
         "title": "Muți și activitățile dependente?"
       },
       "duplicate_cancel": {

@@ -43,6 +43,14 @@ A date change that would make a dependent work item start or finish too early is
 - Nothing is offered, and the change stays refused, when a dependent is in a completed or cancelled state, when you may not edit one of them, when more than 100 work items would move, or when the changed work item itself would come too early for something it depends on.
 - Clients of the API get a `400` with `error_code: relation_reschedule_available` and the list in `shifts`, and confirm by sending the same request again with `shift_dependents: true`. This holds for the app API, the public API (`/api/v1/`) and the timeline's bulk date update.
 
+### Due dates of moved work items
+
+Moving a work item never changes its due date. When the new finish date of a work item that would be moved passes its due date, the list warns about it, for example "DEMO-41 will exceed its due date by 3 working days". The overrun counts the working days of that work item's project after the due date, up to the new finish date: a finish on the weekend right after a Friday due date is not late, and work that ends on Friday meets a due date on Saturday.
+
+A work item that is late already is named only when the move makes it later still, with both figures: "DEMO-41 is already 1 working day past its due date and will exceed it by 4 working days". Work items without a due date or a finish date get no warning. The warning does not stop the move.
+
+Each entry of `shifts` carries `target_date` (the due date), `deadline_overrun_days` (the working days past the due date after the move, or `null` when there is no warning) and `previous_deadline_overrun_days` (the overrun before the move, given only beside a warning for a work item that was late already).
+
 ### History
 
 Each work item that was moved gets an activity entry per changed date that names and links the work item whose change caused it, for example "moved the start date to 15 Jan 2026 automatically after WDR-12 changed". Further down a chain the entry still names the work item the person changed, not the neighbour in between. The entry is recorded under the person who confirmed the move. The history endpoint returns the cause as `shift_cause` (`id`, `project_id`, `project_identifier`, `sequence_id`); it is empty once that work item is deleted. Shifts do not send notifications or emails and do not subscribe the person to the moved work items.

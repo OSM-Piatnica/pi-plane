@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Mover",
         "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
+        "deadline_overrun": "{issue} vai ultrapassar a data de vencimento em {count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}.",
+        "deadline_overrun_more": "{issue} já ultrapassa a data de vencimento em {previous, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}} e vai ultrapassá-la em {count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}.",
         "title": "Mover também os itens de trabalho dependentes?"
       },
       "duplicate_cancel": {

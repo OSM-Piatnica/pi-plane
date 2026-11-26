@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Posunúť",
         "content": "Táto zmena by porušila závislosti. Tieto pracovné položky možno posunúť na neskôr so zachovaním ich dĺžky, aby všetky závislosti naďalej platili:",
+        "deadline_overrun": "{issue} prekročí svoj termín o {count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}.",
+        "deadline_overrun_more": "{issue} už prekračuje svoj termín o {previous, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}} a prekročí ho o {count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}.",
         "title": "Posunúť aj závislé pracovné položky?"
       },
       "duplicate_cancel": {

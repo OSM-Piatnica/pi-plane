@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Pindahkan",
         "content": "Perubahan ini akan melanggar dependensi. Item kerja berikut dapat dipindahkan ke waktu yang lebih lambat dengan durasi tetap, agar semua dependensi tetap terpenuhi:",
+        "deadline_overrun": "{issue} akan melewati tanggal jatuh temponya {count, plural, one {# hari kerja} other {# hari kerja}}.",
+        "deadline_overrun_more": "{issue} sudah melewati tanggal jatuh temponya {previous, plural, one {# hari kerja} other {# hari kerja}} dan akan melewatinya {count, plural, one {# hari kerja} other {# hari kerja}}.",
         "title": "Pindahkan juga item kerja yang bergantung?"
       },
       "duplicate_cancel": {

@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Verplaatsen",
         "content": "Deze wijziging zou afhankelijkheden verbreken. Deze werkitems kunnen later worden gepland, met behoud van hun duur, zodat alle afhankelijkheden blijven kloppen:",
+        "deadline_overrun": "{issue} overschrijdt de vervaldatum met {count, plural, one {# werkdag} other {# werkdagen}}.",
+        "deadline_overrun_more": "{issue} is al {previous, plural, one {# werkdag} other {# werkdagen}} over de vervaldatum en overschrijdt die dan met {count, plural, one {# werkdag} other {# werkdagen}}.",
         "title": "Ook de afhankelijke werkitems verplaatsen?"
       },
       "duplicate_cancel": {

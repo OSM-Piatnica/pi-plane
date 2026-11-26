@@ -46,4 +46,10 @@ export type TRelationRescheduleShift = {
   finish_date: string | null;
   new_start_date: string | null;
   new_finish_date: string | null;
+  /** The due date (deadline); shifting never changes it. */
+  target_date?: string | null;
+  /** Working days by which the new finish passes the due date, when the shift makes the item later than it was. */
+  deadline_overrun_days?: number | null;
+  /** Working days the item was past its due date before the shift, given only beside a warning. */
+  previous_deadline_overrun_days?: number | null;
 };

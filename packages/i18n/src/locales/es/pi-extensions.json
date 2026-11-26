@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Moverlos",
         "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
+        "deadline_overrun": "{issue} superará su fecha de vencimiento en {count, plural, one {# día laborable} other {# días laborables}}.",
+        "deadline_overrun_more": "{issue} ya supera su fecha de vencimiento en {previous, plural, one {# día laborable} other {# días laborables}} y la superará en {count, plural, one {# día laborable} other {# días laborables}}.",
         "title": "¿Mover también los elementos de trabajo dependientes?"
       },
       "duplicate_cancel": {

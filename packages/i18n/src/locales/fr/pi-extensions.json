@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Les décaler",
         "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
+        "deadline_overrun": "{issue} dépassera sa date d’échéance de {count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}.",
+        "deadline_overrun_more": "{issue} dépasse déjà sa date d’échéance de {previous, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}} et la dépassera de {count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}.",
         "title": "Déplacer aussi les éléments de travail dépendants ?"
       },
       "duplicate_cancel": {

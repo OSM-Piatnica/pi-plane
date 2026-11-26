@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "移动",
         "content": "此更改会破坏依赖关系。可以将以下工作项顺延（保持其工期），以使所有依赖关系仍然成立：",
+        "deadline_overrun": "{issue} 将超出截止日期 {count, plural, one {# 个工作日} other {# 个工作日}}。",
+        "deadline_overrun_more": "{issue} 已超出截止日期 {previous, plural, one {# 个工作日} other {# 个工作日}}，移动后将超出 {count, plural, one {# 个工作日} other {# 个工作日}}。",
         "title": "是否同时移动依赖它的工作项？"
       },
       "duplicate_cancel": {

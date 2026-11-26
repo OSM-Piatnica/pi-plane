@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "移動する",
         "content": "この変更は依存関係を壊します。すべての依存関係を保つため、次の作業項目を期間を保ったまま後ろにずらせます:",
+        "deadline_overrun": "{issue}は期限を{count, plural, one {#稼働日} other {#稼働日}}超過します。",
+        "deadline_overrun_more": "{issue}はすでに期限を{previous, plural, one {#稼働日} other {#稼働日}}超過しており、{count, plural, one {#稼働日} other {#稼働日}}超過することになります。",
         "title": "依存する作業項目も移動しますか？"
       },
       "duplicate_cancel": {
