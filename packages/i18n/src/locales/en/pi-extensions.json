@@ -82,6 +82,11 @@
         "content": "This change would break dependencies. These work items can be moved later, keeping their duration, so that every dependency still holds:",
         "deadline_overrun": "{issue} will exceed its due date by {count, plural, one {# working day} other {# working days}}.",
         "deadline_overrun_more": "{issue} is already {previous, plural, one {# working day} other {# working days}} past its due date and will exceed it by {count, plural, one {# working day} other {# working days}}.",
+        "save": "Save",
+        "sub_items_content": "This work item has sub-work items. They can move with it by the same number of working days, keeping their duration.",
+        "sub_items_dependents": "Work items that depend on them move as well:",
+        "sub_items_title": "Move the sub-work items too?",
+        "sub_items_toggle": "{count, plural, one {Move the sub-work item too} other {Move the # sub-work items too}}",
         "title": "Move the dependent work items too?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Only assignees, the project lead and admins can change a work item"
         },
         "reschedule_offer": {
-          "description": "When a date change would break a dependency, offer to move the dependent work items later instead of refusing the change. When off, such a change is refused.",
+          "description": "When a date change would break a dependency, offer to move the dependent work items later instead of refusing the change, and offer to move the sub-work items of a moved parent along with it. When off, such a change is refused and sub-work items stay where they are.",
           "title": "Offer to shift dependent work items"
         }
       },

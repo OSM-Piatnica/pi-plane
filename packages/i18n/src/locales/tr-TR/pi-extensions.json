@@ -82,6 +82,11 @@
         "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
         "deadline_overrun": "{issue} son tarihini {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
         "deadline_overrun_more": "{issue} son tarihini zaten {previous, plural, one {# iş günü} other {# iş günü}} aşıyor ve {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
+        "save": "Kaydet",
+        "sub_items_content": "Bu iş öğesinin alt iş öğeleri var. Bunlar, sürelerini koruyarak aynı sayıda iş günü kadar onunla birlikte taşınabilir.",
+        "sub_items_dependents": "Bunlara bağımlı iş öğeleri de taşınır:",
+        "sub_items_title": "Alt iş öğeleri de taşınsın mı?",
+        "sub_items_toggle": "{count, plural, one {Alt iş öğesini de taşı} other {# alt iş öğesini de taşı}}",
         "title": "Bağımlı iş öğeleri de taşınsın mı?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
         },
         "reschedule_offer": {
-          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir.",
+          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir. Taşınan bir üst öğenin alt iş öğelerini de onunla birlikte taşımayı önerir; kapalıyken yerlerinde kalırlar.",
           "title": "Bağımlı iş öğelerini taşımayı öner"
         }
       },

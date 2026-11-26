@@ -82,6 +82,11 @@
         "content": "Tato změna by porušila závislosti. Tyto pracovní položky lze posunout na později při zachování jejich délky, aby všechny závislosti dál platily:",
         "deadline_overrun": "{issue} překročí svůj termín o {count, plural, one {# pracovní den} few {# pracovní dny} many {# pracovního dne} other {# pracovních dnů}}.",
         "deadline_overrun_more": "{issue} už překračuje svůj termín o {previous, plural, one {# pracovní den} few {# pracovní dny} many {# pracovního dne} other {# pracovních dnů}} a překročí ho o {count, plural, one {# pracovní den} few {# pracovní dny} many {# pracovního dne} other {# pracovních dnů}}.",
+        "save": "Uložit",
+        "sub_items_content": "Tato pracovní položka má podřízené pracovní položky. Mohou se posunout spolu s ní o stejný počet pracovních dní a zachovat si svou délku.",
+        "sub_items_dependents": "Posunou se i pracovní položky, které na nich závisejí:",
+        "sub_items_title": "Posunout i podřízené pracovní položky?",
+        "sub_items_toggle": "{count, plural, one {Posunout i podřízenou pracovní položku} few {Posunout i # podřízené pracovní položky} many {Posunout i # podřízené pracovní položky} other {Posunout i # podřízených pracovních položek}}",
         "title": "Posunout i závislé pracovní položky?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Pracovní položku mohou měnit jen přiřazení, vedoucí projektu a správci"
         },
         "reschedule_offer": {
-          "description": "Když by změna data porušila závislost, nabídne se posunutí závislých pracovních položek na později místo odmítnutí změny. Je-li volba vypnutá, taková změna se odmítne.",
+          "description": "Když by změna data porušila závislost, nabídne se posunutí závislých pracovních položek na později místo odmítnutí změny. Je-li volba vypnutá, taková změna se odmítne. Nabídne se také posunutí podřízených pracovních položek spolu s posunutou nadřazenou položkou; je-li volba vypnutá, zůstanou na místě.",
           "title": "Nabízet posunutí závislých pracovních položek"
         }
       },

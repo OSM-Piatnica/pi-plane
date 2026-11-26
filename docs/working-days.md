@@ -41,7 +41,7 @@ A date change that would make a dependent work item start or finish too early is
 
 - Work items only move later, never earlier. Each keeps its length in working days of its own project.
 - Nothing is offered, and the change stays refused, when a dependent is in a completed or cancelled state, when you may not edit one of them, when more than 100 work items would move, or when the changed work item itself would come too early for something it depends on.
-- Clients of the API get a `400` with `error_code: relation_reschedule_available` and the list in `shifts`, and confirm by sending the same request again with `shift_dependents: true`. This holds for the app API, the public API (`/api/v1/`) and the timeline's bulk date update.
+- Clients of the API get a `400` with `error_code: relation_reschedule_available` and the list in `shifts`, and confirm by sending the same request again with `shift_dependents: true`. This holds for the app API, the public API (`/api/v1/`) and the timeline's bulk date update. For sub-work items, see "Parents and sub-work items" below.
 
 ### Due dates of moved work items
 
@@ -49,7 +49,7 @@ Moving a work item never changes its due date. When the new finish date of a wor
 
 A work item that is late already is named only when the move makes it later still, with both figures: "DEMO-41 is already 1 working day past its due date and will exceed it by 4 working days". Work items without a due date or a finish date get no warning. The warning does not stop the move.
 
-Each entry of `shifts` carries `target_date` (the due date), `deadline_overrun_days` (the working days past the due date after the move, or `null` when there is no warning) and `previous_deadline_overrun_days` (the overrun before the move, given only beside a warning for a work item that was late already).
+Each entry of `shifts`, `sub_items` and `shifts_with_sub_items` carries `target_date` (the due date), `deadline_overrun_days` (the working days past the due date after the move, or `null` when there is no warning) and `previous_deadline_overrun_days` (the overrun before the move, given only beside a warning for a work item that was late already).
 
 ### History
 
@@ -57,16 +57,27 @@ Each work item that was moved gets an activity entry per changed date that names
 
 ### Switching the offer off
 
-Project settings, Workflows, Rules: **Offer to shift dependent work items** (on by default; also under the advanced options when creating a project; `is_reschedule_offer_enabled` in the API). With the setting off, a date change that breaks a dependency is refused with the dependency error (`relation_date_conflict`), as it was before the offer existed, and `shift_dependents` is ignored. The project of the work item being changed decides, also when its dependents are in other projects.
+Project settings, Workflows, Rules: **Offer to shift dependent work items** (on by default; also under the advanced options when creating a project; `is_reschedule_offer_enabled` in the API). With the setting off, a date change that breaks a dependency is refused with the dependency error (`relation_date_conflict`), as it was before the offer existed, and `shift_dependents` is ignored. Nothing else moves either: sub-work items are not offered and `move_sub_items` is ignored, so a moved parent is saved alone. The project of the work item being changed decides, also when its dependents are in other projects.
 
 ### Parents and sub-work items
 
-The dates a parent shows on the timeline from its sub-work items (the bracket, or the hatched bar of a parent without dates) are only drawn there. A parent keeps its own start and finish dates, and dependencies are checked against those. Sub-work items do not take over the dependencies of their parent. So:
+A parent keeps its own start and finish dates; the timeline also draws the span of its sub-work items (the bracket, or the hatched bar of a parent without dates). Decision 15 of the roadmap (D8c) settled how the two meet:
 
-- Moving a parent moves the work items that depend on the parent. Its sub-work items stay where they are.
-- A parent that is moved as a dependent takes its own dependents along, again without its sub-work items.
-- A sub-work item that is moved, by hand or as a dependent, does not change its parent's dates, and nothing that depends on the parent moves, even when the sub-work item now ends after the parent.
-- A parent without dates of its own holds nothing back: a dependency on it has no date to check.
+| Situation                                       | What happens                                                                                                                                                                                                                                                       |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| A parent is moved, by hand or as a dependent    | Its sub-work items are listed in the same dialog, ticked by default. Ticked, each one moves by as many working days as the parent's start moved and keeps its own length; unticked, they stay. Nothing moves without the dialog.                                   |
+| Only the parent's finish changes                | Its start did not move, so nothing is offered for the sub-work items.                                                                                                                                                                                              |
+| A parent is moved earlier                       | Sub-work items follow it earlier too, except one that would then come too early for something it depends on: that one stays.                                                                                                                                       |
+| Sub-work items that follow                      | Sub-work items at every level follow. Completed and cancelled ones, those you may not edit and those the change itself moves stay where they are. The ones that move take their own dependents along (listed in the dialog); the 100 work items limit counts them. |
+| A sub-work item reaches past its parent's dates | For what depends on the parent, the parent counts with the wider span: a sub-work item that now ends after the parent's successor starts breaks that dependency. Pi-Plane offers to move the successor (or refuses the change when the offer is switched off).     |
+| A parent without dates of its own               | It counts with the span of its sub-work items alone.                                                                                                                                                                                                               |
+| An overrun that was already there               | Only a change that makes the parent's span later is checked against the parent's dependencies, so shortening a sub-work item that already overruns is allowed. A change to the successor itself is checked against the whole span.                                 |
+| A parent that depends on something              | Sub-work items do not take over the predecessors of their parent: the parent's own dates are checked, its sub-work items may start earlier.                                                                                                                        |
+| History                                         | A sub-work item that followed gets an activity entry per changed date naming the work item you changed, like any shifted dependent.                                                                                                                                |
+
+The critical path and float (`docs/critical-path.md`) still take a parent with its own dates only.
+
+For API clients: a request that changes dates may carry `offer_sub_items: true`; then a change that moves a parent with sub-work items is answered with a `400` offer even when it breaks no dependency (`original_error_code` is empty). The offer lists `shifts` (dependents that move when the sub-work items stay), `sub_items`, and `shifts_with_sub_items` (dependents that move when they follow). Confirm with `move_sub_items: true` or `false`, together with `shift_dependents: true` when the chosen list of dependents is not empty. A client that sends none of these flags sees no change: sub-work items never move, a change that breaks nothing is saved as it is, and `shift_dependents: true` alone moves only the dependents.
 
 ## Upgrading
 

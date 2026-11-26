@@ -82,6 +82,11 @@
         "content": "此變更會破壞相依關係。可以將以下工作事項順延（維持其工期），使所有相依關係仍然成立：",
         "deadline_overrun": "{issue} 將超過截止日期 {count, plural, one {# 個工作日} other {# 個工作日}}。",
         "deadline_overrun_more": "{issue} 已超過截止日期 {previous, plural, one {# 個工作日} other {# 個工作日}}，移動後將超過 {count, plural, one {# 個工作日} other {# 個工作日}}。",
+        "save": "儲存",
+        "sub_items_content": "此工作事項包含子工作事項。它們可以隨之移動相同的工作日數，並保持各自的工期。",
+        "sub_items_dependents": "相依於它們的工作事項也會隨之移動：",
+        "sub_items_title": "是否同時移動子工作事項？",
+        "sub_items_toggle": "{count, plural, one {同時移動 # 個子工作事項} other {同時移動 # 個子工作事項}}",
         "title": "是否同時移動依賴它的工作事項？"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "只有負責人、專案負責人和管理員可以變更工作事項"
         },
         "reschedule_offer": {
-          "description": "當日期變更會破壞相依關係時，提議將相依的工作事項順延，而不是拒絕該變更。關閉後，此類變更將被拒絕。",
+          "description": "當日期變更會破壞相依關係時，提議將相依的工作事項順延，而不是拒絕該變更。關閉後，此類變更將被拒絕。也會提議將被移動的上層項目的子工作事項隨之移動；關閉後，子工作事項保持不變。",
           "title": "提議順延相依的工作事項"
         }
       },

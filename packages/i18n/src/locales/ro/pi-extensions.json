@@ -82,6 +82,11 @@
         "content": "Această modificare ar încălca dependențe. Aceste activități pot fi mutate mai târziu, păstrându-și durata, astfel încât toate dependențele să rămână respectate:",
         "deadline_overrun": "{issue} va depăși data limită cu {count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}.",
         "deadline_overrun_more": "{issue} depășește deja data limită cu {previous, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}} și o va depăși cu {count, plural, one {# zi lucrătoare} few {# zile lucrătoare} other {# de zile lucrătoare}}.",
+        "save": "Salvează",
+        "sub_items_content": "Această activitate are sub-activități. Ele se pot muta odată cu ea cu același număr de zile lucrătoare, păstrându-și durata.",
+        "sub_items_dependents": "Se mută și activitățile care depind de ele:",
+        "sub_items_title": "Muți și sub-activitățile?",
+        "sub_items_toggle": "{count, plural, one {Mută și sub-activitatea} few {Mută și cele # sub-activități} other {Mută și cele # de sub-activități}}",
         "title": "Muți și activitățile dependente?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "O activitate pot să o modifice doar cei atribuiți, liderul proiectului și administratorii"
         },
         "reschedule_offer": {
-          "description": "Când o modificare de dată ar încălca o dependență, se propune mutarea mai târziu a activităților dependente în loc să se refuze modificarea. Când opțiunea este dezactivată, o astfel de modificare este refuzată.",
+          "description": "Când o modificare de dată ar încălca o dependență, se propune mutarea mai târziu a activităților dependente în loc să se refuze modificarea. Când opțiunea este dezactivată, o astfel de modificare este refuzată. Se propune și mutarea sub-activităților unei activități părinte mutate; când opțiunea este dezactivată, ele rămân pe loc.",
           "title": "Propune mutarea activităților dependente"
         }
       },

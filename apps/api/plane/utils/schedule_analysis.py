@@ -39,6 +39,10 @@ The rules, in short (``docs/critical-path.md`` has them for people):
   counted downstream has a due date. A work item's own due date is not part of its own ``needed_by``.
 * **Hierarchy is ignored.** Every dated work item is a node of its own; a parent is not a predecessor of its
   sub-work items and relations of a parent do not pass down to them.
+  The analysis also takes a parent with its own dates only, not with the span widened by its sub-work items that the
+  date rules and the "move dependents" offer use (``issue_effective_span``): the sub-work items are nodes of their
+  own already, and the critical path through a parent's span is a separate question (see the D8c note in
+  ``docs/plans/workflow-roadmap.md``).
 * **Cycles.** Work items that depend on each other in a circle are reported. The relations inside such a circle are
   left out of the analysis, relations in and out of it still count.
 * **Relations to work items outside the analysed set** (another project, undated, outside the scope) are ignored.
@@ -48,7 +52,12 @@ from collections import defaultdict
 from datetime import date
 
 from plane.utils.issue_relation_constraints import STORED_TIMELINE_RELATION_TYPES
-from plane.utils.issue_reschedule import NOT_MOVED_GROUPS, _move_to, _successor_requirement
+from plane.utils.issue_reschedule import (
+    NOT_MOVED_GROUPS,
+    _move_to,
+    _successor_requirement,
+    _working_days_between,
+)
 from plane.utils.work_item_duration import (
     add_working_days,
     count_working_days,
@@ -70,13 +79,6 @@ _STORED_AS_PREDECESSOR_RULE = {
     "start_before_finish": (True, "start_before_finish"),
 }
 assert set(_STORED_AS_PREDECESSOR_RULE) == set(STORED_TIMELINE_RELATION_TYPES)
-
-
-def _working_days_between(earlier: date, later: date, weekend_days) -> int:
-    """Working days to get from one working day to another; negative when ``later`` is before ``earlier``."""
-    if later >= earlier:
-        return count_working_days(earlier, later, weekend_days) - 1
-    return -(count_working_days(later, earlier, weekend_days) - 1)
 
 
 def _strongly_connected(node_ids, successors):

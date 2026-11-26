@@ -82,6 +82,11 @@
         "content": "Ce changement enfreindrait des dépendances. Ces éléments de travail peuvent être décalés plus tard, en gardant leur durée, pour que toutes les dépendances restent respectées :",
         "deadline_overrun": "{issue} dépassera sa date d’échéance de {count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}.",
         "deadline_overrun_more": "{issue} dépasse déjà sa date d’échéance de {previous, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}} et la dépassera de {count, plural, one {# jour ouvré} many {# jours ouvrés} other {# jours ouvrés}}.",
+        "save": "Enregistrer",
+        "sub_items_content": "Cet élément de travail a des sous-éléments de travail. Ils peuvent être décalés avec lui du même nombre de jours ouvrés, en gardant leur durée.",
+        "sub_items_dependents": "Les éléments de travail qui en dépendent sont aussi décalés :",
+        "sub_items_title": "Déplacer aussi les sous-éléments de travail ?",
+        "sub_items_toggle": "{count, plural, one {Déplacer aussi le sous-élément de travail} many {Déplacer aussi les # sous-éléments de travail} other {Déplacer aussi les # sous-éléments de travail}}",
         "title": "Déplacer aussi les éléments de travail dépendants ?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Seuls les assignés, le responsable du projet et les admins peuvent modifier un élément de travail"
         },
         "reschedule_offer": {
-          "description": "Si un changement de date devait enfreindre une dépendance, proposer de décaler plus tard les éléments de travail dépendants au lieu de refuser le changement. Lorsque ce réglage est désactivé, un tel changement est refusé.",
+          "description": "Si un changement de date devait enfreindre une dépendance, proposer de décaler plus tard les éléments de travail dépendants au lieu de refuser le changement. Lorsque ce réglage est désactivé, un tel changement est refusé. Propose aussi de décaler les sous-éléments de travail d’un élément parent déplacé ; lorsque ce réglage est désactivé, ils restent en place.",
           "title": "Proposer de décaler les éléments de travail dépendants"
         }
       },

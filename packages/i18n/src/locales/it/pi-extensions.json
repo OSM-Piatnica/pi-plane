@@ -82,6 +82,11 @@
         "content": "Questa modifica violerebbe delle dipendenze. Questi elementi di lavoro possono essere spostati più avanti, mantenendo la durata, così che tutte le dipendenze restino rispettate:",
         "deadline_overrun": "{issue} supererà la scadenza di {count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}.",
         "deadline_overrun_more": "{issue} supera già la scadenza di {previous, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}} e la supererà di {count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}.",
+        "save": "Salva",
+        "sub_items_content": "Questo elemento di lavoro ha dei sotto-elementi di lavoro. Possono spostarsi con esso dello stesso numero di giorni lavorativi, mantenendo la loro durata.",
+        "sub_items_dependents": "Si spostano anche gli elementi di lavoro che dipendono da essi:",
+        "sub_items_title": "Spostare anche i sotto-elementi di lavoro?",
+        "sub_items_toggle": "{count, plural, one {Sposta anche il sotto-elemento di lavoro} many {Sposta anche i # sotto-elementi di lavoro} other {Sposta anche i # sotto-elementi di lavoro}}",
         "title": "Spostare anche gli elementi di lavoro dipendenti?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Solo gli assegnatari, il responsabile del progetto e gli admin possono modificare un elemento di lavoro"
         },
         "reschedule_offer": {
-          "description": "Quando una modifica delle date violerebbe una dipendenza, viene proposto di spostare più avanti gli elementi di lavoro dipendenti invece di rifiutare la modifica. Quando è disattivata, una modifica di questo tipo viene rifiutata.",
+          "description": "Quando una modifica delle date violerebbe una dipendenza, viene proposto di spostare più avanti gli elementi di lavoro dipendenti invece di rifiutare la modifica. Quando è disattivata, una modifica di questo tipo viene rifiutata. Viene anche proposto di spostare i sotto-elementi di lavoro di un elemento padre spostato; quando è disattivata, restano dove sono.",
           "title": "Proponi di spostare gli elementi di lavoro dipendenti"
         }
       },

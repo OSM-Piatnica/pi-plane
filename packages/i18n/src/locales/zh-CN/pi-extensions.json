@@ -82,6 +82,11 @@
         "content": "此更改会破坏依赖关系。可以将以下工作项顺延（保持其工期），以使所有依赖关系仍然成立：",
         "deadline_overrun": "{issue} 将超出截止日期 {count, plural, one {# 个工作日} other {# 个工作日}}。",
         "deadline_overrun_more": "{issue} 已超出截止日期 {previous, plural, one {# 个工作日} other {# 个工作日}}，移动后将超出 {count, plural, one {# 个工作日} other {# 个工作日}}。",
+        "save": "保存",
+        "sub_items_content": "此工作项包含子工作项。它们可以随之移动相同的工作日数，并保持各自的工期。",
+        "sub_items_dependents": "依赖它们的工作项也会随之移动：",
+        "sub_items_title": "是否同时移动子工作项？",
+        "sub_items_toggle": "{count, plural, one {同时移动 # 个子工作项} other {同时移动 # 个子工作项}}",
         "title": "是否同时移动依赖它的工作项？"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "只有负责人、项目负责人和管理员可以更改工作项"
         },
         "reschedule_offer": {
-          "description": "当日期更改会破坏依赖关系时，提议将依赖它的工作项顺延，而不是拒绝该更改。关闭后，此类更改将被拒绝。",
+          "description": "当日期更改会破坏依赖关系时，提议将依赖它的工作项顺延，而不是拒绝该更改。关闭后，此类更改将被拒绝。还会提议将被移动的父项的子工作项随之移动；关闭后，子工作项保持不变。",
           "title": "提议顺延依赖的工作项"
         }
       },
