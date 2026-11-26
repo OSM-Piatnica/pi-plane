@@ -9,6 +9,7 @@ export * from "./critical";
 export * from "./cycle";
 export * from "./date";
 export * from "./group";
+export * from "./raci";
 export * from "./label";
 export * from "./module";
 export * from "./priority";

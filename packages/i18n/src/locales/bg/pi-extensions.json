@@ -256,7 +256,13 @@
     "select_placeholder": "Тип"
   },
   "workspace_features": {
-    "description": "Включване и изключване на части от Pi-Plane за всички в това работно пространство."
+    "description": "Включване и изключване на части от Pi-Plane за всички в това работно пространство.",
+    "items": {
+      "raci": {
+        "description": "Отделите получават роли в работните елементи (отговорен, одобряващ, консултиран, информиран). Всеки проект го включва в своите функции.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Типът е запазен"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "промени ролята на <department/> от <old_role/> на <new_role/>.",
+      "removed": "отне от <department/> ролята <old_role/>.",
+      "set": "даде на <department/> ролята <new_role/>."
+    },
+    "color_by_department": "Отговорен отдел",
+    "feature": {
+      "description": "Роли на отделите в работните елементи: отговорен, одобряващ, консултиран, информиран.",
+      "title": "RACI"
+    },
+    "my_department": "Моят отдел",
+    "no_departments": "Работното пространство все още няма отдели.",
+    "none": "Няма",
+    "properties": {
+      "any": "Отдел (всяка роля)",
+      "responsible": "Отговорен",
+      "approver": "Одобряващ",
+      "consulted": "Консултиран",
+      "informed": "Информиран"
+    },
+    "role_of": "Роля на {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Отговорен"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Одобряващ"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Консултиран"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Информиран"
+      }
+    },
+    "save_failed": "RACI не можа да бъде запазено.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Роли RACI"
       }
     }
   }

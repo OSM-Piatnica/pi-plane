@@ -256,7 +256,13 @@
     "select_placeholder": "类型"
   },
   "workspace_features": {
-    "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。"
+    "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。",
+    "items": {
+      "raci": {
+        "description": "部门可在工作项上承担角色（负责、审批、咨询、知会）。每个项目在其功能设置中启用。",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "类型已保存"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "将 <department/> 的角色从 <old_role/> 改为 <new_role/>。",
+      "removed": "移除了 <department/> 的角色 <old_role/>。",
+      "set": "为 <department/> 指定了角色 <new_role/>。"
+    },
+    "color_by_department": "负责部门",
+    "feature": {
+      "description": "部门在工作项上的角色：负责、审批、咨询、知会。",
+      "title": "RACI"
+    },
+    "my_department": "我的部门",
+    "no_departments": "工作区还没有部门。",
+    "none": "无",
+    "properties": {
+      "any": "部门（任意角色）",
+      "responsible": "负责",
+      "approver": "审批",
+      "consulted": "咨询",
+      "informed": "知会"
+    },
+    "role_of": "{department} 的角色",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "负责"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "审批"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "咨询"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "知会"
+      }
+    },
+    "save_failed": "无法保存 RACI。",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI 角色"
       }
     }
   }

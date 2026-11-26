@@ -118,6 +118,8 @@ from .worklog import IssueWorkLog
 
 from .project_copy_job import ProjectCopyJob
 
+from .raci import IssueRaci, RaciRole
+
 from .description import Description, DescriptionVersion
 
 from .user_group import (

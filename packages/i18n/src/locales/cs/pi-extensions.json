@@ -256,7 +256,13 @@
     "select_placeholder": "Typ"
   },
   "workspace_features": {
-    "description": "Zapínání a vypínání částí Pi-Plane pro všechny v tomto pracovním prostoru."
+    "description": "Zapínání a vypínání částí Pi-Plane pro všechny v tomto pracovním prostoru.",
+    "items": {
+      "raci": {
+        "description": "Oddělení dostávají role u pracovních položek (odpovědné, schvalující, konzultované, informované). Každý projekt to zapíná ve svých funkcích.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Typ uložen"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "změnil(a) roli oddělení <department/> z <old_role/> na <new_role/>.",
+      "removed": "odebral(a) oddělení <department/> roli <old_role/>.",
+      "set": "přidělil(a) oddělení <department/> roli <new_role/>."
+    },
+    "color_by_department": "Odpovědné oddělení",
+    "feature": {
+      "description": "Role oddělení u pracovních položek: odpovědné, schvalující, konzultované, informované.",
+      "title": "RACI"
+    },
+    "my_department": "Moje oddělení",
+    "no_departments": "Pracovní prostor zatím nemá žádná oddělení.",
+    "none": "Žádná",
+    "properties": {
+      "any": "Oddělení (libovolná role)",
+      "responsible": "Odpovědné",
+      "approver": "Schvalující",
+      "consulted": "Konzultované",
+      "informed": "Informované"
+    },
+    "role_of": "Role oddělení {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Odpovědné"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Schvalující"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Konzultované"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informované"
+      }
+    },
+    "save_failed": "RACI se nepodařilo uložit.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Role RACI"
       }
     }
   }

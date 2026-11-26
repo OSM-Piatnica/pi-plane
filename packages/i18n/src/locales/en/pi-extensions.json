@@ -256,7 +256,13 @@
     "select_placeholder": "Type"
   },
   "workspace_features": {
-    "description": "Switch parts of Pi-Plane on or off for everyone in this workspace."
+    "description": "Switch parts of Pi-Plane on or off for everyone in this workspace.",
+    "items": {
+      "raci": {
+        "description": "Departments get roles on work items (responsible, approver, consulted, informed). Each project switches it on in its features.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Type saved"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "changed the role of <department/> from <old_role/> to <new_role/>.",
+      "removed": "took the role <old_role/> away from <department/>.",
+      "set": "gave <department/> the role <new_role/>."
+    },
+    "color_by_department": "Responsible department",
+    "feature": {
+      "description": "Roles of departments on work items: responsible, approver, consulted, informed.",
+      "title": "RACI"
+    },
+    "my_department": "My department",
+    "no_departments": "The workspace has no departments yet.",
+    "none": "None",
+    "properties": {
+      "any": "Department (any role)",
+      "responsible": "Responsible",
+      "approver": "Approver",
+      "consulted": "Consulted",
+      "informed": "Informed"
+    },
+    "role_of": "Role of {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsible"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Approver"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consulted"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informed"
+      }
+    },
+    "save_failed": "The RACI could not be saved.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI roles"
       }
     }
   }

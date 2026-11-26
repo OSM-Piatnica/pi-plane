@@ -45,6 +45,7 @@ import {
   getCycleFilterConfig,
   getFileURL,
   getGroupAssigneeFilterConfig,
+  getRaciFilterConfig,
   getLabelFilterConfig,
   getMentionFilterConfig,
   getModuleFilterConfig,
@@ -67,6 +68,8 @@ import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useTranslation } from "@plane/i18n";
 import { useFilterableUserGroups } from "@/hooks/use-filterable-user-groups";
+import { useDepartments } from "@/hooks/use-departments";
+import { useWorkspaceFeatures } from "@/hooks/use-workspace-features";
 import { useFiltersOperatorConfigs } from "@/hooks/rich-filters/use-filters-operator-configs";
 
 export type TWorkItemFiltersEntityProps = {
@@ -94,6 +97,15 @@ export type TWorkItemFiltersConfig = {
   members: IUserLite[];
 };
 
+/** The RACI filters: departments with any role, then one per role. */
+const RACI_FILTER_KEYS: TWorkItemFilterProperty[] = [
+  "raci_department_id",
+  "raci_responsible_id",
+  "raci_approver_id",
+  "raci_consulted_id",
+  "raci_informed_id",
+];
+
 export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps): TWorkItemFiltersConfig => {
   const { allowedFilters, cycleIds, labelIds, memberIds, moduleIds, projectId, projectIds, stateIds, workspaceSlug } =
     props;
@@ -105,6 +117,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
   const { getStateById } = useProjectState();
   const { getUserDetails } = useMember();
   const { groups: filterableGroups } = useFilterableUserGroups(workspaceSlug);
+  const { isFeatureEnabled } = useWorkspaceFeatures();
   // derived values
   const { t } = useTranslation();
   const baseOperatorConfigs = useFiltersOperatorConfigs({ workspaceSlug });
@@ -266,6 +279,25 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
     [isFilterEnabled, projectId, operatorConfigs]
   );
 
+  // RACI filter configs: where the workspace has RACI on (and, in a project, the project too) and has departments
+  const isRaciAvailable =
+    isFeatureEnabled("raci") && (projectId ? Boolean(getProjectById(projectId)?.is_raci_enabled) : true);
+  const { departments: raciDepartments } = useDepartments(workspaceSlug, isRaciAvailable);
+  const raciFilterConfigs = useMemo(
+    () =>
+      RACI_FILTER_KEYS.map((key) =>
+        getRaciFilterConfig<TWorkItemFilterProperty>(key)({
+          isEnabled: isRaciAvailable && isFilterEnabled(key) && raciDepartments.length > 0,
+          filterIcon: MembersOutline,
+          departments: raciDepartments,
+          ...operatorConfigs,
+          // the API does not negate a RACI filter
+          allowNegative: false,
+        })
+      ),
+    [isRaciAvailable, isFilterEnabled, raciDepartments, operatorConfigs]
+  );
+
   // mention filter config
   const mentionFilterConfig = useMemo(
     () =>
@@ -415,6 +447,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       stateGroupFilterConfig,
       assigneeFilterConfig,
       groupAssigneeFilterConfig,
+      ...raciFilterConfigs,
       criticalPathFilterConfig,
       priorityFilterConfig,
       projectFilterConfig,
@@ -439,6 +472,7 @@ export const useWorkItemFiltersConfig = (props: TUseWorkItemFiltersConfigProps):
       module_id: moduleFilterConfig,
       assignee_id: assigneeFilterConfig,
       group_assignee_id: groupAssigneeFilterConfig,
+      ...Object.fromEntries(RACI_FILTER_KEYS.map((key, index) => [key, raciFilterConfigs[index]])),
       is_critical: criticalPathFilterConfig,
       mention_id: mentionFilterConfig,
       created_by_id: createdByFilterConfig,

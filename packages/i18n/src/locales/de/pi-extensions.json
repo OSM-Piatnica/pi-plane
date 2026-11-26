@@ -256,7 +256,13 @@
     "select_placeholder": "Typ"
   },
   "workspace_features": {
-    "description": "Teile von Pi-Plane für alle in diesem Arbeitsbereich ein- oder ausschalten."
+    "description": "Teile von Pi-Plane für alle in diesem Arbeitsbereich ein- oder ausschalten.",
+    "items": {
+      "raci": {
+        "description": "Abteilungen erhalten Rollen an Arbeitselementen (verantwortlich, genehmigend, konsultiert, informiert). Jedes Projekt schaltet es in seinen Funktionen ein.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Typ gespeichert"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "hat die Rolle von <department/> von <old_role/> auf <new_role/> geändert.",
+      "removed": "hat <department/> die Rolle <old_role/> entzogen.",
+      "set": "hat <department/> die Rolle <new_role/> gegeben."
+    },
+    "color_by_department": "Verantwortliche Abteilung",
+    "feature": {
+      "description": "Rollen von Abteilungen an Arbeitselementen: verantwortlich, genehmigend, konsultiert, informiert.",
+      "title": "RACI"
+    },
+    "my_department": "Meine Abteilung",
+    "no_departments": "Der Arbeitsbereich hat noch keine Abteilungen.",
+    "none": "Keine",
+    "properties": {
+      "any": "Abteilung (beliebige Rolle)",
+      "responsible": "Verantwortlich",
+      "approver": "Genehmigend",
+      "consulted": "Konsultiert",
+      "informed": "Informiert"
+    },
+    "role_of": "Rolle von {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Verantwortlich"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Genehmigend"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Konsultiert"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informiert"
+      }
+    },
+    "save_failed": "RACI konnte nicht gespeichert werden.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI-Rollen"
       }
     }
   }

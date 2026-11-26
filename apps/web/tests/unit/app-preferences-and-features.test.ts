@@ -118,21 +118,20 @@ describe("the lists the API validates against", () => {
   });
 });
 
-describe("what ships: one app, no available feature", () => {
-  it("offers nothing to switch", () => {
-    expect(getAvailableWorkspaceFeatures()).toEqual([]);
+describe("what ships: one app, RACI as the only available feature", () => {
+  it("offers RACI to switch", () => {
+    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["raci"]);
   });
 
-  it("has no Features entry in the settings sidebar or the command palette", () => {
-    expect(isWorkspaceSettingsItemAvailable(WORKSPACE_SETTINGS.features)).toBe(false);
+  it("has a Features entry in the settings sidebar", () => {
+    expect(isWorkspaceSettingsItemAvailable(WORKSPACE_SETTINGS.features)).toBe(true);
     const sidebarKeys = Object.values(GROUPED_WORKSPACE_SETTINGS)
       .flat()
       .map((item) => item.key);
-    expect(sidebarKeys).not.toContain("features");
+    expect(sidebarKeys).toContain("features");
     // the other pages are untouched
     expect(sidebarKeys).toEqual(expect.arrayContaining(["general", "members", "groups", "export", "webhooks"]));
-    for (const item of Object.values(WORKSPACE_SETTINGS))
-      if (item.key !== "features") expect(isWorkspaceSettingsItemAvailable(item)).toBe(true);
+    for (const item of Object.values(WORKSPACE_SETTINGS)) expect(isWorkspaceSettingsItemAvailable(item)).toBe(true);
   });
 
   it("keeps Projects enabled whatever the feature switches say", () => {

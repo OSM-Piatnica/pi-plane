@@ -20,7 +20,12 @@ export const WORKSPACE_FEATURES: { [TKey in TWorkspaceFeatureKey]: TWorkspaceFea
   approvals: { key: "approvals", isAvailable: false },
   initiatives: { key: "initiatives", isAvailable: false },
   wiki: { key: "wiki", isAvailable: false },
-  raci: { key: "raci", isAvailable: false },
+  raci: {
+    key: "raci",
+    isAvailable: true,
+    i18n_title: "workspace_features.items.raci.title",
+    i18n_description: "workspace_features.items.raci.description",
+  },
 };
 
 /** The feature switches, in the order of the Features settings page */

@@ -28,6 +28,7 @@ import { cn, getDate, renderFormattedPayloadDate, generateWorkItemLink, validate
 import { CycleSelect } from "@/components/dropdowns/cycle/cycle-select";
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
+import { RaciRolesCell } from "@/components/issues/raci/raci-roles-cell";
 import { ModuleSelect } from "@/components/dropdowns/module/module-select";
 import { PrioritySelect } from "@/components/dropdowns/priority/priority-select";
 import { StateSelect } from "@/components/dropdowns/state/state-select";
@@ -625,6 +626,20 @@ export const IssueProperties = observer(function IssueProperties(props: IIssuePr
           </Tooltip>
         </WithDisplayPropertiesHOC>
       )}
+
+      {/* RACI: the departments with a role on the work item */}
+      {(["responsible", "approver", "consulted"] as const).map((role) => (
+        <WithDisplayPropertiesHOC
+          key={role}
+          displayProperties={displayProperties}
+          displayPropertyKey={`raci_${role}`}
+          shouldRenderProperty={() => !!issue.raci?.some((entry) => entry.role === role)}
+        >
+          <div role="presentation" onClick={handleEventPropagation}>
+            <RaciRolesCell issue={issue} role={role} />
+          </div>
+        </WithDisplayPropertiesHOC>
+      ))}
 
       {/* attachments */}
       <WithDisplayPropertiesHOC

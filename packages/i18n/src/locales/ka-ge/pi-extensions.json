@@ -256,7 +256,13 @@
     "select_placeholder": "ტიპი"
   },
   "workspace_features": {
-    "description": "ჩართეთ ან გამორთეთ Pi-Plane-ის ნაწილები ამ სამუშაო სივრცის ყველა წევრისთვის."
+    "description": "ჩართეთ ან გამორთეთ Pi-Plane-ის ნაწილები ამ სამუშაო სივრცის ყველა წევრისთვის.",
+    "items": {
+      "raci": {
+        "description": "განყოფილებები იღებენ როლებს სამუშაო ელემენტებზე (პასუხისმგებელი, დამმტკიცებელი, კონსულტირებული, ინფორმირებული). თითოეული პროექტი ამას თავის ფუნქციებში ჩართავს.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "ტიპი შენახულია"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "შეცვალა <department/>-ის როლი <old_role/>-დან <new_role/>-ზე.",
+      "removed": "ჩამოართვა <department/>-ს როლი <old_role/>.",
+      "set": "მიანიჭა <department/>-ს როლი <new_role/>."
+    },
+    "color_by_department": "პასუხისმგებელი განყოფილება",
+    "feature": {
+      "description": "განყოფილებების როლები სამუშაო ელემენტებზე: პასუხისმგებელი, დამმტკიცებელი, კონსულტირებული, ინფორმირებული.",
+      "title": "RACI"
+    },
+    "my_department": "ჩემი განყოფილება",
+    "no_departments": "სამუშაო სივრცეს ჯერ არ აქვს განყოფილებები.",
+    "none": "არცერთი",
+    "properties": {
+      "any": "განყოფილება (ნებისმიერი როლი)",
+      "responsible": "პასუხისმგებელი",
+      "approver": "დამმტკიცებელი",
+      "consulted": "კონსულტირებული",
+      "informed": "ინფორმირებული"
+    },
+    "role_of": "{department}-ის როლი",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "პასუხისმგებელი"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "დამმტკიცებელი"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "კონსულტირებული"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "ინფორმირებული"
+      }
+    },
+    "save_failed": "RACI ვერ შეინახა.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI როლები"
       }
     }
   }

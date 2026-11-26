@@ -16,3 +16,6 @@ export const GROUP_FILTER_KEYWORDS = {
 } as const;
 
 export type TGroupFilterKeyword = (typeof GROUP_FILTER_KEYWORDS)[keyof typeof GROUP_FILTER_KEYWORDS];
+
+/** The value of a RACI filter that stands for the department of the person who filters. */
+export const RACI_FILTER_MY_DEPARTMENT = "my_department";

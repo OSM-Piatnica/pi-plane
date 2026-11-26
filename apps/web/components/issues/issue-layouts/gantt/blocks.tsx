@@ -31,6 +31,7 @@ import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useChartPalette } from "@/hooks/use-chart-palette";
+import { useRaciBarColors } from "@/components/issues/raci/use-raci-bar-colors";
 import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
@@ -76,19 +77,25 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
   const stateDetails =
     issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
 
+  // RACI: the colours of the responsible departments, when the bars are coloured by them
+  const { colors: departmentColors, backgroundImage } = useRaciBarColors(workspaceSlug, colorBy, issueDetails?.raci);
+
   const barColor = getBarColor({
     colorBy,
     stateColor: stateDetails?.color,
     projectIdentifier: getProjectIdentifierById(issueDetails?.project_id),
     sequenceId: issueDetails?.sequence_id,
     palette: chartPalette,
+    departmentColors,
   });
 
   // the bar spans start to finish; the due date is a separate deadline marker and never part of the bar
-  const { blockStyle } = getBlockViewDetails(
+  const { blockStyle: baseBlockStyle } = getBlockViewDetails(
     { start_date: issueDetails?.start_date, target_date: issueDetails?.finish_date },
     barColor ?? ""
   );
+  // several responsible departments share the bar side by side
+  const blockStyle = { ...baseBlockStyle, backgroundImage };
 
   const handleIssuePeekOverview = () => handleRedirection(workspaceSlug, issueDetails, isMobile);
 

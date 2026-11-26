@@ -34,10 +34,12 @@ from plane.db.models import (
     User,
     EstimatePoint,
     IssueType,
+    UserGroup,
 )
 from plane.settings.redis import redis_instance
 from plane.utils.exception_logger import log_exception
 from plane.utils.issue_relation_mapper import get_inverse_relation
+from plane.utils.raci import raci_changes
 from plane.utils.uuid import is_valid_uuid
 
 
@@ -1306,6 +1308,57 @@ def delete_worklog_activity(
     )
 
 
+def update_raci_activity(
+    requested_data,
+    current_instance,
+    issue_id,
+    project_id,
+    workspace_id,
+    actor_id,
+    issue_activities,
+    epoch,
+):
+    """
+    One entry per department whose role on the work item was set, changed or taken away.
+
+    The roles go to ``old_value`` and ``new_value`` by their neutral names (the interface shows them in its own
+    language), the department to the identifiers, and its name as it was at the time to ``comment``.
+    """
+    requested_data = json.loads(requested_data) if requested_data is not None else {}
+    current_instance = json.loads(current_instance) if current_instance is not None else {}
+    changes = raci_changes(current_instance.get("raci"), requested_data.get("raci"))
+    if not changes:
+        return
+    # all_objects: a department that was deleted since is still named in the history
+    departments = {
+        str(group.id): group
+        for group in UserGroup.all_objects.filter(
+            workspace_id=workspace_id, id__in=[group_id for group_id, _, _ in changes]
+        )
+    }
+    for group_id, old_role, new_role in changes:
+        department = departments.get(group_id)
+        if department is None:
+            continue
+        label = f"{department.code} · {department.name}" if department.code else department.name
+        issue_activities.append(
+            IssueActivity(
+                issue_id=issue_id,
+                project_id=project_id,
+                workspace_id=workspace_id,
+                actor_id=actor_id,
+                verb="created" if old_role is None else "deleted" if new_role is None else "updated",
+                field="raci",
+                old_value=old_role or "",
+                new_value=new_role or "",
+                old_identifier=department.id if old_role is not None else None,
+                new_identifier=department.id if new_role is not None else None,
+                comment=label,
+                epoch=epoch,
+            )
+        )
+
+
 def create_attachment_activity(
     requested_data,
     current_instance,
@@ -1863,6 +1916,7 @@ def issue_activity(
             "worklog.activity.created": create_worklog_activity,
             "worklog.activity.updated": update_worklog_activity,
             "worklog.activity.deleted": delete_worklog_activity,
+            "raci.activity.updated": update_raci_activity,
         }
 
         func = ACTIVITY_MAPPER.get(type)

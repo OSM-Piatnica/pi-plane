@@ -147,7 +147,7 @@ export enum EProjectFeatureKey {
  */
 export const PROJECT_COPY_WORK_ITEM_PROPERTY_GROUPS = {
   content: ["dates", "custom_properties", "description_images"],
-  people: ["assignees"],
+  people: ["assignees", "raci"],
   organization: ["labels", "cycles", "modules"],
   hierarchy: ["parents", "relations", "links"],
 } as const;

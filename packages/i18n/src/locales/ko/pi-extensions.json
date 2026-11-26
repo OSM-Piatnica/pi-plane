@@ -256,7 +256,13 @@
     "select_placeholder": "유형"
   },
   "workspace_features": {
-    "description": "이 워크스페이스의 모든 사용자를 대상으로 Pi-Plane의 일부 기능을 켜거나 끕니다."
+    "description": "이 워크스페이스의 모든 사용자를 대상으로 Pi-Plane의 일부 기능을 켜거나 끕니다.",
+    "items": {
+      "raci": {
+        "description": "부서가 작업 항목에서 역할(실행 책임, 승인, 협의, 통보)을 받습니다. 각 프로젝트가 기능 설정에서 켭니다.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "유형 저장됨"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "<department/>의 역할을 <old_role/>에서 <new_role/>(으)로 변경했습니다.",
+      "removed": "<department/>에서 <old_role/> 역할을 제거했습니다.",
+      "set": "<department/>에 <new_role/> 역할을 부여했습니다."
+    },
+    "color_by_department": "책임 부서",
+    "feature": {
+      "description": "작업 항목에서 부서의 역할: 실행 책임, 승인, 협의, 통보.",
+      "title": "RACI"
+    },
+    "my_department": "내 부서",
+    "no_departments": "워크스페이스에 아직 부서가 없습니다.",
+    "none": "없음",
+    "properties": {
+      "any": "부서(모든 역할)",
+      "responsible": "실행 책임",
+      "approver": "승인",
+      "consulted": "협의",
+      "informed": "통보"
+    },
+    "role_of": "{department}의 역할",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "실행 책임"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "승인"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "협의"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "통보"
+      }
+    },
+    "save_failed": "RACI를 저장할 수 없습니다.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI 역할"
       }
     }
   }

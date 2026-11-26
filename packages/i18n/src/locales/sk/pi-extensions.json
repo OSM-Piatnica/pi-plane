@@ -256,7 +256,13 @@
     "select_placeholder": "Typ"
   },
   "workspace_features": {
-    "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore."
+    "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore.",
+    "items": {
+      "raci": {
+        "description": "Oddelenia dostávajú roly pri pracovných položkách (zodpovedné, schvaľujúce, konzultované, informované). Každý projekt to zapína vo svojich funkciách.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Typ uložený"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "zmenil(a) rolu oddelenia <department/> z <old_role/> na <new_role/>.",
+      "removed": "odobral(a) oddeleniu <department/> rolu <old_role/>.",
+      "set": "pridelil(a) oddeleniu <department/> rolu <new_role/>."
+    },
+    "color_by_department": "Zodpovedné oddelenie",
+    "feature": {
+      "description": "Roly oddelení pri pracovných položkách: zodpovedné, schvaľujúce, konzultované, informované.",
+      "title": "RACI"
+    },
+    "my_department": "Moje oddelenie",
+    "no_departments": "Pracovný priestor zatiaľ nemá žiadne oddelenia.",
+    "none": "Žiadna",
+    "properties": {
+      "any": "Oddelenie (ľubovoľná rola)",
+      "responsible": "Zodpovedné",
+      "approver": "Schvaľujúce",
+      "consulted": "Konzultované",
+      "informed": "Informované"
+    },
+    "role_of": "Rola oddelenia {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Zodpovedné"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Schvaľujúce"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Konzultované"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informované"
+      }
+    },
+    "save_failed": "RACI sa nepodarilo uložiť.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Roly RACI"
       }
     }
   }

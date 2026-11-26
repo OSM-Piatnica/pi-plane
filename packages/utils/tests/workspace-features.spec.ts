@@ -35,16 +35,18 @@ describe("WORKSPACE_FEATURES as shipped", () => {
     for (const [key, feature] of Object.entries(WORKSPACE_FEATURES)) expect(feature.key).toBe(key);
   });
 
-  it("has no available feature, so nothing is offered and nothing can be on", () => {
-    expect(WORKSPACE_FEATURE_LIST.some((feature) => feature.isAvailable)).toBe(false);
-    expect(getAvailableWorkspaceFeatures()).toEqual([]);
-    expect(hasAvailableWorkspaceFeatures()).toBe(false);
+  it("has RACI as the only available feature, so only RACI can be on", () => {
+    expect(WORKSPACE_FEATURE_LIST.filter((feature) => feature.isAvailable).map((feature) => feature.key)).toEqual([
+      "raci",
+    ]);
+    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["raci"]);
+    expect(hasAvailableWorkspaceFeatures()).toBe(true);
     expect(getWorkspaceFeatureFlags(["lite", "approvals", "initiatives", "wiki", "raci"])).toEqual({
       lite: false,
       approvals: false,
       initiatives: false,
       wiki: false,
-      raci: false,
+      raci: true,
     });
   });
 });

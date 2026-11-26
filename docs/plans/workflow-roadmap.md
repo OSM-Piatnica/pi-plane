@@ -20,7 +20,7 @@ Updated by every roadmap PR (see "Keeping this plan current" below). Steps not l
 | A2     | not started     |                                                                                                                                                                                        | a draft exists from before [#482](https://github.com/OSM-Piatnica/pi-plane/pull/482); check it against the A2 text below before reuse          |
 | B2     | open            | [#479](https://github.com/OSM-Piatnica/pi-plane/pull/479)                                                                                                                              |                                                                                                                                                |
 | D1     | merged, changed | [#476](https://github.com/OSM-Piatnica/pi-plane/pull/476)                                                                                                                              | departments are groups; no per-member field (see D1); one department per person is [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508) |
-| D2     | not started     |                                                                                                                                                                                        | an early draft assumed `WorkspaceMember.department`; redo it on department groups                                                              |
+| D2     | merged          | [#542](https://github.com/OSM-Piatnica/pi-plane/pull/542)                                                                                                                              | `0163_issue_raci`; gated by the workspace feature `raci` as well as the project switch; `docs/raci.md`                                         |
 | D5     | merged          | [#475](https://github.com/OSM-Piatnica/pi-plane/pull/475), [#517](https://github.com/OSM-Piatnica/pi-plane/pull/517), [#519](https://github.com/OSM-Piatnica/pi-plane/pull/519) (open) | no cache, cap 2000; sorting by Float is [#518](https://github.com/OSM-Piatnica/pi-plane/issues/518)                                            |
 | D6     | not started     |                                                                                                                                                                                        | a draft stacked on #475 exists; it must snapshot `finish_date` as well (see D6)                                                                |
 | D8     | open            | [#478](https://github.com/OSM-Piatnica/pi-plane/pull/478)                                                                                                                              | `0160`; the deadline warning is left over (see D8)                                                                                             |
@@ -361,12 +361,13 @@ Already delivered before this plan: dependency shifting with confirmation, relat
 - Delivered: migration `0157_departments`; workspace settings "Departments" (list, code, colour, order, switch, import from a pasted list), managed by workspace admins only; "Department" column in member settings; members are managed on the Groups page. A person belongs to at most one active department (the API answers 409 or 400 otherwise); SSO sync joins the first department the provider lists and replaces one set by hand. See `docs/departments.md`.
 - Changed from the plan: no `WorkspaceMember.department` field, and no picker in onboarding, on invitation or at sign-in; workspace admins assign people. Whether a person may be in several departments is [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508); D2 and D9 must not rely on "the" department of a person more than that issue settles.
 
-**D2. RACI on work items (SPEC-02). Size L. Needs D1.**
+**D2. RACI on work items (SPEC-02). Size L. Needs D1. Merged: #542.**
 
 - `IssueRaci` (issue, group, role), unique (issue, group); several `responsible` allowed. `group` is a department group (`UserGroup.kind = department`). Project switch "RACI" in feature toggles.
 - Endpoints for read and bulk set; activity entries; included in project duplication.
 - Web: RACI section in work item detail; list columns for responsible, approver, consulted; display property; filter "my department" and filter by role; timeline bar coloured by the responsible department (two colours for two).
 - Edit rights: project admins and the project lead (decision 10).
+- Changed from the plan: RACI is switched on twice, for the workspace (the G3 feature `raci`, now available) and per project; while either is off the rows are kept but not served or matched. A switched-off department keeps its roles (shown, and can be taken away) but gets no new or changed one; deleting a department or turning it into a plain group removes its roles. "My department" is every active department group the person belongs to directly, not one field, so it keeps working whatever [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508) decides. The migration is `0163_issue_raci` on top of `0161`, because `0162` is taken by D6 (#539); whichever merges second re-points its dependency. See `docs/raci.md`.
 
 **D3. RACI notifications and validation. Size M. Needs D2.**
 
@@ -522,7 +523,7 @@ Stickies stay under Projects and Home (they are personal notes, not a destinatio
 **G3. Workspace feature switches. Size S. Merged: #480 (with G2).**
 
 - Delivered: a `WorkspaceFeature` table (workspace, key, is_enabled; no row means off) for `lite`, `approvals`, `initiatives`, `wiki`, `raci`; `GET`/`PATCH /api/workspaces/<slug>/features/` (admins change); workspace settings page "Features"; the rail registry's `isEnabled` gets `features`.
-- Each key is also marked "available" (`utils/workspace_features.py`, `packages/constants/src/workspace-features.ts`), and none is yet. The PR that builds a feature marks its key available and adds the feature's title and description strings. See `docs/workspace-features.md`.
+- Each key is also marked "available" (`utils/workspace_features.py`, `packages/constants/src/workspace-features.ts`); `raci` is since D2 (#542), the others are not yet. The PR that builds a feature marks its key available and adds the feature's title and description strings. See `docs/workspace-features.md`.
 
 **G4. Workspace wiki. Size L. Can be last.**
 

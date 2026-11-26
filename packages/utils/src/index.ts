@@ -49,3 +49,4 @@ export * from "./work-item";
 export * from "./workspace";
 export * from "./workspace-features";
 export * from "./user-group-filter";
+export * from "./raci";

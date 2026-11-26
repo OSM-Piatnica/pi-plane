@@ -256,7 +256,13 @@
     "select_placeholder": "Type"
   },
   "workspace_features": {
-    "description": "Activez ou désactivez des parties de Pi-Plane pour tous les membres de cet espace de travail."
+    "description": "Activez ou désactivez des parties de Pi-Plane pour tous les membres de cet espace de travail.",
+    "items": {
+      "raci": {
+        "description": "Les services reçoivent des rôles sur les éléments de travail (responsable, approbateur, consulté, informé). Chaque projet l’active dans ses fonctionnalités.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Type enregistré"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "a changé le rôle de <department/> de <old_role/> à <new_role/>.",
+      "removed": "a retiré le rôle <old_role/> à <department/>.",
+      "set": "a donné à <department/> le rôle <new_role/>."
+    },
+    "color_by_department": "Service responsable",
+    "feature": {
+      "description": "Rôles des services sur les éléments de travail : responsable, approbateur, consulté, informé.",
+      "title": "RACI"
+    },
+    "my_department": "Mon service",
+    "no_departments": "L’espace de travail n’a pas encore de services.",
+    "none": "Aucun",
+    "properties": {
+      "any": "Service (tout rôle)",
+      "responsible": "Responsable",
+      "approver": "Approbateur",
+      "consulted": "Consulté",
+      "informed": "Informé"
+    },
+    "role_of": "Rôle de {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsable"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Approbateur"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consulté"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informé"
+      }
+    },
+    "save_failed": "Le RACI n’a pas pu être enregistré.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Rôles RACI"
       }
     }
   }

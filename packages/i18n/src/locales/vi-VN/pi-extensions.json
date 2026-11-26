@@ -256,7 +256,13 @@
     "select_placeholder": "Loại"
   },
   "workspace_features": {
-    "description": "Bật hoặc tắt các phần của Pi-Plane cho mọi người trong không gian làm việc này."
+    "description": "Bật hoặc tắt các phần của Pi-Plane cho mọi người trong không gian làm việc này.",
+    "items": {
+      "raci": {
+        "description": "Các phòng ban nhận vai trò trên mục công việc (chịu trách nhiệm, phê duyệt, tham vấn, được thông báo). Mỗi dự án bật tính năng này trong phần tính năng của mình.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Đã lưu loại"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "đã đổi vai trò của <department/> từ <old_role/> thành <new_role/>.",
+      "removed": "đã gỡ vai trò <old_role/> khỏi <department/>.",
+      "set": "đã giao cho <department/> vai trò <new_role/>."
+    },
+    "color_by_department": "Phòng ban chịu trách nhiệm",
+    "feature": {
+      "description": "Vai trò của các phòng ban trên mục công việc: chịu trách nhiệm, phê duyệt, tham vấn, được thông báo.",
+      "title": "RACI"
+    },
+    "my_department": "Phòng ban của tôi",
+    "no_departments": "Không gian làm việc chưa có phòng ban nào.",
+    "none": "Không có",
+    "properties": {
+      "any": "Phòng ban (vai trò bất kỳ)",
+      "responsible": "Chịu trách nhiệm",
+      "approver": "Phê duyệt",
+      "consulted": "Tham vấn",
+      "informed": "Được thông báo"
+    },
+    "role_of": "Vai trò của {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Chịu trách nhiệm"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Phê duyệt"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Tham vấn"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Được thông báo"
+      }
+    },
+    "save_failed": "Không thể lưu RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Vai trò RACI"
       }
     }
   }

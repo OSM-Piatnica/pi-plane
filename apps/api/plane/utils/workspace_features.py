@@ -19,7 +19,7 @@ WORKSPACE_FEATURES = {
     "approvals": False,
     "initiatives": False,
     "wiki": False,
-    "raci": False,
+    "raci": True,
 }
 
 

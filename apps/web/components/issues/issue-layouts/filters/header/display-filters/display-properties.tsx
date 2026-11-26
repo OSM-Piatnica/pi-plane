@@ -13,6 +13,8 @@ import { ISSUE_DISPLAY_PROPERTIES } from "@plane/constants";
 import { useTranslation } from "@plane/i18n";
 // types
 import type { IIssueDisplayProperties } from "@plane/types";
+// hooks
+import { useProject } from "@/hooks/store/use-project";
 // components
 import { FilterHeader } from "../helpers/filter-header";
 
@@ -36,6 +38,7 @@ export const FilterDisplayProperties = observer(function FilterDisplayProperties
   } = props;
   // hooks
   const { t } = useTranslation();
+  const { currentProjectDetails } = useProject();
   // states
   const [previewEnabled, setPreviewEnabled] = React.useState(true);
 
@@ -50,6 +53,11 @@ export const FilterDisplayProperties = observer(function FilterDisplayProperties
         return !cycleViewDisabled;
       case "modules":
         return !moduleViewDisabled;
+      case "raci_responsible":
+      case "raci_approver":
+      case "raci_consulted":
+        // offered where RACI is on; a list without a project (workspace wide) offers it too
+        return currentProjectDetails?.is_raci_enabled !== false;
       default:
         return true;
     }

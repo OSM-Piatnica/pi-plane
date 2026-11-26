@@ -256,7 +256,13 @@
     "select_placeholder": "タイプ"
   },
   "workspace_features": {
-    "description": "このワークスペースの全員を対象に、Pi-Plane の機能のオン・オフを切り替えます。"
+    "description": "このワークスペースの全員を対象に、Pi-Plane の機能のオン・オフを切り替えます。",
+    "items": {
+      "raci": {
+        "description": "部署に作業項目での役割（実行責任、承認、相談、報告）を割り当てます。各プロジェクトが機能設定で有効にします。",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "タイプを保存しました"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "<department/>の役割を<old_role/>から<new_role/>に変更しました。",
+      "removed": "<department/>から役割<old_role/>を外しました。",
+      "set": "<department/>に役割<new_role/>を割り当てました。"
+    },
+    "color_by_department": "実行責任のある部署",
+    "feature": {
+      "description": "作業項目での部署の役割: 実行責任、承認、相談、報告。",
+      "title": "RACI"
+    },
+    "my_department": "自分の部署",
+    "no_departments": "ワークスペースにはまだ部署がありません。",
+    "none": "なし",
+    "properties": {
+      "any": "部署（任意の役割）",
+      "responsible": "実行責任",
+      "approver": "承認",
+      "consulted": "相談",
+      "informed": "報告"
+    },
+    "role_of": "{department}の役割",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "実行責任"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "承認"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "相談"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "報告"
+      }
+    },
+    "save_failed": "RACIを保存できませんでした。",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI の役割"
       }
     }
   }

@@ -9,11 +9,10 @@ switches are:
 | `approvals`   | the Approvals app (roadmap C6)   | no        |
 | `initiatives` | the Initiatives app (roadmap F2) | no        |
 | `wiki`        | the workspace wiki (roadmap G4)  | no        |
-| `raci`        | RACI on work items (roadmap D)   | no        |
+| `raci`        | RACI on work items (roadmap D2)  | yes       |
 
-"Available" means the feature is built. Today none is, so the mechanism is invisible: the
-settings page has no navigation entry, nothing can be switched on, and no request is made for it.
-Everything below has so far run only in unit and contract tests.
+"Available" means the feature is built. Only `raci` is (see [`raci.md`](./raci.md)), so the settings page
+"Features" is listed for workspace admins and offers that one switch.
 
 ## How it works
 
@@ -71,7 +70,7 @@ When the feature behind a key is built:
      `enabled_workspace_feature_keys(workspace)`. Hiding the UI is not access control.
 5. Tests: `WORKSPACE_FEATURES as shipped` in `packages/utils/tests/workspace-features.spec.ts` and
    `TestWorkspaceFeaturesAsShipped` in
-   `apps/api/plane/tests/contract/app/test_workspace_features_app.py` pin "nothing is available";
+   `apps/api/plane/tests/contract/app/test_workspace_features_app.py` pin which features are available;
    update them.
 
 A feature that is switched on by default for existing workspaces needs a data migration that

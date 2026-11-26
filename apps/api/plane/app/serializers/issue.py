@@ -1017,6 +1017,8 @@ class IssueSerializer(DynamicBaseSerializer):
     assignee_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
     # The groups the work item is assigned to; left out of answers of views that do not annotate it
     group_assignee_ids = serializers.ListField(child=serializers.UUIDField(), required=False)
+    # The roles of departments on the work item ({"group_id", "role"}); empty where the project has RACI off
+    raci = serializers.ListField(child=serializers.DictField(), required=False)
 
     # Count items
     sub_issues_count = serializers.IntegerField(read_only=True)
@@ -1047,6 +1049,7 @@ class IssueSerializer(DynamicBaseSerializer):
             "label_ids",
             "assignee_ids",
             "group_assignee_ids",
+            "raci",
             "sub_issues_count",
             "created_at",
             "updated_at",
@@ -1136,6 +1139,7 @@ class IssueListDetailSerializer(serializers.Serializer):
             "label_ids": self.get_label_ids(instance),
             "assignee_ids": self.get_assignee_ids(instance),
             "group_assignee_ids": getattr(instance, "group_assignee_ids", []),
+            "raci": getattr(instance, "raci", []),
             "sub_issues_count": instance.sub_issues_count,
             "attachment_count": instance.attachment_count,
             "link_count": instance.link_count,

@@ -37,6 +37,7 @@ from plane.utils.departments import (
     next_sort_order,
 )
 from plane.utils.project_groups import reconcile_user, reconcile_workspace
+from plane.utils.raci import remove_department_roles
 from plane.utils.user_groups import (
     MAX_GROUP_DEPTH,
     administered_group_ids,
@@ -236,6 +237,7 @@ class UserGroupDetailEndpoint(_GroupView):
         # Turning a group into a department, or switching a department on, makes it count as its members'
         # department: refused when any of them already belongs to another active department
         becomes_department = new_kind == GroupKind.DEPARTMENT and not group.is_department
+        stops_being_department = group.is_department and new_kind != GroupKind.DEPARTMENT
         starts_counting = (
             new_kind == GroupKind.DEPARTMENT
             and data.get("is_active", group.is_active)
@@ -275,6 +277,9 @@ class UserGroupDetailEndpoint(_GroupView):
                 if starts_counting:
                     member_ids = UserGroupMember.objects.filter(group=group).values_list("user_id", flat=True)
                     check_one_department(group, member_ids)
+                if stops_being_department:
+                    # RACI names departments only
+                    remove_department_roles([group.id])
         except IntegrityError as exc:
             return _conflict(exc)
         except DepartmentError as exc:
@@ -300,6 +305,8 @@ class UserGroupDetailEndpoint(_GroupView):
             IssueGroupAssignee.objects.filter(group=group).delete()
             # ... nor does a project have it as a member
             ProjectGroup.objects.filter(group=group).delete()
+            # ... nor does a work item give it a RACI role
+            remove_department_roles([group.id])
             group.delete()
         reconcile_workspace(workspace.id)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -403,13 +410,23 @@ class UserGroupMemberDetailEndpoint(_GroupView):
 
 
 class DepartmentListEndpoint(BaseAPIView):
-    """The departments that are switched on, in their order, for pickers and labels (any member, guests included)."""
+    """
+    The departments that are switched on, in their order, for pickers and labels (any member, guests included).
+
+    ``?include_inactive=true`` adds the ones that are switched off, which a work item may still name in its RACI.
+    """
 
     permission_classes = [WorkspaceViewerPermission]
 
     def get(self, request, slug):
         workspace = Workspace.objects.get(slug=slug)
-        return Response(DepartmentLiteSerializer(active_departments(workspace.id), many=True).data)
+        if request.query_params.get("include_inactive", "").lower() == "true":
+            departments = UserGroup.objects.filter(workspace=workspace, kind=GroupKind.DEPARTMENT).order_by(
+                "sort_order", "name"
+            )
+        else:
+            departments = active_departments(workspace.id)
+        return Response(DepartmentLiteSerializer(departments, many=True).data)
 
 
 class DepartmentMembersEndpoint(BaseAPIView):

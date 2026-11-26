@@ -42,6 +42,7 @@ import { IssueModuleSelect } from "../issue-detail/module-select";
 import { WorkItemAdditionalSidebarProperties } from "@/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/components/issues/issue-details/parent-select-root";
 import { TransferHopInfo } from "@/components/issues/issue-details/sidebar/transfer-hop-info";
+import { IssueRaciSection } from "@/components/issues/raci/raci-section";
 import { IssueWorklogProperty } from "@/components/issues/worklog/property";
 
 interface IPeekOverviewProperties {
@@ -203,6 +204,8 @@ export const PeekOverviewProperties = observer(function PeekOverviewProperties(p
         <SidebarPropertyListItem propertyKey="labels" icon={LabelsOutline} label={t("common.labels")}>
           <IssueLabel workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} disabled={disabled} />
         </SidebarPropertyListItem>
+
+        <IssueRaciSection workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
 
         <IssueWorklogProperty
           workspaceSlug={workspaceSlug}

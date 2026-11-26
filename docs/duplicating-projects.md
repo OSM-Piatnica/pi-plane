@@ -15,13 +15,13 @@ settings. There is no feature flag and nothing to configure.
 
 ## What a copy contains
 
-| Always copied                                                                                                   | Copied unless you opt out                         | Copied only if you opt in                                    | Never copied                                                   |
-| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
-| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types), cover image | Labels, including their hierarchy                 | Members and their roles                                      | Pages                                                          |
-| States, including the triage state                                                                              | Estimates and their points                        | Cycles, as empty shells                                      | Webhooks and workflows                                         |
-| Links to the work item types the source uses                                                                    | Intake configuration, if the source has intake on | Modules, as empty shells, with their links, lead and members | Web sharing, favourites, drafts, notifications, import history |
-|                                                                                                                 |                                                   | Views, subject to the privacy rules below                    | Comments, attachments, activity, time entries and subscribers  |
-|                                                                                                                 |                                                   | **Work items**, in the background                            |                                                                |
+| Always copied                                                                                                         | Copied unless you opt out                         | Copied only if you opt in                                    | Never copied                                                   |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| Project settings, feature toggles (cycles, modules, pages, intake, time tracking, work item types, RACI), cover image | Labels, including their hierarchy                 | Members and their roles                                      | Pages                                                          |
+| States, including the triage state                                                                                    | Estimates and their points                        | Cycles, as empty shells                                      | Webhooks and workflows                                         |
+| Links to the work item types the source uses                                                                          | Intake configuration, if the source has intake on | Modules, as empty shells, with their links, lead and members | Web sharing, favourites, drafts, notifications, import history |
+|                                                                                                                       |                                                   | Views, subject to the privacy rules below                    | Comments, attachments, activity, time entries and subscribers  |
+|                                                                                                                       |                                                   | **Work items**, in the background                            |                                                                |
 
 The copy always gets a **new name and identifier**, and the person who made it
 becomes its project lead and an admin.
@@ -78,7 +78,7 @@ its group (everything is on by default):
 | Group                   | Options                                                                      |
 | ----------------------- | ---------------------------------------------------------------------------- |
 | Content                 | dates (start, due, duration), custom property values, images in descriptions |
-| People                  | assignees (only people who are in the copy)                                  |
+| People                  | assignees (only people who are in the copy), RACI roles of departments       |
 | Organization            | labels, cycle membership, module membership                                  |
 | Hierarchy and relations | sub-work-item links, relations (both ends must be in the copy), links        |
 
@@ -119,7 +119,7 @@ Every field is optional.
 
 `states` and `work_item_types` are always copied. An unrecognised key in
 `include`, or an unknown name in `work_item_properties`, is rejected. The properties are `dates`,
-`custom_properties`, `description_images`, `assignees`, `labels`, `cycles`, `modules`, `parents`,
+`custom_properties`, `description_images`, `assignees`, `raci`, `labels`, `cycles`, `modules`, `parents`,
 `relations` and `links`. On success the response is the created project, in the
 shape project creation returns, plus `copy_summary` (`source_project_id`,
 `counts`, `skipped`, and `work_items` with the job's id, status and total when work items were asked for).

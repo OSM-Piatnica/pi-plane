@@ -256,7 +256,13 @@
     "select_placeholder": "Tipo"
   },
   "workspace_features": {
-    "description": "Attivare o disattivare parti di Pi-Plane per tutti in questo spazio di lavoro."
+    "description": "Attivare o disattivare parti di Pi-Plane per tutti in questo spazio di lavoro.",
+    "items": {
+      "raci": {
+        "description": "I reparti ricevono ruoli sugli elementi di lavoro (responsabile, approvatore, consultato, informato). Ogni progetto lo attiva nelle sue funzionalità.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Tipo salvato"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "ha cambiato il ruolo di <department/> da <old_role/> a <new_role/>.",
+      "removed": "ha tolto a <department/> il ruolo <old_role/>.",
+      "set": "ha assegnato a <department/> il ruolo <new_role/>."
+    },
+    "color_by_department": "Reparto responsabile",
+    "feature": {
+      "description": "Ruoli dei reparti sugli elementi di lavoro: responsabile, approvatore, consultato, informato.",
+      "title": "RACI"
+    },
+    "my_department": "Il mio reparto",
+    "no_departments": "L’area di lavoro non ha ancora reparti.",
+    "none": "Nessuno",
+    "properties": {
+      "any": "Reparto (qualsiasi ruolo)",
+      "responsible": "Responsabile",
+      "approver": "Approvatore",
+      "consulted": "Consultato",
+      "informed": "Informato"
+    },
+    "role_of": "Ruolo di {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsabile"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Approvatore"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consultato"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informato"
+      }
+    },
+    "save_failed": "Impossibile salvare il RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Ruoli RACI"
       }
     }
   }

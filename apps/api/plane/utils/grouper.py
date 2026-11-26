@@ -12,6 +12,7 @@ from django.db.models.functions import Coalesce
 # Module imports
 from plane.utils.date_buckets import BUCKET_FIELDS, BUCKETS, bucket_case, week_start_for_request
 from plane.utils.user_groups import group_assignee_ids_annotation
+from plane.utils.raci import raci_annotation
 from plane.db.models import (
     Cycle,
     Issue,
@@ -88,6 +89,7 @@ def issue_queryset_grouper(
     annotations_map: Dict[str, Tuple[str, Q]] = {
         "assignee_ids": Coalesce(issue_assignee_subquery, Value([], output_field=ArrayField(UUIDField()))),
         "group_assignee_ids": group_assignee_ids_annotation(),
+        "raci": raci_annotation(),
         "label_ids": Coalesce(issue_label_subquery, Value([], output_field=ArrayField(UUIDField()))),
         "module_ids": Coalesce(issue_module_subquery, Value([], output_field=ArrayField(UUIDField()))),
     }
@@ -127,7 +129,7 @@ def issue_on_results(
         "issue_module__module_id": "module_ids",
     }
 
-    original_list: List[str] = ["assignee_ids", "group_assignee_ids", "label_ids", "module_ids"]
+    original_list: List[str] = ["assignee_ids", "group_assignee_ids", "raci", "label_ids", "module_ids"]
 
     required_fields: List[str] = [
         "id",

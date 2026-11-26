@@ -44,6 +44,7 @@ export interface IPartialProject {
   /** Offer to move dependent work items when a date change breaks a relation; on unless set to false. */
   is_reschedule_offer_enabled?: boolean;
   is_time_tracking_enabled?: boolean;
+  is_raci_enabled?: boolean;
   project_lead?: IUserLite | string | null;
   network?: number;
   /** Whether the signed-in user has an open request to join this Private project (gallery list only). */

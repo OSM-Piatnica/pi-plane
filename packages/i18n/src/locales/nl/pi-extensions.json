@@ -256,7 +256,13 @@
     "select_placeholder": "Type"
   },
   "workspace_features": {
-    "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte."
+    "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte.",
+    "items": {
+      "raci": {
+        "description": "Afdelingen krijgen rollen op werkitems (verantwoordelijk, goedkeurder, geraadpleegd, geïnformeerd). Elk project schakelt het in bij zijn functies.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Type opgeslagen"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "heeft de rol van <department/> gewijzigd van <old_role/> naar <new_role/>.",
+      "removed": "heeft <department/> de rol <old_role/> ontnomen.",
+      "set": "heeft <department/> de rol <new_role/> gegeven."
+    },
+    "color_by_department": "Verantwoordelijke afdeling",
+    "feature": {
+      "description": "Rollen van afdelingen op werkitems: verantwoordelijk, goedkeurder, geraadpleegd, geïnformeerd.",
+      "title": "RACI"
+    },
+    "my_department": "Mijn afdeling",
+    "no_departments": "De werkruimte heeft nog geen afdelingen.",
+    "none": "Geen",
+    "properties": {
+      "any": "Afdeling (elke rol)",
+      "responsible": "Verantwoordelijk",
+      "approver": "Goedkeurder",
+      "consulted": "Geraadpleegd",
+      "informed": "Geïnformeerd"
+    },
+    "role_of": "Rol van {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Verantwoordelijk"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Goedkeurder"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Geraadpleegd"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Geïnformeerd"
+      }
+    },
+    "save_failed": "De RACI kon niet worden opgeslagen.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI-rollen"
       }
     }
   }

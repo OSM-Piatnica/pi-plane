@@ -270,7 +270,13 @@
     "total_work_items": "Łączna liczba {entity}"
   },
   "workspace_features": {
-    "description": "Włączanie i wyłączanie części Pi-Plane dla wszystkich w tej przestrzeni roboczej."
+    "description": "Włączanie i wyłączanie części Pi-Plane dla wszystkich w tej przestrzeni roboczej.",
+    "items": {
+      "raci": {
+        "description": "Działy dostają role w elementach pracy (odpowiada, zatwierdza, konsultowany, informowany). Każdy projekt włącza to w swoich funkcjach.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -699,6 +705,56 @@
             "title": "Typ zapisany"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "zmieniono rolę działu <department/> z <old_role/> na <new_role/>.",
+      "removed": "odebrano działowi <department/> rolę <old_role/>.",
+      "set": "nadano działowi <department/> rolę <new_role/>."
+    },
+    "color_by_department": "Dział odpowiedzialny",
+    "feature": {
+      "description": "Role działów w elementach pracy: odpowiada, zatwierdza, konsultowany, informowany.",
+      "title": "RACI"
+    },
+    "my_department": "Mój dział",
+    "no_departments": "Przestrzeń robocza nie ma jeszcze działów.",
+    "none": "Brak",
+    "properties": {
+      "any": "Dział (dowolna rola)",
+      "responsible": "Odpowiada",
+      "approver": "Zatwierdza",
+      "consulted": "Konsultowany",
+      "informed": "Informowany"
+    },
+    "role_of": "Rola działu {department}",
+    "roles": {
+      "responsible": {
+        "letter": "O",
+        "name": "Odpowiada"
+      },
+      "approver": {
+        "letter": "Z",
+        "name": "Zatwierdza"
+      },
+      "consulted": {
+        "letter": "K",
+        "name": "Konsultowany"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informowany"
+      }
+    },
+    "save_failed": "Nie udało się zapisać RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Role RACI"
       }
     }
   }

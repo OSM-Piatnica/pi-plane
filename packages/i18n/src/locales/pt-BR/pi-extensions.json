@@ -256,7 +256,13 @@
     "select_placeholder": "Tipo"
   },
   "workspace_features": {
-    "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho."
+    "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho.",
+    "items": {
+      "raci": {
+        "description": "Os departamentos recebem funções nos itens de trabalho (responsável, aprovador, consultado, informado). Cada projeto ativa isso em seus recursos.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -685,6 +691,56 @@
             "title": "Tipo salvo"
           }
         }
+      }
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "alterou a função de <department/> de <old_role/> para <new_role/>.",
+      "removed": "removeu de <department/> a função <old_role/>.",
+      "set": "atribuiu a <department/> a função <new_role/>."
+    },
+    "color_by_department": "Departamento responsável",
+    "feature": {
+      "description": "Funções dos departamentos nos itens de trabalho: responsável, aprovador, consultado, informado.",
+      "title": "RACI"
+    },
+    "my_department": "Meu departamento",
+    "no_departments": "O espaço de trabalho ainda não tem departamentos.",
+    "none": "Nenhum",
+    "properties": {
+      "any": "Departamento (qualquer função)",
+      "responsible": "Responsável",
+      "approver": "Aprovador",
+      "consulted": "Consultado",
+      "informed": "Informado"
+    },
+    "role_of": "Função de {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsável"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Aprovador"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consultado"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informado"
+      }
+    },
+    "save_failed": "Não foi possível salvar o RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Funções RACI"
       }
     }
   }
