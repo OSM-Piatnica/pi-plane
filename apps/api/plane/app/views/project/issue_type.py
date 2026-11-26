@@ -176,9 +176,10 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
                     project_id=project_id, deleted_at__isnull=True
                 ).select_related("issue_type")
             }
-            # A system-managed type is never the type a new work item starts with
-            default_row = existing.get(str(default_uuid)) if default_uuid else None
-            if default_row is not None and default_row.issue_type.kind in SYSTEM_MANAGED_ISSUE_TYPE_KINDS:
+            # The default must be one of the types this list links. A system-managed type (left out of
+            # `valid_types`) is never the type a new work item starts with, and a default that is not linked
+            # would leave the project without one; either way the current default stays.
+            if default_uuid not in {issue_type.id for issue_type in valid_types}:
                 default_uuid = None
             keep = set()
             for issue_type in valid_types:
