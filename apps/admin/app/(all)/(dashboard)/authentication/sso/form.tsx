@@ -227,7 +227,7 @@ export function InstanceOidcConfigForm(props: Props) {
                 </h4>
                 <p className="text-11 text-tertiary">
                   For migration only: switch it off once everybody has signed in. Linking replaces any password set on
-                  the account.
+                  the account, except for instance admins, who keep theirs because god mode only accepts a password.
                 </p>
               </div>
               <Controller
