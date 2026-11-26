@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import IssueTypeSerializer, ProjectIssueTypeSerializer
 from plane.app.views.base import BaseAPIView, BaseViewSet
-from plane.db.models import IssueType, IssueTypeKind, Project, ProjectIssueType
+from plane.db.models import SYSTEM_MANAGED_ISSUE_TYPE_KINDS, IssueType, IssueTypeKind, Project, ProjectIssueType
 from plane.utils.project_issue_types import (
     EpicsNotAvailableError,
     ensure_project_epic_type,
@@ -127,7 +127,14 @@ class ProjectIssueTypeViewSet(BaseViewSet):
         return super().destroy(request, slug, project_id, pk)
 
 
+# Kinds whose links a type list never removes: Epic types belong to the Epics switch, system-managed types
+# (approval, review) to the feature that links them through `ensure_project_kind_type`
+KINDS_KEPT_BY_BULK_ASSIGN = frozenset({IssueTypeKind.EPIC, *SYSTEM_MANAGED_ISSUE_TYPE_KINDS})
+
+
 class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
+    """Set the types a project can use from a list. A list neither adds nor removes a system-managed type."""
+
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER], level="PROJECT")
     def post(self, request, slug, project_id):
         issue_type_ids = request.data.get("issue_type_ids")
@@ -151,7 +158,7 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
                 id__in=parsed_ids,
                 deleted_at__isnull=True,
                 is_active=True,
-            )
+            ).exclude(kind__in=SYSTEM_MANAGED_ISSUE_TYPE_KINDS)
         )
 
         default_type_id = request.data.get("default_type_id")
@@ -169,6 +176,10 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
                     project_id=project_id, deleted_at__isnull=True
                 ).select_related("issue_type")
             }
+            # A system-managed type is never the type a new work item starts with
+            default_row = existing.get(str(default_uuid)) if default_uuid else None
+            if default_row is not None and default_row.issue_type.kind in SYSTEM_MANAGED_ISSUE_TYPE_KINDS:
+                default_uuid = None
             keep = set()
             for issue_type in valid_types:
                 keep.add(str(issue_type.id))
@@ -185,8 +196,9 @@ class ProjectIssueTypeBulkAssignEndpoint(BaseAPIView):
                     existing[str(issue_type.id)].save()
             for key, row in existing.items():
                 # Epics are switched on and off through the Epics endpoint only, so a list that leaves an Epic
-                # type out (the settings list does not show them) never turns Epics off
-                if key not in keep and row.issue_type.kind != IssueTypeKind.EPIC:
+                # type out (the settings list does not show them) never turns Epics off; the same holds for the
+                # system-managed types, which the lists do not show either
+                if key not in keep and row.issue_type.kind not in KINDS_KEPT_BY_BULK_ASSIGN:
                     row.delete()
 
             if default_uuid:
