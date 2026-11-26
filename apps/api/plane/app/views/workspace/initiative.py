@@ -8,9 +8,11 @@ import uuid
 # Django imports
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction
+from django.db.models import Q
 
 # Third party imports
 from rest_framework import status
+from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
 
 # Module imports
@@ -28,7 +30,8 @@ from plane.db.models import (
     Workspace,
 )
 from plane.utils.user_groups import is_workspace_admin
-from plane.utils.initiatives import accessible_project_ids, describe, project_access
+from plane.utils.initiatives import accessible_project_ids, describe, linked_epics, project_access
+from plane.utils.workspace_features import is_workspace_feature_enabled
 
 from ..base import BaseAPIView
 
@@ -37,6 +40,8 @@ LINKS_ONLY_ON_INITIATIVES = "Projects and Epics are linked to initiatives, not t
 MAX_LINKS_PER_REQUEST = 100
 NOT_ALLOWED_TO_UNLINK = "Only a member of the project (not a guest) or a workspace admin can unlink it."
 NOT_ALLOWED_TO_LINK = "Only a member of the project (not a guest) or a workspace admin can link it or its Epics."
+# The most Epics one search returns
+MAX_EPIC_SEARCH_RESULTS = 20
 
 
 def _error(message, code=status.HTTP_400_BAD_REQUEST):
@@ -62,14 +67,25 @@ def _uuid_list(data, key):
     return None if any(value is None for value in ids) else list(dict.fromkeys(ids))
 
 
+class InitiativesSwitchedOn(BasePermission):
+    """The Initiatives feature is switched on for the workspace (``WorkspaceFeature``, key ``initiatives``)."""
+
+    message = "Initiatives are switched off in this workspace."
+
+    def has_permission(self, request, view):
+        workspace = Workspace.objects.filter(slug=view.workspace_slug).first()
+        return workspace is not None and is_workspace_feature_enabled(workspace, "initiatives")
+
+
 class _InitiativeView(BaseAPIView):
     """Initiatives belong to the workspace: its admins and members read and manage them, guests have no access.
 
+    They answer only while a workspace admin has switched the feature on (``docs/workspace-features.md``).
     Work item numbers come only from the projects the requester may see: all of them for a workspace admin, their
     own for a member (see ``plane.utils.initiatives``).
     """
 
-    permission_classes = [WorkSpaceAdminPermission]
+    permission_classes = [WorkSpaceAdminPermission, InitiativesSwitchedOn]
 
     def handle_exception(self, exc):
         # What a model refuses is said in its own words; the base view would answer with a general message
@@ -246,10 +262,22 @@ class InitiativeProjectDetailEndpoint(_InitiativeView):
 
 
 class InitiativeEpicsEndpoint(_InitiativeView):
-    """Link Epics to an initiative.
+    """The linked Epics, and linking Epics to an initiative.
 
     Linking and unlinking takes at least the Member role in the project of the Epic, or a workspace admin.
     """
+
+    def get(self, request, slug, pk):
+        """The linked Epics the requester may see, each with the progress of its child work items.
+
+        For a goal, the Epics of its initiatives, each once. Hidden Epics are only counted, in the initiative's
+        ``hidden_epic_count``.
+        """
+        workspace = self._workspace(slug)
+        initiative = self._initiative(workspace, pk)
+        if initiative is None:
+            return _error("Initiative not found.", status.HTTP_404_NOT_FOUND)
+        return Response(linked_epics(initiative, request.user, workspace.id), status=status.HTTP_200_OK)
 
     def post(self, request, slug, pk):
         workspace = self._workspace(slug)
@@ -274,7 +302,9 @@ class InitiativeEpicsEndpoint(_InitiativeView):
             )
         if any(project_id not in manageable for _, project_id in found):
             return _error(NOT_ALLOWED_TO_LINK, status.HTTP_403_FORBIDDEN)
-        epics = [epic_id for epic_id, _ in found]
+        # In the order of the request: the links are listed in the order they were made
+        found_ids = {epic_id for epic_id, _ in found}
+        epics = [epic_id for epic_id in epic_ids if epic_id in found_ids]
 
         present = set(
             InitiativeEpic.objects.filter(initiative=initiative, issue_id__in=epic_ids).values_list(
@@ -293,6 +323,49 @@ class InitiativeEpicsEndpoint(_InitiativeView):
             ignore_conflicts=True,
         )
         return Response(self._present_one(request, workspace, initiative), status=status.HTTP_200_OK)
+
+
+class InitiativeEpicSearchEndpoint(_InitiativeView):
+    """Epics the requester may link to an initiative: in a project they may link, not archived, not linked yet."""
+
+    def get(self, request, slug, pk):
+        workspace = self._workspace(slug)
+        initiative = self._initiative(workspace, pk)
+        if initiative is None:
+            return _error("Initiative not found.", status.HTTP_404_NOT_FOUND)
+        if initiative.kind != InitiativeKind.INITIATIVE:
+            return _error(LINKS_ONLY_ON_INITIATIVES)
+        _, manageable = project_access(request.user, workspace.id)
+        epics = Issue.issue_objects.filter(workspace=workspace, type__is_epic=True, project_id__in=manageable).exclude(
+            pk__in=InitiativeEpic.objects.filter(initiative=initiative).values("issue_id"),
+        )
+        search = request.GET.get("search", "").strip()
+        if search:
+            match = Q(name__icontains=search)
+            # "12" or "ABC-12": the number of the Epic, with or without the identifier of its project
+            identifier, _, number = search.rpartition("-")
+            if number.isdigit():
+                by_number = Q(sequence_id=int(number))
+                if identifier:
+                    by_number &= Q(project__identifier__iexact=identifier)
+                match |= by_number
+            epics = epics.filter(match)
+        rows = epics.order_by("-updated_at").values("id", "name", "sequence_id", "project_id", "project__identifier")[
+            :MAX_EPIC_SEARCH_RESULTS
+        ]
+        return Response(
+            [
+                {
+                    "id": row["id"],
+                    "name": row["name"],
+                    "sequence_id": row["sequence_id"],
+                    "project_id": row["project_id"],
+                    "project_identifier": row["project__identifier"],
+                }
+                for row in rows
+            ],
+            status=status.HTTP_200_OK,
+        )
 
 
 class InitiativeEpicDetailEndpoint(_InitiativeView):
