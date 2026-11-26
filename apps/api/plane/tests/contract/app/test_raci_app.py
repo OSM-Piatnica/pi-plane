@@ -58,14 +58,18 @@ def project(db, workspace, create_user, raci_on):
 
 
 def _issue(project, name, parent=None, created_by=None):
-    return Issue.objects.create(
+    issue = Issue.objects.create(
         name=name,
         project=project,
         workspace=project.workspace,
         state=State.objects.get(project=project),
         parent=parent,
-        created_by=created_by,
     )
+    if created_by is not None:
+        # BaseModel.save() sets created_by from the request user (none in a test), so it is set afterwards
+        Issue.objects.filter(pk=issue.pk).update(created_by=created_by)
+        issue.refresh_from_db()
+    return issue
 
 
 @pytest.fixture
@@ -322,6 +326,30 @@ class TestRaciInWorkItemLists:
         expected = [{"group_id": str(departments["rm"].id), "role": "responsible"}]
         assert [{k: str(v) for k, v in row.items()} for row in rows["Packaging"]["raci"]] == expected
         assert [{k: str(v) for k, v in row.items()} for row in detail.data["raci"]] == expected
+
+    def test_creating_a_work_item_answers_with_its_empty_raci(self, session_client, project):
+        # regression: the answer to a create is read through the grouper without a grouping, which left out the
+        # raci annotation and failed with a FieldError (500)
+        response = session_client.post(
+            f"/api/workspaces/{project.workspace.slug}/projects/{project.id}/issues/", {"name": "New"}, format="json"
+        )
+
+        assert response.status_code == 201, response.data
+        assert response.data["raci"] == []
+
+    def test_creating_a_work_item_works_where_raci_is_off(self, session_client, workspace, create_user):
+        plain = Project.objects.create(name="Plain", identifier="PLN", workspace=workspace, created_by=create_user)
+        ProjectMember.objects.create(project=plain, member=create_user, role=ADMIN, is_active=True)
+        State.objects.create(
+            name="Todo", group="unstarted", color="#fff", project=plain, workspace=workspace, default=True
+        )
+
+        response = session_client.post(
+            f"/api/workspaces/{workspace.slug}/projects/{plain.id}/issues/", {"name": "New"}, format="json"
+        )
+
+        assert response.status_code == 201, response.data
+        assert response.data["raci"] == []
 
     def test_nothing_is_served_while_the_project_has_raci_off(self, session_client, project, issue, departments):
         IssueRaci.objects.create(

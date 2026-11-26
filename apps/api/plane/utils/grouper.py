@@ -46,6 +46,8 @@ def issue_queryset_grouper(
         "module_ids": "issue_module__module_id",
         # Never a grouping: listed so that the annotation below is always added
         "group_assignee_ids": "issue_group_assignee__group_id",
+        # Never a grouping either: without an entry a list that is not grouped (group_by None) would skip it
+        "raci": "issue_raci__group_id",
     }
 
     GROUP_FILTER_MAPPER: Dict[str, Q] = {
