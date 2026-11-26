@@ -22,6 +22,38 @@
   --editor-colors-light-blue-background: #c5eff9;
   --editor-colors-dark-blue-background: #c9dafb;
   --editor-colors-purple-background: #e3d8fd;
+  /* sticky text: the theme's own text, unless a custom theme sets text that matches its sticky backgrounds */
+  --sticky-txt-primary: var(--txt-primary);
+  --sticky-txt-secondary: var(--txt-secondary);
+  --sticky-txt-tertiary: var(--txt-tertiary);
+  --sticky-txt-placeholder: var(--txt-placeholder);
+  /* the theme's own text, for panels that open inside a sticky on a surface background */
+  --page-txt-primary: var(--txt-primary);
+  --page-txt-secondary: var(--txt-secondary);
+  --page-txt-tertiary: var(--txt-tertiary);
+  --page-txt-placeholder: var(--txt-placeholder);
+}
+
+/* A custom theme can pin text colours that stay the same in both modes (the light Piatnica theme pins dark grey),
+ * while sticky backgrounds follow the mode. Inside a sticky the text tokens are swapped for ones that read on its
+ * background, which applyCustomTheme sets for the mode. */
+.sticky-note {
+  --txt-primary: var(--sticky-txt-primary);
+  --txt-secondary: var(--sticky-txt-secondary);
+  --txt-tertiary: var(--sticky-txt-tertiary);
+  --txt-placeholder: var(--sticky-txt-placeholder);
+  /* the editor's text token, resolved once on the page; its empty-line placeholder is this at 50% */
+  --text-color-primary: var(--sticky-txt-primary);
+  color: var(--txt-primary);
+}
+
+.sticky-note .sticky-note-surface {
+  --txt-primary: var(--page-txt-primary);
+  --txt-secondary: var(--page-txt-secondary);
+  --txt-tertiary: var(--page-txt-tertiary);
+  --txt-placeholder: var(--page-txt-placeholder);
+  --text-color-primary: var(--page-txt-primary);
+  color: var(--txt-primary);
 }
 
 .shadow-custom {

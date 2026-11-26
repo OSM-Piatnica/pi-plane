@@ -155,3 +155,23 @@ export const EDITOR_COLORS_DARK = {
   "dark-blue": "#223558",
   purple: "#3d325a",
 };
+
+/**
+ * Sticky text on the light editor color backgrounds (pastel)
+ */
+export const STICKY_TEXT_COLORS_LIGHT: Record<string, string> = {
+  "sticky-txt-primary": "#262626",
+  "sticky-txt-secondary": "#404040",
+  "sticky-txt-tertiary": "#595959",
+  "sticky-txt-placeholder": "#6b6b6b",
+};
+
+/**
+ * Sticky text on the dark editor color backgrounds (deep)
+ */
+export const STICKY_TEXT_COLORS_DARK: Record<string, string> = {
+  "sticky-txt-primary": "#f5f5f5",
+  "sticky-txt-secondary": "#e0e0e0",
+  "sticky-txt-tertiary": "#c4c4c4",
+  "sticky-txt-placeholder": "#a8a8a8",
+};
