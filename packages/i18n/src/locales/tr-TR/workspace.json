@@ -398,6 +398,9 @@
       "updated": "Tema güncellendi",
       "updating": "Tema güncelleniyor...",
       "update_failed": "Tema güncellenemedi. Lütfen tekrar deneyin.",
+      "instance_managed": "Bu tema yöneticiniz tarafından ayarlandığı için renkleri burada değiştirilemez. Kendi değişikliklerinizi yapmak için özel tema olarak kopyalayın.",
+      "copy_as_custom": "Özel tema olarak kopyala",
+      "copied_as_custom": "Özel tema olarak kopyalandı",
       "advanced": {
         "title": "Gelişmiş özelleştirme",
         "description": "Tek tek renkleri yerleşik temaların yaptığı gibi ayarlayın. Otomatik olarak bıraktığınız her şey yukarıdaki iki rengi takip eder.",

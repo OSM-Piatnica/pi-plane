@@ -398,6 +398,9 @@
       "updated": "Tema atualizado",
       "updating": "Atualizando tema...",
       "update_failed": "Falha ao atualizar o tema. Tente novamente.",
+      "instance_managed": "Este tema é definido pelo seu administrador, por isso as respetivas cores não podem ser alteradas aqui. Copie-o como tema personalizado para fazer as suas próprias alterações.",
+      "copy_as_custom": "Copiar como tema personalizado",
+      "copied_as_custom": "Copiado como tema personalizado",
       "advanced": {
         "title": "Personalização avançada",
         "description": "Defina cores individuais como fazem os temas integrados. Tudo o que deixar em Automático segue as duas cores acima.",

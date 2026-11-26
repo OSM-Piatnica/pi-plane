@@ -398,6 +398,9 @@
       "updated": "主題已更新",
       "updating": "正在更新主題...",
       "update_failed": "更新主題失敗，請再試一次。",
+      "instance_managed": "此主題由您的管理員設定，因此無法在此變更其顏色。請將其複製為自訂主題，以進行您自己的變更。",
+      "copy_as_custom": "複製為自訂主題",
+      "copied_as_custom": "已複製為自訂主題",
       "advanced": {
         "title": "進階自訂",
         "description": "像內建主題一樣個別設定各項顏色。保持為「自動」的項目會跟隨上方的兩種顏色。",
