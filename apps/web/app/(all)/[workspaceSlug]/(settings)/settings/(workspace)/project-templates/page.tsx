@@ -67,6 +67,7 @@ import {
 import { ProjectTemplateCoverField } from "./project-template-cover-field";
 import { StateTemplatesEditor } from "./state-templates-editor";
 import { WorkItemTypesTemplateEditor } from "./work-item-types-template-editor";
+import { useSystemManagedTypeNames } from "@/hooks/use-workspace-issue-types";
 
 const service = new ProjectTemplateService();
 
@@ -108,6 +109,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
   );
 
   // the workspace's groups, for the "Groups as members" section and the paths written next to their ids
+  const systemManagedTypeNames = useSystemManagedTypeNames(workspaceSlug, canManage);
   const { data: groups } = useSWR(canManage && workspaceSlug ? `USER_GROUPS_${workspaceSlug}` : null, () =>
     userGroupService.list(workspaceSlug)
   );
@@ -263,7 +265,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
       const body = {
         name: values.templateName.trim(),
         description: values.templateNote,
-        payload: buildProjectTemplatePayloadFromFormValues(values, getGroupPaths(groups ?? [])),
+        payload: buildProjectTemplatePayloadFromFormValues(values, getGroupPaths(groups ?? []), systemManagedTypeNames),
       };
       if (editingId) {
         await service.update(workspaceSlug, editingId, body);
@@ -665,6 +667,7 @@ function ProjectTemplatesPage({ params }: Route.ComponentProps) {
                                         taskCustomProperties={taskField.value}
                                         epicCustomProperties={epicField.value}
                                         additionalWorkItemTypes={addField.value}
+                                        systemManagedTypeNames={systemManagedTypeNames}
                                         onChangeTask={taskField.onChange}
                                         onChangeEpic={epicField.onChange}
                                         onChangeAdditional={addField.onChange}

@@ -6,6 +6,7 @@
 
 import useSWR from "swr";
 import type { TProjectIssueType } from "@plane/types";
+import { getDefaultProjectIssueTypeId } from "@/helpers/issue-type-options";
 import { IssueTypeService } from "@/services/issue-type.service";
 
 const service = new IssueTypeService();
@@ -15,14 +16,11 @@ export function useProjectIssueTypes(workspaceSlug: string | undefined, projectI
   const { data, error, isLoading, mutate } = useSWR(key, () => service.listProjectTypes(workspaceSlug!, projectId!));
 
   const types = (data ?? []) as TProjectIssueType[];
-  const defaultType =
-    types.find((row) => row.is_default)?.issue_type_detail ??
-    types.find((row) => row.issue_type_detail)?.issue_type_detail ??
-    null;
 
   return {
     types,
-    defaultTypeId: defaultType?.id ?? null,
+    // never a system-managed type: a person cannot create those work items by hand
+    defaultTypeId: getDefaultProjectIssueTypeId(types),
     isLoading,
     error,
     mutate,

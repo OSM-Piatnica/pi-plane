@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Typen laden…",
     "property_values_save_failed": "Het werkitem is aangemaakt, maar extra eigenschappen konden niet worden opgeslagen. Vul ze in via de details van het werkitem.",
-    "select_placeholder": "Type"
+    "select_placeholder": "Type",
+    "system_managed": {
+      "change_refused": "Dit werkitemtype wordt door het systeem beheerd. Een werkitem kan niet naar dit type of van dit type naar een ander worden gewijzigd.",
+      "tooltip": "Het systeem stelt dit type in. Het kan niet worden gewijzigd."
+    }
   },
   "workspace_features": {
     "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Optioneel",
             "properties_empty": "Geen aangepaste eigenschappen voor dit type.",
+            "system_type_name": "Dit is de naam van een door het systeem beheerd type. Deze invoer wordt niet met het sjabloon opgeslagen.",
             "task": {
               "description": "Standaardwerkitemtype voor dagelijkse taken.",
               "title": "Taak"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Goedkeuring",
+          "milestone": "Mijlpaal",
+          "review": "Beoordeling"
+        },
+        "system_type_hint": "Het systeem gebruikt dit type. De naam, het pictogram, de beschrijving en de eigenschappen kunnen worden gewijzigd, maar het type kan hier niet worden verwijderd, gedeactiveerd of aan projecten worden toegewezen.",
         "table": {
           "name": "Type",
           "no_projects": "Niet toegewezen",

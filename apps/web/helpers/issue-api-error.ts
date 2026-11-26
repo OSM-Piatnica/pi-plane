@@ -29,6 +29,16 @@ const readField = (value: unknown): string | undefined => {
 // A project that lets only assignees, the lead and admins change a work item refuses the others with this code
 const EDIT_RESTRICTED_CODE = "work_item_edit_restricted";
 
+// The type of a work item cannot be switched into, out of or cleared from a system-managed kind (approval,
+// review): `SYSTEM_MANAGED_TYPE_CODE` in plane/utils/project_issue_types.py
+export const WORK_ITEM_TYPE_SYSTEM_MANAGED_CODE = "WORK_ITEM_TYPE_SYSTEM_MANAGED";
+
+// Codes that have one translated sentence each
+const CODE_MESSAGE_KEYS: Record<string, string> = {
+  [EDIT_RESTRICTED_CODE]: "issue.edit_restricted",
+  [WORK_ITEM_TYPE_SYSTEM_MANAGED_CODE]: "work_item_types.system_managed.change_refused",
+};
+
 const RELATION_SHAPE_KEYS: Record<string, string> = {
   relation_self: "issue.relation.conflict.self",
   relation_cycle: "issue.relation.conflict.cycle",
@@ -74,9 +84,10 @@ export const getIssueApiErrorMessage = (error: unknown, fallback: string, t?: TT
   if (typeof error === "object") {
     const payload = error as Record<string, unknown>;
 
-    if (t && readField(payload.error_code) === EDIT_RESTRICTED_CODE) {
-      const message = t("issue.edit_restricted");
-      if (message !== "issue.edit_restricted") return message;
+    const codeKey = CODE_MESSAGE_KEYS[readField(payload.error_code) ?? ""];
+    if (t && codeKey) {
+      const message = t(codeKey);
+      if (message !== codeKey) return message;
     }
 
     if (t) {

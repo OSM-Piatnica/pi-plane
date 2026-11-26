@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Loading types…",
     "property_values_save_failed": "The work item was created, but additional properties could not be saved. Fill them in from the work item details.",
-    "select_placeholder": "Type"
+    "select_placeholder": "Type",
+    "system_managed": {
+      "change_refused": "The system manages this work item type. A work item cannot be switched to it or away from it.",
+      "tooltip": "The system sets this type. It cannot be changed."
+    }
   },
   "workspace_features": {
     "description": "Switch parts of Pi-Plane on or off for everyone in this workspace."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Optional",
             "properties_empty": "No custom properties for this type.",
+            "system_type_name": "This is the name of a system-managed type. The entry will not be saved with the template.",
             "task": {
               "description": "Standard work item type for everyday tasks.",
               "title": "Task"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Approval",
+          "milestone": "Milestone",
+          "review": "Review"
+        },
+        "system_type_hint": "The system uses this type. You can change its name, icon, description and properties, but it cannot be removed, deactivated or assigned to projects here.",
         "table": {
           "name": "Type",
           "no_projects": "Not assigned",

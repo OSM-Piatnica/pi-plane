@@ -25,12 +25,17 @@ export type TIssueTypeProperty = {
   updated_at?: string;
 };
 
+/** What the system does with a work item type. Set by the server; read-only for clients. */
+export type TIssueTypeKind = "standard" | "epic" | "milestone" | "approval" | "review";
+
 export type TIssueType = {
   id: string;
   name: string;
   description: string;
   logo_props: TLogoProps;
   is_epic: boolean;
+  /** Optional: data cached before the server sent kinds has none. Read it through `getIssueTypeKind`. */
+  kind?: TIssueTypeKind;
   is_default: boolean;
   is_active: boolean;
   level: number;

@@ -19,7 +19,9 @@ import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { setToast } from "@plane/blocks/toast";
 import { Switch } from "@makeplane/propel/components/switch";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 import type { TIssueType } from "@plane/types";
+import { getIssueTypeKind, isSystemManagedKind, isSystemManagedType } from "@plane/utils";
 import { PageHead } from "@/components/core/page-title";
 import { NotAuthorizedView } from "@/components/auth-screens/not-authorized-view";
 import { ProjectSelect } from "@/components/dropdowns/project/project-select";
@@ -35,7 +37,12 @@ import type { Route } from "./+types/page";
 import { WorkItemTypesSettingsHeader } from "./header";
 import { WorkItemTypePropertyEditor } from "./work-item-type-property-editor";
 import { DEFAULT_WORK_ITEM_TYPE_FORM, type TWorkItemTypeFormFields } from "./work-item-type-form.types";
-import { buildIssueTypePayloadFromForm, mapIssueTypeToFormValues } from "./work-item-type-payload-helpers";
+import {
+  buildIssueTypePayloadFromForm,
+  canToggleEpicKind,
+  getKindBadgeKey,
+  mapIssueTypeToFormValues,
+} from "./work-item-type-payload-helpers";
 
 const service = new IssueTypeService();
 
@@ -66,6 +73,9 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
 
   const { handleSubmit, control, reset, watch, setValue, formState } = form;
   const properties = watch("properties");
+  // the kind of the type in the form: set by the server, shown but never edited here
+  const editingKind = getIssueTypeKind(issueTypes?.find((row) => row.id === editingId));
+  const isEditingSystemManaged = isSystemManagedKind(editingKind);
 
   // react-doctor-disable-next-line no-event-handler -- modalOpen is closed from several places (submit, cancel, modal onOpenChange), so one effect keeps the reset in sync
   useEffect(() => {
@@ -100,7 +110,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
       });
       return;
     }
-    const payload = buildIssueTypePayloadFromForm(values);
+    const payload = buildIssueTypePayloadFromForm(values, editingKind);
     setSaving(true);
     try {
       if (editingId) {
@@ -128,6 +138,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
   });
 
   const onToggleActive = async (row: TIssueType) => {
+    if (isSystemManagedType(row)) return;
     try {
       await service.updateWorkspaceType(workspaceSlug, row.id, { is_active: !row.is_active });
       await mutate(listKey);
@@ -141,7 +152,9 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
     }
   };
 
-  const onDelete = async (id: string) => {
+  const onDelete = async (row: TIssueType) => {
+    if (isSystemManagedType(row)) return;
+    const id = row.id;
     if (!window.confirm(t("workspace_settings.settings.work_item_types.delete_confirm"))) return;
     try {
       await service.removeWorkspaceType(workspaceSlug, id);
@@ -260,52 +273,66 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-6">
-                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
-                        <label className="flex items-center gap-2 text-13 text-secondary">
-                          <Controller
-                            name="isEpic"
-                            control={control}
-                            render={({ field }) => (
-                              <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
-                            )}
-                          />
-                          {t("workspace_settings.settings.work_item_types.form.is_epic")}
-                        </label>
-                        {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
-                        <label className="flex items-center gap-2 text-13 text-secondary">
-                          <Controller
-                            name="isActive"
-                            control={control}
-                            render={({ field }) => (
-                              <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
-                            )}
-                          />
-                          {t("workspace_settings.settings.work_item_types.form.is_active")}
-                        </label>
-                      </div>
-                      <div>
-                        <span id="work-item-type-projects-label" className="block text-12 text-tertiary">
-                          {t("workspace_settings.settings.work_item_types.form.projects_label")}
-                        </span>
-                        <p className="pt-0.5 pb-1 text-11 text-tertiary">
-                          {t("workspace_settings.settings.work_item_types.form.projects_hint")}
+                      {isEditingSystemManaged ? (
+                        <p className="rounded-md border border-subtle bg-surface-1 px-3 py-2 text-12 text-secondary">
+                          {t("workspace_settings.settings.work_item_types.system_type_hint")}
                         </p>
-                        <div className="mt-1 h-8 max-w-md" role="group" aria-labelledby="work-item-type-projects-label">
-                          <Controller
-                            name="projectIds"
-                            control={control}
-                            render={({ field }) => (
-                              <ProjectSelect
-                                value={field.value}
-                                onChange={(ids) => field.onChange(ids)}
-                                multiple
-                                variant="select-md"
+                      ) : (
+                        <>
+                          <div className="flex flex-wrap items-center gap-6">
+                            {canToggleEpicKind(editingKind) ? (
+                              // react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label
+                              <label className="flex items-center gap-2 text-13 text-secondary">
+                                <Controller
+                                  name="isEpic"
+                                  control={control}
+                                  render={({ field }) => (
+                                    <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
+                                  )}
+                                />
+                                {t("workspace_settings.settings.work_item_types.form.is_epic")}
+                              </label>
+                            ) : null}
+                            {/* react-doctor-disable-next-line label-has-associated-control -- the Switch is rendered inside the Controller render prop, so it is nested in this label */}
+                            <label className="flex items-center gap-2 text-13 text-secondary">
+                              <Controller
+                                name="isActive"
+                                control={control}
+                                render={({ field }) => (
+                                  <Switch checked={field.value} onCheckedChange={field.onChange} size="sm" />
+                                )}
                               />
-                            )}
-                          />
-                        </div>
-                      </div>
+                              {t("workspace_settings.settings.work_item_types.form.is_active")}
+                            </label>
+                          </div>
+                          <div>
+                            <span id="work-item-type-projects-label" className="block text-12 text-tertiary">
+                              {t("workspace_settings.settings.work_item_types.form.projects_label")}
+                            </span>
+                            <p className="pt-0.5 pb-1 text-11 text-tertiary">
+                              {t("workspace_settings.settings.work_item_types.form.projects_hint")}
+                            </p>
+                            <div
+                              className="mt-1 h-8 max-w-md"
+                              role="group"
+                              aria-labelledby="work-item-type-projects-label"
+                            >
+                              <Controller
+                                name="projectIds"
+                                control={control}
+                                render={({ field }) => (
+                                  <ProjectSelect
+                                    value={field.value}
+                                    onChange={(ids) => field.onChange(ids)}
+                                    multiple
+                                    variant="select-md"
+                                  />
+                                )}
+                              />
+                            </div>
+                          </div>
+                        </>
+                      )}
                       <div className="rounded-md border border-subtle bg-surface-1 p-3">
                         <h4 className="pb-2 text-14 font-medium text-primary">
                           {t("workspace_settings.settings.work_item_types.form.properties_heading")}
@@ -379,46 +406,14 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                 </thead>
                 <tbody>
                   {issueTypes.map((row) => (
-                    <tr key={row.id} className="border-t border-subtle">
-                      <td className="p-2">
-                        <div className="flex items-center gap-2 font-medium text-primary">
-                          <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
-                          <span>{row.name}</span>
-                          {row.is_epic ? (
-                            <span className="rounded bg-surface-2 px-1.5 py-0.5 text-10 text-tertiary">
-                              {t("workspace_settings.settings.work_item_types.epic_badge")}
-                            </span>
-                          ) : null}
-                        </div>
-                      </td>
-                      <td className="p-2 text-secondary">{row.properties?.length ?? 0}</td>
-                      <td className="p-2 text-secondary">
-                        {(row.project_ids ?? []).length === 0
-                          ? t("workspace_settings.settings.work_item_types.table.no_projects")
-                          : (row.project_ids ?? []).map((id) => getProjectById(id)?.name ?? id).join(", ")}
-                      </td>
-                      <td className="p-2">
-                        <Switch checked={row.is_active} onCheckedChange={() => onToggleActive(row)} size="sm" />
-                      </td>
-                      <td className="p-2 text-right">
-                        <div className="flex justify-end gap-1">
-                          <Button
-                            stretch="auto"
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => openEdit(row)}
-                            label={t("edit")}
-                          />
-                          <Button
-                            stretch="auto"
-                            variant="danger-outline"
-                            size="sm"
-                            onClick={() => onDelete(row.id)}
-                            label={t("remove")}
-                          />
-                        </div>
-                      </td>
-                    </tr>
+                    <WorkItemTypeRow
+                      key={row.id}
+                      row={row}
+                      projectNames={(row.project_ids ?? []).map((id) => getProjectById(id)?.name ?? id).join(", ")}
+                      onEdit={openEdit}
+                      onToggleActive={onToggleActive}
+                      onDelete={onDelete}
+                    />
                   ))}
                 </tbody>
               </table>
@@ -427,6 +422,71 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
         </div>
       </SettingsContentWrapper>
     </FormProvider>
+  );
+}
+
+type TWorkItemTypeRowProps = {
+  row: TIssueType;
+  projectNames: string;
+  onEdit: (row: TIssueType) => void;
+  onToggleActive: (row: TIssueType) => void;
+  onDelete: (row: TIssueType) => void;
+};
+
+function WorkItemTypeRow(props: TWorkItemTypeRowProps) {
+  const { row, projectNames, onEdit, onToggleActive, onDelete } = props;
+  const { t } = useTranslation();
+  const kindBadgeKey = getKindBadgeKey(getIssueTypeKind(row));
+  // A system type (approval, review) keeps its switch and its remove button visible but off, with the reason.
+  // This is a guard of the page only: the server does not refuse these two requests yet.
+  const isSystemManaged = isSystemManagedType(row);
+  const systemTypeHint = isSystemManaged ? t("workspace_settings.settings.work_item_types.system_type_hint") : null;
+
+  return (
+    <tr className="border-t border-subtle">
+      <td className="p-2">
+        <div className="flex items-center gap-2 font-medium text-primary">
+          <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
+          <span>{row.name}</span>
+          {kindBadgeKey ? (
+            <span className="rounded bg-surface-2 px-1.5 py-0.5 text-10 text-tertiary">{t(kindBadgeKey)}</span>
+          ) : null}
+        </div>
+      </td>
+      <td className="p-2 text-secondary">{row.properties?.length ?? 0}</td>
+      <td className="p-2 text-secondary">
+        {projectNames || t("workspace_settings.settings.work_item_types.table.no_projects")}
+      </td>
+      <td className="p-2">
+        <Tooltip label={systemTypeHint} layout="stacked">
+          <span className="inline-flex">
+            <Switch
+              checked={row.is_active}
+              onCheckedChange={() => onToggleActive(row)}
+              size="sm"
+              disabled={isSystemManaged}
+            />
+          </span>
+        </Tooltip>
+      </td>
+      <td className="p-2 text-right">
+        <div className="flex justify-end gap-1">
+          <Button stretch="auto" variant="secondary" size="sm" onClick={() => onEdit(row)} label={t("edit")} />
+          <Tooltip label={systemTypeHint} layout="stacked">
+            <span className="inline-flex">
+              <Button
+                stretch="auto"
+                variant="danger-outline"
+                size="sm"
+                onClick={() => onDelete(row)}
+                disabled={isSystemManaged}
+                label={t("remove")}
+              />
+            </span>
+          </Tooltip>
+        </div>
+      </td>
+    </tr>
   );
 }
 

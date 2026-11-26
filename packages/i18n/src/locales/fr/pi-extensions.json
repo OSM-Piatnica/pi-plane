@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Chargement des types…",
     "property_values_save_failed": "L'élément de travail a été créé, mais les propriétés supplémentaires n'ont pas pu être enregistrées. Renseignez-les depuis les détails de l'élément de travail.",
-    "select_placeholder": "Type"
+    "select_placeholder": "Type",
+    "system_managed": {
+      "change_refused": "Ce type d'élément de travail est géré par le système. Un élément de travail ne peut pas passer à ce type ni le quitter.",
+      "tooltip": "Ce type est défini par le système. Il ne peut pas être modifié."
+    }
   },
   "workspace_features": {
     "description": "Activez ou désactivez des parties de Pi-Plane pour tous les membres de cet espace de travail."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Optionnel",
             "properties_empty": "Aucune propriété personnalisée pour ce type.",
+            "system_type_name": "C'est le nom d'un type géré par le système. Cette entrée ne sera pas enregistrée avec le modèle.",
             "task": {
               "description": "Type d'élément de travail standard pour les tâches courantes.",
               "title": "Tâche"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Approbation",
+          "milestone": "Jalon",
+          "review": "Revue"
+        },
+        "system_type_hint": "Le système utilise ce type. Vous pouvez modifier son nom, son icône, sa description et ses propriétés, mais il ne peut pas être supprimé, désactivé ni assigné à des projets ici.",
         "table": {
           "name": "Type",
           "no_projects": "Non assigné",

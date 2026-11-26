@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Memuat tipe…",
     "property_values_save_failed": "Item kerja berhasil dibuat, tetapi properti tambahan tidak dapat disimpan. Isi properti tersebut dari detail item kerja.",
-    "select_placeholder": "Tipe"
+    "select_placeholder": "Tipe",
+    "system_managed": {
+      "change_refused": "Tipe item kerja ini dikelola oleh sistem. Item kerja tidak dapat dialihkan ke tipe ini atau dari tipe ini ke tipe lain.",
+      "tooltip": "Tipe ini ditetapkan oleh sistem. Tidak dapat diubah."
+    }
   },
   "workspace_features": {
     "description": "Aktifkan atau nonaktifkan bagian Pi-Plane untuk semua orang di ruang kerja ini."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Opsional",
             "properties_empty": "Tidak ada properti kustom untuk tipe ini.",
+            "system_type_name": "Ini adalah nama tipe yang dikelola oleh sistem. Entri ini tidak akan disimpan bersama template.",
             "task": {
               "description": "Tipe item kerja standar untuk tugas sehari-hari.",
               "title": "Tugas"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Persetujuan",
+          "milestone": "Tonggak",
+          "review": "Tinjauan"
+        },
+        "system_type_hint": "Sistem menggunakan tipe ini. Nama, ikon, deskripsi, dan propertinya dapat diubah, tetapi tipe ini tidak dapat dihapus, dinonaktifkan, atau ditetapkan ke proyek di sini.",
         "table": {
           "name": "Tipe",
           "no_projects": "Belum ditetapkan",
