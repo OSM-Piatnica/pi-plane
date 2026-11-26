@@ -33,7 +33,7 @@ function WorkspaceLayout() {
             <Outlet />
           </main>
         </div>
-        <div className="absolute bottom-[1.5px] left-3 z-20">
+        <div className="absolute bottom-0.5 left-3 z-20">
           <StickyActionBar />
         </div>
       </div>
