@@ -7,13 +7,13 @@ switches are:
 | ------------- | -------------------------------- | --------- |
 | `lite`        | the "My tasks" app (roadmap E)   | no        |
 | `approvals`   | the Approvals app (roadmap C6)   | no        |
-| `initiatives` | the Initiatives app (roadmap F2) | no        |
+| `initiatives` | the Initiatives app (roadmap F2) | yes       |
 | `wiki`        | the workspace wiki (roadmap G4)  | no        |
 | `raci`        | RACI on work items (roadmap D)   | no        |
 
-"Available" means the feature is built. Today none is, so the mechanism is invisible: the
-settings page has no navigation entry, nothing can be switched on, and no request is made for it.
-Everything below has so far run only in unit and contract tests.
+"Available" means the feature is built. Initiatives is the first (F2), so the "Features" settings
+page is in the sidebar with one switch. The initiative endpoints check the switch with
+`is_workspace_feature_enabled(workspace, "initiatives")` (see [`initiatives.md`](./initiatives.md)).
 
 ## How it works
 
@@ -69,9 +69,10 @@ When the feature behind a key is built:
    - anything else in the web app: `useWorkspaceFeatures().isFeatureEnabled("approvals")`;
    - the API: the feature's endpoints check the switch themselves, for example with
      `enabled_workspace_feature_keys(workspace)`. Hiding the UI is not access control.
-5. Tests: `WORKSPACE_FEATURES as shipped` in `packages/utils/tests/workspace-features.spec.ts` and
+5. Tests: `WORKSPACE_FEATURES as shipped` in `packages/utils/tests/workspace-features.spec.ts`,
    `TestWorkspaceFeaturesAsShipped` in
-   `apps/api/plane/tests/contract/app/test_workspace_features_app.py` pin "nothing is available";
+   `apps/api/plane/tests/contract/app/test_workspace_features_app.py` and the "what ships" cases of
+   `apps/web/tests/unit/app-preferences-and-features.test.ts` pin which features are available;
    update them.
 
 A feature that is switched on by default for existing workspaces needs a data migration that
@@ -85,6 +86,5 @@ table above. No migration is needed.
 ## Performance note
 
 `enabled_features` is computed per workspace from `workspace.workspace_features.all()`, and not at
-all while no feature is available. The workspace list endpoint serializes all workspaces of a
-user; when the first feature becomes available, add `prefetch_related("workspace_features")` to
-`UserWorkSpacesEndpoint` so the list stays at one query for the switches.
+all while no feature is available. The workspace lists prefetch the switches
+(`prefetch_workspace_features`), so a list stays at one query for them.

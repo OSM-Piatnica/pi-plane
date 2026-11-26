@@ -4,7 +4,9 @@ The app rail is the narrow vertical bar on the left edge of a workspace. Each it
 "app": a part of Pi-Plane with its own routes and its own contextual sidebar. The rail is
 built from a registry, so adding an app means registering it rather than editing the shell.
 
-Today the registry holds one app, **Projects**. With a single app there is nothing to switch
+The registry holds two apps: **Projects** and **Initiatives** (F2, [`initiatives.md`](./initiatives.md)).
+Initiatives is enabled for workspace admins and members once a workspace admin switches the
+feature on. Until then, and for guests, Projects is the only app: there is nothing to switch
 between, so the rail is not shown and the shell looks exactly as it did before the registry.
 
 ## What the registry drives
@@ -224,8 +226,8 @@ dialog and the landing appear for that user.
 
 ## A user's preferences
 
-All of this exists only for a user with more than one enabled app. It was built before a second
-app existed, so so far it has run only in unit and contract tests.
+All of this exists only for a user with more than one enabled app, which today means Initiatives
+is switched on and the user is a workspace admin or member.
 
 ### Order and hidden apps
 
