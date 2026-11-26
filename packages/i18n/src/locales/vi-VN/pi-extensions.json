@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Di chuyển",
         "content": "Thay đổi này sẽ phá vỡ các phụ thuộc. Có thể dời các mục công việc sau đây về sau, giữ nguyên thời lượng, để mọi phụ thuộc vẫn được đáp ứng:",
+        "deadline_overrun": "{issue} sẽ vượt ngày hết hạn {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
+        "deadline_overrun_more": "{issue} đã vượt ngày hết hạn {previous, plural, one {# ngày làm việc} other {# ngày làm việc}} và sẽ vượt {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
         "title": "Di chuyển cả các mục công việc phụ thuộc?"
       },
       "duplicate_cancel": {

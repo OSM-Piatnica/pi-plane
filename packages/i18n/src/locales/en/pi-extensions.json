@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Move them",
         "content": "This change would break dependencies. These work items can be moved later, keeping their duration, so that every dependency still holds:",
+        "deadline_overrun": "{issue} will exceed its due date by {count, plural, one {# working day} other {# working days}}.",
+        "deadline_overrun_more": "{issue} is already {previous, plural, one {# working day} other {# working days}} past its due date and will exceed it by {count, plural, one {# working day} other {# working days}}.",
         "title": "Move the dependent work items too?"
       },
       "duplicate_cancel": {

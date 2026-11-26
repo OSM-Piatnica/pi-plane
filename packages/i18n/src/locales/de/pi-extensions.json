@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Verschieben",
         "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
+        "deadline_overrun": "{issue} überschreitet sein Fälligkeitsdatum um {count, plural, one {# Arbeitstag} other {# Arbeitstage}}.",
+        "deadline_overrun_more": "{issue} liegt bereits {previous, plural, one {# Arbeitstag} other {# Arbeitstage}} über seinem Fälligkeitsdatum und überschreitet es dann um {count, plural, one {# Arbeitstag} other {# Arbeitstage}}.",
         "title": "Auch die abhängigen Arbeitselemente verschieben?"
       },
       "duplicate_cancel": {

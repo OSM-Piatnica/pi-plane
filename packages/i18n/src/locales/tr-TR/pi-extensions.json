@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Taşı",
         "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
+        "deadline_overrun": "{issue} son tarihini {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
+        "deadline_overrun_more": "{issue} son tarihini zaten {previous, plural, one {# iş günü} other {# iş günü}} aşıyor ve {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
         "title": "Bağımlı iş öğeleri de taşınsın mı?"
       },
       "duplicate_cancel": {

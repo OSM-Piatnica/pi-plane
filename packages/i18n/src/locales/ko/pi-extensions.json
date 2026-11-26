@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "옮기기",
         "content": "이 변경은 종속 관계를 깨뜨립니다. 모든 종속 관계가 유지되도록 다음 작업 항목을 기간은 그대로 두고 뒤로 옮길 수 있습니다:",
+        "deadline_overrun": "{issue}은(는) 마감일을 {count, plural, one {근무일 기준 #일} other {근무일 기준 #일}} 초과합니다.",
+        "deadline_overrun_more": "{issue}은(는) 이미 마감일을 {previous, plural, one {근무일 기준 #일} other {근무일 기준 #일}} 초과했으며, {count, plural, one {근무일 기준 #일} other {근무일 기준 #일}} 초과하게 됩니다.",
         "title": "종속된 작업 항목도 함께 옮기시겠습니까?"
       },
       "duplicate_cancel": {

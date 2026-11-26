@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "Sposta",
         "content": "Questa modifica violerebbe delle dipendenze. Questi elementi di lavoro possono essere spostati più avanti, mantenendo la durata, così che tutte le dipendenze restino rispettate:",
+        "deadline_overrun": "{issue} supererà la scadenza di {count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}.",
+        "deadline_overrun_more": "{issue} supera già la scadenza di {previous, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}} e la supererà di {count, plural, one {# giorno lavorativo} many {# giorni lavorativi} other {# giorni lavorativi}}.",
         "title": "Spostare anche gli elementi di lavoro dipendenti?"
       },
       "duplicate_cancel": {

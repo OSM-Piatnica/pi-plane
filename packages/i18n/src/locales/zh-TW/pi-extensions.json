@@ -80,6 +80,8 @@
       "reschedule": {
         "confirm": "移動",
         "content": "此變更會破壞相依關係。可以將以下工作事項順延（維持其工期），使所有相依關係仍然成立：",
+        "deadline_overrun": "{issue} 將超過截止日期 {count, plural, one {# 個工作日} other {# 個工作日}}。",
+        "deadline_overrun_more": "{issue} 已超過截止日期 {previous, plural, one {# 個工作日} other {# 個工作日}}，移動後將超過 {count, plural, one {# 個工作日} other {# 個工作日}}。",
         "title": "是否同時移動依賴它的工作事項？"
       },
       "duplicate_cancel": {
