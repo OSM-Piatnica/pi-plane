@@ -15,6 +15,8 @@ import { IssueService } from "@/services/issue";
 import type { RootStore } from "@/store/root.store";
 import type { IBaseTimelineStore } from "@/store/timeline/base-timeline.store";
 import { BaseTimeLineStore } from "@/store/timeline/base-timeline.store";
+import type { IBaselineStore } from "@/store/timeline/baseline.store";
+import { BaselineStore } from "@/store/timeline/baseline.store";
 
 const ROLL_UP_DATES_STORAGE_KEY = "timeline_roll_up_dates";
 // keeps the query string of one request well below common URL limits
@@ -28,12 +30,15 @@ export interface IIssuesTimeLineStore extends IBaseTimelineStore {
   toggleDateRollup: () => void;
   /** Fetch the date span below the given work items; ones without children are cleared. */
   fetchDateRollups: (workspaceSlug: string, projectId: string, issueIds: string[]) => Promise<void>;
+  /** The saved plans of the project and the comparison of the current dates with one of them. */
+  baseline: IBaselineStore;
 }
 
 export class IssuesTimeLineStore extends BaseTimeLineStore implements IIssuesTimeLineStore {
   isDependencyEnabled = true;
   isDateRollupEnabled: boolean = getValueFromLocalStorage(ROLL_UP_DATES_STORAGE_KEY, true) !== false;
   dateRollupMap: Record<string, TGanttDateRollup> = {};
+  baseline: IBaselineStore = new BaselineStore();
 
   issueService = new IssueService();
 

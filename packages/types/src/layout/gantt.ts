@@ -103,6 +103,52 @@ export type TScheduleAnalysis = {
 
 export type TScheduleAnalysisScope = { module?: string; cycle?: string };
 
+/** A saved plan of a project: the dates its work items had when it was saved. */
+export type TProjectBaseline = {
+  id: string;
+  name: string;
+  description: string;
+  /** The baseline the timeline compares with unless a person picks another one; at most one per project. */
+  is_active: boolean;
+  /** How many work items were captured; null for a guest who only sees their own work items. */
+  item_count: number | null;
+  created_at: string;
+  created_by: string | null;
+  project: string;
+};
+
+export type TProjectBaselineList = { baselines: TProjectBaseline[]; max_baselines: number };
+
+/**
+ * The dates of one work item in a baseline and now. Dates are ISO "YYYY-MM-DD" strings. A variance counts working
+ * days of the project, positive when the date is later than planned; null when either date is missing.
+ */
+export type TBaselineVarianceItem = {
+  /** False for a work item created after the baseline was saved, or without any date then. */
+  in_baseline: boolean;
+  baseline_start_date: string | null;
+  start_date: string | null;
+  start_date_variance: number | null;
+  baseline_finish_date: string | null;
+  finish_date: string | null;
+  finish_date_variance: number | null;
+  baseline_target_date: string | null;
+  /** The due date is a deadline, not part of the schedule: it has no variance. */
+  target_date: string | null;
+};
+
+/** The answer of the baseline variance endpoint of a project (optionally of one module or cycle). */
+export type TBaselineVariance = {
+  /** Null when the project has no active baseline and none was asked for. */
+  baseline: TProjectBaseline | null;
+  items: Record<string, TBaselineVarianceItem>;
+  /** The latest finish in the baseline and now, and the working days between them. */
+  summary: { baseline_end: string | null; current_end: string | null; end_variance: number | null };
+  weekend_days: number[];
+};
+
+export type TBaselineVarianceScope = TScheduleAnalysisScope & { baseline?: string };
+
 export interface IBlockUpdateData {
   sort_order?: {
     destinationIndex: number;
