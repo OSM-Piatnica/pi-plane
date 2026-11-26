@@ -1487,9 +1487,8 @@
     },
     "error_page": {
       "title": "Parece que algo correu mal!",
-      "description": "Registamos estes erros automaticamente e estamos a trabalhar para restabelecer tudo. Se o problema persistir, contacte-nos. Entretanto, tente atualizar a página.",
-      "contact_support": "Contactar o suporte",
-      "status_page": "Página de estado"
+      "description": "Algo correu mal ao apresentar esta página. Atualize a página ou volte ao início. Se o problema continuar, contacte o suporte.",
+      "contact_support": "Contactar o suporte"
     },
     "links": {
       "created_by": "por {name}"

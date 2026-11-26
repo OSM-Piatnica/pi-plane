@@ -17,7 +17,7 @@ export function ColorPalette(props: TProps) {
   const { handleUpdate } = props;
   const { t } = useTranslation();
   return (
-    <div className="shadow absolute bottom-5 left-0 z-10 mb-2 w-56 rounded-md bg-surface-1 p-2">
+    <div className="sticky-note-surface shadow absolute bottom-5 left-0 z-10 mb-2 w-56 rounded-md bg-surface-1 p-2">
       <div className="mb-2 text-13 font-semibold text-placeholder">{t("page_ui.editor.background_colors")}</div>
       <div className="flex flex-wrap gap-2">
         {STICKY_COLORS_LIST.map((color) => (

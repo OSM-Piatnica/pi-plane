@@ -26,7 +26,8 @@ export const CustomThemeAdvancedSettings = observer(function CustomThemeAdvanced
   // translation
   const { t } = useTranslation();
   // state
-  const [isOpen, setIsOpen] = useState(() => Object.keys(value ?? {}).length > 0);
+  // collapsed until asked for, also for themes that set colours of their own (the Piątnica themes set most of them)
+  const [isOpen, setIsOpen] = useState(false);
   // derived values
   const overrides = value ?? {};
   const overrideCount = Object.keys(overrides).length;

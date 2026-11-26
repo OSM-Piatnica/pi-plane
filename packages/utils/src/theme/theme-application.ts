@@ -12,7 +12,13 @@
 
 import { hexToOKLCH, oklchToCSS, getRelativeLuminance, getPerceptualBrightness } from "./color-conversion";
 import type { OKLCH } from "./color-conversion";
-import { ALPHA_MAPPING, EDITOR_COLORS_LIGHT, EDITOR_COLORS_DARK } from "./constants";
+import {
+  ALPHA_MAPPING,
+  EDITOR_COLORS_LIGHT,
+  EDITOR_COLORS_DARK,
+  STICKY_TEXT_COLORS_DARK,
+  STICKY_TEXT_COLORS_LIGHT,
+} from "./constants";
 import { generateThemePalettes } from "./palette-generator";
 import { getBrandMapping, getNeutralMapping, invertPalette } from "./theme-inversion";
 import { applyThemeOverrides, clearThemeOverrides } from "./theme-overrides";
@@ -85,6 +91,20 @@ export function getOnColorTextColors(
 }
 
 /**
+ * Text colours for stickies, which sit on the editor colour backgrounds of the mode (pastel in light, deep in dark).
+ *
+ * A custom theme can pin its own text colours in the advanced settings, and those stay the same in both modes: the
+ * light Piątnica theme pins dark grey text, which disappears on the deep backgrounds of the dark mode. Stickies read
+ * these instead (see `.sticky-note` in the web app's globals.css), so their text always matches their background.
+ *
+ * @param mode - 'light' or 'dark' theme mode
+ * @returns CSS variable name (without the leading `--`) to colour
+ */
+export function getStickyTextColors(mode: "light" | "dark"): Record<string, string> {
+  return mode === "dark" ? STICKY_TEXT_COLORS_DARK : STICKY_TEXT_COLORS_LIGHT;
+}
+
+/**
  * Apply custom theme using 2-color palette system
  * Generates full palettes from brand and neutral colors
  * and maps them to CSS variables
@@ -150,6 +170,11 @@ export function applyCustomTheme(
     themeElement.style.setProperty(`--editor-colors-${color}-background`, value);
   });
 
+  // Sticky text that reads on those backgrounds, whatever text colours the theme pins
+  Object.entries(getStickyTextColors(mode)).forEach(([token, value]) => {
+    themeElement.style.setProperty(`--${token}`, value);
+  });
+
   // Advanced settings win over what the palette generated
   applyThemeOverrides(overrides);
 }
@@ -200,6 +225,9 @@ export function clearCustomTheme(): void {
   // Clear editor color background overrides
   Object.keys(EDITOR_COLORS_LIGHT).forEach((color) => {
     themeElement.style.removeProperty(`--editor-colors-${color}-background`);
+  });
+  Object.keys(STICKY_TEXT_COLORS_LIGHT).forEach((token) => {
+    themeElement.style.removeProperty(`--${token}`);
   });
 
   clearThemeOverrides();
