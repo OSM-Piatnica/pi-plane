@@ -18,7 +18,7 @@ import type { TInstanceTheme } from "@plane/types";
 import { applyCustomTheme, sanitizeThemeOverrides } from "@plane/utils";
 // components
 import { CustomThemeSelector } from "@/components/core/theme/custom-theme-selector";
-import { getInstanceThemeLink } from "@/components/core/theme/instance-theme-link";
+import { getInstanceThemeLink, toInstanceThemesError } from "@/components/core/theme/instance-theme-link";
 import { InstanceThemeNotice } from "@/components/core/theme/instance-theme-notice";
 import { ThemeSwitch } from "@/components/core/theme/theme-switch";
 import type { TThemeSwitchOption } from "@/components/core/theme/theme-switch";
@@ -53,9 +53,8 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
   // translation
   const { t } = useTranslation();
   const { data: instanceThemes, error: instanceThemesError } = useSWR("INSTANCE_THEMES", () =>
-    // the service rethrows the response body, which is nothing at all when the request never got a response
     instanceService.userThemes().catch((error: unknown) => {
-      throw error || new Error("Failed to load the instance themes");
+      throw toInstanceThemesError(error);
     })
   );
   // derived values

@@ -33,3 +33,13 @@ export const getInstanceThemeLink = (props: {
   const instanceTheme = instanceThemes.find((theme) => theme.id === instanceThemeId);
   return instanceTheme ? { status: "managed", name: instanceTheme.name } : { status: "own" };
 };
+
+/**
+ * The error to hand to SWR when the instance themes could not be loaded.
+ *
+ * `InstanceService.userThemes` rethrows the response body, which is nothing at all (`undefined`) when the request never
+ * got a response. SWR then has no error to report, so `hasFailed` above would never be true and the page would show
+ * neither the editor nor the notice. A real error body is passed on unchanged.
+ */
+export const toInstanceThemesError = (error: unknown): unknown =>
+  error || new Error("Failed to load the instance themes");

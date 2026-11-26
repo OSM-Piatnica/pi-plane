@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from "vitest";
 import type { TInstanceTheme } from "@plane/types";
-import { getInstanceThemeLink } from "@/components/core/theme/instance-theme-link";
+import { getInstanceThemeLink, toInstanceThemesError } from "@/components/core/theme/instance-theme-link";
 
 const theme = (id: string, name: string): TInstanceTheme => ({
   id,
@@ -46,5 +46,17 @@ describe("getInstanceThemeLink", () => {
 
   it("opens the editor when the instance theme was deleted since", () => {
     expect(getInstanceThemeLink({ instanceThemeId: "gone", instanceThemes: themes })).toEqual({ status: "own" });
+  });
+});
+
+describe("toInstanceThemesError", () => {
+  it.each([undefined, null, ""])("turns a failure without a body (%j) into a real error, so SWR reports it", (body) => {
+    expect(toInstanceThemesError(body)).toBeInstanceOf(Error);
+  });
+
+  it("passes a real error body on unchanged", () => {
+    const body = { error: "Authentication credentials were not provided" };
+    expect(toInstanceThemesError(body)).toBe(body);
+    expect(toInstanceThemesError("Server error")).toBe("Server error");
   });
 });
