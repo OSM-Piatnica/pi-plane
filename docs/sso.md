@@ -65,8 +65,9 @@ In the settings below `<KEY>` is the provider key in capitals with `-` written a
    address alone never takes an account over, because anybody could have registered it with a password of their own
    before its owner first signed in. To migrate existing accounts, set `<KEY>_LINK_EXISTING_ACCOUNTS=1` for the time
    people sign in for the first time, then switch it off again. Linking binds the identity to the account **and
-   replaces any password set on it**, so from then on only the provider opens it. An account already bound to a
-   different identity of the provider is always refused (`OIDC_IDENTITY_MISMATCH`).
+   replaces any password set on it**, so from then on only the provider opens it. The exception is an **instance admin**:
+   god mode has no single sign-on and takes email and password only, so an instance admin keeps the password. An account already bound to a different identity of the provider is always
+   refused (`OIDC_IDENTITY_MISMATCH`).
 3. Otherwise a new user is created, if `<KEY>_ENABLE_SIGNUP` is `1` (or they have a workspace invite).
 
 The user, the identity and the profile are created in one transaction, and a binding is never moved to another user.

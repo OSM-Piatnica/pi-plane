@@ -13,6 +13,7 @@ from django.utils import timezone
 from plane.authentication.adapter.error import AUTHENTICATION_ERROR_CODES, AuthenticationException
 from plane.authentication.adapter.oauth import OauthAdapter
 from plane.db.models import Account, User, WorkspaceMemberInvite
+from plane.license.models import InstanceAdmin
 from plane.utils.user_group_sync import sync_external_groups
 
 from . import client
@@ -237,7 +238,8 @@ class OidcProvider(OauthAdapter):
         """Records which identity at the provider the user is. No token of the provider is kept.
 
         A binding is never moved to another user; linking an existing account also takes it over for the provider: the
-        password somebody may have set on it before is replaced, so only the provider can open it from now on.
+        password somebody may have set on it before is replaced, so only the provider can open it from now on. The one
+        exception is an instance admin, who keeps the password because god mode only accepts it.
         """
         subject = self.user_data["user"]["provider_id"]
         account = Account.objects.filter(provider=self.provider, provider_account_id=subject).first()
@@ -255,7 +257,13 @@ class OidcProvider(OauthAdapter):
             last_connected_at=timezone.now(),
         )
         if self.linking_user is not None:
-            user.set_password(uuid.uuid4().hex)
-            user.is_password_autoset = True
             user.is_email_verified = True
-            user.save(update_fields=["password", "is_password_autoset", "is_email_verified"])
+            update_fields = ["is_email_verified"]
+            # God mode has no single sign-on: an instance admin signs in there with email and password only, so
+            # replacing it would lock them out. Their account was set up by whoever installed the instance, not
+            # registered ahead of its owner, which is the case the replacement guards against.
+            if not InstanceAdmin.objects.filter(user=user).exists():
+                user.set_password(uuid.uuid4().hex)
+                user.is_password_autoset = True
+                update_fields += ["password", "is_password_autoset"]
+            user.save(update_fields=update_fields)

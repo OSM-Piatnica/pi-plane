@@ -32,7 +32,7 @@ from plane.db.models import (
     Workspace,
     WorkspaceMember,
 )
-from plane.license.models import Instance
+from plane.license.models import Instance, InstanceAdmin
 
 TENANT = "11111111-2222-3333-4444-555555555555"
 OID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
@@ -512,6 +512,39 @@ class TestAccountOwnership:
         assert client.session["_auth_user_id"] == str(create_user.id)
         assert not create_user.check_password("attackers-password")
         assert create_user.is_password_autoset and create_user.is_email_verified
+
+    def test_linking_keeps_the_password_of_an_instance_admin(self, instance, idp, create_user):
+        # god mode takes a password only, so replacing it would lock the administrator out of the instance settings
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
+        InstanceAdmin.objects.create(instance=instance, user=create_user, role=20)
+        create_user.set_password("admin-password")
+        create_user.is_password_autoset = False
+        create_user.is_email_verified = False
+        create_user.save()
+        client, response, _ = sign_in(idp, token_kwargs={"email": create_user.email})
+        assert "error_code" not in response.url
+        assert client.session["_auth_user_id"] == str(create_user.id)
+        assert Account.objects.filter(user=create_user, provider="entra").exists()
+        create_user.refresh_from_db()
+        assert create_user.check_password("admin-password")
+        assert not create_user.is_password_autoset
+        assert create_user.is_email_verified
+
+    def test_the_admin_can_still_sign_in_to_god_mode_after_linking(self, instance, idp, create_user):
+        CONFIG["ENTRA_LINK_EXISTING_ACCOUNTS"] = "1"
+        InstanceAdmin.objects.create(instance=instance, user=create_user, role=20)
+        create_user.set_password("admin-password")
+        create_user.save()
+        sign_in(idp, token_kwargs={"email": create_user.email})
+        response = Client(HTTP_USER_AGENT="Mozilla/5.0").post(
+            # by path: the sign-in and the sign-up route share one name
+            "/api/instances/admins/sign-in/",
+            {"email": create_user.email, "password": "admin-password"},
+            HTTP_HOST="localhost:8000",
+        )
+        assert response.status_code == 302
+        assert "error_code" not in response.url
+        assert "general" in response.url
 
     def test_a_binding_is_never_moved_to_another_user(self, db, create_user, create_bot_user):
         from django.test import RequestFactory
