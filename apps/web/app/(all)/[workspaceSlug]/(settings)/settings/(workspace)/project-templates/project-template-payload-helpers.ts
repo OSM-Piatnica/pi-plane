@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { isSystemManagedTypeName } from "@/helpers/issue-type-options";
 import type { TProjectTemplate, TProjectTemplateCustomProperty, TProjectTemplatePayload } from "@plane/types";
 import type { TCustomPropertyTemplateField, TProjectTemplateFormFields } from "./project-template-form.types";
 import { buildTemplateGroupsPayload, mapTemplateGroupsFromPayload } from "@/helpers/project-template-groups";
@@ -101,9 +102,15 @@ export const mapProjectTemplateToFormValues = (template: TProjectTemplate): TPro
   };
 };
 
+/**
+ * `systemManagedTypeNames`: names of the workspace's system-managed work item types (approval, review). The
+ * server finds a template's additional type by name, so an entry with such a name would link that type to
+ * every project made from the template; those entries are left out.
+ */
 export const buildProjectTemplatePayloadFromFormValues = (
   values: TProjectTemplateFormFields,
-  groupPaths: Map<string, string> = new Map()
+  groupPaths: Map<string, string> = new Map(),
+  systemManagedTypeNames: string[] = []
 ): TProjectTemplatePayload => {
   const payload: TProjectTemplatePayload = {};
 
@@ -136,7 +143,7 @@ export const buildProjectTemplatePayloadFromFormValues = (
         .map(mapCustomPropertyToPayload);
     }
     payload.additional_work_item_types = values.additionalWorkItemTypes
-      .filter((row) => row.name.trim())
+      .filter((row) => row.name.trim() && !isSystemManagedTypeName(row.name, systemManagedTypeNames))
       .map((row) => ({
         name: row.name.trim(),
         description: row.description.trim() || undefined,

@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Načítavanie typov…",
     "property_values_save_failed": "Pracovná položka bola vytvorená, ale ďalšie vlastnosti sa nepodarilo uložiť. Doplňte ich v detaile pracovnej položky.",
-    "select_placeholder": "Typ"
+    "select_placeholder": "Typ",
+    "system_managed": {
+      "change_refused": "Tento typ pracovnej položky spravuje systém. Pracovnú položku nemožno na tento typ prepnúť ani z neho previesť na iný.",
+      "tooltip": "Tento typ nastavuje systém. Nemožno ho zmeniť."
+    }
   },
   "workspace_features": {
     "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Voliteľné",
             "properties_empty": "Tento typ nemá žiadne vlastné vlastnosti.",
+            "system_type_name": "Toto je názov typu spravovaného systémom. Položka sa so šablónou neuloží.",
             "task": {
               "description": "Štandardný typ pracovnej položky pre bežné úlohy.",
               "title": "Úloha"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Schválenie",
+          "milestone": "Míľnik",
+          "review": "Revízia"
+        },
+        "system_type_hint": "Tento typ používa systém. Názov, ikonu, popis a vlastnosti možno zmeniť, ale typ tu nemožno odstrániť, deaktivovať ani priradiť k projektom.",
         "table": {
           "name": "Typ",
           "no_projects": "Nepriradené",

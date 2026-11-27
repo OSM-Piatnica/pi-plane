@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "正在載入類型…",
     "property_values_save_failed": "工作項目已建立，但無法儲存額外的屬性。請至工作項目詳細資料中填寫。",
-    "select_placeholder": "類型"
+    "select_placeholder": "類型",
+    "system_managed": {
+      "change_refused": "此工作項目類型由系統管理。工作項目無法切換為此類型，也無法從此類型切換為其他類型。",
+      "tooltip": "此類型由系統設定，無法變更。"
+    }
   },
   "workspace_features": {
     "description": "為此工作區中的所有人開啟或關閉 Pi-Plane 的各項功能。"
@@ -501,6 +505,7 @@
             },
             "optional_badge": "選用",
             "properties_empty": "此類型尚無自訂屬性。",
+            "system_type_name": "這是由系統管理的類型名稱。此項目不會隨模板一起儲存。",
             "task": {
               "description": "用於日常任務的標準工作項目類型。",
               "title": "任務"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "核准",
+          "milestone": "里程碑",
+          "review": "審查"
+        },
+        "system_type_hint": "系統正在使用此類型。可以變更其名稱、圖示、描述和屬性，但無法在此將其刪除、停用或指派給專案。",
         "table": {
           "name": "類型",
           "no_projects": "未指派",

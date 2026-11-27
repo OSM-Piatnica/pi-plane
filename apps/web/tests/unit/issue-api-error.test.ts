@@ -10,6 +10,7 @@ import { getIssueApiErrorMessage } from "../../helpers/issue-api-error";
 // a translation store that holds only these entries and echoes any other key back, like the real one
 const entries: Record<string, string> = {
   "issue.edit_restricted": "Only assignees may change this.",
+  "work_item_types.system_managed.change_refused": "The system manages this type.",
   "issue.relation.conflict.self": "{issue} cannot be related to itself.",
   "issue.relation.conflict.date.blocked_by": "{issue} cannot start until {related} is finished.",
   "issue.relation.conflict.lag_suffix": " Relation lag: {lag} d.",
@@ -55,6 +56,14 @@ describe("getIssueApiErrorMessage", () => {
       lag_days: 0,
     };
     expect(getIssueApiErrorMessage(error, "fallback", t)).toBe("A cannot start until B is finished.");
+  });
+
+  it("says in the user's language that a system-managed type cannot be switched", () => {
+    const error = { error: "English text", error_code: "WORK_ITEM_TYPE_SYSTEM_MANAGED" };
+    expect(getIssueApiErrorMessage(error, "fallback", t)).toBe("The system manages this type.");
+    // without a translation the server's sentence is shown, never the bare fallback
+    expect(getIssueApiErrorMessage(error, "fallback", (key) => key)).toBe("English text");
+    expect(getIssueApiErrorMessage(error, "fallback")).toBe("English text");
   });
 
   it("reads codes that a serializer wrapped in a list", () => {

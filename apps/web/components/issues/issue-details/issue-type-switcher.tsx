@@ -10,20 +10,26 @@ import { useParams } from "next/navigation";
 import { observer } from "mobx-react";
 import { Layers } from "lucide-react";
 import { Select } from "@plane/blocks/select";
+import { setToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 import type { TProjectIssueType } from "@plane/types";
 import { SwitcherIcon } from "@/components/common/switcher-label";
+import { getIssueApiErrorMessage } from "@/helpers/issue-api-error";
+import { getLockedProjectIssueType, getSelectableProjectIssueTypes } from "@/helpers/issue-type-options";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
+import { IssueTypeLockedLabel } from "./issue-type-locked-label";
 
 export type TIssueTypeSwitcherProps = {
   issueId: string;
   disabled: boolean;
+  /** Offer the system-managed kinds (approval, review) too. Off: a person does not pick those by hand. */
+  includeSystemManaged?: boolean;
 };
 
 export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIssueTypeSwitcherProps) {
-  const { issueId, disabled } = props;
+  const { issueId, disabled, includeSystemManaged = false } = props;
   const { t } = useTranslation();
   const { workspaceSlug } = useParams();
   const slug = workspaceSlug?.toString();
@@ -43,13 +49,37 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
   if (!issue || !projectId || !slug) return null;
   if (!issueTypesEnabled || types.length === 0) return null;
 
-  const options = types.filter((row) => row.issue_type_detail);
+  // A system-managed type (approval, review) is shown, not switched: the server refuses the change
+  const lockedType = includeSystemManaged ? undefined : getLockedProjectIssueType(types, issue.type_id);
+  if (lockedType?.issue_type_detail) {
+    return (
+      <div className="max-w-xs min-w-0">
+        <IssueTypeLockedLabel issueType={lockedType.issue_type_detail} />
+      </div>
+    );
+  }
+
+  const options = getSelectableProjectIssueTypes(types, { includeSystemManaged });
+  if (options.length === 0) return null;
   const selectedOption = options.find((row) => row.issue_type_id === issue.type_id) ?? null;
   const selected = selectedOption?.issue_type_detail;
 
   const onChange = async (value: string) => {
     if (!value || value === issue.type_id) return;
-    await updateIssue(slug, projectId, issueId, { type_id: value });
+    try {
+      // the store puts the previous type back when the server refuses the change
+      await updateIssue(slug, projectId, issueId, { type_id: value });
+    } catch (error) {
+      setToast({
+        type: "error",
+        title: t("toast.error"),
+        message: getIssueApiErrorMessage(
+          error,
+          t("entity.update.failed", { entity: t("issue.label", { count: 1 }) }),
+          t
+        ),
+      });
+    }
   };
 
   return (

@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "タイプを読み込み中…",
     "property_values_save_failed": "作業項目は作成されましたが、追加のプロパティを保存できませんでした。作業項目の詳細画面から入力してください。",
-    "select_placeholder": "タイプ"
+    "select_placeholder": "タイプ",
+    "system_managed": {
+      "change_refused": "この作業項目タイプはシステムが管理しています。作業項目をこのタイプに切り替えることも、このタイプから別のタイプに切り替えることもできません。",
+      "tooltip": "このタイプはシステムが設定します。変更できません。"
+    }
   },
   "workspace_features": {
     "description": "このワークスペースの全員を対象に、Pi-Plane の機能のオン・オフを切り替えます。"
@@ -501,6 +505,7 @@
             },
             "optional_badge": "任意",
             "properties_empty": "このタイプにはカスタムプロパティがありません。",
+            "system_type_name": "これはシステムが管理するタイプの名前です。この項目はテンプレートに保存されません。",
             "task": {
               "description": "日常的なタスクのための標準的な作業項目タイプ。",
               "title": "タスク"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "承認",
+          "milestone": "マイルストーン",
+          "review": "レビュー"
+        },
+        "system_type_hint": "このタイプはシステムが使用します。名前、アイコン、説明、プロパティは変更できますが、ここでは削除、無効化、プロジェクトへの割り当てはできません。",
         "table": {
           "name": "タイプ",
           "no_projects": "未割り当て",

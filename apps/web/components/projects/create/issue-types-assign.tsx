@@ -8,6 +8,8 @@ import useSWR from "swr";
 import { useTranslation } from "@plane/i18n";
 import { Checkbox } from "@makeplane/propel/components/checkbox";
 import type { TIssueType } from "@plane/types";
+import { isEpicKind } from "@plane/utils";
+import { getAssignableIssueTypes } from "@/helpers/issue-type-options";
 import { IssueTypeService } from "@/services/issue-type.service";
 import { SwitcherIcon } from "@/components/common/switcher-label";
 import { Layers } from "lucide-react";
@@ -23,6 +25,10 @@ type TProps = {
   hideEpics?: boolean;
 };
 
+/**
+ * A list of workspace types to tick for a project. Types of a system-managed kind (approval, review) are never
+ * listed: the feature that uses them links them, so this list can neither add nor remove them.
+ */
 export function ProjectCreateIssueTypesAssign(props: TProps) {
   const { workspaceSlug, value, onChange, disabled = false, hideEpics = false } = props;
   const { t } = useTranslation();
@@ -30,7 +36,7 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
     issueTypeService.listWorkspaceTypes(workspaceSlug, true)
   );
 
-  const rows = ((types ?? []) as TIssueType[]).filter((row) => !(hideEpics && row.is_epic));
+  const rows = getAssignableIssueTypes((types ?? []) as TIssueType[], { hideEpics });
 
   const toggleType = (typeId: string) => {
     if (disabled) return;
@@ -65,7 +71,7 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
               />
               <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
               <span className="text-13 text-primary">{row.name}</span>
-              {row.is_epic ? (
+              {isEpicKind(row) ? (
                 <span className="rounded bg-surface-1 px-1.5 py-0.5 text-10 text-tertiary">
                   {t("workspace_settings.settings.work_item_types.epic_badge")}
                 </span>

@@ -11,6 +11,8 @@ import { setPromiseToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 // components
 import { ProjectCreateIssueTypesAssign } from "@/components/projects/create/issue-types-assign";
+// helpers
+import { getBulkAssignDefaultTypeId } from "@/helpers/issue-type-options";
 // hooks
 import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
 // services
@@ -26,6 +28,7 @@ type Props = {
 /**
  * Which workspace work item types the project can use. A change is saved right away.
  * Epic types are not listed: the Epics switch owns them, and the bulk endpoint never unlinks them.
+ * System-managed types (approval, review) are not listed either: the bulk endpoint never links or unlinks them.
  */
 export const ProjectSettingsIssueTypesControl = observer(function ProjectSettingsIssueTypesControl(props: Props) {
   const { projectId, workspaceSlug } = props;
@@ -40,7 +43,7 @@ export const ProjectSettingsIssueTypesControl = observer(function ProjectSetting
 
   const handleChange = (ids: string[]) => {
     setIsSaving(true);
-    const defaultTypeId = currentDefaultId && ids.includes(currentDefaultId) ? currentDefaultId : (ids[0] ?? null);
+    const defaultTypeId = getBulkAssignDefaultTypeId(ids, types, currentDefaultId);
     const savePromise = issueTypeService
       .bulkAssignProjectTypes(workspaceSlug, projectId, { issue_type_ids: ids, default_type_id: defaultTypeId })
       .then(() => mutate())

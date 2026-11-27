@@ -260,7 +260,11 @@
   "work_item_types": {
     "loading": "Se încarcă tipurile…",
     "property_values_save_failed": "Activitatea a fost creată, dar proprietățile suplimentare nu au putut fi salvate. Completează-le din detaliile activității.",
-    "select_placeholder": "Tip"
+    "select_placeholder": "Tip",
+    "system_managed": {
+      "change_refused": "Acest tip de activitate este gestionat de sistem. O activitate nu poate fi trecută la acest tip și nici de la acest tip la altul.",
+      "tooltip": "Acest tip este stabilit de sistem. Nu poate fi modificat."
+    }
   },
   "workspace_features": {
     "description": "Activați sau dezactivați părți din Pi-Plane pentru toți cei din acest spațiu de lucru."
@@ -501,6 +505,7 @@
             },
             "optional_badge": "Opțional",
             "properties_empty": "Nicio proprietate personalizată pentru acest tip.",
+            "system_type_name": "Acesta este numele unui tip gestionat de sistem. Intrarea nu va fi salvată împreună cu șablonul.",
             "task": {
               "description": "Tip de activitate standard pentru sarcinile curente.",
               "title": "Sarcină"
@@ -666,6 +671,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Aprobare",
+          "milestone": "Etapă importantă",
+          "review": "Revizuire"
+        },
+        "system_type_hint": "Sistemul folosește acest tip. Numele, pictograma, descrierea și proprietățile pot fi modificate, dar tipul nu poate fi eliminat, dezactivat sau asignat proiectelor de aici.",
         "table": {
           "name": "Tip",
           "no_projects": "Neasignat",

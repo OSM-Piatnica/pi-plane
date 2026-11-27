@@ -266,7 +266,11 @@
   "work_item_types": {
     "loading": "Ładowanie typów…",
     "property_values_save_failed": "Zadanie zostało utworzone, ale dodatkowe właściwości nie zostały zapisane. Uzupełnij je w szczegółach zadania.",
-    "select_placeholder": "Typ"
+    "select_placeholder": "Typ",
+    "system_managed": {
+      "change_refused": "Tym typem elementu roboczego zarządza system. Elementu roboczego nie można przełączyć na ten typ ani z niego na inny.",
+      "tooltip": "Ten typ ustawia system. Nie można go zmienić."
+    }
   },
   "workspace_analytics": {
     "total_admins": "Łączna liczba administratorów",
@@ -515,6 +519,7 @@
             },
             "optional_badge": "Opcjonalny",
             "properties_empty": "Brak właściwości niestandardowych dla tego typu.",
+            "system_type_name": "To nazwa typu zarządzanego przez system. Ta pozycja nie zostanie zapisana w szablonie.",
             "task": {
               "description": "Standardowy typ elementu roboczego na co dzień.",
               "title": "Zadanie"
@@ -680,6 +685,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Akceptacja",
+          "milestone": "Kamień milowy",
+          "review": "Przegląd"
+        },
+        "system_type_hint": "Z tego typu korzysta system. Można zmienić jego nazwę, ikonę, opis i właściwości, ale nie można go tutaj usunąć, dezaktywować ani przypisać do projektów.",
         "table": {
           "name": "Typ",
           "no_projects": "Nie przypisano",
