@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+import logging
+
 from django.db import IntegrityError
 
-from plane.db.models import IssueType, IssueTypeProperty, Project
+from plane.db.models import SYSTEM_MANAGED_ISSUE_TYPE_KINDS, IssueType, IssueTypeProperty, Project
 from plane.utils.issue_type_property import clean_property_list
 from plane.utils.project_issue_types import (
     ensure_project_epic_type,
@@ -12,19 +14,51 @@ from plane.utils.project_issue_types import (
     link_issue_type_to_project,
 )
 
+logger = logging.getLogger("plane.api")
+
+
+def _system_managed_type_names(workspace_id) -> set:
+    """Lower-case names of the workspace's system-managed types (approval, review)."""
+
+    return {
+        name.lower()
+        for name in IssueType.objects.filter(
+            workspace_id=workspace_id, kind__in=SYSTEM_MANAGED_ISSUE_TYPE_KINDS, deleted_at__isnull=True
+        ).values_list("name", flat=True)
+    }
+
 
 def seed_project_issue_types_from_template_payload(
     *,
     project: Project,
     payload: dict,
     created_by_id,
-) -> None:
+) -> list[str]:
+    """Link the template's work item types to the project, creating the ones the workspace does not have yet.
+
+    Types are found by name. A name that belongs to a system-managed type (approval, review) is skipped: only the
+    feature that owns such a type links it, and a second type with the same name would be a duplicate. Returns the
+    template names that were skipped, so the caller can report them; the rest of the template is applied.
+    """
+
+    skipped: list[str] = []
     if not payload.get("is_issue_type_enabled"):
-        return
+        return skipped
     if not getattr(project, "is_issue_type_enabled", False):
-        return
+        return skipped
 
     ws_id = project.workspace_id
+    system_managed_names = _system_managed_type_names(ws_id)
+
+    def _is_skipped(name: str) -> bool:
+        if name.strip()[:255].lower() not in system_managed_names:
+            return False
+        skipped.append(name)
+        logger.info(
+            "Project template entry skipped: the name belongs to a system-managed work item type",
+            extra={"project_id": str(project.id)},
+        )
+        return True
 
     def _get_or_create_issue_type(*, name: str, description: str = "", is_epic: bool, is_default: bool):
         return get_or_create_issue_type(
@@ -74,9 +108,10 @@ def seed_project_issue_types_from_template_payload(
             project_, issue_type, level=level, is_default=is_default, created_by_id=created_by_id
         )
 
-    task_type = _get_or_create_issue_type(name="Task", is_epic=False, is_default=True)
-    _link(project, task_type, level=0, is_default=True)
-    _seed_properties(task_type, payload.get("task_custom_properties"))
+    if not _is_skipped("Task"):
+        task_type = _get_or_create_issue_type(name="Task", is_epic=False, is_default=True)
+        _link(project, task_type, level=0, is_default=True)
+        _seed_properties(task_type, payload.get("task_custom_properties"))
 
     if payload.get("epic_enabled"):
         epic_type = ensure_project_epic_type(project, created_by_id=created_by_id)
@@ -84,7 +119,7 @@ def seed_project_issue_types_from_template_payload(
 
     extra = payload.get("additional_work_item_types") or []
     if not isinstance(extra, list):
-        return
+        return skipped
     base_level = 2
     for idx, row in enumerate(extra[:20]):
         if not isinstance(row, dict):
@@ -94,7 +129,10 @@ def seed_project_issue_types_from_template_payload(
             continue
         if nm.lower() in {"task", "epic"}:
             continue
+        if _is_skipped(nm):
+            continue
         desc = str(row.get("description", "") or "")[:4096]
         it = _get_or_create_issue_type(name=nm, description=desc, is_epic=False, is_default=False)
         _link(project, it, level=base_level + idx, is_default=False)
         _seed_properties(it, row.get("custom_properties"))
+    return skipped

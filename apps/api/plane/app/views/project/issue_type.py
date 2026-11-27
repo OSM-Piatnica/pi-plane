@@ -13,8 +13,12 @@ from plane.app.serializers import IssueTypeSerializer, ProjectIssueTypeSerialize
 from plane.app.views.base import BaseAPIView, BaseViewSet
 from plane.db.models import SYSTEM_MANAGED_ISSUE_TYPE_KINDS, IssueType, IssueTypeKind, Project, ProjectIssueType
 from plane.utils.project_issue_types import (
+    SYSTEM_MANAGED_TYPE_LINK,
+    SYSTEM_MANAGED_TYPE_MAKE_DEFAULT,
+    SYSTEM_MANAGED_TYPE_UNLINK,
     EpicsNotAvailableError,
     ensure_project_epic_type,
+    refuse_system_managed_type,
     remove_project_epic_types,
 )
 
@@ -69,6 +73,8 @@ class ProjectIssueTypeViewSet(BaseViewSet):
         ).first()
         if not issue_type:
             return Response({"error": "Issue type not found"}, status=status.HTTP_404_NOT_FOUND)
+        # Only the feature that owns a system-managed type links it (`ensure_project_kind_type`)
+        refuse_system_managed_type(issue_type, SYSTEM_MANAGED_TYPE_LINK)
 
         existing = ProjectIssueType.objects.filter(
             project_id=project_id,
@@ -106,6 +112,8 @@ class ProjectIssueTypeViewSet(BaseViewSet):
 
         is_default = request.data.get("is_default")
         level = request.data.get("level")
+        if is_default is True:
+            refuse_system_managed_type(link.issue_type, SYSTEM_MANAGED_TYPE_MAKE_DEFAULT)
 
         with transaction.atomic():
             if is_default is True:
@@ -124,6 +132,9 @@ class ProjectIssueTypeViewSet(BaseViewSet):
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER], level="PROJECT")
     def destroy(self, request, slug, project_id, pk):
+        link = self.get_queryset().filter(pk=pk).select_related("issue_type").first()
+        if link:
+            refuse_system_managed_type(link.issue_type, SYSTEM_MANAGED_TYPE_UNLINK)
         return super().destroy(request, slug, project_id, pk)
 
 

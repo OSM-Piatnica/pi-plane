@@ -35,6 +35,18 @@ A work item without a type behaves like the `standard` kind.
 
 **System-managed kinds** (`approval`, `review`). The type of an existing work item cannot be changed into or out of these kinds; taking the type off (`type_id: null`) counts as a change out of the kind. The API answers `400` with `{"error": "...", "error_code": "WORK_ITEM_TYPE_SYSTEM_MANAGED"}`. A new work item can be created with such a type. The work item import does not assign these types: the row comes in without a type, with a warning.
 
+Only the feature that owns a system-managed type links it to a project (`ensure_project_kind_type`, which works on the models directly). The API refuses to manage these types by hand, with the same `400` and `error_code` `WORK_ITEM_TYPE_SYSTEM_MANAGED` and a fixed `error` message:
+
+| Request                                                                      | Refused                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `DELETE /api/workspaces/<slug>/issue-types/<id>/`                            | always, whether work items use the type or not                                                                                                                                             |
+| `PATCH /api/workspaces/<slug>/issue-types/<id>/`                             | `is_active: false`; a `project_ids` list that links or unlinks a project (a list equal to the current links, as the type form sends it back, is fine; links to archived projects are kept) |
+| `POST /api/workspaces/<slug>/projects/<project_id>/issue-types/`             | linking the type to a project                                                                                                                                                              |
+| `DELETE /api/workspaces/<slug>/projects/<project_id>/issue-types/<link_id>/` | unlinking the type from a project                                                                                                                                                          |
+| `PATCH /api/workspaces/<slug>/projects/<project_id>/issue-types/<link_id>/`  | `is_default: true`: such a type is never a project's default                                                                                                                               |
+
+The name, icon (`logo_props`), description and custom properties stay editable. `kind` is read-only, so the type endpoints cannot create a system-managed type or move a type into or out of these kinds. A project template finds its work item types by name: an entry with the name of a system-managed type is skipped (not linked, no second type with that name is made) and the rest of the template is applied; `POST /api/workspaces/<slug>/projects/<project_id>/issue-setup/from-project-template/` lists the skipped names in `skipped_work_item_types`.
+
 **Progress.** `epic` and `review` work items are left out of the progress numbers of modules and cycles: an Epic is counted through its children, and an acceptance counts once, through its `approval` work item. They still show in the lists.
 
 ## `kind` and `is_epic`
@@ -70,6 +82,6 @@ The server refuses a change of the type of a work item and keeps system-managed 
 - The mark of a type: `getWorkItemTypeMarkKind` (`apps/web/helpers/work-item-type-mark.ts`) and `WorkItemTypeMarkIcon` (`apps/web/components/issues/issue-details/issue-identifier.tsx`).
 
 - `IssueTypeKind`, `ISSUE_TYPE_KIND_LEVELS`, `SYSTEM_MANAGED_ISSUE_TYPE_KINDS`, `PROGRESS_EXCLUDED_ISSUE_TYPE_KINDS`: `apps/api/plane/db/models/issue_type.py`.
-- `ensure_project_kind_type(project, kind)`, `issue_type_assignment_error(...)`: `apps/api/plane/utils/project_issue_types.py`.
+- `ensure_project_kind_type(project, kind)`, `issue_type_assignment_error(...)`, `refuse_system_managed_type(issue_type, action)` (the shared guard of the endpoints above): `apps/api/plane/utils/project_issue_types.py`.
 - `parent_kind_error(child_kind, parent_kind)`, `validate_work_item_parent(...)`: `apps/api/plane/utils/work_item_hierarchy.py`.
 - `Issue.progress_objects`, `not_epic_q(prefix)`: progress numbers without Epics and reviews (`apps/api/plane/utils/epic_progress.py`).
