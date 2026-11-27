@@ -34,6 +34,18 @@ Priorytet: high (pl,pl-x-podlaski: Wysoki; en: High; de: Hoch; es,it,pt-BR,pt-PT
 
 A question about "lavori in corso" or "In Bearbeitung" finds the same work items as one about "W trakcie". Custom state names stay as they are in every language. The names are read from the Plane instance once a week (`plane_labels.py`); whatever cannot be read comes from `plane_labels_builtin.json`, generated from `packages/i18n`. `COPILOT_LABEL_LANGUAGES` narrows the list, e.g. `pl,en`.
 
+Only the names Plane itself translates are sent in every language. Everything else stays as it was written:
+
+| Information | In every language |
+| --- | --- |
+| State and priority | Yes, exactly as the Plane UI shows them (25 languages) |
+| Title, description, comments | No, in the language they were written in. Copilot may translate them in its answer, but that is its own translation and searching in another language may miss them |
+| Field names in the content (`Projekt:`, `Przypisane do:`, `Termin:`, `Opis:`) | No, in Polish; Copilot understands them and answers in the language of the conversation |
+| Names of projects, people and labels, custom state names | As they are in Plane, which does not translate them either |
+| Dates | ISO format (`2026-12-31`); Copilot writes them its own way |
+
+Translating titles, descriptions and comments would need a translation service during the sync; it is not part of the connector.
+
 ## Who sees what
 
 `COPILOT_ACL_TYPE`:
