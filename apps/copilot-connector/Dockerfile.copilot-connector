@@ -27,7 +27,7 @@ RUN pip install --no-compile -r requirements.txt \
               /usr/local/bin/pip /usr/local/bin/pip3 /usr/local/bin/pip3.12
 
 COPY config.py graph_auth.py graph_users.py graph_connection.py html_text.py plane_client.py \
-     sync_service.py scheduler.py plane_graph_diag.py ./
+     sync_service.py scheduler.py plane_graph_diag.py plane_labels.py plane_labels_builtin.json ./
 
 RUN addgroup -S connector && adduser -S -G connector -H connector \
     && mkdir -p /data && chown connector:connector /data
