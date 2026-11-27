@@ -39,7 +39,7 @@
       "title": "GitHub"
     },
     "jira": {
-      "description": "Importujte pracovní položky a epiky z projektů a epik Jira.",
+      "description": "Importujte pracovní položky a epiky z projektů a epiků Jira.",
       "title": "Jira"
     }
   },
@@ -501,7 +501,7 @@
             "epic": {
               "description": "Rozsáhlý celek práce, který lze rozdělit na úkoly.",
               "disabled": "Epiky jsou pro tuto šablonu vypnuté.",
-              "title": "Epika"
+              "title": "Epik"
             },
             "optional_badge": "Volitelné",
             "properties_empty": "Tento typ nemá žádné vlastní vlastnosti.",
@@ -640,11 +640,11 @@
         "delete_confirm": "Odstranit tento typ pracovní položky? Stávající pracovní položky si zachovají svá data.",
         "description": "Definujte typy pracovních položek s vlastní identitou, vlastními vlastnostmi a rozsahem projektů. Typy můžete zapínat a vypínat, aniž by to ovlivnilo stávající položky.",
         "edit_type": "Upravit typ",
-        "epic_badge": "Epika",
+        "epic_badge": "Epik",
         "form": {
           "description_label": "Popis",
           "is_active": "Aktivní",
-          "is_epic": "Typ epika",
+          "is_epic": "Typ epiku",
           "modal_intro": "Pojmenujte typ, vyberte ikonu a přiřaďte pouze vlastnosti, které tento druh práce potřebuje. Přiřaďte jej k projektům, ve kterých má být dostupný.",
           "name_label": "Název",
           "name_required": "Název typu je povinný",
