@@ -82,6 +82,11 @@
         "content": "Thay đổi này sẽ phá vỡ các phụ thuộc. Có thể dời các mục công việc sau đây về sau, giữ nguyên thời lượng, để mọi phụ thuộc vẫn được đáp ứng:",
         "deadline_overrun": "{issue} sẽ vượt ngày hết hạn {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
         "deadline_overrun_more": "{issue} đã vượt ngày hết hạn {previous, plural, one {# ngày làm việc} other {# ngày làm việc}} và sẽ vượt {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
+        "save": "Lưu",
+        "sub_items_content": "Mục công việc này có các mục công việc con. Chúng có thể di chuyển cùng nó với cùng số ngày làm việc, giữ nguyên thời lượng.",
+        "sub_items_dependents": "Các mục công việc phụ thuộc vào chúng cũng sẽ được di chuyển:",
+        "sub_items_title": "Di chuyển cả các mục công việc con?",
+        "sub_items_toggle": "{count, plural, one {Di chuyển cả # mục công việc con} other {Di chuyển cả # mục công việc con}}",
         "title": "Di chuyển cả các mục công việc phụ thuộc?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Chỉ người được giao, trưởng dự án và quản trị viên mới được thay đổi mục công việc"
         },
         "reschedule_offer": {
-          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối.",
+          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối. Hệ thống cũng đề xuất di chuyển các mục công việc con của một mục cha được di chuyển; khi tắt, chúng giữ nguyên vị trí.",
           "title": "Đề xuất dời các mục công việc phụ thuộc"
         }
       },

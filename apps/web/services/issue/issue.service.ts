@@ -24,6 +24,8 @@ import type {
 } from "@plane/types";
 // services
 import { APIService } from "@/services/api.service";
+import { rescheduleFlags } from "@/helpers/reschedule";
+import type { TRescheduleRequestOptions } from "@/helpers/reschedule";
 
 export class IssueService extends APIService {
   private serviceType: TIssueServiceType;
@@ -263,14 +265,13 @@ export class IssueService extends APIService {
     projectId: string,
     issueId: string,
     data: Partial<TIssue>,
-    options?: { reopenParent?: boolean; shiftDependents?: boolean }
+    options?: { reopenParent?: boolean } & TRescheduleRequestOptions
   ): Promise<any> {
-    // reopen_parent confirms that completed parents may be reopened along with a finished work item, and
-    // shift_dependents that the work items depending on one whose dates change may be moved along
+    // reopen_parent confirms that completed parents may be reopened along with a finished work item
     const payload = {
       ...data,
       ...(options?.reopenParent ? { reopen_parent: true } : {}),
-      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+      ...rescheduleFlags(options),
     };
     return this.patch(`/api/workspaces/${workspaceSlug}/projects/${projectId}/${this.serviceType}/${issueId}/`, payload)
       .then((response) => response?.data)
@@ -291,11 +292,11 @@ export class IssueService extends APIService {
     workspaceSlug: string,
     projectId: string,
     updates: { id: string; start_date?: string; finish_date?: string; target_date?: string }[],
-    options?: { shiftDependents?: boolean }
+    options?: TRescheduleRequestOptions
   ): Promise<void> {
     return this.post(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issue-dates/`, {
       updates,
-      ...(options?.shiftDependents ? { shift_dependents: true } : {}),
+      ...rescheduleFlags(options),
     })
       .then((response) => response?.data)
       .catch((error) => {

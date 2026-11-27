@@ -9,7 +9,8 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import { computedFn } from "mobx-utils";
 import type {
   IIssueWorkflowStatus,
-  TRelationRescheduleShift,
+  TRelationRescheduleAnswer,
+  TRelationRescheduleOffer,
   IProjectWorkflowStates,
   IWorkflow,
   IWorkflowApproval,
@@ -45,8 +46,11 @@ export interface IWorkflowStore {
   pendingDuplicateCancel: TDuplicateCancelOffer | null;
   confirmDuplicateCancel: (offer: TDuplicateCancelOffer) => Promise<boolean>;
   resolveDuplicateCancel: (confirmed: boolean) => void;
-  pendingReschedule: TRelationRescheduleShift[] | null;
-  confirmReschedule: (shifts: TRelationRescheduleShift[]) => Promise<boolean>;
+  pendingReschedule: TRelationRescheduleOffer | null;
+  /** Whether the sub-work items in the open offer follow their parents: ticked when the offer opens */
+  rescheduleMoveSubItems: boolean;
+  setRescheduleMoveSubItems: (moveSubItems: boolean) => void;
+  confirmReschedule: (offer: TRelationRescheduleOffer) => Promise<TRelationRescheduleAnswer>;
   resolveReschedule: (confirmed: boolean) => void;
   pendingParentReopen: TParentReopenRequest[] | null;
   confirmParentReopen: (parents: TParentReopenRequest[]) => Promise<boolean>;
@@ -113,8 +117,9 @@ export class WorkflowStore implements IWorkflowStore {
   workflowHistoryMap: Record<string, IWorkflowHistory[]> = {};
   pendingDuplicateCancel: TDuplicateCancelOffer | null = null;
   private duplicateCancelResolver: ((confirmed: boolean) => void) | null = null;
-  pendingReschedule: TRelationRescheduleShift[] | null = null;
-  private rescheduleResolver: ((confirmed: boolean) => void) | null = null;
+  pendingReschedule: TRelationRescheduleOffer | null = null;
+  rescheduleMoveSubItems = true;
+  private rescheduleResolver: ((answer: TRelationRescheduleAnswer) => void) | null = null;
   pendingSubIssuesChoice: TSubIssuesChoice | null = null;
   private subIssuesResolver: ((include: boolean) => void) | null = null;
   pendingParentReopen: TParentReopenRequest[] | null = null;
@@ -133,6 +138,8 @@ export class WorkflowStore implements IWorkflowStore {
       confirmDuplicateCancel: action,
       resolveDuplicateCancel: action,
       pendingReschedule: observable.ref,
+      rescheduleMoveSubItems: observable.ref,
+      setRescheduleMoveSubItems: action,
       confirmReschedule: action,
       resolveReschedule: action,
       pendingSubIssuesChoice: observable.ref,
@@ -214,24 +221,31 @@ export class WorkflowStore implements IWorkflowStore {
   };
 
   /**
-   * Asks the person whether the work items that depend on one whose dates changed may be moved along. Resolves with
-   * the answer once the dialog is dismissed; a second request while one is open is declined.
+   * Asks the person whether the work items that depend on one whose dates changed may be moved along, and whether its
+   * sub-work items follow it (ticked by default). Resolves with the answer once the dialog is dismissed; a second
+   * request while one is open is declined.
    */
-  confirmReschedule = (shifts: TRelationRescheduleShift[]) => {
-    if (this.pendingReschedule) return Promise.resolve(false);
-    return new Promise<boolean>((resolve) => {
+  confirmReschedule = (offer: TRelationRescheduleOffer) => {
+    if (this.pendingReschedule) return Promise.resolve({ confirmed: false, moveSubItems: false });
+    return new Promise<TRelationRescheduleAnswer>((resolve) => {
       runInAction(() => {
-        this.pendingReschedule = shifts;
+        this.pendingReschedule = offer;
+        this.rescheduleMoveSubItems = true;
         this.rescheduleResolver = resolve;
       });
     });
   };
 
+  setRescheduleMoveSubItems = (moveSubItems: boolean) => {
+    this.rescheduleMoveSubItems = moveSubItems;
+  };
+
   resolveReschedule = (confirmed: boolean) => {
     const resolver = this.rescheduleResolver;
+    const moveSubItems = confirmed && this.rescheduleMoveSubItems && !!this.pendingReschedule?.sub_items.length;
     this.pendingReschedule = null;
     this.rescheduleResolver = null;
-    resolver?.(confirmed);
+    resolver?.({ confirmed, moveSubItems });
   };
 
   resolveParentReopen = (confirmed: boolean) => {

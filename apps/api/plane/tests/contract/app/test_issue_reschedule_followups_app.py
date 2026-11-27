@@ -475,11 +475,13 @@ class TestOfferSwitchedOff:
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestSubItems:
-    """What a shift does around a parent and its sub-items.
+    """What a shift does around a parent and its sub-items (decision 15, D8c).
 
-    The dates rolled up from sub-items are only drawn on the timeline: a parent keeps its own stored dates, and
-    relations are checked against those. Sub-items do not inherit the relations of their parent. These tests pin that
-    behaviour down; see docs/working-days.md.
+    Sub-items follow a moved parent only when the person ticks them in the offer (``move_sub_items``); a client that
+    does not send the flags sees them stay, as before. As the predecessor of a relation a parent counts with its
+    effective span, its own dates widened by the roll-up of its sub-items; as the successor with its own dates, so
+    sub-items do not inherit the predecessors of their parent. More cases are in test_issue_reschedule_sub_items_app.py;
+    see docs/working-days.md.
     """
 
     def rollup(self, client, workspace, project, parent):
@@ -490,36 +492,73 @@ class TestSubItems:
         assert response.status_code == status.HTTP_200_OK
         return response.json()[str(parent.id)]
 
-    def test_moving_a_parent_shifts_its_successors_and_leaves_its_sub_items(self, session_client, workspace, project):
+    def test_moving_a_parent_offers_its_sub_items_beside_its_successors(self, session_client, workspace, project):
         parent = item(project, "parent", date(2026, 1, 1), date(2026, 1, 10))
         child = item(project, "child", date(2026, 1, 3), date(2026, 1, 8), parent=parent)
         successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
         relate(parent, successor)
+        moved = {"start_date": "2026-01-05", "finish_date": "2026-01-14"}
 
-        offered, _ = patch(
-            session_client,
-            workspace,
-            project,
-            parent,
-            {"start_date": "2026-01-05", "finish_date": "2026-01-14"},
-        )
+        offered, _ = patch(session_client, workspace, project, parent, {**moved, "offer_sub_items": True})
         assert code(offered) == "relation_reschedule_available"
-        # only the successor is in the offer: the sub-item is not
-        assert [shift["id"] for shift in offered.json()["shifts"]] == [str(successor.id)]
+        body = offered.json()
+        assert [shift["id"] for shift in body["shifts"]] == [str(successor.id)]
+        assert [(s["id"], s["new_start_date"], s["new_finish_date"]) for s in body["sub_items"]] == [
+            (str(child.id), "2026-01-07", "2026-01-12")
+        ]
+        assert [shift["id"] for shift in body["shifts_with_sub_items"]] == [str(successor.id)]
 
         response, _ = patch(
             session_client,
             workspace,
             project,
             parent,
-            {"start_date": "2026-01-05", "finish_date": "2026-01-14", "shift_dependents": True},
+            {**moved, "shift_dependents": True, "move_sub_items": True},
         )
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert dates(successor) == (date(2026, 1, 15), date(2026, 1, 24))
+        assert dates(child) == (date(2026, 1, 7), date(2026, 1, 12))
+
+    def test_a_client_that_does_not_ask_keeps_the_sub_items_in_place(self, session_client, workspace, project):
+        parent = item(project, "parent", date(2026, 1, 1), date(2026, 1, 10))
+        child = item(project, "child", date(2026, 1, 3), date(2026, 1, 8), parent=parent)
+        successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
+        relate(parent, successor)
+        moved = {"start_date": "2026-01-05", "finish_date": "2026-01-14"}
+
+        offered, _ = patch(session_client, workspace, project, parent, moved)
+        assert [shift["id"] for shift in offered.json()["shifts"]] == [str(successor.id)]
+        assert offered.json()["sub_items"] == []
+
+        response, _ = patch(session_client, workspace, project, parent, {**moved, "shift_dependents": True})
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert dates(successor) == (date(2026, 1, 15), date(2026, 1, 24))
         assert dates(child) == (date(2026, 1, 3), date(2026, 1, 8))
 
-    def test_a_parent_shifted_as_a_dependent_takes_its_successors_but_not_its_sub_items(
+    def test_a_parent_shifted_as_a_dependent_takes_its_sub_items_when_ticked(self, session_client, workspace, project):
+        first = item(project, "first", date(2026, 1, 1), date(2026, 1, 10))
+        parent = item(project, "parent", date(2026, 1, 11), date(2026, 1, 20))
+        child = item(project, "child", date(2026, 1, 11), date(2026, 1, 20), parent=parent)
+        after_parent = item(project, "after parent", date(2026, 1, 21), date(2026, 1, 25))
+        relate(first, parent)
+        relate(parent, after_parent)
+
+        response, _ = patch(
+            session_client,
+            workspace,
+            project,
+            first,
+            {"finish_date": "2026-01-14", "shift_dependents": True, "move_sub_items": True},
+        )
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert dates(parent) == (date(2026, 1, 15), date(2026, 1, 24))
+        assert dates(child) == (date(2026, 1, 15), date(2026, 1, 24))
+        assert dates(after_parent) == (date(2026, 1, 25), date(2026, 1, 29))
+
+    def test_a_parent_shifted_as_a_dependent_leaves_its_sub_items_when_not_ticked(
         self, session_client, workspace, project
     ):
         first = item(project, "first", date(2026, 1, 1), date(2026, 1, 10))
@@ -530,7 +569,11 @@ class TestSubItems:
         relate(parent, after_parent)
 
         response, _ = patch(
-            session_client, workspace, project, first, {"finish_date": "2026-01-14", "shift_dependents": True}
+            session_client,
+            workspace,
+            project,
+            first,
+            {"finish_date": "2026-01-14", "shift_dependents": True, "move_sub_items": False},
         )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -539,7 +582,7 @@ class TestSubItems:
         # the sub-item stays where it was, now before its parent starts
         assert dates(child) == (date(2026, 1, 11), date(2026, 1, 20))
 
-    def test_a_sub_item_that_outgrows_its_parent_moves_neither_the_parent_nor_its_successors(
+    def test_a_sub_item_that_outgrows_its_parent_pushes_the_parents_successors(
         self, session_client, workspace, project
     ):
         parent = item(project, "parent", date(2026, 1, 1), date(2026, 1, 10))
@@ -547,29 +590,34 @@ class TestSubItems:
         successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
         relate(parent, successor)
 
-        # nothing depends on the sub-item itself, so there is no conflict and nothing to offer
-        response, activity = patch(session_client, workspace, project, child, {"finish_date": "2026-01-18"})
+        # the parent now ends on the 18th for what depends on it: the overrun is offered, not passed over
+        offered, _ = patch(session_client, workspace, project, child, {"finish_date": "2026-01-18"})
+        assert code(offered) == "relation_reschedule_available"
+        assert [(s["id"], s["new_start_date"]) for s in offered.json()["shifts"]] == [(str(successor.id), "2026-01-19")]
+
+        response, _ = patch(
+            session_client, workspace, project, child, {"finish_date": "2026-01-18", "shift_dependents": True}
+        )
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        activity.assert_not_called()
+        # the parent keeps its own dates; the timeline draws the sub-item past them
         assert dates(parent) == (date(2026, 1, 1), date(2026, 1, 10))
-        assert dates(successor) == (date(2026, 1, 11), date(2026, 1, 20))
-        # the timeline now draws the sub-items past the parent's own end and past the successor's start
+        assert dates(successor) == (date(2026, 1, 19), date(2026, 1, 28))
         assert self.rollup(session_client, workspace, project, parent)["target_date"] == "2026-01-18"
 
-    def test_a_parent_without_dates_of_its_own_holds_nothing_back(self, session_client, workspace, project):
-        # drawn on the timeline from its sub-items' dates, but the relation has no date of the parent to check
+    def test_a_parent_without_dates_of_its_own_counts_with_its_sub_items(self, session_client, workspace, project):
         parent = item(project, "parent")
         child = item(project, "child", date(2026, 1, 1), date(2026, 1, 10), parent=parent)
         successor = item(project, "successor", date(2026, 1, 11), date(2026, 1, 20))
         relate(parent, successor)
 
-        response, activity = patch(session_client, workspace, project, child, {"finish_date": "2026-01-18"})
+        offered, activity = patch(session_client, workspace, project, child, {"finish_date": "2026-01-18"})
 
-        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert code(offered) == "relation_reschedule_available"
+        assert [(s["id"], s["new_start_date"]) for s in offered.json()["shifts"]] == [(str(successor.id), "2026-01-19")]
         activity.assert_not_called()
-        assert dates(successor) == (date(2026, 1, 11), date(2026, 1, 20))
-        assert self.rollup(session_client, workspace, project, parent)["target_date"] == "2026-01-18"
+        assert dates(child) == (date(2026, 1, 1), date(2026, 1, 10))
+        assert self.rollup(session_client, workspace, project, parent)["target_date"] == "2026-01-10"
 
     def test_a_sub_item_shifted_as_a_dependent_leaves_its_parent(self, session_client, workspace, project):
         first = item(project, "first", date(2026, 1, 1), date(2026, 1, 10))

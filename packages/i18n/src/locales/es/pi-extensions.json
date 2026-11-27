@@ -82,6 +82,11 @@
         "content": "Este cambio rompería dependencias. Estos elementos de trabajo se pueden mover más adelante, manteniendo su duración, para que todas las dependencias se sigan cumpliendo:",
         "deadline_overrun": "{issue} superará su fecha de vencimiento en {count, plural, one {# día laborable} other {# días laborables}}.",
         "deadline_overrun_more": "{issue} ya supera su fecha de vencimiento en {previous, plural, one {# día laborable} other {# días laborables}} y la superará en {count, plural, one {# día laborable} other {# días laborables}}.",
+        "save": "Guardar",
+        "sub_items_content": "Este elemento de trabajo tiene sub-elementos de trabajo. Pueden moverse con él el mismo número de días laborables, conservando su duración.",
+        "sub_items_dependents": "Los elementos de trabajo que dependen de ellos también se mueven:",
+        "sub_items_title": "¿Mover también los sub-elementos de trabajo?",
+        "sub_items_toggle": "{count, plural, one {Mover también el sub-elemento de trabajo} other {Mover también los # sub-elementos de trabajo}}",
         "title": "¿Mover también los elementos de trabajo dependientes?"
       },
       "duplicate_cancel": {
@@ -178,7 +183,7 @@
           "title": "Solo los asignados, el responsable del proyecto y los administradores pueden cambiar un elemento de trabajo"
         },
         "reschedule_offer": {
-          "description": "Cuando un cambio de fechas rompería una dependencia, se ofrece mover más adelante los elementos de trabajo dependientes en lugar de rechazar el cambio. Si está desactivado, ese cambio se rechaza.",
+          "description": "Cuando un cambio de fechas rompería una dependencia, se ofrece mover más adelante los elementos de trabajo dependientes en lugar de rechazar el cambio. Si está desactivado, ese cambio se rechaza. También se ofrece mover los sub-elementos de trabajo de un elemento padre que se mueve; si está desactivado, se quedan donde están.",
           "title": "Ofrecer mover los elementos de trabajo dependientes"
         }
       },
