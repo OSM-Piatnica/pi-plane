@@ -16,12 +16,23 @@ Every `COPILOT_SYNC_INTERVAL_MINUTES` (30 by default) it:
 
 1. checks the connection and its schema in Microsoft Graph, and creates or updates them when they are missing or older than the code (the first time this takes 5–15 minutes);
 2. reads every project of the workspace through the public API, with a [bot token](bot-tokens.md);
-3. sends the work items that changed since the last run: title, description, state, priority, assignees, author, project, dates and a link to the work item. Once a day it sends everything again;
+3. sends the work items that changed since the last run: title, description, state, priority, assignees, author, project, dates and a link to the work item. Once a day it sends everything again. The state and the priority are sent with their names in every language of the Plane UI (see below);
 4. removes from Copilot the work items that were deleted in Plane, or whose project was deleted. If an unusually large share would disappear at once, it removes nothing and logs a warning instead.
 
 A failed run (for example a Microsoft outage) is logged and retried on the next one; the service keeps running. Two runs never overlap. The state (which work items were sent, as ids and hashes) is kept in the `copilot_connector_data` volume.
 
 The service calls the API inside the stack (`http://api:8000`), so it needs no certificate and no access through the proxy. Links in Copilot use `WEB_URL`.
+
+### Every language of Plane
+
+Copilot answers in the language of the conversation. So that it names states and priorities exactly as Plane shows them in that language, each work item carries their names in every language of the Plane UI (25 languages), for example:
+
+```
+Status: In Progress (pl,pl-x-podlaski: W trakcie; de: In Bearbeitung; es: En progreso; fr: En cours; it: In corso; …)
+Priorytet: high (pl,pl-x-podlaski: Wysoki; en: High; de: Hoch; es,it,pt-BR,pt-PT: Alta; fr: Haute; …)
+```
+
+A question about "lavori in corso" or "In Bearbeitung" finds the same work items as one about "W trakcie". Custom state names stay as they are in every language. The names are read from the Plane instance once a week (`plane_labels.py`); whatever cannot be read comes from `plane_labels_builtin.json`, generated from `packages/i18n`. `COPILOT_LABEL_LANGUAGES` narrows the list, e.g. `pl,en`.
 
 ## Who sees what
 
@@ -65,6 +76,7 @@ The server needs outbound HTTPS to `login.microsoftonline.com` and `graph.micros
 | `COPILOT_GRAPH_CONNECTION_NAME` | Its name in the Microsoft 365 admin center | `Pi-Plane Graph Connector` |
 | `COPILOT_ICON_URL` | Icon next to the results in Copilot | the instance's own icon |
 | `COPILOT_PLANE_API_URL` | Where the API is called | `http://api:8000` |
+| `COPILOT_LABEL_LANGUAGES` | Languages of the names of states and priorities sent to Copilot (`all` or a list such as `pl,en`) | `all` |
 
 ## Checking on it
 

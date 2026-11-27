@@ -46,6 +46,7 @@ def run(tmp_path):
         with mock.patch.object(sync_service, "STATE_FILE", state_file), \
                 mock.patch.object(sync_service, "LOCK_FILE", tmp_path / "sync.lock"), \
                 mock.patch.object(sync_service, "_check_graph_ready", lambda: None), \
+                mock.patch.object(sync_service.plane_labels, "ensure_fresh", lambda *args: None), \
                 mock.patch.object(sync_service, "list_projects", lambda: projects), \
                 mock.patch.object(sync_service, "ProjectAccess", lambda project: access), \
                 mock.patch.object(sync_service, "list_all_work_items", list_items), \

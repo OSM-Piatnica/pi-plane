@@ -1,0 +1,430 @@
+{
+ "source": "Pi-Plane packages/i18n/src/locales (preview addbd5d43)",
+ "languages": {
+  "be": {
+   "states": {
+    "backlog": "Бэклог",
+    "todo": "Да выканання",
+    "in_progress": "У рабоце",
+    "done": "Гатова",
+    "cancelled": "Скасавана",
+    "triage": "Сартаванне"
+   },
+   "priority": {
+    "urgent": "Тэрмінова",
+    "high": "Высокі",
+    "medium": "Сярэдні",
+    "low": "Нізкі",
+    "none": "Няма"
+   }
+  },
+  "bg": {
+   "states": {
+    "backlog": "Бъклог",
+    "todo": "За правене",
+    "in_progress": "В процес",
+    "done": "Готово",
+    "cancelled": "Отменено",
+    "triage": "Сортиране"
+   },
+   "priority": {
+    "urgent": "Спешен",
+    "high": "Висок",
+    "medium": "Среден",
+    "low": "Нисък",
+    "none": "Няма"
+   }
+  },
+  "cs": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "K udělání",
+    "in_progress": "V průběhu",
+    "done": "Hotovo",
+    "cancelled": "Zrušeno",
+    "triage": "Třídění"
+   },
+   "priority": {
+    "urgent": "Naléhavá",
+    "high": "Vysoká",
+    "medium": "Střední",
+    "low": "Nízká",
+    "none": "Žádná"
+   }
+  },
+  "de": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Zu erledigen",
+    "in_progress": "In Bearbeitung",
+    "done": "Fertig",
+    "cancelled": "Abgebrochen",
+    "triage": "Triage"
+   },
+   "priority": {
+    "urgent": "Dringend",
+    "high": "Hoch",
+    "medium": "Mittel",
+    "low": "Niedrig",
+    "none": "Keine"
+   }
+  },
+  "en": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "To do",
+    "in_progress": "In Progress",
+    "done": "Done",
+    "cancelled": "Cancelled",
+    "triage": "Triage"
+   },
+   "priority": {
+    "urgent": "Urgent",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "none": "None"
+   }
+  },
+  "es": {
+   "states": {
+    "backlog": "Pendiente",
+    "todo": "Por hacer",
+    "in_progress": "En progreso",
+    "done": "Hecho",
+    "cancelled": "Cancelado",
+    "triage": "Triaje"
+   },
+   "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja",
+    "none": "Ninguno"
+   }
+  },
+  "fr": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "À faire",
+    "in_progress": "En cours",
+    "done": "Terminé",
+    "cancelled": "Annulé",
+    "triage": "Tri"
+   },
+   "priority": {
+    "urgent": "Urgent",
+    "high": "Haute",
+    "medium": "Moyenne",
+    "low": "Basse",
+    "none": "Aucun"
+   }
+  },
+  "id": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Akan dikerjakan",
+    "in_progress": "Dalam Proses",
+    "done": "Selesai",
+    "cancelled": "Dibatalkan",
+    "triage": "Triase"
+   },
+   "priority": {
+    "urgent": "Mendesak",
+    "high": "Tinggi",
+    "medium": "Sedang",
+    "low": "Rendah",
+    "none": "Tidak ada"
+   }
+  },
+  "it": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Da fare",
+    "in_progress": "In corso",
+    "done": "Fatto",
+    "cancelled": "Annullato",
+    "triage": "Triage"
+   },
+   "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Bassa",
+    "none": "Nessuna"
+   }
+  },
+  "ja": {
+   "states": {
+    "backlog": "バックログ",
+    "todo": "未着手",
+    "in_progress": "進行中",
+    "done": "完了",
+    "cancelled": "キャンセル",
+    "triage": "トリアージ"
+   },
+   "priority": {
+    "urgent": "緊急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "なし"
+   }
+  },
+  "ka-ge": {
+   "states": {
+    "backlog": "ჩამორჩენა",
+    "todo": "გასაკეთებელი",
+    "in_progress": "მიმდინარე",
+    "done": "დასრულებული",
+    "cancelled": "გაუქმებული",
+    "triage": "დახარისხება"
+   },
+   "priority": {
+    "urgent": "გადაუდებელი",
+    "high": "მაღალი",
+    "medium": "საშუალო",
+    "low": "დაბალი",
+    "none": "არცერთი"
+   }
+  },
+  "ko": {
+   "states": {
+    "backlog": "백로그",
+    "todo": "할 일",
+    "in_progress": "진행 중",
+    "done": "완료",
+    "cancelled": "취소됨",
+    "triage": "분류"
+   },
+   "priority": {
+    "urgent": "긴급",
+    "high": "높음",
+    "medium": "중간",
+    "low": "낮음",
+    "none": "없음"
+   }
+  },
+  "nl": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Te doen",
+    "in_progress": "In uitvoering",
+    "done": "Klaar",
+    "cancelled": "Geannuleerd",
+    "triage": "Triage"
+   },
+   "priority": {
+    "urgent": "Urgent",
+    "high": "Hoog",
+    "medium": "Gemiddeld",
+    "low": "Laag",
+    "none": "Geen"
+   }
+  },
+  "pl": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Do zrobienia",
+    "in_progress": "W trakcie",
+    "done": "Gotowe",
+    "cancelled": "Anulowane",
+    "triage": "Do kwalifikacji"
+   },
+   "priority": {
+    "urgent": "Pilny",
+    "high": "Wysoki",
+    "medium": "Średni",
+    "low": "Niski",
+    "none": "Brak"
+   }
+  },
+  "pl-x-podlaski": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Do zrobienia",
+    "in_progress": "W trakcie",
+    "done": "Gotowe",
+    "cancelled": "Anulowane",
+    "triage": "Do kwalifikacji"
+   },
+   "priority": {
+    "urgent": "Pilny",
+    "high": "Wysoki",
+    "medium": "Średni",
+    "low": "Niski",
+    "none": "Brak"
+   }
+  },
+  "pt-BR": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "A fazer",
+    "in_progress": "Em Andamento",
+    "done": "Concluído",
+    "cancelled": "Cancelado",
+    "triage": "Triagem"
+   },
+   "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Média",
+    "low": "Baixa",
+    "none": "Nenhum"
+   }
+  },
+  "pt-PT": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Por fazer",
+    "in_progress": "Em Andamento",
+    "done": "Concluído",
+    "cancelled": "Cancelado",
+    "triage": "Triagem"
+   },
+   "priority": {
+    "urgent": "Urgente",
+    "high": "Alta",
+    "medium": "Média",
+    "low": "Baixa",
+    "none": "Nenhum"
+   }
+  },
+  "ro": {
+   "states": {
+    "backlog": "Restante",
+    "todo": "De făcut",
+    "in_progress": "În desfășurare",
+    "done": "Gata",
+    "cancelled": "Anulate",
+    "triage": "Triaj"
+   },
+   "priority": {
+    "urgent": "Urgentă",
+    "high": "Ridicată",
+    "medium": "Medie",
+    "low": "Scăzută",
+    "none": "Niciuna"
+   }
+  },
+  "ru": {
+   "states": {
+    "backlog": "Бэклог",
+    "todo": "К выполнению",
+    "in_progress": "В процессе",
+    "done": "Готово",
+    "cancelled": "Отменено",
+    "triage": "Сортировка"
+   },
+   "priority": {
+    "urgent": "Срочный",
+    "high": "Высокий",
+    "medium": "Средний",
+    "low": "Низкий",
+    "none": "Нет"
+   }
+  },
+  "sk": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "Na vykonanie",
+    "in_progress": "Prebieha",
+    "done": "Hotovo",
+    "cancelled": "Zrušené",
+    "triage": "Triedenie"
+   },
+   "priority": {
+    "urgent": "Naliehavá",
+    "high": "Vysoká",
+    "medium": "Stredná",
+    "low": "Nízka",
+    "none": "Žiadna"
+   }
+  },
+  "tr-TR": {
+   "states": {
+    "backlog": "Bekleme Listesi",
+    "todo": "Yapılacak",
+    "in_progress": "Devam Ediyor",
+    "done": "Tamamlandı",
+    "cancelled": "İptal Edildi",
+    "triage": "Ön değerlendirme"
+   },
+   "priority": {
+    "urgent": "Acil",
+    "high": "Yüksek",
+    "medium": "Orta",
+    "low": "Düşük",
+    "none": "Yok"
+   }
+  },
+  "ua": {
+   "states": {
+    "backlog": "Backlog",
+    "todo": "До виконання",
+    "in_progress": "У процесі",
+    "done": "Готово",
+    "cancelled": "Скасовано",
+    "triage": "Сортування"
+   },
+   "priority": {
+    "urgent": "Терміновий",
+    "high": "Високий",
+    "medium": "Середній",
+    "low": "Низький",
+    "none": "Немає"
+   }
+  },
+  "vi-VN": {
+   "states": {
+    "backlog": "Tồn đọng",
+    "todo": "Cần làm",
+    "in_progress": "Đang tiến hành",
+    "done": "Hoàn thành",
+    "cancelled": "Đã hủy",
+    "triage": "Phân loại"
+   },
+   "priority": {
+    "urgent": "Khẩn cấp",
+    "high": "Cao",
+    "medium": "Trung bình",
+    "low": "Thấp",
+    "none": "Không có"
+   }
+  },
+  "zh-CN": {
+   "states": {
+    "backlog": "待办",
+    "todo": "待办",
+    "in_progress": "进行中",
+    "done": "完成",
+    "cancelled": "已取消",
+    "triage": "分流"
+   },
+   "priority": {
+    "urgent": "紧急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "无"
+   }
+  },
+  "zh-TW": {
+   "states": {
+    "backlog": "待辦事項",
+    "todo": "待辦",
+    "in_progress": "進行中",
+    "done": "完成",
+    "cancelled": "已取消",
+    "triage": "分流"
+   },
+   "priority": {
+    "urgent": "緊急",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "none": "無"
+   }
+  }
+ }
+}

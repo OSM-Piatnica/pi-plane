@@ -18,6 +18,7 @@ Syncs the work items of a Pi-Plane workspace to Microsoft 365 Copilot (a synced 
 | `html_text.py` | Descriptions and comments from HTML to plain text |
 | `plane_graph_diag.py` | Diagnostics: what Graph holds for given work items and who may see them |
 | `plane_mcp_server.py` | MCP server answering live from Plane (not part of the stack yet) |
+| `plane_labels.py`, `plane_labels_builtin.json` | Names of states and priorities in every language of the Plane UI, sent with each work item |
 | `config.py` | Settings from environment variables |
 
 ## Running it outside the stack

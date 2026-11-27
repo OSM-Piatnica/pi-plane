@@ -26,10 +26,13 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 import requests
+import plane_client
 from config import settings
 from graph_auth import get_access_token
 from html_text import html_to_text
 from graph_users import resolve_user_object_id
+import plane_labels
+from plane_labels import bilingual, priority_labels, state_labels
 from plane_client import GUEST_ROLE, list_all_work_items, list_group_members, list_project_people, list_projects
 
 GRAPH_BASE = "https://graph.microsoft.com/v1.0"
@@ -220,8 +223,10 @@ def _map_work_item_to_external_item(project, item, acl, created_by_name=""):
     content_lines = [
         "Zadanie" + (" " + item_key if item_key else "") + ": " + title,
         "Projekt: " + project_name,
-        "Status: " + status,
-        "Priorytet: " + priority,
+        # Nazwy statusu i priorytetu tak, jak pokazuje je interfejs Plane w kazdym jezyku (plane_labels.py) -
+        # Copilot odpowiada w jezyku rozmowy i znajduje zadanie, gdy ktos zapyta np. o "In corso".
+        "Status: " + bilingual(status, state_labels(status)),
+        "Priorytet: " + bilingual(priority, priority_labels(priority)),
         "Przypisane do: " + assigned_names,
     ]
     if created_by_name:
@@ -230,6 +235,8 @@ def _map_work_item_to_external_item(project, item, acl, created_by_name=""):
         content_lines.append("Data rozpoczecia: " + str(item["start_date"]))
     if item.get("target_date"):
         content_lines.append("Termin: " + str(item["target_date"]))
+    content_lines.append("Status i priorytet podawaj w jezyku, w ktorym pisze uzytkownik - uzyj nazwy dla tego "
+                         "jezyka podanej w nawiasie (tak wyswietla je Plane).")
     if description:
         content_lines.append("")
         content_lines.append("Opis:")
@@ -447,6 +454,9 @@ def _run_sync(allow_mass_delete, full):
     if problem:
         print("PRZERWANO - " + problem)
         return 1
+    labels_problem = plane_labels.ensure_fresh(settings.PLANE_BASE_URL, plane_client._VERIFY)
+    if labels_problem:
+        print("UWAGA: " + labels_problem + " - uzywam dolaczonych tlumaczen statusow.")
 
     previous, last_full = _load_state()
     full = full or last_full is None or started - last_full > FULL_REFRESH_EVERY
