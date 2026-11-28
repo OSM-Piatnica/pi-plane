@@ -12,7 +12,11 @@
       "last_used_app": "마지막으로 사용한 앱"
     },
     "switch_to": {
-      "projects": "프로젝트로 전환"
+      "projects": "프로젝트로 전환",
+      "initiatives": "이니셔티브로 전환"
+    },
+    "apps": {
+      "initiatives": "이니셔티브"
     }
   },
   "approve": "승인",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "이 워크스페이스의 모든 사용자를 대상으로 Pi-Plane의 일부 기능을 켜거나 끕니다."
+    "description": "이 워크스페이스의 모든 사용자를 대상으로 Pi-Plane의 일부 기능을 켜거나 끕니다.",
+    "items": {
+      "initiatives": {
+        "title": "이니셔티브",
+        "description": "프로젝트 전반의 목표와 이니셔티브를 진행 상황 및 상태 업데이트와 함께 관리합니다."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "이니셔티브",
+    "all": "모든 이니셔티브",
+    "without_goal": "목표 없음",
+    "no_goal": "목표 없음",
+    "no_goals_yet": "아직 목표가 없습니다",
+    "no_lead": "리드 없음",
+    "new_goal": "새 목표",
+    "new_initiative": "새 이니셔티브",
+    "create_goal": "목표 만들기",
+    "create_initiative": "이니셔티브 만들기",
+    "expand_goal": "{name} 펼치기",
+    "collapse_goal": "{name} 접기",
+    "properties": "속성",
+    "show_properties": "속성 표시",
+    "hide_properties": "속성 숨기기",
+    "description_placeholder": "무엇을 위한 것이며, 완료되었는지 어떻게 알 수 있습니까?",
+    "kind": {
+      "goal": "목표",
+      "initiative": "이니셔티브"
+    },
+    "status": {
+      "planned": "계획됨",
+      "active": "진행 중",
+      "paused": "일시 중지됨",
+      "completed": "완료됨",
+      "cancelled": "취소됨"
+    },
+    "health": {
+      "on_track": "계획대로 진행 중",
+      "at_risk": "위험",
+      "off_track": "계획 이탈",
+      "none": "아직 업데이트 없음",
+      "pick": "건전성"
+    },
+    "fields": {
+      "name": "이름",
+      "status": "상태",
+      "health": "건전성",
+      "lead": "리드",
+      "dates": "날짜",
+      "goal": "목표",
+      "created_by": "생성자"
+    },
+    "form": {
+      "placeholder": "이니셔티브 이름",
+      "goal_placeholder": "목표 이름",
+      "name_required": "이름은 필수입니다."
+    },
+    "empty": {
+      "title": "아직 이니셔티브가 없습니다",
+      "description": "여러 프로젝트의 작업을 이니셔티브로, 이니셔티브를 목표 아래로 묶어 진행 상황을 한곳에서 확인하십시오.",
+      "sidebar": "생성한 목표와 이니셔티브가 여기에 표시됩니다."
+    },
+    "not_found": {
+      "title": "이니셔티브를 찾을 수 없습니다",
+      "description": "삭제되었거나 주소가 잘못되었을 수 있습니다."
+    },
+    "progress": {
+      "projects": "연결된 프로젝트의 작업 항목",
+      "epics": "연결된 에픽의 작업 항목",
+      "done_of_total": "{total}개 중 {done}개 완료",
+      "tooltip": "작업 항목의 {percentage}% 완료",
+      "partial_tooltip": "볼 수 있는 작업 항목의 {percentage}% 완료",
+      "projects_empty": "연결된 프로젝트에 아직 작업 항목이 없습니다.",
+      "epics_empty": "연결된 에픽에 아직 하위 작업 항목이 없습니다.",
+      "hidden_projects": "{count, plural, one {연결된 프로젝트 #개는 볼 수 없으므로 집계에 포함되지 않습니다.} other {연결된 프로젝트 #개는 볼 수 없으므로 집계에 포함되지 않습니다.}}",
+      "hidden_epics": "{count, plural, one {연결된 에픽 #개는 볼 수 없으므로 집계에 포함되지 않습니다.} other {연결된 에픽 #개는 볼 수 없으므로 집계에 포함되지 않습니다.}}",
+      "hidden_children": "일부 하위 작업 항목은 볼 수 없는 프로젝트에 있으므로 집계에 포함되지 않습니다.",
+      "explained": "두 수치는 따로 집계됩니다. 그렇지 않으면 연결된 프로젝트 안의 에픽이 두 번 집계됩니다."
+    },
+    "children": {
+      "title": "이니셔티브",
+      "empty": "아직 이 목표를 위해 진행 중인 이니셔티브가 없습니다."
+    },
+    "projects": {
+      "title": "프로젝트",
+      "add": "프로젝트 추가",
+      "empty": "아직 연결된 프로젝트가 없습니다.",
+      "of_goal": "이 목표에 속한 이니셔티브의 프로젝트입니다. 프로젝트는 이니셔티브에서 연결하십시오.",
+      "remove": "{name} 연결 해제",
+      "unknown": "프로젝트",
+      "archived": "보관됨"
+    },
+    "epics": {
+      "title": "에픽",
+      "add": "에픽 추가",
+      "search": "이름 또는 ID로 에픽 검색",
+      "none_to_add": "추가할 에픽이 없습니다",
+      "empty": "아직 연결된 에픽이 없습니다.",
+      "of_goal": "이 목표에 속한 이니셔티브의 에픽입니다. 에픽은 이니셔티브에서 연결하십시오.",
+      "remove": "{name} 연결 해제",
+      "progress_of": "{name} 진행 상황"
+    },
+    "updates": {
+      "title": "상태 업데이트",
+      "text": "업데이트",
+      "placeholder": "진행 상황은 어떻습니까?",
+      "post": "업데이트 게시",
+      "posted": "업데이트를 게시했습니다.",
+      "empty": "아직 상태 업데이트가 없습니다."
+    },
+    "delete": {
+      "action": "삭제",
+      "goal_title": "목표 삭제",
+      "initiative_title": "이니셔티브 삭제",
+      "goal_description": "목표 {name}을(를) 삭제하시겠습니까? 해당 이니셔티브는 목표 없이 유지됩니다.",
+      "initiative_description": "이니셔티브 {name}을(를) 삭제하시겠습니까? 프로젝트 및 에픽과의 연결과 상태 업데이트는 제거되지만, 프로젝트와 에픽은 유지됩니다."
+    },
+    "toast": {
+      "goal_created": "목표를 만들었습니다.",
+      "initiative_created": "이니셔티브를 만들었습니다.",
+      "goal_deleted": "목표를 삭제했습니다.",
+      "initiative_deleted": "이니셔티브를 삭제했습니다.",
+      "error": "문제가 발생했습니다. 다시 시도하십시오."
     }
   }
 }

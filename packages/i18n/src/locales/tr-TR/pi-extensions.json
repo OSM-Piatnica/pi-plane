@@ -12,7 +12,11 @@
       "last_used_app": "Son kullanılan uygulama"
     },
     "switch_to": {
-      "projects": "Projeler'e geç"
+      "projects": "Projeler'e geç",
+      "initiatives": "Girişimler'e geç"
+    },
+    "apps": {
+      "initiatives": "Girişimler"
     }
   },
   "approve": "Onayla",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "Pi-Plane bölümlerini bu çalışma alanındaki herkes için açın veya kapatın."
+    "description": "Pi-Plane bölümlerini bu çalışma alanındaki herkes için açın veya kapatın.",
+    "items": {
+      "initiatives": {
+        "title": "Girişimler",
+        "description": "Projeler genelinde hedefler ve girişimler; ilerleme ve durum güncellemeleriyle."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Girişimler",
+    "all": "Tüm girişimler",
+    "without_goal": "Hedefsiz",
+    "no_goal": "Hedef yok",
+    "no_goals_yet": "Henüz hedef yok",
+    "no_lead": "Lider yok",
+    "new_goal": "Yeni hedef",
+    "new_initiative": "Yeni girişim",
+    "create_goal": "Hedef oluştur",
+    "create_initiative": "Girişim oluştur",
+    "expand_goal": "{name} öğesini genişlet",
+    "collapse_goal": "{name} öğesini daralt",
+    "properties": "Özellikler",
+    "show_properties": "Özellikleri göster",
+    "hide_properties": "Özellikleri gizle",
+    "description_placeholder": "Ne için yapılıyor ve tamamlandığını nasıl anlayacaksınız?",
+    "kind": {
+      "goal": "Hedef",
+      "initiative": "Girişim"
+    },
+    "status": {
+      "planned": "Planlandı",
+      "active": "Aktif",
+      "paused": "Duraklatıldı",
+      "completed": "Tamamlandı",
+      "cancelled": "İptal edildi"
+    },
+    "health": {
+      "on_track": "Yolunda",
+      "at_risk": "Risk altında",
+      "off_track": "Yolunda değil",
+      "none": "Henüz güncelleme yok",
+      "pick": "Gidişat"
+    },
+    "fields": {
+      "name": "Ad",
+      "status": "Durum",
+      "health": "Gidişat",
+      "lead": "Lider",
+      "dates": "Tarihler",
+      "goal": "Hedef",
+      "created_by": "Oluşturan"
+    },
+    "form": {
+      "placeholder": "Girişim adı",
+      "goal_placeholder": "Hedef adı",
+      "name_required": "Ad gereklidir."
+    },
+    "empty": {
+      "title": "Henüz girişim yok",
+      "description": "Projeler genelindeki çalışmaları girişimlerde, girişimleri de hedeflerde toplayın ve ilerlemelerini tek bir yerden izleyin.",
+      "sidebar": "Oluşturduğunuz hedefler ve girişimler burada görünür."
+    },
+    "not_found": {
+      "title": "Girişim bulunamadı",
+      "description": "Silinmiş veya adres yanlış olabilir."
+    },
+    "progress": {
+      "projects": "Bağlı projelerdeki iş öğeleri",
+      "epics": "Bağlı Epiklerin iş öğeleri",
+      "done_of_total": "{total} öğeden {done} tanesi tamamlandı",
+      "tooltip": "Tamamlanan iş öğeleri: %{percentage}",
+      "partial_tooltip": "Görebildiğiniz iş öğelerinden tamamlananlar: %{percentage}",
+      "projects_empty": "Bağlı projelerde henüz iş öğesi yok.",
+      "epics_empty": "Bağlı Epiklerde henüz alt iş öğesi yok.",
+      "hidden_projects": "{count, plural, one {# bağlı proje sizin için görünür değil ve hesaba katılmıyor.} other {# bağlı proje sizin için görünür değil ve hesaba katılmıyor.}}",
+      "hidden_epics": "{count, plural, one {# bağlı Epik sizin için görünür değil ve hesaba katılmıyor.} other {# bağlı Epik sizin için görünür değil ve hesaba katılmıyor.}}",
+      "hidden_children": "Bazı alt iş öğeleri göremediğiniz projelerde olduğu için hesaba katılmıyor.",
+      "explained": "İki rakam ayrı ayrı hesaplanır: aksi halde bağlı bir projedeki bir Epik iki kez sayılırdı."
+    },
+    "children": {
+      "title": "Girişimler",
+      "empty": "Henüz bu hedefe yönelik bir girişim yok."
+    },
+    "projects": {
+      "title": "Projeler",
+      "add": "Proje ekle",
+      "empty": "Henüz bağlı proje yok.",
+      "of_goal": "Hedefin girişimlerine ait projeler. Projeleri bir girişim üzerinden bağlayın.",
+      "remove": "{name} bağlantısını kaldır",
+      "unknown": "Proje",
+      "archived": "Arşivlendi"
+    },
+    "epics": {
+      "title": "Epikler",
+      "add": "Epik ekle",
+      "search": "Epikleri ada veya ID'ye göre ara",
+      "none_to_add": "Eklenecek Epik yok",
+      "empty": "Henüz bağlı Epik yok.",
+      "of_goal": "Hedefin girişimlerine ait Epikler. Epikleri bir girişim üzerinden bağlayın.",
+      "remove": "{name} bağlantısını kaldır",
+      "progress_of": "{name} ilerlemesi"
+    },
+    "updates": {
+      "title": "Durum güncellemeleri",
+      "text": "Güncelleme",
+      "placeholder": "İşler nasıl gidiyor?",
+      "post": "Güncellemeyi yayınla",
+      "posted": "Güncelleme yayınlandı.",
+      "empty": "Henüz durum güncellemesi yok."
+    },
+    "delete": {
+      "action": "Sil",
+      "goal_title": "Hedefi sil",
+      "initiative_title": "Girişimi sil",
+      "goal_description": "{name} hedefi silinsin mi? Girişimleri hedefsiz olarak kalır.",
+      "initiative_description": "{name} girişimi silinsin mi? Projeler ve Epiklerle bağlantıları ve durum güncellemeleri kaldırılır; projeler ve Epikler kalır."
+    },
+    "toast": {
+      "goal_created": "Hedef oluşturuldu.",
+      "initiative_created": "Girişim oluşturuldu.",
+      "goal_deleted": "Hedef silindi.",
+      "initiative_deleted": "Girişim silindi.",
+      "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
     }
   }
 }

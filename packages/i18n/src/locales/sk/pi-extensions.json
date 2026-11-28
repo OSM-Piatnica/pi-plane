@@ -12,7 +12,11 @@
       "last_used_app": "Naposledy použitá aplikácia"
     },
     "switch_to": {
-      "projects": "Prepnúť na Projekty"
+      "projects": "Prepnúť na Projekty",
+      "initiatives": "Prepnúť na Iniciatívy"
+    },
+    "apps": {
+      "initiatives": "Iniciatívy"
     }
   },
   "approve": "Schváliť",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore."
+    "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore.",
+    "items": {
+      "initiatives": {
+        "title": "Iniciatívy",
+        "description": "Ciele a iniciatívy naprieč projektmi s postupom a aktualizáciami stavu."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Iniciatívy",
+    "all": "Všetky iniciatívy",
+    "without_goal": "Bez cieľa",
+    "no_goal": "Žiadny cieľ",
+    "no_goals_yet": "Zatiaľ žiadne ciele",
+    "no_lead": "Žiadny vedúci",
+    "new_goal": "Nový cieľ",
+    "new_initiative": "Nová iniciatíva",
+    "create_goal": "Vytvoriť cieľ",
+    "create_initiative": "Vytvoriť iniciatívu",
+    "expand_goal": "Rozbaliť {name}",
+    "collapse_goal": "Zbaliť {name}",
+    "properties": "Vlastnosti",
+    "show_properties": "Zobraziť vlastnosti",
+    "hide_properties": "Skryť vlastnosti",
+    "description_placeholder": "Na čo slúži a podľa čoho spoznáte, že je hotovo?",
+    "kind": {
+      "goal": "Cieľ",
+      "initiative": "Iniciatíva"
+    },
+    "status": {
+      "planned": "Plánované",
+      "active": "Aktívne",
+      "paused": "Pozastavené",
+      "completed": "Dokončené",
+      "cancelled": "Zrušené"
+    },
+    "health": {
+      "on_track": "Na správnej ceste",
+      "at_risk": "V ohrození",
+      "off_track": "Mimo plán",
+      "none": "Zatiaľ bez aktualizácie",
+      "pick": "Kondícia"
+    },
+    "fields": {
+      "name": "Názov",
+      "status": "Stav",
+      "health": "Kondícia",
+      "lead": "Vedúci",
+      "dates": "Dátumy",
+      "goal": "Cieľ",
+      "created_by": "Vytvoril"
+    },
+    "form": {
+      "placeholder": "Názov iniciatívy",
+      "goal_placeholder": "Názov cieľa",
+      "name_required": "Názov je povinný."
+    },
+    "empty": {
+      "title": "Zatiaľ žiadne iniciatívy",
+      "description": "Zoskupte prácu naprieč projektmi do iniciatív a iniciatívy pod ciele a sledujte ich postup na jednom mieste.",
+      "sidebar": "Tu sa zobrazia ciele a iniciatívy, ktoré vytvoríte."
+    },
+    "not_found": {
+      "title": "Iniciatíva sa nenašla",
+      "description": "Mohla byť odstránená alebo je adresa nesprávna."
+    },
+    "progress": {
+      "projects": "Pracovné položky v prepojených projektoch",
+      "epics": "Pracovné položky prepojených epikov",
+      "done_of_total": "Hotovo {done} z {total}",
+      "tooltip": "Hotovo {percentage} % pracovných položiek",
+      "partial_tooltip": "Hotovo {percentage} % pracovných položiek, ktoré vidíte",
+      "projects_empty": "V prepojených projektoch zatiaľ nie sú žiadne pracovné položky.",
+      "epics_empty": "Prepojené epiky zatiaľ nemajú žiadne podriadené pracovné položky.",
+      "hidden_projects": "{count, plural, one {# prepojený projekt pre vás nie je viditeľný a nezapočítava sa.} few {# prepojené projekty pre vás nie sú viditeľné a nezapočítavajú sa.} many {# prepojeného projektu pre vás nie je viditeľné a nezapočítava sa.} other {# prepojených projektov pre vás nie je viditeľných a nezapočítava sa.}}",
+      "hidden_epics": "{count, plural, one {# prepojený epik pre vás nie je viditeľný a nezapočítava sa.} few {# prepojené epiky pre vás nie sú viditeľné a nezapočítavajú sa.} many {# prepojeného epiku pre vás nie je viditeľné a nezapočítava sa.} other {# prepojených epikov pre vás nie je viditeľných a nezapočítava sa.}}",
+      "hidden_children": "Niektoré podriadené pracovné položky sú v projektoch, ktoré nevidíte, a nezapočítavajú sa.",
+      "explained": "Obe hodnoty sa počítajú oddelene: epik v prepojenom projekte by sa inak započítal dvakrát."
+    },
+    "children": {
+      "title": "Iniciatívy",
+      "empty": "K tomuto cieľu zatiaľ nesmeruje žiadna iniciatíva."
+    },
+    "projects": {
+      "title": "Projekty",
+      "add": "Pridať projekty",
+      "empty": "Zatiaľ nie sú prepojené žiadne projekty.",
+      "of_goal": "Projekty iniciatív tohto cieľa. Projekty sa prepájajú v iniciatíve.",
+      "remove": "Zrušiť prepojenie s {name}",
+      "unknown": "Projekt",
+      "archived": "Archivovaný"
+    },
+    "epics": {
+      "title": "Epiky",
+      "add": "Pridať epik",
+      "search": "Hľadať epiky podľa názvu alebo ID",
+      "none_to_add": "Žiadne epiky na pridanie",
+      "empty": "Zatiaľ nie sú prepojené žiadne epiky.",
+      "of_goal": "Epiky iniciatív tohto cieľa. Epiky sa prepájajú v iniciatíve.",
+      "remove": "Zrušiť prepojenie s {name}",
+      "progress_of": "Postup: {name}"
+    },
+    "updates": {
+      "title": "Aktualizácie stavu",
+      "text": "Aktualizácia",
+      "placeholder": "Ako to ide?",
+      "post": "Zverejniť aktualizáciu",
+      "posted": "Aktualizácia bola zverejnená.",
+      "empty": "Zatiaľ žiadne aktualizácie stavu."
+    },
+    "delete": {
+      "action": "Odstrániť",
+      "goal_title": "Odstrániť cieľ",
+      "initiative_title": "Odstrániť iniciatívu",
+      "goal_description": "Odstrániť cieľ {name}? Jeho iniciatívy zostanú, bez cieľa.",
+      "initiative_description": "Odstrániť iniciatívu {name}? Jej prepojenia s projektmi a epikmi a jej aktualizácie stavu sa odstránia; projekty a epiky zostanú."
+    },
+    "toast": {
+      "goal_created": "Cieľ bol vytvorený.",
+      "initiative_created": "Iniciatíva bola vytvorená.",
+      "goal_deleted": "Cieľ bol odstránený.",
+      "initiative_deleted": "Iniciatíva bola odstránená.",
+      "error": "Niečo sa pokazilo. Skúste to prosím znova."
     }
   }
 }

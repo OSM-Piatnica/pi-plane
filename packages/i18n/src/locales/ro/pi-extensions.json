@@ -12,7 +12,11 @@
       "last_used_app": "Ultima aplicație folosită"
     },
     "switch_to": {
-      "projects": "Comută la Proiecte"
+      "projects": "Comută la Proiecte",
+      "initiatives": "Comută la Inițiative"
+    },
+    "apps": {
+      "initiatives": "Inițiative"
     }
   },
   "approve": "Aprobă",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "Activați sau dezactivați părți din Pi-Plane pentru toți cei din acest spațiu de lucru."
+    "description": "Activați sau dezactivați părți din Pi-Plane pentru toți cei din acest spațiu de lucru.",
+    "items": {
+      "initiatives": {
+        "title": "Inițiative",
+        "description": "Obiective și inițiative care cuprind mai multe proiecte, cu progres și actualizări de status."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Inițiative",
+    "all": "Toate inițiativele",
+    "without_goal": "Fără obiectiv",
+    "no_goal": "Niciun obiectiv",
+    "no_goals_yet": "Încă nu există obiective",
+    "no_lead": "Fără lider",
+    "new_goal": "Obiectiv nou",
+    "new_initiative": "Inițiativă nouă",
+    "create_goal": "Creează obiectiv",
+    "create_initiative": "Creează inițiativă",
+    "expand_goal": "Extinde {name}",
+    "collapse_goal": "Restrânge {name}",
+    "properties": "Proprietăți",
+    "show_properties": "Afișează proprietățile",
+    "hide_properties": "Ascunde proprietățile",
+    "description_placeholder": "La ce folosește și cum veți ști că este gata?",
+    "kind": {
+      "goal": "Obiectiv",
+      "initiative": "Inițiativă"
+    },
+    "status": {
+      "planned": "Planificat",
+      "active": "Activ",
+      "paused": "În pauză",
+      "completed": "Finalizat",
+      "cancelled": "Anulat"
+    },
+    "health": {
+      "on_track": "Pe drumul cel bun",
+      "at_risk": "În pericol",
+      "off_track": "În afara traiectoriei",
+      "none": "Nicio actualizare încă",
+      "pick": "Stare"
+    },
+    "fields": {
+      "name": "Nume",
+      "status": "Stadiu",
+      "health": "Stare",
+      "lead": "Lider",
+      "dates": "Date",
+      "goal": "Obiectiv",
+      "created_by": "Creat de"
+    },
+    "form": {
+      "placeholder": "Numele inițiativei",
+      "goal_placeholder": "Numele obiectivului",
+      "name_required": "Numele este obligatoriu."
+    },
+    "empty": {
+      "title": "Încă nu există inițiative",
+      "description": "Grupați munca din mai multe proiecte în inițiative, iar inițiativele în obiective, pentru a le urmări progresul într-un singur loc.",
+      "sidebar": "Obiectivele și inițiativele pe care le creați apar aici."
+    },
+    "not_found": {
+      "title": "Inițiativa nu a fost găsită",
+      "description": "Este posibil să fi fost ștearsă sau adresa este greșită."
+    },
+    "progress": {
+      "projects": "Activități din proiectele asociate",
+      "epics": "Activități ale Epicelor asociate",
+      "done_of_total": "{done} din {total} finalizate",
+      "tooltip": "{percentage}% din activități finalizate",
+      "partial_tooltip": "{percentage}% din activitățile pe care le vedeți finalizate",
+      "projects_empty": "Încă nu există activități în proiectele asociate.",
+      "epics_empty": "Încă nu există sub-activități în Epicele asociate.",
+      "hidden_projects": "{count, plural, one {# proiect asociat nu vă este vizibil și nu este numărat.} few {# proiecte asociate nu vă sunt vizibile și nu sunt numărate.} other {# de proiecte asociate nu vă sunt vizibile și nu sunt numărate.}}",
+      "hidden_epics": "{count, plural, one {# Epic asociat nu vă este vizibil și nu este numărat.} few {# Epice asociate nu vă sunt vizibile și nu sunt numărate.} other {# de Epice asociate nu vă sunt vizibile și nu sunt numărate.}}",
+      "hidden_children": "Unele sub-activități se află în proiecte pe care nu le puteți vedea și nu sunt numărate.",
+      "explained": "Cele două cifre sunt calculate separat: altfel, un Epic dintr-un proiect asociat ar fi numărat de două ori."
+    },
+    "children": {
+      "title": "Inițiative",
+      "empty": "Încă nicio inițiativă nu contribuie la acest obiectiv."
+    },
+    "projects": {
+      "title": "Proiecte",
+      "add": "Adaugă proiecte",
+      "empty": "Încă nu există proiecte asociate.",
+      "of_goal": "Proiectele inițiativelor acestui obiectiv. Asociați proiectele la nivelul unei inițiative.",
+      "remove": "Elimină asocierea cu {name}",
+      "unknown": "Proiect",
+      "archived": "Arhivat"
+    },
+    "epics": {
+      "title": "Epice",
+      "add": "Adaugă Epic",
+      "search": "Căutați Epice după nume sau ID",
+      "none_to_add": "Niciun Epic de adăugat",
+      "empty": "Încă nu există Epice asociate.",
+      "of_goal": "Epicele inițiativelor acestui obiectiv. Asociați Epicele la nivelul unei inițiative.",
+      "remove": "Elimină asocierea cu {name}",
+      "progress_of": "Progresul pentru {name}"
+    },
+    "updates": {
+      "title": "Actualizări de status",
+      "text": "Actualizare",
+      "placeholder": "Cum merge?",
+      "post": "Publică actualizarea",
+      "posted": "Actualizarea a fost publicată.",
+      "empty": "Încă nu există actualizări de status."
+    },
+    "delete": {
+      "action": "Șterge",
+      "goal_title": "Șterge obiectivul",
+      "initiative_title": "Șterge inițiativa",
+      "goal_description": "Ștergeți obiectivul {name}? Inițiativele sale rămân, fără obiectiv.",
+      "initiative_description": "Ștergeți inițiativa {name}? Legăturile sale cu proiecte și Epice și actualizările de status sunt eliminate; proiectele și Epicele rămân."
+    },
+    "toast": {
+      "goal_created": "Obiectivul a fost creat.",
+      "initiative_created": "Inițiativa a fost creată.",
+      "goal_deleted": "Obiectivul a fost șters.",
+      "initiative_deleted": "Inițiativa a fost ștearsă.",
+      "error": "Ceva nu a funcționat. Încercați din nou."
     }
   }
 }

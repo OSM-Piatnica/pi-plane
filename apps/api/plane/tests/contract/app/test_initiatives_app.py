@@ -6,6 +6,9 @@
 
 Admins and members of the workspace manage them, guests have no access. Work item numbers come only from the
 projects the requester is a member of; the others are counted as hidden and never named.
+
+The endpoints answer only while the Initiatives feature is switched on, so every test here switches it on for the
+test workspace first (``initiatives_on``); ``TestInitiativesSwitch`` switches it off again.
 """
 
 from unittest.mock import patch
@@ -31,6 +34,7 @@ from plane.db.models import (
     State,
     User,
     Workspace,
+    WorkspaceFeature,
     WorkspaceMember,
 )
 
@@ -79,6 +83,11 @@ def _create(client, **data):
     return client.post(INITIATIVES, {"name": "Thing", **data}, format="json")
 
 
+@pytest.fixture(autouse=True)
+def initiatives_on(db, workspace):
+    WorkspaceFeature.objects.create(workspace=workspace, key="initiatives", is_enabled=True)
+
+
 @pytest.fixture
 def epic_type(db, workspace):
     return IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
@@ -110,9 +119,9 @@ class TestInitiativeCrud:
 
         url = _url(created.data["id"])
         assert session_client.get(url).data["name"] == "Launch"
-        updated = session_client.patch(url, {"status": "active", "health": "on_track"}, format="json")
+        updated = session_client.patch(url, {"status": "active"}, format="json")
         assert updated.status_code == 200
-        assert (updated.data["status"], updated.data["health"]) == ("active", "on_track")
+        assert updated.data["status"] == "active"
 
         assert session_client.delete(url).status_code == 204
         assert session_client.get(url).status_code == 404
@@ -152,7 +161,6 @@ class TestInitiativeCrud:
         assert _create(session_client, name="   ").status_code == 400
         assert _create(session_client, kind="programme").status_code == 400
         assert _create(session_client, status="done").status_code == 400
-        assert _create(session_client, health="fine").status_code == 400
 
     def test_the_lead_must_be_a_member_of_the_workspace(self, session_client, workspace):
         stranger = User.objects.create(email="stranger@plane.so", username="stranger")
@@ -682,6 +690,19 @@ class TestInitiativeUpdates:
         assert [row["text"] for row in listed.data] == ["Supplier is late", "Going well"]
         assert session_client.get(_url(initiative["id"])).data["health"] == "at_risk"
 
+    def test_the_health_is_set_only_by_an_update(self, session_client, workspace):
+        created = _create(session_client, health="on_track")
+        assert created.status_code == 201
+        assert created.data["health"] is None
+
+        url = _url(created.data["id"])
+        session_client.post(_url(created.data["id"], "updates/"), {"health": "at_risk", "text": "Late"}, format="json")
+        patched = session_client.patch(url, {"health": "off_track", "name": "Renamed"}, format="json")
+
+        assert patched.status_code == 200
+        assert (patched.data["name"], patched.data["health"]) == ("Renamed", "at_risk")
+        assert Initiative.objects.get(pk=created.data["id"]).health == "at_risk"
+
     def test_an_update_needs_a_known_health(self, session_client, workspace):
         initiative = _create(session_client).data
         updates_url = _url(initiative["id"], "updates/")
@@ -785,3 +806,280 @@ class TestInitiativeDelete:
 
         assert _as(guest).delete(_url(initiative["id"])).status_code == 403
         assert Initiative.objects.filter(pk=initiative["id"]).exists()
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativesSwitch:
+    """A workspace admin switches the app on; until then the endpoints refuse everybody, admins included."""
+
+    def _switch_off(self, workspace):
+        WorkspaceFeature.objects.filter(workspace=workspace, key="initiatives").update(is_enabled=False)
+
+    def test_nothing_answers_while_the_feature_is_off(self, session_client, workspace):
+        initiative = Initiative.objects.create(workspace=workspace, name="Old")
+        self._switch_off(workspace)
+
+        for response in (
+            session_client.get(INITIATIVES),
+            _create(session_client),
+            session_client.get(_url(initiative.id)),
+            session_client.get(_url(initiative.id, "epics/")),
+            session_client.get(_url(initiative.id, "epics/search/")),
+            session_client.get(_url(initiative.id, "updates/")),
+        ):
+            assert response.status_code == 403
+        assert Initiative.objects.filter(workspace=workspace).count() == 1
+
+    def test_switching_it_on_opens_them(self, session_client, workspace):
+        WorkspaceFeature.objects.filter(workspace=workspace, key="initiatives").delete()
+        assert session_client.get(INITIATIVES).status_code == 403
+
+        switched = session_client.patch(f"/api/workspaces/{SLUG}/features/", {"initiatives": True}, format="json")
+
+        assert switched.status_code == 200
+        assert session_client.get(INITIATIVES).status_code == 200
+        self._switch_off(workspace)
+        assert session_client.get(INITIATIVES).status_code == 403
+
+
+def _child(epic, group, number=1, project=None):
+    """Child work items of an Epic, in its project unless another is given."""
+    project = project or epic.project
+    state, _ = State.objects.get_or_create(
+        project=project, workspace=project.workspace, group=group, defaults={"name": group}
+    )
+    return [
+        Issue.objects.create(
+            name=f"child {group} {index}",
+            project=project,
+            workspace=project.workspace,
+            state=state,
+            parent=epic,
+        )
+        for index in range(number)
+    ]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeEpicProgress:
+    """The second figure: the child work items of the linked Epics, apart from the main one."""
+
+    def test_the_epic_figure_counts_the_children_of_the_linked_epics_and_not_the_main_one(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        linked_project = _project(workspace, "ONE", [create_user])
+        other_project = _project(workspace, "TWO", [create_user])
+        _issues(linked_project, "started", 2)
+        epic = _issues(other_project, "backlog", 1, epic_type)[0]
+        _child(epic, "completed", 3)
+        _child(epic, "started", 1)
+        _issues(other_project, "started", 5)  # not a child: counted nowhere
+        initiative = _create(session_client).data
+        session_client.post(
+            _url(initiative["id"], "projects/"), {"project_ids": [str(linked_project.id)]}, format="json"
+        )
+        session_client.post(_url(initiative["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+
+        detail = session_client.get(_url(initiative["id"])).data
+        listed = session_client.get(INITIATIVES).data[0]
+
+        for row in (detail, listed):
+            assert row["progress"]["total_issues"] == 2
+            assert row["epic_progress"] == {
+                "total_issues": 4,
+                "backlog": 0,
+                "unstarted": 0,
+                "started": 1,
+                "completed": 3,
+                "cancelled": 0,
+            }
+            assert row["epic_progress_is_partial"] is False
+
+    def test_an_epic_in_a_linked_project_counts_in_both_figures_once_each(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        epic = _issues(project, "started", 1, epic_type)[0]
+        _child(epic, "completed", 2)
+        initiative = _create(session_client).data
+        session_client.post(_url(initiative["id"], "projects/"), {"project_ids": [str(project.id)]}, format="json")
+        session_client.post(_url(initiative["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+
+        detail = session_client.get(_url(initiative["id"])).data
+
+        # The Epic itself is in neither; its two children are in both, once in each
+        assert detail["progress"]["total_issues"] == 2
+        assert detail["epic_progress"]["total_issues"] == 2
+
+    def test_hidden_epics_are_counted_not_listed_and_make_the_figure_partial(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        outsider = _person(workspace, "outsider")
+        visible = _project(workspace, "VIS", [create_user, outsider])
+        secret = _project(workspace, "SEC", [create_user])
+        open_epic = _issues(visible, "started", 1, epic_type)[0]
+        secret_epic = _issues(secret, "started", 1, epic_type)[0]
+        Issue.objects.filter(pk=secret_epic.pk).update(name="Secret Epic")
+        _child(open_epic, "started", 1)
+        _child(secret_epic, "completed", 6)
+        initiative = _create(session_client).data
+        session_client.post(
+            _url(initiative["id"], "epics/"), {"epic_ids": [str(open_epic.id), str(secret_epic.id)]}, format="json"
+        )
+
+        whole = session_client.get(_url(initiative["id"])).data
+        client = _as(outsider)
+        detail = client.get(_url(initiative["id"]))
+        epics = client.get(_url(initiative["id"], "epics/"))
+
+        assert whole["epic_progress"]["total_issues"] == 7 and whole["epic_progress_is_partial"] is False
+        assert detail.data["epic_progress"]["total_issues"] == 1
+        assert detail.data["epic_progress"]["completed"] == 0
+        assert detail.data["epic_progress_is_partial"] is True
+        assert detail.data["hidden_epic_count"] == 1
+        assert [str(row["id"]) for row in epics.data] == [str(open_epic.id)]
+        body = detail.content.decode() + epics.content.decode()
+        assert str(secret_epic.id) not in body and "Secret Epic" not in body
+
+    def test_children_in_a_project_the_person_may_not_see_are_left_out(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        outsider = _person(workspace, "outsider")
+        visible = _project(workspace, "VIS", [create_user, outsider])
+        secret = _project(workspace, "SEC", [create_user])
+        epic = _issues(visible, "started", 1, epic_type)[0]
+        _child(epic, "started", 1)
+        _child(epic, "completed", 4, project=secret)
+        initiative = _create(session_client).data
+        session_client.post(_url(initiative["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+
+        for_outsider = _as(outsider).get(_url(initiative["id"], "epics/")).data[0]
+        whole = session_client.get(_url(initiative["id"], "epics/")).data[0]
+
+        assert for_outsider["progress"]["total_issues"] == 1 and for_outsider["progress_is_partial"] is True
+        assert whole["progress"]["total_issues"] == 5 and whole["progress_is_partial"] is False
+
+    def test_a_goal_counts_an_epic_of_two_of_its_initiatives_once(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        epic = _issues(project, "started", 1, epic_type)[0]
+        _child(epic, "started", 3)
+        goal = _create(session_client, name="Goal", kind="goal").data
+        for name in ("First", "Second"):
+            child = _create(session_client, name=name, parent=goal["id"]).data
+            session_client.post(_url(child["id"], "epics/"), {"epic_ids": [str(epic.id)]}, format="json")
+
+        detail = session_client.get(_url(goal["id"])).data
+        epics = session_client.get(_url(goal["id"], "epics/")).data
+
+        assert detail["epic_progress"]["total_issues"] == 3
+        assert [str(row["id"]) for row in epics] == [str(epic.id)]
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeEpicList:
+    def test_the_linked_epics_come_with_their_project_state_and_progress(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        first, second = _issues(project, "started", 2, epic_type)
+        _child(first, "completed", 1)
+        _child(first, "backlog", 1)
+        initiative = _create(session_client).data
+        session_client.post(
+            _url(initiative["id"], "epics/"), {"epic_ids": [str(first.id), str(second.id)]}, format="json"
+        )
+
+        response = session_client.get(_url(initiative["id"], "epics/"))
+
+        assert response.status_code == 200
+        assert [str(row["id"]) for row in response.data] == [str(first.id), str(second.id)]
+        row = response.data[0]
+        assert row["name"] == first.name
+        assert row["sequence_id"] == first.sequence_id
+        assert str(row["project_id"]) == str(project.id)
+        assert row["project_identifier"] == "ONE"
+        assert row["state_group"] == "started"
+        assert row["progress"]["total_issues"] == 2 and row["progress"]["completed"] == 1
+        assert row["progress_is_partial"] is False
+        assert response.data[1]["progress"]["total_issues"] == 0
+
+    def test_an_unknown_initiative_is_not_found(self, session_client, workspace):
+        assert session_client.get(_url(uuid4(), "epics/")).status_code == 404
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeEpicSearch:
+    def test_epics_the_person_may_link_are_found_by_name_or_number(
+        self, session_client, workspace, create_user, epic_type
+    ):
+        project = _project(workspace, "ONE", [create_user])
+        epic = Issue.objects.create(name="Packaging relaunch", project=project, workspace=workspace, type=epic_type)
+        Issue.objects.create(name="Packaging task", project=project, workspace=workspace)  # not an Epic
+        initiative = _create(session_client).data
+        search = _url(initiative["id"], "epics/search/")
+
+        by_name = session_client.get(search, {"search": "packag"}).data
+        by_number = session_client.get(search, {"search": f"one-{epic.sequence_id}"}).data
+        everything = session_client.get(search).data
+
+        assert [str(row["id"]) for row in by_name] == [str(epic.id)]
+        assert [str(row["id"]) for row in by_number] == [str(epic.id)]
+        assert by_name[0]["project_identifier"] == "ONE"
+        assert [str(row["id"]) for row in everything] == [str(epic.id)]
+
+    def test_linked_epics_and_epics_of_projects_the_person_may_not_link_are_left_out(
+        self, workspace, create_user, epic_type
+    ):
+        member = _person(workspace, "member")
+        guest_project = _project(workspace, "GST")
+        ProjectMember.objects.create(workspace=workspace, project=guest_project, member=member, role=GUEST)
+        Project.objects.filter(pk=guest_project.pk).update(guest_view_all_features=True)
+        own = _project(workspace, "OWN", [member])
+        hidden = _project(workspace, "HID", [create_user])
+        _issues(guest_project, "started", 1, epic_type)
+        _issues(hidden, "started", 1, epic_type)
+        linked, free = _issues(own, "started", 2, epic_type)
+        client = _as(member)
+        initiative = _create(client).data
+        client.post(_url(initiative["id"], "epics/"), {"epic_ids": [str(linked.id)]}, format="json")
+
+        found = client.get(_url(initiative["id"], "epics/search/")).data
+
+        assert [str(row["id"]) for row in found] == [str(free.id)]
+
+    def test_a_goal_has_no_epics_to_link(self, session_client, workspace):
+        goal = _create(session_client, name="Goal", kind="goal").data
+
+        assert session_client.get(_url(goal["id"], "epics/search/")).status_code == 400
+
+
+@pytest.mark.contract
+@pytest.mark.django_db
+class TestInitiativeDescriptionImages:
+    ASSETS = f"/api/assets/v2/workspaces/{SLUG}/"
+
+    def _upload(self, client):
+        return client.post(
+            self.ASSETS,
+            {"name": "chart.png", "type": "image/png", "size": 100, "entity_type": "INITIATIVE_DESCRIPTION"},
+            format="json",
+        )
+
+    def test_a_member_uploads_an_image_for_a_description(self, workspace):
+        with patch("plane.app.views.asset.v2.get_storage") as storage:
+            storage.return_value.generate_presigned_post.return_value = {"url": "https://storage.test/"}
+            response = self._upload(_as(_person(workspace, "member")))
+
+        assert response.status_code == 200, response.data
+        assert response.data["asset_id"]
+
+    def test_a_guest_does_not(self, workspace):
+        response = self._upload(_as(_person(workspace, "guest", GUEST)))
+
+        assert response.status_code == 403

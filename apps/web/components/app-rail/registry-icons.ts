@@ -5,7 +5,7 @@
  */
 
 import type { ComponentType } from "react";
-import { Projects } from "@makeplane/propel/icons";
+import { InitiativeOutline, Projects } from "@makeplane/propel/icons";
 import type { TAppRailAppKey } from "@plane/types";
 
 export type TAppRailAppIcon = ComponentType<{ className?: string }>;
@@ -16,4 +16,5 @@ export type TAppRailAppIcon = ComponentType<{ className?: string }>;
  */
 export const APP_RAIL_APP_ICONS: Record<TAppRailAppKey, TAppRailAppIcon> = {
   projects: Projects,
+  initiatives: InitiativeOutline,
 };

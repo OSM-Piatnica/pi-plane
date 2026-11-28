@@ -9,7 +9,7 @@ The web app owns the registry (``apps/web/components/app-rail/registry.ts``, key
 See ``docs/app-rail.md``.
 """
 
-APP_RAIL_APP_KEYS = ("projects",)
+APP_RAIL_APP_KEYS = ("projects", "initiatives")
 
 # ``WorkspaceUserPreference.key`` of a rail app: order (``sort_order``) and hidden state (``is_pinned`` false)
 APP_RAIL_PREFERENCE_KEY_PREFIX = "app_rail:"

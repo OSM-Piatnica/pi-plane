@@ -12,7 +12,11 @@
       "last_used_app": "Last used app"
     },
     "switch_to": {
-      "projects": "Switch to Projects"
+      "projects": "Switch to Projects",
+      "initiatives": "Switch to Initiatives"
+    },
+    "apps": {
+      "initiatives": "Initiatives"
     }
   },
   "approve": "Approve",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "Switch parts of Pi-Plane on or off for everyone in this workspace."
+    "description": "Switch parts of Pi-Plane on or off for everyone in this workspace.",
+    "items": {
+      "initiatives": {
+        "title": "Initiatives",
+        "description": "Goals and initiatives across projects, with progress and status updates."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Initiatives",
+    "all": "All initiatives",
+    "without_goal": "Without a goal",
+    "no_goal": "No goal",
+    "no_goals_yet": "No goals yet",
+    "no_lead": "No lead",
+    "new_goal": "New goal",
+    "new_initiative": "New initiative",
+    "create_goal": "Create goal",
+    "create_initiative": "Create initiative",
+    "expand_goal": "Expand {name}",
+    "collapse_goal": "Collapse {name}",
+    "properties": "Properties",
+    "show_properties": "Show properties",
+    "hide_properties": "Hide properties",
+    "description_placeholder": "What is it for, and how will you know it is done?",
+    "kind": {
+      "goal": "Goal",
+      "initiative": "Initiative"
+    },
+    "status": {
+      "planned": "Planned",
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "health": {
+      "on_track": "On track",
+      "at_risk": "At risk",
+      "off_track": "Off track",
+      "none": "No update yet",
+      "pick": "Health"
+    },
+    "fields": {
+      "name": "Name",
+      "status": "Status",
+      "health": "Health",
+      "lead": "Lead",
+      "dates": "Dates",
+      "goal": "Goal",
+      "created_by": "Created by"
+    },
+    "form": {
+      "placeholder": "Initiative name",
+      "goal_placeholder": "Goal name",
+      "name_required": "A name is required."
+    },
+    "empty": {
+      "title": "No initiatives yet",
+      "description": "Group work across projects into initiatives, and initiatives under goals, to follow their progress in one place.",
+      "sidebar": "Goals and initiatives you create appear here."
+    },
+    "not_found": {
+      "title": "Initiative not found",
+      "description": "It may have been deleted, or the address is wrong."
+    },
+    "progress": {
+      "projects": "Work items in linked projects",
+      "epics": "Work items of linked Epics",
+      "done_of_total": "{done} of {total} done",
+      "tooltip": "{percentage}% of the work items done",
+      "partial_tooltip": "{percentage}% of the work items you can see done",
+      "projects_empty": "No work items in the linked projects yet.",
+      "epics_empty": "No child work items in the linked Epics yet.",
+      "hidden_projects": "{count, plural, one {# linked project is not visible to you and is not counted.} other {# linked projects are not visible to you and are not counted.}}",
+      "hidden_epics": "{count, plural, one {# linked Epic is not visible to you and is not counted.} other {# linked Epics are not visible to you and are not counted.}}",
+      "hidden_children": "Some child work items are in projects you cannot see and are not counted.",
+      "explained": "The two figures are counted apart: an Epic inside a linked project would otherwise count twice."
+    },
+    "children": {
+      "title": "Initiatives",
+      "empty": "No initiative works toward this goal yet."
+    },
+    "projects": {
+      "title": "Projects",
+      "add": "Add projects",
+      "empty": "No projects linked yet.",
+      "of_goal": "The projects of the goal's initiatives. Link projects on an initiative.",
+      "remove": "Unlink {name}",
+      "unknown": "Project",
+      "archived": "Archived"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Add Epic",
+      "search": "Search Epics by name or ID",
+      "none_to_add": "No Epics to add",
+      "empty": "No Epics linked yet.",
+      "of_goal": "The Epics of the goal's initiatives. Link Epics on an initiative.",
+      "remove": "Unlink {name}",
+      "progress_of": "Progress of {name}"
+    },
+    "updates": {
+      "title": "Status updates",
+      "text": "Update",
+      "placeholder": "How is it going?",
+      "post": "Post update",
+      "posted": "The update was posted.",
+      "empty": "No status updates yet."
+    },
+    "delete": {
+      "action": "Delete",
+      "goal_title": "Delete goal",
+      "initiative_title": "Delete initiative",
+      "goal_description": "Delete the goal {name}? Its initiatives stay, without a goal.",
+      "initiative_description": "Delete the initiative {name}? Its links to projects and Epics and its status updates are removed; the projects and Epics stay."
+    },
+    "toast": {
+      "goal_created": "The goal was created.",
+      "initiative_created": "The initiative was created.",
+      "goal_deleted": "The goal was deleted.",
+      "initiative_deleted": "The initiative was deleted.",
+      "error": "Something went wrong. Please try again."
     }
   }
 }

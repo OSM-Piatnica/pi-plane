@@ -94,6 +94,7 @@ from .workspace.user_group import (
 from .workspace.initiative import (
     InitiativeDetailEndpoint,
     InitiativeEpicDetailEndpoint,
+    InitiativeEpicSearchEndpoint,
     InitiativeEpicsEndpoint,
     InitiativeListEndpoint,
     InitiativeProjectDetailEndpoint,

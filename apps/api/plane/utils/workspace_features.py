@@ -17,7 +17,7 @@ See ``docs/workspace-features.md``.
 WORKSPACE_FEATURES = {
     "lite": False,
     "approvals": False,
-    "initiatives": False,
+    "initiatives": True,
     "wiki": False,
     "raci": False,
 }
@@ -47,6 +47,15 @@ def enabled_workspace_feature_keys(workspace):
         return []
     enabled = {feature.key for feature in workspace.workspace_features.all() if feature.is_enabled}
     return [key for key in available if key in enabled]
+
+
+def is_workspace_feature_enabled(workspace, key):
+    """Whether one available feature is switched on for the workspace. One query, or none while it is not built."""
+    if not is_available_workspace_feature(key):
+        return False
+    from plane.db.models import WorkspaceFeature
+
+    return WorkspaceFeature.objects.filter(workspace=workspace, key=key, is_enabled=True).exists()
 
 
 def workspace_feature_states(workspace):

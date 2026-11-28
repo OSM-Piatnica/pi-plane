@@ -12,7 +12,11 @@
       "last_used_app": "上次使用的应用"
     },
     "switch_to": {
-      "projects": "切换到项目"
+      "projects": "切换到项目",
+      "initiatives": "切换到举措"
+    },
+    "apps": {
+      "initiatives": "举措"
     }
   },
   "approve": "批准",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。"
+    "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。",
+    "items": {
+      "initiatives": {
+        "title": "举措",
+        "description": "跨项目的目标和举措，附带进度和状态更新。"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "举措",
+    "all": "所有举措",
+    "without_goal": "无目标",
+    "no_goal": "无目标",
+    "no_goals_yet": "暂无目标",
+    "no_lead": "无负责人",
+    "new_goal": "新建目标",
+    "new_initiative": "新建举措",
+    "create_goal": "创建目标",
+    "create_initiative": "创建举措",
+    "expand_goal": "展开“{name}”",
+    "collapse_goal": "折叠“{name}”",
+    "properties": "属性",
+    "show_properties": "显示属性",
+    "hide_properties": "隐藏属性",
+    "description_placeholder": "它的用途是什么？您如何判断它已完成？",
+    "kind": {
+      "goal": "目标",
+      "initiative": "举措"
+    },
+    "status": {
+      "planned": "已计划",
+      "active": "进行中",
+      "paused": "已暂停",
+      "completed": "已完成",
+      "cancelled": "已取消"
+    },
+    "health": {
+      "on_track": "进展顺利",
+      "at_risk": "有风险",
+      "off_track": "偏离轨道",
+      "none": "暂无更新",
+      "pick": "健康状况"
+    },
+    "fields": {
+      "name": "名称",
+      "status": "状态",
+      "health": "健康状况",
+      "lead": "负责人",
+      "dates": "日期",
+      "goal": "目标",
+      "created_by": "创建者"
+    },
+    "form": {
+      "placeholder": "举措名称",
+      "goal_placeholder": "目标名称",
+      "name_required": "名称为必填项。"
+    },
+    "empty": {
+      "title": "暂无举措",
+      "description": "将跨项目的工作归入举措，再将举措归入目标，即可在一处跟踪其进度。",
+      "sidebar": "您创建的目标和举措将显示在此处。"
+    },
+    "not_found": {
+      "title": "未找到举措",
+      "description": "它可能已被删除，或地址有误。"
+    },
+    "progress": {
+      "projects": "关联项目中的工作项",
+      "epics": "关联史诗的工作项",
+      "done_of_total": "{total} 项中已完成 {done} 项",
+      "tooltip": "已完成 {percentage}% 的工作项",
+      "partial_tooltip": "您可见的工作项中已完成 {percentage}%",
+      "projects_empty": "关联项目中暂无工作项。",
+      "epics_empty": "关联史诗中暂无子工作项。",
+      "hidden_projects": "{count, plural, one {有 # 个关联项目对您不可见，未计入统计。} other {有 # 个关联项目对您不可见，未计入统计。}}",
+      "hidden_epics": "{count, plural, one {有 # 个关联史诗对您不可见，未计入统计。} other {有 # 个关联史诗对您不可见，未计入统计。}}",
+      "hidden_children": "部分子工作项位于您无法查看的项目中，未计入统计。",
+      "explained": "这两个数值分开统计：否则关联项目中的史诗会被重复计算。"
+    },
+    "children": {
+      "title": "举措",
+      "empty": "暂无服务于此目标的举措。"
+    },
+    "projects": {
+      "title": "项目",
+      "add": "添加项目",
+      "empty": "暂无关联项目。",
+      "of_goal": "此目标下各举措的项目。请在举措中关联项目。",
+      "remove": "取消关联“{name}”",
+      "unknown": "项目",
+      "archived": "已归档"
+    },
+    "epics": {
+      "title": "史诗",
+      "add": "添加史诗",
+      "search": "按名称或 ID 搜索史诗",
+      "none_to_add": "没有可添加的史诗",
+      "empty": "暂无关联史诗。",
+      "of_goal": "此目标下各举措的史诗。请在举措中关联史诗。",
+      "remove": "取消关联“{name}”",
+      "progress_of": "“{name}”的进度"
+    },
+    "updates": {
+      "title": "状态更新",
+      "text": "更新",
+      "placeholder": "进展如何？",
+      "post": "发布更新",
+      "posted": "更新已发布。",
+      "empty": "暂无状态更新。"
+    },
+    "delete": {
+      "action": "删除",
+      "goal_title": "删除目标",
+      "initiative_title": "删除举措",
+      "goal_description": "确定删除目标“{name}”吗？其下的举措将保留，但不再属于任何目标。",
+      "initiative_description": "确定删除举措“{name}”吗？其与项目和史诗的关联以及状态更新将被移除；项目和史诗本身将保留。"
+    },
+    "toast": {
+      "goal_created": "目标已创建。",
+      "initiative_created": "举措已创建。",
+      "goal_deleted": "目标已删除。",
+      "initiative_deleted": "举措已删除。",
+      "error": "出现错误，请重试。"
     }
   }
 }

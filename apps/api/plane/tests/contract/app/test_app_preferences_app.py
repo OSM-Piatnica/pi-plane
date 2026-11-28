@@ -41,8 +41,16 @@ def two_apps(monkeypatch):
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestDefaultApp:
-    def test_only_projects_is_known(self):
-        assert APP_RAIL_APP_KEYS == ("projects",)
+    def test_projects_and_initiatives_are_known(self):
+        assert APP_RAIL_APP_KEYS == ("projects", "initiatives")
+
+    def test_initiatives_is_accepted(self, session_client, workspace):
+        response = session_client.patch(
+            PROPERTIES_URL.format(slug=workspace.slug), {"default_app": "initiatives"}, format="json"
+        )
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["default_app"] == "initiatives"
 
     def test_default_is_null(self, session_client, workspace):
         response = session_client.get(PROPERTIES_URL.format(slug=workspace.slug))

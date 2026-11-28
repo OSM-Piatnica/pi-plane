@@ -421,6 +421,19 @@ class WorkspaceFileAssetEndpoint(BaseAPIView):
                     status=status.HTTP_403_FORBIDDEN,
                 )
 
+        # Images of an initiative description are uploaded by those who edit initiatives: workspace admins and members
+        if entity_type == FileAsset.EntityTypeContext.INITIATIVE_DESCRIPTION:
+            if not WorkspaceMember.objects.filter(
+                workspace__slug=slug,
+                member=request.user,
+                is_active=True,
+                role__in=[ROLE.ADMIN.value, ROLE.MEMBER.value],
+            ).exists():
+                return Response(
+                    {"error": "You don't have the required permissions."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
         # Check if the file type is allowed
         allowed_types = [
             "image/jpeg",

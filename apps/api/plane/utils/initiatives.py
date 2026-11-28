@@ -11,6 +11,9 @@ A person only gets numbers from the projects whose work items they may see (``pr
 sees them all). The other projects
 are left out of the numbers and of the lists, and only their count is given, so neither their names nor their sizes
 leak. An archived project stays linked and listed, but its work items do not count.
+
+A second figure, ``epic_progress``, counts the child work items of the linked Epics that the person may see. It is
+kept apart from ``progress``: an Epic inside a linked project would otherwise count twice.
 """
 
 from collections import defaultdict
@@ -125,6 +128,54 @@ def project_state_counts(project_ids):
     return counts
 
 
+def epic_child_state_counts(epic_ids, user, workspace_id, checked, visible):
+    """The child work items of the given Epics by state group, in the projects the person may see.
+
+    Returns ``({epic_id: {state_group: number}}, epic ids with children in projects the person may not see)``.
+    The children are the direct ones, counted like project progress (``Issue.progress_objects``: no Epics, reviews,
+    archived work items, drafts or triage). ``checked`` are the projects whose access is already known and
+    ``visible`` the ones of them the person may see; a child in another project costs one more query, once.
+    """
+    counts = defaultdict(dict)
+    with_hidden = set()
+    if not epic_ids:
+        return counts, with_hidden
+    rows = list(
+        Issue.progress_objects.filter(workspace_id=workspace_id, parent_id__in=epic_ids)
+        .values("parent_id", "project_id", "state__group")
+        .annotate(number=Count("id"))
+        .order_by()
+    )
+    unknown = {row["project_id"] for row in rows} - set(checked)
+    visible = set(visible) | (accessible_project_ids(user, workspace_id, unknown) if unknown else set())
+    for row in rows:
+        if row["project_id"] not in visible:
+            with_hidden.add(row["parent_id"])
+            continue
+        epic_counts = counts[row["parent_id"]]
+        epic_counts[row["state__group"]] = epic_counts.get(row["state__group"], 0) + row["number"]
+    return counts, with_hidden
+
+
+def roll_up_epics(epic_ids, hidden_epic_count, counts, with_hidden):
+    """The Epic figure of one initiative or goal: the child work items of its visible Epics, each Epic once.
+
+    It is partial when Epics are hidden from the person (``hidden_epic_count``) or when a visible Epic has children
+    in a project the person may not see.
+    """
+    progress = empty_progress()
+    epic_ids = list(dict.fromkeys(epic_ids))
+    for epic_id in epic_ids:
+        for group, number in counts.get(epic_id, {}).items():
+            if group in progress:
+                progress[group] += number
+                progress["total_issues"] += number
+    return {
+        "epic_progress": progress,
+        "epic_progress_is_partial": hidden_epic_count > 0 or any(epic_id in with_hidden for epic_id in epic_ids),
+    }
+
+
 def describe(initiatives, user, workspace_id):
     """What the API adds to each initiative for this person: {initiative_id: {...}}.
 
@@ -165,6 +216,7 @@ def describe(initiatives, user, workspace_id):
     # Per initiative: the visible Epics in the order they were linked, and the hidden ones
     epics = defaultdict(list)
     hidden_epics = defaultdict(set)
+    checked, visible = set(every_project), set(accessible)
     if wanted:
         epic_rows = list(
             InitiativeEpic.objects.filter(
@@ -190,6 +242,11 @@ def describe(initiatives, user, workspace_id):
                 epics[initiative_id].append(issue_id)
             else:
                 hidden_epics[initiative_id].add(issue_id)
+        checked |= epic_projects
+        visible |= epic_accessible
+
+    visible_epics = {epic_id for epic_ids in epics.values() for epic_id in epic_ids}
+    epic_counts, with_hidden_children = epic_child_state_counts(visible_epics, user, workspace_id, checked, visible)
 
     described = {}
     for item in initiatives:
@@ -213,5 +270,50 @@ def describe(initiatives, user, workspace_id):
             "epic_ids": epic_ids,
             "hidden_epic_count": len(hidden),
             **roll_up(project_ids, accessible, counts),
+            **roll_up_epics(epic_ids, len(hidden), epic_counts, with_hidden_children),
         }
     return described
+
+
+def linked_epics(initiative, user, workspace_id):
+    """The linked Epics of an initiative (of its initiatives for a goal) that the person may see, with the progress
+    of each one's child work items. In the order of ``epic_ids``."""
+    epic_ids = describe([initiative], user, workspace_id)[initiative.id]["epic_ids"]
+    if not epic_ids:
+        return []
+    rows = {
+        row["id"]: row
+        for row in Issue.objects.filter(workspace_id=workspace_id, pk__in=epic_ids).values(
+            "id",
+            "name",
+            "sequence_id",
+            "project_id",
+            "project__identifier",
+            "state_id",
+            "state__group",
+            "target_date",
+        )
+    }
+    projects = {row["project_id"] for row in rows.values()}
+    counts, with_hidden = epic_child_state_counts(set(rows), user, workspace_id, projects, projects)
+    result = []
+    for epic_id in epic_ids:
+        row = rows.get(epic_id)
+        if row is None:
+            continue
+        figure = roll_up_epics([epic_id], 0, counts, with_hidden)
+        result.append(
+            {
+                "id": row["id"],
+                "name": row["name"],
+                "sequence_id": row["sequence_id"],
+                "project_id": row["project_id"],
+                "project_identifier": row["project__identifier"],
+                "state_id": row["state_id"],
+                "state_group": row["state__group"],
+                "target_date": row["target_date"],
+                "progress": figure["epic_progress"],
+                "progress_is_partial": figure["epic_progress_is_partial"],
+            }
+        )
+    return result

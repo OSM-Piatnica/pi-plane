@@ -12,7 +12,11 @@
       "last_used_app": "Laatst gebruikte app"
     },
     "switch_to": {
-      "projects": "Overschakelen naar Projecten"
+      "projects": "Overschakelen naar Projecten",
+      "initiatives": "Overschakelen naar Initiatieven"
+    },
+    "apps": {
+      "initiatives": "Initiatieven"
     }
   },
   "approve": "Goedkeuren",
@@ -267,7 +271,13 @@
     }
   },
   "workspace_features": {
-    "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte."
+    "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte.",
+    "items": {
+      "initiatives": {
+        "title": "Initiatieven",
+        "description": "Doelen en initiatieven over projecten heen, met voortgang en statusupdates."
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -704,6 +714,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Initiatieven",
+    "all": "Alle initiatieven",
+    "without_goal": "Zonder doel",
+    "no_goal": "Geen doel",
+    "no_goals_yet": "Nog geen doelen",
+    "no_lead": "Geen verantwoordelijke",
+    "new_goal": "Nieuw doel",
+    "new_initiative": "Nieuw initiatief",
+    "create_goal": "Doel aanmaken",
+    "create_initiative": "Initiatief aanmaken",
+    "expand_goal": "{name} uitvouwen",
+    "collapse_goal": "{name} samenvouwen",
+    "properties": "Eigenschappen",
+    "show_properties": "Eigenschappen tonen",
+    "hide_properties": "Eigenschappen verbergen",
+    "description_placeholder": "Waarvoor dient het, en hoe weet je dat het klaar is?",
+    "kind": {
+      "goal": "Doel",
+      "initiative": "Initiatief"
+    },
+    "status": {
+      "planned": "Gepland",
+      "active": "Actief",
+      "paused": "Gepauzeerd",
+      "completed": "Voltooid",
+      "cancelled": "Geannuleerd"
+    },
+    "health": {
+      "on_track": "Op schema",
+      "at_risk": "Risico",
+      "off_track": "Niet op schema",
+      "none": "Nog geen update",
+      "pick": "Gezondheid"
+    },
+    "fields": {
+      "name": "Naam",
+      "status": "Status",
+      "health": "Gezondheid",
+      "lead": "Verantwoordelijke",
+      "dates": "Datums",
+      "goal": "Doel",
+      "created_by": "Aangemaakt door"
+    },
+    "form": {
+      "placeholder": "Naam van het initiatief",
+      "goal_placeholder": "Naam van het doel",
+      "name_required": "Een naam is verplicht."
+    },
+    "empty": {
+      "title": "Nog geen initiatieven",
+      "description": "Groepeer werk uit meerdere projecten in initiatieven, en initiatieven onder doelen, om de voortgang op één plek te volgen.",
+      "sidebar": "Doelen en initiatieven die je aanmaakt, verschijnen hier."
+    },
+    "not_found": {
+      "title": "Initiatief niet gevonden",
+      "description": "Het is mogelijk verwijderd, of het adres is onjuist."
+    },
+    "progress": {
+      "projects": "Werkitems in gekoppelde projecten",
+      "epics": "Werkitems van gekoppelde Epics",
+      "done_of_total": "{done} van {total} voltooid",
+      "tooltip": "{percentage}% van de werkitems voltooid",
+      "partial_tooltip": "{percentage}% van de werkitems die je kunt zien voltooid",
+      "projects_empty": "Nog geen werkitems in de gekoppelde projecten.",
+      "epics_empty": "Nog geen onderliggende werkitems in de gekoppelde Epics.",
+      "hidden_projects": "{count, plural, one {# gekoppeld project is niet zichtbaar voor je en wordt niet meegeteld.} other {# gekoppelde projecten zijn niet zichtbaar voor je en worden niet meegeteld.}}",
+      "hidden_epics": "{count, plural, one {# gekoppelde Epic is niet zichtbaar voor je en wordt niet meegeteld.} other {# gekoppelde Epics zijn niet zichtbaar voor je en worden niet meegeteld.}}",
+      "hidden_children": "Sommige onderliggende werkitems staan in projecten die je niet kunt zien en worden niet meegeteld.",
+      "explained": "De twee cijfers worden apart geteld: anders zou een Epic in een gekoppeld project dubbel worden geteld."
+    },
+    "children": {
+      "title": "Initiatieven",
+      "empty": "Er werkt nog geen initiatief aan dit doel."
+    },
+    "projects": {
+      "title": "Projecten",
+      "add": "Projecten toevoegen",
+      "empty": "Nog geen projecten gekoppeld.",
+      "of_goal": "De projecten van de initiatieven van dit doel. Koppel projecten aan een initiatief.",
+      "remove": "{name} ontkoppelen",
+      "unknown": "Project",
+      "archived": "Gearchiveerd"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Epic toevoegen",
+      "search": "Epics zoeken op naam of ID",
+      "none_to_add": "Geen Epics om toe te voegen",
+      "empty": "Nog geen Epics gekoppeld.",
+      "of_goal": "De Epics van de initiatieven van dit doel. Koppel Epics aan een initiatief.",
+      "remove": "{name} ontkoppelen",
+      "progress_of": "Voortgang van {name}"
+    },
+    "updates": {
+      "title": "Statusupdates",
+      "text": "Update",
+      "placeholder": "Hoe gaat het?",
+      "post": "Update plaatsen",
+      "posted": "De update is geplaatst.",
+      "empty": "Nog geen statusupdates."
+    },
+    "delete": {
+      "action": "Verwijderen",
+      "goal_title": "Doel verwijderen",
+      "initiative_title": "Initiatief verwijderen",
+      "goal_description": "Het doel {name} verwijderen? De initiatieven ervan blijven bestaan, zonder doel.",
+      "initiative_description": "Het initiatief {name} verwijderen? De koppelingen met projecten en Epics en de statusupdates worden verwijderd; de projecten en Epics blijven bestaan."
+    },
+    "toast": {
+      "goal_created": "Het doel is aangemaakt.",
+      "initiative_created": "Het initiatief is aangemaakt.",
+      "goal_deleted": "Het doel is verwijderd.",
+      "initiative_deleted": "Het initiatief is verwijderd.",
+      "error": "Er is iets misgegaan. Probeer het opnieuw."
     }
   }
 }

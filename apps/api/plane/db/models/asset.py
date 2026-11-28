@@ -46,6 +46,8 @@ class FileAsset(BaseModel):
         PROJECT_COVER = "PROJECT_COVER"
         DRAFT_ISSUE_ATTACHMENT = "DRAFT_ISSUE_ATTACHMENT"
         DRAFT_ISSUE_DESCRIPTION = "DRAFT_ISSUE_DESCRIPTION"
+        # An image in the description of an initiative or goal; bound to the workspace only
+        INITIATIVE_DESCRIPTION = "INITIATIVE_DESCRIPTION"
 
     attributes = models.JSONField(default=dict)
     asset = models.FileField(upload_to=get_upload_path, max_length=800)
