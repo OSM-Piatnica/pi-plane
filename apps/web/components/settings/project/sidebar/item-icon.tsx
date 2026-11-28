@@ -6,6 +6,7 @@
  */
 
 import type { LucideIcon } from "lucide-react";
+import { FolderOpen } from "lucide-react";
 import {
   EstimateOutline,
   LabelsOutline,
@@ -25,6 +26,7 @@ export const PROJECT_SETTINGS_ICONS: Record<TProjectSettingsTabs, LucideIcon | R
   general: SettingIcon,
   members: MembersOutline,
   features: WidgetOutline,
+  documents: FolderOpen,
   states: StateOutline,
   workflows: WorkflowsPropertyOutline,
   labels: LabelsOutline,

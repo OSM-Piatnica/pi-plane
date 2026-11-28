@@ -245,6 +245,36 @@
           "title": "Duplicato"
         }
       }
+    },
+    "documents": {
+      "heading": "Documenti",
+      "description": "Dove sono conservati i nuovi documenti di questo progetto: nella posizione predefinita dello spazio di lavoro, in un'altra raccolta o nell'archivio di Pi-Plane, e in quale cartella.",
+      "not_configured": "SharePoint non è configurato in questa istanza, quindi i documenti di questo progetto sono conservati nell'archivio di Pi-Plane. Un amministratore dell'istanza lo configura in God Mode, in Integrazioni → SharePoint.",
+      "native_name": "archivio di Pi-Plane",
+      "store": {
+        "label": "I nuovi documenti vanno in",
+        "workspace": "La posizione predefinita dello spazio di lavoro ({name})",
+        "sharepoint": "Una raccolta dello spazio di lavoro",
+        "native": "Archivio di Pi-Plane"
+      },
+      "no_libraries": "Lo spazio di lavoro non ha ancora raccolte documenti. Gli amministratori dello spazio di lavoro le aggiungono nelle impostazioni dello spazio di lavoro, in Raccolte documenti.",
+      "library": "Raccolta",
+      "folder": "Cartella del progetto",
+      "folder_hint": "All'interno della cartella radice della raccolta; se vuoto, si usa {identifier}. I nuovi documenti vanno in {path} e i documenti di un elemento di lavoro in una cartella al suo interno con il nome dell'elemento di lavoro.",
+      "existing_stay": "I documenti già salvati non vengono spostati.",
+      "saved": "Salvato.",
+      "current": {
+        "label": "I nuovi documenti vanno in",
+        "sharepoint": "SharePoint, raccolta {library}, cartella {folder}",
+        "native": {
+          "chosen": "Archivio di Pi-Plane, come scelto per questo progetto.",
+          "no_library": "Archivio di Pi-Plane: lo spazio di lavoro non ha una raccolta documenti predefinita.",
+          "sharepoint_off": "Archivio di Pi-Plane: SharePoint non è configurato in questa istanza."
+        }
+      },
+      "open_folder": "Apri cartella in SharePoint",
+      "open_root_folder": "Apri la cartella della raccolta in SharePoint",
+      "folder_not_yet": "La cartella del progetto viene creata con il suo primo documento."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Il tipo di elemento di lavoro è stato salvato.",
             "title": "Tipo salvato"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Raccolte documenti",
+        "description": "Dove sono conservati i documenti di questo spazio di lavoro: nelle raccolte documenti di SharePoint o nell'archivio di Pi-Plane. I nuovi documenti vanno nella posizione predefinita, a meno che un progetto non ne scelga un'altra.",
+        "add": "Aggiungi raccolta",
+        "added": "Raccolta aggiunta.",
+        "edit": "Modifica raccolta",
+        "updated": "Raccolta aggiornata.",
+        "remove": "Rimuovi",
+        "removing": "Rimozione in corso",
+        "removed": "Raccolta rimossa.",
+        "remove_title": "Rimuovere {name}?",
+        "remove_content": "I documenti già presenti in questa raccolta vi restano e possono ancora essere aperti. I progetti che l'avevano scelta tornano alla posizione predefinita dello spazio di lavoro. In SharePoint non viene eliminato nulla.",
+        "default": "Predefinita",
+        "make_default": "Imposta come predefinita",
+        "default_inactive": "La raccolta predefinita non viene usata finché SharePoint non è configurato: i nuovi documenti vanno nell'archivio di Pi-Plane.",
+        "open_in_sharepoint": "Apri in SharePoint",
+        "root_folder_value": "Cartella radice: {folder}",
+        "usage": "{documents, plural, one {# documento} many {# di documenti} other {# documenti}}, scelta da {projects, plural, one {# progetto} many {# di progetti} other {# progetti}}",
+        "not_configured_title": "SharePoint non è configurato",
+        "native": {
+          "name": "Archivio di Pi-Plane",
+          "description": "L'archivio file proprio di Pi-Plane. Sempre disponibile; usato quando SharePoint non è configurato o nessuna raccolta è predefinita."
+        },
+        "site_url": "Indirizzo del sito SharePoint",
+        "site_url_hint": "L'indirizzo della home page del sito, ad esempio https://contoso.sharepoint.com/sites/Projects. Un amministratore di SharePoint deve prima concedere a Pi-Plane l'accesso al sito.",
+        "look_up": "Cerca",
+        "no_drives": "Il sito {site} non ha raccolte documenti visibili a Pi-Plane.",
+        "pick_drive": "Raccolte documenti di {site}",
+        "already_added": "Già aggiunta con la cartella radice: {folders}",
+        "name": "Nome",
+        "root_folder": "Cartella radice",
+        "root_folder_hint": "Una cartella all'interno della raccolta, ad esempio Pi-Plane/Progetti. Lasci il campo vuoto per usare la radice della raccolta. Le cartelle mancanti vengono create con il primo documento.",
+        "root_folder_change_hint": "I nuovi documenti vanno nella nuova cartella. I documenti già salvati restano dove sono.",
+        "make_default_on_add": "Imposta come raccolta predefinita",
+        "errors": {
+          "not_configured": "Un amministratore dell'istanza configura e attiva SharePoint in God Mode, in Integrazioni → SharePoint. Fino ad allora i documenti sono conservati nell'archivio di Pi-Plane.",
+          "invalid_site_url": "Incolli l'indirizzo di un sito SharePoint Online, ad esempio https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane non ha accesso a questo sito. Un amministratore di SharePoint deve concedere all'applicazione l'accesso al sito.",
+          "site_not_found": "Non esiste alcun sito a questo indirizzo. Verifichi l'indirizzo del sito.",
+          "library_not_found": "Il sito non ha questa raccolta documenti.",
+          "library_exists": "Questa cartella di questa raccolta è già stata aggiunta.",
+          "invalid_folder": "Il nome di una cartella non può contenere \" * : < > ? \\ | # % né terminare con un punto.",
+          "throttled": "Microsoft sta limitando le richieste. Riprovi più tardi.",
+          "timeout": "Non è stato possibile raggiungere Microsoft in tempo. Riprovi più tardi."
         }
       }
     }

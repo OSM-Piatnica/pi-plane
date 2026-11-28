@@ -245,6 +245,36 @@
           "title": "Duplicado"
         }
       }
+    },
+    "documents": {
+      "heading": "Documentos",
+      "description": "Dónde se guardan los documentos nuevos de este proyecto: en la ubicación predeterminada del espacio de trabajo, en otra biblioteca o en el almacenamiento de Pi-Plane, y en qué carpeta.",
+      "not_configured": "SharePoint no está configurado en esta instancia, por lo que los documentos de este proyecto se guardan en el almacenamiento de Pi-Plane. Un administrador de la instancia lo configura en God Mode, en Integraciones → SharePoint.",
+      "native_name": "almacenamiento de Pi-Plane",
+      "store": {
+        "label": "Los documentos nuevos van a",
+        "workspace": "La ubicación predeterminada del espacio de trabajo ({name})",
+        "sharepoint": "Una biblioteca del espacio de trabajo",
+        "native": "Almacenamiento de Pi-Plane"
+      },
+      "no_libraries": "El espacio de trabajo aún no tiene bibliotecas de documentos. Los administradores del espacio de trabajo las agregan en la configuración del espacio de trabajo, en Bibliotecas de documentos.",
+      "library": "Biblioteca",
+      "folder": "Carpeta del proyecto",
+      "folder_hint": "Dentro de la carpeta raíz de la biblioteca; si está vacía, se usa {identifier}. Los documentos nuevos van a {path}, y los documentos de un elemento de trabajo, a una carpeta dentro de ella con el nombre del elemento de trabajo.",
+      "existing_stay": "Los documentos ya guardados no se mueven.",
+      "saved": "Guardado.",
+      "current": {
+        "label": "Los documentos nuevos van a",
+        "sharepoint": "SharePoint, biblioteca {library}, carpeta {folder}",
+        "native": {
+          "chosen": "Almacenamiento de Pi-Plane, según lo elegido para este proyecto.",
+          "no_library": "Almacenamiento de Pi-Plane: el espacio de trabajo no tiene una biblioteca de documentos predeterminada.",
+          "sharepoint_off": "Almacenamiento de Pi-Plane: SharePoint no está configurado en esta instancia."
+        }
+      },
+      "open_folder": "Abrir carpeta en SharePoint",
+      "open_root_folder": "Abrir la carpeta de la biblioteca en SharePoint",
+      "folder_not_yet": "La carpeta del proyecto se crea con su primer documento."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "El tipo de elemento de trabajo se guardó.",
             "title": "Tipo guardado"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Bibliotecas de documentos",
+        "description": "Dónde se guardan los documentos de este espacio de trabajo: en bibliotecas de documentos de SharePoint o en el almacenamiento de Pi-Plane. Los documentos nuevos van a la ubicación predeterminada, salvo que un proyecto elija otra.",
+        "add": "Agregar biblioteca",
+        "added": "Biblioteca agregada.",
+        "edit": "Editar biblioteca",
+        "updated": "Biblioteca actualizada.",
+        "remove": "Quitar",
+        "removing": "Quitando",
+        "removed": "Biblioteca quitada.",
+        "remove_title": "¿Quitar {name}?",
+        "remove_content": "Los documentos que ya están en esta biblioteca permanecen allí y se pueden seguir abriendo. Los proyectos que la eligieron vuelven a la ubicación predeterminada del espacio de trabajo. No se elimina nada en SharePoint.",
+        "default": "Predeterminada",
+        "make_default": "Establecer como predeterminada",
+        "default_inactive": "La biblioteca predeterminada no se usa mientras SharePoint no esté configurado: los documentos nuevos van al almacenamiento de Pi-Plane.",
+        "open_in_sharepoint": "Abrir en SharePoint",
+        "root_folder_value": "Carpeta raíz: {folder}",
+        "usage": "{documents, plural, one {# documento} other {# documentos}}, elegida por {projects, plural, one {# proyecto} other {# proyectos}}",
+        "not_configured_title": "SharePoint no está configurado",
+        "native": {
+          "name": "Almacenamiento de Pi-Plane",
+          "description": "El almacenamiento de archivos propio de Pi-Plane. Siempre disponible; se usa cuando SharePoint no está configurado o ninguna biblioteca es la predeterminada."
+        },
+        "site_url": "Dirección del sitio de SharePoint",
+        "site_url_hint": "La dirección de la página principal del sitio, por ejemplo https://contoso.sharepoint.com/sites/Projects. Un administrador de SharePoint debe conceder primero a Pi-Plane acceso al sitio.",
+        "look_up": "Buscar",
+        "no_drives": "El sitio {site} no tiene bibliotecas de documentos que Pi-Plane pueda ver.",
+        "pick_drive": "Bibliotecas de documentos de {site}",
+        "already_added": "Ya agregada con la carpeta raíz: {folders}",
+        "name": "Nombre",
+        "root_folder": "Carpeta raíz",
+        "root_folder_hint": "Una carpeta dentro de la biblioteca, por ejemplo Pi-Plane/Proyectos. Déjela vacía para usar la raíz de la biblioteca. Las carpetas que falten se crean con el primer documento.",
+        "root_folder_change_hint": "Los documentos nuevos van a la nueva carpeta. Los documentos ya guardados se quedan donde están.",
+        "make_default_on_add": "Establecer como biblioteca predeterminada",
+        "errors": {
+          "not_configured": "Un administrador de la instancia configura y activa SharePoint en God Mode, en Integraciones → SharePoint. Hasta entonces, los documentos se guardan en el almacenamiento de Pi-Plane.",
+          "invalid_site_url": "Pegue la dirección de un sitio de SharePoint Online, por ejemplo https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane no tiene acceso a este sitio. Un administrador de SharePoint debe conceder a la aplicación acceso a él.",
+          "site_not_found": "No hay ningún sitio en esta dirección. Compruebe la dirección del sitio.",
+          "library_not_found": "El sitio no tiene esa biblioteca de documentos.",
+          "library_exists": "Esta carpeta de esta biblioteca ya se agregó.",
+          "invalid_folder": "El nombre de una carpeta no puede contener \" * : < > ? \\ | # % ni terminar en punto.",
+          "throttled": "Microsoft está limitando las solicitudes. Inténtelo de nuevo más tarde.",
+          "timeout": "No se pudo contactar con Microsoft a tiempo. Inténtelo de nuevo más tarde."
         }
       }
     }

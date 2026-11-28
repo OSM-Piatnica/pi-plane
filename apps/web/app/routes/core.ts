@@ -271,6 +271,10 @@ export const coreRoutes: RouteConfigEntry[] = [
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/departments/page.tsx"
           ),
           route(
+            ":workspaceSlug/settings/document-libraries",
+            "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/document-libraries/page.tsx"
+          ),
+          route(
             ":workspaceSlug/settings/exports",
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/exports/page.tsx"
           ),
@@ -330,6 +334,11 @@ export const coreRoutes: RouteConfigEntry[] = [
             route(
               ":workspaceSlug/settings/projects/:projectId/features/*",
               "routes/redirects/core/project-settings-features.tsx"
+            ),
+            // Where new documents of the project go
+            route(
+              ":workspaceSlug/settings/projects/:projectId/documents",
+              "./(all)/[workspaceSlug]/(settings)/settings/projects/[projectId]/documents/page.tsx"
             ),
             // Project States
             route(

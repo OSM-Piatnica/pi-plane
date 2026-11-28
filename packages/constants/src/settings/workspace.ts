@@ -59,6 +59,14 @@ export const WORKSPACE_SETTINGS: Record<TWorkspaceSettingsTabs, TWorkspaceSettin
     access: [EUserWorkspaceRoles.ADMIN],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/departments/`,
   },
+  // Where documents are kept: SharePoint libraries and Pi-Plane storage (docs/document-libraries.md)
+  "document-libraries": {
+    key: "document-libraries",
+    i18n_label: "workspace_settings.settings.document_libraries.title",
+    href: `/settings/document-libraries`,
+    access: [EUserWorkspaceRoles.ADMIN],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/settings/document-libraries/`,
+  },
   // Workspace feature switches (docs/workspace-features.md); listed only while a feature is available
   features: {
     key: "features",
@@ -131,6 +139,7 @@ export const GROUPED_WORKSPACE_SETTINGS: Record<WORKSPACE_SETTINGS_CATEGORY, TWo
     WORKSPACE_SETTINGS["members"],
     WORKSPACE_SETTINGS["groups"],
     WORKSPACE_SETTINGS["departments"],
+    WORKSPACE_SETTINGS["document-libraries"],
     WORKSPACE_SETTINGS["features"],
     WORKSPACE_SETTINGS["export"],
   ].filter((item) => isWorkspaceSettingsItemAvailable(item)),

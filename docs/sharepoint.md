@@ -6,7 +6,7 @@ today, how to register the application in Microsoft Entra, and what is still to 
 
 > **Status: groundwork, not tried against a real tenant.** What exists is the connection to Microsoft Graph, the
 > instance settings, a "Test connection" button and, through the [document store](document-store.md), the API to
-> store documents in a library (no screens yet, and a library is set up by hand until B4). The code was written
+> store documents in a library, and the settings to choose libraries ([Document libraries](document-libraries.md)). The code was written
 > from Microsoft's documentation and is tested against a fake Microsoft only: no step below, and no answer of Graph
 > the code expects, has been confirmed against a live Microsoft 365 tenant. Steps and behaviours that most need that
 > confirmation are marked **(unverified)**. The first test on a real tenant may well bring corrections.
@@ -159,9 +159,9 @@ seconds, and a wait that would not fit in the remaining time is not started.
 - **Storing documents** works through the API of the [document store](document-store.md) (B3): upload sessions,
   versions, download URLs, thumbnails, and changes made directly in SharePoint. It is **unverified** like the rest
   of this page; that page lists what B1 must confirm.
-- **Choosing a library.** A workspace administrator will pick the site, the library and a root folder in the
-  workspace settings (B4), and a project may override them. Today a `DocumentLibrary` row is added by hand.
-- **Anything in the web app.** `is_sharepoint_enabled` is exposed, and nothing reads it yet.
+- **Choosing a library** is built ([Document libraries](document-libraries.md)): a workspace admin picks the site,
+  the library and a root folder in the workspace settings, and a project may choose another library and folder.
+- **Documents in the web app.** Only the settings pages exist; screens for uploading and viewing documents come in later steps (workstream C).
 - **Certificate credentials** in place of a client secret, and a warning before the secret expires.
 - **Browser access to Microsoft.** Whether the browser can upload to and download from Microsoft directly (CORS), or
   whether Pi-Plane has to pass the bytes through, needs a real tenant to decide. The document store assumes direct

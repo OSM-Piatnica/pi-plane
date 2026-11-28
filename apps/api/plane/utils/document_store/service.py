@@ -35,7 +35,8 @@ from plane.db.models.document import (
 
 from .base import DocumentStoreError, UploadRequest, changed_since
 from .native import NativeStore
-from .sharepoint import SharePointStore, default_folder
+from .libraries import project_target
+from .sharepoint import SharePointStore
 
 UPLOAD_TOKEN_SALT = "plane.documents.upload"
 # How long the browser has between beginning and finishing an upload. Longer than a presigned POST lives (one hour
@@ -58,24 +59,16 @@ class DocumentRequestError(Exception):
 # ---------------------------------------------------------------------- choosing the store
 
 
-def default_library(workspace_id):
-    """The SharePoint library new documents of the workspace go to, or None."""
-    return DocumentLibrary.objects.filter(
-        workspace_id=workspace_id, is_default=True, provider=DocumentProvider.SHAREPOINT
-    ).first()
-
-
-def store_for_new_document(workspace_id, *, request=None):
+def store_for_new_document(project, *, request=None):
     """
-    (store, library) for a new document: SharePoint when it is switched on for the instance and the workspace has a
-    default library, Pi-Plane's own storage otherwise. B4 adds the per-project override.
+    (store, library, target) for a new document of `project`: SharePoint when it is switched on for the instance and
+    the project has a library (its own choice, or the workspace default), Pi-Plane's own storage otherwise. See
+    ``libraries.project_target``.
     """
-    from plane.utils.sharepoint.config import is_sharepoint_enabled
-
-    library = default_library(workspace_id)
-    if library is not None and is_sharepoint_enabled():
-        return SharePointStore(library=library), library
-    return NativeStore(request=request), None
+    target = project_target(project)
+    if target.library is not None:
+        return SharePointStore(library=target.library), target.library, target
+    return NativeStore(request=request), None, target
 
 
 def store_for_document(document, *, request=None, client_options=None):
@@ -171,13 +164,13 @@ def begin_upload(
             base_content_tag=base_tag,
         )
     else:
-        store, library = store_for_new_document(project.workspace_id, request=request)
+        store, library, target = store_for_new_document(project, request=request)
         upload_request = UploadRequest(
             workspace_id=str(project.workspace_id),
             name=name,
             mime_type=mime_type,
             size=size,
-            folder=default_folder(project.identifier, issue.sequence_id if issue is not None else None),
+            folder=target.item_folder(project.identifier, issue.sequence_id if issue is not None else None),
         )
 
     planned = store.begin_upload(upload_request)

@@ -245,6 +245,36 @@
           "title": "Duplikát"
         }
       }
+    },
+    "documents": {
+      "heading": "Dokumenty",
+      "description": "Kde jsou uloženy nové dokumenty tohoto projektu: ve výchozím umístění pracovního prostoru, v jiné knihovně nebo v úložišti Pi-Plane, a v jaké složce.",
+      "not_configured": "SharePoint není v této instanci nastaven, proto jsou dokumenty tohoto projektu uloženy v úložišti Pi-Plane. Správce instance ho nastaví v God Mode v části Integrace → SharePoint.",
+      "native_name": "úložiště Pi-Plane",
+      "store": {
+        "label": "Umístění nových dokumentů",
+        "workspace": "Výchozí umístění pracovního prostoru ({name})",
+        "sharepoint": "Knihovna pracovního prostoru",
+        "native": "Úložiště Pi-Plane"
+      },
+      "no_libraries": "Pracovní prostor zatím nemá žádné knihovny dokumentů. Správci pracovního prostoru je přidávají v nastavení pracovního prostoru v části Knihovny dokumentů.",
+      "library": "Knihovna",
+      "folder": "Složka projektu",
+      "folder_hint": "Uvnitř kořenové složky knihovny; prázdné znamená {identifier}. Nové dokumenty se ukládají do {path} a dokumenty pracovní položky do složky v ní, pojmenované podle pracovní položky.",
+      "existing_stay": "Již uložené dokumenty se nepřesouvají.",
+      "saved": "Uloženo.",
+      "current": {
+        "label": "Umístění nových dokumentů",
+        "sharepoint": "SharePoint, knihovna {library}, složka {folder}",
+        "native": {
+          "chosen": "Úložiště Pi-Plane, jak bylo zvoleno pro tento projekt.",
+          "no_library": "Úložiště Pi-Plane: pracovní prostor nemá výchozí knihovnu dokumentů.",
+          "sharepoint_off": "Úložiště Pi-Plane: SharePoint není v této instanci nastaven."
+        }
+      },
+      "open_folder": "Otevřít složku ve službě SharePoint",
+      "open_root_folder": "Otevřít složku knihovny ve službě SharePoint",
+      "folder_not_yet": "Složka projektu se vytvoří s jeho prvním dokumentem."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Typ pracovní položky byl uložen.",
             "title": "Typ uložen"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Knihovny dokumentů",
+        "description": "Kde jsou uloženy dokumenty tohoto pracovního prostoru: v knihovnách dokumentů SharePoint nebo v úložišti Pi-Plane. Nové dokumenty se ukládají do výchozího umístění, pokud projekt nezvolí jiné.",
+        "add": "Přidat knihovnu",
+        "added": "Knihovna byla přidána.",
+        "edit": "Upravit knihovnu",
+        "updated": "Knihovna byla aktualizována.",
+        "remove": "Odebrat",
+        "removing": "Odebírání",
+        "removed": "Knihovna byla odebrána.",
+        "remove_title": "Odebrat {name}?",
+        "remove_content": "Dokumenty, které už v této knihovně jsou, v ní zůstanou a lze je dál otevírat. Projekty, které ji zvolily, se vrátí k výchozímu nastavení pracovního prostoru. Ve službě SharePoint se nic neodstraní.",
+        "default": "Výchozí",
+        "make_default": "Nastavit jako výchozí",
+        "default_inactive": "Výchozí knihovna se nepoužívá, dokud není SharePoint nastaven: nové dokumenty se ukládají do úložiště Pi-Plane.",
+        "open_in_sharepoint": "Otevřít ve službě SharePoint",
+        "root_folder_value": "Kořenová složka: {folder}",
+        "usage": "{documents, plural, one {# dokument} few {# dokumenty} many {# dokumentu} other {# dokumentů}}, zvolena {projects, plural, one {# projektem} few {# projekty} many {# projektu} other {# projekty}}",
+        "not_configured_title": "SharePoint není nastaven",
+        "native": {
+          "name": "Úložiště Pi-Plane",
+          "description": "Vlastní úložiště souborů Pi-Plane. Vždy dostupné; používá se, když SharePoint není nastaven nebo žádná knihovna není výchozí."
+        },
+        "site_url": "Adresa webu SharePoint",
+        "site_url_hint": "Adresa domovské stránky webu, například https://contoso.sharepoint.com/sites/Projects. Správce SharePoint musí nejprve udělit Pi-Plane přístup k webu.",
+        "look_up": "Vyhledat",
+        "no_drives": "Web {site} nemá žádné knihovny dokumentů, které Pi-Plane vidí.",
+        "pick_drive": "Knihovny dokumentů webu {site}",
+        "already_added": "Již přidána s kořenovou složkou: {folders}",
+        "name": "Název",
+        "root_folder": "Kořenová složka",
+        "root_folder_hint": "Složka v knihovně, například Pi-Plane/Projekty. Chcete-li použít kořen knihovny, ponechte pole prázdné. Chybějící složky se vytvoří s prvním dokumentem.",
+        "root_folder_change_hint": "Nové dokumenty se uloží do nové složky. Již uložené dokumenty zůstanou, kde jsou.",
+        "make_default_on_add": "Nastavit jako výchozí knihovnu",
+        "errors": {
+          "not_configured": "Správce instance nastaví a zapne SharePoint v God Mode v části Integrace → SharePoint. Do té doby jsou dokumenty uloženy v úložišti Pi-Plane.",
+          "invalid_site_url": "Vložte adresu webu SharePoint Online, například https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane nemá k tomuto webu přístup. Správce SharePoint musí aplikaci udělit přístup k němu.",
+          "site_not_found": "Na této adrese žádný web není. Zkontrolujte adresu webu.",
+          "library_not_found": "Web takovou knihovnu dokumentů nemá.",
+          "library_exists": "Tato složka této knihovny již byla přidána.",
+          "invalid_folder": "Název složky nesmí obsahovat \" * : < > ? \\ | # % ani končit tečkou.",
+          "throttled": "Microsoft omezuje počet požadavků. Zkuste to znovu později.",
+          "timeout": "Služby Microsoft nebyly včas dostupné. Zkuste to znovu později."
         }
       }
     }

@@ -15,9 +15,10 @@ logical file with versions, possibly in a library Pi-Plane does not own.
 
 ## Where a new document goes
 
-- **SharePoint** when SharePoint is switched on for the instance (`is_sharepoint_enabled`) and the workspace has a
-  default document library. The file goes to `{root folder}/{PROJECT}/{PROJECT}-{number}/{name}` for a work item,
-  `{root folder}/{PROJECT}/{name}` for the project itself. A file of that name that is already there is never
+- **SharePoint** when SharePoint is switched on for the instance (`is_sharepoint_enabled`) and the project has a
+  library: the one it chose in its settings, or else the workspace's default library. The file goes to
+  `{root folder}/{PROJECT}/{PROJECT}-{number}/{name}` for a work item, `{root folder}/{PROJECT}/{name}` for the
+  project itself; a project can set another folder in place of `{PROJECT}`. A file of that name that is already there is never
   overwritten: the upload is refused with `name_taken`.
 - **Native** otherwise: one object per version under `{workspace id}/documents/` in the bucket (or Azure container)
   attachments use, with the same presigned uploads and downloads, so nothing new is needed from the storage.
@@ -26,9 +27,8 @@ A document stays in the store it was created in. A SharePoint document carries i
 reachable when its library is later removed from the workspace settings. If SharePoint is switched off, its
 documents answer `not_configured` until it is switched on again.
 
-Choosing a library is B4 (workspace settings "Document libraries", and a per-project override). Until then a library
-is a row of `DocumentLibrary` (`workspace`, `site_id`, `drive_id`, `root_path`, `web_url`, `is_default`) that an
-instance administrator adds in the Django shell, after finding the IDs with "Test connection" in the admin app.
+Libraries are set up in the workspace settings ("Document libraries"), and a project can choose another library
+and folder in its settings: see [Document libraries](document-libraries.md).
 
 ## Versions
 

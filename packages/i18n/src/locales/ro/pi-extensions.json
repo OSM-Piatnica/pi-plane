@@ -245,6 +245,36 @@
           "title": "Duplicată a"
         }
       }
+    },
+    "documents": {
+      "heading": "Documente",
+      "description": "Unde sunt păstrate documentele noi ale acestui proiect: în locația implicită a spațiului de lucru, în altă bibliotecă sau în stocarea Pi-Plane, și în ce folder.",
+      "not_configured": "SharePoint nu este configurat în această instanță, așa că documentele acestui proiect sunt păstrate în stocarea Pi-Plane. Un administrator al instanței îl configurează în God Mode, la Integrări → SharePoint.",
+      "native_name": "stocarea Pi-Plane",
+      "store": {
+        "label": "Documentele noi ajung în",
+        "workspace": "Locația implicită a spațiului de lucru ({name})",
+        "sharepoint": "O bibliotecă a spațiului de lucru",
+        "native": "Stocare Pi-Plane"
+      },
+      "no_libraries": "Spațiul de lucru nu are încă biblioteci de documente. Administratorii spațiului de lucru le adaugă în setările spațiului de lucru, la Biblioteci de documente.",
+      "library": "Bibliotecă",
+      "folder": "Folderul proiectului",
+      "folder_hint": "În folderul rădăcină al bibliotecii; gol înseamnă {identifier}. Documentele noi ajung în {path}, iar documentele unei activități într-un folder din interiorul acestuia, denumit după activitate.",
+      "existing_stay": "Documentele deja stocate nu sunt mutate.",
+      "saved": "Salvat.",
+      "current": {
+        "label": "Documentele noi ajung în",
+        "sharepoint": "SharePoint, biblioteca {library}, folderul {folder}",
+        "native": {
+          "chosen": "Stocare Pi-Plane, conform alegerii pentru acest proiect.",
+          "no_library": "Stocare Pi-Plane: spațiul de lucru nu are o bibliotecă de documente implicită.",
+          "sharepoint_off": "Stocare Pi-Plane: SharePoint nu este configurat în această instanță."
+        }
+      },
+      "open_folder": "Deschideți folderul în SharePoint",
+      "open_root_folder": "Deschideți folderul bibliotecii în SharePoint",
+      "folder_not_yet": "Folderul proiectului este creat odată cu primul său document."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Tipul de activitate a fost salvat.",
             "title": "Tip salvat"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Biblioteci de documente",
+        "description": "Unde sunt păstrate documentele acestui spațiu de lucru: în biblioteci de documente SharePoint sau în stocarea Pi-Plane. Documentele noi ajung în locația implicită, cu excepția cazului în care un proiect alege alta.",
+        "add": "Adăugați o bibliotecă",
+        "added": "Biblioteca a fost adăugată.",
+        "edit": "Editați biblioteca",
+        "updated": "Biblioteca a fost actualizată.",
+        "remove": "Eliminați",
+        "removing": "Se elimină",
+        "removed": "Biblioteca a fost eliminată.",
+        "remove_title": "Eliminați {name}?",
+        "remove_content": "Documentele care sunt deja în această bibliotecă rămân acolo și pot fi deschise în continuare. Proiectele care au ales-o revin la setarea implicită a spațiului de lucru. Nu se șterge nimic în SharePoint.",
+        "default": "Implicită",
+        "make_default": "Setați ca implicită",
+        "default_inactive": "Biblioteca implicită nu este folosită cât timp SharePoint nu este configurat: documentele noi ajung în stocarea Pi-Plane.",
+        "open_in_sharepoint": "Deschideți în SharePoint",
+        "root_folder_value": "Folder rădăcină: {folder}",
+        "usage": "{documents, plural, one {# document} few {# documente} other {# de documente}}, aleasă de {projects, plural, one {# proiect} few {# proiecte} other {# de proiecte}}",
+        "not_configured_title": "SharePoint nu este configurat",
+        "native": {
+          "name": "Stocare Pi-Plane",
+          "description": "Stocarea de fișiere proprie a Pi-Plane. Întotdeauna disponibilă; folosită când SharePoint nu este configurat sau nicio bibliotecă nu este implicită."
+        },
+        "site_url": "Adresa site-ului SharePoint",
+        "site_url_hint": "Adresa paginii principale a site-ului, de exemplu https://contoso.sharepoint.com/sites/Projects. Un administrator SharePoint trebuie mai întâi să acorde Pi-Plane acces la site.",
+        "look_up": "Căutați",
+        "no_drives": "Site-ul {site} nu are biblioteci de documente vizibile pentru Pi-Plane.",
+        "pick_drive": "Bibliotecile de documente ale site-ului {site}",
+        "already_added": "Deja adăugată cu folderul rădăcină: {folders}",
+        "name": "Nume",
+        "root_folder": "Folder rădăcină",
+        "root_folder_hint": "Un folder din bibliotecă, de exemplu Pi-Plane/Proiecte. Lăsați gol pentru a folosi rădăcina bibliotecii. Folderele lipsă sunt create odată cu primul document.",
+        "root_folder_change_hint": "Documentele noi ajung în noul folder. Documentele deja stocate rămân unde sunt.",
+        "make_default_on_add": "Setați ca bibliotecă implicită",
+        "errors": {
+          "not_configured": "Un administrator al instanței configurează și activează SharePoint în God Mode, la Integrări → SharePoint. Până atunci, documentele sunt păstrate în stocarea Pi-Plane.",
+          "invalid_site_url": "Lipiți adresa unui site SharePoint Online, de exemplu https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane nu are acces la acest site. Un administrator SharePoint trebuie să acorde aplicației acces la el.",
+          "site_not_found": "Nu există niciun site la această adresă. Verificați adresa site-ului.",
+          "library_not_found": "Site-ul nu are o astfel de bibliotecă de documente.",
+          "library_exists": "Acest folder al acestei biblioteci a fost deja adăugat.",
+          "invalid_folder": "Numele unui folder nu poate conține \" * : < > ? \\ | # % și nici nu se poate termina cu punct.",
+          "throttled": "Microsoft limitează solicitările. Încercați din nou mai târziu.",
+          "timeout": "Microsoft nu a putut fi contactat la timp. Încercați din nou mai târziu."
         }
       }
     }

@@ -152,4 +152,6 @@ from .document import (
     DocumentProvider,
     DocumentVersion,
     DocumentVersionSource,
+    ProjectDocumentSettings,
+    ProjectDocumentStore,
 )

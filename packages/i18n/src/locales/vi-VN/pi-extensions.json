@@ -245,6 +245,36 @@
           "title": "Trùng lặp"
         }
       }
+    },
+    "documents": {
+      "heading": "Tài liệu",
+      "description": "Nơi lưu trữ tài liệu mới của dự án này: mặc định của không gian làm việc, một thư viện khác hoặc bộ nhớ Pi-Plane, và trong thư mục nào.",
+      "not_configured": "SharePoint chưa được thiết lập trên hệ thống này, vì vậy tài liệu của dự án này được lưu trong bộ nhớ Pi-Plane. Quản trị viên hệ thống thiết lập SharePoint trong God Mode, tại Tích hợp → SharePoint.",
+      "native_name": "bộ nhớ Pi-Plane",
+      "store": {
+        "label": "Tài liệu mới được lưu vào",
+        "workspace": "Mặc định của không gian làm việc ({name})",
+        "sharepoint": "Một thư viện của không gian làm việc",
+        "native": "Bộ nhớ Pi-Plane"
+      },
+      "no_libraries": "Không gian làm việc chưa có thư viện tài liệu nào. Quản trị viên không gian làm việc thêm thư viện trong cài đặt không gian làm việc, tại Thư viện tài liệu.",
+      "library": "Thư viện",
+      "folder": "Thư mục dự án",
+      "folder_hint": "Bên trong thư mục gốc của thư viện; để trống nghĩa là {identifier}. Tài liệu mới được lưu vào {path}, còn tài liệu của một mục công việc được lưu vào thư mục mang tên mục công việc đó bên trong.",
+      "existing_stay": "Các tài liệu đã lưu sẽ không bị di chuyển.",
+      "saved": "Đã lưu.",
+      "current": {
+        "label": "Tài liệu mới được lưu vào",
+        "sharepoint": "SharePoint, thư viện {library}, thư mục {folder}",
+        "native": {
+          "chosen": "Bộ nhớ Pi-Plane, theo lựa chọn cho dự án này.",
+          "no_library": "Bộ nhớ Pi-Plane: không gian làm việc không có thư viện tài liệu mặc định.",
+          "sharepoint_off": "Bộ nhớ Pi-Plane: SharePoint chưa được thiết lập trên hệ thống này."
+        }
+      },
+      "open_folder": "Mở thư mục trong SharePoint",
+      "open_root_folder": "Mở thư mục thư viện trong SharePoint",
+      "folder_not_yet": "Thư mục của dự án được tạo cùng tài liệu đầu tiên."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Loại mục công việc đã được lưu.",
             "title": "Đã lưu loại"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Thư viện tài liệu",
+        "description": "Nơi lưu trữ tài liệu của không gian làm việc này: thư viện tài liệu SharePoint hoặc bộ nhớ Pi-Plane. Tài liệu mới được lưu vào vị trí mặc định, trừ khi dự án chọn vị trí khác.",
+        "add": "Thêm thư viện",
+        "added": "Đã thêm thư viện.",
+        "edit": "Chỉnh sửa thư viện",
+        "updated": "Đã cập nhật thư viện.",
+        "remove": "Gỡ bỏ",
+        "removing": "Đang gỡ bỏ",
+        "removed": "Đã gỡ bỏ thư viện.",
+        "remove_title": "Gỡ bỏ {name}?",
+        "remove_content": "Các tài liệu đã có trong thư viện này vẫn ở đó và vẫn có thể mở được. Các dự án đã chọn thư viện này sẽ quay về mặc định của không gian làm việc. Không có gì bị xóa trong SharePoint.",
+        "default": "Mặc định",
+        "make_default": "Đặt làm mặc định",
+        "default_inactive": "Thư viện mặc định không được dùng khi SharePoint chưa được thiết lập: tài liệu mới được lưu vào bộ nhớ Pi-Plane.",
+        "open_in_sharepoint": "Mở trong SharePoint",
+        "root_folder_value": "Thư mục gốc: {folder}",
+        "usage": "{documents, plural, one {# tài liệu} other {# tài liệu}}, được {projects, plural, one {# dự án} other {# dự án}} chọn",
+        "not_configured_title": "SharePoint chưa được thiết lập",
+        "native": {
+          "name": "Bộ nhớ Pi-Plane",
+          "description": "Bộ nhớ tệp riêng của Pi-Plane. Luôn có sẵn; được dùng khi SharePoint chưa được thiết lập hoặc không có thư viện nào là mặc định."
+        },
+        "site_url": "Địa chỉ trang SharePoint",
+        "site_url_hint": "Địa chỉ trang chủ của trang, ví dụ https://contoso.sharepoint.com/sites/Projects. Quản trị viên SharePoint phải cấp cho Pi-Plane quyền truy cập trang trước.",
+        "look_up": "Tra cứu",
+        "no_drives": "Trang {site} không có thư viện tài liệu nào mà Pi-Plane có thể thấy.",
+        "pick_drive": "Thư viện tài liệu của {site}",
+        "already_added": "Đã được thêm với thư mục gốc: {folders}",
+        "name": "Tên",
+        "root_folder": "Thư mục gốc",
+        "root_folder_hint": "Một thư mục trong thư viện, ví dụ Pi-Plane/Dự án. Để trống để dùng thư mục gốc của thư viện. Các thư mục còn thiếu sẽ được tạo cùng tài liệu đầu tiên.",
+        "root_folder_change_hint": "Tài liệu mới sẽ được lưu vào thư mục mới. Các tài liệu đã lưu vẫn ở nguyên chỗ cũ.",
+        "make_default_on_add": "Đặt làm thư viện mặc định",
+        "errors": {
+          "not_configured": "Quản trị viên hệ thống thiết lập và bật SharePoint trong God Mode, tại Tích hợp → SharePoint. Cho đến lúc đó, tài liệu được lưu trong bộ nhớ Pi-Plane.",
+          "invalid_site_url": "Dán địa chỉ của một trang SharePoint Online, ví dụ https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane không có quyền truy cập trang này. Quản trị viên SharePoint phải cấp cho ứng dụng quyền truy cập trang này.",
+          "site_not_found": "Không có trang nào ở địa chỉ này. Hãy kiểm tra địa chỉ của trang.",
+          "library_not_found": "Trang không có thư viện tài liệu như vậy.",
+          "library_exists": "Thư mục này của thư viện này đã được thêm.",
+          "invalid_folder": "Tên thư mục không được chứa \" * : < > ? \\ | # % hoặc kết thúc bằng dấu chấm.",
+          "throttled": "Microsoft đang giới hạn yêu cầu. Hãy thử lại sau.",
+          "timeout": "Không thể kết nối tới Microsoft kịp thời. Hãy thử lại sau."
         }
       }
     }
