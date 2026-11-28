@@ -501,7 +501,7 @@
             "epic": {
               "description": "Rozsiahly celok práce, ktorý je možné rozdeliť na úlohy.",
               "disabled": "Epiky sú pre túto šablónu zakázané.",
-              "title": "Epika"
+              "title": "Epik"
             },
             "optional_badge": "Voliteľné",
             "properties_empty": "Tento typ nemá žiadne vlastné vlastnosti.",
@@ -640,11 +640,11 @@
         "delete_confirm": "Odstrániť tento typ pracovnej položky? Existujúce pracovné položky si zachovajú svoje údaje.",
         "description": "Definujte typy pracovných položiek s vlastnou identitou, vlastnými vlastnosťami a rozsahom projektov. Typy môžete zapínať a vypínať bez vplyvu na existujúce položky.",
         "edit_type": "Upraviť typ",
-        "epic_badge": "Epika",
+        "epic_badge": "Epik",
         "form": {
           "description_label": "Popis",
           "is_active": "Aktívne",
-          "is_epic": "Typ epiky",
+          "is_epic": "Typ epiku",
           "modal_intro": "Pomenujte typ, vyberte ikonu a priraďte iba tie vlastnosti, ktoré tento druh práce potrebuje. Priraďte ho k projektom, v ktorých má byť dostupný.",
           "name_label": "Názov",
           "name_required": "Názov typu je povinný",
