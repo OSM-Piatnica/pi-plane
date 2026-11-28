@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
-# Numbered 0163 because 0162 was reserved for the baselines change (#539), which was renumbered to
-# 0164_project_baselines and depends on this migration. 0162 is intentionally unused.
+# Numbered 0163 because 0162 is taken by the open baselines change (#539, 0162_project_baselines). The dependency
+# names 0161, the latest migration on preview when this was written: whichever of the two merges second re-points
+# its dependency at the other (and renumbers if needed) so that the graph has one leaf.
 
 import django.db.models.deletion
 import uuid
