@@ -49,6 +49,14 @@ export const PROJECT_SETTINGS: Record<TProjectSettingsTabs, TProjectSettingsItem
     access: [EUserProjectRoles.ADMIN],
     highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/features/`,
   },
+  // Where new documents of the project go (docs/document-libraries.md)
+  documents: {
+    key: "documents",
+    i18n_label: "project_settings.documents.heading",
+    href: `/documents`,
+    access: [EUserProjectRoles.ADMIN],
+    highlight: (pathname: string, baseUrl: string) => pathname === `${baseUrl}/documents/`,
+  },
   states: {
     key: "states",
     i18n_label: "common.states",
@@ -93,6 +101,7 @@ export const GROUPED_PROJECT_SETTINGS: Record<PROJECT_SETTINGS_CATEGORY, TProjec
     PROJECT_SETTINGS["general"],
     PROJECT_SETTINGS["members"],
     PROJECT_SETTINGS["features"],
+    PROJECT_SETTINGS["documents"],
   ],
   [PROJECT_SETTINGS_CATEGORY.WORK_STRUCTURE]: [
     PROJECT_SETTINGS["states"],

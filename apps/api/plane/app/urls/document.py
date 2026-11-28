@@ -7,14 +7,21 @@ from django.urls import path
 from plane.app.views import (
     DocumentAdoptEndpoint,
     DocumentEndpoint,
+    DocumentLibraryDefaultEndpoint,
+    DocumentLibraryEndpoint,
+    DocumentLibrarySiteEndpoint,
     DocumentThumbnailEndpoint,
     DocumentUploadEndpoint,
     DocumentUploadFinishEndpoint,
     DocumentVersionDownloadEndpoint,
     DocumentVersionEndpoint,
+    ProjectDocumentFolderEndpoint,
+    ProjectDocumentSettingsEndpoint,
 )
 
 DOCUMENTS = "workspaces/<str:slug>/projects/<uuid:project_id>/documents"
+LIBRARIES = "workspaces/<str:slug>/document-libraries"
+PROJECT_SETTINGS = "workspaces/<str:slug>/projects/<uuid:project_id>/document-settings"
 
 urlpatterns = [
     path(f"{DOCUMENTS}/", DocumentEndpoint.as_view(), name="project-documents"),
@@ -49,5 +56,16 @@ urlpatterns = [
         f"{DOCUMENTS}/<uuid:document_id>/adopt/",
         DocumentAdoptEndpoint.as_view(),
         name="project-document-adopt",
+    ),
+    # Document libraries of the workspace and the project's choice (B4, docs/document-libraries.md)
+    path(f"{LIBRARIES}/", DocumentLibraryEndpoint.as_view(), name="document-libraries"),
+    path(f"{LIBRARIES}/sites/", DocumentLibrarySiteEndpoint.as_view(), name="document-library-sites"),
+    path(f"{LIBRARIES}/default/", DocumentLibraryDefaultEndpoint.as_view(), name="document-library-default"),
+    path(f"{LIBRARIES}/<uuid:library_id>/", DocumentLibraryEndpoint.as_view(), name="document-library"),
+    path(f"{PROJECT_SETTINGS}/", ProjectDocumentSettingsEndpoint.as_view(), name="project-document-settings"),
+    path(
+        f"{PROJECT_SETTINGS}/folder/",
+        ProjectDocumentFolderEndpoint.as_view(),
+        name="project-document-folder",
     ),
 ]

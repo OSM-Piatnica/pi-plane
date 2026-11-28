@@ -52,9 +52,9 @@ class DocumentLibrary(BaseModel):
     """
     A SharePoint document library a workspace keeps its documents in.
 
-    The workspace settings page that creates these is B4; until then a library is added by an instance
-    administrator (see ``docs/document-store.md``). New documents of a workspace go to its default library when
-    SharePoint is switched on, under ``{root_path}/{PROJECT}/{PROJECT}-{sequence}/``.
+    Workspace admins add these in the workspace settings ("Document libraries"; see ``docs/document-libraries.md``).
+    New documents of a workspace go to its default library when SharePoint is switched on, under
+    ``{root_path}/{PROJECT}/{PROJECT}-{sequence}/``, unless the project overrides it (``ProjectDocumentSettings``).
     """
 
     workspace = models.ForeignKey("db.Workspace", on_delete=models.CASCADE, related_name="document_libraries")
@@ -167,3 +167,48 @@ class DocumentVersion(ProjectBaseModel):
 
     def __str__(self):
         return f"{self.document_id} v{self.number}"
+
+
+class ProjectDocumentStore(models.TextChoices):
+    """Where new documents of a project go."""
+
+    # Whatever the workspace says: its default library, or Pi-Plane's own storage when it has none
+    WORKSPACE = "workspace", "Workspace default"
+    NATIVE = "native", "Pi-Plane storage"
+    SHAREPOINT = "sharepoint", "SharePoint library"
+
+
+class ProjectDocumentSettings(ProjectBaseModel):
+    """
+    A project's override of where its new documents go: another library of the workspace (or Pi-Plane's own
+    storage) and another folder. Without a row the workspace default applies. Existing documents never move.
+
+    ``folder`` is the project's folder under the library's root folder ("/"-separated, without leading or trailing
+    "/"), in place of the project identifier; "" keeps the identifier. Documents of a work item still go to a
+    ``{PROJECT}-{sequence}`` folder inside it.
+    """
+
+    store = models.CharField(
+        max_length=20, choices=ProjectDocumentStore.choices, default=ProjectDocumentStore.WORKSPACE
+    )
+    # Only with store "sharepoint"; when the library is removed the project falls back to the workspace default
+    library = models.ForeignKey(
+        DocumentLibrary, on_delete=models.SET_NULL, null=True, blank=True, related_name="project_settings"
+    )
+    folder = models.CharField(max_length=400, blank=True, default="")
+
+    class Meta:
+        verbose_name = "Project Document Settings"
+        verbose_name_plural = "Project Document Settings"
+        db_table = "project_document_settings"
+        ordering = ("-created_at",)
+        constraints = [
+            models.UniqueConstraint(
+                fields=["project"],
+                condition=Q(deleted_at__isnull=True),
+                name="project_document_settings_unique_project_when_deleted_at_null",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.project_id}: {self.store}"

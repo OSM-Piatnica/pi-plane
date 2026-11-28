@@ -245,6 +245,36 @@
           "title": "重複する"
         }
       }
+    },
+    "documents": {
+      "heading": "ドキュメント",
+      "description": "このプロジェクトの新しいドキュメントの保存先（ワークスペースの既定、別のライブラリ、または Pi-Plane ストレージ）と保存するフォルダーです。",
+      "not_configured": "このインスタンスでは SharePoint が設定されていないため、このプロジェクトのドキュメントは Pi-Plane ストレージに保存されます。SharePoint は、インスタンス管理者が God Mode の「インテグレーション → SharePoint」で設定します。",
+      "native_name": "Pi-Plane ストレージ",
+      "store": {
+        "label": "新しいドキュメントの保存先",
+        "workspace": "ワークスペースの既定（{name}）",
+        "sharepoint": "ワークスペースのライブラリ",
+        "native": "Pi-Plane ストレージ"
+      },
+      "no_libraries": "ワークスペースにはまだドキュメントライブラリがありません。ワークスペース管理者が、ワークスペース設定の「ドキュメントライブラリ」で追加します。",
+      "library": "ライブラリ",
+      "folder": "プロジェクトフォルダー",
+      "folder_hint": "ライブラリのルートフォルダー内です。空欄の場合は {identifier} になります。新しいドキュメントは {path} に保存され、作業項目のドキュメントはその中の作業項目名のフォルダーに保存されます。",
+      "existing_stay": "既に保存されているドキュメントは移動されません。",
+      "saved": "保存しました。",
+      "current": {
+        "label": "新しいドキュメントの保存先",
+        "sharepoint": "SharePoint、ライブラリ {library}、フォルダー {folder}",
+        "native": {
+          "chosen": "Pi-Plane ストレージ（このプロジェクトで選択）。",
+          "no_library": "Pi-Plane ストレージ：ワークスペースに既定のドキュメントライブラリがありません。",
+          "sharepoint_off": "Pi-Plane ストレージ：このインスタンスでは SharePoint が設定されていません。"
+        }
+      },
+      "open_folder": "SharePoint でフォルダーを開く",
+      "open_root_folder": "SharePoint でライブラリのフォルダーを開く",
+      "folder_not_yet": "プロジェクトのフォルダーは、最初のドキュメントの保存時に作成されます。"
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "作業項目タイプを保存しました。",
             "title": "タイプを保存しました"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "ドキュメントライブラリ",
+        "description": "このワークスペースのドキュメントの保存先です。SharePoint のドキュメントライブラリ、または Pi-Plane ストレージを使用できます。プロジェクトで別の保存先を選択しない限り、新しいドキュメントは既定の保存先に保存されます。",
+        "add": "ライブラリを追加",
+        "added": "ライブラリを追加しました。",
+        "edit": "ライブラリを編集",
+        "updated": "ライブラリを更新しました。",
+        "remove": "削除",
+        "removing": "削除中",
+        "removed": "ライブラリを削除しました。",
+        "remove_title": "{name} を削除しますか？",
+        "remove_content": "このライブラリに既にあるドキュメントはそのまま残り、引き続き開くことができます。このライブラリを選択していたプロジェクトは、ワークスペースの既定に戻ります。SharePoint 上では何も削除されません。",
+        "default": "既定",
+        "make_default": "既定に設定",
+        "default_inactive": "SharePoint が設定されていない間は、既定のライブラリは使用されません。新しいドキュメントは Pi-Plane ストレージに保存されます。",
+        "open_in_sharepoint": "SharePoint で開く",
+        "root_folder_value": "ルートフォルダー：{folder}",
+        "usage": "{documents, plural, one {ドキュメント # 件} other {ドキュメント # 件}}、{projects, plural, one {# 件のプロジェクトが選択} other {# 件のプロジェクトが選択}}",
+        "not_configured_title": "SharePoint が設定されていません",
+        "native": {
+          "name": "Pi-Plane ストレージ",
+          "description": "Pi-Plane 独自のファイルストレージです。常に利用でき、SharePoint が設定されていない場合や既定のライブラリがない場合に使用されます。"
+        },
+        "site_url": "SharePoint サイトのアドレス",
+        "site_url_hint": "サイトのホームページのアドレスです（例：https://contoso.sharepoint.com/sites/Projects）。事前に SharePoint 管理者が Pi-Plane にサイトへのアクセス権を付与する必要があります。",
+        "look_up": "検索",
+        "no_drives": "サイト {site} には、Pi-Plane から参照できるドキュメントライブラリがありません。",
+        "pick_drive": "{site} のドキュメントライブラリ",
+        "already_added": "次のルートフォルダーで追加済み：{folders}",
+        "name": "名前",
+        "root_folder": "ルートフォルダー",
+        "root_folder_hint": "ライブラリ内のフォルダーです（例：Pi-Plane/プロジェクト）。ライブラリのルートを使用する場合は空欄のままにしてください。存在しないフォルダーは最初のドキュメントの保存時に作成されます。",
+        "root_folder_change_hint": "新しいドキュメントは新しいフォルダーに保存されます。既に保存されているドキュメントは移動されません。",
+        "make_default_on_add": "既定のライブラリに設定",
+        "errors": {
+          "not_configured": "SharePoint は、インスタンス管理者が God Mode の「インテグレーション → SharePoint」で設定して有効にします。それまでは、ドキュメントは Pi-Plane ストレージに保存されます。",
+          "invalid_site_url": "SharePoint Online サイトのアドレスを貼り付けてください（例：https://contoso.sharepoint.com/sites/Projects）。",
+          "site_access_denied": "Pi-Plane にはこのサイトへのアクセス権がありません。SharePoint 管理者がアプリケーションにアクセス権を付与する必要があります。",
+          "site_not_found": "このアドレスにはサイトがありません。サイトのアドレスを確認してください。",
+          "library_not_found": "サイトにそのドキュメントライブラリはありません。",
+          "library_exists": "このライブラリのこのフォルダーは既に追加されています。",
+          "invalid_folder": "フォルダー名には \" * : < > ? \\ | # % を含めることも、末尾をピリオドにすることもできません。",
+          "throttled": "Microsoft がリクエストを制限しています。しばらくしてからもう一度お試しください。",
+          "timeout": "時間内に Microsoft に接続できませんでした。しばらくしてからもう一度お試しください。"
         }
       }
     }

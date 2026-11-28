@@ -245,6 +245,36 @@
           "title": "Doublon"
         }
       }
+    },
+    "documents": {
+      "heading": "Documents",
+      "description": "Où sont conservés les nouveaux documents de ce projet : à l’emplacement par défaut de l’espace de travail, dans une autre bibliothèque ou dans le stockage Pi-Plane, et dans quel dossier.",
+      "not_configured": "SharePoint n’est pas configuré sur cette instance, les documents de ce projet sont donc conservés dans le stockage Pi-Plane. Un administrateur de l’instance le configure dans God Mode, sous Intégrations → SharePoint.",
+      "native_name": "stockage Pi-Plane",
+      "store": {
+        "label": "Emplacement des nouveaux documents",
+        "workspace": "L’emplacement par défaut de l’espace de travail ({name})",
+        "sharepoint": "Une bibliothèque de l’espace de travail",
+        "native": "Stockage Pi-Plane"
+      },
+      "no_libraries": "L’espace de travail n’a pas encore de bibliothèques de documents. Les administrateurs de l’espace de travail les ajoutent dans les paramètres de l’espace de travail, sous Bibliothèques de documents.",
+      "library": "Bibliothèque",
+      "folder": "Dossier du projet",
+      "folder_hint": "Dans le dossier racine de la bibliothèque ; vide signifie {identifier}. Les nouveaux documents vont dans {path}, et les documents d’un élément de travail dans un dossier à l’intérieur de celui-ci, nommé d’après l’élément de travail.",
+      "existing_stay": "Les documents déjà enregistrés ne sont pas déplacés.",
+      "saved": "Enregistré.",
+      "current": {
+        "label": "Emplacement des nouveaux documents",
+        "sharepoint": "SharePoint, bibliothèque {library}, dossier {folder}",
+        "native": {
+          "chosen": "Stockage Pi-Plane, comme choisi pour ce projet.",
+          "no_library": "Stockage Pi-Plane : l’espace de travail n’a pas de bibliothèque de documents par défaut.",
+          "sharepoint_off": "Stockage Pi-Plane : SharePoint n’est pas configuré sur cette instance."
+        }
+      },
+      "open_folder": "Ouvrir le dossier dans SharePoint",
+      "open_root_folder": "Ouvrir le dossier de la bibliothèque dans SharePoint",
+      "folder_not_yet": "Le dossier du projet est créé avec son premier document."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Le type d'élément de travail a été enregistré.",
             "title": "Type enregistré"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Bibliothèques de documents",
+        "description": "Où sont conservés les documents de cet espace de travail : dans des bibliothèques de documents SharePoint ou dans le stockage Pi-Plane. Les nouveaux documents vont à l’emplacement par défaut, sauf si un projet en choisit un autre.",
+        "add": "Ajouter une bibliothèque",
+        "added": "Bibliothèque ajoutée.",
+        "edit": "Modifier la bibliothèque",
+        "updated": "Bibliothèque mise à jour.",
+        "remove": "Retirer",
+        "removing": "Retrait en cours",
+        "removed": "Bibliothèque retirée.",
+        "remove_title": "Retirer {name} ?",
+        "remove_content": "Les documents déjà présents dans cette bibliothèque y restent et peuvent toujours être ouverts. Les projets qui l’avaient choisie reviennent à l’emplacement par défaut de l’espace de travail. Rien n’est supprimé dans SharePoint.",
+        "default": "Par défaut",
+        "make_default": "Définir par défaut",
+        "default_inactive": "La bibliothèque par défaut n’est pas utilisée tant que SharePoint n’est pas configuré : les nouveaux documents vont dans le stockage Pi-Plane.",
+        "open_in_sharepoint": "Ouvrir dans SharePoint",
+        "root_folder_value": "Dossier racine : {folder}",
+        "usage": "{documents, plural, one {# document} many {# de documents} other {# documents}}, choisie par {projects, plural, one {# projet} many {# de projets} other {# projets}}",
+        "not_configured_title": "SharePoint n’est pas configuré",
+        "native": {
+          "name": "Stockage Pi-Plane",
+          "description": "Le stockage de fichiers propre à Pi-Plane. Toujours disponible ; utilisé lorsque SharePoint n’est pas configuré ou qu’aucune bibliothèque n’est définie par défaut."
+        },
+        "site_url": "Adresse du site SharePoint",
+        "site_url_hint": "L’adresse de la page d’accueil du site, par exemple https://contoso.sharepoint.com/sites/Projects. Un administrateur SharePoint doit d’abord accorder à Pi-Plane l’accès au site.",
+        "look_up": "Rechercher",
+        "no_drives": "Le site {site} n’a aucune bibliothèque de documents visible par Pi-Plane.",
+        "pick_drive": "Bibliothèques de documents de {site}",
+        "already_added": "Déjà ajoutée avec le dossier racine : {folders}",
+        "name": "Nom",
+        "root_folder": "Dossier racine",
+        "root_folder_hint": "Un dossier dans la bibliothèque, par exemple Pi-Plane/Projets. Laissez vide pour utiliser la racine de la bibliothèque. Les dossiers manquants sont créés avec le premier document.",
+        "root_folder_change_hint": "Les nouveaux documents vont dans le nouveau dossier. Les documents déjà enregistrés restent où ils sont.",
+        "make_default_on_add": "Définir comme bibliothèque par défaut",
+        "errors": {
+          "not_configured": "Un administrateur de l’instance configure et active SharePoint dans God Mode, sous Intégrations → SharePoint. D’ici là, les documents sont conservés dans le stockage Pi-Plane.",
+          "invalid_site_url": "Collez l’adresse d’un site SharePoint Online, par exemple https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane n’a pas accès à ce site. Un administrateur SharePoint doit accorder à l’application l’accès à celui-ci.",
+          "site_not_found": "Aucun site n’existe à cette adresse. Vérifiez l’adresse du site.",
+          "library_not_found": "Le site ne contient pas cette bibliothèque de documents.",
+          "library_exists": "Ce dossier de cette bibliothèque a déjà été ajouté.",
+          "invalid_folder": "Un nom de dossier ne peut pas contenir \" * : < > ? \\ | # % ni se terminer par un point.",
+          "throttled": "Microsoft limite les requêtes. Réessayez plus tard.",
+          "timeout": "Microsoft n’a pas pu être joint à temps. Réessayez plus tard."
         }
       }
     }

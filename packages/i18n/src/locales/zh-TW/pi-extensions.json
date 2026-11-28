@@ -245,6 +245,36 @@
           "title": "此項重複"
         }
       }
+    },
+    "documents": {
+      "heading": "文件",
+      "description": "此專案新文件的存放位置：工作區預設位置、其他文件庫或 Pi-Plane 儲存空間，以及存放的資料夾。",
+      "not_configured": "此執行個體尚未設定 SharePoint，因此此專案的文件存放在 Pi-Plane 儲存空間中。執行個體管理員可在 God Mode 的「整合 → SharePoint」中設定。",
+      "native_name": "Pi-Plane 儲存空間",
+      "store": {
+        "label": "新文件存放到",
+        "workspace": "工作區預設位置（{name}）",
+        "sharepoint": "工作區的文件庫",
+        "native": "Pi-Plane 儲存空間"
+      },
+      "no_libraries": "工作區尚無文件庫。工作區管理員可在工作區設定的「文件庫」中新增。",
+      "library": "文件庫",
+      "folder": "專案資料夾",
+      "folder_hint": "位於文件庫的根資料夾內；留空表示 {identifier}。新文件會存放到 {path}，工作事項的文件則存放到其中以該工作事項命名的資料夾。",
+      "existing_stay": "已存放的文件不會移動。",
+      "saved": "已儲存。",
+      "current": {
+        "label": "新文件存放到",
+        "sharepoint": "SharePoint，文件庫 {library}，資料夾 {folder}",
+        "native": {
+          "chosen": "Pi-Plane 儲存空間（為此專案所選）。",
+          "no_library": "Pi-Plane 儲存空間：工作區沒有預設文件庫。",
+          "sharepoint_off": "Pi-Plane 儲存空間：此執行個體尚未設定 SharePoint。"
+        }
+      },
+      "open_folder": "在 SharePoint 中開啟資料夾",
+      "open_root_folder": "在 SharePoint 中開啟文件庫資料夾",
+      "folder_not_yet": "專案資料夾會在存放第一份文件時建立。"
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "工作項目類型已儲存。",
             "title": "類型已儲存"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "文件庫",
+        "description": "此工作區文件的存放位置：SharePoint 文件庫或 Pi-Plane 儲存空間。除非專案另行選擇，新文件會存放到預設位置。",
+        "add": "新增文件庫",
+        "added": "已新增文件庫。",
+        "edit": "編輯文件庫",
+        "updated": "已更新文件庫。",
+        "remove": "移除",
+        "removing": "正在移除",
+        "removed": "已移除文件庫。",
+        "remove_title": "要移除 {name} 嗎？",
+        "remove_content": "此文件庫中已有的文件會保留在其中，仍可開啟。選擇此文件庫的專案會改回使用工作區預設值。SharePoint 中的內容不會被刪除。",
+        "default": "預設",
+        "make_default": "設為預設",
+        "default_inactive": "在 SharePoint 尚未設定期間，不會使用預設文件庫：新文件會存放到 Pi-Plane 儲存空間。",
+        "open_in_sharepoint": "在 SharePoint 中開啟",
+        "root_folder_value": "根資料夾：{folder}",
+        "usage": "{documents, plural, one {# 份文件} other {# 份文件}}，{projects, plural, one {# 個專案選用} other {# 個專案選用}}",
+        "not_configured_title": "SharePoint 尚未設定",
+        "native": {
+          "name": "Pi-Plane 儲存空間",
+          "description": "Pi-Plane 本身的檔案儲存空間。一律可用；在 SharePoint 尚未設定或沒有預設文件庫時使用。"
+        },
+        "site_url": "SharePoint 網站位址",
+        "site_url_hint": "網站首頁的位址，例如 https://contoso.sharepoint.com/sites/Projects。SharePoint 管理員必須先授予 Pi-Plane 存取該網站的權限。",
+        "look_up": "查詢",
+        "no_drives": "網站 {site} 沒有 Pi-Plane 可見的文件庫。",
+        "pick_drive": "{site} 的文件庫",
+        "already_added": "已使用下列根資料夾新增：{folders}",
+        "name": "名稱",
+        "root_folder": "根資料夾",
+        "root_folder_hint": "文件庫中的資料夾，例如 Pi-Plane/專案。留空則使用文件庫的根目錄。缺少的資料夾會在存放第一份文件時建立。",
+        "root_folder_change_hint": "新文件會存放到新資料夾。已存放的文件保持原位。",
+        "make_default_on_add": "設為預設文件庫",
+        "errors": {
+          "not_configured": "執行個體管理員會在 God Mode 的「整合 → SharePoint」中設定並啟用 SharePoint。在此之前，文件會存放在 Pi-Plane 儲存空間中。",
+          "invalid_site_url": "請貼上 SharePoint Online 網站的位址，例如 https://contoso.sharepoint.com/sites/Projects。",
+          "site_access_denied": "Pi-Plane 無權存取此網站。SharePoint 管理員必須授予此應用程式存取該網站的權限。",
+          "site_not_found": "此位址沒有網站。請檢查網站位址。",
+          "library_not_found": "此網站沒有這個文件庫。",
+          "library_exists": "此文件庫的這個資料夾已新增過。",
+          "invalid_folder": "資料夾名稱不能包含 \" * : < > ? \\ | # %，也不能以句點結尾。",
+          "throttled": "Microsoft 正在限制要求。請稍後再試。",
+          "timeout": "未能及時連線到 Microsoft。請稍後再試。"
         }
       }
     }

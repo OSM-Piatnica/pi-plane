@@ -245,6 +245,36 @@
           "title": "Duplicate"
         }
       }
+    },
+    "documents": {
+      "heading": "Documents",
+      "description": "Where new documents of this project are kept: the workspace default, another library or Pi-Plane storage, and in which folder.",
+      "not_configured": "SharePoint is not set up on this instance, so documents of this project are kept in Pi-Plane storage. An instance administrator sets it up in God Mode, under Integrations → SharePoint.",
+      "native_name": "Pi-Plane storage",
+      "store": {
+        "label": "New documents go to",
+        "workspace": "The workspace default ({name})",
+        "sharepoint": "A library of the workspace",
+        "native": "Pi-Plane storage"
+      },
+      "no_libraries": "The workspace has no document libraries yet. Workspace admins add them in the workspace settings, under Document libraries.",
+      "library": "Library",
+      "folder": "Project folder",
+      "folder_hint": "Inside the library's root folder; empty means {identifier}. New documents go to {path}, and the documents of a work item to a folder named after the work item inside it.",
+      "existing_stay": "Documents already stored do not move.",
+      "saved": "Saved.",
+      "current": {
+        "label": "New documents go to",
+        "sharepoint": "SharePoint, library {library}, folder {folder}",
+        "native": {
+          "chosen": "Pi-Plane storage, as chosen for this project.",
+          "no_library": "Pi-Plane storage: the workspace has no default document library.",
+          "sharepoint_off": "Pi-Plane storage: SharePoint is not set up on this instance."
+        }
+      },
+      "open_folder": "Open folder in SharePoint",
+      "open_root_folder": "Open the library folder in SharePoint",
+      "folder_not_yet": "The project's folder is created with its first document."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "The work item type was saved.",
             "title": "Type saved"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Document libraries",
+        "description": "Where the documents of this workspace are kept: SharePoint document libraries or Pi-Plane storage. New documents go to the default, unless a project chooses otherwise.",
+        "add": "Add library",
+        "added": "Library added.",
+        "edit": "Edit library",
+        "updated": "Library updated.",
+        "remove": "Remove",
+        "removing": "Removing",
+        "removed": "Library removed.",
+        "remove_title": "Remove {name}?",
+        "remove_content": "Documents already in this library stay there and can still be opened. Projects that chose it go back to the workspace default. Nothing is deleted in SharePoint.",
+        "default": "Default",
+        "make_default": "Make default",
+        "default_inactive": "The default library is not used while SharePoint is not set up: new documents go to Pi-Plane storage.",
+        "open_in_sharepoint": "Open in SharePoint",
+        "root_folder_value": "Root folder: {folder}",
+        "usage": "{documents, plural, one {# document} other {# documents}}, chosen by {projects, plural, one {# project} other {# projects}}",
+        "not_configured_title": "SharePoint is not set up",
+        "native": {
+          "name": "Pi-Plane storage",
+          "description": "Pi-Plane's own file storage. Always available; used when SharePoint is not set up or no library is the default."
+        },
+        "site_url": "SharePoint site address",
+        "site_url_hint": "The address of the site's home page, for example https://contoso.sharepoint.com/sites/Projects. A SharePoint administrator must first grant Pi-Plane access to the site.",
+        "look_up": "Look up",
+        "no_drives": "The site {site} has no document libraries that Pi-Plane can see.",
+        "pick_drive": "Document libraries of {site}",
+        "already_added": "Already added with the root folder: {folders}",
+        "name": "Name",
+        "root_folder": "Root folder",
+        "root_folder_hint": "A folder inside the library, for example Pi-Plane/Projects. Leave it empty to use the root of the library. Missing folders are created with the first document.",
+        "root_folder_change_hint": "New documents go to the new folder. Documents already stored stay where they are.",
+        "make_default_on_add": "Make it the default library",
+        "errors": {
+          "not_configured": "An instance administrator sets SharePoint up and switches it on in God Mode, under Integrations → SharePoint. Until then documents are kept in Pi-Plane storage.",
+          "invalid_site_url": "Paste the address of a SharePoint Online site, for example https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane has no access to this site. A SharePoint administrator has to grant the application access to it.",
+          "site_not_found": "There is no site at this address. Check the address of the site.",
+          "library_not_found": "The site has no such document library.",
+          "library_exists": "This folder of this library has already been added.",
+          "invalid_folder": "A folder name cannot contain \" * : < > ? \\ | # % or end with a dot.",
+          "throttled": "Microsoft is limiting requests. Try again later.",
+          "timeout": "Microsoft could not be reached in time. Try again later."
         }
       }
     }

@@ -245,6 +245,36 @@
           "title": "Duplicaat"
         }
       }
+    },
+    "documents": {
+      "heading": "Documenten",
+      "description": "Waar nieuwe documenten van dit project worden bewaard: op de standaardlocatie van de werkruimte, in een andere bibliotheek of in de Pi-Plane-opslag, en in welke map.",
+      "not_configured": "SharePoint is niet ingesteld op deze instantie, dus documenten van dit project worden in de Pi-Plane-opslag bewaard. Een instantiebeheerder stelt het in via God Mode, onder Integraties → SharePoint.",
+      "native_name": "Pi-Plane-opslag",
+      "store": {
+        "label": "Nieuwe documenten gaan naar",
+        "workspace": "De standaard van de werkruimte ({name})",
+        "sharepoint": "Een bibliotheek van de werkruimte",
+        "native": "Pi-Plane-opslag"
+      },
+      "no_libraries": "De werkruimte heeft nog geen documentbibliotheken. Werkruimtebeheerders voegen ze toe in de werkruimte-instellingen, onder Documentbibliotheken.",
+      "library": "Bibliotheek",
+      "folder": "Projectmap",
+      "folder_hint": "Binnen de hoofdmap van de bibliotheek; leeg betekent {identifier}. Nieuwe documenten gaan naar {path}, en de documenten van een werkitem naar een map daarin met de naam van het werkitem.",
+      "existing_stay": "Documenten die al zijn opgeslagen, worden niet verplaatst.",
+      "saved": "Opgeslagen.",
+      "current": {
+        "label": "Nieuwe documenten gaan naar",
+        "sharepoint": "SharePoint, bibliotheek {library}, map {folder}",
+        "native": {
+          "chosen": "Pi-Plane-opslag, zoals gekozen voor dit project.",
+          "no_library": "Pi-Plane-opslag: de werkruimte heeft geen standaarddocumentbibliotheek.",
+          "sharepoint_off": "Pi-Plane-opslag: SharePoint is niet ingesteld op deze instantie."
+        }
+      },
+      "open_folder": "Map openen in SharePoint",
+      "open_root_folder": "Bibliotheekmap openen in SharePoint",
+      "folder_not_yet": "De projectmap wordt bij het eerste document aangemaakt."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Het werkitemtype is opgeslagen.",
             "title": "Type opgeslagen"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Documentbibliotheken",
+        "description": "Waar de documenten van deze werkruimte worden bewaard: in SharePoint-documentbibliotheken of in de Pi-Plane-opslag. Nieuwe documenten gaan naar de standaardlocatie, tenzij een project iets anders kiest.",
+        "add": "Bibliotheek toevoegen",
+        "added": "Bibliotheek toegevoegd.",
+        "edit": "Bibliotheek bewerken",
+        "updated": "Bibliotheek bijgewerkt.",
+        "remove": "Verwijderen",
+        "removing": "Bezig met verwijderen",
+        "removed": "Bibliotheek verwijderd.",
+        "remove_title": "{name} verwijderen?",
+        "remove_content": "Documenten die al in deze bibliotheek staan, blijven daar en kunnen nog steeds worden geopend. Projecten die deze bibliotheek hebben gekozen, gaan terug naar de standaard van de werkruimte. In SharePoint wordt niets verwijderd.",
+        "default": "Standaard",
+        "make_default": "Als standaard instellen",
+        "default_inactive": "De standaardbibliotheek wordt niet gebruikt zolang SharePoint niet is ingesteld: nieuwe documenten gaan naar de Pi-Plane-opslag.",
+        "open_in_sharepoint": "Openen in SharePoint",
+        "root_folder_value": "Hoofdmap: {folder}",
+        "usage": "{documents, plural, one {# document} other {# documenten}}, gekozen door {projects, plural, one {# project} other {# projecten}}",
+        "not_configured_title": "SharePoint is niet ingesteld",
+        "native": {
+          "name": "Pi-Plane-opslag",
+          "description": "De eigen bestandsopslag van Pi-Plane. Altijd beschikbaar; wordt gebruikt wanneer SharePoint niet is ingesteld of geen bibliotheek de standaard is."
+        },
+        "site_url": "Adres van de SharePoint-site",
+        "site_url_hint": "Het adres van de startpagina van de site, bijvoorbeeld https://contoso.sharepoint.com/sites/Projects. Een SharePoint-beheerder moet Pi-Plane eerst toegang tot de site geven.",
+        "look_up": "Opzoeken",
+        "no_drives": "De site {site} heeft geen documentbibliotheken die Pi-Plane kan zien.",
+        "pick_drive": "Documentbibliotheken van {site}",
+        "already_added": "Al toegevoegd met de hoofdmap: {folders}",
+        "name": "Naam",
+        "root_folder": "Hoofdmap",
+        "root_folder_hint": "Een map in de bibliotheek, bijvoorbeeld Pi-Plane/Projecten. Laat leeg om de hoofdmap van de bibliotheek te gebruiken. Ontbrekende mappen worden bij het eerste document aangemaakt.",
+        "root_folder_change_hint": "Nieuwe documenten gaan naar de nieuwe map. Documenten die al zijn opgeslagen, blijven waar ze zijn.",
+        "make_default_on_add": "Als standaardbibliotheek instellen",
+        "errors": {
+          "not_configured": "Een instantiebeheerder stelt SharePoint in en schakelt het in via God Mode, onder Integraties → SharePoint. Tot die tijd worden documenten in de Pi-Plane-opslag bewaard.",
+          "invalid_site_url": "Plak het adres van een SharePoint Online-site, bijvoorbeeld https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane heeft geen toegang tot deze site. Een SharePoint-beheerder moet de toepassing toegang tot de site geven.",
+          "site_not_found": "Er is geen site op dit adres. Controleer het adres van de site.",
+          "library_not_found": "De site heeft deze documentbibliotheek niet.",
+          "library_exists": "Deze map van deze bibliotheek is al toegevoegd.",
+          "invalid_folder": "Een mapnaam mag geen \" * : < > ? \\ | # % bevatten en niet op een punt eindigen.",
+          "throttled": "Microsoft beperkt het aantal aanvragen. Probeer het later opnieuw.",
+          "timeout": "Microsoft was niet op tijd bereikbaar. Probeer het later opnieuw."
         }
       }
     }

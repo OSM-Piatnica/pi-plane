@@ -245,6 +245,36 @@
           "title": "Duplicado"
         }
       }
+    },
+    "documents": {
+      "heading": "Documentos",
+      "description": "Onde os novos documentos deste projeto são guardados: no padrão do espaço de trabalho, em outra biblioteca ou no armazenamento do Pi-Plane, e em qual pasta.",
+      "not_configured": "O SharePoint não está configurado nesta instância, então os documentos deste projeto são guardados no armazenamento do Pi-Plane. Um administrador da instância o configura no God Mode, em Integrações → SharePoint.",
+      "native_name": "armazenamento do Pi-Plane",
+      "store": {
+        "label": "Novos documentos vão para",
+        "workspace": "O padrão do espaço de trabalho ({name})",
+        "sharepoint": "Uma biblioteca do espaço de trabalho",
+        "native": "Armazenamento do Pi-Plane"
+      },
+      "no_libraries": "O espaço de trabalho ainda não tem bibliotecas de documentos. Os administradores do espaço de trabalho as adicionam nas configurações do espaço de trabalho, em Bibliotecas de documentos.",
+      "library": "Biblioteca",
+      "folder": "Pasta do projeto",
+      "folder_hint": "Dentro da pasta raiz da biblioteca; vazio significa {identifier}. Novos documentos vão para {path}, e os documentos de um item de trabalho para uma pasta dentro dela com o nome do item de trabalho.",
+      "existing_stay": "Os documentos já armazenados não são movidos.",
+      "saved": "Salvo.",
+      "current": {
+        "label": "Novos documentos vão para",
+        "sharepoint": "SharePoint, biblioteca {library}, pasta {folder}",
+        "native": {
+          "chosen": "Armazenamento do Pi-Plane, conforme escolhido para este projeto.",
+          "no_library": "Armazenamento do Pi-Plane: o espaço de trabalho não tem uma biblioteca de documentos padrão.",
+          "sharepoint_off": "Armazenamento do Pi-Plane: o SharePoint não está configurado nesta instância."
+        }
+      },
+      "open_folder": "Abrir pasta no SharePoint",
+      "open_root_folder": "Abrir a pasta da biblioteca no SharePoint",
+      "folder_not_yet": "A pasta do projeto é criada com o primeiro documento."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "O tipo de item de trabalho foi salvo.",
             "title": "Tipo salvo"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Bibliotecas de documentos",
+        "description": "Onde os documentos deste espaço de trabalho são guardados: em bibliotecas de documentos do SharePoint ou no armazenamento do Pi-Plane. Novos documentos vão para o local padrão, a menos que um projeto escolha outro.",
+        "add": "Adicionar biblioteca",
+        "added": "Biblioteca adicionada.",
+        "edit": "Editar biblioteca",
+        "updated": "Biblioteca atualizada.",
+        "remove": "Remover",
+        "removing": "Removendo",
+        "removed": "Biblioteca removida.",
+        "remove_title": "Remover {name}?",
+        "remove_content": "Os documentos que já estão nesta biblioteca permanecem nela e ainda podem ser abertos. Os projetos que a escolheram voltam ao padrão do espaço de trabalho. Nada é excluído no SharePoint.",
+        "default": "Padrão",
+        "make_default": "Definir como padrão",
+        "default_inactive": "A biblioteca padrão não é usada enquanto o SharePoint não estiver configurado: novos documentos vão para o armazenamento do Pi-Plane.",
+        "open_in_sharepoint": "Abrir no SharePoint",
+        "root_folder_value": "Pasta raiz: {folder}",
+        "usage": "{documents, plural, one {# documento} many {# de documentos} other {# documentos}}, escolhida por {projects, plural, one {# projeto} many {# de projetos} other {# projetos}}",
+        "not_configured_title": "O SharePoint não está configurado",
+        "native": {
+          "name": "Armazenamento do Pi-Plane",
+          "description": "O armazenamento de arquivos próprio do Pi-Plane. Sempre disponível; usado quando o SharePoint não está configurado ou nenhuma biblioteca é a padrão."
+        },
+        "site_url": "Endereço do site do SharePoint",
+        "site_url_hint": "O endereço da página inicial do site, por exemplo https://contoso.sharepoint.com/sites/Projects. Um administrador do SharePoint precisa primeiro conceder ao Pi-Plane acesso ao site.",
+        "look_up": "Buscar",
+        "no_drives": "O site {site} não tem bibliotecas de documentos que o Pi-Plane possa ver.",
+        "pick_drive": "Bibliotecas de documentos de {site}",
+        "already_added": "Já adicionada com a pasta raiz: {folders}",
+        "name": "Nome",
+        "root_folder": "Pasta raiz",
+        "root_folder_hint": "Uma pasta dentro da biblioteca, por exemplo Pi-Plane/Projetos. Deixe em branco para usar a raiz da biblioteca. As pastas que faltarem são criadas com o primeiro documento.",
+        "root_folder_change_hint": "Novos documentos vão para a nova pasta. Os documentos já armazenados permanecem onde estão.",
+        "make_default_on_add": "Definir como biblioteca padrão",
+        "errors": {
+          "not_configured": "Um administrador da instância configura e ativa o SharePoint no God Mode, em Integrações → SharePoint. Até lá, os documentos são guardados no armazenamento do Pi-Plane.",
+          "invalid_site_url": "Cole o endereço de um site do SharePoint Online, por exemplo https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "O Pi-Plane não tem acesso a este site. Um administrador do SharePoint precisa conceder ao aplicativo acesso a ele.",
+          "site_not_found": "Não há nenhum site neste endereço. Verifique o endereço do site.",
+          "library_not_found": "O site não tem essa biblioteca de documentos.",
+          "library_exists": "Esta pasta desta biblioteca já foi adicionada.",
+          "invalid_folder": "O nome de uma pasta não pode conter \" * : < > ? \\ | # % nem terminar com ponto.",
+          "throttled": "A Microsoft está limitando as solicitações. Tente novamente mais tarde.",
+          "timeout": "Não foi possível contatar a Microsoft a tempo. Tente novamente mais tarde."
         }
       }
     }

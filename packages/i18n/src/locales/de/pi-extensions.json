@@ -245,6 +245,36 @@
           "title": "Duplikat"
         }
       }
+    },
+    "documents": {
+      "heading": "Dokumente",
+      "description": "Wo neue Dokumente dieses Projekts aufbewahrt werden: am Standardort des Arbeitsbereichs, in einer anderen Bibliothek oder im Pi-Plane-Speicher, und in welchem Ordner.",
+      "not_configured": "SharePoint ist in dieser Instanz nicht eingerichtet, daher werden die Dokumente dieses Projekts im Pi-Plane-Speicher aufbewahrt. Ein Instanzadministrator richtet es in God Mode unter Integrationen → SharePoint ein.",
+      "native_name": "Pi-Plane-Speicher",
+      "store": {
+        "label": "Speicherort für neue Dokumente",
+        "workspace": "Standard des Arbeitsbereichs ({name})",
+        "sharepoint": "Eine Bibliothek des Arbeitsbereichs",
+        "native": "Pi-Plane-Speicher"
+      },
+      "no_libraries": "Der Arbeitsbereich hat noch keine Dokumentbibliotheken. Arbeitsbereichsadmins fügen sie in den Arbeitsbereichseinstellungen unter Dokumentbibliotheken hinzu.",
+      "library": "Bibliothek",
+      "folder": "Projektordner",
+      "folder_hint": "Innerhalb des Stammordners der Bibliothek; leer bedeutet {identifier}. Neue Dokumente landen in {path} und die Dokumente eines Arbeitselements in einem darin liegenden Ordner, der nach dem Arbeitselement benannt ist.",
+      "existing_stay": "Bereits gespeicherte Dokumente werden nicht verschoben.",
+      "saved": "Gespeichert.",
+      "current": {
+        "label": "Speicherort für neue Dokumente",
+        "sharepoint": "SharePoint, Bibliothek {library}, Ordner {folder}",
+        "native": {
+          "chosen": "Pi-Plane-Speicher, wie für dieses Projekt gewählt.",
+          "no_library": "Pi-Plane-Speicher: Der Arbeitsbereich hat keine Standard-Dokumentbibliothek.",
+          "sharepoint_off": "Pi-Plane-Speicher: SharePoint ist in dieser Instanz nicht eingerichtet."
+        }
+      },
+      "open_folder": "Ordner in SharePoint öffnen",
+      "open_root_folder": "Bibliotheksordner in SharePoint öffnen",
+      "folder_not_yet": "Der Projektordner wird mit dem ersten Dokument angelegt."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Der Arbeitselementtyp wurde gespeichert.",
             "title": "Typ gespeichert"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Dokumentbibliotheken",
+        "description": "Wo die Dokumente dieses Arbeitsbereichs aufbewahrt werden: in SharePoint-Dokumentbibliotheken oder im Pi-Plane-Speicher. Neue Dokumente landen am Standardort, sofern ein Projekt nichts anderes wählt.",
+        "add": "Bibliothek hinzufügen",
+        "added": "Bibliothek hinzugefügt.",
+        "edit": "Bibliothek bearbeiten",
+        "updated": "Bibliothek aktualisiert.",
+        "remove": "Entfernen",
+        "removing": "Wird entfernt",
+        "removed": "Bibliothek entfernt.",
+        "remove_title": "{name} entfernen?",
+        "remove_content": "Dokumente, die bereits in dieser Bibliothek liegen, bleiben dort und können weiterhin geöffnet werden. Projekte, die sie gewählt haben, verwenden wieder den Standard des Arbeitsbereichs. In SharePoint wird nichts gelöscht.",
+        "default": "Standard",
+        "make_default": "Als Standard festlegen",
+        "default_inactive": "Die Standardbibliothek wird nicht verwendet, solange SharePoint nicht eingerichtet ist: Neue Dokumente landen im Pi-Plane-Speicher.",
+        "open_in_sharepoint": "In SharePoint öffnen",
+        "root_folder_value": "Stammordner: {folder}",
+        "usage": "{documents, plural, one {# Dokument} other {# Dokumente}}, gewählt von {projects, plural, one {# Projekt} other {# Projekten}}",
+        "not_configured_title": "SharePoint ist nicht eingerichtet",
+        "native": {
+          "name": "Pi-Plane-Speicher",
+          "description": "Der eigene Dateispeicher von Pi-Plane. Immer verfügbar; wird verwendet, wenn SharePoint nicht eingerichtet ist oder keine Bibliothek als Standard festgelegt ist."
+        },
+        "site_url": "Adresse der SharePoint-Website",
+        "site_url_hint": "Die Adresse der Startseite der Website, zum Beispiel https://contoso.sharepoint.com/sites/Projects. Ein SharePoint-Administrator muss Pi-Plane zuerst Zugriff auf die Website gewähren.",
+        "look_up": "Suchen",
+        "no_drives": "Die Website {site} hat keine Dokumentbibliotheken, die Pi-Plane sehen kann.",
+        "pick_drive": "Dokumentbibliotheken von {site}",
+        "already_added": "Bereits hinzugefügt mit dem Stammordner: {folders}",
+        "name": "Name",
+        "root_folder": "Stammordner",
+        "root_folder_hint": "Ein Ordner in der Bibliothek, zum Beispiel Pi-Plane/Projekte. Leer lassen, um den Stamm der Bibliothek zu verwenden. Fehlende Ordner werden mit dem ersten Dokument angelegt.",
+        "root_folder_change_hint": "Neue Dokumente landen im neuen Ordner. Bereits gespeicherte Dokumente bleiben, wo sie sind.",
+        "make_default_on_add": "Als Standardbibliothek festlegen",
+        "errors": {
+          "not_configured": "Ein Instanzadministrator richtet SharePoint in God Mode unter Integrationen → SharePoint ein und schaltet es ein. Bis dahin werden Dokumente im Pi-Plane-Speicher aufbewahrt.",
+          "invalid_site_url": "Fügen Sie die Adresse einer SharePoint Online-Website ein, zum Beispiel https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane hat keinen Zugriff auf diese Website. Ein SharePoint-Administrator muss der Anwendung Zugriff darauf gewähren.",
+          "site_not_found": "Unter dieser Adresse gibt es keine Website. Prüfen Sie die Adresse der Website.",
+          "library_not_found": "Die Website hat keine solche Dokumentbibliothek.",
+          "library_exists": "Dieser Ordner dieser Bibliothek wurde bereits hinzugefügt.",
+          "invalid_folder": "Ein Ordnername darf weder \" * : < > ? \\ | # % enthalten noch auf einen Punkt enden.",
+          "throttled": "Microsoft begrenzt die Anfragen. Versuchen Sie es später erneut.",
+          "timeout": "Microsoft war nicht rechtzeitig erreichbar. Versuchen Sie es später erneut."
         }
       }
     }

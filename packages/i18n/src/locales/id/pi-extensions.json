@@ -245,6 +245,36 @@
           "title": "Duplikat"
         }
       }
+    },
+    "documents": {
+      "heading": "Dokumen",
+      "description": "Tempat dokumen baru proyek ini disimpan: default ruang kerja, pustaka lain, atau penyimpanan Pi-Plane, serta di folder mana.",
+      "not_configured": "SharePoint belum disiapkan di instansi ini, sehingga dokumen proyek ini disimpan di penyimpanan Pi-Plane. Admin instansi menyiapkannya di God Mode, pada Integrasi → SharePoint.",
+      "native_name": "penyimpanan Pi-Plane",
+      "store": {
+        "label": "Dokumen baru masuk ke",
+        "workspace": "Default ruang kerja ({name})",
+        "sharepoint": "Pustaka ruang kerja",
+        "native": "Penyimpanan Pi-Plane"
+      },
+      "no_libraries": "Ruang kerja belum memiliki pustaka dokumen. Admin ruang kerja menambahkannya di pengaturan ruang kerja, pada Pustaka dokumen.",
+      "library": "Pustaka",
+      "folder": "Folder proyek",
+      "folder_hint": "Di dalam folder akar pustaka; kosong berarti {identifier}. Dokumen baru masuk ke {path}, dan dokumen item kerja ke folder di dalamnya yang dinamai sesuai item kerja tersebut.",
+      "existing_stay": "Dokumen yang sudah disimpan tidak dipindahkan.",
+      "saved": "Tersimpan.",
+      "current": {
+        "label": "Dokumen baru masuk ke",
+        "sharepoint": "SharePoint, pustaka {library}, folder {folder}",
+        "native": {
+          "chosen": "Penyimpanan Pi-Plane, sesuai pilihan untuk proyek ini.",
+          "no_library": "Penyimpanan Pi-Plane: ruang kerja tidak memiliki pustaka dokumen default.",
+          "sharepoint_off": "Penyimpanan Pi-Plane: SharePoint belum disiapkan di instansi ini."
+        }
+      },
+      "open_folder": "Buka folder di SharePoint",
+      "open_root_folder": "Buka folder pustaka di SharePoint",
+      "folder_not_yet": "Folder proyek dibuat bersama dokumen pertamanya."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "Tipe item kerja berhasil disimpan.",
             "title": "Tipe disimpan"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Pustaka dokumen",
+        "description": "Tempat dokumen ruang kerja ini disimpan: pustaka dokumen SharePoint atau penyimpanan Pi-Plane. Dokumen baru masuk ke lokasi default, kecuali proyek memilih yang lain.",
+        "add": "Tambahkan pustaka",
+        "added": "Pustaka ditambahkan.",
+        "edit": "Edit pustaka",
+        "updated": "Pustaka diperbarui.",
+        "remove": "Hapus",
+        "removing": "Menghapus",
+        "removed": "Pustaka dihapus.",
+        "remove_title": "Hapus {name}?",
+        "remove_content": "Dokumen yang sudah ada di pustaka ini tetap di sana dan masih dapat dibuka. Proyek yang memilihnya kembali ke default ruang kerja. Tidak ada yang dihapus di SharePoint.",
+        "default": "Default",
+        "make_default": "Jadikan default",
+        "default_inactive": "Pustaka default tidak digunakan selama SharePoint belum disiapkan: dokumen baru masuk ke penyimpanan Pi-Plane.",
+        "open_in_sharepoint": "Buka di SharePoint",
+        "root_folder_value": "Folder akar: {folder}",
+        "usage": "{documents, plural, one {# dokumen} other {# dokumen}}, dipilih oleh {projects, plural, one {# proyek} other {# proyek}}",
+        "not_configured_title": "SharePoint belum disiapkan",
+        "native": {
+          "name": "Penyimpanan Pi-Plane",
+          "description": "Penyimpanan file milik Pi-Plane sendiri. Selalu tersedia; digunakan saat SharePoint belum disiapkan atau tidak ada pustaka yang menjadi default."
+        },
+        "site_url": "Alamat situs SharePoint",
+        "site_url_hint": "Alamat halaman beranda situs, misalnya https://contoso.sharepoint.com/sites/Projects. Administrator SharePoint harus terlebih dahulu memberi Pi-Plane akses ke situs tersebut.",
+        "look_up": "Cari",
+        "no_drives": "Situs {site} tidak memiliki pustaka dokumen yang dapat dilihat Pi-Plane.",
+        "pick_drive": "Pustaka dokumen {site}",
+        "already_added": "Sudah ditambahkan dengan folder akar: {folders}",
+        "name": "Nama",
+        "root_folder": "Folder akar",
+        "root_folder_hint": "Folder di dalam pustaka, misalnya Pi-Plane/Proyek. Biarkan kosong untuk menggunakan akar pustaka. Folder yang belum ada dibuat bersama dokumen pertama.",
+        "root_folder_change_hint": "Dokumen baru masuk ke folder baru. Dokumen yang sudah disimpan tetap di tempatnya.",
+        "make_default_on_add": "Jadikan pustaka default",
+        "errors": {
+          "not_configured": "Admin instansi menyiapkan dan mengaktifkan SharePoint di God Mode, pada Integrasi → SharePoint. Sampai saat itu, dokumen disimpan di penyimpanan Pi-Plane.",
+          "invalid_site_url": "Tempelkan alamat situs SharePoint Online, misalnya https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane tidak memiliki akses ke situs ini. Administrator SharePoint harus memberi aplikasi akses ke situs ini.",
+          "site_not_found": "Tidak ada situs di alamat ini. Periksa alamat situs.",
+          "library_not_found": "Situs tidak memiliki pustaka dokumen tersebut.",
+          "library_exists": "Folder ini dari pustaka ini sudah ditambahkan.",
+          "invalid_folder": "Nama folder tidak boleh berisi \" * : < > ? \\ | # % atau diakhiri dengan titik.",
+          "throttled": "Microsoft sedang membatasi permintaan. Coba lagi nanti.",
+          "timeout": "Microsoft tidak dapat dihubungi tepat waktu. Coba lagi nanti."
         }
       }
     }

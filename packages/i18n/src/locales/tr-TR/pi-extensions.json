@@ -245,6 +245,36 @@
           "title": "Kopyası"
         }
       }
+    },
+    "documents": {
+      "heading": "Belgeler",
+      "description": "Bu projenin yeni belgelerinin nerede saklanacağı: çalışma alanının varsayılanı, başka bir kitaplık veya Pi-Plane depolama alanı ve hangi klasör.",
+      "not_configured": "Bu örnekte SharePoint ayarlanmadığından bu projenin belgeleri Pi-Plane depolama alanında saklanır. Bir örnek yöneticisi bunu God Mode'da, Entegrasyonlar → SharePoint altında ayarlar.",
+      "native_name": "Pi-Plane depolama alanı",
+      "store": {
+        "label": "Yeni belgelerin gideceği yer",
+        "workspace": "Çalışma alanının varsayılanı ({name})",
+        "sharepoint": "Çalışma alanının bir kitaplığı",
+        "native": "Pi-Plane depolama alanı"
+      },
+      "no_libraries": "Çalışma alanının henüz belge kitaplığı yok. Çalışma alanı yöneticileri bunları çalışma alanı ayarlarında, Belge kitaplıkları altında ekler.",
+      "library": "Kitaplık",
+      "folder": "Proje klasörü",
+      "folder_hint": "Kitaplığın kök klasörü içinde; boş bırakılırsa {identifier} kullanılır. Yeni belgeler {path} konumuna, bir iş öğesinin belgeleri ise bunun içinde iş öğesinin adını taşıyan bir klasöre gider.",
+      "existing_stay": "Zaten depolanmış belgeler taşınmaz.",
+      "saved": "Kaydedildi.",
+      "current": {
+        "label": "Yeni belgelerin gideceği yer",
+        "sharepoint": "SharePoint, {library} kitaplığı, {folder} klasörü",
+        "native": {
+          "chosen": "Pi-Plane depolama alanı, bu proje için seçildiği şekilde.",
+          "no_library": "Pi-Plane depolama alanı: çalışma alanının varsayılan belge kitaplığı yok.",
+          "sharepoint_off": "Pi-Plane depolama alanı: bu örnekte SharePoint ayarlanmadı."
+        }
+      },
+      "open_folder": "Klasörü SharePoint'te aç",
+      "open_root_folder": "Kitaplık klasörünü SharePoint'te aç",
+      "folder_not_yet": "Projenin klasörü ilk belgesiyle birlikte oluşturulur."
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "İş öğesi türü kaydedildi.",
             "title": "Tür kaydedildi"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Belge kitaplıkları",
+        "description": "Bu çalışma alanının belgelerinin saklandığı yer: SharePoint belge kitaplıkları veya Pi-Plane depolama alanı. Bir proje başka bir yer seçmedikçe yeni belgeler varsayılan konuma gider.",
+        "add": "Kitaplık ekle",
+        "added": "Kitaplık eklendi.",
+        "edit": "Kitaplığı düzenle",
+        "updated": "Kitaplık güncellendi.",
+        "remove": "Kaldır",
+        "removing": "Kaldırılıyor",
+        "removed": "Kitaplık kaldırıldı.",
+        "remove_title": "{name} kaldırılsın mı?",
+        "remove_content": "Bu kitaplıkta zaten bulunan belgeler orada kalır ve açılmaya devam edebilir. Bu kitaplığı seçen projeler çalışma alanının varsayılanına geri döner. SharePoint'te hiçbir şey silinmez.",
+        "default": "Varsayılan",
+        "make_default": "Varsayılan yap",
+        "default_inactive": "SharePoint ayarlanmadığı sürece varsayılan kitaplık kullanılmaz: yeni belgeler Pi-Plane depolama alanına gider.",
+        "open_in_sharepoint": "SharePoint'te aç",
+        "root_folder_value": "Kök klasör: {folder}",
+        "usage": "{documents, plural, one {# belge} other {# belge}}, {projects, plural, one {# proje} other {# proje}} tarafından seçildi",
+        "not_configured_title": "SharePoint ayarlanmadı",
+        "native": {
+          "name": "Pi-Plane depolama alanı",
+          "description": "Pi-Plane'in kendi dosya depolama alanı. Her zaman kullanılabilir; SharePoint ayarlanmadığında veya hiçbir kitaplık varsayılan olmadığında kullanılır."
+        },
+        "site_url": "SharePoint site adresi",
+        "site_url_hint": "Sitenin ana sayfasının adresi, örneğin https://contoso.sharepoint.com/sites/Projects. Bir SharePoint yöneticisinin önce Pi-Plane'e siteye erişim izni vermesi gerekir.",
+        "look_up": "Ara",
+        "no_drives": "{site} sitesinde Pi-Plane'in görebildiği bir belge kitaplığı yok.",
+        "pick_drive": "{site} sitesinin belge kitaplıkları",
+        "already_added": "Şu kök klasörle zaten eklendi: {folders}",
+        "name": "Ad",
+        "root_folder": "Kök klasör",
+        "root_folder_hint": "Kitaplık içindeki bir klasör, örneğin Pi-Plane/Projeler. Kitaplığın kökünü kullanmak için boş bırakın. Eksik klasörler ilk belgeyle birlikte oluşturulur.",
+        "root_folder_change_hint": "Yeni belgeler yeni klasöre gider. Zaten depolanmış belgeler oldukları yerde kalır.",
+        "make_default_on_add": "Varsayılan kitaplık yap",
+        "errors": {
+          "not_configured": "Bir örnek yöneticisi SharePoint'i God Mode'da, Entegrasyonlar → SharePoint altında ayarlar ve açar. O zamana kadar belgeler Pi-Plane depolama alanında saklanır.",
+          "invalid_site_url": "Bir SharePoint Online sitesinin adresini yapıştırın, örneğin https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane'in bu siteye erişimi yok. Bir SharePoint yöneticisinin uygulamaya bu siteye erişim izni vermesi gerekir.",
+          "site_not_found": "Bu adreste bir site yok. Sitenin adresini kontrol edin.",
+          "library_not_found": "Sitede böyle bir belge kitaplığı yok.",
+          "library_exists": "Bu kitaplığın bu klasörü zaten eklendi.",
+          "invalid_folder": "Klasör adı \" * : < > ? \\ | # % karakterlerini içeremez ve nokta ile bitemez.",
+          "throttled": "Microsoft istekleri sınırlıyor. Lütfen daha sonra tekrar deneyin.",
+          "timeout": "Microsoft'a zamanında ulaşılamadı. Lütfen daha sonra tekrar deneyin."
         }
       }
     }

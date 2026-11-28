@@ -251,6 +251,36 @@
           "title": "Duplikat"
         }
       }
+    },
+    "documents": {
+      "heading": "Dokumenty",
+      "description": "Gdzie są przechowywane nowe dokumenty tego projektu: w miejscu domyślnym przestrzeni roboczej, w innej bibliotece lub w magazynie Pi-Plane, oraz w jakim folderze.",
+      "not_configured": "SharePoint nie jest skonfigurowany w tej instancji, więc dokumenty tego projektu są przechowywane w magazynie Pi-Plane. Administrator instancji konfiguruje go w God Mode, w sekcji Integracje → SharePoint.",
+      "native_name": "magazyn Pi-Plane",
+      "store": {
+        "label": "Nowe dokumenty trafiają do",
+        "workspace": "Miejsce domyślne przestrzeni roboczej ({name})",
+        "sharepoint": "Biblioteka przestrzeni roboczej",
+        "native": "Magazyn Pi-Plane"
+      },
+      "no_libraries": "Przestrzeń robocza nie ma jeszcze bibliotek dokumentów. Administratorzy przestrzeni roboczej dodają je w ustawieniach przestrzeni roboczej, w sekcji Biblioteki dokumentów.",
+      "library": "Biblioteka",
+      "folder": "Folder projektu",
+      "folder_hint": "W folderze głównym biblioteki; puste oznacza {identifier}. Nowe dokumenty trafiają do {path}, a dokumenty elementu pracy do folderu nazwanego od niego wewnątrz tego folderu.",
+      "existing_stay": "Dokumenty już zapisane nie są przenoszone.",
+      "saved": "Zapisano.",
+      "current": {
+        "label": "Nowe dokumenty trafiają do",
+        "sharepoint": "SharePoint, biblioteka {library}, folder {folder}",
+        "native": {
+          "chosen": "Magazyn Pi-Plane, zgodnie z wyborem dla tego projektu.",
+          "no_library": "Magazyn Pi-Plane: przestrzeń robocza nie ma domyślnej biblioteki dokumentów.",
+          "sharepoint_off": "Magazyn Pi-Plane: SharePoint nie jest skonfigurowany w tej instancji."
+        }
+      },
+      "open_folder": "Otwórz folder w SharePoint",
+      "open_root_folder": "Otwórz folder biblioteki w SharePoint",
+      "folder_not_yet": "Folder projektu powstanie razem z pierwszym dokumentem."
     }
   },
   "project_templates": {
@@ -759,6 +789,52 @@
             "message": "Typ elementu roboczego został zapisany.",
             "title": "Typ zapisany"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "Biblioteki dokumentów",
+        "description": "Gdzie są przechowywane dokumenty tego przestrzeni roboczej: w bibliotekach dokumentów SharePoint lub w magazynie Pi-Plane. Nowe dokumenty trafiają do domyślnego miejsca, chyba że projekt wybierze inne.",
+        "add": "Dodaj bibliotekę",
+        "added": "Dodano bibliotekę.",
+        "edit": "Edytuj bibliotekę",
+        "updated": "Zaktualizowano bibliotekę.",
+        "remove": "Usuń",
+        "removing": "Usuwanie",
+        "removed": "Usunięto bibliotekę.",
+        "remove_title": "Usunąć {name}?",
+        "remove_content": "Dokumenty, które już są w tej bibliotece, zostają w niej i nadal można je otwierać. Projekty, które ją wybrały, wracają do ustawienia domyślnego przestrzeni roboczej. W SharePoint nic nie zostanie usunięte.",
+        "default": "Domyślna",
+        "make_default": "Ustaw jako domyślną",
+        "default_inactive": "Domyślna biblioteka nie jest używana, dopóki SharePoint nie jest skonfigurowany: nowe dokumenty trafiają do magazynu Pi-Plane.",
+        "open_in_sharepoint": "Otwórz w SharePoint",
+        "root_folder_value": "Folder główny: {folder}",
+        "usage": "{documents, plural, one {# dokument} few {# dokumenty} many {# dokumentów} other {# dokumentu}}, wybrana przez {projects, plural, one {# projekt} few {# projekty} many {# projektów} other {# projektu}}",
+        "not_configured_title": "SharePoint nie jest skonfigurowany",
+        "native": {
+          "name": "Magazyn Pi-Plane",
+          "description": "Własny magazyn plików Pi-Plane. Zawsze dostępny; używany, gdy SharePoint nie jest skonfigurowany lub żadna biblioteka nie jest domyślna."
+        },
+        "site_url": "Adres witryny SharePoint",
+        "site_url_hint": "Adres strony głównej witryny, na przykład https://contoso.sharepoint.com/sites/Projects. Administrator SharePoint musi najpierw nadać Pi-Plane dostęp do witryny.",
+        "look_up": "Wyszukaj",
+        "no_drives": "Witryna {site} nie ma bibliotek dokumentów widocznych dla Pi-Plane.",
+        "pick_drive": "Biblioteki dokumentów witryny {site}",
+        "already_added": "Już dodana z folderem głównym: {folders}",
+        "name": "Nazwa",
+        "root_folder": "Folder główny",
+        "root_folder_hint": "Folder w bibliotece, na przykład Pi-Plane/Projekty. Pozostaw puste, aby używać katalogu głównego biblioteki. Brakujące foldery powstaną przy pierwszym dokumencie.",
+        "root_folder_change_hint": "Nowe dokumenty trafią do nowego folderu. Dokumenty już zapisane zostają na swoim miejscu.",
+        "make_default_on_add": "Ustaw jako domyślną bibliotekę",
+        "errors": {
+          "not_configured": "Administrator instancji konfiguruje i włącza SharePoint w God Mode, w sekcji Integracje → SharePoint. Do tego czasu dokumenty są przechowywane w magazynie Pi-Plane.",
+          "invalid_site_url": "Wklej adres witryny SharePoint Online, na przykład https://contoso.sharepoint.com/sites/Projects.",
+          "site_access_denied": "Pi-Plane nie ma dostępu do tej witryny. Administrator SharePoint musi nadać aplikacji dostęp do niej.",
+          "site_not_found": "Pod tym adresem nie ma witryny. Sprawdź adres witryny.",
+          "library_not_found": "Witryna nie ma takiej biblioteki dokumentów.",
+          "library_exists": "Ten folder tej biblioteki został już dodany.",
+          "invalid_folder": "Nazwa folderu nie może zawierać znaków \" * : < > ? \\ | # % ani kończyć się kropką.",
+          "throttled": "Microsoft ogranicza liczbę żądań. Spróbuj ponownie później.",
+          "timeout": "Nie udało się połączyć z Microsoft na czas. Spróbuj ponownie później."
         }
       }
     }

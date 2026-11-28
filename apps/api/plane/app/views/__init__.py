@@ -189,6 +189,13 @@ from .document.base import (
     DocumentVersionDownloadEndpoint,
     DocumentVersionEndpoint,
 )
+from .document.library import (
+    DocumentLibraryDefaultEndpoint,
+    DocumentLibraryEndpoint,
+    DocumentLibrarySiteEndpoint,
+    ProjectDocumentFolderEndpoint,
+    ProjectDocumentSettingsEndpoint,
+)
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 

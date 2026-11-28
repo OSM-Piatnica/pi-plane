@@ -245,6 +245,36 @@
           "title": "重复于"
         }
       }
+    },
+    "documents": {
+      "heading": "文档",
+      "description": "此项目新文档的存放位置：工作区默认位置、其他文档库或 Pi-Plane 存储，以及存放在哪个文件夹。",
+      "not_configured": "此实例未设置 SharePoint，因此此项目的文档存放在 Pi-Plane 存储中。实例管理员可在 God Mode 的“集成 → SharePoint”中进行设置。",
+      "native_name": "Pi-Plane 存储",
+      "store": {
+        "label": "新文档存放到",
+        "workspace": "工作区默认位置（{name}）",
+        "sharepoint": "工作区的文档库",
+        "native": "Pi-Plane 存储"
+      },
+      "no_libraries": "工作区还没有文档库。工作区管理员可在工作区设置的“文档库”中添加。",
+      "library": "文档库",
+      "folder": "项目文件夹",
+      "folder_hint": "位于文档库的根文件夹内；留空表示 {identifier}。新文档存放到 {path}，工作项的文档存放到其中以该工作项命名的文件夹。",
+      "existing_stay": "已存放的文档不会移动。",
+      "saved": "已保存。",
+      "current": {
+        "label": "新文档存放到",
+        "sharepoint": "SharePoint，文档库 {library}，文件夹 {folder}",
+        "native": {
+          "chosen": "Pi-Plane 存储（为此项目选择）。",
+          "no_library": "Pi-Plane 存储：工作区没有默认文档库。",
+          "sharepoint_off": "Pi-Plane 存储：此实例未设置 SharePoint。"
+        }
+      },
+      "open_folder": "在 SharePoint 中打开文件夹",
+      "open_root_folder": "在 SharePoint 中打开文档库文件夹",
+      "folder_not_yet": "项目文件夹将在存放第一个文档时创建。"
     }
   },
   "project_templates": {
@@ -745,6 +775,52 @@
             "message": "工作项类型已保存。",
             "title": "类型已保存"
           }
+        }
+      },
+      "document_libraries": {
+        "title": "文档库",
+        "description": "此工作区文档的存放位置：SharePoint 文档库或 Pi-Plane 存储。除非项目另行选择，新文档将存放到默认位置。",
+        "add": "添加文档库",
+        "added": "已添加文档库。",
+        "edit": "编辑文档库",
+        "updated": "已更新文档库。",
+        "remove": "移除",
+        "removing": "正在移除",
+        "removed": "已移除文档库。",
+        "remove_title": "移除 {name}？",
+        "remove_content": "此文档库中已有的文档会保留在其中，仍可打开。选择了此文档库的项目将恢复使用工作区默认设置。SharePoint 中的内容不会被删除。",
+        "default": "默认",
+        "make_default": "设为默认",
+        "default_inactive": "在 SharePoint 未设置期间，不会使用默认文档库：新文档将存放到 Pi-Plane 存储。",
+        "open_in_sharepoint": "在 SharePoint 中打开",
+        "root_folder_value": "根文件夹：{folder}",
+        "usage": "{documents, plural, one {# 个文档} other {# 个文档}}，{projects, plural, one {# 个项目选用} other {# 个项目选用}}",
+        "not_configured_title": "SharePoint 未设置",
+        "native": {
+          "name": "Pi-Plane 存储",
+          "description": "Pi-Plane 自带的文件存储。始终可用；在 SharePoint 未设置或没有默认文档库时使用。"
+        },
+        "site_url": "SharePoint 网站地址",
+        "site_url_hint": "网站主页的地址，例如 https://contoso.sharepoint.com/sites/Projects。SharePoint 管理员必须先授予 Pi-Plane 访问该网站的权限。",
+        "look_up": "查找",
+        "no_drives": "网站 {site} 没有 Pi-Plane 可见的文档库。",
+        "pick_drive": "{site} 的文档库",
+        "already_added": "已使用以下根文件夹添加：{folders}",
+        "name": "名称",
+        "root_folder": "根文件夹",
+        "root_folder_hint": "文档库中的文件夹，例如 Pi-Plane/项目。留空则使用文档库的根目录。缺少的文件夹会在存放第一个文档时创建。",
+        "root_folder_change_hint": "新文档将存放到新文件夹。已存放的文档保持原位。",
+        "make_default_on_add": "设为默认文档库",
+        "errors": {
+          "not_configured": "实例管理员在 God Mode 的“集成 → SharePoint”中设置并启用 SharePoint。在此之前，文档存放在 Pi-Plane 存储中。",
+          "invalid_site_url": "请粘贴 SharePoint Online 网站的地址，例如 https://contoso.sharepoint.com/sites/Projects。",
+          "site_access_denied": "Pi-Plane 无权访问此网站。SharePoint 管理员需要授予该应用访问此网站的权限。",
+          "site_not_found": "此地址上没有网站。请检查网站地址。",
+          "library_not_found": "该网站没有此文档库。",
+          "library_exists": "此文档库的这个文件夹已添加。",
+          "invalid_folder": "文件夹名称不能包含 \" * : < > ? \\ | # %，也不能以句点结尾。",
+          "throttled": "Microsoft 正在限制请求。请稍后重试。",
+          "timeout": "未能及时连接到 Microsoft。请稍后重试。"
         }
       }
     }
