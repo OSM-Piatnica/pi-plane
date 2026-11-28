@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Inisiatif",
         "description": "Tujuan dan inisiatif lintas proyek, dengan kemajuan dan pembaruan status."
+      },
+      "raci": {
+        "description": "Departemen mendapat peran pada item kerja (penanggung jawab, penyetuju, dikonsultasikan, diinformasikan). Setiap proyek mengaktifkannya di fiturnya.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Tujuan telah dihapus.",
       "initiative_deleted": "Inisiatif telah dihapus.",
       "error": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "mengubah peran <department/> dari <old_role/> menjadi <new_role/>.",
+      "removed": "mencabut peran <old_role/> dari <department/>.",
+      "set": "memberi <department/> peran <new_role/>."
+    },
+    "color_by_department": "Departemen penanggung jawab",
+    "feature": {
+      "description": "Peran departemen pada item kerja: penanggung jawab, penyetuju, dikonsultasikan, diinformasikan.",
+      "title": "RACI"
+    },
+    "my_department": "Departemen saya",
+    "no_departments": "Ruang kerja belum memiliki departemen.",
+    "none": "Tidak ada",
+    "properties": {
+      "any": "Departemen (peran apa pun)",
+      "responsible": "Penanggung jawab",
+      "approver": "Penyetuju",
+      "consulted": "Dikonsultasikan",
+      "informed": "Diinformasikan"
+    },
+    "role_of": "Peran {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Penanggung jawab"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Penyetuju"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Dikonsultasikan"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Diinformasikan"
+      }
+    },
+    "save_failed": "RACI tidak dapat disimpan.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Peran RACI"
+      }
     }
   }
 }

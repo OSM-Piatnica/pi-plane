@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Girişimler",
         "description": "Projeler genelinde hedefler ve girişimler; ilerleme ve durum güncellemeleriyle."
+      },
+      "raci": {
+        "description": "Departmanlar iş öğelerinde rol alır (sorumlu, onaylayan, danışılan, bilgilendirilen). Her proje bunu kendi özelliklerinde açar.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Hedef silindi.",
       "initiative_deleted": "Girişim silindi.",
       "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "<department/> departmanının rolünü <old_role/> yerine <new_role/> olarak değiştirdi.",
+      "removed": "<department/> departmanından <old_role/> rolünü kaldırdı.",
+      "set": "<department/> departmanına <new_role/> rolünü verdi."
+    },
+    "color_by_department": "Sorumlu departman",
+    "feature": {
+      "description": "Departmanların iş öğelerindeki rolleri: sorumlu, onaylayan, danışılan, bilgilendirilen.",
+      "title": "RACI"
+    },
+    "my_department": "Departmanım",
+    "no_departments": "Çalışma alanında henüz departman yok.",
+    "none": "Yok",
+    "properties": {
+      "any": "Departman (herhangi bir rol)",
+      "responsible": "Sorumlu",
+      "approver": "Onaylayan",
+      "consulted": "Danışılan",
+      "informed": "Bilgilendirilen"
+    },
+    "role_of": "{department} rolü",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Sorumlu"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Onaylayan"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Danışılan"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Bilgilendirilen"
+      }
+    },
+    "save_failed": "RACI kaydedilemedi.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI rolleri"
+      }
     }
   }
 }

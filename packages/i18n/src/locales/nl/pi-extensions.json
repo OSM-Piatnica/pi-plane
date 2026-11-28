@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Initiatieven",
         "description": "Doelen en initiatieven over projecten heen, met voortgang en statusupdates."
+      },
+      "raci": {
+        "description": "Afdelingen krijgen rollen op werkitems (verantwoordelijk, goedkeurder, geraadpleegd, geïnformeerd). Elk project schakelt het in bij zijn functies.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Het doel is verwijderd.",
       "initiative_deleted": "Het initiatief is verwijderd.",
       "error": "Er is iets misgegaan. Probeer het opnieuw."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "heeft de rol van <department/> gewijzigd van <old_role/> naar <new_role/>.",
+      "removed": "heeft <department/> de rol <old_role/> ontnomen.",
+      "set": "heeft <department/> de rol <new_role/> gegeven."
+    },
+    "color_by_department": "Verantwoordelijke afdeling",
+    "feature": {
+      "description": "Rollen van afdelingen op werkitems: verantwoordelijk, goedkeurder, geraadpleegd, geïnformeerd.",
+      "title": "RACI"
+    },
+    "my_department": "Mijn afdeling",
+    "no_departments": "De werkruimte heeft nog geen afdelingen.",
+    "none": "Geen",
+    "properties": {
+      "any": "Afdeling (elke rol)",
+      "responsible": "Verantwoordelijk",
+      "approver": "Goedkeurder",
+      "consulted": "Geraadpleegd",
+      "informed": "Geïnformeerd"
+    },
+    "role_of": "Rol van {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Verantwoordelijk"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Goedkeurder"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Geraadpleegd"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Geïnformeerd"
+      }
+    },
+    "save_failed": "De RACI kon niet worden opgeslagen.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI-rollen"
+      }
     }
   }
 }

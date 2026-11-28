@@ -67,7 +67,7 @@ class DepartmentLiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserGroup
-        fields = ["id", "name", "code", "color", "sort_order", "is_external"]
+        fields = ["id", "name", "code", "color", "sort_order", "is_external", "is_active"]
         read_only_fields = fields
 
 

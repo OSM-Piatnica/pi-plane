@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "이니셔티브",
         "description": "프로젝트 전반의 목표와 이니셔티브를 진행 상황 및 상태 업데이트와 함께 관리합니다."
+      },
+      "raci": {
+        "description": "부서가 작업 항목에서 역할(실행 책임, 승인, 협의, 통보)을 받습니다. 각 프로젝트가 기능 설정에서 켭니다.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "목표를 삭제했습니다.",
       "initiative_deleted": "이니셔티브를 삭제했습니다.",
       "error": "문제가 발생했습니다. 다시 시도하십시오."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "<department/>의 역할을 <old_role/>에서 <new_role/>(으)로 변경했습니다.",
+      "removed": "<department/>에서 <old_role/> 역할을 제거했습니다.",
+      "set": "<department/>에 <new_role/> 역할을 부여했습니다."
+    },
+    "color_by_department": "책임 부서",
+    "feature": {
+      "description": "작업 항목에서 부서의 역할: 실행 책임, 승인, 협의, 통보.",
+      "title": "RACI"
+    },
+    "my_department": "내 부서",
+    "no_departments": "워크스페이스에 아직 부서가 없습니다.",
+    "none": "없음",
+    "properties": {
+      "any": "부서(모든 역할)",
+      "responsible": "실행 책임",
+      "approver": "승인",
+      "consulted": "협의",
+      "informed": "통보"
+    },
+    "role_of": "{department}의 역할",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "실행 책임"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "승인"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "협의"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "통보"
+      }
+    },
+    "save_failed": "RACI를 저장할 수 없습니다.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "RACI 역할"
+      }
     }
   }
 }

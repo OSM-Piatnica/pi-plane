@@ -82,7 +82,7 @@ export type TIssueOrderByField = TStripDescendingPrefix<TIssueOrderByOptions>;
 export type TIssueGroupingFilters = "active" | "backlog";
 
 /** What the timeline bars take their colour from. */
-export type TTimelineColorBy = "state" | "key";
+export type TTimelineColorBy = "state" | "key" | "department";
 
 export type TIssueExtraOptions = "show_empty_groups" | "sub_issue";
 
@@ -135,6 +135,11 @@ export const WORK_ITEM_FILTER_PROPERTY_KEYS = [
   "target_date",
   "assignee_id",
   "group_assignee_id",
+  "raci_department_id",
+  "raci_responsible_id",
+  "raci_approver_id",
+  "raci_consulted_id",
+  "raci_informed_id",
   "mention_id",
   "created_by_id",
   "subscriber_id",
@@ -233,6 +238,10 @@ export interface IIssueDisplayProperties {
   cycle?: boolean;
   issue_type?: boolean;
   parent?: boolean;
+  /** The departments with a RACI role on the work item, one property per role; only in projects with RACI on. */
+  raci_responsible?: boolean;
+  raci_approver?: boolean;
+  raci_consulted?: boolean;
 }
 
 export type TIssueKanbanFilters = {

@@ -18,7 +18,13 @@ import type { TUserGroup, TUserGroupFormData } from "@plane/types";
 import { GroupMembersModal } from "@/components/workspace/user-groups/group-members-modal";
 // helpers
 import type { TDepartmentImportRow } from "@/helpers/department";
-import { getDepartmentsKey, getMovedSortOrder, getUserGroupsKey, sortDepartments } from "@/helpers/department";
+import {
+  getAllDepartmentsKey,
+  getDepartmentsKey,
+  getMovedSortOrder,
+  getUserGroupsKey,
+  sortDepartments,
+} from "@/helpers/department";
 // services
 import { userGroupService } from "@/services/user-group.service";
 // local imports
@@ -55,6 +61,7 @@ export const DepartmentsSettings = observer(function DepartmentsSettings(props: 
   const refresh = async () => {
     await mutate();
     await mutateGlobal(getDepartmentsKey(workspaceSlug));
+    await mutateGlobal(getAllDepartmentsKey(workspaceSlug));
   };
 
   const showError = (error: unknown) =>

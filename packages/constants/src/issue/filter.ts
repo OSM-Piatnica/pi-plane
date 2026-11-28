@@ -124,7 +124,20 @@ export type TIssueFiltersToDisplayByPageType = {
 
 export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
   profile_issues: {
-    filters: ["priority", "state_group", "label_id", "group_assignee_id", "start_date", "finish_date", "target_date"],
+    filters: [
+      "priority",
+      "state_group",
+      "label_id",
+      "group_assignee_id",
+      "raci_department_id",
+      "raci_responsible_id",
+      "raci_approver_id",
+      "raci_consulted_id",
+      "raci_informed_id",
+      "start_date",
+      "finish_date",
+      "target_date",
+    ],
     layoutOptions: {
       list: {
         display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
@@ -196,6 +209,11 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "module_id",
       "assignee_id",
       "group_assignee_id",
+      "raci_department_id",
+      "raci_responsible_id",
+      "raci_approver_id",
+      "raci_consulted_id",
+      "raci_informed_id",
       "created_by_id",
       "label_id",
       "start_date",
@@ -245,6 +263,11 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "label_id",
       "assignee_id",
       "group_assignee_id",
+      "raci_department_id",
+      "raci_responsible_id",
+      "raci_approver_id",
+      "raci_consulted_id",
+      "raci_informed_id",
       "created_by_id",
       "subscriber_id",
       "project_id",
@@ -307,6 +330,11 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
       "module_id",
       "assignee_id",
       "group_assignee_id",
+      "raci_department_id",
+      "raci_responsible_id",
+      "raci_approver_id",
+      "raci_consulted_id",
+      "raci_informed_id",
       "mention_id",
       "created_by_id",
       "label_id",
@@ -438,7 +466,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         display_filters: {
           order_by: ["sort_order", "sequence_id", "name", "-created_at", "-updated_at", "start_date", "-priority"],
           type: ["active", "backlog"],
-          color_by: ["state", "key"],
+          color_by: ["state", "key", "department"],
         },
         extra_options: {
           access: true,

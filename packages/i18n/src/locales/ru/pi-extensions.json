@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Инициативы",
         "description": "Цели и инициативы, охватывающие проекты, с отслеживанием прогресса и обновлениями статуса."
+      },
+      "raci": {
+        "description": "Отделы получают роли в рабочих элементах (ответственный, утверждающий, консультируемый, информируемый). Каждый проект включает это в своих функциях.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Цель удалена.",
       "initiative_deleted": "Инициатива удалена.",
       "error": "Что-то пошло не так. Попробуйте ещё раз."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "изменил(а) роль отдела <department/> с <old_role/> на <new_role/>.",
+      "removed": "снял(а) с отдела <department/> роль <old_role/>.",
+      "set": "назначил(а) отделу <department/> роль <new_role/>."
+    },
+    "color_by_department": "Ответственный отдел",
+    "feature": {
+      "description": "Роли отделов в рабочих элементах: ответственный, утверждающий, консультируемый, информируемый.",
+      "title": "RACI"
+    },
+    "my_department": "Мой отдел",
+    "no_departments": "В рабочем пространстве пока нет отделов.",
+    "none": "Нет",
+    "properties": {
+      "any": "Отдел (любая роль)",
+      "responsible": "Ответственный",
+      "approver": "Утверждающий",
+      "consulted": "Консультируемый",
+      "informed": "Информируемый"
+    },
+    "role_of": "Роль отдела {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Ответственный"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Утверждающий"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Консультируемый"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Информируемый"
+      }
+    },
+    "save_failed": "Не удалось сохранить RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Роли RACI"
+      }
     }
   }
 }

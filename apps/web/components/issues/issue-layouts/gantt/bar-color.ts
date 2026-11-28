@@ -24,15 +24,21 @@ export const getWorkItemKeyColor = (
   return palette[(hashIdentifier(projectIdentifier ?? "") + Math.abs(sequenceId)) % palette.length];
 };
 
-/** Bar colour for a work item; key mode falls back to the state colour when there is no key yet. */
+/**
+ * Bar colour for a work item; key mode falls back to the state colour when there is no key yet, department mode
+ * (RACI) takes the colour of the first responsible department and falls back to the state colour without one.
+ */
 export const getBarColor = (args: {
   colorBy: TTimelineColorBy | undefined;
   stateColor: string | undefined;
   projectIdentifier: string | undefined;
   sequenceId: number | undefined;
   palette: readonly string[];
+  /** The colours of the responsible departments, in their order (department mode only). */
+  departmentColors?: readonly string[];
 }): string | undefined => {
   const { colorBy = DEFAULT_TIMELINE_COLOR_BY, stateColor, projectIdentifier, sequenceId, palette } = args;
+  if (colorBy === "department") return args.departmentColors?.find((color) => !!color) ?? stateColor;
   if (colorBy !== "key") return stateColor;
   return getWorkItemKeyColor(projectIdentifier, sequenceId, palette) ?? stateColor;
 };

@@ -118,9 +118,9 @@ describe("the lists the API validates against", () => {
   });
 });
 
-describe("what ships: Projects, and Initiatives behind its switch", () => {
-  it("offers the Initiatives switch and nothing else", () => {
-    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["initiatives"]);
+describe("what ships: Projects, and Initiatives and RACI behind their switches", () => {
+  it("offers the Initiatives and RACI switches and nothing else", () => {
+    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["initiatives", "raci"]);
   });
 
   it("has a Features entry in the settings sidebar", () => {

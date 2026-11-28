@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Inițiative",
         "description": "Obiective și inițiative care cuprind mai multe proiecte, cu progres și actualizări de status."
+      },
+      "raci": {
+        "description": "Departamentele primesc roluri pe elementele de lucru (responsabil, aprobator, consultat, informat). Fiecare proiect îl activează în funcționalitățile sale.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Obiectivul a fost șters.",
       "initiative_deleted": "Inițiativa a fost ștearsă.",
       "error": "Ceva nu a funcționat. Încercați din nou."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "a schimbat rolul departamentului <department/> din <old_role/> în <new_role/>.",
+      "removed": "a retras departamentului <department/> rolul <old_role/>.",
+      "set": "a dat departamentului <department/> rolul <new_role/>."
+    },
+    "color_by_department": "Departament responsabil",
+    "feature": {
+      "description": "Rolurile departamentelor pe elementele de lucru: responsabil, aprobator, consultat, informat.",
+      "title": "RACI"
+    },
+    "my_department": "Departamentul meu",
+    "no_departments": "Spațiul de lucru nu are încă departamente.",
+    "none": "Niciunul",
+    "properties": {
+      "any": "Departament (orice rol)",
+      "responsible": "Responsabil",
+      "approver": "Aprobator",
+      "consulted": "Consultat",
+      "informed": "Informat"
+    },
+    "role_of": "Rolul pentru {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsabil"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Aprobator"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consultat"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informat"
+      }
+    },
+    "save_failed": "RACI nu a putut fi salvat.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Roluri RACI"
+      }
     }
   }
 }

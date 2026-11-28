@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Iniciativas",
         "description": "Objetivos e iniciativas que abarcan varios proyectos, con progreso y actualizaciones de estado."
+      },
+      "raci": {
+        "description": "Los departamentos reciben roles en los elementos de trabajo (responsable, aprobador, consultado, informado). Cada proyecto lo activa en sus funciones.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Se eliminó el objetivo.",
       "initiative_deleted": "Se eliminó la iniciativa.",
       "error": "Algo salió mal. Inténtelo de nuevo."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "cambió el rol de <department/> de <old_role/> a <new_role/>.",
+      "removed": "quitó a <department/> el rol <old_role/>.",
+      "set": "asignó a <department/> el rol <new_role/>."
+    },
+    "color_by_department": "Departamento responsable",
+    "feature": {
+      "description": "Roles de los departamentos en los elementos de trabajo: responsable, aprobador, consultado, informado.",
+      "title": "RACI"
+    },
+    "my_department": "Mi departamento",
+    "no_departments": "El espacio de trabajo aún no tiene departamentos.",
+    "none": "Ninguno",
+    "properties": {
+      "any": "Departamento (cualquier rol)",
+      "responsible": "Responsable",
+      "approver": "Aprobador",
+      "consulted": "Consultado",
+      "informed": "Informado"
+    },
+    "role_of": "Rol de {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsable"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Aprobador"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consultado"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informado"
+      }
+    },
+    "save_failed": "No se pudo guardar el RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Roles RACI"
+      }
     }
   }
 }

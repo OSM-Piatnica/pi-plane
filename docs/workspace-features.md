@@ -9,11 +9,12 @@ switches are:
 | `approvals`   | the Approvals app (roadmap C6)   | no        |
 | `initiatives` | the Initiatives app (roadmap F2) | yes       |
 | `wiki`        | the workspace wiki (roadmap G4)  | no        |
-| `raci`        | RACI on work items (roadmap D)   | no        |
+| `raci`        | RACI on work items (roadmap D2)  | yes       |
 
-"Available" means the feature is built. Initiatives is the first (F2), so the "Features" settings
-page is in the sidebar with one switch. The initiative endpoints check the switch with
-`is_workspace_feature_enabled(workspace, "initiatives")` (see [`initiatives.md`](./initiatives.md)).
+"Available" means the feature is built. Initiatives (F2) and RACI (D2) are, so the "Features" settings
+page is in the sidebar with two switches. The initiative endpoints check the switch with
+`is_workspace_feature_enabled(workspace, "initiatives")` (see [`initiatives.md`](./initiatives.md)); RACI is
+described in [`raci.md`](./raci.md).
 
 ## How it works
 

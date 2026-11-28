@@ -6,6 +6,7 @@
  */
 
 import type { TIssuePriorities } from "../issues";
+import type { TIssueRaciEntry } from "../raci";
 import type { TStateGroups } from "../state";
 import type { TIssuePublicComment } from "./activity/issue_comment";
 import type { TIssueAttachment } from "./issue_attachment";
@@ -55,6 +56,8 @@ export type TBaseIssue = {
   assignee_ids: string[];
   /** The user groups the work item is assigned to; absent from answers that do not carry them. */
   group_assignee_ids?: string[];
+  /** The roles of departments on the work item; empty where the project has RACI off. */
+  raci?: TIssueRaciEntry[];
   /** What the group filter works on, see TGroupFilterable; only the sub-work-item list answers carry it. */
   group_ids?: string[];
   has_group?: boolean;

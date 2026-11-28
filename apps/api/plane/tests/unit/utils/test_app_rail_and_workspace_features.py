@@ -79,12 +79,13 @@ class TestAppRailKeys:
 
 @pytest.mark.unit
 class TestWorkspaceFeatureKeys:
-    def test_as_shipped_only_initiatives_is_available(self):
+    def test_as_shipped_only_initiatives_and_raci_are_available(self):
         assert list(workspace_features.WORKSPACE_FEATURES) == ["lite", "approvals", "initiatives", "wiki", "raci"]
-        assert available_workspace_feature_keys() == ["initiatives"]
+        assert available_workspace_feature_keys() == ["initiatives", "raci"]
         assert is_available_workspace_feature("initiatives")
         assert is_known_workspace_feature("wiki")
         assert not is_available_workspace_feature("wiki")
+        assert is_available_workspace_feature("raci")
         assert not is_known_workspace_feature("unknown")
         assert not is_available_workspace_feature("unknown")
 
@@ -92,7 +93,7 @@ class TestWorkspaceFeatureKeys:
         workspace = _Workspace(_Row("approvals", True), _Row("wiki", True))
 
         assert enabled_workspace_feature_keys(workspace) == []
-        assert workspace_feature_states(workspace) == {"initiatives": False}
+        assert workspace_feature_states(workspace) == {"initiatives": False, "raci": False}
 
     def test_nothing_is_enabled_and_nothing_is_queried_while_nothing_is_available(self, monkeypatch):
         _only_available(monkeypatch)

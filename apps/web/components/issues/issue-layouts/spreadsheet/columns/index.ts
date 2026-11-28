@@ -23,3 +23,4 @@ export * from "./updated-on-column";
 export * from "./module-column";
 export * from "./cycle-column";
 export * from "./parent-column";
+export * from "./raci-column";

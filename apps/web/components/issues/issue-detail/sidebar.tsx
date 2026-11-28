@@ -25,6 +25,7 @@ import {
 // components
 import { EstimateSelect } from "@/components/dropdowns/estimate/estimate-select";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
+import { IssueRaciSection } from "@/components/issues/raci/raci-section";
 import { WorkItemPlanningDates } from "@/components/issues/work-item-planning-dates";
 import { GroupAssigneeSelect } from "@/components/workspace/user-groups/group-assignee-select";
 import { MemberSelect } from "@/components/dropdowns/member/member-select";
@@ -152,6 +153,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 </div>
               </SidebarPropertyListItem>
             )}
+
+            <IssueRaciSection workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
 
             <WorkItemPlanningDates
               issue={issue}

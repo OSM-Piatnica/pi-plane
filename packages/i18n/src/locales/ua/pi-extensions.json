@@ -276,6 +276,10 @@
       "initiatives": {
         "title": "Ініціативи",
         "description": "Цілі та ініціативи, що охоплюють проєкти, з відстеженням прогресу й оновленнями статусу."
+      },
+      "raci": {
+        "description": "Відділи отримують ролі в робочих елементах (відповідальний, затверджує, консультується, інформується). Кожен проєкт вмикає це у своїх функціях.",
+        "title": "RACI"
       }
     }
   },
@@ -831,6 +835,56 @@
       "goal_deleted": "Ціль видалено.",
       "initiative_deleted": "Ініціативу видалено.",
       "error": "Щось пішло не так. Спробуйте ще раз."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "змінено роль відділу <department/> з <old_role/> на <new_role/>.",
+      "removed": "знято з відділу <department/> роль <old_role/>.",
+      "set": "призначено відділу <department/> роль <new_role/>."
+    },
+    "color_by_department": "Відповідальний відділ",
+    "feature": {
+      "description": "Ролі відділів у робочих елементах: відповідальний, затверджує, консультується, інформується.",
+      "title": "RACI"
+    },
+    "my_department": "Мій відділ",
+    "no_departments": "У робочому просторі ще немає відділів.",
+    "none": "Немає",
+    "properties": {
+      "any": "Відділ (будь-яка роль)",
+      "responsible": "Відповідальний",
+      "approver": "Затверджує",
+      "consulted": "Консультується",
+      "informed": "Інформується"
+    },
+    "role_of": "Роль відділу {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Відповідальний"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Затверджує"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Консультується"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Інформується"
+      }
+    },
+    "save_failed": "Не вдалося зберегти RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Ролі RACI"
+      }
     }
   }
 }

@@ -22,6 +22,7 @@ import { ProjectSettingsIssueTypesControl } from "@/components/settings/project/
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useUserPermissions } from "@/hooks/store/user";
+import { useWorkspaceFeatures } from "@/hooks/use-workspace-features";
 // local imports
 import type { Route } from "./+types/page";
 import { FeaturesProjectSettingsHeader } from "./header";
@@ -48,6 +49,7 @@ function FeaturesSettingsPage({ params }: Route.ComponentProps) {
   // store hooks
   const { workspaceUserInfo, allowPermissions } = useUserPermissions();
   const { currentProjectDetails } = useProject();
+  const { isFeatureEnabled } = useWorkspaceFeatures();
   // translation
   const { t } = useTranslation();
   // derived values
@@ -85,6 +87,17 @@ function FeaturesSettingsPage({ params }: Route.ComponentProps) {
             value={!!currentProjectDetails?.is_issue_type_enabled}
             workspaceSlug={workspaceSlug}
           />
+          {/* RACI is offered per project once the workspace has it switched on */}
+          {isFeatureEnabled("raci") && (
+            <ProjectSettingsFeatureControlItem
+              title={t("raci.feature.title")}
+              description={t("raci.feature.description")}
+              featureProperty="is_raci_enabled"
+              projectId={projectId}
+              value={!!currentProjectDetails?.is_raci_enabled}
+              workspaceSlug={workspaceSlug}
+            />
+          )}
           {/* Types and Epics (a work item type) only exist in projects that use work item types */}
           {currentProjectDetails?.is_issue_type_enabled && (
             <>

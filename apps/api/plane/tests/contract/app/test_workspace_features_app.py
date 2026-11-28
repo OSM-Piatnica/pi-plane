@@ -4,8 +4,8 @@
 
 """Contract tests for the workspace feature switches.
 
-Initiatives is the only feature built so far. The tests of the mechanism make ``approvals`` the only available
-feature for their own duration, so they do not change when another feature is built.
+Initiatives and ``raci`` are the features built so far. The tests of the mechanism make ``approvals`` the only
+available feature for their own duration, so they do not change when another feature is built.
 """
 
 from unittest import mock
@@ -44,23 +44,23 @@ def approvals_available(monkeypatch):
 @pytest.mark.contract
 @pytest.mark.django_db
 class TestWorkspaceFeaturesAsShipped:
-    """Initiatives is built and can be switched; nothing else can."""
+    """Initiatives and RACI are built and can be switched; nothing else can."""
 
-    def test_known_keys_and_only_initiatives_available(self):
+    def test_known_keys_and_available_ones(self):
         assert set(WORKSPACE_FEATURES) == {"lite", "approvals", "initiatives", "wiki", "raci"}
-        assert [key for key, available in WORKSPACE_FEATURES.items() if available] == ["initiatives"]
+        assert [key for key, available in WORKSPACE_FEATURES.items() if available] == ["initiatives", "raci"]
 
-    def test_read_lists_initiatives_off_by_default(self, session_client, workspace):
+    def test_read_lists_the_available_features_off_by_default(self, session_client, workspace):
         response = session_client.get(URL.format(slug=workspace.slug))
 
         assert response.status_code == status.HTTP_200_OK
-        assert response.data == {"initiatives": False}
+        assert response.data == {"initiatives": False, "raci": False}
 
     def test_initiatives_can_be_switched_on(self, session_client, workspace):
         response = session_client.patch(URL.format(slug=workspace.slug), {"initiatives": True}, format="json")
 
         assert response.status_code == status.HTTP_200_OK
-        assert response.data == {"initiatives": True}
+        assert response.data == {"initiatives": True, "raci": False}
         assert [row["enabled_features"] for row in session_client.get(WORKSPACES_URL).data] == [["initiatives"]]
 
     @pytest.mark.parametrize("key", [key for key, available in WORKSPACE_FEATURES.items() if not available])
