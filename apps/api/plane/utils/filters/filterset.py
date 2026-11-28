@@ -12,6 +12,7 @@ from django_filters import FilterSet, filters
 from plane.db.models import Issue
 from plane.utils.group_filters import issue_group_q, resolve_for_request
 from plane.utils.schedule_scope import critical_issue_ids
+from plane.utils.raci import issue_raci_q_for_request
 
 
 class UUIDInFilter(filters.BaseInFilter, filters.UUIDFilter):
@@ -145,6 +146,19 @@ class IssueFilterSet(BaseFilterSet):
     group_assignee_id = filters.CharFilter(method="filter_group_assignee_id")
     group_assignee_id__in = CharInFilter(method="filter_group_assignee_id_in", lookup_expr="in")
 
+    # RACI: a department id or "my_department" (the department of the person who asks). raci_department_id
+    # matches any role, the others one role each.
+    raci_department_id = filters.CharFilter(method="filter_raci")
+    raci_department_id__in = CharInFilter(method="filter_raci", lookup_expr="in")
+    raci_responsible_id = filters.CharFilter(method="filter_raci")
+    raci_responsible_id__in = CharInFilter(method="filter_raci", lookup_expr="in")
+    raci_approver_id = filters.CharFilter(method="filter_raci")
+    raci_approver_id__in = CharInFilter(method="filter_raci", lookup_expr="in")
+    raci_consulted_id = filters.CharFilter(method="filter_raci")
+    raci_consulted_id__in = CharInFilter(method="filter_raci", lookup_expr="in")
+    raci_informed_id = filters.CharFilter(method="filter_raci")
+    raci_informed_id__in = CharInFilter(method="filter_raci", lookup_expr="in")
+
     cycle_id = filters.UUIDFilter(method="filter_cycle_id")
     cycle_id__in = UUIDInFilter(method="filter_cycle_id_in", lookup_expr="in")
 
@@ -259,6 +273,13 @@ class IssueFilterSet(BaseFilterSet):
     def filter_group_assignee_id_in(self, queryset, name, value):
         """Filter by several groups, "my_groups" and "none" (any of them)"""
         return issue_group_q(resolve_for_request(self.request, value))
+
+    def filter_raci(self, queryset, name, value):
+        """Filter by the departments that have a role on a work item: any role, or the one the filter names"""
+        key = name.split("__")[0]
+        role = None if key == "raci_department_id" else key[len("raci_") : -len("_id")]
+        values = value if isinstance(value, (list, tuple)) else [value]
+        return issue_raci_q_for_request(self.request, values, role)
 
     def filter_cycle_id(self, queryset, name, value):
         """Filter by cycle ID, excluding soft deleted cycles"""

@@ -12,7 +12,11 @@
       "last_used_app": "Ultima app utilizzata"
     },
     "switch_to": {
-      "projects": "Passa a Progetti"
+      "projects": "Passa a Progetti",
+      "initiatives": "Passa a Iniziative"
+    },
+    "apps": {
+      "initiatives": "Iniziative"
     }
   },
   "approve": "Approva",
@@ -295,7 +299,17 @@
     }
   },
   "workspace_features": {
-    "description": "Attivare o disattivare parti di Pi-Plane per tutti in questo spazio di lavoro."
+    "description": "Attivare o disattivare parti di Pi-Plane per tutti in questo spazio di lavoro.",
+    "items": {
+      "initiatives": {
+        "title": "Iniziative",
+        "description": "Obiettivi e iniziative trasversali ai progetti, con avanzamento e aggiornamenti di stato."
+      },
+      "raci": {
+        "description": "I reparti ricevono ruoli sugli elementi di lavoro (responsabile, approvatore, consultato, informato). Ogni progetto lo attiva nelle sue funzionalità.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -731,6 +745,173 @@
             "title": "Tipo salvato"
           }
         }
+      }
+    }
+  },
+  "initiatives": {
+    "title": "Iniziative",
+    "all": "Tutte le iniziative",
+    "without_goal": "Senza obiettivo",
+    "no_goal": "Nessun obiettivo",
+    "no_goals_yet": "Ancora nessun obiettivo",
+    "no_lead": "Nessun responsabile",
+    "new_goal": "Nuovo obiettivo",
+    "new_initiative": "Nuova iniziativa",
+    "create_goal": "Crea obiettivo",
+    "create_initiative": "Crea iniziativa",
+    "expand_goal": "Espandi {name}",
+    "collapse_goal": "Comprimi {name}",
+    "properties": "Proprietà",
+    "show_properties": "Mostra proprietà",
+    "hide_properties": "Nascondi proprietà",
+    "description_placeholder": "A cosa serve e come saprà che è stato raggiunto?",
+    "kind": {
+      "goal": "Obiettivo",
+      "initiative": "Iniziativa"
+    },
+    "status": {
+      "planned": "Pianificato",
+      "active": "Attivo",
+      "paused": "In pausa",
+      "completed": "Completato",
+      "cancelled": "Annullato"
+    },
+    "health": {
+      "on_track": "In linea",
+      "at_risk": "A rischio",
+      "off_track": "Fuori rotta",
+      "none": "Ancora nessun aggiornamento",
+      "pick": "Salute"
+    },
+    "fields": {
+      "name": "Nome",
+      "status": "Stato",
+      "health": "Salute",
+      "lead": "Responsabile",
+      "dates": "Date",
+      "goal": "Obiettivo",
+      "created_by": "Creato da"
+    },
+    "form": {
+      "placeholder": "Nome dell’iniziativa",
+      "goal_placeholder": "Nome dell’obiettivo",
+      "name_required": "Il nome è obbligatorio."
+    },
+    "empty": {
+      "title": "Ancora nessuna iniziativa",
+      "description": "Raggruppi il lavoro di più progetti in iniziative, e le iniziative sotto obiettivi, per seguirne l’avanzamento in un unico posto.",
+      "sidebar": "Gli obiettivi e le iniziative che crea compaiono qui."
+    },
+    "not_found": {
+      "title": "Iniziativa non trovata",
+      "description": "Potrebbe essere stata eliminata, oppure l’indirizzo è errato."
+    },
+    "progress": {
+      "projects": "Elementi di lavoro nei progetti collegati",
+      "epics": "Elementi di lavoro degli Epics collegati",
+      "done_of_total": "{done} di {total} completati",
+      "tooltip": "{percentage}% degli elementi di lavoro completato",
+      "partial_tooltip": "{percentage}% degli elementi di lavoro a Lei visibili completato",
+      "projects_empty": "Ancora nessun elemento di lavoro nei progetti collegati.",
+      "epics_empty": "Ancora nessun elemento di lavoro figlio negli Epic collegati.",
+      "hidden_projects": "{count, plural, one {# progetto collegato non Le è visibile e non viene conteggiato.} many {# di progetti collegati non Le sono visibili e non vengono conteggiati.} other {# progetti collegati non Le sono visibili e non vengono conteggiati.}}",
+      "hidden_epics": "{count, plural, one {# Epic collegato non Le è visibile e non viene conteggiato.} many {# di Epic collegati non Le sono visibili e non vengono conteggiati.} other {# Epic collegati non Le sono visibili e non vengono conteggiati.}}",
+      "hidden_children": "Alcuni elementi di lavoro figli si trovano in progetti che non può vedere e non vengono conteggiati.",
+      "explained": "Le due cifre sono conteggiate separatamente: altrimenti un Epic all’interno di un progetto collegato verrebbe conteggiato due volte."
+    },
+    "children": {
+      "title": "Iniziative",
+      "empty": "Ancora nessuna iniziativa contribuisce a questo obiettivo."
+    },
+    "projects": {
+      "title": "Progetti",
+      "add": "Aggiungi progetti",
+      "empty": "Ancora nessun progetto collegato.",
+      "of_goal": "I progetti delle iniziative dell’obiettivo. Colleghi i progetti da un’iniziativa.",
+      "remove": "Scollega {name}",
+      "unknown": "Progetto",
+      "archived": "Archiviato"
+    },
+    "epics": {
+      "title": "Epic",
+      "add": "Aggiungi Epic",
+      "search": "Cerca Epic per nome o ID",
+      "none_to_add": "Nessun Epic da aggiungere",
+      "empty": "Ancora nessun Epic collegato.",
+      "of_goal": "Gli Epic delle iniziative dell’obiettivo. Colleghi gli Epic da un’iniziativa.",
+      "remove": "Scollega {name}",
+      "progress_of": "Avanzamento di {name}"
+    },
+    "updates": {
+      "title": "Aggiornamenti di stato",
+      "text": "Aggiornamento",
+      "placeholder": "Come sta andando?",
+      "post": "Pubblica aggiornamento",
+      "posted": "L’aggiornamento è stato pubblicato.",
+      "empty": "Ancora nessun aggiornamento di stato."
+    },
+    "delete": {
+      "action": "Elimina",
+      "goal_title": "Elimina obiettivo",
+      "initiative_title": "Elimina iniziativa",
+      "goal_description": "Eliminare l’obiettivo {name}? Le sue iniziative restano, senza obiettivo.",
+      "initiative_description": "Eliminare l’iniziativa {name}? I suoi collegamenti a progetti ed Epic e i suoi aggiornamenti di stato vengono rimossi; i progetti e gli Epic restano."
+    },
+    "toast": {
+      "goal_created": "L’obiettivo è stato creato.",
+      "initiative_created": "L’iniziativa è stata creata.",
+      "goal_deleted": "L’obiettivo è stato eliminato.",
+      "initiative_deleted": "L’iniziativa è stata eliminata.",
+      "error": "Qualcosa è andato storto. Riprovi."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "ha cambiato il ruolo di <department/> da <old_role/> a <new_role/>.",
+      "removed": "ha tolto a <department/> il ruolo <old_role/>.",
+      "set": "ha assegnato a <department/> il ruolo <new_role/>."
+    },
+    "color_by_department": "Reparto responsabile",
+    "feature": {
+      "description": "Ruoli dei reparti sugli elementi di lavoro: responsabile, approvatore, consultato, informato.",
+      "title": "RACI"
+    },
+    "my_department": "Il mio reparto",
+    "no_departments": "L’area di lavoro non ha ancora reparti.",
+    "none": "Nessuno",
+    "properties": {
+      "any": "Reparto (qualsiasi ruolo)",
+      "responsible": "Responsabile",
+      "approver": "Approvatore",
+      "consulted": "Consultato",
+      "informed": "Informato"
+    },
+    "role_of": "Ruolo di {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Responsabile"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Approvatore"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Consultato"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Informato"
+      }
+    },
+    "save_failed": "Impossibile salvare il RACI.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Ruoli RACI"
       }
     }
   }

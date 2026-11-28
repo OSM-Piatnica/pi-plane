@@ -274,6 +274,7 @@ export const TIMELINE_COLOR_BY_OPTIONS: {
 }[] = [
   { key: "state", titleTranslationKey: "issue.display.color_by.state" },
   { key: "key", titleTranslationKey: "issue.display.color_by.key" },
+  { key: "department", titleTranslationKey: "raci.color_by_department" },
 ];
 
 export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [
@@ -296,6 +297,9 @@ export const ISSUE_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = 
   "cycle",
   "issue_type",
   "parent",
+  "raci_responsible",
+  "raci_approver",
+  "raci_consulted",
 ];
 
 export const SUB_ISSUES_DISPLAY_PROPERTIES_KEYS: (keyof IIssueDisplayProperties)[] = [
@@ -372,6 +376,9 @@ export const ISSUE_DISPLAY_PROPERTIES: {
   { key: "cycle", titleTranslationKey: "common.cycle" },
   { key: "parent", titleTranslationKey: "common.parent" },
   { key: "issue_type", titleTranslationKey: "issue.display.properties.issue_type" },
+  { key: "raci_responsible", titleTranslationKey: "raci.properties.responsible" },
+  { key: "raci_approver", titleTranslationKey: "raci.properties.approver" },
+  { key: "raci_consulted", titleTranslationKey: "raci.properties.consulted" },
 ];
 
 export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
@@ -379,6 +386,9 @@ export const SPREADSHEET_PROPERTY_LIST: (keyof IIssueDisplayProperties)[] = [
   "state",
   "priority",
   "assignee",
+  "raci_responsible",
+  "raci_approver",
+  "raci_consulted",
   "labels",
   "modules",
   "cycle",
@@ -417,6 +427,18 @@ export const SPREADSHEET_PROPERTY_DETAILS: {
   parent: {
     i18n_title: "common.parent",
     icon: "ParentPropertyIcon",
+  },
+  raci_responsible: {
+    i18n_title: "raci.properties.responsible",
+    icon: "MembersOutline",
+  },
+  raci_approver: {
+    i18n_title: "raci.properties.approver",
+    icon: "MembersOutline",
+  },
+  raci_consulted: {
+    i18n_title: "raci.properties.consulted",
+    icon: "MembersOutline",
   },
   assignee: {
     i18n_title: "common.assignees",

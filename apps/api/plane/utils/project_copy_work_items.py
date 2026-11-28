@@ -48,10 +48,12 @@ from plane.bgtasks.copy_s3_object import extract_asset_ids, replace_asset_ids, s
 from plane.db.models import (
     CycleIssue,
     FileAsset,
+    GroupKind,
     Issue,
     IssueAssignee,
     IssueLabel,
     IssueLink,
+    IssueRaci,
     IssuePropertyValue,
     IssueRelation,
     IssueSequence,
@@ -73,7 +75,7 @@ BATCH_SIZE = 500
 # they are other people's words, files and hours.
 WORK_ITEM_PROPERTY_GROUPS = {
     "content": ("dates", "custom_properties", "description_images"),
-    "people": ("assignees",),
+    "people": ("assignees", "raci"),
     "organization": ("labels", "cycles", "modules"),
     "hierarchy": ("parents", "relations", "links"),
 }
@@ -312,7 +314,7 @@ def _already_written(model, target_ids, field="issue_id") -> set:
 
 @transaction.atomic
 def copy_satellites(*, source_project_id, target_project, ids, remap, properties, tally: CopyTally) -> None:
-    """Labels, assignees, links, and cycle and module membership.
+    """Labels, assignees, RACI roles, links, and cycle and module membership.
 
     Each is skipped, with a note, when it was not asked for or the thing it points at was not itself
     copied. Forcing cycles on because work items were asked for would copy other people's sprint
@@ -365,6 +367,21 @@ def copy_satellites(*, source_project_id, target_project, ids, remap, properties
             tally.note("work_items:assignees-not-in-copy")
     else:
         tally.note("work_items:assignees-not-copied")
+
+    if "raci" in properties:
+        # Departments belong to the workspace, so the copy names the same ones; the project switch is copied too
+        done = _already_written(IssueRaci, target_ids)
+        rows = [
+            IssueRaci(issue_id=ids[issue_id], group_id=group_id, role=role, **stamp)
+            for issue_id, group_id, role in IssueRaci.objects.filter(
+                issue_id__in=source_ids, group__deleted_at__isnull=True, group__kind=GroupKind.DEPARTMENT
+            ).values_list("issue_id", "group_id", "role")
+            if ids[issue_id] not in done
+        ]
+        IssueRaci.objects.bulk_create(rows, batch_size=BATCH_SIZE)
+        tally.add("raci", len(rows))
+    else:
+        tally.note("work_items:raci-not-copied")
 
     if "links" in properties:
         done = _already_written(IssueLink, target_ids)

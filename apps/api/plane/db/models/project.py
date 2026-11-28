@@ -122,6 +122,8 @@ class Project(ChangeTrackerMixin, BaseModel):
     # Offer to move dependent work items when a date change breaks a relation; off refuses the change
     # (plane.utils.issue_reschedule)
     is_reschedule_offer_enabled = models.BooleanField(default=True)
+    # Roles of departments on work items (plane.utils.raci)
+    is_raci_enabled = models.BooleanField(default=False)
     guest_view_all_features = models.BooleanField(default=False)
     cover_image = models.TextField(blank=True, null=True)
     cover_image_asset = models.ForeignKey(

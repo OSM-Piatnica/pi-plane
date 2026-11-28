@@ -91,4 +91,4 @@ All under `/api/workspaces/<slug>/projects/<project_id>/`.
 }
 ```
 
-Without an active baseline (and none asked for), `baseline` is `null` and `items` is empty. The tables are `project_baselines` and `project_baseline_items` (migration `0162_project_baselines`); the code is in `apps/api/plane/utils/baselines.py` and `apps/api/plane/app/views/project/baseline.py`.
+Without an active baseline (and none asked for), `baseline` is `null` and `items` is empty. The tables are `project_baselines` and `project_baseline_items` (migration `0164_project_baselines`); the code is in `apps/api/plane/utils/baselines.py` and `apps/api/plane/app/views/project/baseline.py`.

@@ -59,4 +59,4 @@ The first specification (SPEC-02) let people choose their own department, at onb
 
 ## Not there yet
 
-- RACI roles on work items, filters and notifications by department come with later changes.
+- RACI roles of departments on work items and the "my department" filters: see [RACI on work items](raci.md). Notifications by department come with a later change.

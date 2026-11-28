@@ -31,6 +31,8 @@ const SORT_ORDER_STEP = 10000;
 export const getDepartmentsKey = (workspaceSlug: string) => `WORKSPACE_DEPARTMENTS_${workspaceSlug}`;
 /** The SWR key of who works in which department (derived from the department groups). */
 export const getDepartmentMembersKey = (workspaceSlug: string) => `WORKSPACE_DEPARTMENT_MEMBERS_${workspaceSlug}`;
+/** The SWR key of every department of the workspace, the ones that are switched off included (RACI). */
+export const getAllDepartmentsKey = (workspaceSlug: string) => `WORKSPACE_DEPARTMENTS_ALL_${workspaceSlug}`;
 /** The SWR key of every group of the workspace (shared with the groups settings). */
 export const getUserGroupsKey = (workspaceSlug: string) => `USER_GROUPS_${workspaceSlug}`;
 const HEX_COLOR = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;

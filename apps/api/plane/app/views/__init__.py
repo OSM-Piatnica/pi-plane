@@ -94,6 +94,7 @@ from .workspace.user_group import (
 from .workspace.initiative import (
     InitiativeDetailEndpoint,
     InitiativeEpicDetailEndpoint,
+    InitiativeEpicSearchEndpoint,
     InitiativeEpicsEndpoint,
     InitiativeListEndpoint,
     InitiativeProjectDetailEndpoint,
@@ -176,6 +177,7 @@ from .project.baseline import (
     ProjectBaselineVarianceEndpoint,
 )
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
+from .issue.raci import IssueRaciEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 

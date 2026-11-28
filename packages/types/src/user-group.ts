@@ -64,6 +64,8 @@ export type TDepartment = {
   color: string;
   sort_order: number;
   is_external: boolean;
+  /** False for a department that is switched off; only the list asked for with them carries such rows. */
+  is_active?: boolean;
 };
 
 export type TUserGroupMember = {

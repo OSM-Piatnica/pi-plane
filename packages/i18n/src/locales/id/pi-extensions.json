@@ -12,7 +12,11 @@
       "last_used_app": "Aplikasi yang terakhir digunakan"
     },
     "switch_to": {
-      "projects": "Beralih ke Proyek"
+      "projects": "Beralih ke Proyek",
+      "initiatives": "Beralih ke Inisiatif"
+    },
+    "apps": {
+      "initiatives": "Inisiatif"
     }
   },
   "approve": "Setujui",
@@ -295,7 +299,17 @@
     }
   },
   "workspace_features": {
-    "description": "Aktifkan atau nonaktifkan bagian Pi-Plane untuk semua orang di ruang kerja ini."
+    "description": "Aktifkan atau nonaktifkan bagian Pi-Plane untuk semua orang di ruang kerja ini.",
+    "items": {
+      "initiatives": {
+        "title": "Inisiatif",
+        "description": "Tujuan dan inisiatif lintas proyek, dengan kemajuan dan pembaruan status."
+      },
+      "raci": {
+        "description": "Departemen mendapat peran pada item kerja (penanggung jawab, penyetuju, dikonsultasikan, diinformasikan). Setiap proyek mengaktifkannya di fiturnya.",
+        "title": "RACI"
+      }
+    }
   },
   "workspace_settings": {
     "settings": {
@@ -731,6 +745,173 @@
             "title": "Tipe disimpan"
           }
         }
+      }
+    }
+  },
+  "initiatives": {
+    "title": "Inisiatif",
+    "all": "Semua inisiatif",
+    "without_goal": "Tanpa tujuan",
+    "no_goal": "Tidak ada tujuan",
+    "no_goals_yet": "Belum ada tujuan",
+    "no_lead": "Tidak ada pemimpin",
+    "new_goal": "Tujuan baru",
+    "new_initiative": "Inisiatif baru",
+    "create_goal": "Buat tujuan",
+    "create_initiative": "Buat inisiatif",
+    "expand_goal": "Bentangkan {name}",
+    "collapse_goal": "Ciutkan {name}",
+    "properties": "Properti",
+    "show_properties": "Tampilkan properti",
+    "hide_properties": "Sembunyikan properti",
+    "description_placeholder": "Untuk apa ini, dan bagaimana Anda tahu bahwa ini sudah selesai?",
+    "kind": {
+      "goal": "Tujuan",
+      "initiative": "Inisiatif"
+    },
+    "status": {
+      "planned": "Direncanakan",
+      "active": "Aktif",
+      "paused": "Dijeda",
+      "completed": "Selesai",
+      "cancelled": "Dibatalkan"
+    },
+    "health": {
+      "on_track": "Sesuai jalur",
+      "at_risk": "Dalam risiko",
+      "off_track": "Menyimpang",
+      "none": "Belum ada pembaruan",
+      "pick": "Kondisi"
+    },
+    "fields": {
+      "name": "Nama",
+      "status": "Status",
+      "health": "Kondisi",
+      "lead": "Pemimpin",
+      "dates": "Tanggal",
+      "goal": "Tujuan",
+      "created_by": "Dibuat oleh"
+    },
+    "form": {
+      "placeholder": "Nama inisiatif",
+      "goal_placeholder": "Nama tujuan",
+      "name_required": "Nama wajib diisi."
+    },
+    "empty": {
+      "title": "Belum ada inisiatif",
+      "description": "Kelompokkan pekerjaan lintas proyek ke dalam inisiatif, dan inisiatif ke dalam tujuan, untuk memantau kemajuannya di satu tempat.",
+      "sidebar": "Tujuan dan inisiatif yang Anda buat akan muncul di sini."
+    },
+    "not_found": {
+      "title": "Inisiatif tidak ditemukan",
+      "description": "Inisiatif ini mungkin telah dihapus, atau alamatnya salah."
+    },
+    "progress": {
+      "projects": "Item kerja di proyek yang ditautkan",
+      "epics": "Item kerja dari Epik yang ditautkan",
+      "done_of_total": "{done} dari {total} selesai",
+      "tooltip": "{percentage}% item kerja selesai",
+      "partial_tooltip": "{percentage}% item kerja yang dapat Anda lihat selesai",
+      "projects_empty": "Belum ada item kerja di proyek yang ditautkan.",
+      "epics_empty": "Belum ada item kerja turunan di Epik yang ditautkan.",
+      "hidden_projects": "{count, plural, one {# proyek yang ditautkan tidak dapat Anda lihat dan tidak dihitung.} other {# proyek yang ditautkan tidak dapat Anda lihat dan tidak dihitung.}}",
+      "hidden_epics": "{count, plural, one {# Epik yang ditautkan tidak dapat Anda lihat dan tidak dihitung.} other {# Epik yang ditautkan tidak dapat Anda lihat dan tidak dihitung.}}",
+      "hidden_children": "Beberapa item kerja turunan berada di proyek yang tidak dapat Anda lihat dan tidak dihitung.",
+      "explained": "Kedua angka dihitung terpisah: jika tidak, Epik di dalam proyek yang ditautkan akan terhitung dua kali."
+    },
+    "children": {
+      "title": "Inisiatif",
+      "empty": "Belum ada inisiatif yang mendukung tujuan ini."
+    },
+    "projects": {
+      "title": "Proyek",
+      "add": "Tambahkan proyek",
+      "empty": "Belum ada proyek yang ditautkan.",
+      "of_goal": "Proyek dari inisiatif-inisiatif tujuan ini. Tautkan proyek pada sebuah inisiatif.",
+      "remove": "Lepaskan tautan {name}",
+      "unknown": "Proyek",
+      "archived": "Diarsipkan"
+    },
+    "epics": {
+      "title": "Epik",
+      "add": "Tambahkan Epik",
+      "search": "Cari Epik berdasarkan nama atau ID",
+      "none_to_add": "Tidak ada Epik untuk ditambahkan",
+      "empty": "Belum ada Epik yang ditautkan.",
+      "of_goal": "Epik dari inisiatif-inisiatif tujuan ini. Tautkan Epik pada sebuah inisiatif.",
+      "remove": "Lepaskan tautan {name}",
+      "progress_of": "Kemajuan {name}"
+    },
+    "updates": {
+      "title": "Pembaruan status",
+      "text": "Pembaruan",
+      "placeholder": "Bagaimana perkembangannya?",
+      "post": "Kirim pembaruan",
+      "posted": "Pembaruan telah dikirim.",
+      "empty": "Belum ada pembaruan status."
+    },
+    "delete": {
+      "action": "Hapus",
+      "goal_title": "Hapus tujuan",
+      "initiative_title": "Hapus inisiatif",
+      "goal_description": "Hapus tujuan {name}? Inisiatifnya tetap ada, tanpa tujuan.",
+      "initiative_description": "Hapus inisiatif {name}? Tautannya ke proyek dan Epik serta pembaruan statusnya akan dihapus; proyek dan Epik itu sendiri tetap ada."
+    },
+    "toast": {
+      "goal_created": "Tujuan telah dibuat.",
+      "initiative_created": "Inisiatif telah dibuat.",
+      "goal_deleted": "Tujuan telah dihapus.",
+      "initiative_deleted": "Inisiatif telah dihapus.",
+      "error": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
+  "raci": {
+    "activity": {
+      "changed": "mengubah peran <department/> dari <old_role/> menjadi <new_role/>.",
+      "removed": "mencabut peran <old_role/> dari <department/>.",
+      "set": "memberi <department/> peran <new_role/>."
+    },
+    "color_by_department": "Departemen penanggung jawab",
+    "feature": {
+      "description": "Peran departemen pada item kerja: penanggung jawab, penyetuju, dikonsultasikan, diinformasikan.",
+      "title": "RACI"
+    },
+    "my_department": "Departemen saya",
+    "no_departments": "Ruang kerja belum memiliki departemen.",
+    "none": "Tidak ada",
+    "properties": {
+      "any": "Departemen (peran apa pun)",
+      "responsible": "Penanggung jawab",
+      "approver": "Penyetuju",
+      "consulted": "Dikonsultasikan",
+      "informed": "Diinformasikan"
+    },
+    "role_of": "Peran {department}",
+    "roles": {
+      "responsible": {
+        "letter": "R",
+        "name": "Penanggung jawab"
+      },
+      "approver": {
+        "letter": "A",
+        "name": "Penyetuju"
+      },
+      "consulted": {
+        "letter": "C",
+        "name": "Dikonsultasikan"
+      },
+      "informed": {
+        "letter": "I",
+        "name": "Diinformasikan"
+      }
+    },
+    "save_failed": "RACI tidak dapat disimpan.",
+    "title": "RACI"
+  },
+  "project_components": {
+    "duplicate_modal": {
+      "properties": {
+        "raci": "Peran RACI"
       }
     }
   }

@@ -31,9 +31,14 @@ export class UserGroupService extends APIService {
       });
   }
 
-  /** The departments that are switched on, in their order; open to every member of the workspace, guests included. */
-  async listDepartments(workspaceSlug: string): Promise<TDepartment[]> {
-    return this.get(`/api/workspaces/${workspaceSlug}/departments/`)
+  /**
+   * The departments that are switched on, in their order; open to every member of the workspace, guests included.
+   * With `includeInactive` the ones that are switched off come too (a work item may still name them in its RACI).
+   */
+  async listDepartments(workspaceSlug: string, includeInactive = false): Promise<TDepartment[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/departments/`, {
+      params: includeInactive ? { include_inactive: "true" } : undefined,
+    })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

@@ -17,6 +17,14 @@ export const extendedRoutes: RouteConfigEntry[] = [
           route("i/:workItem", "./(all)/short-work-item/page.tsx"),
         ]),
       ]),
+      // The Initiatives rail app (`docs/initiatives.md`, `docs/app-rail.md`)
+      layout("./(all)/[workspaceSlug]/(initiatives)/layout.tsx", [
+        route(":workspaceSlug/initiatives", "./(all)/[workspaceSlug]/(initiatives)/initiatives/page.tsx"),
+        route(
+          ":workspaceSlug/initiatives/:initiativeId",
+          "./(all)/[workspaceSlug]/(initiatives)/initiatives/[initiativeId]/page.tsx"
+        ),
+      ]),
     ]),
   ]),
 ];

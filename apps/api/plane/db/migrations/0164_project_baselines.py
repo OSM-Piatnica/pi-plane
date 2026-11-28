@@ -10,7 +10,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("db", "0161_workspace_features_default_app"),
+        ("db", "0163_issue_raci"),
     ]
 
     operations = [

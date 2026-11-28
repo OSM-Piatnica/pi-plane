@@ -96,6 +96,9 @@ import {
   SpreadsheetModuleColumn,
   SpreadsheetCycleColumn,
   SpreadsheetParentColumn,
+  SpreadsheetRaciApproverColumn,
+  SpreadsheetRaciConsultedColumn,
+  SpreadsheetRaciResponsibleColumn,
   SpreadsheetLinkColumn,
   SpreadsheetPriorityColumn,
   SpreadsheetStartDateColumn,
@@ -1051,6 +1054,9 @@ export const SPREADSHEET_COLUMNS: { [key in keyof IIssueDisplayProperties]: TSpr
   updated_on: SpreadsheetUpdatedOnColumn,
   attachment_count: SpreadsheetAttachmentColumn,
   parent: SpreadsheetParentColumn,
+  raci_responsible: SpreadsheetRaciResponsibleColumn,
+  raci_approver: SpreadsheetRaciApproverColumn,
+  raci_consulted: SpreadsheetRaciConsultedColumn,
 };
 
 export const useGroupByOptions = (

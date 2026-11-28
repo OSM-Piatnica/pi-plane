@@ -4,6 +4,7 @@
  * See the LICENSE file for details.
  */
 
+import { EUserWorkspaceRoles } from "@plane/types";
 import type { TAppRailApp, TAppRailAppKey } from "@plane/types";
 
 /**
@@ -25,6 +26,16 @@ const APP_RAIL_APP_DEFINITIONS: { [TKey in TAppRailAppKey]: TAppRailApp & { key:
     isDefault: true,
     getHref: (workspaceSlug) => `/${workspaceSlug}/`,
     isEnabled: () => true,
+  },
+  initiatives: {
+    key: "initiatives",
+    i18n_label: "app_rail.apps.initiatives",
+    i18n_switch_label: "app_rail.switch_to.initiatives",
+    routeSegments: ["initiatives"],
+    getHref: (workspaceSlug) => `/${workspaceSlug}/initiatives/`,
+    // a workspace admin switches it on; guests have no access to initiatives (the API refuses them)
+    isEnabled: ({ features, workspaceRole }) =>
+      features.initiatives && workspaceRole !== undefined && workspaceRole >= EUserWorkspaceRoles.MEMBER,
   },
 };
 
