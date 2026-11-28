@@ -91,6 +91,7 @@ from .workspace.user_group import (
     UserGroupMemberDetailEndpoint,
     UserGroupMembersEndpoint,
 )
+from .workspace.focus import ProjectFocusEndpoint, WorkspaceFocusEndpoint
 from .workspace.initiative import (
     InitiativeDetailEndpoint,
     InitiativeEpicDetailEndpoint,
