@@ -395,6 +395,7 @@
             "labels": "Štítky",
             "modules": "Moduly",
             "parents": "Nadřazené pracovní položky",
+            "raci": "Role RACI",
             "relations": "Vztahy mezi pracovními položkami",
             "select_all": "Vybrat vše",
             "subscribers": "Odběratelé"

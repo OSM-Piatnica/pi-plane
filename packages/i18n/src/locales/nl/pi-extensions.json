@@ -395,6 +395,7 @@
             "labels": "Labels",
             "modules": "Modules",
             "parents": "Bovenliggende werkitems",
+            "raci": "RACI-rollen",
             "relations": "Relaties tussen werkitems",
             "select_all": "Alles selecteren",
             "subscribers": "Abonnees"

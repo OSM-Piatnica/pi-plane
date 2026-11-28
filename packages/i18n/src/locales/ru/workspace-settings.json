@@ -160,6 +160,7 @@
             "is_draft": "Признак черновика",
             "assignees": "Исполнители",
             "group_assignees": "Группы-исполнители",
+            "raci": "Роли RACI",
             "subscribers": "Подписчики",
             "created_by_name": "Создал",
             "start_date": "Дата начала",

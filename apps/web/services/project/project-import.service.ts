@@ -18,6 +18,7 @@ export type TWorkItemImportOptions = {
   labels: boolean;
   modules: boolean;
   cycles: boolean;
+  raci: boolean;
 };
 
 export type TWorkItemImportResult = {

@@ -395,6 +395,7 @@
             "labels": "Etiquetas",
             "modules": "Módulos",
             "parents": "Elementos de trabajo padre",
+            "raci": "Roles RACI",
             "relations": "Relaciones entre elementos de trabajo",
             "select_all": "Seleccionar todo",
             "subscribers": "Suscriptores"

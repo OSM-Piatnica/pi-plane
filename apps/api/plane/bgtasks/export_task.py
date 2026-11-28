@@ -29,8 +29,10 @@ from plane.db.models import (
     IssueComment,
     IssueGroupAssignee,
     IssuePropertyValue,
+    IssueRaci,
     IssueRelation,
     IssueSubscriber,
+    Profile,
     Project,
     ProjectUserProperty,
     WorkspaceMember,
@@ -40,6 +42,7 @@ from plane.utils.exception_logger import log_exception
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.porters.exporter import DataExporter
 from plane.utils.porters.serializers.issue import IssueExportSerializer
+from plane.utils.raci_columns import letters_for_language
 from plane.utils.s3_config import s3_client_config
 
 
@@ -267,6 +270,7 @@ def issue_export_task(
                     "issue_group_assignee",
                     queryset=IssueGroupAssignee.objects.select_related("group"),
                 ),
+                Prefetch("issue_raci", queryset=IssueRaci.objects.select_related("group")),
                 "issue_link",
                 Prefetch(
                     "type_property_values",
@@ -311,7 +315,15 @@ def issue_export_task(
                 IssueExportSerializer,
                 format_type=provider,
                 csv_delimiter=csv_delimiter,
-                context={"member_emails": member_emails},
+                context={
+                    "member_emails": member_emails,
+                    # RACI letters as the person who exports reads them: O / Z / K / I in Polish, R / A / C / I else
+                    "raci_letters": letters_for_language(
+                        Profile.objects.filter(user_id=exporter_instance.initiated_by_id)
+                        .values_list("language", flat=True)
+                        .first()
+                    ),
+                },
                 export_fields=export_fields,
             )
         except ValueError as e:

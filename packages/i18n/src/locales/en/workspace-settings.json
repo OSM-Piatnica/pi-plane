@@ -160,6 +160,7 @@
             "is_draft": "Draft flag",
             "assignees": "Assignees",
             "group_assignees": "Group assignees",
+            "raci": "RACI roles",
             "subscribers": "Subscribers",
             "created_by_name": "Created by",
             "start_date": "Start date",

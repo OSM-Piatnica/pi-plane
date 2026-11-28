@@ -160,6 +160,7 @@
             "is_draft": "Příznak konceptu",
             "assignees": "Přiřazení",
             "group_assignees": "Přiřazené skupiny",
+            "raci": "Role RACI",
             "subscribers": "Odběratelé",
             "created_by_name": "Vytvořil(a)",
             "start_date": "Datum zahájení",

@@ -160,6 +160,7 @@
             "is_draft": "Conceptmarkering",
             "assignees": "Toegewezen aan",
             "group_assignees": "Toegewezen groepen",
+            "raci": "RACI-rollen",
             "subscribers": "Abonnees",
             "created_by_name": "Gemaakt door",
             "start_date": "Startdatum",

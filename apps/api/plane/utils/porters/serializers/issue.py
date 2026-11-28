@@ -12,8 +12,11 @@ from rest_framework import serializers
 
 # Module imports
 from plane.app.serializers import IssueSerializer
+from plane.db.models import GroupKind
 from plane.utils.group_paths import escape_list_entry, escape_name, group_paths
 from plane.utils.issue_relation_mapper import get_inverse_relation
+from plane.utils.raci import project_raci_enabled
+from plane.utils.raci_columns import department_token, format_raci_cell
 
 
 # Columns every work item export carries, because a file without them cannot be imported again:
@@ -35,7 +38,7 @@ ISSUE_EXPORT_FIELD_GROUPS = {
         "estimate",
         "is_draft",
     ),
-    "people": ("assignees", "group_assignees", "subscribers", "created_by_name"),
+    "people": ("assignees", "group_assignees", "raci", "subscribers", "created_by_name"),
     "dates": (
         "start_date",
         "finish_date",
@@ -112,6 +115,7 @@ class IssueExportSerializer(IssueSerializer):
     issue_type = serializers.SerializerMethodField()
     assignees = serializers.SerializerMethodField()
     group_assignees = serializers.SerializerMethodField()
+    raci = serializers.SerializerMethodField()
     parent = serializers.SerializerMethodField()
     labels = serializers.SerializerMethodField()
     cycles = serializers.SerializerMethodField()
@@ -146,6 +150,7 @@ class IssueExportSerializer(IssueSerializer):
             "priority",
             "assignees",
             "group_assignees",
+            "raci",
             "subscribers",
             "created_by_name",
             "start_date",
@@ -200,6 +205,29 @@ class IssueExportSerializer(IssueSerializer):
         )
         # a comma in a name is written "\\," so the column can be read as comma separated text (Excel cells are)
         return sorted(escape_list_entry(name) for name in names)
+
+    def get_raci(self, obj):
+        """
+        The roles of departments as one cell, "O:RM;K:PR" (see ``plane.utils.raci_columns``), in the letters of the
+        language in ``context["raci_letters"]`` ("pl" or "en", English by default). Empty where RACI is off.
+        """
+        enabled = self.__dict__.setdefault("_raci_enabled", {})
+        if obj.project_id not in enabled:
+            enabled[obj.project_id] = project_raci_enabled(obj.project)
+        if not enabled[obj.project_id]:
+            return ""
+        rows = [
+            row
+            for row in obj.issue_raci.all()
+            if row.deleted_at is None
+            and row.group
+            and row.group.deleted_at is None
+            and row.group.kind == GroupKind.DEPARTMENT
+        ]
+        rows.sort(key=lambda row: (row.group.sort_order, row.group.name))
+        return format_raci_cell(
+            [(row.role, department_token(row.group)) for row in rows], self.context.get("raci_letters", "en")
+        )
 
     def get_subscribers(self, obj):
         """Return list of subscriber e-mails."""

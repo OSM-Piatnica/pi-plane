@@ -160,6 +160,7 @@
             "is_draft": "草稿标记",
             "assignees": "负责人",
             "group_assignees": "负责用户组",
+            "raci": "RACI 角色",
             "subscribers": "订阅者",
             "created_by_name": "创建者",
             "start_date": "开始日期",

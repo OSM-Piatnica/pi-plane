@@ -160,6 +160,7 @@
             "is_draft": "Entwurfskennzeichen",
             "assignees": "Zugewiesene",
             "group_assignees": "Zugewiesene Gruppen",
+            "raci": "RACI-Rollen",
             "subscribers": "Abonnenten",
             "created_by_name": "Erstellt von",
             "start_date": "Startdatum",

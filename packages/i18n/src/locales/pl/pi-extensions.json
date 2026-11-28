@@ -409,6 +409,7 @@
             "labels": "Etykiety",
             "modules": "Moduły",
             "parents": "Elementy nadrzędne",
+            "raci": "Role RACI",
             "relations": "Relacje między elementami",
             "select_all": "Zaznacz wszystko",
             "subscribers": "Obserwujący"

@@ -160,6 +160,7 @@
             "is_draft": "Ознака чернетки",
             "assignees": "Виконавці",
             "group_assignees": "Групи-виконавці",
+            "raci": "Ролі RACI",
             "subscribers": "Підписники",
             "created_by_name": "Створив",
             "start_date": "Дата початку",

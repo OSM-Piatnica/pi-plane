@@ -64,6 +64,35 @@ sees the work items they created only sees the roles of those.
 when the work items are copied, their roles (option "RACI roles" in the "People" group). Departments belong to
 the workspace, so the copy names the same departments.
 
+## Import and export
+
+**Export work items** (workspace settings → Exports) writes a column **RACI** (in the "People" group of
+columns), one cell per work item, for example `O:RM;O:PR;Z:ZA;K:KS`:
+
+- each entry is a letter, a colon and a department; entries are separated by `;`;
+- the department is its code, or its name when it has no code; a `;` inside a name is written `\;`;
+- the letters are those of the language of the person who exports: O / Z / K / I in Polish, R / A / C / I in
+  the other languages; roles come in the order responsible, approver, consulted, informed;
+- the cell is empty for a project (or a workspace) with RACI off.
+
+**Import work items** (workspace settings → Imports) reads the same column, with Polish or English letters
+(both mean the same roles; I is "informed" in both), in upper or lower case. Labels of the form `O:RM`, as the
+Gantt-RACI prototype keeps roles, become roles too, instead of labels. Option "RACI roles" in "What to import"
+leaves all of it out. A department is found by its code, then by its name.
+
+Roles come in only when the target project has RACI on (workspace and project) and the person importing may
+change roles (an admin or the lead of the project). Otherwise the work items are imported without roles, one
+warning says why, and `O:XX` labels stay labels. The import reports and skips:
+
+- an entry that is not a letter, a colon and a department;
+- a department that is not known (a label that names no department stays a label instead);
+- a name shared by several departments (use the code);
+- a department that is switched off (it cannot be given a role, as in the app);
+- a second role for the same department on one work item (the RACI column comes before labels, and the first
+  role wins).
+
+An import writes no activity entries for the roles, as it writes none for labels or modules.
+
 ## API
 
 - `GET /api/workspaces/<slug>/projects/<project_id>/issues/<issue_id>/raci/` answers
@@ -84,7 +113,7 @@ the workspace, so the copy names the same departments.
 ## Not there yet
 
 - Notifications by role and the project warnings (a work item without a responsible department, and so on) come
-  with D3 of the roadmap; import and export of a RACI column with D4; "my view" with D9.
+  with D3 of the roadmap; "my view" with D9.
 - One department per person is the rule of [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508) for now.
   "My department" already takes every active department group a person belongs to, so it keeps working if that
   rule changes.

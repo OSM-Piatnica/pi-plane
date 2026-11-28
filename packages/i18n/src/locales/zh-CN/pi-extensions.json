@@ -395,6 +395,7 @@
             "labels": "标签",
             "modules": "模块",
             "parents": "父工作项",
+            "raci": "RACI 角色",
             "relations": "工作项之间的关联",
             "select_all": "全选",
             "subscribers": "订阅者"

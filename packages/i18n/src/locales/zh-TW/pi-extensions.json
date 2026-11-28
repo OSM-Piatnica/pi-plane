@@ -395,6 +395,7 @@
             "labels": "標籤",
             "modules": "模組",
             "parents": "上層工作項目",
+            "raci": "RACI 角色",
             "relations": "工作項目之間的關聯",
             "select_all": "全選",
             "subscribers": "訂閱者"
