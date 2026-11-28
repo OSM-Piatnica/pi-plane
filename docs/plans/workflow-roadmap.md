@@ -29,6 +29,7 @@ Updated by every roadmap PR (see "Keeping this plan current" below). Steps not l
 | D8c    | merged          | [#540](https://github.com/OSM-Piatnica/pi-plane/pull/540)                                                                                                                       | decision 15 taken; schedule analysis still uses a parent's own dates (see D8c)                                                                               |
 | F1     | merged          | [#472](https://github.com/OSM-Piatnica/pi-plane/pull/472), [#477](https://github.com/OSM-Piatnica/pi-plane/pull/477)                                                            | `0159_initiatives`; `docs/initiatives.md`                                                                                                                    |
 | F2     | merged          | [#545](https://github.com/OSM-Piatnica/pi-plane/pull/545)                                                                                                                       | no migration; Initiatives is the first available feature switch; Epic figure `epic_progress`; see F2                                                         |
+| F3     | open            | [#561](https://github.com/OSM-Piatnica/pi-plane/pull/561)                                                                                                                       | no migration; `initiative_ids` on the project list; a goal in the filter means its initiatives' projects; see F3                                             |
 | G1     | merged          | [#474](https://github.com/OSM-Piatnica/pi-plane/pull/474)                                                                                                                       | `docs/app-rail.md`                                                                                                                                           |
 | G2, G3 | merged          | [#480](https://github.com/OSM-Piatnica/pi-plane/pull/480)                                                                                                                       | `0161`; nothing visible until a second app or a feature is available; `docs/workspace-features.md`                                                           |
 
@@ -507,9 +508,18 @@ Leftovers to reuse: the reserved slug `initiatives`, `EFileAssetType.INITIATIVE_
   - The `initiatives` feature switch is now available, and the endpoints answer 403 while it is off (a check F1 did not have). The rail app is for workspace admins and members only, as the API refuses guests.
   - Health is set only through status updates in the app; the properties panel shows it.
   - Images in descriptions use the new `INITIATIVE_DESCRIPTION` asset type, bound to the workspace.
-    **F3. Project list: filter and group by initiative; initiative chip in the project header. Size S.**
-    **F4. Roadmap timeline: initiatives and their projects on a time axis (reuse `store/timeline/` and the gantt chart blocks). Size M.**
-    **F5. Goals: goal level, progress across initiatives, optional target metric (name, start, target, current value). Size M.**
+
+**F3. Project list: filter and group by initiative; initiative chip in the project header. Size S. Open: #561.**
+
+- Delivered without a migration. Decisions:
+  - The project list (`projects/details/`) and one project return `initiative_ids` per project in a fixed number of queries. It is empty while the feature is off, for workspace guests, and for projects whose numbers the person may not see (`project_access`), as `project_ids` and the `project` filter of the initiative list.
+  - The filter offers goals: a goal keeps the projects of its initiatives. Goals get no group of their own in "Group by"; a group's heading names the goal. "No initiative" is a filter value and the last group; a project in several initiatives shows in each of their groups.
+  - The chip shows in both project navigation modes (breadcrumb and tabs): the first initiative with "+N" and a menu for several. Projects linked or unlinked in the Initiatives app update the list without a reload.
+  - The grouping is a display option in memory, like the ordering; it is not saved per user.
+
+**F4. Roadmap timeline: initiatives and their projects on a time axis (reuse `store/timeline/` and the gantt chart blocks). Size M.**
+
+**F5. Goals: goal level, progress across initiatives, optional target metric (name, start, target, current value). Size M.**
 
 ## 8. Workstream G: navigation (request 6)
 

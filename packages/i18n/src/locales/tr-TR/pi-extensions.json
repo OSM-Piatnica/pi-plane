@@ -863,6 +863,10 @@
       "goal_deleted": "Hedef silindi.",
       "initiative_deleted": "Girişim silindi.",
       "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+    },
+    "project_list": {
+      "no_initiative": "Girişim yok",
+      "of_project": "Bu projenin girişimleri"
     }
   },
   "raci": {

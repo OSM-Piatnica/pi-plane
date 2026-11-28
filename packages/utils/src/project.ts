@@ -11,6 +11,8 @@ import type { TProject, TProjectDisplayFilters, TProjectFilters, TProjectOrderBy
 // local imports
 import { getDate } from "./datetime";
 import { satisfiesDateFilter } from "./filter";
+import { matchesInitiativeFilter } from "./project-initiatives";
+import type { TInitiativeIdsByGoal } from "./project-initiatives";
 import { matchesGroupFilter } from "./user-group-filter";
 
 /**
@@ -58,12 +60,14 @@ export const projectIdentifierSanitizer = (identifier: string): string =>
  * @param {TProject} project
  * @param {TProjectFilters} filters
  * @param {TProjectDisplayFilters} displayFilters
+ * @param options.initiativeIdsByGoal - The initiatives of each goal, for a goal in the initiative filter
  * @returns {boolean}
  */
 export const shouldFilterProject = (
   project: TProject,
   displayFilters: TProjectDisplayFilters,
-  filters: TProjectFilters
+  filters: TProjectFilters,
+  options: { initiativeIdsByGoal?: TInitiativeIdsByGoal } = {}
 ): boolean => {
   let fallsInFilters = true;
   Object.keys(filters).forEach((key) => {
@@ -80,6 +84,10 @@ export const shouldFilterProject = (
     }
     if (filterKey === "groups" && filters.groups && filters.groups.length > 0)
       fallsInFilters = fallsInFilters && matchesGroupFilter(filters.groups, project);
+    if (filterKey === "initiatives" && filters.initiatives && filters.initiatives.length > 0)
+      fallsInFilters =
+        fallsInFilters &&
+        matchesInitiativeFilter(filters.initiatives, project.initiative_ids, options.initiativeIdsByGoal);
     if (filterKey === "created_at" && filters.created_at && filters.created_at.length > 0) {
       const createdDate = getDate(project.created_at);
       filters.created_at.forEach((dateFilter) => {

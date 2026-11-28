@@ -863,6 +863,10 @@
       "goal_deleted": "Cíl byl smazán.",
       "initiative_deleted": "Iniciativa byla smazána.",
       "error": "Něco se pokazilo. Zkuste to prosím znovu."
+    },
+    "project_list": {
+      "no_initiative": "Bez iniciativy",
+      "of_project": "Iniciativy tohoto projektu"
     }
   },
   "raci": {

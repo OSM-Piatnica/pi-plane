@@ -863,6 +863,10 @@
       "goal_deleted": "Obiectivul a fost șters.",
       "initiative_deleted": "Inițiativa a fost ștearsă.",
       "error": "Ceva nu a funcționat. Încercați din nou."
+    },
+    "project_list": {
+      "no_initiative": "Nicio inițiativă",
+      "of_project": "Inițiativele acestui proiect"
     }
   },
   "raci": {

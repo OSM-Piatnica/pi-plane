@@ -863,6 +863,10 @@
       "goal_deleted": "目标已删除。",
       "initiative_deleted": "举措已删除。",
       "error": "出现错误，请重试。"
+    },
+    "project_list": {
+      "no_initiative": "无举措",
+      "of_project": "此项目的举措"
     }
   },
   "raci": {

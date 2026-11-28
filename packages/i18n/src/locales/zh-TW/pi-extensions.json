@@ -863,6 +863,10 @@
       "goal_deleted": "已刪除目標。",
       "initiative_deleted": "已刪除舉措。",
       "error": "發生錯誤，請再試一次。"
+    },
+    "project_list": {
+      "no_initiative": "無舉措",
+      "of_project": "此專案的舉措"
     }
   },
   "raci": {

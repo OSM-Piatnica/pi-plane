@@ -64,6 +64,20 @@ export const canLinkInProject = (
   return projectRole !== undefined && projectRole >= EUserPermissions.MEMBER;
 };
 
+/** The initiatives in tree order (each goal's initiatives, then those without a goal): the groups of the project list */
+export const getInitiativeOrder = (tree: readonly TInitiativeTreeNode[]): string[] =>
+  tree.flatMap((node) => node.initiatives.map((initiative) => initiative.id));
+
+/** The initiatives of each goal, for a goal in the project list's initiative filter */
+export const getInitiativeIdsByGoal = (tree: readonly TInitiativeTreeNode[]): Record<string, string[]> =>
+  Object.fromEntries(
+    tree.flatMap((node) => (node.goal ? [[node.goal.id, node.initiatives.map((initiative) => initiative.id)]] : []))
+  );
+
+/** Workspace admins and members read initiatives; the API refuses guests (`docs/initiatives.md`) */
+export const canReadInitiatives = (workspaceRole: EUserWorkspaceRoles | number | undefined): boolean =>
+  workspaceRole === EUserWorkspaceRoles.ADMIN || workspaceRole === EUserWorkspaceRoles.MEMBER;
+
 /**
  * The message of a failed initiative request: the API answers `{ error }` or, for a refused
  * field, `{ field: [message] }`. Anything else gets the general message.

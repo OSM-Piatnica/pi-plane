@@ -863,6 +863,10 @@
       "goal_deleted": "Het doel is verwijderd.",
       "initiative_deleted": "Het initiatief is verwijderd.",
       "error": "Er is iets misgegaan. Probeer het opnieuw."
+    },
+    "project_list": {
+      "no_initiative": "Geen initiatief",
+      "of_project": "Initiatieven van dit project"
     }
   },
   "raci": {

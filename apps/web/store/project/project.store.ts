@@ -20,7 +20,8 @@ import type {
   TProjectDuplicatePayload,
 } from "@plane/types";
 // helpers
-import { orderProjects, shouldFilterProject } from "@plane/utils";
+import { getWorkspaceFeatureFlags, orderProjects, shouldFilterProject } from "@plane/utils";
+import { getInitiativeIdsByGoal } from "@/helpers/initiatives";
 // services
 import { IssueLabelService, IssueService } from "@/services/issue";
 import { ProjectService, ProjectStateService, ProjectArchiveService } from "@/services/project";
@@ -62,6 +63,8 @@ export interface IProjectStore {
 
   // helper actions
   processProjectAfterCreation: (workspaceSlug: string, data: TProject) => void;
+  /** Keeps `initiative_ids` of the projects in step after they are linked to or unlinked from an initiative */
+  updateProjectInitiativeLinks: (projectIds: string[], initiativeId: string, isLinked: boolean) => void;
 
   // fetch actions
   fetchPartialProjects: (workspaceSlug: string) => Promise<TPartialProject[]>;
@@ -128,6 +131,7 @@ export class ProjectStore implements IProjectStore {
       currentProjectNextSequenceId: computed,
       // helper actions
       processProjectAfterCreation: action,
+      updateProjectInitiativeLinks: action,
       // fetch actions
       fetchPartialProjects: action,
       fetchProjects: action,
@@ -176,12 +180,16 @@ export class ProjectStore implements IProjectStore {
       searchQuery,
     } = this.rootStore.projectRoot.projectFilter;
     if (!workspaceDetails || !displayFilters || !filters) return;
+    // The initiative filter counts only while the feature is on; a goal stands for its initiatives
+    const initiativesOn = getWorkspaceFeatureFlags(workspaceDetails.enabled_features).initiatives;
+    const appliedFilters = initiativesOn ? filters : { ...filters, initiatives: undefined };
+    const initiativeIdsByGoal = initiativesOn ? getInitiativeIdsByGoal(this.rootStore.initiative.tree) : {};
     let workspaceProjects = Object.values(this.projectMap).filter(
       (p) =>
         p.workspace === workspaceDetails.id &&
         (p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           p.identifier.toLowerCase().includes(searchQuery.toLowerCase())) &&
-        shouldFilterProject(p, displayFilters, filters)
+        shouldFilterProject(p, displayFilters, appliedFilters, { initiativeIdsByGoal })
     );
     workspaceProjects = orderProjects(workspaceProjects, displayFilters.order_by);
     return workspaceProjects.map((p) => p.id);
@@ -311,6 +319,17 @@ export class ProjectStore implements IProjectStore {
       set(this.projectMap, [data.id], data);
       // updating the user project role in workspaceProjectsPermissions
       set(this.rootStore.user.permission.workspaceProjectsPermissions, [workspaceSlug, data.id], data.member_role);
+    });
+  };
+
+  updateProjectInitiativeLinks = (projectIds: string[], initiativeId: string, isLinked: boolean) => {
+    runInAction(() => {
+      for (const projectId of projectIds) {
+        const project = this.projectMap[projectId];
+        if (!project) continue;
+        const others = (project.initiative_ids ?? []).filter((id) => id !== initiativeId);
+        project.initiative_ids = isLinked ? [...others, initiativeId] : others;
+      }
     });
   };
 

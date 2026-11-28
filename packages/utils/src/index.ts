@@ -33,6 +33,7 @@ export * from "./page";
 export * from "./permission";
 export * from "./project-views";
 export * from "./project";
+export * from "./project-initiatives";
 export * from "./rich-filters";
 export * from "./router";
 export * from "./sharepoint-file-size";

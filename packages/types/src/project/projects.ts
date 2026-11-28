@@ -79,6 +79,11 @@ export interface IProject extends IPartialProject {
   has_group?: boolean;
   /** Whether the project has a project group among the requester's groups. */
   in_my_groups?: boolean;
+  /**
+   * The initiatives the project is linked to (never goals), in list order. Empty while the Initiatives feature is
+   * off, for workspace guests, and for a project whose work items the person may not see (`docs/initiatives.md`).
+   */
+  initiative_ids?: string[];
   timezone?: string;
   start_of_the_week?: EStartOfTheWeek;
   /** Days that count as non-working time in this project, 0 = Sunday ... 6 = Saturday. */

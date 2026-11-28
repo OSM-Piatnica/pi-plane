@@ -18,8 +18,10 @@ import { FiltersDropdown } from "@/components/issues/issue-layouts/filters";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useProjectFilter } from "@/hooks/store/use-project-filter";
+import { useProjectInitiatives } from "@/hooks/use-project-initiatives";
 // local imports
 import { ProjectFiltersSelection } from "./dropdowns/filters";
+import { ProjectGroupByDropdown } from "./dropdowns/group-by";
 import { ProjectOrderByDropdown } from "./dropdowns/order-by";
 
 type Props = {
@@ -48,6 +50,7 @@ const HeaderFilters = observer(function HeaderFilters({
   const {
     workspace: { workspaceMemberIds },
   } = useMember();
+  const { isEnabled: isInitiativesEnabled } = useProjectInitiatives();
   const handleFilters = useCallback(
     (key: keyof TProjectFilters, value: string | string[]) => {
       if (!workspaceSlug) return;
@@ -90,6 +93,16 @@ const HeaderFilters = observer(function HeaderFilters({
         }}
         isMobile={isMobile}
       />
+      {isInitiativesEnabled && (
+        <ProjectGroupByDropdown
+          value={displayFilters?.group_by}
+          onChange={(val) => {
+            if (!workspaceSlug) return;
+            updateDisplayFilters(workspaceSlug.toString(), { group_by: val });
+          }}
+          isMobile={isMobile}
+        />
+      )}
       <div className={cn(filterClassname)}>
         <FiltersDropdown
           icon={<FilterOutline className="h-3 w-3" />}
