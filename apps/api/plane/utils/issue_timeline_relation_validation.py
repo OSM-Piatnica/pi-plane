@@ -5,10 +5,12 @@
 from collections import defaultdict
 
 from plane.db.models import Issue, IssueRelation
+from plane.utils.issue_effective_span import EffectiveSpans, is_later
 from plane.utils.issue_relation_constraints import (
     STORED_TIMELINE_RELATION_TYPES,
     TIMELINE_RELATION_TYPES,
     date_violation_error,
+    dependent_side,
     is_status_transition_allowed,
     is_timeline_relation_satisfied,
     status_violation_error,
@@ -36,7 +38,16 @@ def weekend_days_of(issue):
     return default_weekend_days() if days is None else days
 
 
-def _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
+def _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag, spans=None):
+    """
+    Whether the rule holds. With ``spans`` the predecessor counts with its effective span, its own dates widened by
+    those of its sub-work items (``issue_effective_span``); the successor always counts with its own dates.
+    """
+    if spans is not None:
+        if dependent_side(relation_type) == "issue":
+            related_dates = spans.span(related, related_dates)
+        else:
+            issue_dates = spans.span(issue, issue_dates)
     return is_timeline_relation_satisfied(
         relation_type, issue_dates, related_dates, lag, weekend_days_of(issue), weekend_days_of(related)
     )
@@ -94,6 +105,9 @@ def validate_issue_timeline_relations(
         state_group = getattr(getattr(issue, "state", None), "group", None)
 
     issue_ref = issue_display_ref(issue)
+    spans = EffectiveSpans()
+    if check_dates:
+        spans.set_dates(issue.id, issue_dates["start_date"], issue_dates["finish_date"])
 
     for relation_type, related, lag in _iter_timeline_constraints(issue):
         related_ref = issue_display_ref(related)
@@ -103,13 +117,56 @@ def validate_issue_timeline_relations(
         }
         related_group = getattr(getattr(related, "state", None), "group", None)
 
-        if check_dates and not _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag):
+        if check_dates and not _is_satisfied(relation_type, issue, issue_dates, related, related_dates, lag, spans):
             return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
         if check_status and state_group is not None:
             if not is_status_transition_allowed(relation_type, state_group, related_group):
                 return status_violation_error(relation_type, issue_ref, related_ref)
 
+    if check_dates:
+        return validate_ancestor_spans([issue], spans)
+    return None
+
+
+def validate_ancestor_spans(changed_issues, spans):
+    """
+    Check the relations of the parents (at any level) of ``changed_issues`` whose effective span the planned dates in
+    ``spans`` make later: a sub-work item that now ends after its parent's successor starts breaks that relation.
+
+    Only the relations in which the parent is the predecessor are checked, and only for a parent whose span gets
+    later, so a change that keeps or shortens an overrun that was already there is not refused for it. Returns an
+    error payload naming the parent, or None.
+    """
+    changed_ids = {str(issue.id) for issue in changed_issues}
+    ancestor_ids = []
+    for issue in changed_issues:
+        # a work item without a parent has no ancestor: the project's tree is not even loaded
+        if getattr(issue, "parent_id", None) is None:
+            continue
+        for ancestor_id in spans.ancestors(issue):
+            if str(ancestor_id) not in changed_ids and ancestor_id not in ancestor_ids:
+                ancestor_ids.append(ancestor_id)
+    if not ancestor_ids:
+        return None
+
+    ancestors = Issue.objects.select_related("state", "project").in_bulk(ancestor_ids)
+    for ancestor_id in ancestor_ids:
+        ancestor = ancestors.get(ancestor_id)
+        if ancestor is None:
+            continue
+        before, after = spans.stored_span(ancestor), spans.span(ancestor)
+        if not (
+            is_later(after["start_date"], before["start_date"]) or is_later(after["finish_date"], before["finish_date"])
+        ):
+            continue
+        for relation_type, related, lag in _iter_timeline_constraints(ancestor):
+            if dependent_side(relation_type) == "issue":
+                continue
+            if not is_timeline_relation_satisfied(
+                relation_type, after, spans.own_dates(related), lag, (), weekend_days_of(related)
+            ):
+                return date_violation_error(relation_type, issue_display_ref(ancestor), issue_display_ref(related), lag)
     return None
 
 
@@ -163,7 +220,7 @@ def validate_new_timeline_relation(issue, related_issue, relation_type, lag=0):
     issue_ref = issue_display_ref(issue)
     related_ref = issue_display_ref(related_issue)
 
-    if not _is_satisfied(relation_type, issue, issue_dates, related_issue, related_dates, lag):
+    if not _is_satisfied(relation_type, issue, issue_dates, related_issue, related_dates, lag, EffectiveSpans()):
         return date_violation_error(relation_type, issue_ref, related_ref, lag)
 
     if not is_status_transition_allowed(relation_type, issue_group, related_group):
@@ -223,6 +280,10 @@ def validate_issue_dates_batch(updates, issues_by_id):
     if not proposed:
         return None
 
+    spans = EffectiveSpans()
+    for issue_id, issue_dates in proposed.items():
+        spans.set_dates(issue_id, issue_dates["start_date"], issue_dates["finish_date"])
+
     constraints = _fetch_timeline_constraints(list(proposed.keys()))
 
     for issue_id, issue_dates in proposed.items():
@@ -233,10 +294,12 @@ def validate_issue_dates_batch(updates, issues_by_id):
                 str(related.id),
                 {"start_date": related.start_date, "finish_date": related.finish_date},
             )
-            if not _is_satisfied(relation_type, issues_by_id[issue_id], issue_dates, related, related_dates, lag):
+            if not _is_satisfied(
+                relation_type, issues_by_id[issue_id], issue_dates, related, related_dates, lag, spans
+            ):
                 return date_violation_error(relation_type, issue_ref, issue_display_ref(related), lag)
 
-    return None
+    return validate_ancestor_spans([issues_by_id[issue_id] for issue_id in proposed], spans)
 
 
 def get_issue_with_timeline_prefetch(issue_id):

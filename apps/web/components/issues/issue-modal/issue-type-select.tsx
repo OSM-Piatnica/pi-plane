@@ -16,6 +16,8 @@ import { Select } from "@plane/blocks/select";
 import { useTranslation } from "@plane/i18n";
 import type { TBulkIssueProperties, TIssue, TProjectIssueType } from "@plane/types";
 import { SwitcherIcon } from "@/components/common/switcher-label";
+import { IssueTypeLockedLabel } from "@/components/issues/issue-details/issue-type-locked-label";
+import { getLockedProjectIssueType, getSelectableProjectIssueTypes } from "@/helpers/issue-type-options";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectIssueTypes } from "@/hooks/use-project-issue-types";
 
@@ -35,12 +37,74 @@ export type TIssueTypeSelectProps<T extends Partial<TIssueFields>> = {
   dropDownContainerClassName?: string;
   showMandatoryFieldInfo?: boolean;
   handleFormChange?: () => void;
+  /** Offer the system-managed kinds (approval, review) too. Off: a person does not pick those by hand. */
+  includeSystemManaged?: boolean;
 };
+
+type TIssueTypeOptionsProps = {
+  options: TProjectIssueType[];
+  value: string | null;
+  onChange: (value: string | null) => void;
+  disabled: boolean;
+  /** Shown while nothing is selected */
+  label: string;
+  renderChevron: boolean;
+};
+
+/** The types a person may pick, as a select; nothing when there are none. */
+function IssueTypeOptions(props: TIssueTypeOptionsProps) {
+  const { options, value, onChange, disabled, label, renderChevron } = props;
+  if (options.length === 0) return null;
+  const selectedOption = options.find((row) => row.issue_type_id === value) ?? null;
+  const selected = selectedOption?.issue_type_detail;
+
+  return (
+    <div className="min-w-0 sm:max-w-[12rem]">
+      <Select<TProjectIssueType>
+        getValues={() => options}
+        value={selectedOption}
+        onChange={(row) => onChange(row || null)}
+        disabled={disabled}
+        getOptionValue={(row) => row.issue_type_id}
+        getOptionLabel={(row) => row.issue_type_detail?.name ?? ""}
+        getOptionIcon={(row) => (
+          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} />
+        )}
+        showSearch={false}
+        pinSelected={false}
+      >
+        <Select.Trigger
+          variant="select-md"
+          className="w-full max-w-full truncate"
+          appendIcon={renderChevron ? undefined : null}
+          tabIndex={0}
+        >
+          {selected ? (
+            <span className="flex items-center gap-1.5 truncate">
+              <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
+              <span className="truncate">{selected.name}</span>
+            </span>
+          ) : (
+            label
+          )}
+        </Select.Trigger>
+      </Select>
+    </div>
+  );
+}
 
 export const IssueTypeSelect = observer(function IssueTypeSelect<T extends Partial<TIssueFields>>(
   props: TIssueTypeSelectProps<T>
 ) {
-  const { control, projectId, disabled = false, renderChevron = false, placeholder, handleFormChange } = props;
+  const {
+    control,
+    projectId,
+    disabled = false,
+    renderChevron = false,
+    placeholder,
+    handleFormChange,
+    includeSystemManaged = false,
+  } = props;
   const { t } = useTranslation();
   const { workspaceSlug } = useParams();
   const { getProjectById } = useProject();
@@ -64,47 +128,27 @@ export const IssueTypeSelect = observer(function IssueTypeSelect<T extends Parti
     return null;
   }
 
-  const options = types.filter((row) => row.issue_type_detail);
-  const selectedOption = options.find((row) => row.issue_type_id === field.value) ?? null;
-  const selected = selectedOption?.issue_type_detail;
-  const buttonLabel = isLoading
-    ? t("work_item_types.loading")
-    : (selected?.name ?? placeholder ?? t("work_item_types.select_placeholder"));
+  // A work item that already has a system-managed type shows it read-only: the server refuses the switch
+  const lockedType = includeSystemManaged ? undefined : getLockedProjectIssueType(types, field.value as string | null);
+  if (lockedType?.issue_type_detail) {
+    return (
+      <div className="min-w-0 sm:max-w-[12rem]">
+        <IssueTypeLockedLabel issueType={lockedType.issue_type_detail} />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-w-0 sm:max-w-[12rem]">
-      <Select<TProjectIssueType>
-        getValues={() => options}
-        value={selectedOption}
-        onChange={(value) => {
-          field.onChange(value || null);
-          handleFormChange?.();
-        }}
-        disabled={disabled || isLoading}
-        getOptionValue={(row) => row.issue_type_id}
-        getOptionLabel={(row) => row.issue_type_detail?.name ?? ""}
-        getOptionIcon={(row) => (
-          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} />
-        )}
-        showSearch={false}
-        pinSelected={false}
-      >
-        <Select.Trigger
-          variant="select-md"
-          className="w-full max-w-full truncate"
-          appendIcon={renderChevron ? undefined : null}
-          tabIndex={0}
-        >
-          {selected ? (
-            <span className="flex items-center gap-1.5 truncate">
-              <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
-              <span className="truncate">{selected.name}</span>
-            </span>
-          ) : (
-            buttonLabel
-          )}
-        </Select.Trigger>
-      </Select>
-    </div>
+    <IssueTypeOptions
+      options={getSelectableProjectIssueTypes(types, { includeSystemManaged })}
+      value={field.value as string | null}
+      onChange={(value) => {
+        field.onChange(value);
+        handleFormChange?.();
+      }}
+      disabled={disabled || isLoading}
+      label={isLoading ? t("work_item_types.loading") : (placeholder ?? t("work_item_types.select_placeholder"))}
+      renderChevron={renderChevron}
+    />
   );
 });

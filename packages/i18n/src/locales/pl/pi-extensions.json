@@ -111,6 +111,11 @@
         "content": "Ta zmiana naruszyłaby zależności. Te elementy pracy można przesunąć na później z zachowaniem ich czasu trwania, aby wszystkie zależności nadal były spełnione:",
         "deadline_overrun": "{issue} przekroczy termin o {count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}.",
         "deadline_overrun_more": "{issue} jest już {previous, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}} po terminie i przekroczy go o {count, plural, one {# dzień roboczy} few {# dni robocze} many {# dni roboczych} other {# dnia roboczego}}.",
+        "save": "Zapisz",
+        "sub_items_content": "Ten element pracy ma podrzędne elementy pracy. Mogą przesunąć się razem z nim o tyle samo dni roboczych, zachowując czas trwania.",
+        "sub_items_dependents": "Przesuną się też zależne od nich elementy pracy:",
+        "sub_items_title": "Przesunąć także podrzędne elementy pracy?",
+        "sub_items_toggle": "{count, plural, one {Przesuń także podrzędny element pracy} few {Przesuń także # podrzędne elementy pracy} many {Przesuń także # podrzędnych elementów pracy} other {Przesuń także # podrzędnego elementu pracy}}",
         "title": "Przesunąć także zależne elementy pracy?"
       },
       "duplicate_cancel": {
@@ -212,7 +217,7 @@
           "title": "Elementy pracy mogą zmieniać tylko osoby przypisane, lider projektu i administratorzy"
         },
         "reschedule_offer": {
-          "description": "Gdy zmiana dat naruszyłaby zależność, zamiast odrzucać zmianę proponuj przesunięcie zależnych elementów pracy na później. Po wyłączeniu taka zmiana jest odrzucana.",
+          "description": "Gdy zmiana dat naruszyłaby zależność, zamiast odrzucać zmianę proponuj przesunięcie zależnych elementów pracy na później. Po wyłączeniu taka zmiana jest odrzucana. Proponuj też przesunięcie podrzędnych elementów pracy razem z przesuwanym elementem nadrzędnym; po wyłączeniu zostają na miejscu.",
           "title": "Proponuj przesunięcie zależnych elementów pracy"
         }
       },
@@ -289,7 +294,11 @@
   "work_item_types": {
     "loading": "Ładowanie typów…",
     "property_values_save_failed": "Zadanie zostało utworzone, ale dodatkowe właściwości nie zostały zapisane. Uzupełnij je w szczegółach zadania.",
-    "select_placeholder": "Typ"
+    "select_placeholder": "Typ",
+    "system_managed": {
+      "change_refused": "Tym typem elementu roboczego zarządza system. Elementu roboczego nie można przełączyć na ten typ ani z niego na inny.",
+      "tooltip": "Ten typ ustawia system. Nie można go zmienić."
+    }
   },
   "workspace_analytics": {
     "total_admins": "Łączna liczba administratorów",
@@ -538,6 +547,7 @@
             },
             "optional_badge": "Opcjonalny",
             "properties_empty": "Brak właściwości niestandardowych dla tego typu.",
+            "system_type_name": "To nazwa typu zarządzanego przez system. Ta pozycja nie zostanie zapisana w szablonie.",
             "task": {
               "description": "Standardowy typ elementu roboczego na co dzień.",
               "title": "Zadanie"
@@ -703,6 +713,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Akceptacja",
+          "milestone": "Kamień milowy",
+          "review": "Przegląd"
+        },
+        "system_type_hint": "Z tego typu korzysta system. Można zmienić jego nazwę, ikonę, opis i właściwości, ale nie można go tutaj usunąć, dezaktywować ani przypisać do projektów.",
         "table": {
           "name": "Typ",
           "no_projects": "Nie przypisano",

@@ -33,6 +33,7 @@ import { EIssueServiceType, EIssueLayoutTypes } from "@plane/types";
 // helpers
 import { convertToISODateString, getDateBucket, isDateBucketGroupBy } from "@plane/utils";
 import { getBucketContext } from "@/helpers/date-bucket-today";
+import { getRescheduleMoves, getRescheduleOffer } from "@/helpers/reschedule";
 import type { TPairedDateNotice } from "@plane/utils";
 // lib
 import { emitWorkItemDateNotice } from "@/lib/work-item-date-notices";
@@ -220,12 +221,6 @@ const getParentReopenRequest = (error: unknown) => {
     | { code?: string; parents?: { id: string; name: string; sequence_id: number | string }[] }
     | undefined;
   return body?.code === "parent_reopen_required" && body.parents?.length ? body.parents : null;
-};
-
-/** The work items the API offers to move along with a date change, when it answered that it needs a yes first. */
-const getRescheduleOffer = (error: unknown): TRelationRescheduleShift[] | null => {
-  const body = error as { error_code?: string; shifts?: TRelationRescheduleShift[] } | undefined;
-  return body?.error_code === "relation_reschedule_available" && body.shifts?.length ? body.shifts : null;
 };
 
 const compareIssuesByName = (a: TIssue, b: TIssue) =>
@@ -628,7 +623,12 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
     issueId: string,
     payload: Partial<TIssue>,
     shouldSync = true,
-    options?: { reopenParent?: boolean; shiftDependents?: boolean; shiftedWorkItems?: TRelationRescheduleShift[] }
+    options?: {
+      reopenParent?: boolean;
+      shiftDependents?: boolean;
+      moveSubItems?: boolean;
+      shiftedWorkItems?: TRelationRescheduleShift[];
+    }
   ): Promise<void> {
     // `initialize_paired_date` is a request-only flag for the server's one-time "first finish/due
     // entry fills both" default. It is never part of the local issue.
@@ -653,12 +653,14 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
 
       // call API to update the issue; epic_id is derived by the server, so it is not sent
       const { epic_id: _epicId, ...patchData } = data;
+      // a change of dates asks for the sub-work items to be offered too, until the person has answered
+      const offerSubItems = options?.moveSubItems === undefined && ("start_date" in data || "finish_date" in data);
       const response = await this.issueService.patchIssue(
         workspaceSlug,
         projectId,
         issueId,
         (initializePairedDate ? { ...patchData, initialize_paired_date: true } : patchData) as Partial<TIssue>,
-        options
+        { ...options, offerSubItems }
       );
 
       if (initializePairedDate) {
@@ -713,15 +715,17 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
         return;
       }
 
-      // Dates that come too early for what depends on this work item: move those along, if the person agrees
-      const shifts = getRescheduleOffer(error);
-      if (shifts && workflowStore) {
-        const confirmed = await workflowStore.confirmReschedule(shifts);
+      // Dates that come too early for what depends on this work item, or sub-work items that can follow it: move
+      // those along, if the person agrees
+      const offer = getRescheduleOffer(error);
+      if (offer && workflowStore) {
+        const { confirmed, moveSubItems } = await workflowStore.confirmReschedule(offer);
         if (confirmed)
           return this.issueUpdate(workspaceSlug, projectId, issueId, payload, shouldSync, {
             ...options,
             shiftDependents: true,
-            shiftedWorkItems: shifts,
+            moveSubItems,
+            shiftedWorkItems: getRescheduleMoves(offer, moveSubItems),
           });
         return;
       }
@@ -1011,13 +1015,14 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
       });
 
       try {
-        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates);
+        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates, { offerSubItems: true });
       } catch (error) {
-        // Dates that come too early for what depends on them: move those along, if the person agrees
-        const shifts = getRescheduleOffer(error);
+        // Dates that come too early for what depends on them, or sub-work items that can follow: move those along,
+        // if the person agrees
+        const offer = getRescheduleOffer(error);
         const workflowStore = this.rootIssueStore.rootStore?.workflow;
-        if (!shifts || !workflowStore) throw error;
-        const confirmed = await workflowStore.confirmReschedule(shifts);
+        if (!offer || !workflowStore) throw error;
+        const { confirmed, moveSubItems } = await workflowStore.confirmReschedule(offer);
         if (!confirmed) {
           // declined: the drag is undone, which is no error
           runInAction(() => {
@@ -1027,8 +1032,11 @@ export abstract class BaseIssuesStore implements IBaseIssuesStore {
           });
           return false;
         }
-        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates, { shiftDependents: true });
-        await this.syncShiftedWorkItems(shifts);
+        await this.issueService.updateIssueDates(workspaceSlug, projectId, updates, {
+          shiftDependents: true,
+          moveSubItems,
+        });
+        await this.syncShiftedWorkItems(getRescheduleMoves(offer, moveSubItems));
       }
       return true;
     } catch (e) {

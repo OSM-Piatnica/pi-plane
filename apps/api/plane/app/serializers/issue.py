@@ -334,22 +334,19 @@ class IssueCreateSerializer(BaseSerializer):
         if self.instance is not None:
             from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
 
-            timeline_error = validate_issue_update_payload(self.instance, attrs)
-            if timeline_error:
-                from plane.utils.issue_reschedule import (
-                    RescheduleOffered,
-                    is_shift_confirmed,
-                    plan_for_issue_update,
-                )
+            from plane.utils.issue_reschedule import RescheduleOffered, decide_for_issue_update
 
-                # Dates that only come too early for what depends on this work item can be fixed by moving
-                # those along, once the person agrees
-                plan = plan_for_issue_update(self.instance, attrs, request.user if request else None, timeline_error)
-                if plan is None:
-                    raise serializers.ValidationError(timeline_error)
-                if not is_shift_confirmed(self.initial_data):
-                    raise RescheduleOffered(plan.payload(timeline_error))
-                self._reschedule_plan = plan
+            timeline_error = validate_issue_update_payload(self.instance, attrs)
+            # Dates that only come too early for what depends on this work item can be fixed by moving those
+            # along, and sub-work items can follow their parent, once the person agrees
+            decision = decide_for_issue_update(
+                self.instance, attrs, request.user if request else None, timeline_error, self.initial_data
+            )
+            if decision.refusal:
+                raise serializers.ValidationError(decision.refusal)
+            if decision.offer:
+                raise RescheduleOffered(decision.offer)
+            self._reschedule_plan = decision.plan
 
         return attrs
 

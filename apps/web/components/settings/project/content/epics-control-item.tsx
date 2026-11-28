@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 import { setPromiseToast } from "@plane/blocks/toast";
 import { useTranslation } from "@plane/i18n";
 import { Switch } from "@makeplane/propel/components/switch";
+import { isEpicKind } from "@plane/utils";
 // components
 import { SettingsBoxedControlItem } from "@/components/settings/boxed-control-item";
 // hooks
@@ -24,7 +25,7 @@ type Props = {
   workspaceSlug: string;
 };
 
-/** Epics are on in a project when a work item type marked as an Epic is linked to it. */
+/** Epics are on in a project when a work item type of the Epic kind is linked to it. */
 export const ProjectSettingsEpicsControlItem = observer(function ProjectSettingsEpicsControlItem(props: Props) {
   const { projectId, workspaceSlug } = props;
   // states
@@ -33,7 +34,7 @@ export const ProjectSettingsEpicsControlItem = observer(function ProjectSettings
   const { t } = useTranslation();
   const { types, isLoading, mutate } = useProjectIssueTypes(workspaceSlug, projectId);
   // derived values
-  const isEnabled = types.some((row) => row.issue_type_detail?.is_epic);
+  const isEnabled = types.some((row) => isEpicKind(row.issue_type_detail));
 
   const handleToggle = () => {
     setIsUpdating(true);

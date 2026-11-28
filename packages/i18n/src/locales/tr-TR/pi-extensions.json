@@ -110,6 +110,11 @@
         "content": "Bu değişiklik bağımlılıkları bozardı. Tüm bağımlılıklar korunsun diye bu iş öğeleri süreleri korunarak daha sonraya taşınabilir:",
         "deadline_overrun": "{issue} son tarihini {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
         "deadline_overrun_more": "{issue} son tarihini zaten {previous, plural, one {# iş günü} other {# iş günü}} aşıyor ve {count, plural, one {# iş günü} other {# iş günü}} aşacak.",
+        "save": "Kaydet",
+        "sub_items_content": "Bu iş öğesinin alt iş öğeleri var. Bunlar, sürelerini koruyarak aynı sayıda iş günü kadar onunla birlikte taşınabilir.",
+        "sub_items_dependents": "Bunlara bağımlı iş öğeleri de taşınır:",
+        "sub_items_title": "Alt iş öğeleri de taşınsın mı?",
+        "sub_items_toggle": "{count, plural, one {Alt iş öğesini de taşı} other {# alt iş öğesini de taşı}}",
         "title": "Bağımlı iş öğeleri de taşınsın mı?"
       },
       "duplicate_cancel": {
@@ -206,7 +211,7 @@
           "title": "Bir iş öğesini yalnızca atananlar, proje lideri ve yöneticiler değiştirebilir"
         },
         "reschedule_offer": {
-          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir.",
+          "description": "Bir tarih değişikliği bir bağımlılığı bozacaksa, değişikliği reddetmek yerine bağımlı iş öğelerini daha sonraya taşımayı önerir. Kapalıyken böyle bir değişiklik reddedilir. Taşınan bir üst öğenin alt iş öğelerini de onunla birlikte taşımayı önerir; kapalıyken yerlerinde kalırlar.",
           "title": "Bağımlı iş öğelerini taşımayı öner"
         }
       },
@@ -283,7 +288,11 @@
   "work_item_types": {
     "loading": "Türler yükleniyor…",
     "property_values_save_failed": "İş öğesi oluşturuldu, ancak ek özellikler kaydedilemedi. Bunları iş öğesi ayrıntılarından doldurun.",
-    "select_placeholder": "Tür"
+    "select_placeholder": "Tür",
+    "system_managed": {
+      "change_refused": "Bu iş öğesi türü sistem tarafından yönetilir. Bir iş öğesi bu türe geçirilemez veya bu türden başka bir türe değiştirilemez.",
+      "tooltip": "Bu türü sistem belirler. Değiştirilemez."
+    }
   },
   "workspace_features": {
     "description": "Pi-Plane bölümlerini bu çalışma alanındaki herkes için açın veya kapatın."
@@ -524,6 +533,7 @@
             },
             "optional_badge": "İsteğe Bağlı",
             "properties_empty": "Bu tür için özel özellik yok.",
+            "system_type_name": "Bu, sistem tarafından yönetilen bir türün adıdır. Bu giriş şablonla birlikte kaydedilmez.",
             "task": {
               "description": "Günlük görevler için standart iş öğesi türü.",
               "title": "Görev"
@@ -689,6 +699,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Onay",
+          "milestone": "Kilometre taşı",
+          "review": "İnceleme"
+        },
+        "system_type_hint": "Sistem bu türü kullanır. Adı, simgesi, açıklaması ve özellikleri değiştirilebilir, ancak tür buradan kaldırılamaz, devre dışı bırakılamaz veya projelere atanamaz.",
         "table": {
           "name": "Tür",
           "no_projects": "Atanmadı",

@@ -297,26 +297,21 @@ class IssueSerializer(BaseSerializer):
         if self.instance is not None:
             from plane.utils.issue_timeline_relation_validation import validate_issue_update_payload
 
+            from crum import get_current_user
+
+            from plane.utils.issue_reschedule import RescheduleOffered, decide_for_issue_update
+
             timeline_error = validate_issue_update_payload(self.instance, data)
-            if timeline_error:
-                from crum import get_current_user
-
-                from plane.utils.issue_reschedule import (
-                    RescheduleOffered,
-                    is_shift_confirmed,
-                    plan_for_issue_update,
-                )
-
-                # Dates that only come too early for what depends on this work item can be fixed by moving
-                # those along, once the caller agrees (shift_dependents)
-                request = self.context.get("request")
-                actor = request.user if request else get_current_user()
-                plan = plan_for_issue_update(self.instance, data, actor, timeline_error)
-                if plan is None:
-                    raise serializers.ValidationError(timeline_error)
-                if not is_shift_confirmed(self.initial_data):
-                    raise RescheduleOffered(plan.payload(timeline_error))
-                self._reschedule_plan = plan
+            # Dates that only come too early for what depends on this work item can be fixed by moving those
+            # along, once the caller agrees (shift_dependents); sub-work items follow only on move_sub_items
+            request = self.context.get("request")
+            actor = request.user if request else get_current_user()
+            decision = decide_for_issue_update(self.instance, data, actor, timeline_error, self.initial_data)
+            if decision.refusal:
+                raise serializers.ValidationError(decision.refusal)
+            if decision.offer:
+                raise RescheduleOffered(decision.offer)
+            self._reschedule_plan = decision.plan
 
         return data
 

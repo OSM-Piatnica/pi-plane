@@ -77,6 +77,42 @@ def is_system_managed_type(issue_type) -> bool:
     return issue_type is not None and issue_type.kind in SYSTEM_MANAGED_ISSUE_TYPE_KINDS
 
 
+# What a client may not do by hand to a system-managed type (approval, review). The feature that owns such a type
+# links it through `ensure_project_kind_type`, which works on the models and never meets these checks.
+SYSTEM_MANAGED_TYPE_DELETE = "delete"
+SYSTEM_MANAGED_TYPE_DEACTIVATE = "deactivate"
+SYSTEM_MANAGED_TYPE_LINK = "link"
+SYSTEM_MANAGED_TYPE_UNLINK = "unlink"
+SYSTEM_MANAGED_TYPE_CHANGE_PROJECTS = "change_projects"
+SYSTEM_MANAGED_TYPE_MAKE_DEFAULT = "make_default"
+
+_SYSTEM_MANAGED_TYPE_MESSAGES = {
+    SYSTEM_MANAGED_TYPE_DELETE: "A system-managed work item type (approval, review) cannot be deleted",
+    SYSTEM_MANAGED_TYPE_DEACTIVATE: "A system-managed work item type (approval, review) cannot be deactivated",
+    SYSTEM_MANAGED_TYPE_LINK: "A system-managed work item type (approval, review) cannot be added to a project by hand",
+    SYSTEM_MANAGED_TYPE_UNLINK: "A system-managed work item type (approval, review) cannot be removed from a project",
+    SYSTEM_MANAGED_TYPE_CHANGE_PROJECTS: (
+        "The projects of a system-managed work item type (approval, review) cannot be changed by hand"
+    ),
+    SYSTEM_MANAGED_TYPE_MAKE_DEFAULT: (
+        "A system-managed work item type (approval, review) cannot be the default type of a project"
+    ),
+}
+
+
+def refuse_system_managed_type(issue_type, action: str) -> None:
+    """Answer 400 with the `SYSTEM_MANAGED_TYPE_CODE` error code when `issue_type` is system-managed.
+
+    `action` is one of the `SYSTEM_MANAGED_TYPE_*` actions above; it picks the fixed message. Works from a view and
+    from a serializer's `validate` (the error is an `APIException`, so DRF answers with the payload as it is).
+    """
+
+    if is_system_managed_type(issue_type):
+        raise IssueTypeChangeRejected(
+            {"error": _SYSTEM_MANAGED_TYPE_MESSAGES[action], "error_code": SYSTEM_MANAGED_TYPE_CODE}
+        )
+
+
 def get_or_create_issue_type(
     *,
     workspace_id,

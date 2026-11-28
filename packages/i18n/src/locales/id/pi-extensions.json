@@ -110,6 +110,11 @@
         "content": "Perubahan ini akan melanggar dependensi. Item kerja berikut dapat dipindahkan ke waktu yang lebih lambat dengan durasi tetap, agar semua dependensi tetap terpenuhi:",
         "deadline_overrun": "{issue} akan melewati tanggal jatuh temponya {count, plural, one {# hari kerja} other {# hari kerja}}.",
         "deadline_overrun_more": "{issue} sudah melewati tanggal jatuh temponya {previous, plural, one {# hari kerja} other {# hari kerja}} dan akan melewatinya {count, plural, one {# hari kerja} other {# hari kerja}}.",
+        "save": "Simpan",
+        "sub_items_content": "Item kerja ini memiliki sub-item kerja. Sub-item tersebut dapat ikut dipindahkan sebanyak hari kerja yang sama, dengan durasi tetap.",
+        "sub_items_dependents": "Item kerja yang bergantung padanya juga ikut dipindahkan:",
+        "sub_items_title": "Pindahkan juga sub-item kerja?",
+        "sub_items_toggle": "{count, plural, one {Pindahkan juga sub-item kerja} other {Pindahkan juga # sub-item kerja}}",
         "title": "Pindahkan juga item kerja yang bergantung?"
       },
       "duplicate_cancel": {
@@ -206,7 +211,7 @@
           "title": "Hanya penerima tugas, pemimpin proyek, dan admin yang dapat mengubah item kerja"
         },
         "reschedule_offer": {
-          "description": "Jika perubahan tanggal akan melanggar dependensi, item kerja yang bergantung ditawarkan untuk dipindahkan ke waktu yang lebih lambat alih-alih menolak perubahan. Jika dinonaktifkan, perubahan seperti itu ditolak.",
+          "description": "Jika perubahan tanggal akan melanggar dependensi, item kerja yang bergantung ditawarkan untuk dipindahkan ke waktu yang lebih lambat alih-alih menolak perubahan. Jika dinonaktifkan, perubahan seperti itu ditolak. Juga ditawarkan untuk memindahkan sub-item kerja dari item induk yang dipindahkan; jika dinonaktifkan, sub-item tetap di tempatnya.",
           "title": "Tawarkan pemindahan item kerja yang bergantung"
         }
       },
@@ -283,7 +288,11 @@
   "work_item_types": {
     "loading": "Memuat tipe…",
     "property_values_save_failed": "Item kerja berhasil dibuat, tetapi properti tambahan tidak dapat disimpan. Isi properti tersebut dari detail item kerja.",
-    "select_placeholder": "Tipe"
+    "select_placeholder": "Tipe",
+    "system_managed": {
+      "change_refused": "Tipe item kerja ini dikelola oleh sistem. Item kerja tidak dapat dialihkan ke tipe ini atau dari tipe ini ke tipe lain.",
+      "tooltip": "Tipe ini ditetapkan oleh sistem. Tidak dapat diubah."
+    }
   },
   "workspace_features": {
     "description": "Aktifkan atau nonaktifkan bagian Pi-Plane untuk semua orang di ruang kerja ini."
@@ -524,6 +533,7 @@
             },
             "optional_badge": "Opsional",
             "properties_empty": "Tidak ada properti kustom untuk tipe ini.",
+            "system_type_name": "Ini adalah nama tipe yang dikelola oleh sistem. Entri ini tidak akan disimpan bersama template.",
             "task": {
               "description": "Tipe item kerja standar untuk tugas sehari-hari.",
               "title": "Tugas"
@@ -689,6 +699,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Persetujuan",
+          "milestone": "Tonggak",
+          "review": "Tinjauan"
+        },
+        "system_type_hint": "Sistem menggunakan tipe ini. Nama, ikon, deskripsi, dan propertinya dapat diubah, tetapi tipe ini tidak dapat dihapus, dinonaktifkan, atau ditetapkan ke proyek di sini.",
         "table": {
           "name": "Tipe",
           "no_projects": "Belum ditetapkan",

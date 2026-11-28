@@ -36,4 +36,17 @@ describe("getWorkItemTypeMarkKind", () => {
     expect(getWorkItemTypeMarkKind({ logo_props: {} as never, is_epic: true })).toBe("epic");
     expect(getWorkItemTypeMarkKind({ logo_props: {} as never, is_epic: false })).toBe("default");
   });
+
+  it("picks the built-in mark by kind", () => {
+    const none = {} as never;
+    expect(getWorkItemTypeMarkKind({ logo_props: none, kind: "epic", is_epic: true })).toBe("epic");
+    expect(getWorkItemTypeMarkKind({ logo_props: none, kind: "milestone", is_epic: false })).toBe("milestone");
+    expect(getWorkItemTypeMarkKind({ logo_props: none, kind: "approval", is_epic: false })).toBe("approval");
+    expect(getWorkItemTypeMarkKind({ logo_props: none, kind: "review", is_epic: false })).toBe("review");
+    expect(getWorkItemTypeMarkKind({ logo_props: none, kind: "standard", is_epic: false })).toBe("default");
+  });
+
+  it("keeps the logo an admin picked on a system type", () => {
+    expect(getWorkItemTypeMarkKind({ logo_props: logo, kind: "approval", is_epic: false })).toBe("logo");
+  });
 });

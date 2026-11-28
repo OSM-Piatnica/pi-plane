@@ -9,7 +9,13 @@ from rest_framework import serializers
 from plane.app.serializers.base import BaseSerializer
 from plane.db.models import IssueType, IssueTypeKind, IssueTypeProperty, Project, ProjectIssueType, Workspace
 from plane.utils.issue_type_property import clean_property_list
-from plane.utils.project_issue_types import issue_type_in_use
+from plane.utils.project_issue_types import (
+    SYSTEM_MANAGED_TYPE_CHANGE_PROJECTS,
+    SYSTEM_MANAGED_TYPE_DEACTIVATE,
+    is_system_managed_type,
+    issue_type_in_use,
+    refuse_system_managed_type,
+)
 
 
 class IssueTypePropertySerializer(BaseSerializer):
@@ -174,12 +180,11 @@ class IssueTypeSerializer(BaseSerializer):
             if key not in seen_ids:
                 obj.delete()
 
-    def _sync_project_links(self, issue_type: IssueType, project_ids):
-        if project_ids is None:
-            return
-        slug = self.context.get("slug")
-        workspace = Workspace.objects.get(slug=slug)
-        valid_ids = set(
+    def _valid_project_ids(self, project_ids) -> set:
+        """The ids among `project_ids` of the workspace's projects that are neither archived nor deleted."""
+
+        workspace = Workspace.objects.get(slug=self.context.get("slug"))
+        return set(
             str(pid)
             for pid in Project.objects.filter(
                 workspace_id=workspace.id,
@@ -188,6 +193,29 @@ class IssueTypeSerializer(BaseSerializer):
                 deleted_at__isnull=True,
             ).values_list("id", flat=True)
         )
+
+    def _project_links_change(self, issue_type: IssueType, project_ids) -> bool:
+        """Whether `_sync_project_links` would link or unlink a project that is neither archived nor deleted."""
+
+        current = set(
+            str(pid)
+            for pid in ProjectIssueType.objects.filter(
+                issue_type=issue_type,
+                deleted_at__isnull=True,
+                project__archived_at__isnull=True,
+                project__deleted_at__isnull=True,
+            ).values_list("project_id", flat=True)
+        )
+        return self._valid_project_ids(project_ids) != current
+
+    def _sync_project_links(self, issue_type: IssueType, project_ids):
+        if project_ids is None:
+            return
+        if is_system_managed_type(issue_type):
+            # `validate` has refused any change already. The form sends back the list it got, so nothing is synced:
+            # that also keeps the links to archived projects, which the sync below would drop
+            return
+        valid_ids = self._valid_project_ids(project_ids)
         existing = {
             str(row.project_id): row
             for row in ProjectIssueType.objects.filter(issue_type=issue_type, deleted_at__isnull=True)
@@ -222,6 +250,15 @@ class IssueTypeSerializer(BaseSerializer):
 
     def validate(self, attrs):
         attrs = super().validate(attrs)
+        # `kind` is read-only, so a type made here is always `standard` or `epic`: a system-managed type comes only
+        # from `ensure_project_kind_type`. Such a type keeps its name, icon, description and properties editable;
+        # it cannot be switched off, and the projects that use it are left to the feature that owns it
+        if is_system_managed_type(self.instance):
+            if self.instance.is_active and attrs.get("is_active", True) is False:
+                refuse_system_managed_type(self.instance, SYSTEM_MANAGED_TYPE_DEACTIVATE)
+            project_ids = attrs.get("project_ids")
+            if project_ids is not None and self._project_links_change(self.instance, project_ids):
+                refuse_system_managed_type(self.instance, SYSTEM_MANAGED_TYPE_CHANGE_PROJECTS)
         # Work items that have a parent would silently become Epics (or Epics would stop being one), so the
         # flag is fixed as soon as a work item uses the type
         if self.instance is not None and "is_epic" in attrs and attrs["is_epic"] != self.instance.is_epic:

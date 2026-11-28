@@ -110,6 +110,11 @@
         "content": "Esta alteração quebraria dependências. Estes itens de trabalho podem ser movidos para mais tarde, mantendo a duração, para que todas as dependências continuem válidas:",
         "deadline_overrun": "{issue} vai ultrapassar a data de vencimento em {count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}.",
         "deadline_overrun_more": "{issue} já ultrapassa a data de vencimento em {previous, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}} e vai ultrapassá-la em {count, plural, one {# dia útil} many {# dias úteis} other {# dias úteis}}.",
+        "save": "Salvar",
+        "sub_items_content": "Este item de trabalho tem sub-itens de trabalho. Eles podem ser movidos junto com ele pelo mesmo número de dias úteis, mantendo sua duração.",
+        "sub_items_dependents": "Os itens de trabalho que dependem deles também são movidos:",
+        "sub_items_title": "Mover também os sub-itens de trabalho?",
+        "sub_items_toggle": "{count, plural, one {Mover também o sub-item de trabalho} many {Mover também os # sub-itens de trabalho} other {Mover também os # sub-itens de trabalho}}",
         "title": "Mover também os itens de trabalho dependentes?"
       },
       "duplicate_cancel": {
@@ -206,7 +211,7 @@
           "title": "Só os responsáveis, o líder do projeto e os admins podem alterar um item de trabalho"
         },
         "reschedule_offer": {
-          "description": "Quando uma alteração de datas quebraria uma dependência, é oferecido mover para mais tarde os itens de trabalho dependentes em vez de recusar a alteração. Quando desativado, essa alteração é recusada.",
+          "description": "Quando uma alteração de datas quebraria uma dependência, é oferecido mover para mais tarde os itens de trabalho dependentes em vez de recusar a alteração. Quando desativado, essa alteração é recusada. Também é oferecido mover os sub-itens de trabalho de um item pai movido; quando desativado, eles ficam onde estão.",
           "title": "Oferecer mover os itens de trabalho dependentes"
         }
       },
@@ -283,7 +288,11 @@
   "work_item_types": {
     "loading": "Carregando tipos…",
     "property_values_save_failed": "O item de trabalho foi criado, mas não foi possível salvar as propriedades adicionais. Preencha-as a partir dos detalhes do item de trabalho.",
-    "select_placeholder": "Tipo"
+    "select_placeholder": "Tipo",
+    "system_managed": {
+      "change_refused": "Este tipo de item de trabalho é gerenciado pelo sistema. Um item de trabalho não pode ser alterado para este tipo nem deste tipo para outro.",
+      "tooltip": "Este tipo é definido pelo sistema. Não pode ser alterado."
+    }
   },
   "workspace_features": {
     "description": "Ative ou desative partes do Pi-Plane para todos neste espaço de trabalho."
@@ -524,6 +533,7 @@
             },
             "optional_badge": "Opcional",
             "properties_empty": "Nenhuma propriedade personalizada para este tipo.",
+            "system_type_name": "Este é o nome de um tipo gerenciado pelo sistema. Esta entrada não será salva com o modelo.",
             "task": {
               "description": "Tipo de item de trabalho padrão para tarefas do dia a dia.",
               "title": "Tarefa"
@@ -689,6 +699,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Aprovação",
+          "milestone": "Marco",
+          "review": "Revisão"
+        },
+        "system_type_hint": "O sistema usa este tipo. É possível alterar o nome, o ícone, a descrição e as propriedades, mas aqui ele não pode ser removido, desativado nem atribuído a projetos.",
         "table": {
           "name": "Tipo",
           "no_projects": "Não atribuído",

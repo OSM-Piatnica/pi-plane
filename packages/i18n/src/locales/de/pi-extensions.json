@@ -110,6 +110,11 @@
         "content": "Diese Änderung würde Abhängigkeiten verletzen. Diese Arbeitselemente können unter Beibehaltung ihrer Dauer nach hinten verschoben werden, damit alle Abhängigkeiten weiter erfüllt sind:",
         "deadline_overrun": "{issue} überschreitet sein Fälligkeitsdatum um {count, plural, one {# Arbeitstag} other {# Arbeitstage}}.",
         "deadline_overrun_more": "{issue} liegt bereits {previous, plural, one {# Arbeitstag} other {# Arbeitstage}} über seinem Fälligkeitsdatum und überschreitet es dann um {count, plural, one {# Arbeitstag} other {# Arbeitstage}}.",
+        "save": "Speichern",
+        "sub_items_content": "Dieses Arbeitselement hat untergeordnete Arbeitselemente. Sie können um dieselbe Anzahl Arbeitstage mitverschoben werden und behalten ihre Dauer.",
+        "sub_items_dependents": "Davon abhängige Arbeitselemente werden ebenfalls verschoben:",
+        "sub_items_title": "Auch die untergeordneten Arbeitselemente verschieben?",
+        "sub_items_toggle": "{count, plural, one {Auch das untergeordnete Arbeitselement verschieben} other {Auch die # untergeordneten Arbeitselemente verschieben}}",
         "title": "Auch die abhängigen Arbeitselemente verschieben?"
       },
       "duplicate_cancel": {
@@ -206,7 +211,7 @@
           "title": "Nur Zugewiesene, die Projektleitung und Admins dürfen ein Arbeitselement ändern"
         },
         "reschedule_offer": {
-          "description": "Wenn eine Datumsänderung eine Abhängigkeit verletzen würde, wird angeboten, die abhängigen Arbeitselemente nach hinten zu verschieben, statt die Änderung abzulehnen. Ist die Option ausgeschaltet, wird eine solche Änderung abgelehnt.",
+          "description": "Wenn eine Datumsänderung eine Abhängigkeit verletzen würde, wird angeboten, die abhängigen Arbeitselemente nach hinten zu verschieben, statt die Änderung abzulehnen. Ist die Option ausgeschaltet, wird eine solche Änderung abgelehnt. Außerdem wird angeboten, die untergeordneten Arbeitselemente eines verschobenen übergeordneten Elements mitzuverschieben; ist die Option ausgeschaltet, bleiben sie, wo sie sind.",
           "title": "Verschieben abhängiger Arbeitselemente anbieten"
         }
       },
@@ -283,7 +288,11 @@
   "work_item_types": {
     "loading": "Typen werden geladen…",
     "property_values_save_failed": "Das Arbeitselement wurde erstellt, aber die zusätzlichen Eigenschaften konnten nicht gespeichert werden. Füllen Sie sie in den Arbeitselementdetails aus.",
-    "select_placeholder": "Typ"
+    "select_placeholder": "Typ",
+    "system_managed": {
+      "change_refused": "Dieser Arbeitselementtyp wird vom System verwaltet. Ein Arbeitselement kann weder zu diesem Typ noch von ihm zu einem anderen gewechselt werden.",
+      "tooltip": "Dieser Typ wird vom System festgelegt und kann nicht geändert werden."
+    }
   },
   "workspace_features": {
     "description": "Teile von Pi-Plane für alle in diesem Arbeitsbereich ein- oder ausschalten."
@@ -524,6 +533,7 @@
             },
             "optional_badge": "Optional",
             "properties_empty": "Keine benutzerdefinierten Eigenschaften für diesen Typ.",
+            "system_type_name": "Dies ist der Name eines vom System verwalteten Typs. Der Eintrag wird nicht mit der Vorlage gespeichert.",
             "task": {
               "description": "Standard-Arbeitselementtyp für alltägliche Aufgaben.",
               "title": "Aufgabe"
@@ -689,6 +699,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Genehmigung",
+          "milestone": "Meilenstein",
+          "review": "Prüfung"
+        },
+        "system_type_hint": "Das System verwendet diesen Typ. Name, Symbol, Beschreibung und Eigenschaften können geändert werden, der Typ kann hier jedoch nicht entfernt, deaktiviert oder Projekten zugewiesen werden.",
         "table": {
           "name": "Typ",
           "no_projects": "Nicht zugewiesen",
