@@ -395,6 +395,7 @@
             "labels": "Etiketler",
             "modules": "Modüller",
             "parents": "Üst iş öğeleri",
+            "raci": "RACI rolleri",
             "relations": "İş öğeleri arasındaki ilişkiler",
             "select_all": "Tümünü seç",
             "subscribers": "Aboneler"

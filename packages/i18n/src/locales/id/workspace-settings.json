@@ -160,6 +160,7 @@
             "is_draft": "Penanda draf",
             "assignees": "Penerima tugas",
             "group_assignees": "Grup penerima tugas",
+            "raci": "Peran RACI",
             "subscribers": "Pelanggan",
             "created_by_name": "Dibuat oleh",
             "start_date": "Tanggal mulai",

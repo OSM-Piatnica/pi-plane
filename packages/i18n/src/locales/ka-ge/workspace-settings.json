@@ -160,6 +160,7 @@
             "is_draft": "დრაფტის ნიშანი",
             "assignees": "შემსრულებლები",
             "group_assignees": "შემსრულებელი ჯგუფები",
+            "raci": "RACI როლები",
             "subscribers": "გამომწერები",
             "created_by_name": "შემქმნელი",
             "start_date": "დაწყების თარიღი",

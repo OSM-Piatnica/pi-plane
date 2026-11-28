@@ -160,6 +160,7 @@
             "is_draft": "Znacznik wersji roboczej",
             "assignees": "Przypisani",
             "group_assignees": "Przypisane grupy",
+            "raci": "Role RACI",
             "subscribers": "Subskrybenci",
             "created_by_name": "Utworzył(a)",
             "start_date": "Data rozpoczęcia",

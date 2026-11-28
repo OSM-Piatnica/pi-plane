@@ -395,6 +395,7 @@
             "labels": "Labels",
             "modules": "Modules",
             "parents": "Parent work items",
+            "raci": "RACI roles",
             "relations": "Relations between work items",
             "select_all": "Select all",
             "subscribers": "Subscribers"

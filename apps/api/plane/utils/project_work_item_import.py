@@ -21,6 +21,7 @@ from plane.db.models import (
     IssueGroupAssignee,
     IssueLabel,
     IssuePropertyValue,
+    IssueRaci,
     IssueRelation,
     IssueSequence,
     IssueSubscriber,
@@ -47,6 +48,8 @@ from plane.utils.issue_relation_types import ALL_RELATION_NAMES, MIRRORED_RELATI
 from plane.utils.relation_type_toggles import relation_type_enabled
 from plane.utils.issue_type_property import validate_property_value
 from plane.utils.project_issue_types import is_system_managed_type
+from plane.utils.raci import can_edit_raci, project_raci_enabled
+from plane.utils.raci_columns import DepartmentIndex, parse_raci_cell, parse_raci_entry
 from plane.utils.work_item_hierarchy import parent_kind_error, work_item_kind
 from plane.utils.work_item_duration import (
     normalize_work_item_duration,
@@ -101,6 +104,7 @@ class WorkItemImportOptions:
     labels: bool = True
     modules: bool = True
     cycles: bool = True
+    raci: bool = True
 
     @classmethod
     def from_request_data(cls, data) -> "WorkItemImportOptions":
@@ -327,6 +331,58 @@ def _resolve_groups(
         elif group_id not in resolved:
             resolved.append(group_id)
     return resolved
+
+
+def _read_raci(*, cell, labels: list, departments, warnings: list[str], row_number: int) -> tuple[dict, list]:
+    """
+    The RACI roles of a row, ``{department id: role}``, from its RACI column and its ``O:XX`` labels, and the labels
+    that are left once those are taken out.
+
+    The column comes first; a department named twice keeps its first role. A label whose department is not known
+    stays a label, so nothing of the file is lost. A department that is switched off gets no role, as in the app.
+    """
+    entries, unreadable = parse_raci_cell(cell)
+    for text in unreadable:
+        warnings.append(
+            f'Row {row_number}: RACI entry "{text}" is not a letter (O, Z, K, I or R, A, C, I), a colon and a '
+            "department, skipped"
+        )
+    from_column = len(entries)
+    other_labels = []
+    for label in labels:
+        parsed = parse_raci_entry(label)
+        if parsed is not None and departments.find(parsed[1])[0] is not None:
+            entries.append(parsed)
+        else:
+            other_labels.append(label)
+
+    raci: dict = {}
+    for position, (role, token) in enumerate(entries):
+        department, problem = departments.find(token)
+        if department is None:
+            # labels only reach here with a known department, so this is the column
+            if problem == "ambiguous":
+                warnings.append(
+                    f'Row {row_number}: RACI department "{token}" matches more than one department, use its code, '
+                    "skipped"
+                )
+            else:
+                warnings.append(f'Row {row_number}: unknown RACI department "{token}", skipped')
+            continue
+        if not department.is_active:
+            warnings.append(
+                f'Row {row_number}: department "{token}" is switched off and cannot be given a role, skipped'
+            )
+            continue
+        if department.id in raci:
+            if raci[department.id] != role:
+                source = "RACI column" if position < from_column else "label"
+                warnings.append(
+                    f'Row {row_number}: department "{token}" already has a role, the second one ({source}) skipped'
+                )
+            continue
+        raci[department.id] = role
+    return raci, other_labels
 
 
 def _member_values_to_ids(
@@ -606,6 +662,13 @@ def import_work_items_into_project(
         groups_by_path, groups_by_name = index_groups(project.workspace_id)
         assignable_groups = assignable_group_ids(project.id, project.workspace_id)
 
+    # RACI roles come in when the project has RACI on and the person importing may set them (decision 10);
+    # otherwise the column is left out and "O:XX" labels stay labels.
+    raci_on = options.raci and project_raci_enabled(project)
+    raci_allowed = raci_on and can_edit_raci(user, project)
+    departments = DepartmentIndex(project.workspace_id) if raci_allowed else None
+    raci_not_imported = 0
+
     type_properties_by_type: dict = {}
     for issue_type in types_by_name.values():
         props = {
@@ -664,11 +727,26 @@ def import_work_items_into_project(
             )
             issue_type = None
 
+        raci = {}
+        raw_labels = _coerce_list(row.get("labels"))
+        if raci_allowed:
+            raci, raw_labels = _read_raci(
+                cell=row.get("raci"),
+                labels=raw_labels,
+                departments=departments,
+                warnings=warnings,
+                row_number=index + 1,
+            )
+        elif not options.raci:
+            _note_skipped("RACI", row.get("raci"))
+        elif row.get("raci") not in [None, "", []]:
+            raci_not_imported += 1
+
         # Labels missing from the project are created, so a file imports the same way into
         # a fresh project as into one that was prepared by hand.
         label_ids = []
         if options.labels:
-            for label_name in _coerce_list(row.get("labels")):
+            for label_name in raw_labels:
                 clean_name = str(label_name).strip()
                 if not clean_name:
                     continue
@@ -686,7 +764,7 @@ def import_work_items_into_project(
                 if label.id not in label_ids:
                     label_ids.append(label.id)
         else:
-            _note_skipped("label", row.get("labels"))
+            _note_skipped("label", raw_labels)
 
         # Modules only need a name, so missing ones are created alongside labels
         module_ids = []
@@ -878,6 +956,7 @@ def import_work_items_into_project(
                 "subscriber_ids": subscriber_ids,
                 "relations": raw_relations,
                 "custom_properties": custom_properties,
+                "raci": raci,
             }
         )
 
@@ -1033,9 +1112,22 @@ def import_work_items_into_project(
         cycle_rows = []
         relation_rows = []
         property_rows = []
+        raci_rows = []
         seen_relations: set[tuple] = set()
 
         for item, issue in zip(prepared, created_issues):
+            for group_id, role in item["raci"].items():
+                raci_rows.append(
+                    IssueRaci(
+                        issue=issue,
+                        group_id=group_id,
+                        role=role,
+                        project=project,
+                        workspace=project.workspace,
+                        created_by=user,
+                        updated_by=user,
+                    )
+                )
             for label_id in item["label_ids"]:
                 label_rows.append(
                     IssueLabel(
@@ -1206,6 +1298,8 @@ def import_work_items_into_project(
             IssueRelation.objects.bulk_create(relation_rows, batch_size=500, ignore_conflicts=True)
         if property_rows:
             IssuePropertyValue.objects.bulk_create(property_rows, batch_size=500, ignore_conflicts=True)
+        if raci_rows:
+            IssueRaci.objects.bulk_create(raci_rows, batch_size=500, ignore_conflicts=True)
 
     if created_labels:
         warnings.append(f"Created {len(created_labels)} new label(s): {', '.join(sorted(set(created_labels)))}")
@@ -1215,6 +1309,14 @@ def import_work_items_into_project(
         warnings.append(f"Created {len(created_cycles)} new cycle(s): {', '.join(sorted(set(created_cycles)))}")
         if not options.dates:
             warnings.append("New cycles were created without a period because dates were not imported.")
+
+    if raci_not_imported:
+        reason = (
+            "only a project admin or the project lead can set RACI roles"
+            if raci_on
+            else "RACI is not switched on for this project"
+        )
+        warnings.append(f"{raci_not_imported} work item(s) carried RACI roles that were not imported: {reason}")
 
     for kind, count in sorted(skipped_by_option.items()):
         warnings.append(f"{count} work item(s) carried {kind} data that this import was asked to leave out")

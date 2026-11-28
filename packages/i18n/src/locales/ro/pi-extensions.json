@@ -395,6 +395,7 @@
             "labels": "Etichete",
             "modules": "Module",
             "parents": "Activități părinte",
+            "raci": "Roluri RACI",
             "relations": "Relații între activități",
             "select_all": "Selectează tot",
             "subscribers": "Abonați"

@@ -160,6 +160,7 @@
             "is_draft": "Indicador de rascunho",
             "assignees": "Responsáveis",
             "group_assignees": "Grupos atribuídos",
+            "raci": "Funções RACI",
             "subscribers": "Assinantes",
             "created_by_name": "Criado por",
             "start_date": "Data de início",

@@ -395,6 +395,7 @@
             "labels": "Label",
             "modules": "Modul",
             "parents": "Item kerja induk",
+            "raci": "Peran RACI",
             "relations": "Relasi antar item kerja",
             "select_all": "Pilih semua",
             "subscribers": "Pelanggan"

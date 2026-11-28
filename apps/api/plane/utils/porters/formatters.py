@@ -25,6 +25,15 @@ from plane.utils.csv_utils import sanitize_csv_row, sanitize_csv_value
 UTF8_SIG_BOM = "\ufeff"
 
 
+# Headers that are not written in title case: an acronym stays in capitals ("RACI", not "Raci")
+HEADER_OVERRIDES = {"raci": "RACI"}
+
+
+def prettify_header(header: str) -> str:
+    """Transform 'created_by_name' → 'Created By Name'; normalising the header gives the key back."""
+    return HEADER_OVERRIDES.get(header) or header.replace("_", " ").title()
+
+
 def strip_utf8_bom(content: str) -> str:
     return content.lstrip(UTF8_SIG_BOM) if content else content
 
@@ -85,7 +94,7 @@ class CSVFormatter(BaseFormatter):
 
     def _prettify_header(self, header: str) -> str:
         """Transform 'created_by_name' → 'Created By Name'"""
-        return header.replace("_", " ").title()
+        return prettify_header(header)
 
     def _normalize_header(self, header: str) -> str:
         """Transform 'Display Name' → 'display_name' (reverse of prettify)"""
@@ -199,7 +208,7 @@ class XLSXFormatter(BaseFormatter):
 
     def _prettify_header(self, header: str) -> str:
         """Transform 'created_by_name' → 'Created By Name'"""
-        return header.replace("_", " ").title()
+        return prettify_header(header)
 
     def _normalize_header(self, header: str) -> str:
         """Transform 'Display Name' → 'display_name' (reverse of prettify)"""

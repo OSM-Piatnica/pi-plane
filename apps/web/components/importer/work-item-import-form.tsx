@@ -46,6 +46,7 @@ const IMPORT_OPTION_FIELDS: (keyof TWorkItemImportOptions)[] = [
   "labels",
   "modules",
   "cycles",
+  "raci",
 ];
 
 const DEFAULT_IMPORT_OPTIONS: TWorkItemImportOptions = {
@@ -58,6 +59,7 @@ const DEFAULT_IMPORT_OPTIONS: TWorkItemImportOptions = {
   labels: true,
   modules: true,
   cycles: true,
+  raci: true,
 };
 
 type ImportOutcome = {

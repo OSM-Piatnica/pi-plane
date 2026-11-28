@@ -395,6 +395,7 @@
             "labels": "레이블",
             "modules": "모듈",
             "parents": "상위 작업 항목",
+            "raci": "RACI 역할",
             "relations": "작업 항목 간 관계",
             "select_all": "모두 선택",
             "subscribers": "구독자"

@@ -125,12 +125,15 @@ def map_community_export_rows(rows: list[dict]) -> list[dict]:
                 "duration": duration,
                 "estimate": _pick(row, "estimate", "estimate_point"),
                 "labels": labels,
-                "modules": _pick(row, "modules"),
+                # Pi-Plane writes "Modules"; "Module Name" is the column of the exporter schema upstream Plane carries
+                # in ``plane.utils.exporters`` (removed here), so a file with that column keeps its modules too.
+                "modules": _pick(row, "modules", "module_name"),
                 "cycles": _pick(row, "cycles", "cycle"),
                 "cycle_start_date": _pick(row, "cycle_start_date"),
                 "cycle_end_date": _pick(row, "cycle_end_date"),
                 "relations": _pick(row, "relations"),
                 "group_assignees": _pick(row, "group_assignees"),
+                "raci": _pick(row, "raci"),
                 "assignee_emails": assignee_emails,
                 "assignee_names": assignee_names,
                 "subscriber_emails": subscriber_emails,

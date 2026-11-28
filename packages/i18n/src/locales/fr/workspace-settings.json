@@ -160,6 +160,7 @@
             "is_draft": "Indicateur de brouillon",
             "assignees": "Assignés",
             "group_assignees": "Groupes assignés",
+            "raci": "Rôles RACI",
             "subscribers": "Abonnés",
             "created_by_name": "Créé par",
             "start_date": "Date de début",

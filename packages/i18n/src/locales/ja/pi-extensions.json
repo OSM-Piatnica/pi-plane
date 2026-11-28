@@ -395,6 +395,7 @@
             "labels": "ラベル",
             "modules": "モジュール",
             "parents": "親作業項目",
+            "raci": "RACI の役割",
             "relations": "作業項目間の関連",
             "select_all": "すべて選択",
             "subscribers": "購読者"

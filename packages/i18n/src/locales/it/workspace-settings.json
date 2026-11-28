@@ -160,6 +160,7 @@
             "is_draft": "Indicatore di bozza",
             "assignees": "Assegnatari",
             "group_assignees": "Gruppi assegnatari",
+            "raci": "Ruoli RACI",
             "subscribers": "Iscritti",
             "created_by_name": "Creato da",
             "start_date": "Data di inizio",

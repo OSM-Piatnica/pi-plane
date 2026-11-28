@@ -395,6 +395,7 @@
             "labels": "Nhãn",
             "modules": "Mô-đun",
             "parents": "Mục công việc cha",
+            "raci": "Vai trò RACI",
             "relations": "Mối quan hệ giữa các mục công việc",
             "select_all": "Chọn tất cả",
             "subscribers": "Người theo dõi"

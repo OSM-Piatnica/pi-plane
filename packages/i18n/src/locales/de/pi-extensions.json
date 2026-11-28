@@ -395,6 +395,7 @@
             "labels": "Labels",
             "modules": "Module",
             "parents": "Übergeordnete Arbeitselemente",
+            "raci": "RACI-Rollen",
             "relations": "Beziehungen zwischen Arbeitselementen",
             "select_all": "Alle auswählen",
             "subscribers": "Abonnenten"

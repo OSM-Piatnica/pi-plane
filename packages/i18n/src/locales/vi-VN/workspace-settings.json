@@ -160,6 +160,7 @@
             "is_draft": "Cờ bản nháp",
             "assignees": "Người được giao",
             "group_assignees": "Nhóm được giao",
+            "raci": "Vai trò RACI",
             "subscribers": "Người đăng ký",
             "created_by_name": "Người tạo",
             "start_date": "Ngày bắt đầu",

@@ -2,10 +2,18 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # See the LICENSE file for details.
 
+from types import SimpleNamespace
+
+import pytest
+
 from plane.utils.community_work_item_import import (
     is_community_work_item_export,
     map_community_export_rows,
 )
+from plane.utils.porters.exporter import DataExporter
+from plane.utils.porters.importer import DataImporter
+from plane.utils.porters.serializers.issue import IssueExportSerializer
+from plane.utils.project_work_item_import import _coerce_list
 
 
 def test_detects_community_export_headers():
@@ -152,3 +160,57 @@ def test_maps_the_cycle_period_columns():
     assert mapped[0]["cycles"] == '["Sprint 1"]'
     assert mapped[0]["cycle_start_date"] == "2026-06-01"
     assert mapped[0]["cycle_end_date"] == "2026-06-14"
+
+
+def test_reads_a_module_name_column_as_modules():
+    # The column of the exporter schema upstream Plane carries; Pi-Plane writes "Modules"
+    mapped = map_community_export_rows(
+        [{"identifier": "DEMO-6", "name": "Etap", "state_name": "Todo", "module_name": '["Etap 1"]'}]
+    )
+
+    assert mapped[0]["modules"] == '["Etap 1"]'
+
+
+def test_a_modules_column_wins_over_a_module_name_column():
+    mapped = map_community_export_rows(
+        [{"identifier": "DEMO-7", "name": "Both", "modules": '["Etap 2"]', "module_name": '["Etap 1"]'}]
+    )
+
+    assert mapped[0]["modules"] == '["Etap 2"]'
+
+
+class _Prefetched(list):
+    """Stands in for a prefetched relation: ``.all()`` gives the rows."""
+
+    def all(self):
+        return self
+
+
+def _exported_rows(file_format, fields, **extra):
+    """A Demo work item through the export serializer and the file format, read back as an import reads it."""
+    issue = SimpleNamespace(
+        project=SimpleNamespace(identifier="DEMO", name="Demo", timezone="UTC"),
+        sequence_id=7,
+        name="Projekt etykiety",
+        state=SimpleNamespace(name="Todo"),
+        issue_module=_Prefetched([SimpleNamespace(module=SimpleNamespace(name=name)) for name in ("Etap 1", "Druk")]),
+        **extra,
+    )
+    exporter = DataExporter(IssueExportSerializer, format_type=file_format, export_fields=fields)
+    _, content = exporter.export("export", [issue])
+    if isinstance(content, str):
+        content = content.encode("utf-8")
+    return DataImporter(format_type=file_format).decode(content)
+
+
+@pytest.mark.parametrize("file_format", ["csv", "xlsx", "json"])
+def test_the_modules_column_of_an_export_is_the_one_the_import_reads(file_format):
+    """
+    The known-bugs list of the Gantt-RACI package says modules are lost on export and import again. It was read from
+    ``plane.utils.exporters`` ("Module Name"), which the app never used: the export writes "Modules". This pins it.
+    """
+    rows = _exported_rows(file_format, ["identifier", "name", "state_name", "modules"])
+    mapped = map_community_export_rows(rows)
+
+    assert "modules" in rows[0] and "module_name" not in rows[0]
+    assert _coerce_list(mapped[0]["modules"]) == ["Etap 1", "Druk"]
