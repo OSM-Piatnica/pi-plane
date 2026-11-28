@@ -1,0 +1,51 @@
+name: Test Copilot connector
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "preview"
+    types:
+      - "opened"
+      - "synchronize"
+      - "ready_for_review"
+      - "reopened"
+      - "edited"
+    paths:
+      - "apps/copilot-connector/**"
+      - ".github/workflows/pull-request-test-copilot-connector.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # a skipped `edited` run (title/description edit) must not cancel the real run of the latest push
+  cancel-in-progress: ${{ github.event.action != 'edited' || github.event.changes.base != null }}
+
+permissions:
+  contents: read
+
+jobs:
+  test-copilot-connector:
+    name: Test Copilot connector
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      ((github.event.action != 'edited' || github.event.changes.base != null) &&
+      github.event.pull_request.draft == false)
+    defaults:
+      run:
+        working-directory: apps/copilot-connector
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          # The image uses python:3.12.12-alpine; any 3.12 runs the tests (the runner image does not
+          # ship every patch release).
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements-test.txt
+      # The tests use made-up settings (tests/conftest.py) and never call Plane or Microsoft Graph.
+      - name: Run tests
+        run: python -m pytest -q tests
+      - name: Build the image
+        run: docker build -f Dockerfile.copilot-connector -t copilot-connector:ci .
