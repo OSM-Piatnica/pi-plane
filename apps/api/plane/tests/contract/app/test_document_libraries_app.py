@@ -306,7 +306,7 @@ class TestWorkspaceLibraries:
         member = _member(workspace)
         assert member.get(_libraries(workspace)).status_code == 403
         assert member.post(f"{_libraries(workspace)}sites/", {"site_url": SITE_URL}).status_code == 403
-        assert member.post(f"{_libraries(workspace)}default/", {"library_id": None}).status_code == 403
+        assert member.post(f"{_libraries(workspace)}default/", {"library_id": None}, format="json").status_code == 403
 
 
 @pytest.mark.contract
