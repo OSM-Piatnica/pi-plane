@@ -116,6 +116,8 @@ from .sticky import Sticky
 
 from .worklog import IssueWorkLog
 
+from .baseline import BaselineItem, ProjectBaseline
+
 from .project_copy_job import ProjectCopyJob
 
 from .raci import IssueRaci, RaciRole

@@ -20,6 +20,7 @@ import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
 import { BLOCK_HEIGHT } from "../constants";
 // components
 import { ChartDraggable } from "../helpers";
+import { GanttBaselineBar } from "./baseline-bar";
 import { GanttDueMarker } from "./due-marker";
 import { useGanttResizable } from "../helpers/blockResizables/use-gantt-resizable";
 import { getBlockChartDates, isBlockOnChart, isBlockRolledUp } from "../views/helpers";
@@ -46,6 +47,9 @@ const getBarState = (block: IGanttBlock | undefined, editing: TBarEditing) => {
     canResizeRight: editing.enableBlockRightResize && !isRolledUp && !isSingleEndedWorkItem,
     canMove: editing.enableBlockMove && (isComplete || isSingleEndedWorkItem) && !isRolledUp,
     showRollupBracket: isOnChart && !isRolledUp && !!block?.rollup?.position,
+    // the trace of a saved plan belongs to work items; the number of days needs free room after a real bar
+    isWorkItem: block?.meta?.type === EGanttBlockType.ISSUE,
+    showBaselineVariance: isOnChart && !isSingleEndedWorkItem,
   };
 };
 
@@ -146,6 +150,9 @@ export const GanttChartBlock = observer(function GanttChartBlock(props: Props) {
         />
       )}
       {bar.showRollupBracket && <GanttRollupBracket block={block} />}
+      {bar.isWorkItem && (
+        <GanttBaselineBar block={block} isAboveBar={bar.showRollupBracket} showVariance={bar.showBaselineVariance} />
+      )}
     </div>
   );
 });

@@ -171,6 +171,11 @@ from .issue.base import (
 from .issue.activity import IssueActivityEndpoint
 from .issue.hierarchy import IssueDateRollupEndpoint
 from .issue.schedule import ProjectScheduleAnalysisEndpoint
+from .project.baseline import (
+    ProjectBaselineDetailEndpoint,
+    ProjectBaselinesEndpoint,
+    ProjectBaselineVarianceEndpoint,
+)
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
 from .issue.raci import IssueRaciEndpoint
 

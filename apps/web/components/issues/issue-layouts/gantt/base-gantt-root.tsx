@@ -42,6 +42,7 @@ import { useBulkOperationStatus } from "@/hooks/use-bulk-operation-status";
 
 import { IssueLayoutHOC } from "../issue-layout-HOC";
 import { GanttQuickAddIssueButton, QuickAddIssueRoot } from "../quick-add";
+import { GanttBaselineTools } from "./baseline-control";
 import { IssueGanttBlock } from "./blocks";
 import { GanttCriticalPathToggle, GanttScheduleAnalysisLoader } from "./critical-path-toggle";
 import { GanttHierarchyControls } from "./hierarchy-controls";
@@ -340,6 +341,7 @@ export const BaseGanttRoot = observer(function BaseGanttRoot(props: IBaseGanttRo
                       <GanttCriticalPathToggle />
                     </>
                   )}
+                  <GanttBaselineTools issueIds={issuesIds} storeType={storeType} canManage={isAllowed} />
                 </>
               }
             />
