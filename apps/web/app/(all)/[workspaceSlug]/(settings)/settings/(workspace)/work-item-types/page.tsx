@@ -35,7 +35,9 @@ import { IssueTypeService } from "@/services/issue-type.service";
 import { LogoSpinner } from "@/components/common/logo-spinner";
 import type { Route } from "./+types/page";
 import { WorkItemTypesSettingsHeader } from "./header";
+import { WorkItemTypeCatalogueDialog } from "./work-item-type-catalogue-dialog";
 import { WorkItemTypePropertyEditor } from "./work-item-type-property-editor";
+import { WorkItemTypeTemplateEditor } from "./work-item-type-template-editor";
 import { DEFAULT_WORK_ITEM_TYPE_FORM, type TWorkItemTypeFormFields } from "./work-item-type-form.types";
 import {
   buildIssueTypePayloadFromForm,
@@ -66,6 +68,7 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [logoPickerOpen, setLogoPickerOpen] = useState(false);
+  const [catalogueOpen, setCatalogueOpen] = useState(false);
 
   const form = useForm<TWorkItemTypeFormFields>({
     defaultValues: DEFAULT_WORK_ITEM_TYPE_FORM,
@@ -273,6 +276,28 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
                           </div>
                         </div>
                       </div>
+                      <div>
+                        <span id="work-item-type-template-label" className="block text-12 text-tertiary">
+                          {t("workspace_settings.settings.work_item_types.form.description_template_label")}
+                        </span>
+                        <p className="pt-0.5 pb-1 text-11 text-tertiary">
+                          {t("workspace_settings.settings.work_item_types.form.description_template_hint")}
+                        </p>
+                        <div role="group" aria-labelledby="work-item-type-template-label">
+                          <Controller
+                            name="descriptionTemplate"
+                            control={control}
+                            render={({ field }) => (
+                              <WorkItemTypeTemplateEditor
+                                editorKey={editingId ?? "new"}
+                                workspaceSlug={workspaceSlug}
+                                value={field.value}
+                                onChange={field.onChange}
+                              />
+                            )}
+                          />
+                        </div>
+                      </div>
                       {isEditingSystemManaged ? (
                         <p className="rounded-md border border-subtle bg-surface-1 px-3 py-2 text-12 text-secondary">
                           {t("workspace_settings.settings.work_item_types.system_type_hint")}
@@ -368,18 +393,33 @@ function WorkItemTypesPage({ params }: Route.ComponentProps) {
             </form>
           </DialogContent>
         </Dialog>
+        <WorkItemTypeCatalogueDialog
+          workspaceSlug={workspaceSlug}
+          isOpen={catalogueOpen}
+          onClose={() => setCatalogueOpen(false)}
+          onAdded={() => mutate(listKey)}
+        />
         <div className="w-full">
           <SettingsHeading
             title={t("workspace_settings.settings.work_item_types.title")}
             description={t("workspace_settings.settings.work_item_types.description")}
             control={
-              <Button
-                stretch="auto"
-                variant="primary"
-                size="lg"
-                onClick={openCreate}
-                label={t("workspace_settings.settings.work_item_types.add_type")}
-              />
+              <div className="flex items-center gap-2">
+                <Button
+                  stretch="auto"
+                  variant="secondary"
+                  size="lg"
+                  onClick={() => setCatalogueOpen(true)}
+                  label={t("workspace_settings.settings.work_item_types.catalogue.button")}
+                />
+                <Button
+                  stretch="auto"
+                  variant="primary"
+                  size="lg"
+                  onClick={openCreate}
+                  label={t("workspace_settings.settings.work_item_types.add_type")}
+                />
+              </div>
             }
           />
           {isLoading || !issueTypes ? (
@@ -446,7 +486,7 @@ function WorkItemTypeRow(props: TWorkItemTypeRowProps) {
     <tr className="border-t border-subtle">
       <td className="p-2">
         <div className="flex items-center gap-2 font-medium text-primary">
-          <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
+          <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} type="material" />
           <span>{row.name}</span>
           {kindBadgeKey ? (
             <span className="rounded bg-surface-2 px-1.5 py-0.5 text-10 text-tertiary">{t(kindBadgeKey)}</span>

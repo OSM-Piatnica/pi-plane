@@ -32,6 +32,8 @@ export type TIssueType = {
   id: string;
   name: string;
   description: string;
+  /** HTML the create form puts into the description of a new work item of this type while it is empty. */
+  description_template?: string | null;
   logo_props: TLogoProps;
   is_epic: boolean;
   /** Optional: data cached before the server sent kinds has none. Read it through `getIssueTypeKind`. */
@@ -65,3 +67,25 @@ export type TIssueTypePropertyValueEntry = {
 };
 
 export type TIssuePropertyValuesMap = Record<string, unknown>;
+
+/** A ready-made type of the catalogue (`GET /api/workspaces/<slug>/issue-types/catalogue/`). */
+export type TIssueTypeCatalogueEntry = {
+  key: string;
+  kind: TIssueTypeKind;
+  /** Made the workspace's default type when it has none */
+  is_default: boolean;
+  name: string;
+  description: string;
+  logo_props: TLogoProps;
+  description_template: string;
+  properties: Pick<TIssueTypeProperty, "title" | "property_type" | "description" | "options" | "select_mode">[];
+  /** The workspace's type that already stands for this entry; adding the entry again does not make another */
+  existing_type_id: string | null;
+};
+
+export type TIssueTypeCatalogueResult = {
+  key: string;
+  /** `updated`: the workspace's milestone type got the catalogue's icon, template or properties where it had none */
+  status: "created" | "exists" | "updated";
+  issue_type: TIssueType;
+};

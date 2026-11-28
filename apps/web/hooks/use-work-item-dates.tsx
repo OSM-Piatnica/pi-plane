@@ -5,15 +5,17 @@
  */
 
 import { useCallback } from "react";
+import { useParams } from "next/navigation";
 // plane imports
 import { useTranslation } from "@plane/i18n";
 import { setToast } from "@plane/blocks/toast";
 import type { TIssue } from "@plane/types";
 import type { TWorkItemDateStatuses, TWorkItemPlanningDates } from "@plane/utils";
-import { getTodayInTimeZone, getWorkItemDateStatuses, planWorkItemDateChange } from "@plane/utils";
+import { getTodayInTimeZone, getWorkItemDateStatuses, isMilestoneType, planWorkItemDateChange } from "@plane/utils";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useWorkspace } from "@/hooks/store/use-workspace";
+import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 
 /**
  * Project time zone (workspace time zone as fallback): the zone that defines "today" and the end of
@@ -54,15 +56,26 @@ export const useWorkItemDateStatuses = (
  * error toasts stay where they were.
  */
 export const useWorkItemDateEdit = (
-  issue: Pick<TIssue, "start_date" | "finish_date" | "target_date" | "duration" | "dates_initialized">,
+  issue: Pick<TIssue, "start_date" | "finish_date" | "target_date" | "duration" | "dates_initialized"> &
+    Partial<Pick<TIssue, "type_id">>,
   update: (data: Partial<TIssue>) => Promise<void> | void,
   weekendDays: readonly number[] = []
 ) => {
   const { t } = useTranslation();
+  const { workspaceSlug } = useParams();
+  const { typeMap } = useWorkspaceIssueTypes(workspaceSlug?.toString());
+  // a milestone is one day: its start and finish move together, as the server keeps them
+  const isMilestone = isMilestoneType(issue.type_id ? typeMap[issue.type_id] : undefined);
 
   return useCallback(
     async (change: Partial<TWorkItemPlanningDates>, options?: { initialize?: boolean }) => {
-      const { patch, error } = planWorkItemDateChange(issue, change, options?.initialize ?? true, weekendDays);
+      const { patch, error } = planWorkItemDateChange(
+        issue,
+        change,
+        options?.initialize ?? true,
+        weekendDays,
+        isMilestone
+      );
       if (error) {
         setToast({
           type: "error",
@@ -73,6 +86,6 @@ export const useWorkItemDateEdit = (
       }
       await update(patch as Partial<TIssue>);
     },
-    [issue, update, weekendDays, t]
+    [issue, update, weekendDays, isMilestone, t]
   );
 };

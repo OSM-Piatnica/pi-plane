@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Typen werden geladen…",
+    "milestone_after_due": "Nach dem Fälligkeitsdatum",
     "property_values_save_failed": "Das Arbeitselement wurde erstellt, aber die zusätzlichen Eigenschaften konnten nicht gespeichert werden. Füllen Sie sie in den Arbeitselementdetails aus.",
     "select_placeholder": "Typ",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Typ hinzufügen",
+        "catalogue": {
+          "add_selected": "Auswahl hinzufügen",
+          "button": "Aus Katalog hinzufügen",
+          "default_badge": "Standard",
+          "in_workspace": "Bereits im Arbeitsbereich",
+          "intro": "Fertige Typen mit Symbol, Beschreibungsvorlage und vorgeschlagenen Eigenschaften. Typen, die der Arbeitsbereich schon hat, werden nicht erneut hinzugefügt; es gibt einen Meilenstein-Typ pro Arbeitsbereich.",
+          "no_properties": "Keine vorgeschlagenen Eigenschaften",
+          "properties": "Eigenschaften: {properties}",
+          "title": "Aus Katalog hinzufügen",
+          "toasts": {
+            "add_failed": {
+              "message": "Bitte versuche es erneut.",
+              "title": "Typen konnten nicht hinzugefügt werden"
+            },
+            "added": {
+              "message": "Die ausgewählten Typen wurden dem Arbeitsbereich hinzugefügt.",
+              "title": "Typen hinzugefügt"
+            }
+          }
+        },
         "delete_confirm": "Diesen Arbeitselementtyp entfernen? Bestehende Arbeitselemente behalten ihre Daten.",
         "description": "Definieren Sie Arbeitselementtypen mit eigener Identität, benutzerdefinierten Eigenschaften und Projektbereich. Aktivieren oder deaktivieren Sie Typen, ohne bestehende Elemente zu beeinflussen.",
         "edit_type": "Typ bearbeiten",
         "epic_badge": "Epic",
         "form": {
           "description_label": "Beschreibung",
+          "description_template_hint": "Wird in die Beschreibung eines neuen Arbeitselements dieses Typs eingefügt, solange die Beschreibung leer ist.",
+          "description_template_label": "Beschreibungsvorlage",
+          "description_template_placeholder": "Überschriften und Listen, mit denen jedes Arbeitselement dieses Typs beginnt",
           "is_active": "Aktiv",
           "is_epic": "Epic-Typ",
           "modal_intro": "Benennen Sie den Typ, wählen Sie ein Symbol und fügen Sie nur die Eigenschaften hinzu, die diese Art von Arbeit benötigt. Weisen Sie ihn den Projekten zu, in denen er verfügbar sein soll.",

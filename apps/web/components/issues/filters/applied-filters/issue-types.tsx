@@ -31,7 +31,7 @@ export const AppliedIssueTypeFilters = observer(function AppliedIssueTypeFilters
         if (!typeDetails) return null;
         return (
           <div key={typeId} className="flex items-center gap-1 rounded-sm bg-layer-1 p-1 text-11">
-            <SwitcherIcon logo_props={typeDetails.logo_props} LabelIcon={Layers} size={10} />
+            <SwitcherIcon logo_props={typeDetails.logo_props} LabelIcon={Layers} size={10} type="material" />
             <span className="normal-case">{typeDetails.name}</span>
             {editable ? (
               <button

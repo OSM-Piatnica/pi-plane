@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Typen laden…",
+    "milestone_after_due": "Na de vervaldatum",
     "property_values_save_failed": "Het werkitem is aangemaakt, maar extra eigenschappen konden niet worden opgeslagen. Vul ze in via de details van het werkitem.",
     "select_placeholder": "Type",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Type toevoegen",
+        "catalogue": {
+          "add_selected": "Selectie toevoegen",
+          "button": "Toevoegen uit catalogus",
+          "default_badge": "Standaard",
+          "in_workspace": "Al in de werkruimte",
+          "intro": "Kant-en-klare types met een pictogram, een beschrijvingssjabloon en voorgestelde eigenschappen. Types die de werkruimte al heeft, worden niet opnieuw toegevoegd; er is één Mijlpaal-type per werkruimte.",
+          "no_properties": "Geen voorgestelde eigenschappen",
+          "properties": "Eigenschappen: {properties}",
+          "title": "Toevoegen uit catalogus",
+          "toasts": {
+            "add_failed": {
+              "message": "Probeer het opnieuw.",
+              "title": "Types konden niet worden toegevoegd"
+            },
+            "added": {
+              "message": "De geselecteerde types zijn aan de werkruimte toegevoegd.",
+              "title": "Types toegevoegd"
+            }
+          }
+        },
         "delete_confirm": "Dit werkitemtype verwijderen? Bestaande werkitems behouden hun gegevens.",
         "description": "Definieer werkitemtypen met een eigen identiteit, aangepaste eigenschappen en projectbereik. Schakel typen in of uit zonder bestaande items te beïnvloeden.",
         "edit_type": "Type bewerken",
         "epic_badge": "Epic",
         "form": {
           "description_label": "Beschrijving",
+          "description_template_hint": "Wordt in de beschrijving van een nieuw werkitem van dit type gezet zolang de beschrijving leeg is.",
+          "description_template_label": "Beschrijvingssjabloon",
+          "description_template_placeholder": "Koppen en lijsten waarmee elk werkitem van dit type begint",
           "is_active": "Actief",
           "is_epic": "Epic-type",
           "modal_intro": "Geef het type een naam, kies een pictogram en koppel alleen de eigenschappen die dit soort werk nodig heeft. Wijs het toe aan projecten waar het beschikbaar moet zijn.",

@@ -32,6 +32,7 @@ from plane.utils.content_validator import (
     validate_binary_data,
 )
 from plane.utils.project_weekend_days import get_project_weekend_days
+from plane.utils.milestone_dates import apply_milestone_dates
 from plane.utils.work_item_dates import apply_date_rules
 from plane.app.permissions import ROLE
 
@@ -87,6 +88,10 @@ class DraftIssueCreateSerializer(BaseSerializer):
         return data
 
     def validate(self, attrs):
+        # A milestone is one day: its start follows its finish (or the other way round); the due date stays apart
+        apply_milestone_dates(
+            self.instance, attrs, attrs["type"] if "type" in attrs else getattr(self.instance, "type", None)
+        )
         # One shared rule for start/finish/due: duration (in the project's working days), the finish >= start
         # invariant and the one-time "first finish or due fills both" default. Due is never compared with start.
         self.date_notices = apply_date_rules(

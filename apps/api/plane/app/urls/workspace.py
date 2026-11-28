@@ -59,6 +59,7 @@ from plane.app.views import (
     WorkspaceFeatureEndpoint,
     WorkspaceWorkItemTemplateViewSet,
     WorkspaceIssueTypeViewSet,
+    WorkspaceIssueTypeCatalogueEndpoint,
     WorkspaceProjectTemplateViewSet,
 )
 
@@ -384,6 +385,11 @@ urlpatterns = [
         "workspaces/<str:slug>/issue-types/",
         WorkspaceIssueTypeViewSet.as_view({"get": "list", "post": "create"}),
         name="workspace-issue-types",
+    ),
+    path(
+        "workspaces/<str:slug>/issue-types/catalogue/",
+        WorkspaceIssueTypeCatalogueEndpoint.as_view(),
+        name="workspace-issue-type-catalogue",
     ),
     path(
         "workspaces/<str:slug>/issue-types/<uuid:pk>/",

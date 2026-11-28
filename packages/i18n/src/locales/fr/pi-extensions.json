@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Chargement des types…",
+    "milestone_after_due": "Après sa date d’échéance",
     "property_values_save_failed": "L'élément de travail a été créé, mais les propriétés supplémentaires n'ont pas pu être enregistrées. Renseignez-les depuis les détails de l'élément de travail.",
     "select_placeholder": "Type",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Ajouter un type",
+        "catalogue": {
+          "add_selected": "Ajouter la sélection",
+          "button": "Ajouter depuis le catalogue",
+          "default_badge": "Par défaut",
+          "in_workspace": "Déjà dans l’espace de travail",
+          "intro": "Types prêts à l’emploi avec une icône, un modèle de description et des propriétés suggérées. Les types que l’espace de travail possède déjà ne sont pas ajoutés à nouveau ; il y a un seul type Jalon par espace de travail.",
+          "no_properties": "Aucune propriété suggérée",
+          "properties": "Propriétés : {properties}",
+          "title": "Ajouter depuis le catalogue",
+          "toasts": {
+            "add_failed": {
+              "message": "Veuillez réessayer.",
+              "title": "Impossible d’ajouter les types"
+            },
+            "added": {
+              "message": "Les types sélectionnés ont été ajoutés à l’espace de travail.",
+              "title": "Types ajoutés"
+            }
+          }
+        },
         "delete_confirm": "Supprimer ce type d'élément de travail ? Les éléments de travail existants conservent leurs données.",
         "description": "Définissez des types d'éléments de travail avec leur propre identité, des propriétés personnalisées et une portée projet. Activez ou désactivez les types sans affecter les éléments existants.",
         "edit_type": "Modifier le type",
         "epic_badge": "Epic",
         "form": {
           "description_label": "Description",
+          "description_template_hint": "Inséré dans la description d’un nouvel élément de travail de ce type tant que la description est vide.",
+          "description_template_label": "Modèle de description",
+          "description_template_placeholder": "Titres et listes par lesquels commence chaque élément de travail de ce type",
           "is_active": "Actif",
           "is_epic": "Type Epic",
           "modal_intro": "Nommez le type, choisissez une icône et n'associez que les propriétés dont ce type de travail a besoin. Assignez-le aux projets où il doit être disponible.",

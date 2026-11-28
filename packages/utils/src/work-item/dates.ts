@@ -73,6 +73,21 @@ export const canInitializePairedDate = (
 };
 
 /**
+ * @description A milestone is one day, so a change of its start or finish moves both: the finish decides when both
+ * are sent (a cleared finish keeps a start that was sent), the start alone moves the finish along, and a duration is
+ * dropped. The due date is left alone. Mirrors `apply_milestone_dates` in `apps/api/plane/utils/milestone_dates.py`.
+ */
+export const getMilestoneDateChange = (change: Partial<TWorkItemPlanningDates>): Partial<TWorkItemPlanningDates> => {
+  const { duration: _duration, ...rest } = change;
+  if ("finish_date" in rest) {
+    const moved = rest.finish_date ?? rest.start_date ?? null;
+    return { ...rest, start_date: moved, finish_date: moved };
+  }
+  if ("start_date" in rest) return { ...rest, finish_date: rest.start_date ?? null };
+  return rest;
+};
+
+/**
  * @description Builds the patch for a single user edit of the planning dates, previewing the server
  * rules: duration follows start/finish, the schedule invariant is enforced, and (when `initialize`
  * is true and still allowed) the first finish or due entry fills the other field once.
@@ -81,13 +96,16 @@ export const canInitializePairedDate = (
  *
  * @param initialize user wants the one-time default ("Set only finish/due" opts out)
  * @param weekendDays the project's non-working days, which the duration does not count
+ * @param isMilestone the work item is of the milestone kind: its start and finish move together
  */
 export const planWorkItemDateChange = (
   current: TWorkItemPlanningDates,
-  change: Partial<TWorkItemPlanningDates>,
+  requestedChange: Partial<TWorkItemPlanningDates>,
   initialize = true,
-  weekendDays: readonly number[] = []
+  weekendDays: readonly number[] = [],
+  isMilestone = false
 ): TPlannedDateChange => {
+  const change = isMilestone ? getMilestoneDateChange(requestedChange) : requestedChange;
   let patch: TPlannedDateChange["patch"] = { ...change };
   let notice: TPairedDateNotice | undefined;
 

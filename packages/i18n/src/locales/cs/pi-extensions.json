@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Načítání typů…",
+    "milestone_after_due": "Po termínu",
     "property_values_save_failed": "Pracovní položka byla vytvořena, ale další vlastnosti se nepodařilo uložit. Vyplňte je v detailu pracovní položky.",
     "select_placeholder": "Typ",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Přidat typ",
+        "catalogue": {
+          "add_selected": "Přidat vybrané",
+          "button": "Přidat z katalogu",
+          "default_badge": "Výchozí",
+          "in_workspace": "Už je v pracovním prostoru",
+          "intro": "Hotové typy s ikonou, šablonou popisu a navrženými vlastnostmi. Typy, které pracovní prostor už má, se znovu nepřidávají; v pracovním prostoru je jeden typ Milník.",
+          "no_properties": "Žádné navržené vlastnosti",
+          "properties": "Vlastnosti: {properties}",
+          "title": "Přidat z katalogu",
+          "toasts": {
+            "add_failed": {
+              "message": "Zkuste to prosím znovu.",
+              "title": "Typy se nepodařilo přidat"
+            },
+            "added": {
+              "message": "Vybrané typy byly přidány do pracovního prostoru.",
+              "title": "Typy přidány"
+            }
+          }
+        },
         "delete_confirm": "Odstranit tento typ pracovní položky? Stávající pracovní položky si zachovají svá data.",
         "description": "Definujte typy pracovních položek s vlastní identitou, vlastními vlastnostmi a rozsahem projektů. Typy můžete zapínat a vypínat, aniž by to ovlivnilo stávající položky.",
         "edit_type": "Upravit typ",
         "epic_badge": "Epik",
         "form": {
           "description_label": "Popis",
+          "description_template_hint": "Vloží se do popisu nové pracovní položky tohoto typu, dokud je popis prázdný.",
+          "description_template_label": "Šablona popisu",
+          "description_template_placeholder": "Nadpisy a seznamy, kterými začíná každá pracovní položka tohoto typu",
           "is_active": "Aktivní",
           "is_epic": "Typ epiku",
           "modal_intro": "Pojmenujte typ, vyberte ikonu a přiřaďte pouze vlastnosti, které tento druh práce potřebuje. Přiřaďte jej k projektům, ve kterých má být dostupný.",

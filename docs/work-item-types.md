@@ -7,13 +7,13 @@ A work item type has two sides:
 
 ## Kinds
 
-| Kind        | Level | Behaviour                                                                                                       |
-| ----------- | ----- | --------------------------------------------------------------------------------------------------------------- |
-| `standard`  | 0     | No special behaviour. A workspace can have any number of these.                                                 |
-| `epic`      | 1     | Groups other work items: no parent, left out of module and cycle progress. See [Epics](epics.md).               |
-| `milestone` | 0     | Reserved for milestones (one date, a diamond on the timeline). Hierarchy rules apply now; the rest comes later. |
-| `approval`  | 0     | Reserved for acceptance work items. System-managed.                                                             |
-| `review`    | -1    | One step of an approval: only as a child of an `approval` work item. System-managed.                            |
+| Kind        | Level | Behaviour                                                                                               |
+| ----------- | ----- | ------------------------------------------------------------------------------------------------------- |
+| `standard`  | 0     | No special behaviour. A workspace can have any number of these.                                         |
+| `epic`      | 1     | Groups other work items: no parent, left out of module and cycle progress. See [Epics](epics.md).       |
+| `milestone` | 0     | A point in the schedule: start equals finish, a diamond on the timeline. See [Milestones](#milestones). |
+| `approval`  | 0     | Reserved for acceptance work items. System-managed.                                                     |
+| `review`    | -1    | One step of an approval: only as a child of an `approval` work item. System-managed.                    |
 
 A work item without a type behaves like the `standard` kind.
 
@@ -49,6 +49,34 @@ The name, icon (`logo_props`), description and custom properties stay editable. 
 
 **Progress.** `epic` and `review` work items are left out of the progress numbers of modules and cycles: an Epic is counted through its children, and an acceptance counts once, through its `approval` work item. They still show in the lists.
 
+## Milestones
+
+A work item of the `milestone` kind lasts one day. The server keeps its start date equal to its finish date (the app API, the public API, drafts and the timeline's date endpoint):
+
+- when a request sends only one of the two, the other follows it;
+- when it sends both, the finish date decides; a cleared finish with a start sent keeps the start;
+- a duration that is sent is dropped (the dates make it 1);
+- a work item whose type changes to a milestone is collapsed onto its finish date (else its start date).
+
+The due date (`target_date`) is never touched: it stays the milestone's deadline. Date shifting (dependents moved after a predecessor, sub-work items following their parent) keeps a milestone at one day.
+
+On the timeline a milestone is a diamond at its finish date, red when the finish is after the due date; it can be moved but not resized. The date fields of the detail page and the create form move start and finish together, as the server does.
+
+## Catalogue and description templates
+
+**Workspace settings → Work item types → Add from catalogue** offers ready-made types: Task (made the workspace's default type when it has none), Bug, Story, Change request and Milestone. Each brings an icon, a description, a description template and suggested custom properties (Bug: severity, environment, steps to reproduce; Change request: reason, impact). The catalogue is written in English and Polish; the dialog uses the app's language, and other languages get English. The added types are not linked to any project.
+
+Adding an entry never makes a second type:
+
+- Task, Bug, Story and Change request are skipped when the workspace has a type with their name in either language;
+- Milestone is the workspace's system type of the `milestone` kind, the one `ensure_project_kind_type` links (one per workspace). When the workspace already has one, the catalogue fills in its empty icon, description and template and adds the suggested properties it lacks; what an admin set stays.
+
+The same is available to operators: `python manage.py seed_work_item_type_catalogue <workspace_slug> [--keys bug story] [--language pl]`.
+
+Every type can have a **description template** (HTML, edited in the type form). The create form puts it into the description of a new work item when its type is chosen and the description is empty; switching to another type replaces a template nobody edited, and never replaces text a person wrote. The server sanitises the template like a work item description.
+
+API: `GET /api/workspaces/<slug>/issue-types/catalogue/?language=pl` lists the entries with `existing_type_id`; `POST` the same URL with `{"keys": ["bug", "milestone"], "language": "pl"}` answers each entry's `status` (`created`, `exists` or `updated`) and type. `description_template` is a field of the type endpoints.
+
 ## `kind` and `is_epic`
 
 `is_epic` is the older flag for the Epic kind. Upstream code and the public API read it, so it stays, and it is always equal to `kind == "epic"`:
@@ -83,5 +111,6 @@ The server refuses a change of the type of a work item and keeps system-managed 
 
 - `IssueTypeKind`, `ISSUE_TYPE_KIND_LEVELS`, `SYSTEM_MANAGED_ISSUE_TYPE_KINDS`, `PROGRESS_EXCLUDED_ISSUE_TYPE_KINDS`: `apps/api/plane/db/models/issue_type.py`.
 - `ensure_project_kind_type(project, kind)`, `issue_type_assignment_error(...)`, `refuse_system_managed_type(issue_type, action)` (the shared guard of the endpoints above): `apps/api/plane/utils/project_issue_types.py`.
+- The catalogue: `apps/api/plane/utils/issue_type_catalogue.py`. The milestone date rule: `apply_milestone_dates` (`apps/api/plane/utils/milestone_dates.py`) and `getMilestoneDateChange` (`packages/utils/src/work-item/dates.ts`), which the web app uses to preview it.
 - `parent_kind_error(child_kind, parent_kind)`, `validate_work_item_parent(...)`: `apps/api/plane/utils/work_item_hierarchy.py`.
 - `Issue.progress_objects`, `not_epic_q(prefix)`: progress numbers without Epics and reviews (`apps/api/plane/utils/epic_progress.py`).

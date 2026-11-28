@@ -49,7 +49,7 @@ export const FilterIssueTypes = observer(function FilterIssueTypes(props: Props)
                 key={row.id}
                 isChecked={appliedFiltersSet.has(row.id)}
                 onClick={() => handleUpdate(row.id)}
-                icon={<SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={12} />}
+                icon={<SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={12} type="material" />}
                 title={row.name}
               />
             ))

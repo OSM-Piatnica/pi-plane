@@ -121,6 +121,7 @@ from .workspace.quick_link import QuickLinkViewSet
 from .workspace.sticky import WorkspaceStickyViewSet
 from .workspace.work_item_template import WorkspaceWorkItemTemplateViewSet
 from .workspace.issue_type import WorkspaceIssueTypeViewSet
+from .workspace.issue_type_catalogue import WorkspaceIssueTypeCatalogueEndpoint
 from .workspace.project_template import WorkspaceProjectTemplateViewSet
 from .workspace.project_issue_type_seed import WorkspaceProjectIssueTypeSeedEndpoint
 from .workspace.project_template_groups import WorkspaceProjectTemplateGroupsEndpoint

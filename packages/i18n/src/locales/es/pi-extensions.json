@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Cargando tipos…",
+    "milestone_after_due": "Después de su fecha de vencimiento",
     "property_values_save_failed": "El elemento de trabajo se creó, pero no se pudieron guardar las propiedades adicionales. Complétalas desde los detalles del elemento de trabajo.",
     "select_placeholder": "Tipo",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Agregar tipo",
+        "catalogue": {
+          "add_selected": "Añadir seleccionados",
+          "button": "Añadir desde el catálogo",
+          "default_badge": "Predeterminado",
+          "in_workspace": "Ya está en el espacio de trabajo",
+          "intro": "Tipos listos para usar con icono, plantilla de descripción y propiedades sugeridas. Los tipos que el espacio de trabajo ya tiene no se añaden de nuevo; hay un tipo Hito por espacio de trabajo.",
+          "no_properties": "Sin propiedades sugeridas",
+          "properties": "Propiedades: {properties}",
+          "title": "Añadir desde el catálogo",
+          "toasts": {
+            "add_failed": {
+              "message": "Inténtalo de nuevo.",
+              "title": "No se pudieron añadir los tipos"
+            },
+            "added": {
+              "message": "Los tipos seleccionados se añadieron al espacio de trabajo.",
+              "title": "Tipos añadidos"
+            }
+          }
+        },
         "delete_confirm": "¿Eliminar este tipo de elemento de trabajo? Los elementos de trabajo existentes conservan sus datos.",
         "description": "Define tipos de elementos de trabajo con su propia identidad, propiedades personalizadas y alcance de proyecto. Activa o desactiva tipos sin afectar los elementos existentes.",
         "edit_type": "Editar tipo",
         "epic_badge": "Épica",
         "form": {
           "description_label": "Descripción",
+          "description_template_hint": "Se inserta en la descripción de un nuevo elemento de trabajo de este tipo mientras la descripción esté vacía.",
+          "description_template_label": "Plantilla de descripción",
+          "description_template_placeholder": "Títulos y listas con los que empieza cada elemento de trabajo de este tipo",
           "is_active": "Activo",
           "is_epic": "Tipo Epic",
           "modal_intro": "Nombra el tipo, elige un icono y adjunta solo las propiedades que este tipo de trabajo necesita. Asígnalo a los proyectos donde debe estar disponible.",

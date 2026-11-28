@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Loading types…",
+    "milestone_after_due": "After its due date",
     "property_values_save_failed": "The work item was created, but additional properties could not be saved. Fill them in from the work item details.",
     "select_placeholder": "Type",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Add type",
+        "catalogue": {
+          "add_selected": "Add selected",
+          "button": "Add from catalogue",
+          "default_badge": "Default",
+          "in_workspace": "Already in the workspace",
+          "intro": "Ready-made types with an icon, a description template and suggested properties. Types the workspace already has are not added again; there is one Milestone type per workspace.",
+          "no_properties": "No suggested properties",
+          "properties": "Properties: {properties}",
+          "title": "Add from catalogue",
+          "toasts": {
+            "add_failed": {
+              "message": "Please try again.",
+              "title": "Could not add types"
+            },
+            "added": {
+              "message": "The selected types were added to the workspace.",
+              "title": "Types added"
+            }
+          }
+        },
         "delete_confirm": "Remove this work item type? Existing work items keep their data.",
         "description": "Define work item types with their own identity, custom properties, and project scope. Toggle types on or off without affecting existing items.",
         "edit_type": "Edit type",
         "epic_badge": "Epic",
         "form": {
           "description_label": "Description",
+          "description_template_hint": "Put into the description of a new work item of this type while the description is empty.",
+          "description_template_label": "Description template",
+          "description_template_placeholder": "Headings and lists that every work item of this type starts with",
           "is_active": "Active",
           "is_epic": "Epic type",
           "modal_intro": "Name the type, pick an icon, and attach only the properties this kind of work needs. Assign it to projects where it should be available.",

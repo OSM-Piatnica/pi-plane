@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Se încarcă tipurile…",
+    "milestone_after_due": "După termenul limită",
     "property_values_save_failed": "Activitatea a fost creată, dar proprietățile suplimentare nu au putut fi salvate. Completează-le din detaliile activității.",
     "select_placeholder": "Tip",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Adaugă tip",
+        "catalogue": {
+          "add_selected": "Adaugă selecția",
+          "button": "Adaugă din catalog",
+          "default_badge": "Implicit",
+          "in_workspace": "Deja în spațiul de lucru",
+          "intro": "Tipuri gata făcute cu pictogramă, șablon de descriere și proprietăți sugerate. Tipurile pe care spațiul de lucru le are deja nu sunt adăugate din nou; există un singur tip Etapă importantă per spațiu de lucru.",
+          "no_properties": "Nicio proprietate sugerată",
+          "properties": "Proprietăți: {properties}",
+          "title": "Adaugă din catalog",
+          "toasts": {
+            "add_failed": {
+              "message": "Încearcă din nou.",
+              "title": "Tipurile nu au putut fi adăugate"
+            },
+            "added": {
+              "message": "Tipurile selectate au fost adăugate în spațiul de lucru.",
+              "title": "Tipuri adăugate"
+            }
+          }
+        },
         "delete_confirm": "Elimini acest tip de activitate? Activitățile existente își păstrează datele.",
         "description": "Definește tipuri de activități cu identitate proprie, proprietăți personalizate și domeniu de aplicare la nivel de proiect. Activează sau dezactivează tipurile fără a afecta activitățile existente.",
         "edit_type": "Editează tipul",
         "epic_badge": "Sarcină majoră",
         "form": {
           "description_label": "Descriere",
+          "description_template_hint": "Se pune în descrierea unui element de lucru nou de acest tip cât timp descrierea este goală.",
+          "description_template_label": "Șablon de descriere",
+          "description_template_placeholder": "Titluri și liste cu care începe fiecare element de lucru de acest tip",
           "is_active": "Activ",
           "is_epic": "Tip epic",
           "modal_intro": "Denumește tipul, alege o pictogramă și atașează doar proprietățile de care are nevoie acest tip de activitate. Asignează-l proiectelor în care trebuie să fie disponibil.",

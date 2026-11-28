@@ -56,6 +56,7 @@ import { DeDupeButtonRoot } from "@/components/de-dupe/de-dupe-button";
 import { DuplicateModalRoot } from "@/components/de-dupe/duplicate-modal";
 import { IssueTypeSelect, WorkItemTemplateSelect } from "@/components/issues/issue-modal";
 import { WorkItemModalAdditionalProperties } from "@/components/issues/issue-modal/modal-additional-properties";
+import { useTypeDescriptionTemplate } from "@/components/issues/issue-modal/use-type-description-template";
 import { isSubmitShortcut } from "@/components/issues/issue-modal/submit-shortcut";
 import { useDebouncedDuplicateIssues } from "@/hooks/use-debounced-duplicate-issues";
 
@@ -215,6 +216,19 @@ export const IssueFormRoot = observer(function IssueFormRoot(props: IssueFormPro
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, projectId]);
+
+  // A new work item takes the description template of its type while its description is empty
+  useTypeDescriptionTemplate({
+    enabled: !data?.id && !data?.sourceIssueId,
+    workspaceSlug: workspaceSlug?.toString(),
+    projectId,
+    typeId: watch("type_id"),
+    getDescription: () => getValues("description_html"),
+    applyDescription: (html) => {
+      setValue("description_html", html);
+      requestAnimationFrame(() => editorRef.current?.setEditorValue?.(html, false));
+    },
+  });
 
   useEffect(() => {
     if (workItemTemplateId && projectId) {

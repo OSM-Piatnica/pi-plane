@@ -58,6 +58,7 @@ from plane.utils.content_validator import (
 from plane.utils.project_groups import ASSIGNABLE_GROUP_MESSAGE, GroupNotInProjectError, assignable_group_ids
 from plane.utils.project_weekend_days import get_project_weekend_days
 from plane.utils.project_issue_types import issue_type_assignment_error, raise_issue_type_assignment_error
+from plane.utils.milestone_dates import apply_milestone_dates
 from plane.utils.work_item_dates import apply_date_rules
 from plane.utils.work_item_hierarchy import WorkItemInvariantError, validate_work_item_parent
 
@@ -166,6 +167,10 @@ class IssueCreateSerializer(BaseSerializer):
         allow_triage = self.context.get("allow_triage_state", False)
         state_manager = State.triage_objects if allow_triage else State.objects
 
+        # A milestone is one day: its start follows its finish (or the other way round); the due date stays apart
+        apply_milestone_dates(
+            self.instance, attrs, attrs["type"] if "type" in attrs else getattr(self.instance, "type", None)
+        )
         # One shared rule for start/finish/due: duration (in the project's working days), the finish >= start
         # invariant and the one-time "first finish or due fills both" default. Due is never compared with start.
         self.date_notices = apply_date_rules(

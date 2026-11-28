@@ -31,5 +31,12 @@ export const isSystemManagedKind = (kind: TIssueTypeKind | null | undefined): bo
 export const isSystemManagedType = (type: TKindSource | null | undefined): boolean =>
   isSystemManagedKind(getIssueTypeKind(type));
 
+/**
+ * True for a type of the milestone kind: a point in the schedule, so its start equals its finish (the server keeps
+ * them equal) and the timeline draws a diamond at the finish date.
+ */
+export const isMilestoneType = (type: TKindSource | null | undefined): boolean =>
+  getIssueTypeKind(type) === "milestone";
+
 /** True for a type of the Epic kind; falls back to `is_epic` when the type carries no kind. */
 export const isEpicKind = (type: TKindSource | null | undefined): boolean => getIssueTypeKind(type) === "epic";

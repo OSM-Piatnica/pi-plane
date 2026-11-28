@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Carregando tipos…",
+    "milestone_after_due": "Depois da data de vencimento",
     "property_values_save_failed": "O item de trabalho foi criado, mas não foi possível salvar as propriedades adicionais. Preencha-as a partir dos detalhes do item de trabalho.",
     "select_placeholder": "Tipo",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Adicionar tipo",
+        "catalogue": {
+          "add_selected": "Adicionar selecionados",
+          "button": "Adicionar do catálogo",
+          "default_badge": "Padrão",
+          "in_workspace": "Já está no espaço de trabalho",
+          "intro": "Tipos prontos com ícone, modelo de descrição e propriedades sugeridas. Tipos que o espaço de trabalho já tem não são adicionados novamente; há um tipo Marco por espaço de trabalho.",
+          "no_properties": "Nenhuma propriedade sugerida",
+          "properties": "Propriedades: {properties}",
+          "title": "Adicionar do catálogo",
+          "toasts": {
+            "add_failed": {
+              "message": "Tente novamente.",
+              "title": "Não foi possível adicionar os tipos"
+            },
+            "added": {
+              "message": "Os tipos selecionados foram adicionados ao espaço de trabalho.",
+              "title": "Tipos adicionados"
+            }
+          }
+        },
         "delete_confirm": "Remover este tipo de item de trabalho? Os itens de trabalho existentes mantêm seus dados.",
         "description": "Defina tipos de item de trabalho com identidade própria, propriedades personalizadas e escopo de projeto. Ative ou desative tipos sem afetar os itens existentes.",
         "edit_type": "Editar tipo",
         "epic_badge": "Épico",
         "form": {
           "description_label": "Descrição",
+          "description_template_hint": "Inserido na descrição de um novo item de trabalho deste tipo enquanto a descrição estiver vazia.",
+          "description_template_label": "Modelo de descrição",
+          "description_template_placeholder": "Títulos e listas com que todo item de trabalho deste tipo começa",
           "is_active": "Ativo",
           "is_epic": "Tipo Épico",
           "modal_intro": "Dê um nome ao tipo, escolha um ícone e anexe apenas as propriedades que esse tipo de trabalho precisa. Atribua-o aos projetos onde deve estar disponível.",

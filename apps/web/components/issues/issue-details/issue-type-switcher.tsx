@@ -92,7 +92,7 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
         getOptionValue={(row) => row.issue_type_id}
         getOptionLabel={(row) => row.issue_type_detail?.name ?? ""}
         getOptionIcon={(row) => (
-          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} />
+          <SwitcherIcon logo_props={row.issue_type_detail?.logo_props} LabelIcon={Layers} size={12} type="material" />
         )}
         showSearch={false}
         pinSelected={false}
@@ -100,7 +100,7 @@ export const IssueTypeSwitcher = observer(function IssueTypeSwitcher(props: TIss
         <Select.Trigger variant="select-md" className="w-full">
           {selected ? (
             <span className="flex items-center gap-1.5 truncate">
-              <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} />
+              <SwitcherIcon logo_props={selected.logo_props} LabelIcon={Layers} size={12} type="material" />
               <span className="truncate">{selected.name}</span>
             </span>
           ) : (

@@ -5,7 +5,13 @@
  */
 
 import { API_BASE_URL } from "@plane/constants";
-import type { TIssueType, TIssueTypePropertyValueEntry, TProjectIssueType } from "@plane/types";
+import type {
+  TIssueType,
+  TIssueTypeCatalogueEntry,
+  TIssueTypeCatalogueResult,
+  TIssueTypePropertyValueEntry,
+  TProjectIssueType,
+} from "@plane/types";
 import { APIService } from "@/services/api.service";
 
 type TListResult<T> = T[] | { results: T[]; count?: number; next?: string | null };
@@ -58,6 +64,28 @@ export class IssueTypeService extends APIService {
   async removeWorkspaceType(workspaceSlug: string, typeId: string): Promise<void> {
     return this.delete(`/api/workspaces/${workspaceSlug}/issue-types/${typeId}/`)
       .then(() => undefined)
+      .catch((e) => {
+        throw e?.response;
+      });
+  }
+
+  /** The catalogue of ready-made types, in `language` (English when the catalogue has no text in it). */
+  async listCatalogue(workspaceSlug: string, language: string): Promise<TIssueTypeCatalogueEntry[]> {
+    return this.get(`/api/workspaces/${workspaceSlug}/issue-types/catalogue/`, { params: { language } })
+      .then((res) => (Array.isArray(res?.data) ? res.data : []))
+      .catch((e) => {
+        throw e?.response;
+      });
+  }
+
+  /** Add catalogue entries to the workspace; types it already has are reported, not made again. */
+  async addFromCatalogue(
+    workspaceSlug: string,
+    keys: string[],
+    language: string
+  ): Promise<TIssueTypeCatalogueResult[]> {
+    return this.post(`/api/workspaces/${workspaceSlug}/issue-types/catalogue/`, { keys, language })
+      .then((res) => (Array.isArray(res?.data) ? res.data : []))
       .catch((e) => {
         throw e?.response;
       });

@@ -8,6 +8,7 @@ from rest_framework import serializers
 
 from plane.app.serializers.base import BaseSerializer
 from plane.db.models import IssueType, IssueTypeKind, IssueTypeProperty, Project, ProjectIssueType, Workspace
+from plane.utils.content_validator import validate_html_content
 from plane.utils.issue_type_property import clean_property_list
 from plane.utils.project_issue_types import (
     SYSTEM_MANAGED_TYPE_CHANGE_PROJECTS,
@@ -39,6 +40,8 @@ class IssueTypePropertySerializer(BaseSerializer):
 
 
 LOGO_TEXT_MAX_LENGTH = 64
+# A description template is a short skeleton (headings, a list); a whole document does not belong in a type
+DESCRIPTION_TEMPLATE_MAX_LENGTH = 65536
 
 
 def _logo_text(value, field):
@@ -59,6 +62,7 @@ class IssueTypeSerializer(BaseSerializer):
             "id",
             "name",
             "description",
+            "description_template",
             "logo_props",
             "is_epic",
             "kind",
@@ -100,6 +104,20 @@ class IssueTypeSerializer(BaseSerializer):
         if not clean.get(primary):
             raise serializers.ValidationError(f"{in_use}.{primary} is required")
         return {"in_use": in_use, in_use: clean}
+
+    def validate_description_template(self, value):
+        """Sanitised like a work item description, since the create form copies it into one. Empty clears it."""
+
+        if value is None or not str(value).strip():
+            return None
+        if len(value) > DESCRIPTION_TEMPLATE_MAX_LENGTH:
+            raise serializers.ValidationError(
+                f"The description template must be at most {DESCRIPTION_TEMPLATE_MAX_LENGTH} characters"
+            )
+        is_valid, _error, sanitized = validate_html_content(value)
+        if not is_valid:
+            raise serializers.ValidationError("The description template is not valid HTML")
+        return sanitized if sanitized is not None else value
 
     def get_properties(self, instance):
         props = IssueTypeProperty.objects.filter(issue_type=instance, deleted_at__isnull=True).order_by(
