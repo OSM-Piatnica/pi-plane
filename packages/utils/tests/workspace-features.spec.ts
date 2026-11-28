@@ -16,7 +16,7 @@ import {
 
 type TKey = "lite" | "approvals" | "wiki";
 
-// a list with available features exists only in this test: production has none yet
+// a list with available features exists only in this test
 const available = (key: TKey): TWorkspaceFeature<TKey> => ({
   key,
   isAvailable: true,
@@ -35,16 +35,17 @@ describe("WORKSPACE_FEATURES as shipped", () => {
     for (const [key, feature] of Object.entries(WORKSPACE_FEATURES)) expect(feature.key).toBe(key);
   });
 
-  it("has RACI as the only available feature, so only RACI can be on", () => {
+  it("has Initiatives and RACI as the only available features, so only they can be on", () => {
     expect(WORKSPACE_FEATURE_LIST.filter((feature) => feature.isAvailable).map((feature) => feature.key)).toEqual([
+      "initiatives",
       "raci",
     ]);
-    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["raci"]);
+    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["initiatives", "raci"]);
     expect(hasAvailableWorkspaceFeatures()).toBe(true);
     expect(getWorkspaceFeatureFlags(["lite", "approvals", "initiatives", "wiki", "raci"])).toEqual({
       lite: false,
       approvals: false,
-      initiatives: false,
+      initiatives: true,
       wiki: false,
       raci: true,
     });

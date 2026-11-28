@@ -521,7 +521,7 @@
       "message": "Došlo k chybe. Skúste to prosím znova."
     },
     "group_by": "Zoskupiť podľa",
-    "epic": "Epika",
+    "epic": "Epik",
     "epics": "Epiky",
     "work_item": "Pracovná položka",
     "work_items": "Pracovné položky",
@@ -778,7 +778,7 @@
     "overview": "Prehľad",
     "no_of": "Počet {entity}",
     "no_of_work_items": "Počet Pracovné položky",
-    "no_of_epics": "Počet Epiky",
+    "no_of_epics": "Počet Epikov",
     "resolved": "Vyriešené",
     "get_started": "Začať",
     "worklogs": "Pracovné záznamy",

@@ -29,7 +29,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.bgtasks.deletion_task import soft_delete_related_objects
-from plane.utils.initiatives import describe, empty_progress, project_access, roll_up
+from plane.utils.initiatives import describe, empty_progress, linked_epics, project_access, roll_up, roll_up_epics
 
 GOAL, INITIATIVE = InitiativeKind.GOAL, InitiativeKind.INITIATIVE
 
@@ -71,6 +71,36 @@ class TestRollUp:
             "progress_is_partial": False,
             "hidden_project_count": 0,
         }
+
+
+@pytest.mark.unit
+class TestRollUpEpics:
+    def test_the_children_of_each_epic_are_added_up_once(self):
+        counts = {"a": {"started": 2}, "b": {"completed": 1, "backlog": 1}}
+
+        result = roll_up_epics(["a", "b", "a"], 0, counts, set())
+
+        assert result["epic_progress"] == {
+            **empty_progress(),
+            "total_issues": 4,
+            "started": 2,
+            "completed": 1,
+            "backlog": 1,
+        }
+        assert result["epic_progress_is_partial"] is False
+
+    def test_hidden_epics_make_it_partial_without_adding_anything(self):
+        result = roll_up_epics(["a"], 2, {"a": {"started": 1}, "b": {"started": 9}}, set())
+
+        assert result["epic_progress"]["total_issues"] == 1
+        assert result["epic_progress_is_partial"] is True
+
+    def test_an_epic_with_children_the_person_may_not_see_makes_it_partial(self):
+        assert roll_up_epics(["a"], 0, {}, {"a"})["epic_progress_is_partial"] is True
+        assert roll_up_epics(["a"], 0, {}, {"b"})["epic_progress_is_partial"] is False
+
+    def test_no_epics_is_an_empty_complete_figure(self):
+        assert roll_up_epics([], 0, {}, set()) == {"epic_progress": empty_progress(), "epic_progress_is_partial": False}
 
 
 def _initiative(workspace, name="Thing", kind=INITIATIVE, **extra):
@@ -468,3 +498,54 @@ class TestDescribe:
             assert for_plain[item.id]["hidden_project_count"] == 1
             assert for_plain[item.id]["project_ids"] == [] and for_plain[item.id]["epic_ids"] == []
             assert for_plain[item.id]["hidden_epic_count"] == 1
+
+
+def _children(epic, group, number, project=None):
+    project = project or epic.project
+    state, _ = State.objects.get_or_create(
+        project=project, workspace=project.workspace, group=group, defaults={"name": group}
+    )
+    return [
+        Issue.objects.create(
+            name=f"child {index}", project=project, workspace=project.workspace, state=state, parent=epic
+        )
+        for index in range(number)
+    ]
+
+
+@pytest.mark.unit
+@pytest.mark.django_db
+class TestEpicProgress:
+    def test_the_children_of_linked_epics_count_apart_from_the_projects(self, workspace, create_user):
+        project = _project(workspace, "ONE", [create_user])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        epic = _issues(project, "started", 1, epic_type)[0]
+        nested = _children(epic, "started", 1)[0]
+        Issue.objects.filter(pk=nested.pk).update(type=epic_type)  # an Epic under an Epic does not count
+        _children(epic, "completed", 2)
+        archived = _children(epic, "backlog", 1)[0]
+        Issue.objects.filter(pk=archived.pk).update(archived_at=timezone.now().date())
+        initiative = _initiative(workspace)
+        InitiativeEpic.objects.create(initiative=initiative, issue=epic)
+
+        described = describe([initiative], create_user, workspace.id)[initiative.id]
+
+        assert described["progress"]["total_issues"] == 0
+        assert described["epic_progress"] == {**empty_progress(), "total_issues": 2, "completed": 2}
+        assert described["epic_progress_is_partial"] is False
+
+    def test_linked_epics_are_described_in_the_order_they_were_linked(self, workspace, create_user):
+        project = _project(workspace, "ONE", [create_user])
+        epic_type = IssueType.objects.create(workspace=workspace, name="Epic", is_epic=True)
+        first, second = _issues(project, "started", 2, epic_type)
+        _children(second, "completed", 1)
+        initiative = _initiative(workspace)
+        InitiativeEpic.objects.create(initiative=initiative, issue=second)
+        InitiativeEpic.objects.create(initiative=initiative, issue=first)
+
+        rows = linked_epics(initiative, create_user, workspace.id)
+
+        assert [row["id"] for row in rows] == [second.id, first.id]
+        assert rows[0]["project_identifier"] == "ONE"
+        assert rows[0]["progress"]["completed"] == 1
+        assert rows[1]["progress"] == empty_progress()

@@ -489,7 +489,7 @@
   },
   "epic": {
     "new": "Nový epik",
-    "label": "{count, plural, one {Epik} other {Epiky}}",
+    "label": "{count, plural, one {Epik} few {Epiky} many {Epiku} other {Epiků}}",
     "adding": "Přidávám epik",
     "create": {
       "success": "Epik úspěšně vytvořen"
@@ -567,7 +567,7 @@
     },
     "close_peek": "Zavřít náhled",
     "labels_count": "Štítky: {count}",
-    "view_epic": "Zobrazit epiku",
+    "view_epic": "Zobrazit epik",
     "view_work_item": "Zobrazit pracovní položku",
     "save_draft": {
       "title": "Uložit tento koncept?",
@@ -575,7 +575,7 @@
     },
     "delete_confirm": {
       "work_item": "Opravdu chcete odstranit pracovní položku {identifier}? Všechna data související s touto pracovní položkou budou trvale odstraněna. Tuto akci nelze vrátit zpět.",
-      "epic": "Opravdu chcete odstranit epiku {identifier}? Všechna data související s touto epikou budou trvale odstraněna. Tuto akci nelze vrátit zpět."
+      "epic": "Opravdu chcete odstranit epik {identifier}? Všechna data související s tímto epikem budou trvale odstraněna. Tuto akci nelze vrátit zpět."
     },
     "work_item_deleted": "Tato pracovní položka byla odstraněna",
     "epics_link_copied": "Odkaz na epiky byl zkopírován do schránky.",

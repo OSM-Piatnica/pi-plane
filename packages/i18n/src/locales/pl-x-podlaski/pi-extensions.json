@@ -12,7 +12,11 @@
       "last_used_app": "Ostatnio używana aplikacja"
     },
     "switch_to": {
-      "projects": "Przełącz na Projekty"
+      "projects": "Przełącz na Projekty",
+      "initiatives": "Przełącz na Inicjatywy"
+    },
+    "apps": {
+      "initiatives": "Inicjatywy"
     }
   },
   "appearance": "Wygląd",
@@ -283,6 +287,10 @@
   "workspace_features": {
     "description": "Włączanie i wyłączanie części Pi-Plane dla wszystkich w tej przestrzeni roboczej.",
     "items": {
+      "initiatives": {
+        "title": "Inicjatywy",
+        "description": "Cele i inicjatywy obejmujące wiele projektów, z postępem i aktualizacjami statusu."
+      },
       "raci": {
         "description": "Działy dostają role w elementach pracy (odpowiada, zatwierdza, konsultowany, informowany). Każdy projekt włącza to w swoich funkcjach.",
         "title": "RACI"
@@ -724,6 +732,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Inicjatywy",
+    "all": "Wszystkie inicjatywy",
+    "without_goal": "Bez celu",
+    "no_goal": "Brak celu",
+    "no_goals_yet": "Nie ma jeszcze celów",
+    "no_lead": "Brak lidera",
+    "new_goal": "Nowy cel",
+    "new_initiative": "Nowa inicjatywa",
+    "create_goal": "Utwórz cel",
+    "create_initiative": "Utwórz inicjatywę",
+    "expand_goal": "Rozwiń {name}",
+    "collapse_goal": "Zwiń {name}",
+    "properties": "Właściwości",
+    "show_properties": "Pokaż właściwości",
+    "hide_properties": "Ukryj właściwości",
+    "description_placeholder": "Czemu to służy i po czym poznać, że jest gotowe?",
+    "kind": {
+      "goal": "Cel",
+      "initiative": "Inicjatywa"
+    },
+    "status": {
+      "planned": "Zaplanowane",
+      "active": "Aktywne",
+      "paused": "Wstrzymane",
+      "completed": "Ukończone",
+      "cancelled": "Anulowane"
+    },
+    "health": {
+      "on_track": "Na dobrej drodze",
+      "at_risk": "W zagrożeniu",
+      "off_track": "Poza planem",
+      "none": "Jeszcze bez aktualizacji",
+      "pick": "Kondycja"
+    },
+    "fields": {
+      "name": "Nazwa",
+      "status": "Status",
+      "health": "Kondycja",
+      "lead": "Lider",
+      "dates": "Daty",
+      "goal": "Cel",
+      "created_by": "Utworzone przez"
+    },
+    "form": {
+      "placeholder": "Nazwa inicjatywy",
+      "goal_placeholder": "Nazwa celu",
+      "name_required": "Nazwa jest wymagana."
+    },
+    "empty": {
+      "title": "Nie ma jeszcze inicjatyw",
+      "description": "Pracę z wielu projektów można grupować w inicjatywy, a inicjatywy w cele, by śledzić ich postęp w jednym miejscu.",
+      "sidebar": "Tutaj pojawią się utworzone cele i inicjatywy."
+    },
+    "not_found": {
+      "title": "Nie znaleziono inicjatywy",
+      "description": "Mogła zostać usunięta albo adres jest nieprawidłowy."
+    },
+    "progress": {
+      "projects": "Elementy pracy w powiązanych projektach",
+      "epics": "Elementy pracy powiązanych epików",
+      "done_of_total": "Ukończono {done} z {total}",
+      "tooltip": "Ukończono {percentage}% elementów pracy",
+      "partial_tooltip": "Ukończono {percentage}% widocznych elementów pracy",
+      "projects_empty": "W powiązanych projektach nie ma jeszcze elementów pracy.",
+      "epics_empty": "Powiązane epiki nie mają jeszcze podrzędnych elementów pracy.",
+      "hidden_projects": "{count, plural, one {Nie wliczono # powiązanego projektu, do którego brak dostępu.} few {Nie wliczono # powiązanych projektów, do których brak dostępu.} many {Nie wliczono # powiązanych projektów, do których brak dostępu.} other {Nie wliczono # powiązanego projektu, do którego brak dostępu.}}",
+      "hidden_epics": "{count, plural, one {Nie wliczono # powiązanego epika, do którego brak dostępu.} few {Nie wliczono # powiązanych epików, do których brak dostępu.} many {Nie wliczono # powiązanych epików, do których brak dostępu.} other {Nie wliczono # powiązanego epika, do którego brak dostępu.}}",
+      "hidden_children": "Część podrzędnych elementów pracy znajduje się w niedostępnych projektach i nie jest wliczana.",
+      "explained": "Obie wartości są liczone osobno: w przeciwnym razie epik z powiązanego projektu zostałby policzony dwukrotnie."
+    },
+    "children": {
+      "title": "Inicjatywy",
+      "empty": "Żadna inicjatywa nie realizuje jeszcze tego celu."
+    },
+    "projects": {
+      "title": "Projekty",
+      "add": "Dodaj projekty",
+      "empty": "Nie powiązano jeszcze projektów.",
+      "of_goal": "Projekty z inicjatyw tego celu. Projekty powiązuje się w inicjatywie.",
+      "remove": "Odłącz {name}",
+      "unknown": "Projekt",
+      "archived": "Zarchiwizowany"
+    },
+    "epics": {
+      "title": "Epiki",
+      "add": "Dodaj epik",
+      "search": "Szukaj epików po nazwie lub ID",
+      "none_to_add": "Brak epików do dodania",
+      "empty": "Nie powiązano jeszcze epików.",
+      "of_goal": "Epiki z inicjatyw tego celu. Epiki powiązuje się w inicjatywie.",
+      "remove": "Odłącz {name}",
+      "progress_of": "Postęp: {name}"
+    },
+    "updates": {
+      "title": "Aktualizacje statusu",
+      "text": "Aktualizacja",
+      "placeholder": "Jak idą prace?",
+      "post": "Opublikuj aktualizację",
+      "posted": "Aktualizacja została opublikowana.",
+      "empty": "Nie ma jeszcze aktualizacji statusu."
+    },
+    "delete": {
+      "action": "Usuń",
+      "goal_title": "Usuń cel",
+      "initiative_title": "Usuń inicjatywę",
+      "goal_description": "Usunąć cel {name}? Jego inicjatywy pozostaną, ale bez celu.",
+      "initiative_description": "Usunąć inicjatywę {name}? Jej powiązania z projektami i epikami oraz jej aktualizacje statusu zostaną usunięte; same projekty i epiki pozostaną."
+    },
+    "toast": {
+      "goal_created": "Cel został utworzony.",
+      "initiative_created": "Inicjatywa została utworzona.",
+      "goal_deleted": "Cel został usunięty.",
+      "initiative_deleted": "Inicjatywa została usunięta.",
+      "error": "Coś poszło nie tak. Proszę spróbować ponownie."
     }
   },
   "raci": {

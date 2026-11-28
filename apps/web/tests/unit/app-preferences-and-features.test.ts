@@ -69,7 +69,7 @@ const hasEnglishString = (key: string): boolean =>
         ) === "string"
   );
 
-// apps and features that exist only in these tests: production has Projects alone and no available feature
+// apps and features that exist only in these tests: production has Projects and Initiatives (behind its switch)
 const projects = APP_RAIL_APPS[0];
 const fakeApp = (key: string, overrides: Partial<TAppRailApp> = {}): TAppRailApp =>
   ({
@@ -118,9 +118,9 @@ describe("the lists the API validates against", () => {
   });
 });
 
-describe("what ships: one app, RACI as the only available feature", () => {
-  it("offers RACI to switch", () => {
-    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["raci"]);
+describe("what ships: Projects, and Initiatives and RACI behind their switches", () => {
+  it("offers the Initiatives and RACI switches and nothing else", () => {
+    expect(getAvailableWorkspaceFeatures().map((feature) => feature.key)).toEqual(["initiatives", "raci"]);
   });
 
   it("has a Features entry in the settings sidebar", () => {
@@ -129,9 +129,18 @@ describe("what ships: one app, RACI as the only available feature", () => {
       .flat()
       .map((item) => item.key);
     expect(sidebarKeys).toContain("features");
-    // the other pages are untouched
     expect(sidebarKeys).toEqual(expect.arrayContaining(["general", "members", "groups", "export", "webhooks"]));
-    for (const item of Object.values(WORKSPACE_SETTINGS)) expect(isWorkspaceSettingsItemAvailable(item)).toBe(true);
+  });
+
+  it("enables Initiatives for members once the switch is on, never for guests", () => {
+    const on = { ...getWorkspaceFeatureFlags(undefined), initiatives: true };
+    const keys = (overrides: Partial<TAppRailContext>) =>
+      getEnabledAppRailApps(APP_RAIL_APPS, context(overrides)).map((app) => app.key);
+    expect(keys({ features: on, workspaceRole: EUserWorkspaceRoles.MEMBER })).toEqual(["projects", "initiatives"]);
+    expect(keys({ features: on, workspaceRole: EUserWorkspaceRoles.ADMIN })).toEqual(["projects", "initiatives"]);
+    expect(keys({ features: on, workspaceRole: EUserWorkspaceRoles.GUEST })).toEqual(["projects"]);
+    expect(keys({ features: on })).toEqual(["projects"]);
+    expect(keys({ workspaceRole: EUserWorkspaceRoles.ADMIN })).toEqual(["projects"]);
   });
 
   it("keeps Projects enabled whatever the feature switches say", () => {

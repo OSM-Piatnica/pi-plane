@@ -38,10 +38,17 @@ class _Workspace:
         self.workspace_features = _Manager(list(rows))
 
 
+def _only_available(monkeypatch, *keys):
+    """Makes exactly ``keys`` available for the test, whatever is built."""
+    for key in workspace_features.WORKSPACE_FEATURES:
+        monkeypatch.setitem(workspace_features.WORKSPACE_FEATURES, key, key in keys)
+
+
 @pytest.mark.unit
 class TestAppRailKeys:
-    def test_projects_is_the_only_app(self):
+    def test_projects_and_initiatives_are_the_apps(self):
         assert is_app_rail_app_key("projects")
+        assert is_app_rail_app_key("initiatives")
         assert not is_app_rail_app_key("approvals")
 
     @pytest.mark.parametrize("value", [None, "", 5, ["projects"], {"projects": 1}, "Projects", " projects"])
@@ -50,6 +57,7 @@ class TestAppRailKeys:
 
     def test_preference_key_needs_the_prefix_and_a_known_app(self):
         assert is_app_rail_preference_key("app_rail:projects")
+        assert is_app_rail_preference_key("app_rail:initiatives")
         for key in [
             "projects",
             "app_rail:",
@@ -71,42 +79,42 @@ class TestAppRailKeys:
 
 @pytest.mark.unit
 class TestWorkspaceFeatureKeys:
-    def test_as_shipped_only_raci_is_available(self):
+    def test_as_shipped_only_initiatives_and_raci_are_available(self):
         assert list(workspace_features.WORKSPACE_FEATURES) == ["lite", "approvals", "initiatives", "wiki", "raci"]
-        assert available_workspace_feature_keys() == ["raci"]
+        assert available_workspace_feature_keys() == ["initiatives", "raci"]
+        assert is_available_workspace_feature("initiatives")
         assert is_known_workspace_feature("wiki")
         assert not is_available_workspace_feature("wiki")
         assert is_available_workspace_feature("raci")
         assert not is_known_workspace_feature("unknown")
         assert not is_available_workspace_feature("unknown")
 
-    def test_as_shipped_only_raci_can_be_enabled(self):
-        workspace = _Workspace(_Row("approvals", True), _Row("wiki", True), _Row("raci", True))
+    def test_a_row_of_a_feature_that_is_not_built_is_not_reported(self):
+        workspace = _Workspace(_Row("approvals", True), _Row("wiki", True))
 
-        assert enabled_workspace_feature_keys(workspace) == ["raci"]
-        assert workspace_feature_states(workspace) == {"raci": True}
+        assert enabled_workspace_feature_keys(workspace) == []
+        assert workspace_feature_states(workspace) == {"initiatives": False, "raci": False}
 
     def test_nothing_is_enabled_and_nothing_is_queried_while_nothing_is_available(self, monkeypatch):
-        monkeypatch.setitem(workspace_features.WORKSPACE_FEATURES, "raci", False)
-        workspace = _Workspace(_Row("approvals", True), _Row("wiki", True), _Row("raci", True))
+        _only_available(monkeypatch)
+        workspace = _Workspace(_Row("approvals", True), _Row("wiki", True))
 
         assert enabled_workspace_feature_keys(workspace) == []
         assert workspace_feature_states(workspace) == {}
         assert workspace.workspace_features.calls == 0
 
     def test_enabled_keys_are_the_available_ones_that_are_switched_on(self, monkeypatch):
-        monkeypatch.setitem(workspace_features.WORKSPACE_FEATURES, "approvals", True)
-        monkeypatch.setitem(workspace_features.WORKSPACE_FEATURES, "lite", True)
-        # wiki is on in the table but not available; lite and raci are available but off; a stray key is ignored
+        _only_available(monkeypatch, "approvals", "lite")
+        # wiki is on in the table but not available; lite is available but off; a stray key is ignored
         workspace = _Workspace(
             _Row("wiki", True), _Row("approvals", True), _Row("lite", False), _Row("removed_feature", True)
         )
 
-        assert available_workspace_feature_keys() == ["lite", "approvals", "raci"]
+        assert available_workspace_feature_keys() == ["lite", "approvals"]
         assert enabled_workspace_feature_keys(workspace) == ["approvals"]
-        assert workspace_feature_states(workspace) == {"lite": False, "approvals": True, "raci": False}
+        assert workspace_feature_states(workspace) == {"lite": False, "approvals": True}
 
     def test_a_missing_row_means_off(self, monkeypatch):
-        monkeypatch.setitem(workspace_features.WORKSPACE_FEATURES, "approvals", True)
+        _only_available(monkeypatch, "approvals")
 
-        assert workspace_feature_states(_Workspace()) == {"approvals": False, "raci": False}
+        assert workspace_feature_states(_Workspace()) == {"approvals": False}

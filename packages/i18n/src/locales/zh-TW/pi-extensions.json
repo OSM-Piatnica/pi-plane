@@ -12,7 +12,11 @@
       "last_used_app": "上次使用的應用程式"
     },
     "switch_to": {
-      "projects": "切換至專案"
+      "projects": "切換至專案",
+      "initiatives": "切換至舉措"
+    },
+    "apps": {
+      "initiatives": "舉措"
     }
   },
   "approve": "核准",
@@ -269,6 +273,10 @@
   "workspace_features": {
     "description": "為此工作區中的所有人開啟或關閉 Pi-Plane 的各項功能。",
     "items": {
+      "initiatives": {
+        "title": "舉措",
+        "description": "跨專案的目標與舉措，並提供進度與狀態更新。"
+      },
       "raci": {
         "description": "部門可在工作項目上承擔角色（負責、核准、諮詢、知會）。每個專案在其功能設定中啟用。",
         "title": "RACI"
@@ -710,6 +718,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "舉措",
+    "all": "所有舉措",
+    "without_goal": "無目標",
+    "no_goal": "無目標",
+    "no_goals_yet": "尚無目標",
+    "no_lead": "無負責人",
+    "new_goal": "新目標",
+    "new_initiative": "新舉措",
+    "create_goal": "建立目標",
+    "create_initiative": "建立舉措",
+    "expand_goal": "展開「{name}」",
+    "collapse_goal": "收合「{name}」",
+    "properties": "屬性",
+    "show_properties": "顯示屬性",
+    "hide_properties": "隱藏屬性",
+    "description_placeholder": "它的用途為何？您如何判斷它已完成？",
+    "kind": {
+      "goal": "目標",
+      "initiative": "舉措"
+    },
+    "status": {
+      "planned": "已計劃",
+      "active": "進行中",
+      "paused": "已暫停",
+      "completed": "已完成",
+      "cancelled": "已取消"
+    },
+    "health": {
+      "on_track": "進展順利",
+      "at_risk": "有風險",
+      "off_track": "偏離軌道",
+      "none": "尚無更新",
+      "pick": "健康狀態"
+    },
+    "fields": {
+      "name": "名稱",
+      "status": "狀態",
+      "health": "健康狀態",
+      "lead": "負責人",
+      "dates": "日期",
+      "goal": "目標",
+      "created_by": "建立者"
+    },
+    "form": {
+      "placeholder": "舉措名稱",
+      "goal_placeholder": "目標名稱",
+      "name_required": "名稱為必填欄位。"
+    },
+    "empty": {
+      "title": "尚無舉措",
+      "description": "將跨專案的工作歸入舉措，再將舉措歸入目標，即可在同一處追蹤進度。",
+      "sidebar": "您建立的目標與舉措會顯示在這裡。"
+    },
+    "not_found": {
+      "title": "找不到舉措",
+      "description": "它可能已被刪除，或網址有誤。"
+    },
+    "progress": {
+      "projects": "已連結專案中的工作事項",
+      "epics": "已連結史詩的工作事項",
+      "done_of_total": "{total} 項中已完成 {done} 項",
+      "tooltip": "已完成 {percentage}% 的工作事項",
+      "partial_tooltip": "您可見的工作事項中已完成 {percentage}%",
+      "projects_empty": "已連結的專案中尚無工作事項。",
+      "epics_empty": "已連結的史詩中尚無子工作事項。",
+      "hidden_projects": "{count, plural, one {有 # 個已連結的專案您無法檢視，因此未計入。} other {有 # 個已連結的專案您無法檢視，因此未計入。}}",
+      "hidden_epics": "{count, plural, one {有 # 個已連結的史詩您無法檢視，因此未計入。} other {有 # 個已連結的史詩您無法檢視，因此未計入。}}",
+      "hidden_children": "部分子工作事項位於您無法檢視的專案中，因此未計入。",
+      "explained": "這兩個數值分開計算：否則已連結專案中的史詩會被重複計算。"
+    },
+    "children": {
+      "title": "舉措",
+      "empty": "尚無致力於此目標的舉措。"
+    },
+    "projects": {
+      "title": "專案",
+      "add": "新增專案",
+      "empty": "尚未連結任何專案。",
+      "of_goal": "此目標下各舉措的專案。請在舉措中連結專案。",
+      "remove": "取消連結「{name}」",
+      "unknown": "專案",
+      "archived": "已封存"
+    },
+    "epics": {
+      "title": "史詩",
+      "add": "新增史詩",
+      "search": "依名稱或 ID 搜尋史詩",
+      "none_to_add": "沒有可新增的史詩",
+      "empty": "尚未連結任何史詩。",
+      "of_goal": "此目標下各舉措的史詩。請在舉措中連結史詩。",
+      "remove": "取消連結「{name}」",
+      "progress_of": "「{name}」的進度"
+    },
+    "updates": {
+      "title": "狀態更新",
+      "text": "更新",
+      "placeholder": "進展如何？",
+      "post": "發布更新",
+      "posted": "已發布更新。",
+      "empty": "尚無狀態更新。"
+    },
+    "delete": {
+      "action": "刪除",
+      "goal_title": "刪除目標",
+      "initiative_title": "刪除舉措",
+      "goal_description": "確定要刪除目標「{name}」嗎？其下的舉措會保留，但不再隸屬任何目標。",
+      "initiative_description": "確定要刪除舉措「{name}」嗎？其與專案及史詩的連結以及狀態更新將被移除；專案與史詩本身會保留。"
+    },
+    "toast": {
+      "goal_created": "已建立目標。",
+      "initiative_created": "已建立舉措。",
+      "goal_deleted": "已刪除目標。",
+      "initiative_deleted": "已刪除舉措。",
+      "error": "發生錯誤，請再試一次。"
     }
   },
   "raci": {

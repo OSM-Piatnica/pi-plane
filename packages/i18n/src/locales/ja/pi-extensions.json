@@ -12,7 +12,11 @@
       "last_used_app": "最後に使用したアプリ"
     },
     "switch_to": {
-      "projects": "プロジェクトに切り替え"
+      "projects": "プロジェクトに切り替え",
+      "initiatives": "イニシアチブに切り替え"
+    },
+    "apps": {
+      "initiatives": "イニシアチブ"
     }
   },
   "approve": "承認",
@@ -269,6 +273,10 @@
   "workspace_features": {
     "description": "このワークスペースの全員を対象に、Pi-Plane の機能のオン・オフを切り替えます。",
     "items": {
+      "initiatives": {
+        "title": "イニシアチブ",
+        "description": "プロジェクトをまたぐ目標とイニシアチブを、進捗とステータス更新とともに管理します。"
+      },
       "raci": {
         "description": "部署に作業項目での役割（実行責任、承認、相談、報告）を割り当てます。各プロジェクトが機能設定で有効にします。",
         "title": "RACI"
@@ -710,6 +718,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "イニシアチブ",
+    "all": "すべてのイニシアチブ",
+    "without_goal": "目標なし",
+    "no_goal": "目標なし",
+    "no_goals_yet": "目標はまだありません",
+    "no_lead": "リードなし",
+    "new_goal": "新しい目標",
+    "new_initiative": "新しいイニシアチブ",
+    "create_goal": "目標を作成",
+    "create_initiative": "イニシアチブを作成",
+    "expand_goal": "{name}を展開",
+    "collapse_goal": "{name}を折りたたむ",
+    "properties": "プロパティ",
+    "show_properties": "プロパティを表示",
+    "hide_properties": "プロパティを非表示",
+    "description_placeholder": "何のためのものですか。完了したとどのように判断しますか。",
+    "kind": {
+      "goal": "目標",
+      "initiative": "イニシアチブ"
+    },
+    "status": {
+      "planned": "計画済み",
+      "active": "進行中",
+      "paused": "一時停止",
+      "completed": "完了",
+      "cancelled": "キャンセル"
+    },
+    "health": {
+      "on_track": "順調",
+      "at_risk": "リスクあり",
+      "off_track": "遅れ",
+      "none": "まだ更新がありません",
+      "pick": "健全性"
+    },
+    "fields": {
+      "name": "名前",
+      "status": "ステータス",
+      "health": "健全性",
+      "lead": "リード",
+      "dates": "日付",
+      "goal": "目標",
+      "created_by": "作成者"
+    },
+    "form": {
+      "placeholder": "イニシアチブ名",
+      "goal_placeholder": "目標名",
+      "name_required": "名前は必須です。"
+    },
+    "empty": {
+      "title": "イニシアチブはまだありません",
+      "description": "プロジェクトをまたぐ作業をイニシアチブにまとめ、イニシアチブを目標の下にまとめると、進捗を 1 か所で確認できます。",
+      "sidebar": "作成した目標とイニシアチブがここに表示されます。"
+    },
+    "not_found": {
+      "title": "イニシアチブが見つかりません",
+      "description": "削除されたか、アドレスが間違っている可能性があります。"
+    },
+    "progress": {
+      "projects": "リンクされたプロジェクトの作業項目",
+      "epics": "リンクされたエピックの作業項目",
+      "done_of_total": "{total}件中{done}件完了",
+      "tooltip": "作業項目の{percentage}%が完了",
+      "partial_tooltip": "表示できる作業項目の{percentage}%が完了",
+      "projects_empty": "リンクされたプロジェクトにはまだ作業項目がありません。",
+      "epics_empty": "リンクされたエピックにはまだ子作業項目がありません。",
+      "hidden_projects": "{count, plural, one {リンクされたプロジェクトのうち#件は表示できないため、集計に含まれていません。} other {リンクされたプロジェクトのうち#件は表示できないため、集計に含まれていません。}}",
+      "hidden_epics": "{count, plural, one {リンクされたエピックのうち#件は表示できないため、集計に含まれていません。} other {リンクされたエピックのうち#件は表示できないため、集計に含まれていません。}}",
+      "hidden_children": "一部の子作業項目は表示できないプロジェクトにあるため、集計に含まれていません。",
+      "explained": "2 つの数値は別々に集計されます。そうしないと、リンクされたプロジェクト内のエピックが二重に集計されるためです。"
+    },
+    "children": {
+      "title": "イニシアチブ",
+      "empty": "この目標に取り組むイニシアチブはまだありません。"
+    },
+    "projects": {
+      "title": "プロジェクト",
+      "add": "プロジェクトを追加",
+      "empty": "リンクされたプロジェクトはまだありません。",
+      "of_goal": "この目標のイニシアチブのプロジェクトです。プロジェクトはイニシアチブでリンクしてください。",
+      "remove": "{name}のリンクを解除",
+      "unknown": "プロジェクト",
+      "archived": "アーカイブ済み"
+    },
+    "epics": {
+      "title": "エピック",
+      "add": "エピックを追加",
+      "search": "名前または ID でエピックを検索",
+      "none_to_add": "追加できるエピックはありません",
+      "empty": "リンクされたエピックはまだありません。",
+      "of_goal": "この目標のイニシアチブのエピックです。エピックはイニシアチブでリンクしてください。",
+      "remove": "{name}のリンクを解除",
+      "progress_of": "{name}の進捗"
+    },
+    "updates": {
+      "title": "ステータス更新",
+      "text": "更新",
+      "placeholder": "進み具合はいかがですか。",
+      "post": "更新を投稿",
+      "posted": "更新を投稿しました。",
+      "empty": "ステータス更新はまだありません。"
+    },
+    "delete": {
+      "action": "削除",
+      "goal_title": "目標を削除",
+      "initiative_title": "イニシアチブを削除",
+      "goal_description": "目標「{name}」を削除しますか。その目標のイニシアチブは目標なしで残ります。",
+      "initiative_description": "イニシアチブ「{name}」を削除しますか。プロジェクトとエピックへのリンクおよびステータス更新は削除されますが、プロジェクトとエピック自体は残ります。"
+    },
+    "toast": {
+      "goal_created": "目標を作成しました。",
+      "initiative_created": "イニシアチブを作成しました。",
+      "goal_deleted": "目標を削除しました。",
+      "initiative_deleted": "イニシアチブを削除しました。",
+      "error": "問題が発生しました。もう一度お試しください。"
     }
   },
   "raci": {

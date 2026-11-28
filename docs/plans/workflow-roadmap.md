@@ -27,6 +27,7 @@ Updated by every roadmap PR (see "Keeping this plan current" below). Steps not l
 | D8b    | merged          | [#538](https://github.com/OSM-Piatnica/pi-plane/pull/538)                                                                                                                       | no migration; `deadline_overrun_days` in the shift offer, `docs/working-days.md`                                                               |
 | D8c    | merged          | [#540](https://github.com/OSM-Piatnica/pi-plane/pull/540)                                                                                                                       | decision 15 taken; schedule analysis still uses a parent's own dates (see D8c)                                                                 |
 | F1     | merged          | [#472](https://github.com/OSM-Piatnica/pi-plane/pull/472), [#477](https://github.com/OSM-Piatnica/pi-plane/pull/477)                                                            | `0159_initiatives`; `docs/initiatives.md`                                                                                                      |
+| F2     | merged          | [#545](https://github.com/OSM-Piatnica/pi-plane/pull/545)                                                                                                                       | no migration; Initiatives is the first available feature switch; Epic figure `epic_progress`; see F2                                           |
 | G1     | merged          | [#474](https://github.com/OSM-Piatnica/pi-plane/pull/474)                                                                                                                       | `docs/app-rail.md`                                                                                                                             |
 | G2, G3 | merged          | [#480](https://github.com/OSM-Piatnica/pi-plane/pull/480)                                                                                                                       | `0161`; nothing visible until a second app or a feature is available; `docs/workspace-features.md`                                             |
 
@@ -490,12 +491,17 @@ Leftovers to reuse: the reserved slug `initiatives`, `EFileAssetType.INITIATIVE_
 ### PRs
 
 **F1. Models and API. Size M. Merged: #472.** Decisions taken in review: delete is limited to workspace admins, the lead and the creator; workspace admins see every initiative and can link and unlink any project and Epic; a goal returns the de-duplicated Epics of its initiatives. See `docs/initiatives.md`.
-**F2. Initiatives app: list, detail, add projects and Epics, status updates. Size L. Needs G1.**
+**F2. Initiatives app: list, detail, add projects and Epics, status updates. Size L. Needs G1. Merged: #545.**
 
 - Includes one API addition deferred from F1: a second progress figure for the Epics linked to an initiative, separate from the main one.
   - The main figure stays "work items in the linked projects". Linked Epics are not added to it, so an Epic inside a linked project is not counted twice.
   - The Epic figure is computed from each linked Epic's child work items with the existing Epic progress code (`utils/epic_progress.py`), under the same visibility rule as projects (inaccessible Epics are counted, not listed).
   - It serves an initiative that owns one Epic of a larger shared project without owning the whole project. Settle the response shape together with the screen that shows it.
+- Delivered in #545, without a migration. Decisions and changes from the text above:
+  - The Epic figure is `epic_progress` and `epic_progress_is_partial` on every list and detail response, next to `progress`. It counts the direct children of the visible linked Epics (no Epics under an Epic, as in `Issue.progress_objects`); a child in a project the person may not see is left out and makes it partial. `GET .../epics/` lists the visible linked Epics with the same figure per Epic, and `GET .../epics/search/` finds Epics the person may link. The detail page shows both figures as separate bars. `utils/epic_progress.py` holds only the "leave Epics out" condition, so the figure is built on `Issue.progress_objects` in `utils/initiatives.py`.
+  - The `initiatives` feature switch is now available, and the endpoints answer 403 while it is off (a check F1 did not have). The rail app is for workspace admins and members only, as the API refuses guests.
+  - Health is set only through status updates in the app; the properties panel shows it.
+  - Images in descriptions use the new `INITIATIVE_DESCRIPTION` asset type, bound to the workspace.
     **F3. Project list: filter and group by initiative; initiative chip in the project header. Size S.**
     **F4. Roadmap timeline: initiatives and their projects on a time axis (reuse `store/timeline/` and the gantt chart blocks). Size M.**
     **F5. Goals: goal level, progress across initiatives, optional target metric (name, start, target, current value). Size M.**

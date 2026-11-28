@@ -38,7 +38,8 @@ class InitiativeSerializer(serializers.ModelSerializer):
             "updated_at",
             "created_by",
         ]
-        read_only_fields = ["id", "workspace", "created_at", "updated_at", "created_by"]
+        # The health is set only by a status update (``InitiativeUpdate``), which says who judged it, when and why
+        read_only_fields = ["id", "workspace", "health", "created_at", "updated_at", "created_by"]
 
     def validate_name(self, value):
         value = (value or "").strip()

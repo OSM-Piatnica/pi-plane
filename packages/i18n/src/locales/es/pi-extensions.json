@@ -12,7 +12,11 @@
       "last_used_app": "Última aplicación utilizada"
     },
     "switch_to": {
-      "projects": "Cambiar a Proyectos"
+      "projects": "Cambiar a Proyectos",
+      "initiatives": "Cambiar a Iniciativas"
+    },
+    "apps": {
+      "initiatives": "Iniciativas"
     }
   },
   "approve": "Aprobar",
@@ -269,6 +273,10 @@
   "workspace_features": {
     "description": "Active o desactive partes de Pi-Plane para todos en este espacio de trabajo.",
     "items": {
+      "initiatives": {
+        "title": "Iniciativas",
+        "description": "Objetivos e iniciativas que abarcan varios proyectos, con progreso y actualizaciones de estado."
+      },
       "raci": {
         "description": "Los departamentos reciben roles en los elementos de trabajo (responsable, aprobador, consultado, informado). Cada proyecto lo activa en sus funciones.",
         "title": "RACI"
@@ -710,6 +718,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Iniciativas",
+    "all": "Todas las iniciativas",
+    "without_goal": "Sin objetivo",
+    "no_goal": "Ningún objetivo",
+    "no_goals_yet": "Aún no hay objetivos",
+    "no_lead": "Sin líder",
+    "new_goal": "Nuevo objetivo",
+    "new_initiative": "Nueva iniciativa",
+    "create_goal": "Crear objetivo",
+    "create_initiative": "Crear iniciativa",
+    "expand_goal": "Expandir {name}",
+    "collapse_goal": "Contraer {name}",
+    "properties": "Propiedades",
+    "show_properties": "Mostrar propiedades",
+    "hide_properties": "Ocultar propiedades",
+    "description_placeholder": "¿Para qué sirve y cómo sabrá que se ha cumplido?",
+    "kind": {
+      "goal": "Objetivo",
+      "initiative": "Iniciativa"
+    },
+    "status": {
+      "planned": "Planificado",
+      "active": "Activo",
+      "paused": "En pausa",
+      "completed": "Completado",
+      "cancelled": "Cancelado"
+    },
+    "health": {
+      "on_track": "En buen camino",
+      "at_risk": "En riesgo",
+      "off_track": "Desviado",
+      "none": "Aún sin actualizaciones",
+      "pick": "Salud"
+    },
+    "fields": {
+      "name": "Nombre",
+      "status": "Estado",
+      "health": "Salud",
+      "lead": "Líder",
+      "dates": "Fechas",
+      "goal": "Objetivo",
+      "created_by": "Creado por"
+    },
+    "form": {
+      "placeholder": "Nombre de la iniciativa",
+      "goal_placeholder": "Nombre del objetivo",
+      "name_required": "El nombre es obligatorio."
+    },
+    "empty": {
+      "title": "Aún no hay iniciativas",
+      "description": "Agrupe el trabajo de varios proyectos en iniciativas, y las iniciativas en objetivos, para seguir su progreso en un solo lugar.",
+      "sidebar": "Aquí aparecen los objetivos y las iniciativas que cree."
+    },
+    "not_found": {
+      "title": "No se encontró la iniciativa",
+      "description": "Puede que se haya eliminado o que la dirección sea incorrecta."
+    },
+    "progress": {
+      "projects": "Elementos de trabajo de los proyectos vinculados",
+      "epics": "Elementos de trabajo de los Epics vinculados",
+      "done_of_total": "{done} de {total} completados",
+      "tooltip": "{percentage} % de los elementos de trabajo completados",
+      "partial_tooltip": "{percentage} % de los elementos de trabajo visibles para usted completados",
+      "projects_empty": "Aún no hay elementos de trabajo en los proyectos vinculados.",
+      "epics_empty": "Aún no hay elementos de trabajo secundarios en los Epics vinculados.",
+      "hidden_projects": "{count, plural, one {# proyecto vinculado no es visible para usted y no se cuenta.} other {# proyectos vinculados no son visibles para usted y no se cuentan.}}",
+      "hidden_epics": "{count, plural, one {# Epic vinculado no es visible para usted y no se cuenta.} other {# Epics vinculados no son visibles para usted y no se cuentan.}}",
+      "hidden_children": "Algunos elementos de trabajo secundarios están en proyectos que usted no puede ver y no se cuentan.",
+      "explained": "Las dos cifras se cuentan por separado: de lo contrario, un Epic dentro de un proyecto vinculado se contaría dos veces."
+    },
+    "children": {
+      "title": "Iniciativas",
+      "empty": "Aún no hay ninguna iniciativa que contribuya a este objetivo."
+    },
+    "projects": {
+      "title": "Proyectos",
+      "add": "Añadir proyectos",
+      "empty": "Aún no hay proyectos vinculados.",
+      "of_goal": "Los proyectos de las iniciativas del objetivo. Vincule proyectos desde una iniciativa.",
+      "remove": "Desvincular {name}",
+      "unknown": "Proyecto",
+      "archived": "Archivado"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Añadir Epic",
+      "search": "Buscar Epics por nombre o ID",
+      "none_to_add": "No hay Epics para añadir",
+      "empty": "Aún no hay Epics vinculados.",
+      "of_goal": "Los Epics de las iniciativas del objetivo. Vincule Epics desde una iniciativa.",
+      "remove": "Desvincular {name}",
+      "progress_of": "Progreso de {name}"
+    },
+    "updates": {
+      "title": "Actualizaciones de estado",
+      "text": "Actualización",
+      "placeholder": "¿Cómo va?",
+      "post": "Publicar actualización",
+      "posted": "Se publicó la actualización.",
+      "empty": "Aún no hay actualizaciones de estado."
+    },
+    "delete": {
+      "action": "Eliminar",
+      "goal_title": "Eliminar objetivo",
+      "initiative_title": "Eliminar iniciativa",
+      "goal_description": "¿Eliminar el objetivo {name}? Sus iniciativas se conservan, sin objetivo.",
+      "initiative_description": "¿Eliminar la iniciativa {name}? Se eliminan sus vínculos con proyectos y Epics y sus actualizaciones de estado; los proyectos y los Epics se conservan."
+    },
+    "toast": {
+      "goal_created": "Se creó el objetivo.",
+      "initiative_created": "Se creó la iniciativa.",
+      "goal_deleted": "Se eliminó el objetivo.",
+      "initiative_deleted": "Se eliminó la iniciativa.",
+      "error": "Algo salió mal. Inténtelo de nuevo."
     }
   },
   "raci": {

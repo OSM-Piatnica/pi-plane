@@ -12,7 +12,11 @@
       "last_used_app": "Ứng dụng dùng gần đây nhất"
     },
     "switch_to": {
-      "projects": "Chuyển sang Dự án"
+      "projects": "Chuyển sang Dự án",
+      "initiatives": "Chuyển sang Sáng kiến"
+    },
+    "apps": {
+      "initiatives": "Sáng kiến"
     }
   },
   "approve": "Phê duyệt",
@@ -269,6 +273,10 @@
   "workspace_features": {
     "description": "Bật hoặc tắt các phần của Pi-Plane cho mọi người trong không gian làm việc này.",
     "items": {
+      "initiatives": {
+        "title": "Sáng kiến",
+        "description": "Mục tiêu và sáng kiến xuyên suốt các dự án, kèm tiến độ và cập nhật trạng thái."
+      },
       "raci": {
         "description": "Các phòng ban nhận vai trò trên mục công việc (chịu trách nhiệm, phê duyệt, tham vấn, được thông báo). Mỗi dự án bật tính năng này trong phần tính năng của mình.",
         "title": "RACI"
@@ -710,6 +718,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Sáng kiến",
+    "all": "Tất cả sáng kiến",
+    "without_goal": "Không có mục tiêu",
+    "no_goal": "Không có mục tiêu",
+    "no_goals_yet": "Chưa có mục tiêu nào",
+    "no_lead": "Không có người phụ trách",
+    "new_goal": "Mục tiêu mới",
+    "new_initiative": "Sáng kiến mới",
+    "create_goal": "Tạo mục tiêu",
+    "create_initiative": "Tạo sáng kiến",
+    "expand_goal": "Mở rộng {name}",
+    "collapse_goal": "Thu gọn {name}",
+    "properties": "Thuộc tính",
+    "show_properties": "Hiện thuộc tính",
+    "hide_properties": "Ẩn thuộc tính",
+    "description_placeholder": "Mục đích là gì, và làm sao bạn biết khi nào đã hoàn thành?",
+    "kind": {
+      "goal": "Mục tiêu",
+      "initiative": "Sáng kiến"
+    },
+    "status": {
+      "planned": "Đã lên kế hoạch",
+      "active": "Đang thực hiện",
+      "paused": "Tạm dừng",
+      "completed": "Đã hoàn thành",
+      "cancelled": "Đã hủy"
+    },
+    "health": {
+      "on_track": "Đúng tiến độ",
+      "at_risk": "Có nguy cơ",
+      "off_track": "Chệch hướng",
+      "none": "Chưa có cập nhật",
+      "pick": "Tình trạng"
+    },
+    "fields": {
+      "name": "Tên",
+      "status": "Trạng thái",
+      "health": "Tình trạng",
+      "lead": "Người phụ trách",
+      "dates": "Ngày tháng",
+      "goal": "Mục tiêu",
+      "created_by": "Người tạo"
+    },
+    "form": {
+      "placeholder": "Tên sáng kiến",
+      "goal_placeholder": "Tên mục tiêu",
+      "name_required": "Tên là bắt buộc."
+    },
+    "empty": {
+      "title": "Chưa có sáng kiến nào",
+      "description": "Nhóm công việc từ nhiều dự án thành các sáng kiến, và các sáng kiến vào mục tiêu, để theo dõi tiến độ tại một nơi.",
+      "sidebar": "Các mục tiêu và sáng kiến bạn tạo sẽ xuất hiện tại đây."
+    },
+    "not_found": {
+      "title": "Không tìm thấy sáng kiến",
+      "description": "Sáng kiến có thể đã bị xóa hoặc địa chỉ không đúng."
+    },
+    "progress": {
+      "projects": "Mục công việc trong các dự án được liên kết",
+      "epics": "Mục công việc của các Epic được liên kết",
+      "done_of_total": "Đã xong {done}/{total}",
+      "tooltip": "Đã hoàn thành {percentage}% mục công việc",
+      "partial_tooltip": "Đã hoàn thành {percentage}% mục công việc mà bạn có thể xem",
+      "projects_empty": "Các dự án được liên kết chưa có mục công việc nào.",
+      "epics_empty": "Các Epic được liên kết chưa có mục công việc con nào.",
+      "hidden_projects": "{count, plural, one {Có # dự án được liên kết mà bạn không thể xem nên không được tính.} other {Có # dự án được liên kết mà bạn không thể xem nên không được tính.}}",
+      "hidden_epics": "{count, plural, one {Có # Epic được liên kết mà bạn không thể xem nên không được tính.} other {Có # Epic được liên kết mà bạn không thể xem nên không được tính.}}",
+      "hidden_children": "Một số mục công việc con nằm trong các dự án mà bạn không thể xem nên không được tính.",
+      "explained": "Hai số liệu được tính riêng: nếu không, một Epic nằm trong dự án được liên kết sẽ bị tính hai lần."
+    },
+    "children": {
+      "title": "Sáng kiến",
+      "empty": "Chưa có sáng kiến nào hướng tới mục tiêu này."
+    },
+    "projects": {
+      "title": "Dự án",
+      "add": "Thêm dự án",
+      "empty": "Chưa có dự án nào được liên kết.",
+      "of_goal": "Các dự án của những sáng kiến thuộc mục tiêu này. Hãy liên kết dự án trên một sáng kiến.",
+      "remove": "Hủy liên kết {name}",
+      "unknown": "Dự án",
+      "archived": "Đã lưu trữ"
+    },
+    "epics": {
+      "title": "Epic",
+      "add": "Thêm Epic",
+      "search": "Tìm Epic theo tên hoặc ID",
+      "none_to_add": "Không có Epic nào để thêm",
+      "empty": "Chưa có Epic nào được liên kết.",
+      "of_goal": "Các Epic của những sáng kiến thuộc mục tiêu này. Hãy liên kết Epic trên một sáng kiến.",
+      "remove": "Hủy liên kết {name}",
+      "progress_of": "Tiến độ của {name}"
+    },
+    "updates": {
+      "title": "Cập nhật trạng thái",
+      "text": "Cập nhật",
+      "placeholder": "Mọi việc tiến triển thế nào?",
+      "post": "Đăng cập nhật",
+      "posted": "Đã đăng cập nhật.",
+      "empty": "Chưa có cập nhật trạng thái nào."
+    },
+    "delete": {
+      "action": "Xóa",
+      "goal_title": "Xóa mục tiêu",
+      "initiative_title": "Xóa sáng kiến",
+      "goal_description": "Xóa mục tiêu {name}? Các sáng kiến của mục tiêu này vẫn được giữ lại, nhưng không còn mục tiêu.",
+      "initiative_description": "Xóa sáng kiến {name}? Các liên kết tới dự án và Epic cùng các cập nhật trạng thái của sáng kiến sẽ bị xóa; bản thân các dự án và Epic vẫn được giữ lại."
+    },
+    "toast": {
+      "goal_created": "Đã tạo mục tiêu.",
+      "initiative_created": "Đã tạo sáng kiến.",
+      "goal_deleted": "Đã xóa mục tiêu.",
+      "initiative_deleted": "Đã xóa sáng kiến.",
+      "error": "Đã xảy ra lỗi. Vui lòng thử lại."
     }
   },
   "raci": {

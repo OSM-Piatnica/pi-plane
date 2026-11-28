@@ -12,7 +12,11 @@
       "last_used_app": "Zuletzt verwendete App"
     },
     "switch_to": {
-      "projects": "Zu Projekte wechseln"
+      "projects": "Zu Projekte wechseln",
+      "initiatives": "Zu Initiativen wechseln"
+    },
+    "apps": {
+      "initiatives": "Initiativen"
     }
   },
   "approve": "Genehmigen",
@@ -269,6 +273,10 @@
   "workspace_features": {
     "description": "Teile von Pi-Plane für alle in diesem Arbeitsbereich ein- oder ausschalten.",
     "items": {
+      "initiatives": {
+        "title": "Initiativen",
+        "description": "Projektübergreifende Ziele und Initiativen mit Fortschritt und Status-Updates."
+      },
       "raci": {
         "description": "Abteilungen erhalten Rollen an Arbeitselementen (verantwortlich, genehmigend, konsultiert, informiert). Jedes Projekt schaltet es in seinen Funktionen ein.",
         "title": "RACI"
@@ -710,6 +718,123 @@
           }
         }
       }
+    }
+  },
+  "initiatives": {
+    "title": "Initiativen",
+    "all": "Alle Initiativen",
+    "without_goal": "Ohne Ziel",
+    "no_goal": "Kein Ziel",
+    "no_goals_yet": "Noch keine Ziele",
+    "no_lead": "Keine Leitung",
+    "new_goal": "Neues Ziel",
+    "new_initiative": "Neue Initiative",
+    "create_goal": "Ziel erstellen",
+    "create_initiative": "Initiative erstellen",
+    "expand_goal": "{name} aufklappen",
+    "collapse_goal": "{name} zuklappen",
+    "properties": "Eigenschaften",
+    "show_properties": "Eigenschaften anzeigen",
+    "hide_properties": "Eigenschaften ausblenden",
+    "description_placeholder": "Wozu dient es, und woran erkennen Sie, dass es erledigt ist?",
+    "kind": {
+      "goal": "Ziel",
+      "initiative": "Initiative"
+    },
+    "status": {
+      "planned": "Geplant",
+      "active": "Aktiv",
+      "paused": "Pausiert",
+      "completed": "Abgeschlossen",
+      "cancelled": "Abgebrochen"
+    },
+    "health": {
+      "on_track": "Im Plan",
+      "at_risk": "Gefährdet",
+      "off_track": "Außer Plan",
+      "none": "Noch kein Update",
+      "pick": "Zustand"
+    },
+    "fields": {
+      "name": "Name",
+      "status": "Status",
+      "health": "Zustand",
+      "lead": "Leitung",
+      "dates": "Termine",
+      "goal": "Ziel",
+      "created_by": "Erstellt von"
+    },
+    "form": {
+      "placeholder": "Name der Initiative",
+      "goal_placeholder": "Name des Ziels",
+      "name_required": "Ein Name ist erforderlich."
+    },
+    "empty": {
+      "title": "Noch keine Initiativen",
+      "description": "Fassen Sie projektübergreifende Arbeit in Initiativen und Initiativen unter Zielen zusammen, um ihren Fortschritt an einem Ort zu verfolgen.",
+      "sidebar": "Hier erscheinen die Ziele und Initiativen, die Sie erstellen."
+    },
+    "not_found": {
+      "title": "Initiative nicht gefunden",
+      "description": "Sie wurde möglicherweise gelöscht, oder die Adresse ist falsch."
+    },
+    "progress": {
+      "projects": "Arbeitselemente in verknüpften Projekten",
+      "epics": "Arbeitselemente verknüpfter Epics",
+      "done_of_total": "{done} von {total} erledigt",
+      "tooltip": "{percentage} % der Arbeitselemente erledigt",
+      "partial_tooltip": "{percentage} % der für Sie sichtbaren Arbeitselemente erledigt",
+      "projects_empty": "Noch keine Arbeitselemente in den verknüpften Projekten.",
+      "epics_empty": "Noch keine untergeordneten Arbeitselemente in den verknüpften Epics.",
+      "hidden_projects": "{count, plural, one {# verknüpftes Projekt ist für Sie nicht sichtbar und wird nicht mitgezählt.} other {# verknüpfte Projekte sind für Sie nicht sichtbar und werden nicht mitgezählt.}}",
+      "hidden_epics": "{count, plural, one {# verknüpftes Epic ist für Sie nicht sichtbar und wird nicht mitgezählt.} other {# verknüpfte Epics sind für Sie nicht sichtbar und werden nicht mitgezählt.}}",
+      "hidden_children": "Einige untergeordnete Arbeitselemente liegen in Projekten, die Sie nicht sehen können, und werden nicht mitgezählt.",
+      "explained": "Die beiden Werte werden getrennt gezählt: Ein Epic in einem verknüpften Projekt würde sonst doppelt gezählt."
+    },
+    "children": {
+      "title": "Initiativen",
+      "empty": "Noch keine Initiative arbeitet auf dieses Ziel hin."
+    },
+    "projects": {
+      "title": "Projekte",
+      "add": "Projekte hinzufügen",
+      "empty": "Noch keine Projekte verknüpft.",
+      "of_goal": "Die Projekte der Initiativen dieses Ziels. Projekte werden in einer Initiative verknüpft.",
+      "remove": "Verknüpfung mit {name} aufheben",
+      "unknown": "Projekt",
+      "archived": "Archiviert"
+    },
+    "epics": {
+      "title": "Epics",
+      "add": "Epic hinzufügen",
+      "search": "Epics nach Name oder ID suchen",
+      "none_to_add": "Keine Epics zum Hinzufügen",
+      "empty": "Noch keine Epics verknüpft.",
+      "of_goal": "Die Epics der Initiativen dieses Ziels. Epics werden in einer Initiative verknüpft.",
+      "remove": "Verknüpfung mit {name} aufheben",
+      "progress_of": "Fortschritt von {name}"
+    },
+    "updates": {
+      "title": "Status-Updates",
+      "text": "Update",
+      "placeholder": "Wie läuft es?",
+      "post": "Update veröffentlichen",
+      "posted": "Das Update wurde veröffentlicht.",
+      "empty": "Noch keine Status-Updates."
+    },
+    "delete": {
+      "action": "Löschen",
+      "goal_title": "Ziel löschen",
+      "initiative_title": "Initiative löschen",
+      "goal_description": "Das Ziel {name} löschen? Seine Initiativen bleiben bestehen, ohne Ziel.",
+      "initiative_description": "Die Initiative {name} löschen? Ihre Verknüpfungen mit Projekten und Epics sowie ihre Status-Updates werden entfernt; die Projekte und Epics bleiben bestehen."
+    },
+    "toast": {
+      "goal_created": "Das Ziel wurde erstellt.",
+      "initiative_created": "Die Initiative wurde erstellt.",
+      "goal_deleted": "Das Ziel wurde gelöscht.",
+      "initiative_deleted": "Die Initiative wurde gelöscht.",
+      "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
     }
   },
   "raci": {

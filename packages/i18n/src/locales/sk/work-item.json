@@ -488,19 +488,19 @@
     }
   },
   "epic": {
-    "new": "Nová epika",
-    "label": "{count, plural, one {Epika} few {Epiky} other {Epík}}",
-    "adding": "Pridávam epiku",
+    "new": "Nový epik",
+    "label": "{count, plural, one {Epik} few {Epiky} many {Epiku} other {Epikov}}",
+    "adding": "Pridávam epik",
     "create": {
-      "success": "Epika bola úspešne vytvorená"
+      "success": "Epik bol úspešne vytvorený"
     },
     "add": {
-      "label": "Pridať epiku",
-      "press_enter": "Pre pridanie ďalšej epiky stlačte 'Enter'"
+      "label": "Pridať epik",
+      "press_enter": "Pre pridanie ďalšieho epiku stlačte 'Enter'"
     },
     "title": {
-      "label": "Názov epiky",
-      "required": "Názov epiky je povinný."
+      "label": "Názov epiku",
+      "required": "Názov epiku je povinný."
     }
   },
   "issue_ui": {
@@ -567,7 +567,7 @@
     },
     "close_peek": "Zavrieť náhľad",
     "labels_count": "Štítky: {count}",
-    "view_epic": "Zobraziť epiku",
+    "view_epic": "Zobraziť epik",
     "view_work_item": "Zobraziť pracovnú položku",
     "save_draft": {
       "title": "Uložiť tento koncept?",
@@ -575,7 +575,7 @@
     },
     "delete_confirm": {
       "work_item": "Naozaj chcete odstrániť pracovnú položku {identifier}? Všetky údaje súvisiace s touto pracovnou položkou budú natrvalo odstránené. Túto akciu nemožno vrátiť späť.",
-      "epic": "Naozaj chcete odstrániť epiku {identifier}? Všetky údaje súvisiace s touto epikou budú natrvalo odstránené. Túto akciu nemožno vrátiť späť."
+      "epic": "Naozaj chcete odstrániť epik {identifier}? Všetky údaje súvisiace s týmto epikom budú natrvalo odstránené. Túto akciu nemožno vrátiť späť."
     },
     "work_item_deleted": "Táto pracovná položka bola odstránená",
     "epics_link_copied": "Odkaz na epiky bol skopírovaný do schránky.",
@@ -852,7 +852,7 @@
         "updated_without_issue": "aktualizovaný stav pracovnej položky v Intake."
       },
       "issue": {
-        "converted_to_epic": "<issue/> prevedené na epiku",
+        "converted_to_epic": "<issue/> prevedené na epik",
         "created": "vytvorené <issue/>",
         "deleted": "odstránené <issue/>",
         "deleted_tooltip": "Táto pracovná položka bola odstránená",

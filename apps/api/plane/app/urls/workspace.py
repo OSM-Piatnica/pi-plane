@@ -22,6 +22,7 @@ from plane.app.views import (
     DepartmentMembersEndpoint,
     InitiativeDetailEndpoint,
     InitiativeEpicDetailEndpoint,
+    InitiativeEpicSearchEndpoint,
     InitiativeEpicsEndpoint,
     InitiativeListEndpoint,
     InitiativeProjectDetailEndpoint,
@@ -213,6 +214,11 @@ urlpatterns = [
         "workspaces/<str:slug>/initiatives/<uuid:pk>/epics/",
         InitiativeEpicsEndpoint.as_view(),
         name="workspace-initiative-epics",
+    ),
+    path(
+        "workspaces/<str:slug>/initiatives/<uuid:pk>/epics/search/",
+        InitiativeEpicSearchEndpoint.as_view(),
+        name="workspace-initiative-epic-search",
     ),
     path(
         "workspaces/<str:slug>/initiatives/<uuid:pk>/epics/<uuid:epic_id>/",
