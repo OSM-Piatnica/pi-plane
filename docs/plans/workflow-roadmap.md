@@ -398,7 +398,7 @@ Already delivered before this plan: dependency shifting with confirmation, relat
 - The ghost bar and the variance use the schedule, `start_date` to `finish_date`, as the timeline bar does, in working days of the project. The saved `target_date` is shown as a separate hollow marker when the deadline moved, and it does not count as schedule variance (the API answers no variance for it).
 - Web: a "Baseline" menu on the timeline (show, save, picker, manage); a grey ghost bar under each moved bar with "+3 d" next to it; the end of the plan's variance on the button. Rules and limits are in `docs/baselines.md`.
 - Left out: the list, kanban and spreadsheet column "Variance". It needs the comparison loaded outside the timeline, as #517 did for Float (a root store, loaders in each layout, a display property); a follow-up PR, [#543](https://github.com/OSM-Piatnica/pi-plane/issues/543).
-- "What if" (unsaved shifts compared with the baseline) is out of scope for the first version.
+- "What if" (unsaved shifts compared with the baseline) is out of scope for the first version; tracked in [#558](https://github.com/OSM-Piatnica/pi-plane/issues/558).
 
 **D7. Date modes and external wait (SPEC-03). Size L. Needs D5.**
 
