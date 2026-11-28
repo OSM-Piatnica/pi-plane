@@ -398,6 +398,9 @@
       "updated": "Motiv aktualizován",
       "updating": "Aktualizace motivu...",
       "update_failed": "Motiv se nepodařilo aktualizovat. Zkuste to prosím znovu.",
+      "instance_managed": "Tento motiv nastavil váš správce, proto zde nelze měnit jeho barvy. Zkopírujte ho jako vlastní motiv a upravte si ho podle sebe.",
+      "copy_as_custom": "Kopírovat jako vlastní motiv",
+      "copied_as_custom": "Zkopírováno jako vlastní motiv",
       "advanced": {
         "title": "Pokročilé přizpůsobení",
         "description": "Nastavte jednotlivé barvy stejně jako vestavěné motivy. Vše, co necháte na Automaticky, se řídí dvěma barvami výše.",

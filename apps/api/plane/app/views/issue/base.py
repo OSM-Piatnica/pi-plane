@@ -77,7 +77,7 @@ from plane.utils.grouper import (
 from plane.utils.host import base_host
 from plane.utils.serializers import writable_data
 from plane.utils.issue_filters import issue_filters
-from plane.utils.issue_reschedule import apply_shifts, is_shift_confirmed, plan_for_batch
+from plane.utils.issue_reschedule import apply_shifts, decide_for_batch
 from plane.utils.issue_timeline_relation_validation import validate_issue_dates_batch
 from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
@@ -1218,14 +1218,14 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         # The whole batch is validated against its own proposed state, so dragging two linked
         # work items at once is not rejected because one of them still sees a stale neighbour.
         timeline_error = validate_issue_dates_batch(updates, issues_dict)
-        reschedule_plan = None
-        if timeline_error:
-            # Work items that come too early for what depends on them can be moved along, once the person agrees
-            reschedule_plan = plan_for_batch(updates, issues_dict, request.user, timeline_error)
-            if reschedule_plan is None:
-                return Response(timeline_error, status=status.HTTP_400_BAD_REQUEST)
-            if not is_shift_confirmed(request.data):
-                return Response(reschedule_plan.payload(timeline_error), status=status.HTTP_400_BAD_REQUEST)
+        # Work items that come too early for what depends on them can be moved along, and sub-work items can
+        # follow their parents, once the person agrees
+        decision = decide_for_batch(updates, issues_dict, request.user, timeline_error, request.data)
+        if decision.refusal:
+            return Response(decision.refusal, status=status.HTTP_400_BAD_REQUEST)
+        if decision.offer:
+            return Response(decision.offer, status=status.HTTP_400_BAD_REQUEST)
+        reschedule_plan = decision.plan
 
         for update in updates:
             issue_id = str(update.get("id"))

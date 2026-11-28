@@ -9,6 +9,7 @@ from plane.app.permissions import ROLE, allow_permission
 from plane.app.serializers import IssueTypeSerializer
 from plane.app.views.base import BaseViewSet
 from plane.db.models import IssueType
+from plane.utils.project_issue_types import SYSTEM_MANAGED_TYPE_DELETE, refuse_system_managed_type
 
 
 class WorkspaceIssueTypeViewSet(BaseViewSet):
@@ -68,4 +69,7 @@ class WorkspaceIssueTypeViewSet(BaseViewSet):
 
     @allow_permission(allowed_roles=[ROLE.ADMIN, ROLE.MEMBER], level="WORKSPACE")
     def destroy(self, request, *args, **kwargs):
+        # Refused for good, used or not: the feature that owns the type links it again whenever it needs it, and a
+        # deleted type would leave its work items behind. Deactivating is refused in the serializer.
+        refuse_system_managed_type(self.get_object(), SYSTEM_MANAGED_TYPE_DELETE)
         return super().destroy(request, *args, **kwargs)

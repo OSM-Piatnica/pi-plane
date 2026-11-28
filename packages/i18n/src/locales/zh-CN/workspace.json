@@ -398,6 +398,9 @@
       "updated": "主题已更新",
       "updating": "正在更新主题...",
       "update_failed": "更新主题失败，请重试。",
+      "instance_managed": "此主题由您的管理员设置，因此无法在此处更改其颜色。请将其复制为自定义主题，以进行您自己的更改。",
+      "copy_as_custom": "复制为自定义主题",
+      "copied_as_custom": "已复制为自定义主题",
       "advanced": {
         "title": "高级自定义",
         "description": "像内置主题一样单独设置各项颜色。保持为“自动”的项目将跟随上方的两种颜色。",

@@ -398,6 +398,9 @@
       "updated": "Tema diperbarui",
       "updating": "Memperbarui tema...",
       "update_failed": "Gagal memperbarui tema. Silakan coba lagi.",
+      "instance_managed": "Tema ini ditetapkan oleh administrator Anda, sehingga warnanya tidak dapat diubah di sini. Salin sebagai tema kustom untuk membuat perubahan Anda sendiri.",
+      "copy_as_custom": "Salin sebagai tema kustom",
+      "copied_as_custom": "Disalin sebagai tema kustom",
       "advanced": {
         "title": "Penyesuaian lanjutan",
         "description": "Atur warna satu per satu seperti pada tema bawaan. Pengaturan yang Anda biarkan pada Otomatis akan mengikuti dua warna di atas.",

@@ -18,6 +18,8 @@ import type { TInstanceTheme } from "@plane/types";
 import { applyCustomTheme, sanitizeThemeOverrides } from "@plane/utils";
 // components
 import { CustomThemeSelector } from "@/components/core/theme/custom-theme-selector";
+import { getInstanceThemeLink, toInstanceThemesError } from "@/components/core/theme/instance-theme-link";
+import { InstanceThemeNotice } from "@/components/core/theme/instance-theme-notice";
 import { ThemeSwitch } from "@/components/core/theme/theme-switch";
 import type { TThemeSwitchOption } from "@/components/core/theme/theme-switch";
 import { SettingsControlItem } from "@/components/settings/control-item";
@@ -50,9 +52,19 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
   const { theme: activeTheme, setTheme } = useTheme();
   // translation
   const { t } = useTranslation();
-  const { data: instanceThemes } = useSWR("INSTANCE_THEMES", () => instanceService.userThemes());
+  const { data: instanceThemes, error: instanceThemesError } = useSWR("INSTANCE_THEMES", () =>
+    instanceService.userThemes().catch((error: unknown) => {
+      throw toInstanceThemesError(error);
+    })
+  );
   // derived values
   const instanceThemeOptions = useMemo(() => (instanceThemes ?? []).map(toThemeOption), [instanceThemes]);
+  // an instance theme is managed by the administrator: its colours are not edited here, but can be copied
+  const instanceThemeLink = getInstanceThemeLink({
+    instanceThemeId: userProfile?.theme?.instanceThemeId,
+    instanceThemes,
+    hasFailed: !!instanceThemesError,
+  });
   const currentTheme = useMemo(() => {
     // An instance theme is saved as a custom theme that remembers where it came from
     const instanceThemeId = userProfile?.theme?.instanceThemeId;
@@ -158,7 +170,8 @@ export const ThemeSwitcher = observer(function ThemeSwitcher(props: {
           />
         }
       />
-      {userProfile.theme?.theme === "custom" && <CustomThemeSelector />}
+      {userProfile.theme?.theme === "custom" && instanceThemeLink.status === "own" && <CustomThemeSelector />}
+      {userProfile.theme?.theme === "custom" && instanceThemeLink.status === "managed" && <InstanceThemeNotice />}
     </>
   );
 });

@@ -80,6 +80,13 @@
       "reschedule": {
         "confirm": "Verplaatsen",
         "content": "Deze wijziging zou afhankelijkheden verbreken. Deze werkitems kunnen later worden gepland, met behoud van hun duur, zodat alle afhankelijkheden blijven kloppen:",
+        "deadline_overrun": "{issue} overschrijdt de vervaldatum met {count, plural, one {# werkdag} other {# werkdagen}}.",
+        "deadline_overrun_more": "{issue} is al {previous, plural, one {# werkdag} other {# werkdagen}} over de vervaldatum en overschrijdt die dan met {count, plural, one {# werkdag} other {# werkdagen}}.",
+        "save": "Opslaan",
+        "sub_items_content": "Dit werkitem heeft subwerkitems. Ze kunnen met hetzelfde aantal werkdagen mee verschuiven en behouden hun duur.",
+        "sub_items_dependents": "Werkitems die ervan afhangen, verschuiven ook:",
+        "sub_items_title": "Ook de subwerkitems verplaatsen?",
+        "sub_items_toggle": "{count, plural, one {Ook het subwerkitem verplaatsen} other {Ook de # subwerkitems verplaatsen}}",
         "title": "Ook de afhankelijke werkitems verplaatsen?"
       },
       "duplicate_cancel": {
@@ -176,7 +183,7 @@
           "title": "Alleen toegewezenen, de projectleider en beheerders mogen een werkitem wijzigen"
         },
         "reschedule_offer": {
-          "description": "Als een datumwijziging een afhankelijkheid zou verbreken, wordt aangeboden de afhankelijke werkitems later te plannen in plaats van de wijziging te weigeren. Staat dit uit, dan wordt een dergelijke wijziging geweigerd.",
+          "description": "Als een datumwijziging een afhankelijkheid zou verbreken, wordt aangeboden de afhankelijke werkitems later te plannen in plaats van de wijziging te weigeren. Staat dit uit, dan wordt een dergelijke wijziging geweigerd. Daarnaast wordt aangeboden de subwerkitems van een verplaatst bovenliggend item mee te verplaatsen; staat dit uit, dan blijven ze staan.",
           "title": "Aanbieden om afhankelijke werkitems te verplaatsen"
         }
       },
@@ -253,7 +260,11 @@
   "work_item_types": {
     "loading": "Typen laden…",
     "property_values_save_failed": "Het werkitem is aangemaakt, maar extra eigenschappen konden niet worden opgeslagen. Vul ze in via de details van het werkitem.",
-    "select_placeholder": "Type"
+    "select_placeholder": "Type",
+    "system_managed": {
+      "change_refused": "Dit werkitemtype wordt door het systeem beheerd. Een werkitem kan niet naar dit type of van dit type naar een ander worden gewijzigd.",
+      "tooltip": "Het systeem stelt dit type in. Het kan niet worden gewijzigd."
+    }
   },
   "workspace_features": {
     "description": "Schakel onderdelen van Pi-Plane in of uit voor iedereen in deze werkruimte.",
@@ -500,6 +511,7 @@
             },
             "optional_badge": "Optioneel",
             "properties_empty": "Geen aangepaste eigenschappen voor dit type.",
+            "system_type_name": "Dit is de naam van een door het systeem beheerd type. Deze invoer wordt niet met het sjabloon opgeslagen.",
             "task": {
               "description": "Standaardwerkitemtype voor dagelijkse taken.",
               "title": "Taak"
@@ -665,6 +677,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Goedkeuring",
+          "milestone": "Mijlpaal",
+          "review": "Beoordeling"
+        },
+        "system_type_hint": "Het systeem gebruikt dit type. De naam, het pictogram, de beschrijving en de eigenschappen kunnen worden gewijzigd, maar het type kan hier niet worden verwijderd, gedeactiveerd of aan projecten worden toegewezen.",
         "table": {
           "name": "Type",
           "no_projects": "Niet toegewezen",

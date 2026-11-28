@@ -80,6 +80,13 @@
       "reschedule": {
         "confirm": "Di chuyển",
         "content": "Thay đổi này sẽ phá vỡ các phụ thuộc. Có thể dời các mục công việc sau đây về sau, giữ nguyên thời lượng, để mọi phụ thuộc vẫn được đáp ứng:",
+        "deadline_overrun": "{issue} sẽ vượt ngày hết hạn {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
+        "deadline_overrun_more": "{issue} đã vượt ngày hết hạn {previous, plural, one {# ngày làm việc} other {# ngày làm việc}} và sẽ vượt {count, plural, one {# ngày làm việc} other {# ngày làm việc}}.",
+        "save": "Lưu",
+        "sub_items_content": "Mục công việc này có các mục công việc con. Chúng có thể di chuyển cùng nó với cùng số ngày làm việc, giữ nguyên thời lượng.",
+        "sub_items_dependents": "Các mục công việc phụ thuộc vào chúng cũng sẽ được di chuyển:",
+        "sub_items_title": "Di chuyển cả các mục công việc con?",
+        "sub_items_toggle": "{count, plural, one {Di chuyển cả # mục công việc con} other {Di chuyển cả # mục công việc con}}",
         "title": "Di chuyển cả các mục công việc phụ thuộc?"
       },
       "duplicate_cancel": {
@@ -176,7 +183,7 @@
           "title": "Chỉ người được giao, trưởng dự án và quản trị viên mới được thay đổi mục công việc"
         },
         "reschedule_offer": {
-          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối.",
+          "description": "Khi một thay đổi ngày sẽ phá vỡ phụ thuộc, hệ thống đề xuất dời các mục công việc phụ thuộc về sau thay vì từ chối thay đổi. Khi tắt, thay đổi như vậy sẽ bị từ chối. Hệ thống cũng đề xuất di chuyển các mục công việc con của một mục cha được di chuyển; khi tắt, chúng giữ nguyên vị trí.",
           "title": "Đề xuất dời các mục công việc phụ thuộc"
         }
       },
@@ -253,7 +260,11 @@
   "work_item_types": {
     "loading": "Đang tải loại…",
     "property_values_save_failed": "Mục công việc đã được tạo, nhưng không thể lưu các thuộc tính bổ sung. Hãy điền chúng từ trang chi tiết mục công việc.",
-    "select_placeholder": "Loại"
+    "select_placeholder": "Loại",
+    "system_managed": {
+      "change_refused": "Loại mục công việc này do hệ thống quản lý. Không thể chuyển một mục công việc sang loại này hoặc từ loại này sang loại khác.",
+      "tooltip": "Hệ thống đặt loại này. Không thể thay đổi."
+    }
   },
   "workspace_features": {
     "description": "Bật hoặc tắt các phần của Pi-Plane cho mọi người trong không gian làm việc này.",
@@ -500,6 +511,7 @@
             },
             "optional_badge": "Không bắt buộc",
             "properties_empty": "Không có thuộc tính tùy chỉnh cho loại này.",
+            "system_type_name": "Đây là tên của một loại do hệ thống quản lý. Mục này sẽ không được lưu cùng mẫu.",
             "task": {
               "description": "Loại mục công việc tiêu chuẩn cho các công việc hằng ngày.",
               "title": "Nhiệm vụ"
@@ -665,6 +677,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Phê duyệt",
+          "milestone": "Cột mốc",
+          "review": "Xem xét"
+        },
+        "system_type_hint": "Hệ thống sử dụng loại này. Có thể đổi tên, biểu tượng, mô tả và thuộc tính, nhưng không thể xóa, vô hiệu hóa hoặc gán loại này cho dự án tại đây.",
         "table": {
           "name": "Loại",
           "no_projects": "Chưa được gán",

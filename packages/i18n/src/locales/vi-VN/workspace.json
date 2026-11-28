@@ -398,6 +398,9 @@
       "updated": "Đã cập nhật giao diện",
       "updating": "Đang cập nhật giao diện...",
       "update_failed": "Không thể cập nhật giao diện. Vui lòng thử lại.",
+      "instance_managed": "Chủ đề này do quản trị viên của bạn thiết lập nên không thể thay đổi màu tại đây. Hãy sao chép thành chủ đề tùy chỉnh để thực hiện các thay đổi của riêng bạn.",
+      "copy_as_custom": "Sao chép thành chủ đề tùy chỉnh",
+      "copied_as_custom": "Đã sao chép thành chủ đề tùy chỉnh",
       "advanced": {
         "title": "Tùy chỉnh nâng cao",
         "description": "Đặt từng màu riêng lẻ giống như các giao diện tích hợp sẵn. Mọi mục bạn để ở chế độ Tự động sẽ theo hai màu ở trên.",

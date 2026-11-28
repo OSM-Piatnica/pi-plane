@@ -398,6 +398,9 @@
       "updated": "Theme aktualisiert",
       "updating": "Theme wird aktualisiert...",
       "update_failed": "Theme konnte nicht aktualisiert werden. Bitte versuchen Sie es erneut.",
+      "instance_managed": "Dieses Theme wurde von Ihrem Administrator festgelegt, daher können seine Farben hier nicht geändert werden. Kopieren Sie es als benutzerdefiniertes Theme, um eigene Änderungen vorzunehmen.",
+      "copy_as_custom": "Als benutzerdefiniertes Theme kopieren",
+      "copied_as_custom": "Als benutzerdefiniertes Theme kopiert",
       "advanced": {
         "title": "Erweiterte Anpassung",
         "description": "Legen Sie einzelne Farben so fest, wie es die integrierten Themes tun. Alles, was auf Automatisch bleibt, folgt den beiden Farben oben.",

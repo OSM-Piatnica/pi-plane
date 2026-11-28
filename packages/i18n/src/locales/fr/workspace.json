@@ -398,6 +398,9 @@
       "updated": "Thème mis à jour",
       "updating": "Mise à jour du thème...",
       "update_failed": "Échec de la mise à jour du thème. Veuillez réessayer.",
+      "instance_managed": "Ce thème est défini par votre administrateur, donc ses couleurs ne peuvent pas être modifiées ici. Copiez-le comme thème personnalisé pour apporter vos propres modifications.",
+      "copy_as_custom": "Copier comme thème personnalisé",
+      "copied_as_custom": "Copié comme thème personnalisé",
       "advanced": {
         "title": "Personnalisation avancée",
         "description": "Définissez chaque couleur individuellement, comme le font les thèmes intégrés. Tout ce que vous laissez sur Auto suit les deux couleurs ci-dessus.",

@@ -8,21 +8,17 @@
 
 import { observer } from "mobx-react";
 import { useParams } from "next/navigation";
-import { Layers } from "lucide-react";
-import { Logo } from "@plane/blocks/emoji-icon-picker";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import { EpicOutline, WorkItemsOutline } from "@makeplane/propel/icons";
-import type { TIssueIdentifierProps, TIssueIdentifierSize, TIssueTypeIdentifier, TLogoProps } from "@plane/types";
-import { SwitcherIcon } from "@/components/common/switcher-label";
+import type { TIssueIdentifierProps, TIssueIdentifierSize, TIssueTypeIdentifier } from "@plane/types";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useProject } from "@/hooks/store/use-project";
-import { getWorkItemTypeMarkKind } from "@/helpers/work-item-type-mark";
 import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 import { IdentifierText } from "@/components/issues/issue-detail/identifier-text";
+import { WorkItemTypeMarkIcon } from "./work-item-type-mark-icon";
 
 const TYPE_MARK_SIZE: Record<TIssueIdentifierSize, number> = { xs: 14, sm: 14, md: 16, lg: 16 };
 
-/** The mark of a work item type: the logo an admin picked, else a built-in one (Epic, general). */
+/** The mark of a work item type with its name as the tooltip: one component draws a type wherever it is shown. */
 const WorkItemTypeMark = observer(function WorkItemTypeMark(props: {
   issueTypeId: string;
   size?: TIssueIdentifierSize;
@@ -33,17 +29,10 @@ const WorkItemTypeMark = observer(function WorkItemTypeMark(props: {
   const issueType = typeMap[issueTypeId];
   if (!issueType) return null;
 
-  const iconSize = TYPE_MARK_SIZE[size];
-  const kind = getWorkItemTypeMarkKind(issueType);
-  let mark;
-  if (kind === "logo") mark = <Logo logo={issueType.logo_props as TLogoProps} size={iconSize} />;
-  else if (kind === "epic") mark = <EpicOutline width={iconSize} height={iconSize} className="text-accent-primary" />;
-  else mark = <WorkItemsOutline width={iconSize} height={iconSize} className="text-tertiary" />;
-
   return (
     <Tooltip label={issueType.name}>
       <span className="grid flex-shrink-0 place-items-center" aria-label={issueType.name}>
-        {mark}
+        <WorkItemTypeMarkIcon issueType={issueType} size={TYPE_MARK_SIZE[size]} />
       </span>
     </Tooltip>
   );
@@ -88,19 +77,9 @@ export const IssueIdentifier = observer(function IssueIdentifier(props: TIssueId
   );
 });
 
+/** The type of a work item on its own, where no identifier is shown (drafts): the same mark as the identifier's. */
 export const IssueTypeIdentifier = observer(function IssueTypeIdentifier(props: TIssueTypeIdentifier) {
-  const { issueTypeId } = props;
-  const { workspaceSlug } = useParams();
-  const { typeMap, isLoading } = useWorkspaceIssueTypes(workspaceSlug?.toString());
-
-  if (!issueTypeId || isLoading) return null;
-  const issueType = typeMap[issueTypeId];
-  if (!issueType) return null;
-
-  return (
-    <span className="inline-flex items-center gap-1 rounded border border-subtle bg-surface-2 px-1.5 py-0.5 text-11 text-secondary">
-      <SwitcherIcon logo_props={issueType.logo_props} LabelIcon={Layers} size={10} />
-      <span className="truncate">{issueType.name}</span>
-    </span>
-  );
+  const { issueTypeId, size = "sm" } = props;
+  if (!issueTypeId) return null;
+  return <WorkItemTypeMark issueTypeId={issueTypeId} size={size} />;
 });

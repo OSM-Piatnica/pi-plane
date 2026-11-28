@@ -80,6 +80,13 @@
       "reschedule": {
         "confirm": "移动",
         "content": "此更改会破坏依赖关系。可以将以下工作项顺延（保持其工期），以使所有依赖关系仍然成立：",
+        "deadline_overrun": "{issue} 将超出截止日期 {count, plural, one {# 个工作日} other {# 个工作日}}。",
+        "deadline_overrun_more": "{issue} 已超出截止日期 {previous, plural, one {# 个工作日} other {# 个工作日}}，移动后将超出 {count, plural, one {# 个工作日} other {# 个工作日}}。",
+        "save": "保存",
+        "sub_items_content": "此工作项包含子工作项。它们可以随之移动相同的工作日数，并保持各自的工期。",
+        "sub_items_dependents": "依赖它们的工作项也会随之移动：",
+        "sub_items_title": "是否同时移动子工作项？",
+        "sub_items_toggle": "{count, plural, one {同时移动 # 个子工作项} other {同时移动 # 个子工作项}}",
         "title": "是否同时移动依赖它的工作项？"
       },
       "duplicate_cancel": {
@@ -176,7 +183,7 @@
           "title": "只有负责人、项目负责人和管理员可以更改工作项"
         },
         "reschedule_offer": {
-          "description": "当日期更改会破坏依赖关系时，提议将依赖它的工作项顺延，而不是拒绝该更改。关闭后，此类更改将被拒绝。",
+          "description": "当日期更改会破坏依赖关系时，提议将依赖它的工作项顺延，而不是拒绝该更改。关闭后，此类更改将被拒绝。还会提议将被移动的父项的子工作项随之移动；关闭后，子工作项保持不变。",
           "title": "提议顺延依赖的工作项"
         }
       },
@@ -253,7 +260,11 @@
   "work_item_types": {
     "loading": "正在加载类型…",
     "property_values_save_failed": "工作项已创建，但无法保存附加属性。请从工作项详情中填写。",
-    "select_placeholder": "类型"
+    "select_placeholder": "类型",
+    "system_managed": {
+      "change_refused": "此工作项类型由系统管理。工作项不能切换为此类型，也不能从此类型切换为其他类型。",
+      "tooltip": "此类型由系统设置，无法更改。"
+    }
   },
   "workspace_features": {
     "description": "为此工作区中的所有人开启或关闭 Pi-Plane 的各项功能。",
@@ -500,6 +511,7 @@
             },
             "optional_badge": "可选",
             "properties_empty": "此类型暂无自定义属性。",
+            "system_type_name": "这是由系统管理的类型的名称。此条目不会随模板一起保存。",
             "task": {
               "description": "用于日常任务的标准工作项类型。",
               "title": "任务"
@@ -665,6 +677,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "审批",
+          "milestone": "里程碑",
+          "review": "评审"
+        },
+        "system_type_hint": "系统正在使用此类型。可以更改其名称、图标、描述和属性，但无法在此处将其删除、停用或分配给项目。",
         "table": {
           "name": "类型",
           "no_projects": "未分配",

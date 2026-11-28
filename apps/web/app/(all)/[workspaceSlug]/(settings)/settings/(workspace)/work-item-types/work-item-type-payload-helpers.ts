@@ -4,7 +4,8 @@
  * See the LICENSE file for details.
  */
 
-import type { TIssueType, TIssueTypeProperty } from "@plane/types";
+import type { TIssueType, TIssueTypeKind, TIssueTypeProperty } from "@plane/types";
+import { isEpicKind, isSystemManagedKind } from "@plane/utils";
 import type { TWorkItemTypeFormFields, TWorkItemTypeFormProperty } from "./work-item-type-form.types";
 
 function mapPropertyToApi(row: TWorkItemTypeFormProperty): TIssueTypeProperty {
@@ -48,14 +49,29 @@ function mapPropertyFromApi(row: TIssueTypeProperty): TWorkItemTypeFormProperty 
   };
 }
 
-export function buildIssueTypePayloadFromForm(values: TWorkItemTypeFormFields) {
+/** The "Epic type" switch moves a type between the standard and the Epic kind only; the server refuses the rest. */
+export const canToggleEpicKind = (kind: TIssueTypeKind): boolean => kind === "standard" || kind === "epic";
+
+/** The translation key of the badge that names a kind; the standard kind has no badge. */
+export const getKindBadgeKey = (kind: TIssueTypeKind): string | null => {
+  if (kind === "standard") return null;
+  if (kind === "epic") return "workspace_settings.settings.work_item_types.epic_badge";
+  return `workspace_settings.settings.work_item_types.kinds.${kind}`;
+};
+
+/**
+ * What the type form sends. `kind` is the kind of the type being edited (a new type is standard).
+ * The form does not offer the Epic switch outside the standard and Epic kinds, nor the active switch and the
+ * project list for a system-managed type, so those fields are left out of the request as well.
+ */
+export function buildIssueTypePayloadFromForm(values: TWorkItemTypeFormFields, kind: TIssueTypeKind = "standard") {
+  const isSystemManaged = isSystemManagedKind(kind);
   return {
     name: values.name.trim(),
     description: values.description,
     logo_props: values.logoProps,
-    is_epic: values.isEpic,
-    is_active: values.isActive,
-    project_ids: values.projectIds,
+    ...(canToggleEpicKind(kind) ? { is_epic: values.isEpic } : {}),
+    ...(isSystemManaged ? {} : { is_active: values.isActive, project_ids: values.projectIds }),
     properties: values.properties.map(mapPropertyToApi),
   };
 }
@@ -65,7 +81,7 @@ export function mapIssueTypeToFormValues(row: TIssueType): TWorkItemTypeFormFiel
     name: row.name,
     description: row.description ?? "",
     logoProps: row.logo_props,
-    isEpic: row.is_epic,
+    isEpic: isEpicKind(row),
     isActive: row.is_active,
     projectIds: row.project_ids ?? [],
     properties: (row.properties ?? []).map(mapPropertyFromApi),

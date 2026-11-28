@@ -398,6 +398,9 @@
       "updated": "Theme updated",
       "updating": "Updating theme...",
       "update_failed": "Failed to update theme. Please try again.",
+      "instance_managed": "This theme is set by your administrator, so its colors can't be changed here. Copy it as a custom theme to make your own changes.",
+      "copy_as_custom": "Copy as custom theme",
+      "copied_as_custom": "Copied as a custom theme",
       "advanced": {
         "title": "Advanced customization",
         "description": "Set individual colors the way the built-in themes do. Anything you leave on Auto follows the two colors above.",

@@ -398,6 +398,9 @@
       "updated": "Motív aktualizovaný",
       "updating": "Aktualizácia motívu...",
       "update_failed": "Motív sa nepodarilo aktualizovať. Skúste to prosím znova.",
+      "instance_managed": "Tento motív nastavil váš správca, preto tu nemožno meniť jeho farby. Skopírujte ho ako vlastný motív a upravte si ho podľa seba.",
+      "copy_as_custom": "Kopírovať ako vlastný motív",
+      "copied_as_custom": "Skopírované ako vlastný motív",
       "advanced": {
         "title": "Rozšírené prispôsobenie",
         "description": "Nastavte jednotlivé farby tak, ako to robia vstavané motívy. Všetko, čo ponecháte na Auto, sa riadi dvoma farbami vyššie.",

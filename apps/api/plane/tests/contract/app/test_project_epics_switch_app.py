@@ -252,3 +252,57 @@ class TestBulkAssignAndEpics:
         )
         assert response.status_code == status.HTTP_200_OK, response.data
         assert _linked(project, issue_type=epic_type).exists()
+
+
+@pytest.mark.contract
+class TestBulkAssignAndSystemManagedTypes:
+    """A type list neither removes nor adds a type of a system-managed kind (approval, review)."""
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("kind", ["approval", "review"])
+    def test_a_list_without_the_type_keeps_it_linked(self, session_client, workspace, project, task_type, kind):
+        system_type = IssueType.objects.create(workspace=workspace, name=kind.title(), kind=kind)
+        ProjectIssueType.objects.create(project=project, issue_type=system_type, workspace=workspace)
+        old = IssueType.objects.create(workspace=workspace, name="Old")
+        ProjectIssueType.objects.create(project=project, issue_type=old, workspace=workspace)
+
+        response = session_client.post(
+            BULK_URL.format(slug=workspace.slug, project_id=project.id),
+            {"issue_type_ids": [str(task_type.id)], "default_type_id": str(task_type.id)},
+            format="json",
+        )
+
+        assert response.status_code == status.HTTP_200_OK, response.data
+        assert _linked(project, issue_type=system_type).exists()
+        assert not _linked(project, issue_type=old).exists()
+
+    @pytest.mark.django_db
+    def test_a_list_with_a_system_managed_type_does_not_link_it(self, session_client, workspace, project, task_type):
+        approval = IssueType.objects.create(workspace=workspace, name="Approval", kind="approval")
+
+        response = session_client.post(
+            BULK_URL.format(slug=workspace.slug, project_id=project.id),
+            {"issue_type_ids": [str(task_type.id), str(approval.id)], "default_type_id": str(approval.id)},
+            format="json",
+        )
+
+        assert response.status_code == status.HTTP_200_OK, response.data
+        assert not _linked(project, issue_type=approval).exists()
+        assert _linked(project, issue_type=task_type, is_default=True).exists()
+
+    @pytest.mark.django_db
+    def test_a_linked_system_managed_type_never_becomes_the_default(
+        self, session_client, workspace, project, task_type
+    ):
+        review = IssueType.objects.create(workspace=workspace, name="Review", kind="review")
+        ProjectIssueType.objects.create(project=project, issue_type=review, workspace=workspace)
+
+        response = session_client.post(
+            BULK_URL.format(slug=workspace.slug, project_id=project.id),
+            {"issue_type_ids": [str(task_type.id)], "default_type_id": str(review.id)},
+            format="json",
+        )
+
+        assert response.status_code == status.HTTP_200_OK, response.data
+        assert not _linked(project, issue_type=review, is_default=True).exists()
+        assert _linked(project, issue_type=task_type, is_default=True).exists()

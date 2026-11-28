@@ -11,6 +11,7 @@ import { Badge } from "@makeplane/propel/components/badge";
 import { Input, InputGroup } from "@makeplane/propel/components/input";
 import { TextArea, TextAreaGroup } from "@makeplane/propel/components/text-area";
 import { Switch } from "@makeplane/propel/components/switch";
+import { isSystemManagedTypeName } from "@/helpers/issue-type-options";
 import { CustomPropertiesTemplateEditor } from "./custom-properties-template-editor";
 import type { TAdditionalWorkItemTypeTemplate, TCustomPropertyTemplateField } from "./project-template-form.types";
 
@@ -24,6 +25,8 @@ type TProps = {
   taskCustomProperties: TCustomPropertyTemplateField[];
   epicCustomProperties: TCustomPropertyTemplateField[];
   additionalWorkItemTypes: TAdditionalWorkItemTypeTemplate[];
+  /** Names of the workspace's system-managed types (approval, review): a template cannot bring those in */
+  systemManagedTypeNames?: string[];
   onChangeTask: (next: TCustomPropertyTemplateField[]) => void;
   onChangeEpic: (next: TCustomPropertyTemplateField[]) => void;
   onChangeAdditional: (next: TAdditionalWorkItemTypeTemplate[]) => void;
@@ -36,6 +39,7 @@ export const WorkItemTypesTemplateEditor = ({
   taskCustomProperties,
   epicCustomProperties,
   additionalWorkItemTypes,
+  systemManagedTypeNames = [],
   onChangeTask,
   onChangeEpic,
   onChangeAdditional,
@@ -153,6 +157,7 @@ export const WorkItemTypesTemplateEditor = ({
             <AdditionalWorkItemTypeCard
               key={row.id}
               row={row}
+              isSystemManagedName={isSystemManagedTypeName(row.name, systemManagedTypeNames)}
               onPatch={(patch) => patchWorkItemType(row.id, patch)}
               onRemove={() => removeWorkItemType(row.id)}
             />
@@ -173,10 +178,12 @@ export const WorkItemTypesTemplateEditor = ({
 
 function AdditionalWorkItemTypeCard(props: {
   row: TAdditionalWorkItemTypeTemplate;
+  /** The name is the name of a system-managed type: the entry is not saved with the template */
+  isSystemManagedName: boolean;
   onPatch: (patch: Partial<TAdditionalWorkItemTypeTemplate>) => void;
   onRemove: () => void;
 }) {
-  const { row, onPatch, onRemove } = props;
+  const { row, isSystemManagedName, onPatch, onRemove } = props;
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);
 
@@ -203,6 +210,11 @@ function AdditionalWorkItemTypeCard(props: {
               )}
             />
           </InputGroup>
+          {isSystemManagedName ? (
+            <p className="text-12 text-danger-primary" role="alert">
+              {t("workspace_settings.settings.project_templates.form.work_item_types.system_type_name")}
+            </p>
+          ) : null}
           {expanded ? (
             <TextAreaGroup resize="vertical">
               <TextArea

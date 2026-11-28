@@ -80,6 +80,13 @@
       "reschedule": {
         "confirm": "Posunúť",
         "content": "Táto zmena by porušila závislosti. Tieto pracovné položky možno posunúť na neskôr so zachovaním ich dĺžky, aby všetky závislosti naďalej platili:",
+        "deadline_overrun": "{issue} prekročí svoj termín o {count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}.",
+        "deadline_overrun_more": "{issue} už prekračuje svoj termín o {previous, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}} a prekročí ho o {count, plural, one {# pracovný deň} few {# pracovné dni} many {# pracovného dňa} other {# pracovných dní}}.",
+        "save": "Uložiť",
+        "sub_items_content": "Táto pracovná položka má podriadené pracovné položky. Môžu sa posunúť spolu s ňou o rovnaký počet pracovných dní a zachovať si svoje trvanie.",
+        "sub_items_dependents": "Posunú sa aj pracovné položky, ktoré od nich závisia:",
+        "sub_items_title": "Posunúť aj podriadené pracovné položky?",
+        "sub_items_toggle": "{count, plural, one {Posunúť aj podriadenú pracovnú položku} few {Posunúť aj # podriadené pracovné položky} many {Posunúť aj # podriadenej pracovnej položky} other {Posunúť aj # podriadených pracovných položiek}}",
         "title": "Posunúť aj závislé pracovné položky?"
       },
       "duplicate_cancel": {
@@ -176,7 +183,7 @@
           "title": "Pracovnú položku môžu meniť len priradení, vedúci projektu a správcovia"
         },
         "reschedule_offer": {
-          "description": "Keď by zmena dátumu porušila závislosť, ponúkne sa posunutie závislých pracovných položiek na neskôr namiesto odmietnutia zmeny. Ak je voľba vypnutá, takáto zmena sa odmietne.",
+          "description": "Keď by zmena dátumu porušila závislosť, ponúkne sa posunutie závislých pracovných položiek na neskôr namiesto odmietnutia zmeny. Ak je voľba vypnutá, takáto zmena sa odmietne. Ponúkne sa aj posunutie podriadených pracovných položiek spolu s posunutou nadradenou položkou; ak je voľba vypnutá, zostanú na mieste.",
           "title": "Ponúkať posunutie závislých pracovných položiek"
         }
       },
@@ -253,7 +260,11 @@
   "work_item_types": {
     "loading": "Načítavanie typov…",
     "property_values_save_failed": "Pracovná položka bola vytvorená, ale ďalšie vlastnosti sa nepodarilo uložiť. Doplňte ich v detaile pracovnej položky.",
-    "select_placeholder": "Typ"
+    "select_placeholder": "Typ",
+    "system_managed": {
+      "change_refused": "Tento typ pracovnej položky spravuje systém. Pracovnú položku nemožno na tento typ prepnúť ani z neho previesť na iný.",
+      "tooltip": "Tento typ nastavuje systém. Nemožno ho zmeniť."
+    }
   },
   "workspace_features": {
     "description": "Zapínanie a vypínanie častí Pi-Plane pre všetkých v tomto pracovnom priestore.",
@@ -500,6 +511,7 @@
             },
             "optional_badge": "Voliteľné",
             "properties_empty": "Tento typ nemá žiadne vlastné vlastnosti.",
+            "system_type_name": "Toto je názov typu spravovaného systémom. Položka sa so šablónou neuloží.",
             "task": {
               "description": "Štandardný typ pracovnej položky pre bežné úlohy.",
               "title": "Úloha"
@@ -665,6 +677,12 @@
             }
           }
         },
+        "kinds": {
+          "approval": "Schválenie",
+          "milestone": "Míľnik",
+          "review": "Revízia"
+        },
+        "system_type_hint": "Tento typ používa systém. Názov, ikonu, popis a vlastnosti možno zmeniť, ale typ tu nemožno odstrániť, deaktivovať ani priradiť k projektom.",
         "table": {
           "name": "Typ",
           "no_projects": "Nepriradené",

@@ -10,3 +10,4 @@ export * from "./dates";
 export * from "./duration";
 export * from "./modal";
 export * from "./state";
+export * from "./type-kind";

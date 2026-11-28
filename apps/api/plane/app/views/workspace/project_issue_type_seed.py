@@ -37,9 +37,10 @@ class WorkspaceProjectIssueTypeSeedEndpoint(BaseAPIView):
             return Response({"error": "Template not found"}, status=status.HTTP_404_NOT_FOUND)
 
         payload = template.payload if isinstance(template.payload, dict) else {}
-        seed_project_issue_types_from_template_payload(
+        skipped = seed_project_issue_types_from_template_payload(
             project=project,
             payload=payload,
             created_by_id=getattr(request.user, "id", None),
         )
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        # Entries named like a system-managed type (approval, review) are left out, not an error
+        return Response({"skipped_work_item_types": skipped}, status=status.HTTP_200_OK)

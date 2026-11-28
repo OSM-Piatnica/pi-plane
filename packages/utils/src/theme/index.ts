@@ -24,6 +24,7 @@ export {
   applyCustomTheme,
   clearCustomTheme,
   isColorDark,
+  getStickyTextColors,
   getOnColorTextColors,
   type DarknessDetectionMethod,
 } from "./theme-application";
