@@ -113,7 +113,8 @@ An import writes no activity entries for the roles, as it writes none for labels
 ## Not there yet
 
 - Notifications by role and the project warnings (a work item without a responsible department, and so on) come
-  with D3 of the roadmap; "my view" with D9.
+  with D3 of the roadmap. The work items one's departments approve are listed by the [focus endpoint](focus.md) (D9);
+  its "My view" panel is still to come.
 - One department per person is the rule of [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508) for now.
   "My department" already takes every active department group a person belongs to, so it keeps working if that
   rule changes.

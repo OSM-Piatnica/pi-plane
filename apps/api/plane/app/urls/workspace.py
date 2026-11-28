@@ -7,6 +7,8 @@ from django.urls import path
 
 
 from plane.app.views import (
+    ProjectFocusEndpoint,
+    WorkspaceFocusEndpoint,
     UserWorkspaceInvitationsViewSet,
     WorkSpaceViewSet,
     WorkspaceJoinEndpoint,
@@ -189,6 +191,16 @@ urlpatterns = [
         "workspaces/<str:slug>/user-groups/<uuid:pk>/members/<uuid:user_id>/",
         UserGroupMemberDetailEndpoint.as_view(),
         name="workspace-user-group-member",
+    ),
+    path(
+        "workspaces/<str:slug>/focus/",
+        WorkspaceFocusEndpoint.as_view(),
+        name="workspace-focus",
+    ),
+    path(
+        "workspaces/<str:slug>/projects/<uuid:project_id>/focus/",
+        ProjectFocusEndpoint.as_view(),
+        name="project-focus",
     ),
     path(
         "workspaces/<str:slug>/initiatives/",

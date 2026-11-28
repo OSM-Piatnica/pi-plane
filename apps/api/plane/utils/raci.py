@@ -101,6 +101,11 @@ def _live_rows():
     )
 
 
+def live_raci_rows():
+    """The roles that count (see ``_live_rows``), for other modules that read them, such as the focus lists."""
+    return _live_rows()
+
+
 def raci_annotation():
     """
     The roles on a work item as ``[{"group_id": ..., "role": ...}]``, to annotate a queryset of work items with.
