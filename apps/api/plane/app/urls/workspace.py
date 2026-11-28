@@ -22,6 +22,7 @@ from plane.app.views import (
     WorkspaceAdminMessageEndpoint,
     DepartmentListEndpoint,
     DepartmentMembersEndpoint,
+    WorkspaceRaciNotificationsEndpoint,
     InitiativeDetailEndpoint,
     InitiativeEpicDetailEndpoint,
     InitiativeEpicSearchEndpoint,
@@ -171,6 +172,11 @@ urlpatterns = [
         "workspaces/<str:slug>/departments/members/",
         DepartmentMembersEndpoint.as_view(),
         name="workspace-department-members",
+    ),
+    path(
+        "workspaces/<str:slug>/raci-notifications/",
+        WorkspaceRaciNotificationsEndpoint.as_view(),
+        name="workspace-raci-notifications",
     ),
     path(
         "workspaces/<str:slug>/user-groups/filterable/",

@@ -26,11 +26,23 @@ from plane.db.models import (
     UserNotificationPreference,
     ProjectMember,
 )
+from plane.utils.raci_notifications import SENDER as RACI_SENDER, raci_activity_recipients
 from django.db.models import Subquery
 
 # Third Party imports
 from celery import shared_task
 from bs4 import BeautifulSoup
+
+
+def _raci_recipients(issue, issue_activities_created, exclude):
+    """Who RACI adds and of which activities; nobody when it fails, so that the other notifications still go."""
+    if issue is None:
+        return {}
+    try:
+        return raci_activity_recipients(issue, issue_activities_created, exclude=exclude)
+    except Exception as e:
+        log_exception(e)
+        return {}
 
 
 def should_send_email(preference, issue_activity, project_id):
@@ -329,8 +341,19 @@ def notifications(
 
             issue_subscribers = list(set(issue_subscribers) - {uuid.UUID(actor_id)})
 
-            for subscriber in issue_subscribers:
-                if issue.created_by_id and issue.created_by_id == subscriber:
+            # Departments with a RACI role on the work item hear about the events the workspace's matrix gives their
+            # role, and only about those activities (plane.utils.raci_notifications); None stands for every activity
+            raci_recipients = _raci_recipients(
+                issue,
+                issue_activities_created,
+                exclude=[*issue_subscribers, *new_mentions, *comment_mentions, actor_id],
+            )
+            recipients = [(user_id, None) for user_id in issue_subscribers] + list(raci_recipients.items())
+
+            for subscriber, raci_activity_ids in recipients:
+                if raci_activity_ids is not None:
+                    sender = RACI_SENDER
+                elif issue.created_by_id and issue.created_by_id == subscriber:
                     sender = "in_app:issue_activities:created"
                 elif subscriber in issue_assignees and issue.created_by_id not in issue_assignees:
                     sender = "in_app:issue_activities:assigned"
@@ -342,6 +365,9 @@ def notifications(
                 for issue_activity in issue_activities_created:
                     # If activity done in blocking then blocked by email should not go
                     if issue_activity.get("issue_detail").get("id") != issue_id:
+                        continue
+
+                    if raci_activity_ids is not None and str(issue_activity.get("id")) not in raci_activity_ids:
                         continue
 
                     # Do not send notification for description update

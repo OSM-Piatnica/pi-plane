@@ -925,7 +925,46 @@
       }
     },
     "save_failed": "Nie udało się zapisać RACI.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Zdarzenie",
+      "events": {
+        "new_version": "Nowa wersja robocza lub załącznik",
+        "comment": "Komentarz",
+        "approval_requested": "Prośba o akceptację",
+        "approval_decided": "Akceptacja lub odrzucenie",
+        "completed": "Wersja końcowa (ukończone)",
+        "state_or_due_date": "Zmiana stanu lub terminu"
+      },
+      "nobody_by_role": "Żaden dział nie ma tych ról",
+      "people": "{count, plural, one {# osoba} few {# osoby} many {# osób} other {# osoby}}",
+      "preview_hint": "Obserwujący, przypisani i wspomniani dostają powiadomienia jak dotąd; autor zmiany ich nie dostaje.",
+      "preview_title": "Kto dostanie powiadomienie",
+      "restore_defaults": "Przywróć domyślne",
+      "settings_description": "Dla każdego zdarzenia w elemencie pracy: role, których działy dostają powiadomienie, obok obserwujących i przypisanych.",
+      "settings_hint": "Powiadomienia dostają tylko członkowie projektu, w projektach z włączonym RACI. Wyłączony dział nie powiadamia nikogo.",
+      "settings_title": "Powiadomienia wg RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Wysyłane, gdy będzie dostępna akceptacja"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# uwaga RACI} few {# uwagi RACI} many {# uwag RACI} other {# uwagi RACI}}",
+      "description": "Braki w rolach i zależnościach otwartych elementów pracy. Nie blokują zapisu.",
+      "kinds": {
+        "no_responsible": "Elementy pracy bez działu, który odpowiada",
+        "milestone_without_approver": "Kamienie milowe bez działu, który zatwierdza",
+        "no_predecessor": "Elementy pracy bez poprzednika",
+        "no_successor": "Elementy pracy, od których nic nie zależy",
+        "department_without_members": "Działy, których powiadomienia nie trafią do nikogo"
+      },
+      "more": "Niewymienione: {count}",
+      "reasons": {
+        "inactive": "Wyłączony, więc jego członkowie nie dostają powiadomień",
+        "no_members": "Nie ma członków",
+        "no_project_members": "Żaden z jego członków nie należy do tego projektu"
+      },
+      "title": "Uwagi RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

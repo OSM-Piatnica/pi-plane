@@ -120,7 +120,7 @@ from .baseline import BaselineItem, ProjectBaseline
 
 from .project_copy_job import ProjectCopyJob
 
-from .raci import IssueRaci, RaciRole
+from .raci import IssueRaci, RaciNotificationSetting, RaciRole
 
 from .description import Description, DescriptionVersion
 

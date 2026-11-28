@@ -25,6 +25,7 @@ import { store } from "@/lib/store-context";
 import { issueRaciService } from "@/services/issue/raci.service";
 // local imports
 import { RaciChip } from "./raci-chip";
+import { IssueRaciNotificationPreview } from "./raci-notification-preview";
 
 type Props = {
   workspaceSlug: string;
@@ -53,7 +54,7 @@ export const IssueRaciSection = observer(function IssueRaciSection(props: Props)
     () => issueRaciService.getRaci(workspaceSlug, projectId, issueId),
     { revalidateOnFocus: false }
   );
-  const { departments } = useDepartments(workspaceSlug, isEnabled);
+  const { departments, departmentsById } = useDepartments(workspaceSlug, isEnabled);
 
   if (!isEnabled) return null;
 
@@ -107,6 +108,13 @@ export const IssueRaciSection = observer(function IssueRaciSection(props: Props)
           </div>
         );
       })}
+      <IssueRaciNotificationPreview
+        workspaceSlug={workspaceSlug}
+        projectId={projectId}
+        issueId={issueId}
+        entries={entries}
+        departmentsById={departmentsById}
+      />
     </SidebarPropertyListItem>
   );
 });

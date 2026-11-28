@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI tidak dapat disimpan.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Peristiwa",
+      "events": {
+        "new_version": "Versi draf baru atau lampiran",
+        "comment": "Komentar",
+        "approval_requested": "Persetujuan diminta",
+        "approval_decided": "Disetujui atau ditolak",
+        "completed": "Versi akhir (selesai)",
+        "state_or_due_date": "Perubahan status atau tanggal jatuh tempo"
+      },
+      "nobody_by_role": "Tidak ada departemen dengan peran ini",
+      "people": "{count, plural, one {# orang} other {# orang}}",
+      "preview_hint": "Pelanggan, penerima tugas, dan orang yang disebut tetap diberi tahu seperti sebelumnya; pembuat perubahan tidak.",
+      "preview_title": "Siapa yang akan diberi tahu",
+      "restore_defaults": "Pulihkan bawaan",
+      "settings_description": "Untuk setiap peristiwa pada item kerja, peran yang departemennya diberi tahu, selain pelanggan dan penerima tugas.",
+      "settings_hint": "Hanya anggota proyek yang diberi tahu, di proyek dengan RACI aktif. Departemen yang dinonaktifkan tidak memberi tahu siapa pun.",
+      "settings_title": "Notifikasi RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Dikirim setelah penerimaan tersedia"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# peringatan RACI} other {# peringatan RACI}}",
+      "description": "Kekurangan pada peran dan dependensi item kerja yang terbuka. Tidak menghalangi penyimpanan.",
+      "kinds": {
+        "no_responsible": "Item kerja tanpa departemen penanggung jawab",
+        "milestone_without_approver": "Milestone tanpa penyetuju",
+        "no_predecessor": "Item kerja tanpa pendahulu",
+        "no_successor": "Item kerja yang tidak menjadi tumpuan apa pun",
+        "department_without_members": "Departemen yang notifikasinya tidak sampai ke siapa pun"
+      },
+      "more": "Tidak tercantum: {count}",
+      "reasons": {
+        "inactive": "Dinonaktifkan, sehingga anggotanya tidak diberi tahu",
+        "no_members": "Tidak memiliki anggota",
+        "no_project_members": "Tidak ada anggotanya yang berada di proyek ini"
+      },
+      "title": "Peringatan RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

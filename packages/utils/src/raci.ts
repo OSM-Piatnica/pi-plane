@@ -179,3 +179,29 @@ export const getRaciFilterOptions = (departments: TRaciDepartment[], t?: TRaciTr
       isKeyword: false,
     })),
 ];
+
+/**
+ * The roles of one event after a role was ticked or unticked in the RACI notification matrix, in the order of
+ * the roles.
+ */
+export const toggleRaciNotificationRole = (current: TRaciRole[] | undefined, role: TRaciRole): TRaciRole[] => {
+  const roles = new Set(current ?? []);
+  if (roles.has(role)) roles.delete(role);
+  else roles.add(role);
+  return RACI_ROLES.filter((option) => roles.has(option));
+};
+
+/** Whether every event of a matrix has the roles of the defaults. */
+export const isDefaultRaciNotificationMatrix = (
+  matrix: Partial<Record<string, TRaciRole[]>>,
+  defaults: Partial<Record<string, TRaciRole[]>>
+): boolean =>
+  Object.keys(defaults).every((event) => {
+    const left = new Set(matrix[event] ?? []);
+    const right = defaults[event] ?? [];
+    return left.size === right.length && right.every((role) => left.has(role));
+  });
+
+/** How many warnings a project has in all: work items once per warning, and departments. */
+export const countRaciWarnings = (counts: Partial<Record<string, number>> | undefined): number =>
+  Object.values(counts ?? {}).reduce<number>((total, count) => total + (count ?? 0), 0);

@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI konnte nicht gespeichert werden.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Ereignis",
+      "events": {
+        "new_version": "Neue Entwurfsversion oder Anhang",
+        "comment": "Kommentar",
+        "approval_requested": "Genehmigung angefordert",
+        "approval_decided": "Genehmigt oder abgelehnt",
+        "completed": "Endversion (abgeschlossen)",
+        "state_or_due_date": "Status oder Fälligkeitsdatum geändert"
+      },
+      "nobody_by_role": "Keine Abteilung mit diesen Rollen",
+      "people": "{count, plural, one {# Person} other {# Personen}}",
+      "preview_hint": "Abonnenten, Zugewiesene und Erwähnte werden wie bisher benachrichtigt; wer die Änderung vornimmt, nicht.",
+      "preview_title": "Wer benachrichtigt wird",
+      "restore_defaults": "Standard wiederherstellen",
+      "settings_description": "Für jedes Ereignis an einem Arbeitselement die Rollen, deren Abteilungen benachrichtigt werden, zusätzlich zu Abonnenten und Zugewiesenen.",
+      "settings_hint": "Benachrichtigt werden nur Mitglieder des Projekts, in Projekten mit aktiviertem RACI. Eine deaktivierte Abteilung benachrichtigt niemanden.",
+      "settings_title": "RACI-Benachrichtigungen",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Wird gesendet, sobald die Abnahme verfügbar ist"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# RACI-Warnung} other {# RACI-Warnungen}}",
+      "description": "Lücken in den Rollen und Abhängigkeiten offener Arbeitselemente. Sie verhindern das Speichern nicht.",
+      "kinds": {
+        "no_responsible": "Arbeitselemente ohne verantwortliche Abteilung",
+        "milestone_without_approver": "Meilensteine ohne genehmigende Abteilung",
+        "no_predecessor": "Arbeitselemente ohne Vorgänger",
+        "no_successor": "Arbeitselemente, von denen nichts abhängt",
+        "department_without_members": "Abteilungen, deren Benachrichtigungen niemanden erreichen"
+      },
+      "more": "Nicht aufgeführt: {count}",
+      "reasons": {
+        "inactive": "Deaktiviert, daher werden ihre Mitglieder nicht benachrichtigt",
+        "no_members": "Hat keine Mitglieder",
+        "no_project_members": "Keines ihrer Mitglieder ist in diesem Projekt"
+      },
+      "title": "RACI-Warnungen"
+    }
   },
   "project_components": {
     "duplicate_modal": {

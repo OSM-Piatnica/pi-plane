@@ -22,6 +22,8 @@ from plane.app.permissions import ROLE, allow_permission, issue_hidden_from_gues
 from plane.bgtasks.issue_activities_task import issue_activity
 from plane.db.models import Issue, Project
 from plane.utils.host import base_host
+from plane.utils.raci_notifications import notification_preview
+from plane.utils.raci_warnings import project_raci_warnings
 from plane.utils.raci import (
     RACI_DISABLED_MESSAGE,
     RACI_EDIT_MESSAGE,
@@ -39,13 +41,8 @@ def _error(message, code=status.HTTP_400_BAD_REQUEST):
     return Response({"error": message}, status=code)
 
 
-class IssueRaciEndpoint(BaseAPIView):
-    """
-    GET reads the roles of the departments on a work item, PUT replaces them all in one call.
-
-    Both answer ``{"raci": [{"group_id", "role"}], "can_edit": bool}``. PUT takes ``{"raci": [...]}`` in the same
-    shape; a department that is left out loses its role, and an empty list clears the work item.
-    """
+class _IssueRaciView(BaseAPIView):
+    """Finds the work item of a RACI request, or the answer to give when its roles cannot be reached."""
 
     def _load(self, request, slug, project_id, issue_id):
         """(project, work item, error): the error is the answer to give when the roles cannot be reached."""
@@ -57,6 +54,15 @@ class IssueRaciEndpoint(BaseAPIView):
             return project, None, _error("You are not allowed to view this work item.", status.HTTP_403_FORBIDDEN)
         issue = get_object_or_404(Issue, workspace__slug=slug, project_id=project_id, pk=issue_id)
         return project, issue, None
+
+
+class IssueRaciEndpoint(_IssueRaciView):
+    """
+    GET reads the roles of the departments on a work item, PUT replaces them all in one call.
+
+    Both answer ``{"raci": [{"group_id", "role"}], "can_edit": bool}``. PUT takes ``{"raci": [...]}`` in the same
+    shape; a department that is left out loses its role, and an empty list clears the work item.
+    """
 
     @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
     def get(self, request, slug, project_id, issue_id):
@@ -96,3 +102,34 @@ class IssueRaciEndpoint(BaseAPIView):
                 origin=base_host(request=request, is_app=True),
             )
         return Response({"raci": after, "can_edit": True}, status=status.HTTP_200_OK)
+
+
+class IssueRaciNotificationPreviewEndpoint(_IssueRaciView):
+    """
+    GET: who the roles on a work item make hear about each event of the workspace's matrix ("who will be notified").
+
+    Answers ``{"events": [{"event", "roles", "departments": [{"group_id", "role", "member_count"}], "member_ids"}]}``
+    in the order of the matrix. The people are those RACI adds; subscribers, assignees and mentioned people are told
+    as before, and the person who makes a change is never told about it.
+    """
+
+    @allow_permission([ROLE.ADMIN, ROLE.MEMBER, ROLE.GUEST])
+    def get(self, request, slug, project_id, issue_id):
+        _, issue, error = self._load(request, slug, project_id, issue_id)
+        if error:
+            return error
+        return Response({"events": notification_preview(issue)}, status=status.HTTP_200_OK)
+
+
+class ProjectRaciWarningsEndpoint(BaseAPIView):
+    """
+    GET: the RACI warnings of a project (``plane.utils.raci_warnings``): work items without a responsible department,
+    milestones without an approver, departments nobody in the project would hear for, and dependency gaps.
+    """
+
+    @allow_permission([ROLE.ADMIN, ROLE.MEMBER])
+    def get(self, request, slug, project_id):
+        project = get_object_or_404(Project.objects.select_related("workspace"), workspace__slug=slug, pk=project_id)
+        if not project_raci_enabled(project):
+            return _error(RACI_DISABLED_MESSAGE)
+        return Response(project_raci_warnings(project), status=status.HTTP_200_OK)

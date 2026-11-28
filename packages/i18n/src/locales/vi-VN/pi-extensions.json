@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "Không thể lưu RACI.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Sự kiện",
+      "events": {
+        "new_version": "Phiên bản nháp mới hoặc tệp đính kèm",
+        "comment": "Bình luận",
+        "approval_requested": "Yêu cầu phê duyệt",
+        "approval_decided": "Đã phê duyệt hoặc từ chối",
+        "completed": "Phiên bản cuối (hoàn thành)",
+        "state_or_due_date": "Thay đổi trạng thái hoặc hạn chót"
+      },
+      "nobody_by_role": "Không có phòng ban nào có các vai trò này",
+      "people": "{count, plural, one {# người} other {# người}}",
+      "preview_hint": "Người theo dõi, người được giao và người được nhắc đến vẫn nhận thông báo như trước; người thực hiện thay đổi thì không.",
+      "preview_title": "Ai sẽ được thông báo",
+      "restore_defaults": "Khôi phục mặc định",
+      "settings_description": "Với mỗi sự kiện trên mục công việc, các vai trò có phòng ban được thông báo, bên cạnh người theo dõi và người được giao.",
+      "settings_hint": "Chỉ thành viên dự án được thông báo, trong các dự án đã bật RACI. Phòng ban đã tắt không thông báo cho ai.",
+      "settings_title": "Thông báo theo RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Sẽ được gửi khi có tính năng chấp nhận"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# cảnh báo RACI} other {# cảnh báo RACI}}",
+      "description": "Thiếu sót trong vai trò và phụ thuộc của các mục công việc đang mở. Không chặn việc lưu.",
+      "kinds": {
+        "no_responsible": "Mục công việc không có phòng ban chịu trách nhiệm",
+        "milestone_without_approver": "Cột mốc không có người phê duyệt",
+        "no_predecessor": "Mục công việc không có mục đứng trước",
+        "no_successor": "Mục công việc không có gì phụ thuộc vào",
+        "department_without_members": "Phòng ban mà thông báo không đến được ai"
+      },
+      "more": "Không được liệt kê: {count}",
+      "reasons": {
+        "inactive": "Đã tắt nên các thành viên không được thông báo",
+        "no_members": "Không có thành viên",
+        "no_project_members": "Không thành viên nào thuộc dự án này"
+      },
+      "title": "Cảnh báo RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "The RACI could not be saved.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Event",
+      "events": {
+        "new_version": "New draft version or attachment",
+        "comment": "Comment",
+        "approval_requested": "Approval requested",
+        "approval_decided": "Approved or rejected",
+        "completed": "Final version (completed)",
+        "state_or_due_date": "State or due date changed"
+      },
+      "nobody_by_role": "No department with these roles",
+      "people": "{count, plural, one {# person} other {# people}}",
+      "preview_hint": "Subscribers, assignees and mentioned people are notified as before; whoever makes the change is not.",
+      "preview_title": "Who will be notified",
+      "restore_defaults": "Restore defaults",
+      "settings_description": "For each event on a work item, the roles whose departments are notified, next to subscribers and assignees.",
+      "settings_hint": "Only members of the project are notified, in projects with RACI on. A switched-off department notifies nobody.",
+      "settings_title": "RACI notifications",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Sent once acceptance is available"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# RACI warning} other {# RACI warnings}}",
+      "description": "Gaps in the roles and dependencies of open work items. They do not block saving.",
+      "kinds": {
+        "no_responsible": "Work items without a responsible department",
+        "milestone_without_approver": "Milestones without an approver",
+        "no_predecessor": "Work items without a predecessor",
+        "no_successor": "Work items nothing depends on",
+        "department_without_members": "Departments whose notifications reach nobody"
+      },
+      "more": "Not listed: {count}",
+      "reasons": {
+        "inactive": "Switched off, so its members are not notified",
+        "no_members": "Has no members",
+        "no_project_members": "None of its members is in this project"
+      },
+      "title": "RACI warnings"
+    }
   },
   "project_components": {
     "duplicate_modal": {

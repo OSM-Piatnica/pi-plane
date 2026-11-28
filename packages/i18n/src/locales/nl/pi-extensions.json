@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "De RACI kon niet worden opgeslagen.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Gebeurtenis",
+      "events": {
+        "new_version": "Nieuwe conceptversie of bijlage",
+        "comment": "Opmerking",
+        "approval_requested": "Goedkeuring gevraagd",
+        "approval_decided": "Goedgekeurd of afgewezen",
+        "completed": "Definitieve versie (voltooid)",
+        "state_or_due_date": "Status of vervaldatum gewijzigd"
+      },
+      "nobody_by_role": "Geen afdeling met deze rollen",
+      "people": "{count, plural, one {# persoon} other {# personen}}",
+      "preview_hint": "Volgers, toegewezenen en vermelde personen krijgen zoals voorheen een melding; wie de wijziging maakt niet.",
+      "preview_title": "Wie een melding krijgt",
+      "restore_defaults": "Standaard herstellen",
+      "settings_description": "Per gebeurtenis op een werkitem de rollen waarvan de afdelingen een melding krijgen, naast volgers en toegewezenen.",
+      "settings_hint": "Alleen leden van het project krijgen een melding, in projecten met RACI aan. Een uitgeschakelde afdeling meldt niemand iets.",
+      "settings_title": "RACI-meldingen",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Wordt verstuurd zodra acceptatie beschikbaar is"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# RACI-waarschuwing} other {# RACI-waarschuwingen}}",
+      "description": "Hiaten in de rollen en afhankelijkheden van open werkitems. Ze blokkeren het opslaan niet.",
+      "kinds": {
+        "no_responsible": "Werkitems zonder verantwoordelijke afdeling",
+        "milestone_without_approver": "Mijlpalen zonder goedkeurder",
+        "no_predecessor": "Werkitems zonder voorganger",
+        "no_successor": "Werkitems waarvan niets afhangt",
+        "department_without_members": "Afdelingen waarvan de meldingen niemand bereiken"
+      },
+      "more": "Niet vermeld: {count}",
+      "reasons": {
+        "inactive": "Uitgeschakeld, dus de leden krijgen geen melding",
+        "no_members": "Heeft geen leden",
+        "no_project_members": "Geen van de leden zit in dit project"
+      },
+      "title": "RACI-waarschuwingen"
+    }
   },
   "project_components": {
     "duplicate_modal": {

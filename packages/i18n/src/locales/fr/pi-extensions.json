@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "Le RACI n’a pas pu être enregistré.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Événement",
+      "events": {
+        "new_version": "Nouvelle version de travail ou pièce jointe",
+        "comment": "Commentaire",
+        "approval_requested": "Approbation demandée",
+        "approval_decided": "Approuvé ou refusé",
+        "completed": "Version finale (terminé)",
+        "state_or_due_date": "État ou date d’échéance modifié"
+      },
+      "nobody_by_role": "Aucun service avec ces rôles",
+      "people": "{count, plural, one {# personne} many {# personnes} other {# personnes}}",
+      "preview_hint": "Les abonnés, les personnes assignées et mentionnées sont notifiés comme avant ; l’auteur de la modification ne l’est pas.",
+      "preview_title": "Qui sera notifié",
+      "restore_defaults": "Rétablir les valeurs par défaut",
+      "settings_description": "Pour chaque événement sur un élément de travail, les rôles dont les services sont notifiés, en plus des abonnés et des personnes assignées.",
+      "settings_hint": "Seuls les membres du projet sont notifiés, dans les projets où RACI est activé. Un service désactivé ne notifie personne.",
+      "settings_title": "Notifications RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Envoyé dès que la validation sera disponible"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# avertissement RACI} many {# avertissements RACI} other {# avertissements RACI}}",
+      "description": "Lacunes dans les rôles et les dépendances des éléments de travail ouverts. Elles n’empêchent pas l’enregistrement.",
+      "kinds": {
+        "no_responsible": "Éléments de travail sans service responsable",
+        "milestone_without_approver": "Jalons sans approbateur",
+        "no_predecessor": "Éléments de travail sans prédécesseur",
+        "no_successor": "Éléments de travail dont rien ne dépend",
+        "department_without_members": "Services dont les notifications n’atteignent personne"
+      },
+      "more": "Non listés : {count}",
+      "reasons": {
+        "inactive": "Désactivé : ses membres ne sont pas notifiés",
+        "no_members": "N’a aucun membre",
+        "no_project_members": "Aucun de ses membres ne fait partie de ce projet"
+      },
+      "title": "Avertissements RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {
