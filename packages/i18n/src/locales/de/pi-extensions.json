@@ -914,5 +914,25 @@
         "raci": "RACI-Rollen"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Vergleich schließen",
+    "compare": "Vergleichen",
+    "compare_pick": "Datei auswählen, die neben dieser angezeigt werden soll.",
+    "download": "Herunterladen",
+    "error": "Die Datei kann nicht angezeigt werden. Original herunterladen.",
+    "fit": "Einpassen",
+    "loading": "Vorschau wird geladen…",
+    "next_page": "Nächste Seite",
+    "page_label": "Seite {page} von {count}",
+    "preview": "Vorschau",
+    "previous_page": "Vorherige Seite",
+    "unsupported": "Für diesen Dateityp ist keine Vorschau möglich. Original herunterladen.",
+    "viewport_label": "Scrollbare Vorschau von {name}",
+    "zoom_in": "Vergrößern",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Einpassen · {scale, number, percent}",
+    "zoom_out": "Verkleinern"
   }
 }

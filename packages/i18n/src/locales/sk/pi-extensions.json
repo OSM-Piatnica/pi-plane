@@ -914,5 +914,25 @@
         "raci": "Roly RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Zavrieť porovnanie",
+    "compare": "Porovnať",
+    "compare_pick": "Vyberte súbor, ktorý sa zobrazí vedľa tohto.",
+    "download": "Stiahnuť",
+    "error": "Súbor nemožno zobraziť. Stiahnite originál.",
+    "fit": "Prispôsobiť",
+    "loading": "Načítava sa náhľad…",
+    "next_page": "Ďalšia strana",
+    "page_label": "Strana {page} z {count}",
+    "preview": "Náhľad",
+    "previous_page": "Predchádzajúca strana",
+    "unsupported": "Pre tento typ súboru nie je náhľad k dispozícii. Stiahnite originál.",
+    "viewport_label": "Posúvateľný náhľad súboru {name}",
+    "zoom_in": "Priblížiť",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Prispôsobiť · {scale, number, percent}",
+    "zoom_out": "Oddialiť"
   }
 }

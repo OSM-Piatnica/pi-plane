@@ -914,5 +914,25 @@
         "raci": "Rôles RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Fermer la comparaison",
+    "compare": "Comparer",
+    "compare_pick": "Choisissez un fichier à afficher à côté de celui-ci.",
+    "download": "Télécharger",
+    "error": "Impossible d’afficher le fichier. Téléchargez l’original.",
+    "fit": "Ajuster",
+    "loading": "Chargement de l’aperçu…",
+    "next_page": "Page suivante",
+    "page_label": "Page {page} sur {count}",
+    "preview": "Aperçu",
+    "previous_page": "Page précédente",
+    "unsupported": "Ce type de fichier ne peut pas être prévisualisé. Téléchargez l’original.",
+    "viewport_label": "Aperçu défilant de {name}",
+    "zoom_in": "Zoom avant",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Ajuster · {scale, number, percent}",
+    "zoom_out": "Zoom arrière"
   }
 }

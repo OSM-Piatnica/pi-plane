@@ -914,5 +914,25 @@
         "raci": "Peran RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Tutup perbandingan",
+    "compare": "Bandingkan",
+    "compare_pick": "Pilih file untuk ditampilkan di samping file ini.",
+    "download": "Unduh",
+    "error": "File tidak dapat ditampilkan. Unduh file asli.",
+    "fit": "Sesuaikan",
+    "loading": "Memuat pratinjau…",
+    "next_page": "Halaman berikutnya",
+    "page_label": "Halaman {page} dari {count}",
+    "preview": "Pratinjau",
+    "previous_page": "Halaman sebelumnya",
+    "unsupported": "Jenis file ini tidak dapat dipratinjau. Unduh file asli.",
+    "viewport_label": "Pratinjau {name} yang dapat digulir",
+    "zoom_in": "Perbesar",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Sesuaikan · {scale, number, percent}",
+    "zoom_out": "Perkecil"
   }
 }

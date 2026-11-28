@@ -928,5 +928,25 @@
         "raci": "Role RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Zamknij porównanie",
+    "compare": "Porównaj",
+    "compare_pick": "Wybierz plik, który ma się pojawić obok tego.",
+    "download": "Pobierz",
+    "error": "Nie można wyświetlić pliku. Pobierz oryginał.",
+    "fit": "Dopasuj",
+    "loading": "Ładowanie podglądu…",
+    "next_page": "Następna strona",
+    "page_label": "Strona {page} z {count}",
+    "preview": "Podgląd",
+    "previous_page": "Poprzednia strona",
+    "unsupported": "Podgląd tego typu pliku nie jest dostępny. Pobierz oryginał.",
+    "viewport_label": "Przewijany podgląd pliku {name}",
+    "zoom_in": "Powiększ",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Dopasuj · {scale, number, percent}",
+    "zoom_out": "Pomniejsz"
   }
 }

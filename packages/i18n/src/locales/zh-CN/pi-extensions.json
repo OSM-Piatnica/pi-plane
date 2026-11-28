@@ -914,5 +914,25 @@
         "raci": "RACI 角色"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "关闭比较",
+    "compare": "比较",
+    "compare_pick": "选择要显示在此文件旁边的文件。",
+    "download": "下载",
+    "error": "无法显示该文件。请下载原始文件。",
+    "fit": "适应窗口",
+    "loading": "正在加载预览…",
+    "next_page": "下一页",
+    "page_label": "第 {page} 页，共 {count} 页",
+    "preview": "预览",
+    "previous_page": "上一页",
+    "unsupported": "无法预览此类型的文件。请下载原始文件。",
+    "viewport_label": "{name} 的可滚动预览",
+    "zoom_in": "放大",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "适应窗口 · {scale, number, percent}",
+    "zoom_out": "缩小"
   }
 }

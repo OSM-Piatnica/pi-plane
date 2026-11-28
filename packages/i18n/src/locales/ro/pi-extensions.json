@@ -914,5 +914,25 @@
         "raci": "Roluri RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Închideți comparația",
+    "compare": "Comparați",
+    "compare_pick": "Alegeți un fișier de afișat lângă acesta.",
+    "download": "Descărcați",
+    "error": "Fișierul nu poate fi afișat. Descărcați originalul.",
+    "fit": "Potrivire",
+    "loading": "Se încarcă previzualizarea…",
+    "next_page": "Pagina următoare",
+    "page_label": "Pagina {page} din {count}",
+    "preview": "Previzualizare",
+    "previous_page": "Pagina anterioară",
+    "unsupported": "Acest tip de fișier nu poate fi previzualizat. Descărcați originalul.",
+    "viewport_label": "Previzualizare derulabilă pentru {name}",
+    "zoom_in": "Mărire",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Potrivire · {scale, number, percent}",
+    "zoom_out": "Micșorare"
   }
 }

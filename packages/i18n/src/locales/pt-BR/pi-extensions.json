@@ -914,5 +914,25 @@
         "raci": "Funções RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Fechar comparação",
+    "compare": "Comparar",
+    "compare_pick": "Escolha um arquivo para exibir ao lado deste.",
+    "download": "Baixar",
+    "error": "Não é possível exibir o arquivo. Baixe o original.",
+    "fit": "Ajustar",
+    "loading": "Carregando visualização…",
+    "next_page": "Próxima página",
+    "page_label": "Página {page} de {count}",
+    "preview": "Visualizar",
+    "previous_page": "Página anterior",
+    "unsupported": "Não é possível visualizar este tipo de arquivo. Baixe o original.",
+    "viewport_label": "Visualização rolável de {name}",
+    "zoom_in": "Ampliar",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Ajustar · {scale, number, percent}",
+    "zoom_out": "Reduzir"
   }
 }

@@ -914,5 +914,25 @@
         "raci": "RACI rolleri"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "%100",
+    "close_compare": "Karşılaştırmayı kapat",
+    "compare": "Karşılaştır",
+    "compare_pick": "Bunun yanında gösterilecek bir dosya seçin.",
+    "download": "İndir",
+    "error": "Dosya görüntülenemiyor. Orijinali indirin.",
+    "fit": "Sığdır",
+    "loading": "Önizleme yükleniyor…",
+    "next_page": "Sonraki sayfa",
+    "page_label": "Sayfa {page} / {count}",
+    "preview": "Önizleme",
+    "previous_page": "Önceki sayfa",
+    "unsupported": "Bu dosya türü önizlenemiyor. Orijinali indirin.",
+    "viewport_label": "{name} için kaydırılabilir önizleme",
+    "zoom_in": "Yakınlaştır",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Sığdır · {scale, number, percent}",
+    "zoom_out": "Uzaklaştır"
   }
 }

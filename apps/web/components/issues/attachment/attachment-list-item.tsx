@@ -5,12 +5,13 @@
  * See the LICENSE file for details.
  */
 
+import { useState } from "react";
 import { observer } from "mobx-react";
 
 import { useTranslation } from "@plane/i18n";
-import { DeleteOutline, MoreHorizontalOutline } from "@makeplane/propel/icons";
+import { DeleteOutline, DownloadOutline, MoreHorizontalOutline, ShowOutline } from "@makeplane/propel/icons";
 import { Tooltip } from "@makeplane/propel/components/tooltip";
-import type { TIssueServiceType } from "@plane/types";
+import type { TIssueAttachment, TIssueServiceType } from "@plane/types";
 import { EIssueServiceType } from "@plane/types";
 // ui
 import { Icon } from "@makeplane/propel/components/icon";
@@ -19,6 +20,8 @@ import { Menu, MenuContent, MenuItem, MenuTrigger } from "@makeplane/propel/comp
 import { convertBytesToSize, getFileExtension, getFileName, getFileURL } from "@plane/utils";
 // components
 //
+import { DocumentViewerModal } from "@/components/document-viewer";
+import type { TDocumentSource } from "@/components/document-viewer";
 import { ButtonAvatars } from "@/components/dropdowns/member/avatar";
 import { getFileIcon } from "@/components/icons";
 // helpers
@@ -27,6 +30,7 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { useLocalizedDates } from "@/hooks/use-localized-dates";
+import { attachmentToDocumentSource, isAttachmentPreviewable } from "./attachment-document-source";
 
 type TIssueAttachmentsListItem = {
   attachmentId: string;
@@ -42,7 +46,7 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
   // store hooks
   const { getUserDetails } = useMember();
   const {
-    attachment: { getAttachmentById },
+    attachment: { getAttachmentById, getAttachmentsByIssueId },
     toggleDeleteAttachmentModal,
   } = useIssueDetail(issueServiceType);
   // derived values
@@ -53,17 +57,50 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
   const fileURL = getFileURL(attachment?.asset_url ?? "");
   // hooks
   const { isMobile } = usePlatformOS();
+  // state
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   if (!attachment) return <></>;
 
+  const canPreview = isAttachmentPreviewable(attachment);
+  const toSource = (item: TIssueAttachment): TDocumentSource | undefined => {
+    const source = attachmentToDocumentSource(item);
+    if (!source) return undefined;
+    const caption = t("date_phrases.uploaded_on", {
+      name: getUserDetails(item.created_by)?.display_name ?? "",
+      date: formatDate(item.updated_at),
+    });
+    return { ...source, caption };
+  };
+  const previewSource = isPreviewOpen ? toSource(attachment) : undefined;
+  // The other previewable files of the same work item can be compared with this one.
+  const compareCandidates = isPreviewOpen
+    ? (getAttachmentsByIssueId(attachment.issue_id) ?? [])
+        .map((id) => getAttachmentById(id))
+        .filter((item): item is TIssueAttachment => !!item && isAttachmentPreviewable(item))
+        .map(toSource)
+        .filter((item): item is TDocumentSource => !!item)
+    : [];
+  const download = () => window.open(fileURL, "_blank", "noopener,noreferrer");
+
   return (
     <>
+      {previewSource && (
+        <DocumentViewerModal
+          isOpen={isPreviewOpen}
+          onClose={() => setIsPreviewOpen(false)}
+          source={previewSource}
+          compareCandidates={compareCandidates}
+        />
+      )}
       <button
         type="button"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          window.open(fileURL, "_blank", "noopener,noreferrer");
+          // PDFs and images open in the viewer; other files download as before.
+          if (canPreview) setIsPreviewOpen(true);
+          else download();
         }}
       >
         <div className="group flex h-11 items-center justify-between gap-3 px-3 hover:bg-surface-2">
@@ -113,20 +150,33 @@ export const IssueAttachmentsListItem = observer(function IssueAttachmentsListIt
                     <IconButton
                       variant="ghost"
                       size="sm"
-                      disabled={disabled}
                       aria-label={t("aria_labels.common.more_actions")}
                       icon={<Icon icon={MoreHorizontalOutline} />}
                     />
                   }
                 />
                 <MenuContent side="bottom" align="end">
+                  {canPreview && (
+                    <MenuItem
+                      icon={<Icon icon={ShowOutline} />}
+                      label={t("document_viewer.preview")}
+                      onClick={() => setIsPreviewOpen(true)}
+                    />
+                  )}
                   <MenuItem
-                    icon={<Icon icon={DeleteOutline} />}
-                    label={t("common.actions.delete")}
-                    onClick={() => {
-                      toggleDeleteAttachmentModal(attachmentId);
-                    }}
+                    icon={<Icon icon={DownloadOutline} />}
+                    label={t("document_viewer.download")}
+                    onClick={download}
                   />
+                  {!disabled && (
+                    <MenuItem
+                      icon={<Icon icon={DeleteOutline} />}
+                      label={t("common.actions.delete")}
+                      onClick={() => {
+                        toggleDeleteAttachmentModal(attachmentId);
+                      }}
+                    />
+                  )}
                 </MenuContent>
               </Menu>
             </div>

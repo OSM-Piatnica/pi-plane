@@ -29,6 +29,8 @@ catalog:
   mobx-react: 9.2.2
   mobx-utils: 6.0.8
   mobx: 6.12.0
+  # Document viewer (C2); loaded lazily, Apache-2.0, see THIRD-PARTY-NOTICES.md.
+  pdfjs-dist: 6.5.438
   react-dom: 19.2.8
   react-is: ^19.2.8
   react-router: 8.3.0

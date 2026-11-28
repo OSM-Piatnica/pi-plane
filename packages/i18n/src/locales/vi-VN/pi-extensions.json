@@ -914,5 +914,25 @@
         "raci": "Vai trò RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Đóng so sánh",
+    "compare": "So sánh",
+    "compare_pick": "Chọn một tệp để hiển thị cạnh tệp này.",
+    "download": "Tải xuống",
+    "error": "Không thể hiển thị tệp. Hãy tải xuống bản gốc.",
+    "fit": "Vừa khung",
+    "loading": "Đang tải bản xem trước…",
+    "next_page": "Trang sau",
+    "page_label": "Trang {page} / {count}",
+    "preview": "Xem trước",
+    "previous_page": "Trang trước",
+    "unsupported": "Không thể xem trước loại tệp này. Hãy tải xuống bản gốc.",
+    "viewport_label": "Bản xem trước có thể cuộn của {name}",
+    "zoom_in": "Phóng to",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Vừa khung · {scale, number, percent}",
+    "zoom_out": "Thu nhỏ"
   }
 }
