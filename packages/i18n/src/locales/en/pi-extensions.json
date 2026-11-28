@@ -914,5 +914,25 @@
         "raci": "RACI roles"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "Close comparison",
+    "compare": "Compare",
+    "compare_pick": "Choose a file to show next to this one.",
+    "download": "Download",
+    "error": "The file cannot be displayed. Download the original.",
+    "fit": "Fit",
+    "loading": "Loading preview…",
+    "next_page": "Next page",
+    "page_label": "Page {page} of {count}",
+    "preview": "Preview",
+    "previous_page": "Previous page",
+    "unsupported": "This file type cannot be previewed. Download the original.",
+    "viewport_label": "Scrollable preview of {name}",
+    "zoom_in": "Zoom in",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Fit · {scale, number, percent}",
+    "zoom_out": "Zoom out"
   }
 }

@@ -914,5 +914,25 @@
         "raci": "RACI の役割"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "比較を閉じる",
+    "compare": "比較",
+    "compare_pick": "このファイルの横に表示するファイルを選択してください。",
+    "download": "ダウンロード",
+    "error": "ファイルを表示できません。元のファイルをダウンロードしてください。",
+    "fit": "全体表示",
+    "loading": "プレビューを読み込んでいます…",
+    "next_page": "次のページ",
+    "page_label": "{page} / {count} ページ",
+    "preview": "プレビュー",
+    "previous_page": "前のページ",
+    "unsupported": "この種類のファイルはプレビューできません。元のファイルをダウンロードしてください。",
+    "viewport_label": "{name} のスクロール可能なプレビュー",
+    "zoom_in": "拡大",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "全体表示 · {scale, number, percent}",
+    "zoom_out": "縮小"
   }
 }

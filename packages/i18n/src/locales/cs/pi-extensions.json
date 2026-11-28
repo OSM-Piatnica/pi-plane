@@ -914,5 +914,25 @@
         "raci": "Role RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Zavřít porovnání",
+    "compare": "Porovnat",
+    "compare_pick": "Vyberte soubor, který se zobrazí vedle tohoto.",
+    "download": "Stáhnout",
+    "error": "Soubor nelze zobrazit. Stáhněte originál.",
+    "fit": "Přizpůsobit",
+    "loading": "Načítání náhledu…",
+    "next_page": "Další stránka",
+    "page_label": "Stránka {page} z {count}",
+    "preview": "Náhled",
+    "previous_page": "Předchozí stránka",
+    "unsupported": "Pro tento typ souboru není náhled k dispozici. Stáhněte originál.",
+    "viewport_label": "Posouvatelný náhled souboru {name}",
+    "zoom_in": "Přiblížit",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Přizpůsobit · {scale, number, percent}",
+    "zoom_out": "Oddálit"
   }
 }

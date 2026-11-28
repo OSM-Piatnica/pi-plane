@@ -914,5 +914,25 @@
         "raci": "Ролі RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Закрыць параўнанне",
+    "compare": "Параўнаць",
+    "compare_pick": "Выберыце файл, які будзе паказаны побач з гэтым.",
+    "download": "Спампаваць",
+    "error": "Не ўдаецца паказаць файл. Спампуйце арыгінал.",
+    "fit": "Па памеры",
+    "loading": "Загрузка прагляду…",
+    "next_page": "Наступная старонка",
+    "page_label": "Старонка {page} з {count}",
+    "preview": "Прагляд",
+    "previous_page": "Папярэдняя старонка",
+    "unsupported": "Для гэтага тыпу файлаў прагляд недаступны. Спампуйце арыгінал.",
+    "viewport_label": "Пракручваны прагляд файла {name}",
+    "zoom_in": "Павялічыць",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "Па памеры · {scale, number, percent}",
+    "zoom_out": "Паменшыць"
   }
 }

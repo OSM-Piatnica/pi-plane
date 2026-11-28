@@ -120,4 +120,4 @@ Pi-Plane would not exist without the work of the people who built Plane. Thank y
 
 ## License
 
-This project is licensed under the [GNU Affero General Public License v3.0](LICENSE.txt).
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE.txt). Components shipped under other licences are listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).

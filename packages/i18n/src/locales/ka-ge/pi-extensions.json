@@ -914,5 +914,25 @@
         "raci": "RACI როლები"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100%",
+    "close_compare": "შედარების დახურვა",
+    "compare": "შედარება",
+    "compare_pick": "აირჩიეთ ფაილი, რომელიც ამის გვერდით გამოჩნდება.",
+    "download": "ჩამოტვირთვა",
+    "error": "ფაილის ჩვენება ვერ ხერხდება. ჩამოტვირთეთ ორიგინალი.",
+    "fit": "მორგება",
+    "loading": "გადახედვა იტვირთება…",
+    "next_page": "შემდეგი გვერდი",
+    "page_label": "გვერდი {page} / {count}",
+    "preview": "გადახედვა",
+    "previous_page": "წინა გვერდი",
+    "unsupported": "ამ ტიპის ფაილის გადახედვა შეუძლებელია. ჩამოტვირთეთ ორიგინალი.",
+    "viewport_label": "{name}-ის გადახვევადი გადახედვა",
+    "zoom_in": "გადიდება",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "მორგება · {scale, number, percent}",
+    "zoom_out": "დაპატარავება"
   }
 }

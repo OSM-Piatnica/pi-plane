@@ -914,5 +914,25 @@
         "raci": "Ролі RACI"
       }
     }
+  },
+  "document_viewer": {
+    "actual_size": "100 %",
+    "close_compare": "Закрити порівняння",
+    "compare": "Порівняти",
+    "compare_pick": "Виберіть файл, який буде показано поруч із цим.",
+    "download": "Завантажити",
+    "error": "Не вдається показати файл. Завантажте оригінал.",
+    "fit": "За розміром",
+    "loading": "Завантаження перегляду…",
+    "next_page": "Наступна сторінка",
+    "page_label": "Сторінка {page} з {count}",
+    "preview": "Перегляд",
+    "previous_page": "Попередня сторінка",
+    "unsupported": "Для цього типу файлів перегляд недоступний. Завантажте оригінал.",
+    "viewport_label": "Прокручуваний перегляд файлу {name}",
+    "zoom_in": "Збільшити",
+    "zoom_level": "{scale, number, percent}",
+    "zoom_level_fit": "За розміром · {scale, number, percent}",
+    "zoom_out": "Зменшити"
   }
 }
