@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Türler yükleniyor…",
+    "milestone_after_due": "Son tarihinden sonra",
     "property_values_save_failed": "İş öğesi oluşturuldu, ancak ek özellikler kaydedilemedi. Bunları iş öğesi ayrıntılarından doldurun.",
     "select_placeholder": "Tür",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Tür ekle",
+        "catalogue": {
+          "add_selected": "Seçilenleri ekle",
+          "button": "Katalogdan ekle",
+          "default_badge": "Varsayılan",
+          "in_workspace": "Zaten çalışma alanında",
+          "intro": "Simgesi, açıklama şablonu ve önerilen özellikleri olan hazır türler. Çalışma alanında zaten bulunan türler yeniden eklenmez; her çalışma alanında bir Kilometre taşı türü vardır.",
+          "no_properties": "Önerilen özellik yok",
+          "properties": "Özellikler: {properties}",
+          "title": "Katalogdan ekle",
+          "toasts": {
+            "add_failed": {
+              "message": "Lütfen tekrar deneyin.",
+              "title": "Türler eklenemedi"
+            },
+            "added": {
+              "message": "Seçilen türler çalışma alanına eklendi.",
+              "title": "Türler eklendi"
+            }
+          }
+        },
         "delete_confirm": "Bu iş öğesi türü kaldırılsın mı? Mevcut iş öğeleri verilerini korur.",
         "description": "Kendi kimliğine, özel özelliklerine ve proje kapsamına sahip iş öğesi türleri tanımlayın. Mevcut öğeleri etkilemeden türleri açıp kapatın.",
         "edit_type": "Türü düzenle",
         "epic_badge": "Epik",
         "form": {
           "description_label": "Açıklama",
+          "description_template_hint": "Açıklama boş olduğu sürece bu türdeki yeni bir iş öğesinin açıklamasına eklenir.",
+          "description_template_label": "Açıklama şablonu",
+          "description_template_placeholder": "Bu türdeki her iş öğesinin başladığı başlıklar ve listeler",
           "is_active": "Aktif",
           "is_epic": "Epik türü",
           "modal_intro": "Türü adlandırın, bir simge seçin ve bu tür işin ihtiyaç duyduğu özellikleri ekleyin. Kullanılabilir olması gereken projelere atayın.",

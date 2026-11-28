@@ -26,6 +26,7 @@ import type { TPairedDateNotice, TWorkItemPlanningDates } from "@plane/utils";
 import {
   getDate,
   getTabIndex,
+  isMilestoneType,
   planWorkItemDateChange,
   renderFormattedDate,
   renderFormattedPayloadDate,
@@ -44,6 +45,7 @@ import { useProjectEstimates } from "@/hooks/store/estimates";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
 import { useProjectWeekendDays } from "@/hooks/use-project-weekend-days";
+import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 import { useStartOfTheWeek } from "@/hooks/use-start-of-the-week";
 import { usePlatformOS } from "@/hooks/use-platform-os";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
@@ -91,6 +93,7 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
   // derived values
   const projectDetails = getProjectById(projectId);
   const weekendDays = useProjectWeekendDays(projectId);
+  const { typeMap } = useWorkspaceIssueTypes(workspaceSlug);
 
   const { getIndex } = getTabIndex(ETabIndices.ISSUE_FORM, isMobile);
 
@@ -106,7 +109,9 @@ export const IssueDefaultProperties = observer(function IssueDefaultProperties(p
       { ...current, dates_initialized: current.dates_initialized || pairingConsumed },
       change,
       true,
-      weekendDays
+      weekendDays,
+      // a milestone is one day: its start and finish move together, as the server keeps them
+      isMilestoneType(current.type_id ? typeMap[current.type_id] : undefined)
     );
     if (error) {
       setToast({

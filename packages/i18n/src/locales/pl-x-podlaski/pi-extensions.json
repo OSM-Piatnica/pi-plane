@@ -327,6 +327,7 @@
   },
   "work_item_types": {
     "loading": "Ładowanie typów…",
+    "milestone_after_due": "Po terminie",
     "property_values_save_failed": "Zadanie zostało utworzone, ale dodatkowe właściwości nie zostały zapisane. Uzupełnij je w szczegółach zadania.",
     "select_placeholder": "Typ",
     "system_managed": {
@@ -724,12 +725,35 @@
       },
       "work_item_types": {
         "add_type": "Dodaj typ",
+        "catalogue": {
+          "add_selected": "Dodaj zaznaczone",
+          "button": "Dodaj z katalogu",
+          "default_badge": "Domyślny",
+          "in_workspace": "Jest już w obszarze roboczym",
+          "intro": "Gotowe typy z ikoną, szablonem opisu i proponowanymi właściwościami. Typy, które obszar roboczy już ma, nie są dodawane drugi raz; w obszarze roboczym jest jeden typ Kamień milowy.",
+          "no_properties": "Brak proponowanych właściwości",
+          "properties": "Właściwości: {properties}",
+          "title": "Dodaj z katalogu",
+          "toasts": {
+            "add_failed": {
+              "message": "Spróbuj jeszcze raz.",
+              "title": "Nie udało się dodać typów"
+            },
+            "added": {
+              "message": "Zaznaczone typy dodano do obszaru roboczego.",
+              "title": "Dodano typy"
+            }
+          }
+        },
         "delete_confirm": "Usunąć ten typ elementu roboczego? Istniejące elementy zachowają swoje dane.",
         "description": "Definiuj typy elementów roboczych z własną tożsamością, właściwościami niestandardowymi i zakresem projektów. Włączaj i wyłączaj typy bez wpływu na istniejące elementy.",
         "edit_type": "Edytuj typ",
         "epic_badge": "Epik",
         "form": {
           "description_label": "Opis",
+          "description_template_hint": "Wstawiany do opisu nowego elementu pracy tego typu, póki opis pusty.",
+          "description_template_label": "Szablon opisu",
+          "description_template_placeholder": "Nagłówki i listy, od których zaczyna się każdy element pracy tego typu",
           "is_active": "Aktywny",
           "is_epic": "Typ epika",
           "modal_intro": "Nazwij typ, wybierz ikonę i dodaj tylko te właściwości, których wymaga ten rodzaj pracy. Przypisz typ do projektów, w których ma być dostępny.",

@@ -69,7 +69,7 @@ export function ProjectCreateIssueTypesAssign(props: TProps) {
                 onCheckedChange={() => toggleType(row.id)}
                 disabled={disabled}
               />
-              <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} />
+              <SwitcherIcon logo_props={row.logo_props} LabelIcon={Layers} size={14} type="material" />
               <span className="text-13 text-primary">{row.name}</span>
               {isEpicKind(row) ? (
                 <span className="rounded bg-surface-1 px-1.5 py-0.5 text-10 text-tertiary">

@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "タイプを読み込み中…",
+    "milestone_after_due": "期日を過ぎています",
     "property_values_save_failed": "作業項目は作成されましたが、追加のプロパティを保存できませんでした。作業項目の詳細画面から入力してください。",
     "select_placeholder": "タイプ",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "タイプを追加",
+        "catalogue": {
+          "add_selected": "選択したものを追加",
+          "button": "カタログから追加",
+          "default_badge": "デフォルト",
+          "in_workspace": "ワークスペースに追加済み",
+          "intro": "アイコン、説明テンプレート、推奨プロパティ付きの既製タイプです。ワークスペースに既にあるタイプは再度追加されません。マイルストーンタイプはワークスペースごとに1つです。",
+          "no_properties": "推奨プロパティなし",
+          "properties": "プロパティ: {properties}",
+          "title": "カタログから追加",
+          "toasts": {
+            "add_failed": {
+              "message": "もう一度お試しください。",
+              "title": "タイプを追加できませんでした"
+            },
+            "added": {
+              "message": "選択したタイプをワークスペースに追加しました。",
+              "title": "タイプを追加しました"
+            }
+          }
+        },
         "delete_confirm": "この作業項目タイプを削除しますか？既存の作業項目のデータは保持されます。",
         "description": "独自の識別情報、カスタムプロパティ、プロジェクトの適用範囲を持つ作業項目タイプを定義します。既存の項目に影響を与えずにタイプのオン/オフを切り替えられます。",
         "edit_type": "タイプを編集",
         "epic_badge": "エピック",
         "form": {
           "description_label": "説明",
+          "description_template_hint": "説明が空の間、このタイプの新しい作業項目の説明に挿入されます。",
+          "description_template_label": "説明テンプレート",
+          "description_template_placeholder": "このタイプのすべての作業項目の最初に入る見出しとリスト",
           "is_active": "アクティブ",
           "is_epic": "エピックタイプ",
           "modal_intro": "タイプの名前を付け、アイコンを選び、この種類の作業に必要なプロパティのみを追加してください。利用可能にするプロジェクトに割り当てます。",

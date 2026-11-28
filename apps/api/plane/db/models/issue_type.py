@@ -41,6 +41,8 @@ class IssueType(BaseModel):
     workspace = models.ForeignKey("db.Workspace", related_name="issue_types", on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    # HTML that the create form puts into the description of a new work item of this type while it is empty
+    description_template = models.TextField(blank=True, null=True)
     logo_props = models.JSONField(default=dict)
     # Kept for upstream code and the public API; always equal to `kind == "epic"` (see `save` and the constraint)
     is_epic = models.BooleanField(default=False)

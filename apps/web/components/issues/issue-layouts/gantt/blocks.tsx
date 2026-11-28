@@ -26,12 +26,9 @@ import { isWorkItemCritical } from "@/helpers/schedule-analysis.helper";
 import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useIssues } from "@/hooks/store/use-issues";
 import { useProject } from "@/hooks/store/use-project";
-import { useProjectState } from "@/hooks/store/use-project-state";
 import { useIssueStoreType } from "@/hooks/use-issue-layout-store";
 import useIssuePeekOverviewRedirection from "@/hooks/use-issue-peek-overview-redirection";
 import { usePlatformOS } from "@/hooks/use-platform-os";
-import { useChartPalette } from "@/hooks/use-chart-palette";
-import { useRaciBarColors } from "@/components/issues/raci/use-raci-bar-colors";
 import { useScheduleAnalysis } from "@/hooks/use-schedule-analysis";
 import { useTimeLineChart } from "@/hooks/use-timeline-chart";
 import { IssueIdentifier } from "@/components/issues/issue-details/issue-identifier";
@@ -39,7 +36,9 @@ import { IssueStats } from "@/components/issues/issue-layouts/issue-stats";
 // local imports
 import { WorkItemPreviewCard } from "../../preview-card";
 import { getBlockViewDetails } from "../utils";
-import { getBarColor } from "./bar-color";
+import { GanttMilestoneMarker } from "./milestone-marker";
+import { useIssueGanttBarColor } from "./use-issue-gantt-bar-color";
+import { useMilestoneMarkerDates } from "./use-milestone-marker-dates";
 import type { GanttStoreType } from "./base-gantt-root";
 
 type Props = {
@@ -57,14 +56,11 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
   const { workspaceSlug: routerWorkspaceSlug } = useParams();
   const workspaceSlug = routerWorkspaceSlug?.toString();
   // store hooks
-  const { getProjectStates } = useProjectState();
   const {
     issue: { getIssueById },
   } = useIssueDetail();
   // hooks
-  const { getProjectIdentifierById } = useProject();
   const { isMobile } = usePlatformOS();
-  const chartPalette = useChartPalette();
   const { handleRedirection } = useIssuePeekOverviewRedirection(isEpic);
   const { getBlockById } = useTimeLineChart(GANTT_TIMELINE_TYPE.ISSUE);
   const { isCriticalPathEnabled, scheduleAnalysis } = useScheduleAnalysis();
@@ -74,20 +70,7 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
   const issueDetails = getIssueById(issueId);
   const isRolledUp = isBlockRolledUp(getBlockById(issueId));
   const isCritical = isCriticalPathEnabled && isWorkItemCritical(scheduleAnalysis, issueId);
-  const stateDetails =
-    issueDetails && getProjectStates(issueDetails?.project_id)?.find((state) => state?.id == issueDetails?.state_id);
-
-  // RACI: the colours of the responsible departments, when the bars are coloured by them
-  const { colors: departmentColors, backgroundImage } = useRaciBarColors(workspaceSlug, colorBy, issueDetails?.raci);
-
-  const barColor = getBarColor({
-    colorBy,
-    stateColor: stateDetails?.color,
-    projectIdentifier: getProjectIdentifierById(issueDetails?.project_id),
-    sequenceId: issueDetails?.sequence_id,
-    palette: chartPalette,
-    departmentColors,
-  });
+  const { barColor, backgroundImage } = useIssueGanttBarColor(workspaceSlug, issueDetails, colorBy);
 
   // the bar spans start to finish; the due date is a separate deadline marker and never part of the bar
   const { blockStyle: baseBlockStyle } = getBlockViewDetails(
@@ -103,6 +86,21 @@ export const IssueGanttBlock = observer(function IssueGanttBlock(props: TGanttBl
 
   const hasStart = !!issueDetails?.start_date;
   const hasFinish = !!issueDetails?.finish_date;
+
+  // a milestone is a point in the schedule: a diamond at its finish date, red when that is after its due date
+  const milestoneDates = useMilestoneMarkerDates(workspaceSlug, issueDetails, isRolledUp);
+  if (milestoneDates) {
+    return (
+      <GanttMilestoneMarker
+        issueId={issueId}
+        name={issueDetails?.name}
+        dates={milestoneDates}
+        color={barColor}
+        isMobile={isMobile}
+        onOpen={handleIssuePeekOverview}
+      />
+    );
+  }
 
   // only a start or only a finish: a labeled marker, never a bar with an invented end
   if (hasStart !== hasFinish && !isRolledUp) {

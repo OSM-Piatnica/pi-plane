@@ -22,6 +22,8 @@ export type TWorkItemTypeFormProperty = {
 export type TWorkItemTypeFormFields = {
   name: string;
   description: string;
+  /** HTML; empty when the type has no description template */
+  descriptionTemplate: string;
   logoProps: TLogoProps;
   isEpic: boolean;
   isActive: boolean;
@@ -64,6 +66,7 @@ export const DEFAULT_WORK_ITEM_TYPE_PROPERTY = (): TWorkItemTypeFormProperty => 
 export const DEFAULT_WORK_ITEM_TYPE_FORM: TWorkItemTypeFormFields = {
   name: "",
   description: "",
+  descriptionTemplate: "",
   logoProps: DEFAULT_LOGO_PROPS,
   isEpic: false,
   isActive: true,

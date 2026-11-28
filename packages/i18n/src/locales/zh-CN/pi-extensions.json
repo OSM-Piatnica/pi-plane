@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "正在加载类型…",
+    "milestone_after_due": "晚于截止日期",
     "property_values_save_failed": "工作项已创建，但无法保存附加属性。请从工作项详情中填写。",
     "select_placeholder": "类型",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "添加类型",
+        "catalogue": {
+          "add_selected": "添加所选",
+          "button": "从目录添加",
+          "default_badge": "默认",
+          "in_workspace": "已在工作区中",
+          "intro": "带有图标、描述模板和建议属性的现成类型。工作区已有的类型不会再次添加；每个工作区只有一个里程碑类型。",
+          "no_properties": "没有建议的属性",
+          "properties": "属性：{properties}",
+          "title": "从目录添加",
+          "toasts": {
+            "add_failed": {
+              "message": "请重试。",
+              "title": "无法添加类型"
+            },
+            "added": {
+              "message": "所选类型已添加到工作区。",
+              "title": "已添加类型"
+            }
+          }
+        },
         "delete_confirm": "移除此工作项类型？现有工作项将保留其数据。",
         "description": "定义具有各自标识、自定义属性和项目范围的工作项类型。启用或禁用类型不会影响现有工作项。",
         "edit_type": "编辑类型",
         "epic_badge": "史诗",
         "form": {
           "description_label": "描述",
+          "description_template_hint": "当描述为空时，插入到此类型新工作项的描述中。",
+          "description_template_label": "描述模板",
+          "description_template_placeholder": "此类型每个工作项开头的标题和列表",
           "is_active": "活动",
           "is_epic": "史诗类型",
           "modal_intro": "为类型命名，选择图标，并仅添加此类工作所需的属性。将其分配给应可使用该类型的项目。",

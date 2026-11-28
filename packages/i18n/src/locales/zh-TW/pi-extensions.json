@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "正在載入類型…",
+    "milestone_after_due": "晚於到期日",
     "property_values_save_failed": "工作項目已建立，但無法儲存額外的屬性。請至工作項目詳細資料中填寫。",
     "select_placeholder": "類型",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "新增類型",
+        "catalogue": {
+          "add_selected": "新增所選",
+          "button": "從目錄新增",
+          "default_badge": "預設",
+          "in_workspace": "已在工作區中",
+          "intro": "附有圖示、描述範本和建議屬性的現成類型。工作區已有的類型不會再次新增；每個工作區只有一個里程碑類型。",
+          "no_properties": "沒有建議的屬性",
+          "properties": "屬性：{properties}",
+          "title": "從目錄新增",
+          "toasts": {
+            "add_failed": {
+              "message": "請再試一次。",
+              "title": "無法新增類型"
+            },
+            "added": {
+              "message": "所選類型已新增到工作區。",
+              "title": "已新增類型"
+            }
+          }
+        },
         "delete_confirm": "要移除此工作項目類型嗎？現有工作項目的資料將會保留。",
         "description": "定義具有獨立識別、自訂屬性與專案範圍的工作項目類型。可切換類型的啟用狀態，而不影響現有項目。",
         "edit_type": "編輯類型",
         "epic_badge": "史詩",
         "form": {
           "description_label": "描述",
+          "description_template_hint": "當描述為空時，插入到此類型新工作項目的描述中。",
+          "description_template_label": "描述範本",
+          "description_template_placeholder": "此類型每個工作項目開頭的標題和清單",
           "is_active": "啟用",
           "is_epic": "Epic 類型",
           "modal_intro": "為類型命名、選擇圖示，並僅附加此類工作所需的屬性，接著將其指派給應該可使用它的專案。",

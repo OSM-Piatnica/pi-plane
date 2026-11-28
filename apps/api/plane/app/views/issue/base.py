@@ -83,6 +83,7 @@ from plane.utils.order_queryset import order_issue_queryset
 from plane.utils.paginator import GroupedOffsetPaginator, SubGroupedOffsetPaginator
 from plane.utils.timezone_converter import user_timezone_converter
 from plane.utils.project_weekend_days import get_project_weekend_days
+from plane.utils.milestone_dates import apply_milestone_dates, milestone_payload_for_logging
 from plane.utils.work_item_dates import ORIGIN_MANUAL, resolve_for_logging
 from plane.utils.work_item_duration import (
     WORK_ITEM_DURATION_MIN,
@@ -433,7 +434,9 @@ class IssueViewSet(BaseViewSet):
         # The serializer derives the duration and the one-time paired finish/due date on save.
         # Mirror that here so the activity feed reports the derived values too, since it is built
         # from the raw request payload rather than from what was saved.
-        logged_data = {**request.data, **resolve_for_logging(None, request.data, project.weekend_days)}
+        # A milestone's start follows its finish (see `apply_milestone_dates`)
+        logged_request = milestone_payload_for_logging(None, request.data)
+        logged_data = {**logged_request, **resolve_for_logging(None, logged_request, project.weekend_days)}
         logged_data.pop("initialize_paired_date", None)
         logged_data.pop("paired_date_defaulted", None)
 
@@ -723,9 +726,11 @@ class IssueViewSet(BaseViewSet):
         # Mirror the serializer's derived values (duration, defaulted paired date) so the activity
         # feed reports them too, since it is built from the raw request payload.
         request_only_keys = ("initialize_paired_date", "paired_date_defaulted")
+        # A milestone's start follows its finish (see `apply_milestone_dates`)
+        logged_request = milestone_payload_for_logging(issue, request.data)
         requested_payload = {
-            **{k: v for k, v in request.data.items() if k not in request_only_keys},
-            **resolve_for_logging(issue, request.data, get_project_weekend_days(project_id)),
+            **{k: v for k, v in logged_request.items() if k not in request_only_keys},
+            **resolve_for_logging(issue, logged_request, get_project_weekend_days(project_id)),
         }
         serializer = IssueCreateSerializer(
             issue, data=request.data, partial=True, context={"project_id": project_id, "request": request}
@@ -1198,7 +1203,7 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
         # Fetch all relevant issues in a single query
         issues = list(
             Issue.objects.filter(id__in=issue_ids, workspace__slug=slug, project_id=project_id).select_related(
-                "state", "project"
+                "state", "project", "type"
             )
         )
         issues_dict = {str(issue.id): issue for issue in issues}
@@ -1208,6 +1213,10 @@ class IssueBulkUpdateDateEndpoint(BaseAPIView):
             issue = issues_dict.get(str(update.get("id")))
             if not issue:
                 continue
+
+            # A milestone stays one day when its bar is dragged or resized: the start follows the finish
+            if "start_date" in update or "finish_date" in update:
+                apply_milestone_dates(issue, update, issue.type)
 
             if not self.validate_dates(issue.start_date, issue.finish_date, update):
                 return Response(

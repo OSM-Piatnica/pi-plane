@@ -206,10 +206,12 @@ def _workspace_kind_types(workspace_id, kind):
     ).order_by("created_at", "id")
 
 
-def workspace_kind_type(workspace_id, kind, *, created_by_id=None):
+def workspace_kind_type(workspace_id, kind, *, created_by_id=None, name=None, defaults=None):
     """The type of this kind that the system uses: the oldest active one, created when the workspace has none.
 
-    Other types of the kind that admins made stay usable through the normal type linking.
+    Other types of the kind that admins made stay usable through the normal type linking. `name` is the name a new
+    type gets (the name of the kind when left out) and `defaults` are further fields of a new type (the type
+    catalogue passes its icon and description template); neither changes a type that already exists.
     """
 
     kind = _system_kind(kind)
@@ -225,23 +227,21 @@ def workspace_kind_type(workspace_id, kind, *, created_by_id=None):
         if existing:
             return existing
         # A type of another kind may already own the name, so the new one gets a free name
-        name = KIND_TYPE_NAMES[kind]
-        if IssueType.objects.filter(workspace_id=workspace_id, name=name, deleted_at__isnull=True).exists():
+        name = (name or "").strip()[:255] or KIND_TYPE_NAMES[kind]
+        if IssueType.objects.filter(workspace_id=workspace_id, name__iexact=name, deleted_at__isnull=True).exists():
             name = f"{name} work item"
-        created = get_or_create_issue_type(
-            workspace_id=workspace_id, name=name, kind=kind, is_default=False, created_by_id=created_by_id
-        )
-        if created is not None and created.kind != kind:
+        if IssueType.objects.filter(workspace_id=workspace_id, name__iexact=name, deleted_at__isnull=True).exists():
             # The second name is taken by a type of another kind as well. A kind drives behaviour, so no kind
             # (the Epic kind included) is ever handed a type of the wrong kind
-            return IssueType.objects.create(
-                workspace_id=workspace_id,
-                name=f"{name} ({kind})"[:255],
-                kind=kind,
-                is_default=False,
-                created_by_id=created_by_id,
-            )
-        return created
+            name = f"{name} ({kind})"
+        return IssueType.objects.create(
+            workspace_id=workspace_id,
+            name=name[:255],
+            kind=kind,
+            is_default=False,
+            created_by_id=created_by_id,
+            **(defaults or {}),
+        )
 
 
 def workspace_epic_type(workspace_id, *, created_by_id=None):

@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Memuat tipe…",
+    "milestone_after_due": "Setelah tanggal jatuh tempo",
     "property_values_save_failed": "Item kerja berhasil dibuat, tetapi properti tambahan tidak dapat disimpan. Isi properti tersebut dari detail item kerja.",
     "select_placeholder": "Tipe",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Tambah tipe",
+        "catalogue": {
+          "add_selected": "Tambah yang dipilih",
+          "button": "Tambah dari katalog",
+          "default_badge": "Bawaan",
+          "in_workspace": "Sudah ada di ruang kerja",
+          "intro": "Tipe siap pakai dengan ikon, templat deskripsi, dan properti yang disarankan. Tipe yang sudah dimiliki ruang kerja tidak ditambahkan lagi; ada satu tipe Tonggak per ruang kerja.",
+          "no_properties": "Tidak ada properti yang disarankan",
+          "properties": "Properti: {properties}",
+          "title": "Tambah dari katalog",
+          "toasts": {
+            "add_failed": {
+              "message": "Silakan coba lagi.",
+              "title": "Tidak dapat menambahkan tipe"
+            },
+            "added": {
+              "message": "Tipe yang dipilih telah ditambahkan ke ruang kerja.",
+              "title": "Tipe ditambahkan"
+            }
+          }
+        },
         "delete_confirm": "Hapus tipe item kerja ini? Item kerja yang sudah ada akan tetap mempertahankan datanya.",
         "description": "Tentukan tipe item kerja dengan identitas, properti kustom, dan cakupan proyek masing-masing. Aktifkan atau nonaktifkan tipe tanpa memengaruhi item yang sudah ada.",
         "edit_type": "Edit tipe",
         "epic_badge": "Epik",
         "form": {
           "description_label": "Deskripsi",
+          "description_template_hint": "Dimasukkan ke deskripsi item kerja baru dengan tipe ini selama deskripsinya kosong.",
+          "description_template_label": "Templat deskripsi",
+          "description_template_placeholder": "Judul dan daftar yang mengawali setiap item kerja dengan tipe ini",
           "is_active": "Aktif",
           "is_epic": "Tipe epik",
           "modal_intro": "Beri nama tipe, pilih ikon, dan lampirkan hanya properti yang dibutuhkan oleh jenis pekerjaan ini. Tetapkan ke proyek tempat tipe ini harus tersedia.",

@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "유형 로딩 중…",
+    "milestone_after_due": "마감일 이후",
     "property_values_save_failed": "작업 항목이 생성되었지만 추가 속성을 저장할 수 없습니다. 작업 항목 세부 정보에서 입력하세요.",
     "select_placeholder": "유형",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "유형 추가",
+        "catalogue": {
+          "add_selected": "선택 항목 추가",
+          "button": "카탈로그에서 추가",
+          "default_badge": "기본값",
+          "in_workspace": "이미 워크스페이스에 있음",
+          "intro": "아이콘, 설명 템플릿, 추천 속성이 포함된 기성 유형입니다. 워크스페이스에 이미 있는 유형은 다시 추가되지 않으며, 마일스톤 유형은 워크스페이스당 하나입니다.",
+          "no_properties": "추천 속성 없음",
+          "properties": "속성: {properties}",
+          "title": "카탈로그에서 추가",
+          "toasts": {
+            "add_failed": {
+              "message": "다시 시도해 주세요.",
+              "title": "유형을 추가할 수 없습니다"
+            },
+            "added": {
+              "message": "선택한 유형이 워크스페이스에 추가되었습니다.",
+              "title": "유형 추가됨"
+            }
+          }
+        },
         "delete_confirm": "이 작업 항목 유형을 제거하시겠습니까? 기존 작업 항목은 데이터를 유지합니다.",
         "description": "고유한 정체성, 커스텀 프로퍼티, 프로젝트 범위를 가진 작업 항목 유형을 정의하세요. 기존 항목에 영향을 주지 않고 유형을 켜거나 끌 수 있습니다.",
         "edit_type": "유형 편집",
         "epic_badge": "에픽",
         "form": {
           "description_label": "설명",
+          "description_template_hint": "설명이 비어 있는 동안 이 유형의 새 작업 항목 설명에 삽입됩니다.",
+          "description_template_label": "설명 템플릿",
+          "description_template_placeholder": "이 유형의 모든 작업 항목이 시작하는 제목과 목록",
           "is_active": "활성",
           "is_epic": "에픽 유형",
           "modal_intro": "유형의 이름을 지정하고 아이콘을 선택한 다음, 이 작업 종류에 필요한 프로퍼티만 연결하세요. 사용할 수 있어야 하는 프로젝트에 할당하세요.",

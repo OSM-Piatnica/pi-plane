@@ -38,7 +38,7 @@ export const IssueTypeActivity = observer(function IssueTypeActivity(props: TIss
 
   const typeChip = (type: NonNullable<typeof oldType>) => (
     <span className="inline-flex items-center gap-1 rounded border border-subtle bg-surface-2 px-1 py-0.5 text-11">
-      <SwitcherIcon logo_props={type.logo_props} LabelIcon={Layers} size={10} />
+      <SwitcherIcon logo_props={type.logo_props} LabelIcon={Layers} size={10} type="material" />
       {type.name}
     </span>
   );

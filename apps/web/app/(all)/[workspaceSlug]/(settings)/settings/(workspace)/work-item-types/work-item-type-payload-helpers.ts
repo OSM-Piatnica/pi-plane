@@ -5,7 +5,7 @@
  */
 
 import type { TIssueType, TIssueTypeKind, TIssueTypeProperty } from "@plane/types";
-import { isEpicKind, isSystemManagedKind } from "@plane/utils";
+import { isEmptyHtmlString, isEpicKind, isSystemManagedKind } from "@plane/utils";
 import type { TWorkItemTypeFormFields, TWorkItemTypeFormProperty } from "./work-item-type-form.types";
 
 function mapPropertyToApi(row: TWorkItemTypeFormProperty): TIssueTypeProperty {
@@ -69,6 +69,8 @@ export function buildIssueTypePayloadFromForm(values: TWorkItemTypeFormFields, k
   return {
     name: values.name.trim(),
     description: values.description,
+    // an empty editor still holds an empty paragraph: that is no template
+    description_template: isEmptyHtmlString(values.descriptionTemplate) ? null : values.descriptionTemplate,
     logo_props: values.logoProps,
     ...(canToggleEpicKind(kind) ? { is_epic: values.isEpic } : {}),
     ...(isSystemManaged ? {} : { is_active: values.isActive, project_ids: values.projectIds }),
@@ -80,6 +82,7 @@ export function mapIssueTypeToFormValues(row: TIssueType): TWorkItemTypeFormFiel
   return {
     name: row.name,
     description: row.description ?? "",
+    descriptionTemplate: row.description_template ?? "",
     logoProps: row.logo_props,
     isEpic: isEpicKind(row),
     isActive: row.is_active,

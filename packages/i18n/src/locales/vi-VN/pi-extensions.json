@@ -321,6 +321,7 @@
   },
   "work_item_types": {
     "loading": "Đang tải loại…",
+    "milestone_after_due": "Sau ngày đến hạn",
     "property_values_save_failed": "Mục công việc đã được tạo, nhưng không thể lưu các thuộc tính bổ sung. Hãy điền chúng từ trang chi tiết mục công việc.",
     "select_placeholder": "Loại",
     "system_managed": {
@@ -710,12 +711,35 @@
       },
       "work_item_types": {
         "add_type": "Thêm loại",
+        "catalogue": {
+          "add_selected": "Thêm mục đã chọn",
+          "button": "Thêm từ danh mục",
+          "default_badge": "Mặc định",
+          "in_workspace": "Đã có trong không gian làm việc",
+          "intro": "Các loại có sẵn với biểu tượng, mẫu mô tả và thuộc tính gợi ý. Các loại không gian làm việc đã có sẽ không được thêm lại; mỗi không gian làm việc có một loại Cột mốc.",
+          "no_properties": "Không có thuộc tính gợi ý",
+          "properties": "Thuộc tính: {properties}",
+          "title": "Thêm từ danh mục",
+          "toasts": {
+            "add_failed": {
+              "message": "Vui lòng thử lại.",
+              "title": "Không thể thêm loại"
+            },
+            "added": {
+              "message": "Các loại đã chọn đã được thêm vào không gian làm việc.",
+              "title": "Đã thêm loại"
+            }
+          }
+        },
         "delete_confirm": "Xóa loại mục công việc này? Các mục công việc hiện có sẽ vẫn giữ nguyên dữ liệu.",
         "description": "Định nghĩa các loại mục công việc với danh tính riêng, thuộc tính tùy chỉnh và phạm vi dự án. Bật hoặc tắt các loại mà không ảnh hưởng đến các mục hiện có.",
         "edit_type": "Chỉnh sửa loại",
         "epic_badge": "Sử thi",
         "form": {
           "description_label": "Mô tả",
+          "description_template_hint": "Được chèn vào mô tả của mục công việc mới thuộc loại này khi mô tả còn trống.",
+          "description_template_label": "Mẫu mô tả",
+          "description_template_placeholder": "Tiêu đề và danh sách mà mọi mục công việc thuộc loại này bắt đầu",
           "is_active": "Hoạt động",
           "is_epic": "Loại sử thi",
           "modal_intro": "Đặt tên cho loại, chọn một biểu tượng và chỉ đính kèm các thuộc tính mà loại công việc này cần. Gán nó cho các dự án mà nó nên khả dụng.",

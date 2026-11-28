@@ -8,14 +8,16 @@
 import type { RefObject } from "react";
 import { useRef } from "react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 // components
 import type { IBlockUpdateDependencyData, IGanttBlock } from "@plane/types";
 import { EGanttBlockType } from "@plane/types";
-import { cn } from "@plane/utils";
+import { cn, isMilestoneType } from "@plane/utils";
 import RenderIfVisible from "@/components/core/render-if-visible-HOC";
 // helpers
 // hooks
 import { useTimeLineChartStore } from "@/hooks/use-timeline-chart";
+import { useWorkspaceIssueTypes } from "@/hooks/use-workspace-issue-types";
 // constants
 import { BLOCK_HEIGHT } from "../constants";
 // components
@@ -26,7 +28,13 @@ import { useGanttResizable } from "../helpers/blockResizables/use-gantt-resizabl
 import { getBlockChartDates, isBlockOnChart, isBlockRolledUp } from "../views/helpers";
 import { GanttRollupBracket } from "./rollup-bracket";
 
-type TBarEditing = { enableBlockLeftResize: boolean; enableBlockRightResize: boolean; enableBlockMove: boolean };
+type TBarEditing = {
+  enableBlockLeftResize: boolean;
+  enableBlockRightResize: boolean;
+  enableBlockMove: boolean;
+  /** A milestone is one day: it moves, but is never resized (the server keeps its start equal to its finish) */
+  isMilestone?: boolean;
+};
 
 /**
  * How a block shows on the chart, and what of it can be dragged: a bar drawn from the children's dates (rolled up)
@@ -40,11 +48,12 @@ const getBarState = (block: IGanttBlock | undefined, editing: TBarEditing) => {
   // a work item with only a start or only a finish is a one day marker: movable, but never resizable
   const isSingleEndedWorkItem =
     block?.meta?.type === EGanttBlockType.ISSUE && !!chartDates?.start_date !== !!chartDates?.target_date;
+  const isFixedLength = isSingleEndedWorkItem || !!editing.isMilestone;
   return {
     isOnChart,
     isSingleEndedWorkItem,
-    canResizeLeft: editing.enableBlockLeftResize && !isRolledUp && !isSingleEndedWorkItem,
-    canResizeRight: editing.enableBlockRightResize && !isRolledUp && !isSingleEndedWorkItem,
+    canResizeLeft: editing.enableBlockLeftResize && !isRolledUp && !isFixedLength,
+    canResizeRight: editing.enableBlockRightResize && !isRolledUp && !isFixedLength,
     canMove: editing.enableBlockMove && (isComplete || isSingleEndedWorkItem) && !isRolledUp,
     showRollupBracket: isOnChart && !isRolledUp && !!block?.rollup?.position,
     // the trace of a saved plan belongs to work items; the number of days needs free room after a real bar
@@ -79,6 +88,8 @@ export const GanttChartBlock = observer(function GanttChartBlock(props: Props) {
   } = props;
   // store hooks
   const { updateActiveBlockId, getBlockById, getIsCurrentDependencyDragging, currentView } = useTimeLineChartStore();
+  const { workspaceSlug } = useParams();
+  const { typeMap } = useWorkspaceIssueTypes(workspaceSlug?.toString());
   // refs
   const resizableRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +99,9 @@ export const GanttChartBlock = observer(function GanttChartBlock(props: Props) {
 
   const { isMoving, handleBlockDrag } = useGanttResizable(block, resizableRef, ganttContainerRef, updateBlockDates);
 
-  const bar = getBarState(block, { enableBlockLeftResize, enableBlockRightResize, enableBlockMove });
+  const isMilestone =
+    block?.meta?.type === EGanttBlockType.ISSUE && isMilestoneType(typeMap[block?.data?.type_id as string]);
+  const bar = getBarState(block, { enableBlockLeftResize, enableBlockRightResize, enableBlockMove, isMilestone });
   const isBlockVisibleOnChart = bar.isOnChart;
   const isDueMarkerShown = block?.meta?.type === EGanttBlockType.ISSUE && !!block?.due_date;
 
