@@ -180,6 +180,15 @@ from .project.baseline import (
 )
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
 from .issue.raci import IssueRaciEndpoint, IssueRaciNotificationPreviewEndpoint, ProjectRaciWarningsEndpoint
+from .document.base import (
+    DocumentAdoptEndpoint,
+    DocumentEndpoint,
+    DocumentThumbnailEndpoint,
+    DocumentUploadEndpoint,
+    DocumentUploadFinishEndpoint,
+    DocumentVersionDownloadEndpoint,
+    DocumentVersionEndpoint,
+)
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 

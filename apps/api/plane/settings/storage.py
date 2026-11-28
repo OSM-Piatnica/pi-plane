@@ -177,6 +177,15 @@ class S3Storage(S3Boto3Storage):
             "Metadata": response.get("Metadata", {}),
         }
 
+    def iter_object(self, object_name, chunk_size=1024 * 1024):
+        """The bytes of an object, chunk by chunk, for work that reads a whole file (the document checksum check).
+        Errors of the storage are raised, not logged: the caller decides whether to try again."""
+        body = self.s3_client.get_object(Bucket=self.aws_storage_bucket_name, Key=str(object_name))["Body"]
+        try:
+            yield from body.iter_chunks(chunk_size)
+        finally:
+            body.close()
+
     def copy_object(self, object_name, new_object_name):
         """Copy an S3 object to a new location"""
         try:

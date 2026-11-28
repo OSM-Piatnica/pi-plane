@@ -152,6 +152,11 @@ class AzureBlobStorage:
             "Metadata": properties.metadata or {},
         }
 
+    def iter_object(self, object_name, chunk_size=1024 * 1024):
+        """The bytes of a blob, chunk by chunk, as ``S3Storage.iter_object``. Errors are raised, not logged.
+        ``chunk_size`` is a hint: the SDK reads in its own chunks (``max_chunk_get_size``)."""
+        yield from self.container.get_blob_client(str(object_name)).download_blob().chunks()
+
     def copy_object(self, object_name, new_object_name):
         """Copy a blob inside the container. Returns something truthy on success, None on failure."""
         try:
