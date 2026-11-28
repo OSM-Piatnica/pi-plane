@@ -4,7 +4,7 @@
  * See the LICENSE file for details.
  */
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { TextArea } from "@makeplane/propel/components/text-area";
@@ -146,10 +146,13 @@ export const InitiativeDetailRoot = observer(function InitiativeDetailRoot(props
   const [, setDescriptionState] = useState<TNameDescriptionLoader>("saved");
   const isGoal = initiative.kind === "goal";
 
-  const save = (data: TInitiativeFormData) =>
-    void updateInitiative(workspaceSlug, initiative.id, data).catch((error: unknown) =>
-      setToast({ type: "error", title: t("toast.error"), message: getInitiativeErrorMessage(error, t) })
-    );
+  const save = useCallback(
+    (data: TInitiativeFormData) =>
+      void updateInitiative(workspaceSlug, initiative.id, data).catch((error: unknown) =>
+        setToast({ type: "error", title: t("toast.error"), message: getInitiativeErrorMessage(error, t) })
+      ),
+    [updateInitiative, workspaceSlug, initiative.id, t]
+  );
 
   const children = initiative.initiative_ids
     .map((childId) => getInitiativeById(childId))
