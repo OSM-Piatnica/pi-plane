@@ -19,6 +19,7 @@ import { usePlatformOS } from "@/hooks/use-platform-os";
 // local imports
 import { FilterAccess } from "./access";
 import { FilterCreatedDate } from "./created-at";
+import { FilterInitiatives } from "./initiatives";
 import { FilterLead } from "./lead";
 import { FilterMembers } from "./members";
 
@@ -106,6 +107,13 @@ export const ProjectFiltersSelection = observer(function ProjectFiltersSelection
         <FilterGroupList
           appliedFilters={filters.groups ?? null}
           handleUpdate={(val) => handleFiltersUpdate("groups", val)}
+          searchQuery={filtersSearchQuery}
+        />
+
+        {/* initiatives, while the feature is on */}
+        <FilterInitiatives
+          appliedFilters={filters.initiatives ?? null}
+          handleUpdate={(val) => handleFiltersUpdate("initiatives", val)}
           searchQuery={filtersSearchQuery}
         />
 

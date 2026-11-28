@@ -863,6 +863,10 @@
       "goal_deleted": "Tujuan telah dihapus.",
       "initiative_deleted": "Inisiatif telah dihapus.",
       "error": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "project_list": {
+      "no_initiative": "Tanpa inisiatif",
+      "of_project": "Inisiatif proyek ini"
     }
   },
   "raci": {

@@ -53,7 +53,7 @@ function HiddenNote({ text }: { text: string | undefined }) {
 export const InitiativeProjects = observer(function InitiativeProjects(props: TProps) {
   const { workspaceSlug, initiative } = props;
   const { t } = useTranslation();
-  const { getProjectById } = useProject();
+  const { getProjectById, updateProjectInitiativeLinks } = useProject();
   const { linkProjects, unlinkProject } = useInitiative();
   const canLink = useLinkPermission(workspaceSlug);
   const isInitiative = initiative.kind === "initiative";
@@ -73,7 +73,11 @@ export const InitiativeProjects = observer(function InitiativeProjects(props: TP
               projectList="all"
               value={[]}
               onChange={(projectIds) => {
-                if (projectIds.length > 0) void linkProjects(workspaceSlug, initiative.id, projectIds).catch(fail);
+                if (projectIds.length > 0)
+                  void linkProjects(workspaceSlug, initiative.id, projectIds)
+                    // the project list and the project header show the initiatives of each project
+                    .then(() => updateProjectInitiativeLinks(projectIds, initiative.id, true))
+                    .catch(fail);
               }}
               filterOption={(projectId) => !initiative.project_ids.includes(projectId) && canLink(projectId)}
               placeholder={t("initiatives.projects.add")}
@@ -108,7 +112,11 @@ export const InitiativeProjects = observer(function InitiativeProjects(props: TP
                   variant="ghost"
                   icon={<Icon icon={UnlinkOutline} />}
                   aria-label={t("initiatives.projects.remove", { name: project?.name ?? "" })}
-                  onClick={() => void unlinkProject(workspaceSlug, initiative.id, projectId).catch(fail)}
+                  onClick={() =>
+                    void unlinkProject(workspaceSlug, initiative.id, projectId)
+                      .then(() => updateProjectInitiativeLinks([projectId], initiative.id, false))
+                      .catch(fail)
+                  }
                 />
               )}
             </li>

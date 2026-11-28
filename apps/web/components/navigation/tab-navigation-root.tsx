@@ -22,6 +22,7 @@ import { useNavigationItems } from "@/components/navigations";
 import { LeaveProjectModal } from "../project/leave-project-modal";
 import { PublishProjectModal } from "../project/publish-project/modal";
 import { ProjectActionsMenu } from "./project-actions-menu";
+import { ProjectInitiativeChip } from "@/components/project/initiative-chip";
 import { ProjectHeader } from "./project-header";
 import { TabNavigationOverflowMenu } from "./tab-navigation-overflow-menu";
 import { DEFAULT_TAB_KEY } from "./tab-navigation-utils";
@@ -189,6 +190,7 @@ export const TabNavigationRoot = observer(function TabNavigationRoot(props: TTab
               onPublishModal={() => handlePublishModal(true)}
             />
           </div>
+          <ProjectInitiativeChip workspaceSlug={workspaceSlug} projectId={projectId} />
         </div>
 
         <div className="h-5 w-1 shrink-0 border-l border-subtle" />

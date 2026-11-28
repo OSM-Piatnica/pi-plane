@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -18,8 +19,10 @@ import { useCommandPalette } from "@/hooks/store/use-command-palette";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectFilter } from "@/hooks/store/use-project-filter";
 import { useUserPermissions } from "@/hooks/store/user";
+import { useProjectInitiatives } from "@/hooks/use-project-initiatives";
 // local imports
 import { ProjectCard } from "./card";
+import { ProjectInitiativeGroups } from "./initiative-groups";
 
 type TProjectCardListProps = {
   totalProjectIds?: string[];
@@ -41,6 +44,7 @@ export const ProjectCardList = observer(function ProjectCardList(props: TProject
   } = useProject();
   const { currentWorkspaceDisplayFilters, currentWorkspaceFilters } = useProjectFilter();
   const { allowPermissions } = useUserPermissions();
+  const { isEnabled: isInitiativesEnabled } = useProjectInitiatives();
 
   // derived values
   const workspaceProjectIds = totalProjectIdsProps ?? storeWorkspaceProjectIds;
@@ -99,6 +103,9 @@ export const ProjectCardList = observer(function ProjectCardList(props: TProject
         assetClassName="size-40"
       />
     );
+
+  if (isInitiativesEnabled && currentWorkspaceDisplayFilters?.group_by === "initiative")
+    return <ProjectInitiativeGroups projectIds={filteredProjectIds} />;
 
   return (
     <ContentWrapper>

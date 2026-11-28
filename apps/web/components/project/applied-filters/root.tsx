@@ -16,6 +16,7 @@ import { getAppliedFilterHeading } from "@/helpers/applied-filter-heading";
 // local imports
 import { AppliedAccessFilters } from "./access";
 import { AppliedDateFilters } from "./date";
+import { AppliedInitiativeFilters } from "./initiatives";
 import { AppliedMembersFilters } from "./members";
 import { AppliedProjectDisplayFilters } from "./project-display-filters";
 
@@ -94,6 +95,13 @@ export function ProjectAppliedFiltersList(props: Props) {
                 <AppliedGroupFilters
                   editable={isEditingAllowed}
                   handleRemove={(val) => handleRemoveFilter("groups", val)}
+                  values={value}
+                />
+              )}
+              {filterKey === "initiatives" && (
+                <AppliedInitiativeFilters
+                  editable={isEditingAllowed}
+                  handleRemove={(val) => handleRemoveFilter("initiatives", val)}
                   values={value}
                 />
               )}

@@ -16,6 +16,7 @@ A second figure, ``epic_progress``, counts the child work items of the linked Ep
 kept apart from ``progress``: an Epic inside a linked project would otherwise count twice.
 """
 
+import uuid
 from collections import defaultdict
 
 from django.db.models import Count
@@ -31,6 +32,7 @@ from plane.db.models import (
     WorkspaceMember,
 )
 from plane.db.models.project import ROLE
+from plane.utils.workspace_features import is_workspace_feature_enabled
 
 STATE_GROUPS = ("backlog", "unstarted", "started", "completed", "cancelled")
 
@@ -88,6 +90,53 @@ def accessible_project_ids(user, workspace_id, project_ids=None):
 def manageable_project_ids(user, workspace_id, project_ids=None):
     """The projects the person may link to an initiative or unlink from it (see ``project_access``)."""
     return project_access(user, workspace_id, project_ids)[1]
+
+
+def initiative_ids_of_projects(user, workspace_id, project_ids):
+    """{project_id: [initiative ids]}: the initiatives each project is linked to, for the project list.
+
+    Empty while the Initiatives feature is switched off, and for a workspace guest (the initiative endpoints refuse
+    guests). Otherwise only the projects whose work items the person may see (``project_access``) carry their
+    initiatives, as in ``project_ids`` of an initiative: where a project is linked is not told to people who may not
+    see the project's numbers. Goals are not listed; a goal is reached through its initiatives (``parent``).
+
+    A fixed number of queries, whatever the number of projects.
+    """
+    project_ids = set(project_ids)
+    if not project_ids or not is_workspace_feature_enabled(workspace_id, "initiatives"):
+        return {}
+    if not WorkspaceMember.objects.filter(
+        workspace_id=workspace_id, member=user, is_active=True, role__gt=ROLE.GUEST.value
+    ).exists():
+        return {}
+    visible = accessible_project_ids(user, workspace_id, project_ids)
+    if not visible:
+        return {}
+    linked = defaultdict(list)
+    for project_id, initiative_id in (
+        InitiativeProject.objects.filter(
+            workspace_id=workspace_id,
+            project_id__in=visible,
+            initiative__deleted_at__isnull=True,
+        )
+        .order_by("initiative__sort_order", "-initiative__created_at")
+        .values_list("project_id", "initiative_id")
+    ):
+        linked[project_id].append(initiative_id)
+    return linked
+
+
+def add_initiative_ids(user, workspace_id, rows):
+    """Add ``initiative_ids`` (see ``initiative_ids_of_projects``) to every row (a dict with an ``id``)."""
+    rows = list(rows)
+    linked = initiative_ids_of_projects(user, workspace_id, {row["id"] for row in rows})
+    for row in rows:
+        row["initiative_ids"] = [str(initiative_id) for initiative_id in linked.get(_as_uuid(row["id"]), [])]
+    return rows
+
+
+def _as_uuid(value):
+    return value if isinstance(value, uuid.UUID) else uuid.UUID(str(value))
 
 
 def roll_up(project_ids, accessible, counts):

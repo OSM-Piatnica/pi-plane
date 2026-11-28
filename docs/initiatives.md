@@ -2,7 +2,7 @@
 
 An **initiative** is a body of work that spans projects. A **goal** states an outcome that initiatives work toward. Both belong to the workspace, not to a project.
 
-This page describes the model, the API and the Initiatives app of the web client.
+This page describes the model, the API, the Initiatives app of the web client and what the project list shows of initiatives.
 
 The feature is switched off in a new workspace. A workspace admin switches it on in workspace settings, "Features" (see [`workspace-features.md`](./workspace-features.md)). While it is off, every endpoint below answers 403 to everybody, admins included, and the app is not in the rail.
 
@@ -122,6 +122,18 @@ Notes:
 - `GET /<id>/epics/` returns, per Epic: `id`, `name`, `sequence_id`, `project_id`, `project_identifier`, `state_id`, `state_group`, `target_date`, and `progress` with `progress_is_partial` for its children, counted as in the Epic figure.
 - `GET /<id>/epics/search/` offers the Epics that are not archived, not linked to this initiative yet, and in a project the person may link. It answers 400 on a goal.
 - Images in a description are uploaded as workspace assets of type `INITIATIVE_DESCRIPTION`, by workspace admins and members only.
+
+## The project list and the project header
+
+While the feature is on, the project list and the project pages show the initiatives of each project (roadmap F3) to workspace admins and members:
+
+- **`initiative_ids`** on every project of `GET /api/workspaces/<slug>/projects/details/` and `GET /api/workspaces/<slug>/projects/<id>/`: the initiatives the project is linked to, never goals, in list order (`sort_order`). It is `[]` while the feature is off, for a workspace guest, and for a project whose numbers the person may not see (the table in "Who can do what"), so the list does not tell where a project is linked to people who may not see that project's numbers; this is the rule of `project_ids` and of the `project` filter. A fixed number of queries, whatever the number of projects (`initiative_ids_of_projects` in `utils/initiatives.py`).
+- **Filter.** The project filters have an "Initiatives" section: "No initiative", each goal with its initiatives, then the initiatives without a goal. A **goal** in the filter stands for its initiatives: it keeps the projects of any of them. Several values keep the projects in any of them.
+- **Group by.** "Group by: Initiative" next to the ordering splits the list into one group per initiative, in the order of the Initiatives app, then "No initiative". A project in several initiatives shows in each of their groups. Goals have no groups of their own; the heading of a group names its goal.
+- **Chip.** The project header (breadcrumb or tabbed navigation) shows the project's initiative next to its name, with "+N" and a menu when there are several. It links to the initiative.
+- The web loads the initiative list of the workspace once for these (the request of the Initiatives app), and keeps `initiative_ids` in step when projects are linked or unlinked in the app. While the feature is off, or for a guest, none of this shows and a stored initiative filter is ignored.
+
+Where things live: `apps/web/hooks/use-project-initiatives.ts`, `apps/web/components/project/{initiative-chip,initiative-groups}.tsx`, `apps/web/components/project/dropdowns/{group-by,filters/initiatives}.tsx`, `packages/utils/src/project-initiatives.ts` (the filter and the grouping).
 
 ## The app
 

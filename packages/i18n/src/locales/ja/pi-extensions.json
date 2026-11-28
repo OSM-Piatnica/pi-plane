@@ -863,6 +863,10 @@
       "goal_deleted": "目標を削除しました。",
       "initiative_deleted": "イニシアチブを削除しました。",
       "error": "問題が発生しました。もう一度お試しください。"
+    },
+    "project_list": {
+      "no_initiative": "イニシアチブなし",
+      "of_project": "このプロジェクトのイニシアチブ"
     }
   },
   "raci": {

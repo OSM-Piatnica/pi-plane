@@ -863,6 +863,10 @@
       "goal_deleted": "Das Ziel wurde gelöscht.",
       "initiative_deleted": "Die Initiative wurde gelöscht.",
       "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    },
+    "project_list": {
+      "no_initiative": "Keine Initiative",
+      "of_project": "Initiativen dieses Projekts"
     }
   },
   "raci": {

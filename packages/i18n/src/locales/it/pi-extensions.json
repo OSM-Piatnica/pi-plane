@@ -863,6 +863,10 @@
       "goal_deleted": "L’obiettivo è stato eliminato.",
       "initiative_deleted": "L’iniziativa è stata eliminata.",
       "error": "Qualcosa è andato storto. Riprovi."
+    },
+    "project_list": {
+      "no_initiative": "Nessuna iniziativa",
+      "of_project": "Iniziative di questo progetto"
     }
   },
   "raci": {

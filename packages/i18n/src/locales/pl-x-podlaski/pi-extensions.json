@@ -877,6 +877,10 @@
       "goal_deleted": "Cel został usunięty.",
       "initiative_deleted": "Inicjatywa została usunięta.",
       "error": "Coś poszło nie tak. Proszę spróbować ponownie."
+    },
+    "project_list": {
+      "no_initiative": "Bez inicjatywy",
+      "of_project": "Inicjatywy tego projektu"
     }
   },
   "raci": {

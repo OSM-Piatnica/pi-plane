@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2023-present Plane Software, Inc. and contributors
  * SPDX-License-Identifier: AGPL-3.0-only
+ * Modified by Okręgowa Spółdzielnia Mleczarska w Piątnicy in 2026.
  * See the LICENSE file for details.
  */
 
@@ -12,6 +13,7 @@ import { Breadcrumbs, BreadcrumbNavigationSelect } from "@plane/blocks/breadcrum
 import { Logo } from "@plane/blocks/emoji-icon-picker";
 import { useTranslation } from "@plane/i18n";
 import { SwitcherLabel } from "@/components/common/switcher-label";
+import { ProjectInitiativeChip } from "@/components/project/initiative-chip";
 // hooks
 import { useProject } from "@/hooks/store/use-project";
 import { useAppRouter } from "@/hooks/use-app-router";
@@ -62,22 +64,25 @@ export const ProjectBreadcrumb = observer(function ProjectBreadcrumb(props: TPro
       label={currentProjectDetails.name}
       {...crumbProps}
       component={
-        <BreadcrumbNavigationSelect
-          selectedItemKey={currentProjectDetails.id}
-          navigationItems={switcherOptions}
-          onChange={(value: string) => {
-            router.push(`/${workspaceSlug}/projects/${value}/issues`);
-          }}
-          label={currentProjectDetails.name}
-          icon={<Logo logo={currentProjectDetails.logo_props} size={14} />}
-          handleOnClick={() => {
-            if (handleOnClick) handleOnClick();
-            else router.push(`/${workspaceSlug}/projects/${currentProjectDetails.id}/issues/`);
-          }}
-          placeholder={t("common.project")}
-          searchPlaceholder={t("common.search.label")}
-          emptyMessage={t("common.search.no_matches_found")}
-        />
+        <span className="flex items-center gap-1.5">
+          <BreadcrumbNavigationSelect
+            selectedItemKey={currentProjectDetails.id}
+            navigationItems={switcherOptions}
+            onChange={(value: string) => {
+              router.push(`/${workspaceSlug}/projects/${value}/issues`);
+            }}
+            label={currentProjectDetails.name}
+            icon={<Logo logo={currentProjectDetails.logo_props} size={14} />}
+            handleOnClick={() => {
+              if (handleOnClick) handleOnClick();
+              else router.push(`/${workspaceSlug}/projects/${currentProjectDetails.id}/issues/`);
+            }}
+            placeholder={t("common.project")}
+            searchPlaceholder={t("common.search.label")}
+            emptyMessage={t("common.search.no_matches_found")}
+          />
+          <ProjectInitiativeChip workspaceSlug={workspaceSlug} projectId={currentProjectDetails.id} />
+        </span>
       }
     />
   );

@@ -16,10 +16,12 @@ import { calculateTotalFilters } from "@plane/utils";
 // components
 import { FiltersDropdown } from "@/components/issues/issue-layouts/filters";
 import { ProjectFiltersSelection } from "@/components/project/dropdowns/filters";
+import { ProjectGroupByDropdown } from "@/components/project/dropdowns/group-by";
 import { ProjectOrderByDropdown } from "@/components/project/dropdowns/order-by";
 // hooks
 import { useMember } from "@/hooks/store/use-member";
 import { useProjectFilter } from "@/hooks/store/use-project-filter";
+import { useProjectInitiatives } from "@/hooks/use-project-initiatives";
 
 export const ProjectsListMobileHeader = observer(function ProjectsListMobileHeader() {
   // i18n
@@ -36,6 +38,7 @@ export const ProjectsListMobileHeader = observer(function ProjectsListMobileHead
   const {
     workspace: { workspaceMemberIds },
   } = useMember();
+  const { isEnabled: isInitiativesEnabled } = useProjectInitiatives();
 
   const handleFilters = useCallback(
     (key: keyof TProjectFilters, value: string | string[]) => {
@@ -70,6 +73,18 @@ export const ProjectsListMobileHeader = observer(function ProjectsListMobileHead
         }}
         isMobile
       />
+      {isInitiativesEnabled && (
+        <div className="flex w-full justify-center border-l border-subtle">
+          <ProjectGroupByDropdown
+            value={displayFilters?.group_by}
+            onChange={(val) => {
+              if (!workspaceSlug) return;
+              updateDisplayFilters(workspaceSlug.toString(), { group_by: val });
+            }}
+            isMobile
+          />
+        </div>
+      )}
       <div className="flex w-full justify-around border-l border-subtle">
         <FiltersDropdown
           icon={<FilterOutline className="h-3 w-3" />}

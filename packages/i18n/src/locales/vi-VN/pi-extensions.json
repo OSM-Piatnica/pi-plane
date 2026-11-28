@@ -863,6 +863,10 @@
       "goal_deleted": "Đã xóa mục tiêu.",
       "initiative_deleted": "Đã xóa sáng kiến.",
       "error": "Đã xảy ra lỗi. Vui lòng thử lại."
+    },
+    "project_list": {
+      "no_initiative": "Không có sáng kiến",
+      "of_project": "Các sáng kiến của dự án này"
     }
   },
   "raci": {
