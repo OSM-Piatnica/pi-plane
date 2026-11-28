@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACIを保存できませんでした。",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "イベント",
+      "events": {
+        "new_version": "新しい下書き版または添付ファイル",
+        "comment": "コメント",
+        "approval_requested": "承認依頼",
+        "approval_decided": "承認または却下",
+        "completed": "最終版（完了）",
+        "state_or_due_date": "状態または期日の変更"
+      },
+      "nobody_by_role": "これらの役割を持つ部署はありません",
+      "people": "{count, plural, one {#人} other {#人}}",
+      "preview_hint": "購読者、担当者、メンションされた人には従来どおり通知されます。変更した本人には通知されません。",
+      "preview_title": "通知を受け取る人",
+      "restore_defaults": "既定値に戻す",
+      "settings_description": "作業項目の各イベントについて、部署に通知される役割を設定します。購読者と担当者には別途通知されます。",
+      "settings_hint": "通知されるのは RACI が有効なプロジェクトのメンバーのみです。無効にした部署からは誰にも通知されません。",
+      "settings_title": "RACI 通知",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "承認機能が利用可能になると送信されます"
+    },
+    "warnings": {
+      "button": "{count, plural, one {RACI の警告 #件} other {RACI の警告 #件}}",
+      "description": "未完了の作業項目の役割と依存関係の不足です。保存は妨げません。",
+      "kinds": {
+        "no_responsible": "実行責任の部署がない作業項目",
+        "milestone_without_approver": "承認者のいないマイルストーン",
+        "no_predecessor": "先行項目のない作業項目",
+        "no_successor": "何も依存していない作業項目",
+        "department_without_members": "通知が誰にも届かない部署"
+      },
+      "more": "表示されていない件数: {count}",
+      "reasons": {
+        "inactive": "無効のため、メンバーに通知されません",
+        "no_members": "メンバーがいません",
+        "no_project_members": "このプロジェクトにメンバーが一人もいません"
+      },
+      "title": "RACI の警告"
+    }
   },
   "project_components": {
     "duplicate_modal": {

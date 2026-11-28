@@ -24,6 +24,7 @@ import { BreadcrumbLink } from "@/components/common/breadcrumb-link";
 import { CountChip } from "@/components/common/count-chip";
 // constants
 import { HeaderFilters } from "@/components/issues/filters";
+import { RaciWarningsButton } from "@/components/issues/raci/raci-warnings-button";
 // helpers
 // hooks
 import { useCommandPalette } from "@/hooks/store/use-command-palette";
@@ -110,6 +111,9 @@ export const IssuesHeader = observer(function IssuesHeader() {
       </Header.LeftItem>
       <Header.RightItem>
         <div className="hidden gap-2 md:flex">
+          {workspaceSlug && projectId && (
+            <RaciWarningsButton workspaceSlug={workspaceSlug.toString()} projectId={projectId.toString()} />
+          )}
           <HeaderFilters
             projectId={projectId}
             currentProjectDetails={currentProjectDetails}

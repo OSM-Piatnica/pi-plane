@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI nu a putut fi salvat.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Eveniment",
+      "events": {
+        "new_version": "Versiune de lucru nouă sau atașament",
+        "comment": "Comentariu",
+        "approval_requested": "Aprobare solicitată",
+        "approval_decided": "Aprobat sau respins",
+        "completed": "Versiune finală (finalizat)",
+        "state_or_due_date": "Schimbare de stare sau de termen"
+      },
+      "nobody_by_role": "Niciun departament cu aceste roluri",
+      "people": "{count, plural, one {# persoană} few {# persoane} other {# de persoane}}",
+      "preview_hint": "Abonații, persoanele atribuite și cele menționate sunt notificate ca înainte; autorul modificării nu.",
+      "preview_title": "Cine va fi notificat",
+      "restore_defaults": "Restabilește valorile implicite",
+      "settings_description": "Pentru fiecare eveniment pe un element de lucru, rolurile ale căror departamente sunt notificate, pe lângă abonați și persoanele atribuite.",
+      "settings_hint": "Sunt notificați doar membrii proiectului, în proiectele cu RACI activat. Un departament dezactivat nu notifică pe nimeni.",
+      "settings_title": "Notificări RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Trimis când acceptarea va fi disponibilă"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# avertisment RACI} few {# avertismente RACI} other {# de avertismente RACI}}",
+      "description": "Lipsuri în rolurile și dependențele elementelor de lucru deschise. Nu blochează salvarea.",
+      "kinds": {
+        "no_responsible": "Elemente de lucru fără departament responsabil",
+        "milestone_without_approver": "Repere fără aprobator",
+        "no_predecessor": "Elemente de lucru fără predecesor",
+        "no_successor": "Elemente de lucru de care nu depinde nimic",
+        "department_without_members": "Departamente ale căror notificări nu ajung la nimeni"
+      },
+      "more": "Nelistate: {count}",
+      "reasons": {
+        "inactive": "Dezactivat, deci membrii lui nu sunt notificați",
+        "no_members": "Nu are membri",
+        "no_project_members": "Niciunul dintre membrii lui nu este în acest proiect"
+      },
+      "title": "Avertismente RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

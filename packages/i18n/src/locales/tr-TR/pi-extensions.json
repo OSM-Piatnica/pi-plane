@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI kaydedilemedi.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Olay",
+      "events": {
+        "new_version": "Yeni taslak sürüm veya ek",
+        "comment": "Yorum",
+        "approval_requested": "Onay istendi",
+        "approval_decided": "Onaylandı veya reddedildi",
+        "completed": "Son sürüm (tamamlandı)",
+        "state_or_due_date": "Durum veya bitiş tarihi değişti"
+      },
+      "nobody_by_role": "Bu rollere sahip departman yok",
+      "people": "{count, plural, one {# kişi} other {# kişi}}",
+      "preview_hint": "Aboneler, atananlar ve bahsedilenler eskisi gibi bildirim alır; değişikliği yapan kişi almaz.",
+      "preview_title": "Kimler bildirim alacak",
+      "restore_defaults": "Varsayılanları geri yükle",
+      "settings_description": "Bir iş öğesindeki her olay için, departmanları bildirim alan roller; abonelere ve atananlara ek olarak.",
+      "settings_hint": "Yalnızca proje üyeleri, RACI açık olan projelerde bildirim alır. Kapatılmış bir departman kimseye bildirim göndermez.",
+      "settings_title": "RACI bildirimleri",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Kabul özelliği kullanıma sunulduğunda gönderilir"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# RACI uyarısı} other {# RACI uyarısı}}",
+      "description": "Açık iş öğelerinin rollerindeki ve bağımlılıklarındaki eksikler. Kaydetmeyi engellemez.",
+      "kinds": {
+        "no_responsible": "Sorumlu departmanı olmayan iş öğeleri",
+        "milestone_without_approver": "Onaylayanı olmayan kilometre taşları",
+        "no_predecessor": "Öncülü olmayan iş öğeleri",
+        "no_successor": "Hiçbir şeyin bağlı olmadığı iş öğeleri",
+        "department_without_members": "Bildirimleri kimseye ulaşmayan departmanlar"
+      },
+      "more": "Listelenmeyen: {count}",
+      "reasons": {
+        "inactive": "Kapalı, bu yüzden üyeleri bildirim almaz",
+        "no_members": "Üyesi yok",
+        "no_project_members": "Üyelerinin hiçbiri bu projede değil"
+      },
+      "title": "RACI uyarıları"
+    }
   },
   "project_components": {
     "duplicate_modal": {

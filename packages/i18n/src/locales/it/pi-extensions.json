@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "Impossibile salvare il RACI.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Evento",
+      "events": {
+        "new_version": "Nuova versione bozza o allegato",
+        "comment": "Commento",
+        "approval_requested": "Approvazione richiesta",
+        "approval_decided": "Approvato o rifiutato",
+        "completed": "Versione finale (completato)",
+        "state_or_due_date": "Modifica di stato o di scadenza"
+      },
+      "nobody_by_role": "Nessun reparto con questi ruoli",
+      "people": "{count, plural, one {# persona} many {# persone} other {# persone}}",
+      "preview_hint": "Iscritti, assegnatari e persone menzionate ricevono notifiche come prima; chi apporta la modifica no.",
+      "preview_title": "Chi riceverà la notifica",
+      "restore_defaults": "Ripristina predefiniti",
+      "settings_description": "Per ogni evento su un elemento di lavoro, i ruoli i cui reparti ricevono la notifica, oltre a iscritti e assegnatari.",
+      "settings_hint": "Ricevono notifiche solo i membri del progetto, nei progetti con RACI attivo. Un reparto disattivato non notifica nessuno.",
+      "settings_title": "Notifiche RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Inviato quando sarà disponibile l’accettazione"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# avviso RACI} many {# avvisi RACI} other {# avvisi RACI}}",
+      "description": "Lacune nei ruoli e nelle dipendenze degli elementi di lavoro aperti. Non impediscono il salvataggio.",
+      "kinds": {
+        "no_responsible": "Elementi di lavoro senza reparto responsabile",
+        "milestone_without_approver": "Milestone senza approvatore",
+        "no_predecessor": "Elementi di lavoro senza predecessore",
+        "no_successor": "Elementi di lavoro da cui non dipende nulla",
+        "department_without_members": "Reparti le cui notifiche non raggiungono nessuno"
+      },
+      "more": "Non elencati: {count}",
+      "reasons": {
+        "inactive": "Disattivato: i suoi membri non ricevono notifiche",
+        "no_members": "Non ha membri",
+        "no_project_members": "Nessuno dei suoi membri fa parte di questo progetto"
+      },
+      "title": "Avvisi RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "Não foi possível salvar o RACI.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Evento",
+      "events": {
+        "new_version": "Nova versão de rascunho ou anexo",
+        "comment": "Comentário",
+        "approval_requested": "Aprovação solicitada",
+        "approval_decided": "Aprovado ou rejeitado",
+        "completed": "Versão final (concluído)",
+        "state_or_due_date": "Mudança de estado ou de data de vencimento"
+      },
+      "nobody_by_role": "Nenhum departamento com essas funções",
+      "people": "{count, plural, one {# pessoa} many {# pessoas} other {# pessoas}}",
+      "preview_hint": "Inscritos, responsáveis atribuídos e mencionados são notificados como antes; quem faz a alteração, não.",
+      "preview_title": "Quem será notificado",
+      "restore_defaults": "Restaurar padrões",
+      "settings_description": "Para cada evento em um item de trabalho, as funções cujos departamentos são notificados, além de inscritos e atribuídos.",
+      "settings_hint": "Só membros do projeto são notificados, em projetos com RACI ativado. Um departamento desativado não notifica ninguém.",
+      "settings_title": "Notificações RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Enviado quando a aceitação estiver disponível"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# aviso RACI} many {# avisos RACI} other {# avisos RACI}}",
+      "description": "Lacunas nas funções e dependências dos itens de trabalho abertos. Não impedem salvar.",
+      "kinds": {
+        "no_responsible": "Itens de trabalho sem departamento responsável",
+        "milestone_without_approver": "Marcos sem aprovador",
+        "no_predecessor": "Itens de trabalho sem predecessor",
+        "no_successor": "Itens de trabalho dos quais nada depende",
+        "department_without_members": "Departamentos cujas notificações não chegam a ninguém"
+      },
+      "more": "Não listados: {count}",
+      "reasons": {
+        "inactive": "Desativado: seus membros não são notificados",
+        "no_members": "Não tem membros",
+        "no_project_members": "Nenhum de seus membros está neste projeto"
+      },
+      "title": "Avisos RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

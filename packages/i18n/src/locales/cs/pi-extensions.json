@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI se nepodařilo uložit.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "Událost",
+      "events": {
+        "new_version": "Nová pracovní verze nebo příloha",
+        "comment": "Komentář",
+        "approval_requested": "Žádost o schválení",
+        "approval_decided": "Schváleno nebo zamítnuto",
+        "completed": "Konečná verze (dokončeno)",
+        "state_or_due_date": "Změna stavu nebo termínu"
+      },
+      "nobody_by_role": "Žádné oddělení s těmito rolemi",
+      "people": "{count, plural, one {# osoba} few {# osoby} many {# osoby} other {# osob}}",
+      "preview_hint": "Odběratelé, přiřazení a zmínění dostávají oznámení jako dosud; ten, kdo změnu provede, ne.",
+      "preview_title": "Kdo dostane oznámení",
+      "restore_defaults": "Obnovit výchozí",
+      "settings_description": "U každé události u pracovní položky role, jejichž oddělení dostanou oznámení, vedle odběratelů a přiřazených.",
+      "settings_hint": "Oznámení dostávají jen členové projektu, v projektech se zapnutým RACI. Vypnuté oddělení neoznamuje nikomu.",
+      "settings_title": "Oznámení podle RACI",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "Odesílá se, jakmile bude dostupné přijetí"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# upozornění RACI} few {# upozornění RACI} many {# upozornění RACI} other {# upozornění RACI}}",
+      "description": "Mezery v rolích a závislostech otevřených pracovních položek. Neblokují uložení.",
+      "kinds": {
+        "no_responsible": "Pracovní položky bez odpovědného oddělení",
+        "milestone_without_approver": "Milníky bez schvalujícího",
+        "no_predecessor": "Pracovní položky bez předchůdce",
+        "no_successor": "Pracovní položky, na kterých nic nezávisí",
+        "department_without_members": "Oddělení, jejichž oznámení nikoho nezastihnou"
+      },
+      "more": "Neuvedeno: {count}",
+      "reasons": {
+        "inactive": "Vypnuté, jeho členové proto nedostávají oznámení",
+        "no_members": "Nemá žádné členy",
+        "no_project_members": "Žádný z jeho členů není v tomto projektu"
+      },
+      "title": "Upozornění RACI"
+    }
   },
   "project_components": {
     "duplicate_modal": {

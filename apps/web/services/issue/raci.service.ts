@@ -5,7 +5,14 @@
  */
 
 import { API_BASE_URL } from "@plane/constants";
-import type { TIssueRaci, TIssueRaciEntry } from "@plane/types";
+import type {
+  TIssueRaci,
+  TIssueRaciEntry,
+  TRaciNotificationMatrix,
+  TRaciNotificationPreview,
+  TRaciNotificationSettings,
+  TRaciProjectWarnings,
+} from "@plane/types";
 import { APIService } from "@/services/api.service";
 
 export class IssueRaciService extends APIService {
@@ -30,6 +37,49 @@ export class IssueRaciService extends APIService {
     raci: TIssueRaciEntry[]
   ): Promise<TIssueRaci> {
     return this.put(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/raci/`, { raci })
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Who the roles on a work item make hear about each event of the workspace's notification matrix. */
+  async getNotificationPreview(
+    workspaceSlug: string,
+    projectId: string,
+    issueId: string
+  ): Promise<TRaciNotificationPreview> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/issues/${issueId}/raci/notifications/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The RACI warnings of a project. */
+  async getProjectWarnings(workspaceSlug: string, projectId: string): Promise<TRaciProjectWarnings> {
+    return this.get(`/api/workspaces/${workspaceSlug}/projects/${projectId}/raci-warnings/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** The notification matrix of a workspace: which roles hear about which event. */
+  async getNotificationSettings(workspaceSlug: string): Promise<TRaciNotificationSettings> {
+    return this.get(`/api/workspaces/${workspaceSlug}/raci-notifications/`)
+      .then((response) => response?.data)
+      .catch((error) => {
+        throw error?.response?.data;
+      });
+  }
+
+  /** Stores the events given; the others keep what they have (workspace admins). */
+  async updateNotificationSettings(
+    workspaceSlug: string,
+    matrix: Partial<TRaciNotificationMatrix>
+  ): Promise<TRaciNotificationSettings> {
+    return this.patch(`/api/workspaces/${workspaceSlug}/raci-notifications/`, { matrix })
       .then((response) => response?.data)
       .catch((error) => {
         throw error?.response?.data;

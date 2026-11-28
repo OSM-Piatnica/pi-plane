@@ -109,12 +109,73 @@ An import writes no activity entries for the roles, as it writes none for labels
   The values are department ids and `my_department`.
 - `GET /api/workspaces/<slug>/departments/?include_inactive=true` lists the switched-off departments too, so
   that their roles can be shown.
+- `GET /api/workspaces/<slug>/raci-notifications/` (any member) answers
+  `{"events": [...], "matrix": {"comment": ["responsible", "consulted"], ...}, "defaults": {...}}`; `PATCH` with
+  `{"matrix": {"<event>": [roles]}}` (workspace admins) changes the events given and keeps the others.
+- `GET .../issues/<issue_id>/raci/notifications/` answers, per event, the roles it reaches, the departments of
+  the work item with one of them (`group_id`, `role`, `member_count`) and `member_ids`, the people RACI adds.
+- `GET /api/workspaces/<slug>/projects/<project_id>/raci-warnings/` (project admins and members) answers
+  `counts` per kind, `items` per kind (at most `max_listed`, 200, each `id`, `name`, `sequence_id`) and
+  `departments` (`group_id`, `is_active`, `member_count`, `project_member_count`, `reason`).
+
+## Notifications by role
+
+When something happens on a work item, the people of the departments with a role on it hear about it, if the
+workspace's notification matrix ticks that role for the event. The matrix is in Settings → Departments, below the
+list of departments (workspace admins), shown while the workspace has RACI on. Its defaults are the table of
+SPEC-02:
+
+| Event                           | What sends it                                     | R   | A   | C   | I   |
+| ------------------------------- | ------------------------------------------------- | --- | --- | --- | --- |
+| New draft version or attachment | an attachment is added                            | ✓   |     | ✓   |     |
+| Comment                         | a comment is added                                | ✓   |     | ✓   |     |
+| Approval requested              | acceptance (workstream C), not sent yet           | ✓   | ✓   |     |     |
+| Approved or rejected            | acceptance (workstream C), not sent yet           | ✓   | ✓   | ✓   |     |
+| Final version (completed)       | the state moves to a state of the completed group | ✓   | ✓   | ✓   | ✓   |
+| State or due date changed       | the state or the due date (`target_date`) changes | ✓   |     | ✓   | ✓   |
+
+- A move to a completed state is both "Final version" and "State or due date changed": whoever either of them
+  reaches hears about it, once.
+- Other changes (name, priority, planned dates, ...) reach subscribers and assignees only, as before.
+- The people of a department are its direct members while it is switched on; a switched-off department tells
+  nobody. A person in several departments hears when any of them qualifies, so this does not depend on
+  [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508).
+- Only active members of the project are told, never the person who made the change, and nobody twice:
+  subscribers, assignees and mentioned people get their notification as before. In-app notifications from RACI
+  have the sender `in_app:issue_activities:raci`; email follows each person's notification preferences and the
+  usual digest.
+- Nothing is sent while RACI is off for the workspace or the project.
+
+**Who will be notified**: the RACI section of the work item detail has a folded list "Who will be notified" that
+shows, per event, the departments whose role it reaches and how many people that makes (in red when none).
+
+Acceptance will send its own two events through `raci_recipient_ids(issue, event)` in
+`apps/api/plane/utils/raci_notifications.py`.
+
+## Warnings
+
+The work items header of a project with RACI on has a button "RACI warnings" with their number (for project
+admins and members, and only when there is something to warn about). It opens the list, each work item a link to
+it. Warnings never block a save. They look at open work items only (not completed, cancelled, archived, drafts or
+in triage), and not at the review steps of an acceptance:
+
+- **Work items without a responsible department**, sub-work items included.
+- **Milestones without an approver**: work items of a type of kind milestone.
+- **Departments whose notifications reach nobody**: a department with a role on an open work item that is switched
+  off, has no members, or has none of them in the project.
+- **Work items without a predecessor**: top-level work items that no timeline relation (blocked by, start before,
+  finish before, start before finish; in any project) makes wait for another, except those that start the project
+  (the earliest start date among the open top-level work items).
+- **Work items nothing depends on**: top-level work items that are nobody's predecessor, except those with a due
+  date and those that end the project (the latest planned finish).
+
+The two dependency warnings are given only in a project that has at least one timeline relation; without any,
+every work item would be listed.
 
 ## Not there yet
 
-- Notifications by role and the project warnings (a work item without a responsible department, and so on) come
-  with D3 of the roadmap. The work items one's departments approve are listed by the [focus endpoint](focus.md) (D9);
-  its "My view" panel is still to come.
+- The work items one's departments approve are listed by the [focus endpoint](focus.md) (D9); its "My view" panel is
+  still to come.
 - One department per person is the rule of [#508](https://github.com/OSM-Piatnica/pi-plane/issues/508) for now.
-  "My department" already takes every active department group a person belongs to, so it keeps working if that
-  rule changes.
+  "My department" and the notifications already take every active department group a person belongs to, so they
+  keep working if that rule changes.

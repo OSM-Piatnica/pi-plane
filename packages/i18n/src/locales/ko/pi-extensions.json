@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "RACI를 저장할 수 없습니다.",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "이벤트",
+      "events": {
+        "new_version": "새 초안 버전 또는 첨부 파일",
+        "comment": "댓글",
+        "approval_requested": "승인 요청",
+        "approval_decided": "승인 또는 반려",
+        "completed": "최종 버전(완료)",
+        "state_or_due_date": "상태 또는 마감일 변경"
+      },
+      "nobody_by_role": "이 역할을 가진 부서가 없습니다",
+      "people": "{count, plural, one {#명} other {#명}}",
+      "preview_hint": "구독자, 담당자, 멘션된 사람은 이전처럼 알림을 받습니다. 변경한 사람은 받지 않습니다.",
+      "preview_title": "알림을 받을 사람",
+      "restore_defaults": "기본값 복원",
+      "settings_description": "작업 항목의 각 이벤트마다 해당 부서가 알림을 받을 역할을 정합니다. 구독자와 담당자도 알림을 받습니다.",
+      "settings_hint": "RACI가 켜진 프로젝트의 멤버만 알림을 받습니다. 꺼진 부서는 아무에게도 알리지 않습니다.",
+      "settings_title": "RACI 알림",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "승인 기능이 제공되면 전송됩니다"
+    },
+    "warnings": {
+      "button": "{count, plural, one {RACI 경고 #개} other {RACI 경고 #개}}",
+      "description": "열린 작업 항목의 역할과 종속성에 있는 빈틈입니다. 저장을 막지 않습니다.",
+      "kinds": {
+        "no_responsible": "실행 책임 부서가 없는 작업 항목",
+        "milestone_without_approver": "승인자가 없는 마일스톤",
+        "no_predecessor": "선행 항목이 없는 작업 항목",
+        "no_successor": "아무것도 의존하지 않는 작업 항목",
+        "department_without_members": "알림이 아무에게도 가지 않는 부서"
+      },
+      "more": "표시되지 않음: {count}",
+      "reasons": {
+        "inactive": "꺼져 있어 멤버가 알림을 받지 않습니다",
+        "no_members": "멤버가 없습니다",
+        "no_project_members": "이 프로젝트에 속한 멤버가 없습니다"
+      },
+      "title": "RACI 경고"
+    }
   },
   "project_components": {
     "duplicate_modal": {

@@ -5,6 +5,7 @@
 from django.db import models
 from django.db.models import Q
 
+from .base import BaseModel
 from .project import ProjectBaseModel
 
 
@@ -47,3 +48,31 @@ class IssueRaci(ProjectBaseModel):
 
     def __str__(self):
         return f"{self.issue_id} {self.group_id} {self.role}"
+
+
+class RaciNotificationSetting(BaseModel):
+    """
+    Which roles hear about which events on a work item, for one workspace (``plane.utils.raci_notifications``).
+
+    ``matrix`` is ``{event: [role, ...]}``. An event it does not name keeps its default, and a workspace without a
+    row has the defaults of SPEC-02 throughout.
+    """
+
+    workspace = models.ForeignKey("db.Workspace", on_delete=models.CASCADE, related_name="raci_notification_settings")
+    matrix = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["workspace"],
+                condition=Q(deleted_at__isnull=True),
+                name="raci_notification_setting_unique_workspace_when_deleted_at_null",
+            )
+        ]
+        verbose_name = "RACI Notification Setting"
+        verbose_name_plural = "RACI Notification Settings"
+        db_table = "raci_notification_settings"
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.workspace_id}"

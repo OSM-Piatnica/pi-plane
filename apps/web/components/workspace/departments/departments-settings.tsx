@@ -31,6 +31,7 @@ import { userGroupService } from "@/services/user-group.service";
 import { DepartmentColorDot } from "./department-color-dot";
 import { DepartmentFormModal } from "./department-form-modal";
 import { DepartmentImportModal } from "./department-import-modal";
+import { RaciNotificationSettings } from "./raci-notification-settings";
 
 type Props = {
   workspaceSlug: string;
@@ -275,6 +276,8 @@ export const DepartmentsSettings = observer(function DepartmentsSettings(props: 
           ))}
         </ul>
       )}
+
+      <RaciNotificationSettings workspaceSlug={workspaceSlug} />
 
       {formState !== null && (
         <DepartmentFormModal

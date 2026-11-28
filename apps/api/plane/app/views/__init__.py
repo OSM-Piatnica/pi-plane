@@ -82,6 +82,7 @@ from .workspace.invite import (
 )
 from .workspace.label import WorkspaceLabelsEndpoint
 from .workspace.admin_message import WorkspaceAdminMessageEndpoint
+from .workspace.raci_notifications import WorkspaceRaciNotificationsEndpoint
 from .workspace.user_group import (
     DepartmentListEndpoint,
     DepartmentMembersEndpoint,
@@ -178,7 +179,7 @@ from .project.baseline import (
     ProjectBaselineVarianceEndpoint,
 )
 from .issue.worklog import IssueWorkLogDetailEndpoint, IssueWorkLogsEndpoint
-from .issue.raci import IssueRaciEndpoint
+from .issue.raci import IssueRaciEndpoint, IssueRaciNotificationPreviewEndpoint, ProjectRaciWarningsEndpoint
 
 from .issue.archive import IssueArchiveViewSet, BulkArchiveIssuesEndpoint
 

@@ -911,7 +911,46 @@
       }
     },
     "save_failed": "无法保存 RACI。",
-    "title": "RACI"
+    "title": "RACI",
+    "notifications": {
+      "event": "事件",
+      "events": {
+        "new_version": "新草稿版本或附件",
+        "comment": "评论",
+        "approval_requested": "请求审批",
+        "approval_decided": "已批准或已拒绝",
+        "completed": "最终版本（已完成）",
+        "state_or_due_date": "状态或截止日期变更"
+      },
+      "nobody_by_role": "没有具有这些角色的部门",
+      "people": "{count, plural, one {# 人} other {# 人}}",
+      "preview_hint": "订阅者、负责人和被提及的人照常收到通知；做出更改的人不会收到。",
+      "preview_title": "谁会收到通知",
+      "restore_defaults": "恢复默认值",
+      "settings_description": "针对工作项上的每个事件，设置哪些角色的部门会收到通知，订阅者和负责人另行通知。",
+      "settings_hint": "只有启用了 RACI 的项目成员会收到通知。已停用的部门不会通知任何人。",
+      "settings_title": "RACI 通知",
+      "toggle": "{role}: {event}",
+      "with_acceptance": "验收功能可用后发送"
+    },
+    "warnings": {
+      "button": "{count, plural, one {# 条 RACI 警告} other {# 条 RACI 警告}}",
+      "description": "未完成工作项在角色和依赖关系上的缺口。不会阻止保存。",
+      "kinds": {
+        "no_responsible": "没有负责部门的工作项",
+        "milestone_without_approver": "没有审批部门的里程碑",
+        "no_predecessor": "没有前置项的工作项",
+        "no_successor": "没有任何工作依赖的工作项",
+        "department_without_members": "通知无人接收的部门"
+      },
+      "more": "未列出：{count}",
+      "reasons": {
+        "inactive": "已停用，其成员不会收到通知",
+        "no_members": "没有成员",
+        "no_project_members": "其成员都不在此项目中"
+      },
+      "title": "RACI 警告"
+    }
   },
   "project_components": {
     "duplicate_modal": {
