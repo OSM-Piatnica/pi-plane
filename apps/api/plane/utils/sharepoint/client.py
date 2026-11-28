@@ -9,11 +9,11 @@ Pi-Plane signs in as itself (OAuth 2.0 client credentials: one POST to the tenan
 is meant to hold the application permission ``Sites.Selected``, which lets it reach only the sites an administrator
 granted to it. See ``docs/sharepoint.md``.
 
-How the module is laid out, for whoever adds to it (upload sessions, download URLs, thumbnails and versions come
-with the document store):
+How the module is laid out, for whoever adds to it (upload sessions, download URLs, thumbnails and versions came
+with the document store, B3, and are as unverified as the rest):
 
-- ``SharePointClient._send`` is the only place that touches the network: time-outs, a cap on the size of an answer,
-  and the bounded retry on 429 and 503 that honours ``Retry-After``.
+- ``SharePointClient._send`` is the only place that talks to Microsoft for JSON: time-outs, a cap on the size of an
+  answer, and the bounded retry on 429 and 503 that honours ``Retry-After``.
 - ``SharePointClient.get_token`` asks for a token through it and keeps the token in the cache until shortly before
   it expires.
 - ``SharePointClient.request`` is the one way to call Graph: it adds the token, refreshes it once when Graph answers
@@ -21,7 +21,8 @@ with the document store):
   that builds a path from validated IDs and calls ``request`` (or ``request_pages`` for a collection).
 - Only ``https://graph.microsoft.com/v1.0`` is ever sent the token. Bytes that travel to a pre-authenticated URL
   (an upload session, a download URL) must not go through ``request``: those URLs are on other hosts and take no
-  bearer token.
+  bearer token. ``iter_download`` reads such a URL (checked by ``pre_authenticated_url``) without a token; the browser
+  uses the others directly (or, if B1 finds that it cannot, an API proxy will).
 
 Nothing here writes the client secret or a token to a log or into an error.
 """
@@ -32,7 +33,7 @@ import logging
 import math
 import re
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
 from urllib.parse import quote, unquote, urlsplit
@@ -97,6 +98,18 @@ _DRIVE_ID_RE = re.compile(r"[A-Za-z0-9!_-]{1,200}")
 _NOT_SITE_SEGMENTS = {"shared documents", "sitepages", "siteassets", "lists", "forms"}
 MAX_SITE_URL_LENGTH = 2000
 MAX_SITE_PATH_SEGMENTS = 10
+# The ID of a file or folder of a library (for example 01BYE5RZ6QN3ZWBTUFOFD3GSPGOHDJD36K)
+_ITEM_ID_RE = re.compile(r"[A-Za-z0-9!_-]{1,200}")
+# The ID of a version of a file: "1.0", "2.0", ... in SharePoint
+_VERSION_ID_RE = re.compile(r"[A-Za-z0-9.]{1,40}")
+# Characters SharePoint Online does not accept in a file or folder name
+_FORBIDDEN_NAME_CHARACTERS = '"*:<>?/\\|#%'
+MAX_ITEM_NAME_LENGTH = 255
+MAX_DRIVE_PATH_SEGMENTS = 30
+# Hosts Graph sends bytes to and from: SharePoint itself, and the service that renders thumbnails (unverified, B1)
+PRE_AUTHENTICATED_HOST_SUFFIXES = (".sharepoint.com", ".svc.ms")
+# How much of a file is read at a time when Pi-Plane itself reads it (the checksum check)
+DOWNLOAD_CHUNK_SIZE = 1024 * 1024
 
 # Why Microsoft refused to issue a token, by the AADSTS number in its answer
 _TOKEN_ERROR_CODES = {
@@ -224,6 +237,72 @@ def _drive_id_path(drive_id) -> str:
     return quote(text, safe="!")
 
 
+def _item_id_path(item_id) -> str:
+    text = str(item_id or "").strip()
+    if not _ITEM_ID_RE.fullmatch(text):
+        raise SharePointInputError("This is not the ID of a file in SharePoint.", code="invalid_item_id")
+    return quote(text, safe="!")
+
+
+def _version_id_path(version_id) -> str:
+    text = str(version_id or "").strip()
+    if not _VERSION_ID_RE.fullmatch(text):
+        raise SharePointInputError("This is not the ID of a version in SharePoint.", code="invalid_version_id")
+    return quote(text, safe=".")
+
+
+def validate_item_name(name) -> str:
+    """
+    A file or folder name SharePoint accepts, or SharePointInputError. Callers clean names first (see
+    ``plane.utils.document_store.sharepoint.sharepoint_file_name``); this is the last check before a name goes into a
+    Graph address.
+    """
+    text = str(name or "")
+    if (
+        not text
+        or len(text) > MAX_ITEM_NAME_LENGTH
+        or text != text.strip()
+        or text.endswith(".")
+        or text in (".", "..")
+        or any(char in text for char in _FORBIDDEN_NAME_CHARACTERS)
+        or any(ord(char) < 32 or ord(char) == 127 for char in text)
+    ):
+        raise SharePointInputError("This name cannot be used for a file in SharePoint.", code="invalid_item_name")
+    return text
+
+
+def _drive_path(path) -> str:
+    """A path inside a library ("folder/sub/file.pdf"), each part checked and encoded, for ``/root:/{path}:``."""
+    segments = [segment for segment in str(path or "").split("/") if segment != ""]
+    if not segments or len(segments) > MAX_DRIVE_PATH_SEGMENTS:
+        raise SharePointInputError("This is not a path inside a document library.", code="invalid_item_path")
+    return "/".join(quote(validate_item_name(segment), safe="") for segment in segments)
+
+
+def pre_authenticated_url(url) -> str:
+    """
+    `url` when it is an https address on a SharePoint Online host (or the thumbnail service, ``*.svc.ms``):
+    where Graph sends the bytes of a file (upload sessions, download URLs, thumbnails). Such an address carries its
+    own short-lived authorisation, so it is handed to the browser or read without a token, never sent one.
+    Which hosts Microsoft really uses is **unverified** (B1).
+    """
+    text = str(url or "")
+    try:
+        parts = urlsplit(text)
+        port = parts.port
+    except ValueError:
+        raise SharePointTransportError("Microsoft sent an address that is not valid.") from None
+    hostname = (parts.hostname or "").lower()
+    if (
+        parts.scheme.lower() != "https"
+        or parts.username is not None
+        or port not in (None, 443)
+        or not any(hostname.endswith(suffix) for suffix in PRE_AUTHENTICATED_HOST_SUFFIXES)
+    ):
+        raise SharePointTransportError("Microsoft sent an address outside SharePoint.")
+    return text
+
+
 @dataclass(frozen=True)
 class Site:
     id: str
@@ -260,23 +339,66 @@ class Drive:
 
 @dataclass(frozen=True)
 class DriveItem:
-    """A file or folder of a library; for now only what the root folder needs."""
+    """
+    A file or folder of a library. ``etag`` changes with any change of the item (its name too), ``content_tag``
+    (Graph's ``cTag``) only when the content changes. ``download_url`` is pre-authenticated and short-lived, and kept
+    out of repr so that it does not end up in a log.
+    """
 
     id: str
     name: str
     web_url: str
     etag: str
     is_folder: bool
+    content_tag: str = ""
+    size: int = 0
+    drive_id: str = ""
+    download_url: str = field(default="", repr=False)
 
     @classmethod
     def from_graph(cls, data: dict) -> "DriveItem":
+        parent = data.get("parentReference")
+        parent = parent if isinstance(parent, dict) else {}
+        try:
+            size = int(data.get("size") or 0)
+        except (TypeError, ValueError):
+            size = 0
         return cls(
             id=str(data.get("id") or ""),
             name=str(data.get("name") or ""),
             web_url=str(data.get("webUrl") or ""),
             etag=str(data.get("eTag") or ""),
             is_folder="folder" in data,
+            content_tag=str(data.get("cTag") or ""),
+            size=size,
+            drive_id=str(parent.get("driveId") or ""),
+            download_url=str(data.get("@microsoft.graph.downloadUrl") or ""),
         )
+
+
+@dataclass(frozen=True)
+class DriveItemVersion:
+    """One version of a file as SharePoint keeps it ("1.0", "2.0", ...)."""
+
+    id: str
+    size: int
+    last_modified: str
+
+    @classmethod
+    def from_graph(cls, data: dict) -> "DriveItemVersion":
+        try:
+            size = int(data.get("size") or 0)
+        except (TypeError, ValueError):
+            size = 0
+        return cls(id=str(data.get("id") or ""), size=size, last_modified=str(data.get("lastModifiedDateTime") or ""))
+
+
+@dataclass(frozen=True)
+class UploadSession:
+    """Where the bytes of a file go, in ranges, without a token; valid until ``expires_at`` (ISO 8601)."""
+
+    upload_url: str = field(repr=False)
+    expires_at: str
 
 
 def _retry_after(headers) -> float | None:
@@ -399,10 +521,10 @@ class SharePointClient:
 
     def _send(self, method: str, url: str, *, what: str, **kwargs):
         """
-        One HTTP exchange with Microsoft, and the only code here that touches the network. Returns the status and the
-        parsed body. Tries again, a bounded number of times and for a bounded time, when the answer is 429 or 503
-        (waiting as long as ``Retry-After`` says, but at least the backoff) and, for a GET, when no answer arrives.
-        Neither a request nor a wait goes past the deadline of the client.
+        One exchange with Microsoft for JSON (only ``iter_download`` also touches the network). Returns the status,
+        the parsed body and the headers. Tries again, a bounded number of times and for a bounded time, when the
+        answer is 429 or 503 (waiting as long as ``Retry-After`` says, but at least the backoff) and, for a GET,
+        when no answer arrives. Neither a request nor a wait goes past the deadline of the client.
         """
         waited = 0.0
         for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -417,7 +539,8 @@ class SharePointClient:
             try:
                 with self._http.stream(method, url, timeout=timeout, **kwargs) as response:
                     status = response.status_code
-                    wait = _retry_after(response.headers)
+                    headers = response.headers
+                    wait = _retry_after(headers)
                     payload = self._read(response)
             except (httpx.HTTPError, httpx.InvalidURL) as exc:
                 # The exception is not chained or quoted: it carries the request, whose body may hold the secret
@@ -438,7 +561,7 @@ class SharePointClient:
 
             if status not in THROTTLED_STATUSES:
                 logger.debug("SharePoint: %s answered %s", what, status)
-                return status, payload
+                return status, payload, headers
 
             # Never sooner than the backoff, however little Retry-After asks for (0, negative, not a number)
             pause = fallback_wait if wait is None else max(fallback_wait, wait)
@@ -495,7 +618,7 @@ class SharePointClient:
                 self._confidential.add(token)
                 return token
 
-        status, payload = self._send(
+        status, payload, _headers = self._send(
             "POST",
             f"{LOGIN_ROOT}/{quote(self._tenant_id, safe='')}/oauth2/v2.0/token",
             what="token request",
@@ -552,16 +675,35 @@ class SharePointClient:
 
     def request(self, method: str, path_or_url: str, *, params: dict | None = None, json=None) -> dict:
         """
-        Call Graph and return the JSON answer. Every Graph call of Pi-Plane goes through here. Raises one of the
-        errors of ``errors.py``; never returns an error answer.
+        Call Graph and return the JSON answer. Every Graph call of Pi-Plane goes through here (or through
+        ``request_redirect``). Raises one of the errors of ``errors.py``; never returns an error answer.
+        """
+        _status, payload, _headers = self._call(method, path_or_url, params=params, json=json)
+        return payload if isinstance(payload, dict) else {}
+
+    def request_redirect(self, path: str) -> str:
+        """
+        Call Graph for an address it answers with a redirect (the content of a file or of one of its versions) and
+        return where it points, without following it: that pre-authenticated address takes no token.
+        """
+        status, _payload, headers = self._call("GET", path)
+        location = headers.get("Location") or ""
+        if status not in (301, 302, 303, 307, 308) or not location:
+            raise SharePointTransportError("Microsoft did not answer with the address of the file.")
+        return pre_authenticated_url(location)
+
+    def _call(self, method: str, path_or_url: str, *, params: dict | None = None, json=None):
+        """
+        One Graph call with the token: (status, payload, headers) of an answer that is not an error. Refreshes the
+        token once on 401; raises one of the errors of ``errors.py`` for an error answer.
         """
         url = self._graph_url(path_or_url)
         what = f"{method} {urlsplit(url).path}"
-        status, payload = 0, None
+        status, payload, headers = 0, None, {}
         # A token Graph does not accept (revoked, or cached past a change on Microsoft's side) is replaced once
         for force_refresh in (False, True):
             token = self.get_token(force_refresh=force_refresh)
-            status, payload = self._send(
+            status, payload, headers = self._send(
                 method,
                 url,
                 what=what,
@@ -575,7 +717,7 @@ class SharePointClient:
             if status == 401:
                 self.forget_token()
             raise self._graph_error(status, payload)
-        return payload if isinstance(payload, dict) else {}
+        return status, payload, headers
 
     def request_pages(self, path: str, *, params: dict | None = None) -> list[dict]:
         """Every entry of a Graph collection, following its own next-page links (and only those)."""
@@ -640,3 +782,101 @@ class SharePointClient:
         if not item.id:
             raise SharePointTransportError("Microsoft answered without the ID of the folder.")
         return item
+
+    # ------------------------------------------------------------------ files and versions
+    # Written from Microsoft's documentation and tested against a fake Graph only: unverified until B1.
+
+    _ITEM_SELECT = "id,name,webUrl,eTag,cTag,size,file,folder,parentReference"
+
+    def _item(self, data: dict) -> DriveItem:
+        item = DriveItem.from_graph(data)
+        if not item.id:
+            raise SharePointTransportError("Microsoft answered without the ID of the file.")
+        return item
+
+    def get_item(self, drive_id, item_id, *, with_download_url: bool = False) -> DriveItem:
+        """A file of a library by its ID; with a short-lived download URL when asked for."""
+        select = self._ITEM_SELECT + (",@microsoft.graph.downloadUrl" if with_download_url else "")
+        data = self.request(
+            "GET", f"/drives/{_drive_id_path(drive_id)}/items/{_item_id_path(item_id)}", params={"$select": select}
+        )
+        return self._item(data)
+
+    def get_item_by_path(self, drive_id, path) -> DriveItem:
+        """A file of a library by its path from the root of the library."""
+        data = self.request(
+            "GET",
+            f"/drives/{_drive_id_path(drive_id)}/root:/{_drive_path(path)}",
+            params={"$select": self._ITEM_SELECT},
+        )
+        return self._item(data)
+
+    def _upload_session(self, path: str, conflict_behavior: str) -> UploadSession:
+        data = self.request("POST", path, json={"item": {"@microsoft.graph.conflictBehavior": conflict_behavior}})
+        upload_url = data.get("uploadUrl")
+        if not isinstance(upload_url, str) or not upload_url:
+            raise SharePointTransportError("Microsoft answered without the address to upload to.")
+        return UploadSession(
+            upload_url=pre_authenticated_url(upload_url), expires_at=str(data.get("expirationDateTime") or "")
+        )
+
+    def create_upload_session_for_path(self, drive_id, path) -> UploadSession:
+        """
+        An upload session for a new file at `path` (SharePoint makes missing folders: unverified). Fails when a file
+        is already there: a new document never overwrites a file Pi-Plane does not know.
+        """
+        return self._upload_session(
+            f"/drives/{_drive_id_path(drive_id)}/root:/{_drive_path(path)}:/createUploadSession", "fail"
+        )
+
+    def create_upload_session_for_item(self, drive_id, item_id) -> UploadSession:
+        """An upload session that replaces the content of an existing file, which makes a new version of it."""
+        return self._upload_session(
+            f"/drives/{_drive_id_path(drive_id)}/items/{_item_id_path(item_id)}/createUploadSession", "replace"
+        )
+
+    def list_versions(self, drive_id, item_id) -> list[DriveItemVersion]:
+        """The versions SharePoint keeps of a file, the current one first."""
+        entries = self.request_pages(
+            f"/drives/{_drive_id_path(drive_id)}/items/{_item_id_path(item_id)}/versions",
+            params={"$select": "id,size,lastModifiedDateTime"},
+        )
+        return [DriveItemVersion.from_graph(entry) for entry in entries if entry.get("id")]
+
+    def get_version_download_url(self, drive_id, item_id, version_id) -> str:
+        """A short-lived, pre-authenticated address of the bytes of one version of a file."""
+        return self.request_redirect(
+            f"/drives/{_drive_id_path(drive_id)}/items/{_item_id_path(item_id)}/versions/"
+            f"{_version_id_path(version_id)}/content"
+        )
+
+    def get_thumbnail_url(self, drive_id, item_id, size: str = "medium") -> str | None:
+        """A short-lived address of a picture of the file (its first page); None when SharePoint has none."""
+        if size not in ("small", "medium", "large"):
+            raise SharePointInputError("This is not a thumbnail size.", code="invalid_thumbnail_size")
+        try:
+            data = self.request(
+                "GET", f"/drives/{_drive_id_path(drive_id)}/items/{_item_id_path(item_id)}/thumbnails/0/{size}"
+            )
+        except SharePointNotFoundError:
+            return None
+        url = data.get("url")
+        return pre_authenticated_url(url) if isinstance(url, str) and url else None
+
+    def iter_download(self, url, *, chunk_size: int = DOWNLOAD_CHUNK_SIZE):
+        """
+        The bytes behind a pre-authenticated download URL, chunk by chunk. No token is sent and redirects are not
+        followed. Meant for background work (the checksum check), which makes the client with ``deadline=None``.
+        """
+        target = pre_authenticated_url(url)
+        try:
+            with self._http.stream("GET", target, timeout=TIMEOUT) as response:
+                if response.status_code != 200:
+                    raise SharePointResponseError(
+                        f"SharePoint did not hand out the file (HTTP {response.status_code}).",
+                        status=response.status_code,
+                    )
+                yield from response.iter_bytes(chunk_size)
+        except httpx.HTTPError as exc:
+            # As in _send: the exception is not chained or quoted, the URL carries its own authorisation
+            raise SharePointTransportError("SharePoint could not be reached.", detail=type(exc).__name__) from None

@@ -5,7 +5,8 @@ review and acceptance live where the organisation already keeps its documents. T
 today, how to register the application in Microsoft Entra, and what is still to come.
 
 > **Status: groundwork, not tried against a real tenant.** What exists is the connection to Microsoft Graph, the
-> instance settings and a "Test connection" button. Nothing can be stored in SharePoint yet. The code was written
+> instance settings, a "Test connection" button and, through the [document store](document-store.md), the API to
+> store documents in a library (no screens yet, and a library is set up by hand until B4). The code was written
 > from Microsoft's documentation and is tested against a fake Microsoft only: no step below, and no answer of Graph
 > the code expects, has been confirmed against a live Microsoft 365 tenant. Steps and behaviours that most need that
 > confirmation are marked **(unverified)**. The first test on a real tenant may well bring corrections.
@@ -110,8 +111,8 @@ copied into the database once, by `configure_instance`, and the admin app rules 
 | `SHAREPOINT_MAX_FILE_SIZE` | Largest file for SharePoint, in bytes, from 1 MB to 250 GB. Empty means the default.         | 524288000 (500 MB) |
 
 `SHAREPOINT_MAX_FILE_SIZE` has nothing to do with `FILE_SIZE_LIMIT` ([file uploads](file-uploads.md)): that one
-bounds what goes into Pi-Plane's own storage. Nothing enforces the SharePoint size yet, because nothing is uploaded
-yet. The admin app shows the saved size in megabytes without rounding (a value set in bytes, say `1000000000`,
+bounds what goes into Pi-Plane's own storage. The document store refuses a SharePoint upload above this size
+before it asks Microsoft for an upload session. The admin app shows the saved size in megabytes without rounding (a value set in bytes, say `1000000000`,
 shows as 953.67431640625), says which size is in force, warns when the saved value cannot be used (then the default
 applies), and saves the size only when it was changed in the form.
 
@@ -155,15 +156,16 @@ seconds, and a wait that would not fit in the remaining time is not started.
 
 ## What is not built yet
 
-- **Storing documents.** No upload, download, thumbnail or version call exists; no document or version is recorded
-  in Pi-Plane. This is the next step (the document store, with a native backend for installations without
-  SharePoint).
+- **Storing documents** works through the API of the [document store](document-store.md) (B3): upload sessions,
+  versions, download URLs, thumbnails, and changes made directly in SharePoint. It is **unverified** like the rest
+  of this page; that page lists what B1 must confirm.
 - **Choosing a library.** A workspace administrator will pick the site, the library and a root folder in the
-  workspace settings, and a project may override them. Today a site is only looked up by "Test connection".
+  workspace settings (B4), and a project may override them. Today a `DocumentLibrary` row is added by hand.
 - **Anything in the web app.** `is_sharepoint_enabled` is exposed, and nothing reads it yet.
 - **Certificate credentials** in place of a client secret, and a warning before the secret expires.
 - **Browser access to Microsoft.** Whether the browser can upload to and download from Microsoft directly (CORS), or
-  whether Pi-Plane has to pass the bytes through, needs a real tenant to decide.
+  whether Pi-Plane has to pass the bytes through, needs a real tenant to decide. The document store assumes direct
+  access for now and has room for a proxy.
 - **National clouds**, and SharePoint Server (on premises), are out of scope.
 
 ## For developers

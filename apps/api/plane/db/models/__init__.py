@@ -144,3 +144,12 @@ from .initiative import (
     InitiativeStatus,
     InitiativeUpdate,
 )
+
+from .document import (
+    ChecksumStatus,
+    Document,
+    DocumentLibrary,
+    DocumentProvider,
+    DocumentVersion,
+    DocumentVersionSource,
+)
