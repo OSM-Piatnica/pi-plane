@@ -765,9 +765,9 @@
       "tooltip": "{percentage}% degli elementi di lavoro completato",
       "partial_tooltip": "{percentage}% degli elementi di lavoro a Lei visibili completato",
       "projects_empty": "Ancora nessun elemento di lavoro nei progetti collegati.",
-      "epics_empty": "Ancora nessun elemento di lavoro figlio negli Epics collegati.",
+      "epics_empty": "Ancora nessun elemento di lavoro figlio negli Epic collegati.",
       "hidden_projects": "{count, plural, one {# progetto collegato non Le è visibile e non viene conteggiato.} many {# di progetti collegati non Le sono visibili e non vengono conteggiati.} other {# progetti collegati non Le sono visibili e non vengono conteggiati.}}",
-      "hidden_epics": "{count, plural, one {# Epic collegato non Le è visibile e non viene conteggiato.} many {# di Epics collegati non Le sono visibili e non vengono conteggiati.} other {# Epics collegati non Le sono visibili e non vengono conteggiati.}}",
+      "hidden_epics": "{count, plural, one {# Epic collegato non Le è visibile e non viene conteggiato.} many {# di Epic collegati non Le sono visibili e non vengono conteggiati.} other {# Epic collegati non Le sono visibili e non vengono conteggiati.}}",
       "hidden_children": "Alcuni elementi di lavoro figli si trovano in progetti che non può vedere e non vengono conteggiati.",
       "explained": "Le due cifre sono conteggiate separatamente: altrimenti un Epic all’interno di un progetto collegato verrebbe conteggiato due volte."
     },
@@ -785,12 +785,12 @@
       "archived": "Archiviato"
     },
     "epics": {
-      "title": "Epics",
+      "title": "Epic",
       "add": "Aggiungi Epic",
-      "search": "Cerca Epics per nome o ID",
+      "search": "Cerca Epic per nome o ID",
       "none_to_add": "Nessun Epic da aggiungere",
       "empty": "Ancora nessun Epic collegato.",
-      "of_goal": "Gli Epics delle iniziative dell’obiettivo. Colleghi gli Epics da un’iniziativa.",
+      "of_goal": "Gli Epic delle iniziative dell’obiettivo. Colleghi gli Epic da un’iniziativa.",
       "remove": "Scollega {name}",
       "progress_of": "Avanzamento di {name}"
     },
@@ -807,7 +807,7 @@
       "goal_title": "Elimina obiettivo",
       "initiative_title": "Elimina iniziativa",
       "goal_description": "Eliminare l’obiettivo {name}? Le sue iniziative restano, senza obiettivo.",
-      "initiative_description": "Eliminare l’iniziativa {name}? I suoi collegamenti a progetti ed Epics e i suoi aggiornamenti di stato vengono rimossi; i progetti e gli Epics restano."
+      "initiative_description": "Eliminare l’iniziativa {name}? I suoi collegamenti a progetti ed Epic e i suoi aggiornamenti di stato vengono rimossi; i progetti e gli Epic restano."
     },
     "toast": {
       "goal_created": "L’obiettivo è stato creato.",

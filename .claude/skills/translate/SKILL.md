@@ -70,23 +70,24 @@ These are common nouns. **Translate them into the target language** using the ca
 
 Use the table verbatim — never coin new variants; never leave the Latin form in the locale value.
 
-| Source      | zh-CN | zh-TW | ja         | ko     | ru       | ua       | be       | de     | fr      | es      | it     | pt-BR   | pl     | cs      | sk      | ro      | tr-TR    | vi-VN  | id      |
-| ----------- | ----- | ----- | ---------- | ------ | -------- | -------- | -------- | ------ | ------- | ------- | ------ | ------- | ------ | ------- | ------- | ------- | -------- | ------ | ------- |
-| **Cycle**   | 周期  | 週期  | サイクル   | 사이클 | Цикл     | Цикл     | Цыкл     | Zyklus | Cycle   | Ciclo   | Ciclo  | Ciclo   | Cykl   | Cyklus  | Cyklus  | Ciclu   | Döngü    | Chu kỳ | Siklus  |
-| **Cycles**  | 周期  | 週期  | サイクル   | 사이클 | Циклы    | Цикли    | Цыклы    | Zyklen | Cycles  | Ciclos  | Cicli  | Ciclos  | Cykle  | Cykly   | Cykly   | Cicluri | Döngüler | Chu kỳ | Siklus  |
-| **Module**  | 模块  | 模組  | モジュール | 모듈   | Модуль   | Модуль   | Модуль   | Modul  | Module  | Módulo  | Modulo | Módulo  | Moduł  | Modul   | Modul   | Modul   | Modül    | Mô-đun | Modul   |
-| **Modules** | 模块  | 模組  | モジュール | 모듈   | Модули   | Модулі   | Модулі   | Module | Modules | Módulos | Moduli | Módulos | Moduły | Moduly  | Moduly  | Module  | Modüller | Mô-đun | Modul   |
-| **Epic**    | 史诗  | 史詩  | エピック   | 에픽   | Эпик     | Епік     | Эпік     | Epic   | Epic    | Epic    | Epic   | Epic    | Epik   | Epik    | Epik    | Epic    | Epik     | Epic   | Epik    |
-| **Epics**   | 史诗  | 史詩  | エピック   | 에픽   | Эпики    | Епіки    | Эпікі    | Epics  | Epics   | Epics   | Epics  | Epics   | Epiki  | Epiky   | Epiky   | Epice   | Epikler  | Epic   | Epik    |
-| **Page**    | 页面  | 頁面  | ページ     | 페이지 | Страница | Сторінка | Старонка | Seite  | Page    | Página  | Pagina | Página  | Strona | Stránka | Stránka | Pagină  | Sayfa    | Trang  | Halaman |
-| **Pages**   | 页面  | 頁面  | ページ     | 페이지 | Страницы | Сторінки | Старонкі | Seiten | Pages   | Páginas | Pagine | Páginas | Strony | Stránky | Stránky | Pagini  | Sayfalar | Trang  | Halaman |
+| Source      | zh-CN | zh-TW | ja         | ko     | ru       | ua       | be       | de     | fr      | es      | it     | pt-BR   | pl     | cs      | sk      | ro      | tr-TR    | vi-VN  | id      | bg       | nl       | ka-ge    | pt-PT   | pl-x-podlaski |
+| ----------- | ----- | ----- | ---------- | ------ | -------- | -------- | -------- | ------ | ------- | ------- | ------ | ------- | ------ | ------- | ------- | ------- | -------- | ------ | ------- | -------- | -------- | -------- | ------- | ------------- |
+| **Cycle**   | 周期  | 週期  | サイクル   | 사이클 | Цикл     | Цикл     | Цыкл     | Zyklus | Cycle   | Ciclo   | Ciclo  | Ciclo   | Cykl   | Cyklus  | Cyklus  | Ciclu   | Döngü    | Chu kỳ | Siklus  | Цикъл    | Cyclus   | ციკლი    | Ciclo   | Cykl          |
+| **Cycles**  | 周期  | 週期  | サイクル   | 사이클 | Циклы    | Цикли    | Цыклы    | Zyklen | Cycles  | Ciclos  | Cicli  | Ciclos  | Cykle  | Cykly   | Cykly   | Cicluri | Döngüler | Chu kỳ | Siklus  | Цикли    | Cycli    | ციკლები  | Ciclos  | Cykle         |
+| **Module**  | 模块  | 模組  | モジュール | 모듈   | Модуль   | Модуль   | Модуль   | Modul  | Module  | Módulo  | Modulo | Módulo  | Moduł  | Modul   | Modul   | Modul   | Modül    | Mô-đun | Modul   | Модул    | Module   | მოდული   | Módulo  | Moduł         |
+| **Modules** | 模块  | 模組  | モジュール | 모듈   | Модули   | Модулі   | Модулі   | Module | Modules | Módulos | Moduli | Módulos | Moduły | Moduly  | Moduly  | Module  | Modüller | Mô-đun | Modul   | Модули   | Modules  | მოდულები | Módulos | Moduły        |
+| **Epic**    | 史诗  | 史詩  | エピック   | 에픽   | Эпик     | Епік     | Эпік     | Epic   | Epic    | Epic    | Epic   | Épico   | Epik   | Epik    | Epik    | Epic    | Epik     | Epic   | Epik    | Епик     | Epic     | ეპიკი    | Épico   | Epik          |
+| **Epics**   | 史诗  | 史詩  | エピック   | 에픽   | Эпики    | Епіки    | Эпікі    | Epics  | Epics   | Epics   | Epic   | Épicos  | Epiki  | Epiky   | Epiky   | Epice   | Epikler  | Epic   | Epik    | Епици    | Epics    | ეპიკები  | Épicos  | Epiki         |
+| **Page**    | 页面  | 頁面  | ページ     | 페이지 | Страница | Сторінка | Старонка | Seite  | Page    | Página  | Pagina | Página  | Strona | Stránka | Stránka | Pagină  | Sayfa    | Trang  | Halaman | Страница | Pagina   | გვერდი   | Página  | Strona        |
+| **Pages**   | 页面  | 頁面  | ページ     | 페이지 | Страницы | Сторінки | Старонкі | Seiten | Pages   | Páginas | Pagine | Páginas | Strony | Stránky | Stránky | Pagini  | Sayfalar | Trang  | Halaman | Страници | Pagina's | გვერდები | Páginas | Strony        |
 
 Notes:
 
 - Single-form locales (zh-CN, zh-TW, ja, ko, vi-VN, id) use the same form for singular and plural — the column repeats by design.
 - Slavic locales (ru, ua, pl, cs, sk) show **nominative singular** and **nominative plural**. Inside ICU `{count, plural, ...}` blocks, use the case-correct form per CLDR keyword (see the Slavic case-form table further down).
 - Some Latin locales (fr, vi-VN, id) have forms identical to English (`Cycle`, `Module`, `Page`) — that's the natural cognate, not a Latin-preservation rule.
-- **Epic / Epics**: stays Latin in most Latin locales because there's no clean cognate (Spanish `épico` is for poetry/film; same for it/pt-BR/de/fr). Slavic locales use phonetic transliteration that's standard in their software industry (Эпик, Епік, Epik). CJK locales use the literal/transliterated form (史诗, エピック, 에픽).
+- **bg, nl, ka-ge, pt-PT, pl-x-podlaski** follow the same rules as their nearest documented locale: bg is Cyrillic (Latin brand marks, formal `вие`-register), nl keeps `Epic`/`Epics` Latin and uses Dutch `Cyclus`/`Cycli`, ka-ge is Georgian script (brand marks stay Latin), pt-PT follows pt-BR with European Portuguese vocabulary, and pl-x-podlaski (Podlaskie dialect variant) uses the same forms as `pl`.
+- **Epic / Epics**: stays Latin in most Latin locales because there's no clean cognate (Spanish `épico` is for poetry/film; same for de/fr/es). **Exceptions**: pt-BR and pt-PT use `Épico` / `Épicos` (the established Portuguese word, already used throughout the product); `it` uses `Epic` for both singular and plural, because Italian loanwords are invariable (`gli Epic`, never `Epics` or `Epiche`). Slavic locales use phonetic transliteration that's standard in their software industry (Эпик, Епік, Epik). CJK locales use the literal/transliterated form (史诗, エピック, 에픽). In cs/sk the form is masculine `Epik` (not `Epika`).
 - **Generic uses translate normally and don't follow this glossary:** `next page` (paginator), `the page` (browser refresh), `status page`, `web page`, `life cycle`, `release cycle`, `rate-limit cycle`, `cycle of releases` — these are not the Plane Cycle/Page feature; translate them as ordinary words in the surrounding prose.
 - When editing an existing file, migrate occurrences you are already touching. Do not bulk-rewrite unrelated strings in the same PR — land a separate sweep PR with the `chore(i18n):` prefix.
 

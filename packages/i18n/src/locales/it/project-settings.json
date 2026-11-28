@@ -401,8 +401,8 @@
         "toggle_description": "I membri del progetto potranno registrare il tempo lavorato."
       },
       "epics": {
-        "toggle_title": "Abilita Epics",
-        "toggle_description": "I membri potranno creare Epics, elementi di lavoro che raggruppano altri elementi di lavoro. Se disattivato, gli Epics esistenti vengono mantenuti."
+        "toggle_title": "Abilita Epic",
+        "toggle_description": "I membri potranno creare Epic, elementi di lavoro che raggruppano altri elementi di lavoro. Se disattivato, gli Epic esistenti vengono mantenuti."
       },
       "milestones": {
         "title": "Traguardi",

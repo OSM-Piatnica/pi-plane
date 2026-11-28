@@ -765,11 +765,11 @@
       "tooltip": "{percentage}% dos itens de trabalho concluídos",
       "partial_tooltip": "{percentage}% dos itens de trabalho visíveis para você concluídos",
       "projects_empty": "Ainda não há itens de trabalho nos projetos vinculados.",
-      "epics_empty": "Ainda não há itens de trabalho filhos nos Epics vinculados.",
+      "epics_empty": "Ainda não há itens de trabalho filhos nos Épicos vinculados.",
       "hidden_projects": "{count, plural, one {# projeto vinculado não está visível para você e não é contabilizado.} many {# de projetos vinculados não estão visíveis para você e não são contabilizados.} other {# projetos vinculados não estão visíveis para você e não são contabilizados.}}",
-      "hidden_epics": "{count, plural, one {# Epic vinculado não está visível para você e não é contabilizado.} many {# de Epics vinculados não estão visíveis para você e não são contabilizados.} other {# Epics vinculados não estão visíveis para você e não são contabilizados.}}",
+      "hidden_epics": "{count, plural, one {# Épico vinculado não está visível para você e não é contabilizado.} many {# de Épicos vinculados não estão visíveis para você e não são contabilizados.} other {# Épicos vinculados não estão visíveis para você e não são contabilizados.}}",
       "hidden_children": "Alguns itens de trabalho filhos estão em projetos que você não pode ver e não são contabilizados.",
-      "explained": "Os dois números são contabilizados separadamente: caso contrário, um Epic dentro de um projeto vinculado seria contado duas vezes."
+      "explained": "Os dois números são contabilizados separadamente: caso contrário, um Épico dentro de um projeto vinculado seria contado duas vezes."
     },
     "children": {
       "title": "Iniciativas",
@@ -785,12 +785,12 @@
       "archived": "Arquivado"
     },
     "epics": {
-      "title": "Epics",
-      "add": "Adicionar Epic",
-      "search": "Buscar Epics por nome ou ID",
-      "none_to_add": "Nenhum Epic para adicionar",
-      "empty": "Ainda não há Epics vinculados.",
-      "of_goal": "Os Epics das iniciativas do objetivo. Vincule Epics em uma iniciativa.",
+      "title": "Épicos",
+      "add": "Adicionar Épico",
+      "search": "Buscar Épicos por nome ou ID",
+      "none_to_add": "Nenhum Épico para adicionar",
+      "empty": "Ainda não há Épicos vinculados.",
+      "of_goal": "Os Épicos das iniciativas do objetivo. Vincule Épicos em uma iniciativa.",
       "remove": "Desvincular {name}",
       "progress_of": "Progresso de {name}"
     },
@@ -807,7 +807,7 @@
       "goal_title": "Excluir objetivo",
       "initiative_title": "Excluir iniciativa",
       "goal_description": "Excluir o objetivo {name}? As iniciativas dele são mantidas, sem objetivo.",
-      "initiative_description": "Excluir a iniciativa {name}? Os vínculos dela com projetos e Epics e as atualizações de status são removidos; os projetos e os Epics são mantidos."
+      "initiative_description": "Excluir a iniciativa {name}? Os vínculos dela com projetos e Épicos e as atualizações de status são removidos; os projetos e os Épicos são mantidos."
     },
     "toast": {
       "goal_created": "O objetivo foi criado.",

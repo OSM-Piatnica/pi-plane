@@ -401,8 +401,8 @@
         "toggle_description": "Os membros do projeto poderão registrar o tempo trabalhado."
       },
       "epics": {
-        "toggle_title": "Ativar Epics",
-        "toggle_description": "Os membros poderão criar Epics, itens de trabalho que agrupam outros itens de trabalho. Ao desativar, os Epics existentes são mantidos."
+        "toggle_title": "Ativar Épicos",
+        "toggle_description": "Os membros poderão criar Épicos, itens de trabalho que agrupam outros itens de trabalho. Ao desativar, os Épicos existentes são mantidos."
       },
       "milestones": {
         "title": "Marcos",
