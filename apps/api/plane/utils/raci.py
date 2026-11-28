@@ -42,8 +42,28 @@ RACI_EDIT_MESSAGE = "Only a project admin or the project lead can change RACI."
 ROLES = tuple(RaciRole.values)
 
 
+RACI_ERRORS = {
+    "not_a_list": "RACI is a list of departments with their roles.",
+    "bad_entry": "Each RACI entry needs a group_id and a role.",
+    "unknown_role": f"Unknown role. The roles are: {', '.join(ROLES)}.",
+    "bad_group_id": "Each RACI entry needs the id of a department.",
+    "duplicate_group": "A department can have only one role on a work item.",
+    "not_a_department": "Only departments of this workspace can have a role.",
+    "inactive_group": "A department that is switched off cannot be given a role.",
+}
+
+
 class RaciError(ValueError):
-    """A list of roles that cannot be stored; the message is shown to whoever asked."""
+    """A list of roles that cannot be stored; ``code`` keys the fixed text in ``RACI_ERRORS`` shown to the asker."""
+
+    def __init__(self, code):
+        super().__init__(code)
+        self.code = code
+
+    @property
+    def public_message(self):
+        """The fixed text for this error; never built from the exception itself."""
+        return RACI_ERRORS.get(self.code, "These RACI roles cannot be saved.")
 
 
 def workspace_raci_enabled(workspace):
@@ -117,20 +137,20 @@ def clean_raci(workspace_id, issue_id, entries):
     role it has on the work item (unchanged), and cannot be given a new or a different one.
     """
     if not isinstance(entries, list):
-        raise RaciError("RACI is a list of departments with their roles.")
+        raise RaciError("not_a_list")
     wanted = {}
     for entry in entries:
         if not isinstance(entry, dict):
-            raise RaciError("Each RACI entry needs a group_id and a role.")
+            raise RaciError("bad_entry")
         role = entry.get("role")
         if role not in ROLES:
-            raise RaciError(f"Unknown role. The roles are: {', '.join(ROLES)}.")
+            raise RaciError("unknown_role")
         try:
             group_id = uuid.UUID(str(entry.get("group_id")))
         except ValueError:
-            raise RaciError("Each RACI entry needs the id of a department.") from None
+            raise RaciError("bad_group_id") from None
         if group_id in wanted:
-            raise RaciError("A department can have only one role on a work item.")
+            raise RaciError("duplicate_group")
         wanted[group_id] = role
 
     departments = dict(
@@ -139,10 +159,10 @@ def clean_raci(workspace_id, issue_id, entries):
         )
     )
     if len(departments) != len(wanted):
-        raise RaciError("Only departments of this workspace can have a role.")
+        raise RaciError("not_a_department")
     present = dict(IssueRaci.objects.filter(issue_id=issue_id).values_list("group_id", "role"))
     if any(not is_active and present.get(group_id) != wanted[group_id] for group_id, is_active in departments.items()):
-        raise RaciError("A department that is switched off cannot be given a role.")
+        raise RaciError("inactive_group")
     return wanted
 
 

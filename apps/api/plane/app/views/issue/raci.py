@@ -79,7 +79,7 @@ class IssueRaciEndpoint(BaseAPIView):
         try:
             wanted = clean_raci(project.workspace_id, issue.id, entries)
         except RaciError as exc:
-            return _error(str(exc))
+            return _error(exc.public_message)
 
         before, after = set_issue_raci(issue, wanted, actor=request.user)
         if raci_changes(before, after):
